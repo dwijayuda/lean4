@@ -18,12 +18,10 @@ def saturatingSub (a b : Nat) : Nat :=
   Nat.sub a b
 
 theorem increment_gt (n : Nat) : n < increment n := by
-  unfold increment
-  omega
+  simpa only [increment] using (Nat.lt_add_one n)
 
 theorem saturatingSub_le (a b : Nat) : saturatingSub a b ≤ a := by
-  unfold saturatingSub
-  omega
+  simpa only [saturatingSub] using (Nat.sub_le a b)
 
 #lean_ts_export increment
 #lean_ts_export square
