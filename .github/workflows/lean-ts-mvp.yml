@@ -36,7 +36,8 @@ jobs:
       - name: Check Lean, emit TypeScript, compile with TS 7, run JS
         run: |
           set -euo pipefail
-          lake env lean Example.lean
+          lake env lean Example.lean > lean-emit.log
+          node publish.mjs lean-emit.log
           npm install --ignore-scripts --no-audit --no-fund --no-package-lock
           test "$(node -p 'require("./node_modules/typescript/package.json").version')" = "7.0.2"
           npm run build
