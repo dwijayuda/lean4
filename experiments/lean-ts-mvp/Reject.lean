@@ -3,7 +3,7 @@ Copyright (c) 2026. Released under Apache 2.0 license.
 -/
 module
 
-import LeanTs
+meta import LeanTs
 
 /-! Unsupported Lean executable constants must be rejected. -/
 
