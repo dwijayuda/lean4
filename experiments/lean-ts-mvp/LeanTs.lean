@@ -52,7 +52,7 @@ private partial def emitNat (params : Array String) (e : Expr) : Except String S
             if inst == .str .anonymous "instOfNatNat" && n == m then
               return s!"{n}n"
           | _, _ => pure ()
-        throw "unsupported OfNat instance or numeral expression"
+        throw s!"unsupported OfNat instance or numeral expression: n={args[1]!}; inst={args[2]!}"
       if name == natOp "add" && args.size == 2 then
         return s!"({← emitNat params args[0]!} + {← emitNat params args[1]!})"
       if name == natOp "mul" && args.size == 2 then
