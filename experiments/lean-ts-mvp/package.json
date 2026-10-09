@@ -1,0 +1,13 @@
+{
+  "name": "lean-ts-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node tests.mjs"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}

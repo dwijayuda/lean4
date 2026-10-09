@@ -1,1 +1,0 @@
-TEST_LEAN_ARGS+=(-j1)

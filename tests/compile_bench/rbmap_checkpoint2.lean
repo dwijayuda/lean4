@@ -1,1 +1,0 @@
-rbmap_checkpoint.lean

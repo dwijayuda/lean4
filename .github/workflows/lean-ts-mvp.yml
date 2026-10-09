@@ -1,0 +1,58 @@
+name: lean-ts7 MVP (Lean 4.35.0-rc4)
+
+on:
+  push:
+    branches:
+      - experiment/lean-ts7-rc4-mvp
+  pull_request:
+    paths:
+      - experiments/lean-ts-mvp/**
+      - .github/workflows/lean-ts-mvp.yml
+  workflow_dispatch:
+
+jobs:
+  lean-to-typescript:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: experiments/lean-ts-mvp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: experiments/lean-ts-mvp
+          auto-config: false
+          build: true
+          use-github-cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check Lean, emit TypeScript, compile with TS 7, run JS
+        run: |
+          set -euo pipefail
+          lake env lean Example.lean
+          npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+          test "$(node -p 'require("./node_modules/typescript/package.json").version')" = "7.0.2"
+          npm run build
+          npm test
+      - name: Check unsupported Lean primitives fail closed
+        run: |
+          set -euo pipefail
+          if lake env lean Reject.lean > reject.log 2>&1; then
+            echo "ERROR: unsupported Lean primitive was accepted"
+            exit 1
+          fi
+          cat reject.log
+          grep -q 'unsupported executable constant' reject.log
+          test ! -e generated/unsupported.ts
+      - name: Check failing Lean proofs prevent compilation
+        run: |
+          set -euo pipefail
+          if lake env lean BadProof.lean > bad-proof.log 2>&1; then
+            echo "ERROR: invalid Lean theorem was accepted"
+            exit 1
+          fi
+          cat bad-proof.log
+          test ! -e generated/afterBadProof.ts
