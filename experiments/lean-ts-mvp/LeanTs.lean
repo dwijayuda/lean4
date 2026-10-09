@@ -3,9 +3,9 @@ Copyright (c) 2026. Released under Apache 2.0 license.
 -/
 module
 
-import Lean
+public meta import Lean
 
-public section
+public meta section
 
 namespace LeanTs
 
