@@ -9,7 +9,8 @@ This is not an LCNF backend and does not prove generated JavaScript correct.
 Install elan, Node.js 22+ and npm. From this folder (not the Lean4 root), run:
 
     lake build LeanTs
-    lake env lean Example.lean
+    lake env lean Example.lean > lean-emit.log
+    node publish.mjs lean-emit.log
     npm install --ignore-scripts --no-audit --no-fund --no-package-lock
     npm run build
     npm test
@@ -37,6 +38,6 @@ All other executable Lean constructs must fail explicitly. The Lean host still s
 
 This uses Lean's original kernel to check Lean declarations and proofs. It does not formally verify translation semantics, the official TypeScript compiler, the Node runtime, or JavaScript callers. Lean sorry and nonstandard axioms are not automatically audited by this tiny emitter.
 
-The export command executes at its source position. The example places it after the relevant theorems. For general projects, emission should be delayed until module checking succeeds completely, with atomic output publication. Other limitations include lack of recursion, higher-order functions, polymorphism, effect handling, arrays, and external Lean functions.
+The command writes framed TypeScript to stdout, not to files. The publish.mjs step runs only after Lean returns a successful exit code, validates all output blocks, and atomically renames each staged file. A failed Lean proof therefore blocks publishing. Do not invoke publish.mjs on output from a failed Lean command. This checks build-process success but does not formally verify generated JavaScript or audit all axioms. Other limitations include lack of recursion, higher-order functions, polymorphism, effect handling, arrays, and external Lean functions.
 
 The logical next backend milestone is extracting actual base/mono-LCNF and implementing explicit TS runtime lowering without changing the Lean frontend or kernel.
