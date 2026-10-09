@@ -83,7 +83,7 @@ private def emitDefinition (name : Name) (d : DefinitionVal) : Except String Str
 
 /-- Generate TypeScript after the preceding Lean declarations and proofs are checked. -/
 elab "#lean_ts_export " decl:ident : command => do
-  if (← hasErrors) then
+  if (← get).messages.hasErrors then
     throwError "Lean reported errors; refusing TypeScript emission"
   let name := decl.getId
   let some (.defnInfo d) := (← getEnv).find? name
