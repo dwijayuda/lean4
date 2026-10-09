@@ -86,8 +86,11 @@ elab "#lean_ts_export " decl:ident : command => do
   if (← get).messages.hasErrors then
     throwError "Lean reported errors; refusing TypeScript emission"
   let name := decl.getId
-  let some (.defnInfo d) := (← getEnv).find? name
-    | throwError m!"{name} is not an executable definition"
+  let resolved ← resolveGlobalConstNoOverload decl
+  let some info := (← getEnv).find? resolved
+    | throwError m!"{resolved} is missing from the Lean environment"
+  let .defnInfo d := info
+    | throwError m!"{resolved} is not a regular executable definition"
   let ts ← match emitDefinition name d with
     | .ok ts => pure ts
     | .error msg => throwError m!"cannot emit {name}: {msg}"
