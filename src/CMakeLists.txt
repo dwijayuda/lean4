@@ -8,9 +8,9 @@ endif()
 include(ExternalProject)
 project(LEAN CXX C)
 set(LEAN_VERSION_MAJOR 4 CACHE STRING "")
-set(LEAN_VERSION_MINOR 35 CACHE STRING "")
+set(LEAN_VERSION_MINOR 36 CACHE STRING "")
 set(LEAN_VERSION_PATCH 0 CACHE STRING "")
-set(LEAN_VERSION_IS_RELEASE 1 CACHE STRING "") # This number is 1 in the release revision, and 0 otherwise.
+set(LEAN_VERSION_IS_RELEASE 0 CACHE STRING "") # This number is 1 in the release revision, and 0 otherwise.
 set(LEAN_SPECIAL_VERSION_DESC "" CACHE STRING "Additional version description like 'nightly-2018-03-11'")
 # project(LEAN) above implicitly creates empty LEAN_VERSION_{MAJOR,MINOR,PATCH}
 # normal variables (CMake sets <PROJECT>_VERSION_* for the project name). These
@@ -536,6 +536,11 @@ if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   set(LEAN_CXX_STDLIB "-lc++")
 endif()
 
+if(CADICAL_LIB)
+  string(APPEND TOOLCHAIN_STATIC_LINKER_FLAGS " -lcadical")
+  string(APPEND TOOLCHAIN_SHARED_LINKER_FLAGS " -lcadical")
+endif()
+
 string(APPEND TOOLCHAIN_STATIC_LINKER_FLAGS " ${LEAN_CXX_STDLIB}")
 string(APPEND TOOLCHAIN_SHARED_LINKER_FLAGS " ${LEAN_CXX_STDLIB}")
 
@@ -885,6 +890,17 @@ if(STAGE GREATER 0 AND CADICAL AND INSTALL_CADICAL)
   add_dependencies(leancpp copy-cadical)
 endif()
 
+if(CADICAL_LIB)
+  set(CADICAL_LIB_DEP "${CMAKE_BINARY_DIR}/lib/lean/libcadical.a")
+  add_custom_target(
+    copy-cadical-lib
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/lib/lean"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CADICAL_LIB}" "${CADICAL_LIB_DEP}"
+  )
+  add_dependencies(leanrt copy-cadical-lib)
+  add_dependencies(leanrt_initial-exec copy-cadical-lib)
+endif()
+
 if(LEANTAR AND INSTALL_LEANTAR)
   add_custom_target(
     copy-leantar
@@ -1063,7 +1079,7 @@ if(NOT CMAKE_SYSTEM_NAME MATCHES "Emscripten")
     PREFIX nanoda
     EXCLUDE_FROM_ALL ON
     GIT_REPOSITORY https://github.com/ammkrn/nanoda_lib
-    GIT_TAG 3a2407216ee84a75f9e1aead6803d0578be06ae7
+    GIT_TAG 4c544ed4099c8227f07d5de77ad1e69fb0740a27
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ${CARGO_BUILD_ENV} cargo build --release --locked
     BUILD_IN_SOURCE ON
@@ -1081,7 +1097,7 @@ if(NOT CMAKE_SYSTEM_NAME MATCHES "Emscripten")
     PREFIX con-leche
     EXCLUDE_FROM_ALL ON
     GIT_REPOSITORY https://github.com/leanprover/con-leche
-    GIT_TAG 67f04630d88718e81aa4d07ab64501f68f105398
+    GIT_TAG b46cb0e6138d975e657857526839a3c7d8a1df20
     CONFIGURE_COMMAND ""
     BUILD_COMMAND lake build con-leche
     BUILD_IN_SOURCE ON
@@ -1097,7 +1113,7 @@ if(NOT CMAKE_SYSTEM_NAME MATCHES "Emscripten")
     PREFIX con-ron
     EXCLUDE_FROM_ALL ON
     GIT_REPOSITORY https://github.com/leanprover/con-ron
-    GIT_TAG dd8d8218892c871276b1e569d3decbb368bba1b6
+    GIT_TAG cb54c9a4e5f604a678b0230f96b8358b9fd73c82
     GIT_SUBMODULES ""
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ${CARGO_BUILD_ENV} cargo build --release --locked
@@ -1134,7 +1150,7 @@ if(PREV_STAGE)
 endif()
 
 if(NOT CMAKE_SYSTEM_NAME MATCHES "Emscripten")
-  add_custom_target(leanir ALL DEPENDS leanshared COMMAND $(MAKE) -f ${CMAKE_BINARY_DIR}/stdlib.make leanir VERBATIM)
+  add_custom_target(leanir ALL DEPENDS leanshared initialize_minimal_shim COMMAND $(MAKE) -f ${CMAKE_BINARY_DIR}/stdlib.make leanir VERBATIM)
   add_custom_target(leanexport ALL DEPENDS leanshared COMMAND $(MAKE) -f ${CMAKE_BINARY_DIR}/stdlib.make leanexport VERBATIM)
 endif()
 

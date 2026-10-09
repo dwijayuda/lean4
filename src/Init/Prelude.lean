@@ -1374,6 +1374,14 @@ instance : Inhabited Nat where
   default := Nat.zero
 
 /--
+Load the object tag of `x` as a natural number.
+Note that if `α` is a trivial wrapper type `x` might at runtime not be of type `α` but instead be
+of a different type and that tag of that type will be loaded.
+-/
+@[extern "lean_obj_tag_nat", tagged_return]
+unsafe opaque getObjTagNat {α : Sort u} (x : @& α) : Nat
+
+/--
 The class `OfNat α n` powers the numeric literal parser. If you write
 `37 : α`, Lean will attempt to synthesize `OfNat α 37`, and will generate
 the term `(OfNat.ofNat 37 : α)`.
@@ -1817,7 +1825,7 @@ instance [HomogeneousPow α] : Pow α α where
 instance instHSMul {α β} [SMul α β] : HSMul α β β where
   hSMul := SMul.smul
 
-instance (priority := 910) {α : Type u} [Mul α] : SMul α α where
+instance (priority := 1100) {α : Type u} [Mul α] : SMul α α where
   smul x y := Mul.mul x y
 
 @[default_instance]

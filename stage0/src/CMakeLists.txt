@@ -8,9 +8,9 @@ endif()
 include(ExternalProject)
 project(LEAN CXX C)
 set(LEAN_VERSION_MAJOR 4 CACHE STRING "")
-set(LEAN_VERSION_MINOR 35 CACHE STRING "")
+set(LEAN_VERSION_MINOR 36 CACHE STRING "")
 set(LEAN_VERSION_PATCH 0 CACHE STRING "")
-set(LEAN_VERSION_IS_RELEASE 1 CACHE STRING "") # This number is 1 in the release revision, and 0 otherwise.
+set(LEAN_VERSION_IS_RELEASE 0 CACHE STRING "") # This number is 1 in the release revision, and 0 otherwise.
 set(LEAN_SPECIAL_VERSION_DESC "" CACHE STRING "Additional version description like 'nightly-2018-03-11'")
 # project(LEAN) above implicitly creates empty LEAN_VERSION_{MAJOR,MINOR,PATCH}
 # normal variables (CMake sets <PROJECT>_VERSION_* for the project name). These
@@ -536,6 +536,11 @@ if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   set(LEAN_CXX_STDLIB "-lc++")
 endif()
 
+if(CADICAL_LIB)
+  string(APPEND TOOLCHAIN_STATIC_LINKER_FLAGS " -lcadical")
+  string(APPEND TOOLCHAIN_SHARED_LINKER_FLAGS " -lcadical")
+endif()
+
 string(APPEND TOOLCHAIN_STATIC_LINKER_FLAGS " ${LEAN_CXX_STDLIB}")
 string(APPEND TOOLCHAIN_SHARED_LINKER_FLAGS " ${LEAN_CXX_STDLIB}")
 
@@ -883,6 +888,17 @@ if(STAGE GREATER 0 AND CADICAL AND INSTALL_CADICAL)
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CADICAL}" "${CMAKE_BINARY_DIR}/bin/cadical${CMAKE_EXECUTABLE_SUFFIX}"
   )
   add_dependencies(leancpp copy-cadical)
+endif()
+
+if(CADICAL_LIB)
+  set(CADICAL_LIB_DEP "${CMAKE_BINARY_DIR}/lib/lean/libcadical.a")
+  add_custom_target(
+    copy-cadical-lib
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/lib/lean"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CADICAL_LIB}" "${CADICAL_LIB_DEP}"
+  )
+  add_dependencies(leanrt copy-cadical-lib)
+  add_dependencies(leanrt_initial-exec copy-cadical-lib)
 endif()
 
 if(LEANTAR AND INSTALL_LEANTAR)
