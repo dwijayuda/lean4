@@ -4,7 +4,7 @@ Copyright (c) 2026. Released under Apache 2.0 license.
 module
 
 import Lean
-import LeanTs
+meta import LeanTs
 
 /-! Kernel-checked Lean functions and proofs, with emitted Nat-only TypeScript. -/
 
