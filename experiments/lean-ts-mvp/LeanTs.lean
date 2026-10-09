@@ -45,7 +45,7 @@ private partial def emitNat (params : Array String) (e : Expr) : Except String S
     let args := e.getAppArgs
     match fn with
     | .const name _ =>
-      if name == `.str (`.str .anonymous "OfNat") "ofNat" && args.size == 3 then
+      if name == .str (.str .anonymous "OfNat") "ofNat" && args.size == 3 then
         if args[0]!.isConstOf natName then
           match args[1]!, args[2]! with
           | .lit (.natVal n), .app (.const inst _) (.lit (.natVal m)) =>
