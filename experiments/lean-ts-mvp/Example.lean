@@ -20,8 +20,8 @@ def saturatingSub (a b : Nat) : Nat :=
 theorem increment_gt (n : Nat) : n < increment n := by
   simpa only [increment] using (Nat.lt_add_one n)
 
-theorem saturatingSub_le (a b : Nat) : saturatingSub a b ≤ a := by
-  simpa only [saturatingSub] using (Nat.sub_le a b)
+theorem square_nonneg (n : Nat) : 0 ≤ square n := by
+  exact Nat.zero_le (square n)
 
 #lean_ts_export increment
 #lean_ts_export square
