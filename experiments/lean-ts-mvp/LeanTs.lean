@@ -102,7 +102,8 @@ elab "#lean_ts_export " decl:ident : command => do
     | .error msg => throwError m!"cannot emit {name}: {msg}"
   let .str .anonymous label := name
     | throwError "only top-level names can be exported"
-  liftIO <| IO.FS.createDirAll "generated"
-  liftIO <| IO.FS.writeFile ("generated/" ++ label ++ ".ts") ts
+  liftIO <| IO.println s!"@@LEAN_TS_BEGIN:{label}@@"
+  liftIO <| IO.println ts
+  liftIO <| IO.println s!"@@LEAN_TS_END:{label}@@"
 
 end LeanTs
