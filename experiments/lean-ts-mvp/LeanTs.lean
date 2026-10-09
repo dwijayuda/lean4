@@ -46,15 +46,11 @@ private partial def emitNat (params : Array String) (e : Expr) : Except String S
     match fn with
     | .const name _ =>
       if name == .str (.str .anonymous "OfNat") "ofNat" && args.size == 3 then
-        if args[0]!.isConstOf natName && args[2]! == mkInstOfNatNat args[1]! then
+        if args[2]! == mkInstOfNatNat args[1]! then
           match args[1]!.consumeMData with
           | .lit (.natVal n) => return s!"{n}n"
           | _ => pure ()
-        let raw := match args[1]!.consumeMData with
-          | .lit (.natVal _) => true
-          | _ => false
-        let matchInst := args[2]! == mkInstOfNatNat args[1]!
-        throw s!"unsupported OfNat instance or numeral expression: natTy={args[0]!.isConstOf natName}, raw={raw}, canonicalInst={matchInst}, inst={args[2]!}, n={args[1]!}"
+        throw "unsupported OfNat instance or numeral expression"
       if name == natOp "add" && args.size == 2 then
         return s!"({← emitNat params args[0]!} + {← emitNat params args[1]!})"
       if name == natOp "mul" && args.size == 2 then
