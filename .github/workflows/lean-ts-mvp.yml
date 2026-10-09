@@ -20,6 +20,10 @@ jobs:
         working-directory: experiments/lean-ts-mvp
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            experiments/lean-ts-mvp
+          sparse-checkout-cone-mode: true
       - uses: leanprover/lean-action@v1
         with:
           lake-package-directory: experiments/lean-ts-mvp
