@@ -122,11 +122,26 @@ private partial def groupedApplicationArg (s : Syntax) : Bool :=
   else
     false
 
+/-- Determine only the first (outer) syntax sequence, not nested tactic branches.
+The native Lean parser emits distinct nodes for braced and indented sequences. -/
+private partial def firstSeqIsBraced (s : Syntax) (braced indented : Name) : Option Bool :=
+  if s.getKind == braced then some true
+  else if s.getKind == indented then some false
+  else s.getArgs.toList.findSome? fun arg => firstSeqIsBraced arg braced indented
+
 private partial def forbiddenSyntax (s : Syntax) : Option String :=
   match s with
   | .node _ kind args =>
     let k := kind.toString
-    if kind == ``Lean.Parser.Term.match then
+    if kind == ``Lean.Parser.Term.byTactic &&
+        firstSeqIsBraced s ``Lean.Parser.Tactic.tacticSeqBracketed
+          ``Lean.Parser.Tactic.tacticSeq1Indented != some true then
+      some "PSCV0-BY: source tactic proofs must use by { ... }"
+    else if kind == ``Lean.Parser.Term.do &&
+        firstSeqIsBraced s ``Lean.Parser.Term.doSeqBracketed
+          ``Lean.Parser.Term.doSeqIndent != some true then
+      some "PSCV0-DO: source monadic blocks must use do { ... }"
+    else if kind == ``Lean.Parser.Term.match then
       some "PSCV0-MATCH: native unbraced match is not a valid .ps term; use match ... with { ... }"
     else if kind == ``Lean.Parser.Term.app && s[1].getArgs.any groupedApplicationArg then
       some "PSCV0-APP-02: spaced parenthesized application is forbidden; use f(x) or f((x, y))"
