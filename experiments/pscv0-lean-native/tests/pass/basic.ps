@@ -1,0 +1,12 @@
+const answer: Nat := 42
+function add(x: Nat, y: Nat): Nat := { x + y }
+function clock(): Nat := 42
+theorem addZero(n: Nat): add(n, 0) = n := by { simp [add] }
+theorem twoGoals(P: Prop, Q: Prop, hp: P, hq: Q): P ∧ Q := by {
+  constructor
+  · exact hp
+  · exact hq
+}
+#check add(20, 22)
+#check clock()
+#check (Nat.add 1 2)

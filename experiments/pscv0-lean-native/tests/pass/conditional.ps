@@ -1,0 +1,6 @@
+function choose(n: Nat): Nat := {
+  if (n == 0) { 1 } else { n }
+}
+theorem chooseNonnegative(n: Nat): 0 ≤ choose(n) := by {
+  exact Nat.zero_le(choose(n))
+}

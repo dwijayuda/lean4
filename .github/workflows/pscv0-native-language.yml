@@ -1,0 +1,66 @@
+name: PSCV0 Lean 4.35 native language
+
+on:
+  push:
+    branches: [experiment/pscv0-native-language-rc4]
+    paths:
+      - experiments/pscv0-lean-native/**
+      - .github/workflows/pscv0-native-language.yml
+  pull_request:
+    paths:
+      - experiments/pscv0-lean-native/**
+      - .github/workflows/pscv0-native-language.yml
+  workflow_dispatch:
+
+jobs:
+  pscv0-native:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: experiments/pscv0-lean-native
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/pscv0-lean-native
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: experiments/pscv0-lean-native
+          auto-config: false
+          build: true
+          use-github-cache: false
+      - name: Build native ProofScript frontend
+        run: |
+          set -euo pipefail
+          lake build PSCVL psc
+          lake env lean --version
+      - name: Check ProofScript source and Lean proofs
+        run: |
+          set -euo pipefail
+          for file in tests/pass/*.ps; do
+            echo "PSCV0_ACCEPT:$file"
+            lake exe psc check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
+            grep -q UNCERTIFIED accepted.log
+          done
+      - name: Reject invalid source and proof terms
+        run: |
+          set -euo pipefail
+          for file in tests/fail/*.ps; do
+            echo "PSCV0_REJECT:$file"
+            if lake exe psc check "$file" > rejected.log 2>&1; then
+              cat rejected.log
+              echo "invalid PSCV0 source accepted: $file"
+              exit 1
+            fi
+          done
+      - name: Compile checked PSCV0 to Lean native executable
+        run: |
+          set -euo pipefail
+          lake exe psc build tests/pass/native_math.ps NativeMath build/native
+          test -s build/native/NativeMath.olean
+          test -s build/native/NativeMath.c
+          LAKE_PATH="$(lake env printenv LEAN_PATH)"
+          LEAN_PATH="$PWD/build/native:$LAKE_PATH" lake env lean -c build/native/NativeHarness.c -o build/native/NativeHarness.olean tests/NativeHarness.lean
+          lake env leanc -o build/native/pscv-native build/native/NativeMath.c build/native/NativeHarness.c
+          build/native/pscv-native | grep -F PSCV0_NATIVE_OK
