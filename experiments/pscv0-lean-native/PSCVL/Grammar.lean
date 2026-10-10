@@ -127,7 +127,9 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
   match s with
   | .node _ kind args =>
     let k := kind.toString
-    if kind == ``Lean.Parser.Term.app && s[1].getArgs.any groupedApplicationArg then
+    if kind == ``Lean.Parser.Term.match then
+      some "PSCV0-MATCH: native unbraced match is not a valid .ps term; use match ... with { ... }"
+    else if kind == ``Lean.Parser.Term.app && s[1].getArgs.any groupedApplicationArg then
       some "PSCV0-APP-02: spaced parenthesized application is forbidden; use f(x) or f((x, y))"
     else if k == "Lean.Parser.Term.runTactic" || k == "Lean.Parser.Tactic.runTac"
         || k == "Lean.Parser.Term.runTactic" then

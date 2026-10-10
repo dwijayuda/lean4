@@ -124,6 +124,18 @@ macro_rules
       app ← `($app:term $arg:term)
     return app
 
+
+/-- PSCV0 matches use a braced alternative sequence while keeping Lean's
+native discriminants, pattern elaborator, motive inference, and exhaustiveness. -/
+syntax (name := pscvBracedMatch)
+  "match " matchDiscr,+ " with " "{" matchAltExpr+ "}" : term
+
+macro_rules (kind := pscvBracedMatch)
+  | `(match $discrs:matchDiscr,* with { $alts:matchAltExpr* }) => do
+    let native : Array (TSyntax ``Lean.Parser.Term.matchAlt) :=
+      alts.map fun alt => ⟨alt.raw⟩
+    `(match $discrs:matchDiscr,* with $native:matchAlt*)
+
 /-- PSCV pure conditional with explicit grouping and braces. It lowers to
 Lean's ordinary typed `if`, and retains proof obligations. -/
 syntax (name := pscvBracedIf)
