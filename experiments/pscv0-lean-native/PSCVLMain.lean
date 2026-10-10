@@ -57,6 +57,8 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   let src := "import PSCVL.Policy\n" ++ raw ++ "\n\n#pscv_gate\n"
   let out := System.FilePath.mk outputDir
   IO.FS.createDirAll out
+  -- The preceding in-process check consumes the importer initialization flag.
+  unsafe enableInitializersExecution
   let moduleId := Name.mkSimple moduleName
   let oleanPath := out / s!"{moduleName}.olean"
   let cPath := out / s!"{moduleName}.c"
