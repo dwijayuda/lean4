@@ -11,6 +11,8 @@ keywords resemble facilities from the normative PSCV language reference.
 open Lean
 open Lean.Parser.Term
 open Lean.Parser.Command
+open Lean.Elab.Term
+open Lean.Meta
 
 namespace PSCVL
 
@@ -113,17 +115,45 @@ macro_rules
         requires $pre:term
         ensures $rv:ident => $post:term := $body:term)
 
+/-- Empty source calls use Lean's own optional-argument elaboration. A source
+nullary function is a required Unit binder, not a second function type. -/
+syntax:max (name := pscvEmptyCall) term:max noWs "(" ")" : term
+
+@[term_elab pscvEmptyCall]
+def elabPscvEmptyCall : TermElab := fun stx expectedType? => do
+  let `(pscvEmptyCall| $f:term()) := stx | throwUnsupportedSyntax
+  let fn ← elabTerm f none
+  let applied ← elabAppArgs fn #[] #[] expectedType? false false
+  let restType ← whnf (← inferType applied)
+  match restType with
+  | .forallE binderName domain _ binderInfo =>
+    unless binderInfo.isExplicit do
+      throwError "PSCV0-CALL-EMPTY: unresolved implicit argument"
+    let domain ← instantiateMVars domain
+    if domain.hasMVar || !(← isDefEq domain (mkConst `Unit)) then
+      throwError "PSCV0-CALL-EMPTY: unresolved required non-Unit argument"
+    let unitValue ← elabTerm (← `(term| ())) (some domain)
+    let completed := mkApp applied unitValue
+    let remaining ← whnf (← inferType completed)
+    if binderName != \`_unit then
+      match remaining with
+      | .forallE nextName _ _ nextInfo =>
+        if nextInfo.isExplicit && !nextName.isAnonymous then
+          throwError "PSCV0-CALL-EMPTY: more than one required argument"
+      | _ => pure ()
+    return completed
+  | _ =>
+    return applied
+
 /-- PSCV0 comma applications are curried Lean applications. Named arguments are
 native Lean binder names and must follow all source positional arguments. -/
 declare_syntax_cat pscvCallArg
 syntax ident " := " term : pscvCallArg
 syntax term : pscvCallArg
-syntax:max (name := pscvCall) term:max noWs "(" pscvCallArg,* ")" : term
+syntax:max (name := pscvCall) term:max noWs "(" pscvCallArg,+ ")" : term
 
 macro_rules (kind := pscvCall)
   | `($f:term($[$args:pscvCallArg],*)) => do
-    if args.isEmpty then
-      return (← `($f:term ()))
     let mut parsedArgs : Array Syntax := #[]
     let mut seenNamed := false
     let mut used : Array Name := #[]
