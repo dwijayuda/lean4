@@ -1,0 +1,13 @@
+structure Key where {
+  value: Nat
+} deriving Repr, BEq
+
+inductive Signal where {
+  | good(value: Nat) : Signal
+  | bad : Signal
+} deriving Repr, BEq
+
+const key: Key := { value := 42 }
+#check reprStr(key)
+#check key == key
+#check (Signal.good 7)
