@@ -10,10 +10,10 @@ The headless profile includes:
 - Compiled LeanTs plugin artifacts, so downstream users can import LeanTs.
 - Runtime support shared libraries, licenses, relocatable bin/lean-ts-lean script.
 
-The package omits Lake, leanc, Clang, LLVM, static .a archives, C headers, Lean
-sources, editor .ilean files, private
-olean payloads. Lean 4.35 also requires .olean.server for ordinary imports. Removal of .olean.private and .ir is an experimentally testable
-claim, not an assumption that every Lean feature works.
+The package omits Lake, leanc, Clang, LLVM, static libraries, headers,
+compiler sources and editor .ilean data. Lean RC4 also requires .olean.server
+and .olean.private files during this tested import path, so headless retains
+both. No-IR and no-private profiles are only experimental.
 
 From experiments/lean-ts-mvp with elan and Node.js installed:
 

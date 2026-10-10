@@ -19,7 +19,7 @@ def retain(filename, profile):
     return (filename.endswith(".olean")
             or (profile != "no-ir" and (filename.endswith(".ir") or filename.endswith(".ir.sig")))
             or filename.endswith(".olean.server")
-            or (profile == "with-private" and filename.endswith(".olean.private")))
+            or (profile != "no-private" and filename.endswith(".olean.private")))
 
 def copy(src, dest):
     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -28,7 +28,7 @@ def copy(src, dest):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--mode", choices=["headless", "no-ir", "with-private"], default="headless")
+    parser.add_argument("--mode", choices=["headless", "no-ir", "no-private"], default="headless")
     parser.add_argument("--no-archive", action="store_true")
     args = parser.parse_args()
     if platform.system() != "Linux" or platform.machine() != "x86_64":
