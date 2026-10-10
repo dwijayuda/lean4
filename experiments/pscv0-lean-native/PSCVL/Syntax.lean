@@ -179,7 +179,7 @@ syntax (name := pscvBracedStructureDeriving)
   "structure " ident " where " "{" structFields "}" " deriving " pscvDeriver,+ : command
 
 macro_rules (kind := pscvBracedStructureDeriving)
-  | `(structure $s:ident where { $fields:structFields } deriving $ds:pscvDeriver,*) => do
+  | `(structure $s:ident where { $fields:structFields } deriving $ds:pscvDeriver,+) => do
     let names ← ds.mapM pscvDeriverIdent
     `(structure $s:ident where
       $fields:structFields
@@ -189,7 +189,7 @@ syntax (name := pscvBracedInductiveDeriving)
   "inductive " ident " where " "{" pscvConstructor+ "}" " deriving " pscvDeriver,+ : command
 
 macro_rules (kind := pscvBracedInductiveDeriving)
-  | `(inductive $s:ident where { $ctors:pscvConstructor* } deriving $ds:pscvDeriver,*) => do
+  | `(inductive $s:ident where { $ctors:pscvConstructor* } deriving $ds:pscvDeriver,+) => do
     let mut native : Array (TSyntax ``Lean.Parser.Command.ctor) := #[]
     for c in ctors do
       match c with
