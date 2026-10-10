@@ -1,0 +1,9 @@
+function greet(name: String := "world"): String := name
+function tick(): Nat := 42
+function oneUnit(u: Unit): Nat := 17
+theorem greeting: greet() = "world" := by { rfl }
+theorem tickResult: tick() = 42 := by { rfl }
+theorem unitResult: oneUnit() = 17 := by { rfl }
+#check greet()
+#check tick()
+#check oneUnit()
