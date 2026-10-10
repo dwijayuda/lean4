@@ -1,5 +1,6 @@
 import Lean
 import Lean.Elab.Frontend
+import Lean.Elab.Import
 import Lean.Compiler.LCNF.EmitC
 import PSCVL.Grammar
 import PSCVL.Policy
@@ -32,7 +33,10 @@ private def approvedSource (src filename : String) :
   for imported in imports do
     unless imported.module == `Std && !imported.isMeta && !imported.importAll do
       return .error s!"unapproved PSCV0 imported module: {imported.module}"
-  return .ok (imports, (src.sliceFrom state.pos).copy)
+  let bytes := src.toByteArray.extract state.pos.byteIdx src.utf8ByteSize
+  let some body := bytes.utf8Decode?
+    | return .error "invalid UTF-8 boundary at PSCV0 import header"
+  return .ok (imports, body)
 
 private def checkFile (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
