@@ -2,7 +2,7 @@ function choose(n: Nat): Nat := {
   if (n == 0) { 1 } else { n }
 }
 theorem nonnegative(n: Nat): 0 ≤ choose(n) := by {
-  exact Nat.zero_le (choose n)
+  exact Nat.zero_le(choose(n))
 }
 
 #check choose(7)
