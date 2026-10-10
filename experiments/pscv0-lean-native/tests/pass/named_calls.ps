@@ -1,0 +1,5 @@
+function combine(first: Nat, second: Nat := 2): Nat := first * second
+theorem namedResult: combine(3, second := 4) = 12 := by { rfl }
+theorem allNamed: combine(first := 3, second := 4) = 12 := by { rfl }
+#check combine(9, second := 5)
+#check combine(first := 3, second := 6)
