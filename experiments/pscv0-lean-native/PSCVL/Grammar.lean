@@ -33,7 +33,9 @@ private partial def attributeIdentifiers (s : Syntax) : List Name :=
   | .node _ _ args => args.toList.flatMap attributeIdentifiers
   | _ => []
 
-private def rejectAttributes (s : Syntax) : Option String := Id.run do
+private partial def rejectAttributes (s : Syntax) : Option String := Id.run do
+  if s.isOfKind choiceKind then
+    return s.getArgs.toList.findSome? rejectAttributes
   unless s.getKind.toString == "Lean.Parser.Command.declaration" do
     return none
   -- declaration[0] is declModifiers; its optional attribute block is field 1.
@@ -50,7 +52,9 @@ private def rejectAttributes (s : Syntax) : Option String := Id.run do
 private partial def allowedCommand (s : Syntax) : Bool :=
   let k := s.getKind.toString
   if s.isOfKind choiceKind then
-    s.getArgs.all allowedCommand
+    -- One selected PSCV0 parser alternative is sufficient; reject all candidates
+    -- below unless at least one belongs to the explicitly accepted grammar.
+    s.getArgs.any allowedCommand
   else if k == "Lean.Parser.Command.declaration" then
     allowedDeclarationKind s[1].getKind.toString
   else
