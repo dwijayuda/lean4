@@ -109,11 +109,24 @@ private partial def forbiddenLoop (s : Syntax) : Option String :=
       args.toList.findSome? forbiddenLoop
   | _ => none
 
+/-- Forbid Lean's spaced grouped operands at application positions only.
+    Other term-start parentheses and native binder syntax stay valid. -/
+private partial def groupedApplicationArg (s : Syntax) : Bool :=
+  if s.isOfKind ``Lean.Parser.Term.paren ||
+     s.isOfKind ``Lean.Parser.Term.namedArgument then
+    true
+  else if s.getKind == nullKind then
+    s.getArgs.any groupedApplicationArg
+  else
+    false
+
 private partial def forbiddenSyntax (s : Syntax) : Option String :=
   match s with
   | .node _ kind args =>
     let k := kind.toString
-    if k == "Lean.Parser.Term.runTactic" || k == "Lean.Parser.Tactic.runTac"
+    if kind == ``Lean.Parser.Term.app && s[1].getArgs.any groupedApplicationArg then
+      some "PSCV0-APP-02: spaced parenthesized application is forbidden; use f(x) or f((x, y))"
+    else if k == "Lean.Parser.Term.runTactic" || k == "Lean.Parser.Tactic.runTac"
         || k == "Lean.Parser.Term.runTactic" then
       some s!"untrusted metaprogramming syntax `{k}`"
     else
