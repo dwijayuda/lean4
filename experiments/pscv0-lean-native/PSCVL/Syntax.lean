@@ -236,7 +236,7 @@ syntax (name := pscvBracedIfLet)
   "if " "let " term " := " term "{" term "}" "else" "{" term "}" : term
 
 macro_rules (kind := pscvBracedIfLet)
-  | `(if let $pat:term := $discr:term { $success:term } else { $failure:term }) =>
+  | `(pscvBracedIfLet| if let $pat:term := $discr:term { $success:term } else { $failure:term }) =>
     `(if let $pat:term := $discr:term then $success:term else $failure:term)
 
 /-- A one-term braced body is grouping, not a record/object literal. -/
