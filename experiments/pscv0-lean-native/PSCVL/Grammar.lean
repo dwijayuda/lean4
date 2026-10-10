@@ -21,9 +21,6 @@ private def allowedDeclarationKind (kind : String) : Bool :=
     "Lean.Parser.Command.example",
     "Lean.Parser.Command.abbrev",
     "Lean.Parser.Command.opaque",
-    "Lean.Parser.Command.structure",
-    "Lean.Parser.Command.classInductive",
-    "Lean.Parser.Command.inductive",
     "Lean.Parser.Command.instance"
   ] : List String).contains kind
 
@@ -60,7 +57,7 @@ private partial def allowedCommand (s : Syntax) : Bool :=
     ([
       "PSCVL.pscvConst", "PSCVL.pscvConstInferred",
       "PSCVL.pscvFunction", "PSCVL.pscvImplicitFunction", "PSCVL.pscvTheorem",
-      "PSCVL.pscvDefinition",
+      "PSCVL.pscvDefinition", "PSCVL.pscvBracedStructure", "PSCVL.pscvBracedInductive",
       "PSCVL.pscvFunctionContract", "PSCVL.pscvFunctionEnsures", "PSCVL.pscvFunctionRequires",
       
       "Lean.Parser.Command.namespace", "Lean.Parser.Command.section",

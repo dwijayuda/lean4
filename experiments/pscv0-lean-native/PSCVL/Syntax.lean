@@ -10,6 +10,7 @@ keywords resemble facilities from the normative PSCV language reference.
 
 open Lean
 open Lean.Parser.Term
+open Lean.Parser.Command
 
 namespace PSCVL
 
@@ -125,6 +126,46 @@ macro_rules
       app ← `($app:term $arg:term)
     return app
 
+
+
+/-- PSCV0 structure field sequences are line separated and Lean checked. -/
+declare_syntax_cat pscvStructField
+syntax ident ":" term : pscvStructField
+
+syntax (name := pscvBracedStructure)
+  "structure " ident " where " "{" pscvStructField+ "}" : command
+
+macro_rules (kind := pscvBracedStructure)
+  | `(structure $s:ident where { $fs:pscvStructField* }) => do
+    let mut native : Array (TSyntax ``Lean.Parser.Command.structExplicitBinder) := #[]
+    for f in fs do
+      match f with
+      | `(pscvStructField| $n:ident : $t:term) =>
+        native := native.push (← `(structExplicitBinder| ($n:ident : $t:term)))
+      | _ => Macro.throwUnsupported
+    let fields ← `(structFields| $native*)
+    `(structure $s:ident where $fields:structFields)
+
+/-- PSCV0 constructors preserve Lean's original positivity and recursor rules. -/
+declare_syntax_cat pscvConstructor
+syntax "| " ident ":" term : pscvConstructor
+syntax "| " ident "(" pscvBinder,* ")" ":" term : pscvConstructor
+
+syntax (name := pscvBracedInductive)
+  "inductive " ident " where " "{" pscvConstructor+ "}" : command
+
+macro_rules (kind := pscvBracedInductive)
+  | `(inductive $s:ident where { $ctors:pscvConstructor* }) => do
+    let mut native : Array (TSyntax ``Lean.Parser.Command.ctor) := #[]
+    for c in ctors do
+      match c with
+      | `(pscvConstructor| | $ctor:ident : $ty:term) =>
+        native := native.push (← `(ctor| | $ctor:ident : $ty:term))
+      | `(pscvConstructor| | $ctor:ident ($[$bs:pscvBinder],*) : $ty:term) =>
+        let bs ← explicitLeanBinders bs
+        native := native.push (← `(ctor| | $ctor:ident $bs* : $ty:term))
+      | _ => Macro.throwUnsupported
+    `(inductive $s:ident where $native:ctor*)
 
 /-- PSCV0 matches use a braced alternative sequence while keeping Lean's
 native discriminants, pattern elaborator, motive inference, and exhaustiveness. -/
