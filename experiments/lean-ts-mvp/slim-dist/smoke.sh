@@ -10,6 +10,7 @@ run_slim() {
     "$DIST/bin/lean" "$@"
 }
 run_slim --version
+"$DIST/bin/lean-ts-lean" --version
 if ! run_slim slim-dist/Smoke.lean > slim-smoke.log 2>&1; then
   cat slim-smoke.log
   exit 1
