@@ -301,6 +301,14 @@ macro_rules
   | `(if ($condition:term) { $onTrue:term } else { $onFalse:term }) =>
     `(if $condition then $onTrue else $onFalse)
 
+/-- Dependent if-binders use Lean's native proposition and branch hypotheses. -/
+syntax (name := pscvBracedDependentIf)
+  "if" "(" ident ":" term ")" "{" term "}" "else" "{" term "}" : term
+
+macro_rules (kind := pscvBracedDependentIf)
+  | `(if ($h:ident : $p:term) { $yes:term } else { $no:term }) =>
+    `(if $h:ident : $p:term then $yes:term else $no:term)
+
 /-- Pattern-binding conditional lowers to Lean's exhaustive match. -/
 syntax (name := pscvBracedIfLet)
   "if " "let " term " := " term:max "{" term "}" "else" "{" term "}" : term

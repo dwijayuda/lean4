@@ -1,0 +1,8 @@
+function two(x: Nat, y: Nat): Nat := x + y
+function pair(p: Nat × Nat): Nat := p.1 + p.2
+function identityUnit(u: Unit): Unit := u
+theorem separateArgs: two(1, 2) = two 1 2 := by { rfl }
+theorem tupleArg: pair((1, 2)) = 3 := by { rfl }
+theorem unitArg: identityUnit(()) = () := by { rfl }
+#check (two 1 2)
+#check pair((1, 2))
