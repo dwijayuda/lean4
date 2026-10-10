@@ -1,0 +1,102 @@
+name: PSCV0 Lean 4.35 frontend MVP
+
+on:
+  push:
+    branches:
+      - experiment/pscv0-lean435-frontend-mvp
+    paths:
+      - experiments/lean-ts-mvp/**
+      - .github/workflows/pscv0-lean435-frontend-mvp.yml
+  pull_request:
+    paths:
+      - experiments/lean-ts-mvp/PSCVL/**
+      - experiments/lean-ts-mvp/PSCVL.lean
+      - experiments/lean-ts-mvp/PSCVLMain.lean
+      - experiments/lean-ts-mvp/pscv0-tests/**
+      - experiments/lean-ts-mvp/lakefile.toml
+      - .github/workflows/pscv0-lean435-frontend-mvp.yml
+  workflow_dispatch:
+
+jobs:
+  pscv0-mvp:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: experiments/lean-ts-mvp
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/lean-ts-mvp
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: experiments/lean-ts-mvp
+          auto-config: false
+          build: true
+          use-github-cache: false
+      - name: Compile copied and adapted PSCV0 frontend
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build PSCVL pscv0
+      - name: Check positive PSCV0 surface and Lean proofs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in pscv0-tests/pass_*.ps; do
+            echo "Accepting $file"
+            lake exe pscv0 check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
+            cat accepted.log
+            grep -q "UNCERTIFIED" accepted.log
+          done
+      - name: Reject invalid PSCV0 syntax and proofs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in pscv0-tests/fail_*.ps; do
+            echo "Rejecting $file"
+            if lake exe pscv0 check "$file" > rejected.log 2>&1; then
+              cat rejected.log
+              echo "ERROR: invalid PSCV0 source accepted: $file"
+              exit 1
+            fi
+          done
+          if lake exe pscv0 check pscv0-tests/fail_gap_call.ps > rejected.log 2>&1; then
+            exit 1
+          fi
+          cat rejected.log
+          grep -q 'PSCV0-APP-02' rejected.log
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regression - independent Lean to TypeScript 7 pipeline
+        run: |
+          set -euo pipefail
+          lake env lean Example.lean > lean-emit.log
+          node publish.mjs lean-emit.log
+          npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+          test "$(node -p 'require("./node_modules/typescript/package.json").version')" = "7.0.2"
+          npm run build
+          npm test
+      - name: Package ProofScript frontend with standalone slim Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 slim-dist/build_slim.py --output slim-dist-output/lean-pscv0 --mode headless
+          bash slim-dist/smoke.sh slim-dist-output/lean-pscv0 pscv0
+          test -x slim-dist-output/lean-pscv0/bin/pscv0
+          mkdir -p slim-dist-output/extracted
+          tar --zstd -xf slim-dist-output/lean-pscv0.tar.zst -C slim-dist-output/extracted
+          bash slim-dist/smoke.sh slim-dist-output/extracted/lean-pscv0 relocated
+          cat slim-dist-output/lean-pscv0-sizes.json
+      - name: Upload PSCV0 headless proof host
+        uses: actions/upload-artifact@v4
+        with:
+          name: pscv0-frontend-lean435-rc4-linux-x86_64
+          path: |
+            experiments/lean-ts-mvp/slim-dist-output/lean-pscv0.tar.zst
+            experiments/lean-ts-mvp/slim-dist-output/lean-pscv0-sizes.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
