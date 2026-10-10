@@ -124,23 +124,26 @@ macro_rules (kind := pscvCall)
   | `($f:term($[$args:pscvCallArg],*)) => do
     if args.isEmpty then
       return (← `($f:term ()))
-    let mut app := f
+    let mut parsedArgs : Array Syntax := #[]
     let mut seenNamed := false
     let mut used : Array Name := #[]
     for arg in args do
       match arg with
       | `(pscvCallArg| $n:ident := $v:term) =>
         if used.contains n.getId then
-          Macro.throwError "PSCV0-CALL-NAMED: duplicate named argument '{n.getId}'"
+          Macro.throwError "PSCV0-CALL-NAMED: duplicate argument name"
         seenNamed := true
         used := used.push n.getId
-        app ← `($app:term ($n:ident := $v:term))
+        let named ← `(Lean.Parser.Term.namedArgument| ($n:ident := $v:term))
+        parsedArgs := parsedArgs.push named.raw
       | `(pscvCallArg| $v:term) =>
         if seenNamed then
           Macro.throwError "PSCV0-CALL-ORDER: positional arguments cannot follow named arguments"
-        app ← `($app:term $v:term)
+        parsedArgs := parsedArgs.push v.raw
       | _ => Macro.throwUnsupported
-    return app
+    -- A single Lean application node keeps defaults and named arguments in the
+    -- same elaboration pass, rather than prematurely applying partial calls.
+    return ⟨Syntax.mkApp f.raw parsedArgs⟩
 
 /-- Use the native Lean structure-field parser inside PSCV0 braces. -/
 syntax (name := pscvBracedStructure)
