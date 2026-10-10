@@ -157,6 +157,53 @@ macro_rules (kind := pscvBracedInductive)
       | _ => Macro.throwUnsupported
     `(inductive $s:ident where $native:ctor*)
 
+
+/-- Deriving is restricted to the selected Lean RC4 handlers. -/
+declare_syntax_cat pscvDeriver
+syntax "Repr" : pscvDeriver
+syntax "BEq" : pscvDeriver
+syntax "DecidableEq" : pscvDeriver
+syntax "Inhabited" : pscvDeriver
+syntax "Hashable" : pscvDeriver
+
+private def pscvDeriverIdent (d : TSyntax `pscvDeriver) : MacroM Ident := do
+  match d with
+  | `(pscvDeriver| Repr) => pure <| mkIdent `Repr
+  | `(pscvDeriver| BEq) => pure <| mkIdent `BEq
+  | `(pscvDeriver| DecidableEq) => pure <| mkIdent `DecidableEq
+  | `(pscvDeriver| Inhabited) => pure <| mkIdent `Inhabited
+  | `(pscvDeriver| Hashable) => pure <| mkIdent `Hashable
+  | _ => Macro.throwUnsupported
+
+syntax (name := pscvBracedStructureDeriving)
+  "structure " ident " where " "{" structFields "}" " deriving " pscvDeriver,+ : command
+
+macro_rules (kind := pscvBracedStructureDeriving)
+  | `(structure $s:ident where { $fields:structFields } deriving $ds:pscvDeriver,*) => do
+    let names ← ds.mapM pscvDeriverIdent
+    `(structure $s:ident where
+      $fields:structFields
+      deriving $names:ident,*)
+
+syntax (name := pscvBracedInductiveDeriving)
+  "inductive " ident " where " "{" pscvConstructor+ "}" " deriving " pscvDeriver,+ : command
+
+macro_rules (kind := pscvBracedInductiveDeriving)
+  | `(inductive $s:ident where { $ctors:pscvConstructor* } deriving $ds:pscvDeriver,*) => do
+    let mut native : Array (TSyntax ``Lean.Parser.Command.ctor) := #[]
+    for c in ctors do
+      match c with
+      | `(pscvConstructor| | $ctor:ident : $ty:term) =>
+        native := native.push (← `(ctor| | $ctor:ident : $ty:term))
+      | `(pscvConstructor| | $ctor:ident ($[$bs:pscvBinder],*) : $ty:term) =>
+        let bs ← explicitLeanBinders bs
+        native := native.push (← `(ctor| | $ctor:ident $bs* : $ty:term))
+      | _ => Macro.throwUnsupported
+    let names ← ds.mapM pscvDeriverIdent
+    `(inductive $s:ident where
+      $native:ctor*
+      deriving $names:ident,*)
+
 /-- PSCV0 matches use a braced alternative sequence while keeping Lean's
 native discriminants, pattern elaborator, motive inference, and exhaustiveness. -/
 declare_syntax_cat pscvMatchAlt

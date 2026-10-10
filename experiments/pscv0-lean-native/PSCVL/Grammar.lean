@@ -58,6 +58,7 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "PSCVL.pscvConst", "PSCVL.pscvConstInferred",
       "PSCVL.pscvFunction", "PSCVL.pscvImplicitFunction", "PSCVL.pscvTheorem",
       "PSCVL.pscvDefinition", "PSCVL.pscvBracedStructure", "PSCVL.pscvBracedInductive",
+      "PSCVL.pscvBracedStructureDeriving", "PSCVL.pscvBracedInductiveDeriving",
       "PSCVL.pscvFunctionContract", "PSCVL.pscvFunctionEnsures", "PSCVL.pscvFunctionRequires",
       
       "Lean.Parser.Command.namespace", "Lean.Parser.Command.section",
@@ -142,7 +143,7 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
     else if (["run_tac", "native_decide", "sorry", "unsafe", "partial",
          "macro", "macro_rules", "elab", "initialize", "set_option",
          "syntax", "declare_syntax_cat", "implemented_by", "extern",
-         "run_cmd", "deriving", "scoped", "assert!"] : List String).contains value then
+         "run_cmd", "scoped", "assert!"] : List String).contains value then
       some s!"forbidden PSCV source token `{value}`"
     else none
   | _ => none
