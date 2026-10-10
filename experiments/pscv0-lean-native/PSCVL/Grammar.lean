@@ -171,7 +171,7 @@ def auditSourceSyntax (source fileName : String) (env : Environment)
         { env := env, options := opts, currNamespace := .anonymous, openDecls := [] }
         parserState messages
     if nextMessages.hasErrors then
-      return .error "Lean parser rejected source before PSCV elaboration"
+      return .error s!"Lean parser rejected source at input bytes {parserState.pos}..{next.pos}, syntax kind {stx.getKind}"
     if stx.isOfKind ``Parser.Command.eoi then
       return .ok encountered
     if Parser.isTerminalCommand stx then
