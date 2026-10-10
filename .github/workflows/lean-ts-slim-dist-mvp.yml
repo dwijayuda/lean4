@@ -1,0 +1,69 @@
+name: Lean TS slim distribution experiment
+
+on:
+  push:
+    branches: [experiment/lean-ts7-slim-dist-mvp]
+    paths:
+      - experiments/lean-ts-mvp/**
+      - .github/workflows/lean-ts-slim-dist-mvp.yml
+  workflow_dispatch:
+
+jobs:
+  slim-dist:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: experiments/lean-ts-mvp
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/lean-ts-mvp
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: experiments/lean-ts-mvp
+          auto-config: false
+          build: true
+          use-github-cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Prepare TypeScript 7
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+          test "$(node -p 'require("./node_modules/typescript/package.json").version')" = "7.0.2"
+      - name: Build and test independently copied Lean host
+        shell: bash
+        run: |
+          set -euo pipefail
+          zstd --version
+          python3 slim-dist/build_slim.py --output slim-dist-output/lean-ts-headless --mode headless
+          bash slim-dist/smoke.sh slim-dist-output/lean-ts-headless headless
+          mkdir -p slim-dist-output/extracted
+          tar --zstd -xf slim-dist-output/lean-ts-headless.tar.zst -C slim-dist-output/extracted
+          bash slim-dist/smoke.sh slim-dist-output/extracted/lean-ts-headless relocated
+          cat slim-dist-output/lean-ts-headless-sizes.json
+      - name: Prove no-IR candidate still fails the compatibility smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 slim-dist/build_slim.py --output slim-dist-output/lean-ts-no-ir --mode no-ir --no-archive
+          if bash slim-dist/smoke.sh slim-dist-output/lean-ts-no-ir no-ir > no-ir-failure.log 2>&1; then
+            echo "Unexpected success of IR-free variant: review the contract"
+            exit 1
+          fi
+          cat no-ir-failure.log
+          grep -q 'missing data file for module' no-ir-failure.log
+      - name: Upload tested standalone distribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-ts-headless-4.35.0-rc4-linux-x86_64
+          path: |
+            experiments/lean-ts-mvp/slim-dist-output/lean-ts-headless.tar.zst
+            experiments/lean-ts-mvp/slim-dist-output/lean-ts-headless-sizes.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
