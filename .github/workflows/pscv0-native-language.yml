@@ -62,5 +62,7 @@ jobs:
           test -s build/native/NativeMath.c
           LAKE_PATH="$(lake env printenv LEAN_PATH)"
           LEAN_PATH="$PWD/build/native:$LAKE_PATH" lake env lean -c build/native/NativeHarness.c -o build/native/NativeHarness.olean tests/NativeHarness.lean
-          lake env leanc -o build/native/pscv-native build/native/NativeMath.c build/native/NativeHarness.c
+          lake build PSCVL:static
+          ls -lh .lake/build/lib/*.a
+          lake env leanc -o build/native/pscv-native build/native/NativeMath.c build/native/NativeHarness.c .lake/build/lib/libpscv0_lean_native_PSCVL.a
           build/native/pscv-native | grep -F PSCV0_NATIVE_OK

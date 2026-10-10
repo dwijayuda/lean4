@@ -54,7 +54,7 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   let status ← checkFile path
   if status != 0 then return status
   let raw ← IO.FS.readFile path
-  let src := "module\nmeta import PSCVL.Policy\n" ++ raw ++ "\n\n#pscv_gate\n"
+  let src := "import PSCVL.Policy\n" ++ raw ++ "\n\n#pscv_gate\n"
   let out := System.FilePath.mk outputDir
   IO.FS.createDirAll out
   -- The preceding in-process check consumes the importer initialization flag.
