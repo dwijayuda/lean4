@@ -2,7 +2,7 @@ name: PSCV0 Lean 4.35 native language
 
 on:
   push:
-    branches: [experiment/pscv0-native-language-rc4]
+    branches: [experiment/pscv0-native-language-rc4, experiment/pscv0-native-language-closure-v1]
     paths:
       - experiments/pscv0-lean-native/**
       - .github/workflows/pscv0-native-language.yml
