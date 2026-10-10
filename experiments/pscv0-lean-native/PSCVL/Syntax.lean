@@ -143,7 +143,7 @@ macro_rules (kind := pscvCall)
       | _ => Macro.throwUnsupported
     -- A single Lean application node keeps defaults and named arguments in the
     -- same elaboration pass, rather than prematurely applying partial calls.
-    return (Syntax.mkApp f parsedArgs).raw
+    return mkNode ``Lean.Parser.Term.app #[f.raw, mkNullNode parsedArgs]
 
 /-- Use the native Lean structure-field parser inside PSCV0 braces. -/
 syntax (name := pscvBracedStructure)
