@@ -18,20 +18,40 @@ private def options : Options :=
     |>.setBool `experimental.vcgen true
     |>.setBool `experimental.intrinsic true
 
+/-- Only named upstream modules in the pinned PSCV0 Standard snapshot
+    may enter the runtime and syntax environment. -/
+private def approvedSource (src filename : String) :
+    IO (Except String (Array Import × String)) := do
+  let inputCtx := Parser.mkInputContext src filename
+  let (header, state, messages) ← Parser.parseHeader inputCtx
+  if messages.hasErrors then
+    return .error "invalid Lean import header"
+  if header.isModule then
+    return .error "explicit module headers are not yet supported in PSCV0"
+  let imports := header.imports (includeInit := false)
+  for imported in imports do
+    unless imported.module == `Std && !imported.isMeta && !imported.importAll do
+      return .error s!"unapproved PSCV0 imported module: {imported.module}"
+  return .ok (imports, (src.sliceFrom state.pos).copy)
+
 private def checkFile (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
     IO.eprintln "PSCV0 expects a .ps source file"
     return 2
   let source ← IO.FS.readFile path
+  let (approved, body) ← match ← approvedSource source path with
+    | .ok v => pure v
+    | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  let env ← importModules #[{ module := `PSCVL.Policy }] {} (trustLevel := 0) (loadExts := true)
-  match validateSourceSyntax source path env options with
+  let env ← importModules (#[{ module := `PSCVL.Policy : Import }] ++ approved) {}
+    (trustLevel := 0) (loadExts := true)
+  match validateSourceSyntax body path env options with
   | .error msg =>
       IO.eprintln s!"PSCV0 source-profile error: {msg}"
       return 1
   | .ok () => pure ()
-  let (_, messages) ← Elab.process (source ++ "\n\n#pscv_gate\n") env options (some path)
+  let (_, messages) ← Elab.process (body ++ "\n\n#pscv_gate\n") env options (some path)
   for msg in messages.markAllReported.reported do
     IO.eprintln (← msg.toString)
   if messages.hasErrors then
@@ -54,7 +74,11 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   let status ← checkFile path
   if status != 0 then return status
   let raw ← IO.FS.readFile path
-  let src := "import PSCVL.Policy\n" ++ raw ++ "\n\n#pscv_gate\n"
+  let (approved, body) ← match ← approvedSource raw path with
+    | .ok v => pure v
+    | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
+  let imports := String.join (approved.toList.map fun im => s!"import {im.module}\n")
+  let src := "import PSCVL.Policy\n" ++ imports ++ body ++ "\n\n#pscv_gate\n"
   let out := System.FilePath.mk outputDir
   IO.FS.createDirAll out
   -- The preceding in-process check consumes the importer initialization flag.
@@ -78,10 +102,14 @@ private def syntaxKinds (path : String) : IO UInt32 := do
     IO.eprintln "PSCV0 expects a .ps source file"
     return 2
   let source ← IO.FS.readFile path
+  let (approved, body) ← match ← approvedSource source path with
+    | .ok v => pure v
+    | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  let env ← importModules #[{ module := `PSCVL.Policy }] {} (trustLevel := 0) (loadExts := true)
-  match auditSourceSyntax source path env options with
+  let env ← importModules (#[{ module := `PSCVL.Policy : Import }] ++ approved) {}
+    (trustLevel := 0) (loadExts := true)
+  match auditSourceSyntax body path env options with
   | .ok kinds =>
       for kind in kinds do IO.println kind
       return 0

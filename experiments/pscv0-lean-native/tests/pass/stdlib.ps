@@ -1,0 +1,7 @@
+import Std
+
+const xs: Array Nat := #[4, 5, 6]
+function safeGet(values: Array Nat, i: Nat): Option Nat := values[i]?
+theorem safeFirst: safeGet(xs, 0) = some 4 := by { rfl }
+#check Std.HashMap
+#check safeGet
