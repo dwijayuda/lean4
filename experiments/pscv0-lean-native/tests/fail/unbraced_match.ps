@@ -1,0 +1,5 @@
+function pick(x: Option Nat): Nat := {
+  match x with
+  | .none => 0
+  | .some n => n
+}

@@ -1,0 +1,18 @@
+function pick(x: Option Nat, defaultValue: Nat): Nat := {
+  match x with {
+    | .none => defaultValue
+    | .some n => n
+  }
+}
+
+function both(x: Option Nat, y: Option Nat): Nat := {
+  match x, y with {
+    | .some a, .some b => a + b
+    | _, _ => 0
+  }
+}
+
+theorem pickSome(n: Nat): pick(.some(n), 0) = n := by {
+  rfl
+}
+#check both(.some(1), .some(2))
