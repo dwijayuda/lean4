@@ -128,22 +128,12 @@ macro_rules
 
 
 
-/-- PSCV0 structure field sequences are line separated and Lean checked. -/
-declare_syntax_cat pscvStructField
-syntax ident ":" term : pscvStructField
-
+/-- Use the native Lean structure-field parser inside PSCV0 braces. -/
 syntax (name := pscvBracedStructure)
-  "structure " ident " where " "{" pscvStructField+ "}" : command
+  "structure " ident " where " "{" structFields "}" : command
 
 macro_rules (kind := pscvBracedStructure)
-  | `(structure $s:ident where { $fs:pscvStructField* }) => do
-    let mut native : Array (TSyntax ``Lean.Parser.Command.structExplicitBinder) := #[]
-    for f in fs do
-      match f with
-      | `(pscvStructField| $n:ident : $t:term) =>
-        native := native.push (← `(structExplicitBinder| ($n:ident : $t:term)))
-      | _ => Macro.throwUnsupported
-    let fields ← `(structFields| $native*)
+  | `(structure $s:ident where { $fields:structFields }) =>
     `(structure $s:ident where $fields:structFields)
 
 /-- PSCV0 constructors preserve Lean's original positivity and recursor rules. -/
