@@ -135,7 +135,7 @@ def elabPscvEmptyCall : TermElab := fun stx expectedType? => do
     let unitValue ← elabTerm (← `(term| ())) (some domain)
     let completed := mkApp applied unitValue
     let remaining ← whnf (← inferType completed)
-    if binderName != \`_unit then
+    if binderName != `_unit then
       match remaining with
       | .forallE nextName _ _ nextInfo =>
         if nextInfo.isExplicit && !nextName.isAnonymous then
