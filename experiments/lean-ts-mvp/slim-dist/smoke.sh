@@ -37,4 +37,20 @@ test ! -e generated/afterBadProof.ts
 node publish.mjs slim-output.log
 npm run build
 npm test
+if [ -x "$DIST/bin/pscv0" ]; then
+  run_pscv0() {
+    env -i HOME=/tmp PATH=/usr/bin:/bin \
+      LEAN_SYSROOT="$DIST" LEAN_PATH="$DIST/lib/lean" \
+      LD_LIBRARY_PATH="$DIST/lib/lean:$DIST/lib" \
+      "$DIST/bin/pscv0" "$@"
+  }
+  run_pscv0 check pscv0-tests/pass_minimal.ps > slim-pscv0.log 2>&1 || { cat slim-pscv0.log; exit 1; }
+  grep -q "UNCERTIFIED" slim-pscv0.log
+  if run_pscv0 check pscv0-tests/fail_gap_call.ps > slim-pscv0-rejected.log 2>&1; then
+    echo "ERROR: distributed PSCV0 accepted forbidden spaced call" >&2
+    exit 1
+  fi
+  grep -q "PSCV0-APP-02" slim-pscv0-rejected.log
+  echo "DISTRIBUTED_PSCV0_PASSED:$MODE"
+fi
 echo "SLIM_SMOKE_PASSED:$MODE"

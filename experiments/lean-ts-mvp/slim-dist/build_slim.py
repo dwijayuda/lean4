@@ -42,6 +42,10 @@ def main():
         raise FileExistsError("Refusing to overwrite existing package: " + str(out))
     out.mkdir(parents=True)
     copy(root / "bin/lean", out / "bin/lean")
+    pscv0_exe = Path(".lake/build/bin/pscv0")
+    if pscv0_exe.is_file():
+        copy(pscv0_exe, out / "bin/pscv0")
+        (out / "bin/pscv0").chmod(0o755)
     numbers = {"olean": 0, "ir": 0, "private": 0, "server": 0, "shared": 0, "plugin": 0}
     for p in (root / "lib/lean").rglob("*"):
         if not p.is_file():

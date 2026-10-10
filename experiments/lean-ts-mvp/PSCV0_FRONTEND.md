@@ -52,3 +52,10 @@ Run in experiments/lean-ts-mvp:
 
 The GitHub workflow tests these and fail-closed grammar cases.
 No proof of JavaScript semantics or unrestricted Lean conformance is claimed.
+
+## Distribution test
+
+The same branch also tests bundling the compiled native `pscv0` executable and PSCVL
+compiled modules with the slim Lean proof host. The isolated runtime test uses
+`env -i` and does not require another Lean/elan/Lake installation. The first
+CI step tests an unpacked copy; packaging does not certify Mathlib or full PSCV0.

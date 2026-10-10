@@ -79,3 +79,11 @@ jobs:
           test "$(node -p 'require("./node_modules/typescript/package.json").version')" = "7.0.2"
           npm run build
           npm test
+      - name: Package ProofScript frontend with standalone slim Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 slim-dist/build_slim.py --output slim-dist-output/lean-pscv0 --mode headless --no-archive
+          bash slim-dist/smoke.sh slim-dist-output/lean-pscv0 pscv0
+          test -x slim-dist-output/lean-pscv0/bin/pscv0
+          cat slim-dist-output/lean-pscv0-sizes.json
