@@ -1,0 +1,7 @@
+function fromOption(x: Option Nat): Nat := {
+  if let .some n := x { n } else { 0 }
+}
+function impossible(e: Empty): Nat := nomatch e
+theorem someSeven: fromOption(.some(7)) = 7 := by { rfl }
+#check fromOption(.none)
+#reduce fromOption(.some(4))

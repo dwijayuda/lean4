@@ -66,7 +66,7 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "Lean.Parser.Command.variable", "Lean.Parser.Command.universe",
       "Lean.Parser.Command.include", "Lean.Parser.Command.omit",
       "Lean.Parser.Command.check", "Lean.Parser.Command.print",
-      "Lean.Parser.Command.printAxioms"
+      "Lean.Parser.Command.printAxioms", "Lean.reduceCmd"
     ] : List String).contains k
 
 /-- Reject known metaprogramming and proof escapes before the Lean elaborator
@@ -143,7 +143,7 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
     else if (["run_tac", "native_decide", "sorry", "unsafe", "partial",
          "macro", "macro_rules", "elab", "initialize", "set_option",
          "syntax", "declare_syntax_cat", "implemented_by", "extern",
-         "run_cmd", "scoped", "assert!"] : List String).contains value then
+         "run_cmd", "scoped", "assert!", "then"] : List String).contains value then
       some s!"forbidden PSCV source token `{value}`"
     else none
   | _ => none

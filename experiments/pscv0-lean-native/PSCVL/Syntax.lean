@@ -231,6 +231,14 @@ macro_rules
   | `(if ($condition:term) { $onTrue:term } else { $onFalse:term }) =>
     `(if $condition then $onTrue else $onFalse)
 
+/-- Pattern-binding conditional lowers to Lean's exhaustive match. -/
+syntax (name := pscvBracedIfLet)
+  "if " "let " term " := " term "{" term "}" "else" "{" term "}" : term
+
+macro_rules (kind := pscvBracedIfLet)
+  | `(if let $pat:term := $discr:term { $success:term } else { $failure:term }) =>
+    `(if let $pat:term := $discr:term then $success:term else $failure:term)
+
 /-- A one-term braced body is grouping, not a record/object literal. -/
 syntax (name := pscvBracedExpression) "{" term "}" : term
 
