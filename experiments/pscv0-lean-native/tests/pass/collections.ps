@@ -1,0 +1,10 @@
+import Std
+const values: Array Nat := #[3, 5, 8]
+const nums: List Nat := [3, 5, 8]
+function maybeAt(xs: Array Nat, i: Nat): Option Nat := xs[i]?
+function provenAt(xs: Array Nat, i: Nat, h: i < xs.size): Nat := xs[i]'h
+function atBang(xs: Array Nat, i: Nat): Nat := xs[i]!
+theorem firstSome: values[0]? = some 3 := by { decide }
+theorem absent: values[10]? = none := by { decide }
+#check values[1]
+#check maybeAt(values, 3)

@@ -1,0 +1,5 @@
+import Std
+function preserve(n: Nat): Id Nat
+    requires n > 0
+    ensures result => result = n := pure n
+theorem assumePositive(n: Nat): n > 0 -> n > 0 := by { intro h; exact h }

@@ -1,0 +1,15 @@
+function predecessor(n: Nat): Nat := {
+  match n with {
+    | 0 => 0
+    | k + 1 => k
+  }
+}
+theorem onePred: predecessor(1) = 0 := by { rfl }
+function isTwo(n: Nat): Bool := {
+  match n with {
+    | 0 => false
+    | 1 => false
+    | k + 2 => true
+  }
+}
+#check isTwo(5)
