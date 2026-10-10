@@ -233,7 +233,7 @@ macro_rules
 
 /-- Pattern-binding conditional lowers to Lean's exhaustive match. -/
 syntax (name := pscvBracedIfLet)
-  "if " "let " term " := " term "{" term "}" "else" "{" term "}" : term
+  "if " "let " term " := " term:max "{" term "}" "else" "{" term "}" : term
 
 macro_rules (kind := pscvBracedIfLet)
   | `(pscvBracedIfLet| if let $pat:term := $discr:term { $success:term } else { $failure:term }) =>
