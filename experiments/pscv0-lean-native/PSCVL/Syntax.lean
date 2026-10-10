@@ -113,20 +113,34 @@ macro_rules
         requires $pre:term
         ensures $rv:ident => $post:term := $body:term)
 
-/-- Adjacent ProofScript calls are curried: f(a,b,c) = f a b c.
-The Lean `noWs` parser combinator enforces adjacency to '(' exactly. -/
-syntax:max (name := pscvCall) term:max noWs "(" term,* ")" : term
+/-- PSCV0 comma applications are curried Lean applications. Named arguments are
+native Lean binder names and must follow all source positional arguments. -/
+declare_syntax_cat pscvCallArg
+syntax ident " := " term : pscvCallArg
+syntax term : pscvCallArg
+syntax:max (name := pscvCall) term:max noWs "(" pscvCallArg,* ")" : term
 
-macro_rules
-  | `($f:term($[$args:term],*)) => do
+macro_rules (kind := pscvCall)
+  | `($f:term($[$args:pscvCallArg],*)) => do
     if args.isEmpty then
       return (← `($f:term ()))
     let mut app := f
+    let mut seenNamed := false
+    let mut used : Array Name := #[]
     for arg in args do
-      app ← `($app:term $arg:term)
+      match arg with
+      | `(pscvCallArg| $n:ident := $v:term) =>
+        if used.contains n.getId then
+          Macro.throwError "PSCV0-CALL-NAMED: duplicate named argument '{n.getId}'"
+        seenNamed := true
+        used := used.push n.getId
+        app ← `($app:term ($n:ident := $v:term))
+      | `(pscvCallArg| $v:term) =>
+        if seenNamed then
+          Macro.throwError "PSCV0-CALL-ORDER: positional arguments cannot follow named arguments"
+        app ← `($app:term $v:term)
+      | _ => Macro.throwUnsupported
     return app
-
-
 
 /-- Use the native Lean structure-field parser inside PSCV0 braces. -/
 syntax (name := pscvBracedStructure)
