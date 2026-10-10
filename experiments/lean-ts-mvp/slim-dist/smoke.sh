@@ -10,8 +10,15 @@ run_slim() {
     "$DIST/bin/lean" "$@"
 }
 run_slim --version
-run_slim slim-dist/Smoke.lean > slim-smoke.log
-run_slim Example.lean > slim-output.log
+if ! run_slim slim-dist/Smoke.lean > slim-smoke.log 2>&1; then
+  cat slim-smoke.log
+  exit 1
+fi
+cat slim-smoke.log
+if ! run_slim Example.lean > slim-output.log 2>&1; then
+  cat slim-output.log
+  exit 1
+fi
 grep -q '@@LEAN_TS_BEGIN:increment@@' slim-output.log
 
 if run_slim Reject.lean > slim-reject.log 2>&1; then
