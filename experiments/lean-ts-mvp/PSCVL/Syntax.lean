@@ -66,6 +66,16 @@ macro_rules
     let binders ← explicitLeanBinders bs
     `(def $f:ident $binders* : $result:term := $body:term)
 
+
+/-- Theorem comma-binders are source-only sugar; Lean elaborates the same proof. -/
+syntax (name := pscvTheorem)
+  "theorem " ident "(" pscvBinder,* ")" ":" term ":=" term : command
+
+macro_rules
+  | (`theorem $name:ident ($[$bs:pscvBinder],*) : $statement:term := $proof:term) => do
+    let binders ← explicitLeanBinders bs
+    `(theorem $name:ident $binders* : $statement:term := $proof:term)
+
 /-- Non-explicit PSCV binders share Lean's implicit, strict-implicit, and
 instance elaborator, rather than emulating the semantics in a new compiler. -/
 syntax (name := pscvImplicitFunction)
