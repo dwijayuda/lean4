@@ -121,7 +121,7 @@ syntax:max (name := pscvEmptyCall) term:max noWs "(" ")" : term
 
 @[term_elab pscvEmptyCall]
 def elabPscvEmptyCall : TermElab := fun stx expectedType? => do
-  let `(pscvEmptyCall| $f:term()) := stx | throwUnsupportedSyntax
+  let f : Term := ⟨stx[0]⟩
   let fn ← elabTerm f none
   let applied ← elabAppArgs fn #[] #[] expectedType? false false
   let restType ← whnf (← inferType applied)
