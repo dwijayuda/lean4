@@ -27,16 +27,16 @@ private def approvedSource (src filename : String) :
   let (header, state, messages) ← Parser.parseHeader inputCtx
   if messages.hasErrors then
     return .error "invalid Lean import header"
-  if header.isModule then
+  if Lean.Elab.HeaderSyntax.isModule header then
     return .error "explicit module headers are not yet supported in PSCV0"
-  let imports := header.imports (includeInit := false)
+  let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
   for imported in imports do
     unless imported.module == `Std && !imported.isMeta && !imported.importAll do
       return .error s!"unapproved PSCV0 imported module: {imported.module}"
   let bytes := src.toByteArray.extract state.pos.byteIdx src.utf8ByteSize
   let some body := bytes.utf8Decode?
     | return .error "invalid UTF-8 boundary at PSCV0 import header"
-  return .ok (imports, body)
+  return .ok (imports, String.ofList body.toList)
 
 private def checkFile (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
