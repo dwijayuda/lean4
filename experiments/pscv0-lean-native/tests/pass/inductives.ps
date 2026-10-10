@@ -1,0 +1,13 @@
+inductive Response where {
+  | ok(value: Nat) : Response
+  | error(message: String) : Response
+}
+
+function fromResponse(x: Response): Nat := {
+  match x with {
+    | .ok n => n
+    | .error _ => 0
+  }
+}
+
+theorem okSeven: fromResponse(.ok(7)) = 7 := by { rfl }

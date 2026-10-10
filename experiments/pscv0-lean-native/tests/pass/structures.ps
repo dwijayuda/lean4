@@ -1,0 +1,9 @@
+structure Point where {
+  x: Nat
+  y: Nat
+}
+
+const origin: Point := { x := 0, y := 0 }
+function sumPoint(p: Point): Nat := { p.x + p.y }
+theorem sumOrigin: sumPoint(origin) = 0 := by { rfl }
+#check sumPoint
