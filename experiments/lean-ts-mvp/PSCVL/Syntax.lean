@@ -72,7 +72,7 @@ syntax (name := pscvTheorem)
   "theorem " ident "(" pscvBinder,* ")" ":" term ":=" term : command
 
 macro_rules
-  | (`theorem $name:ident ($[$bs:pscvBinder],*) : $statement:term := $proof:term) => do
+  | `(theorem $name:ident ($[$bs:pscvBinder],*) : $statement:term := $proof:term) => do
     let binders ← explicitLeanBinders bs
     `(theorem $name:ident $binders* : $statement:term := $proof:term)
 
