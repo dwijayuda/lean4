@@ -11,3 +11,4 @@ name = "PSCVL"
 [[lean_exe]]
 name = "pscv0"
 root = "PSCVLMain"
+supportInterpreter = true
