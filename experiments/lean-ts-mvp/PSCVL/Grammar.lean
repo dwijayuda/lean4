@@ -50,9 +50,11 @@ private def rejectAttributes (s : Syntax) : Option String := Id.run do
     return some s!"PSCVL rejects undeclared attribute '{bad}'"
   return none
 
-private def allowedCommand (s : Syntax) : Bool :=
+private partial def allowedCommand (s : Syntax) : Bool :=
   let k := s.getKind.toString
-  if k == "Lean.Parser.Command.declaration" then
+  if s.isOfKind choiceKind then
+    s.getArgs.all allowedCommand
+  else if k == "Lean.Parser.Command.declaration" then
     allowedDeclarationKind s[1].getKind.toString
   else
     ([
@@ -177,7 +179,7 @@ def auditSourceSyntax (source fileName : String) (env : Environment)
     if next.pos == parserState.pos then
       return .error "PSCVL parser did not advance"
     unless allowedCommand stx do
-      return .error s!"PSCVL closed command profile rejects: {stx.getKind}"
+      return .error s!"PSCVL closed command profile rejects: {stx.getKind}, alternatives: {stx.getArgs.toList.map (fun t => t.getKind)}"
     if let some why := forbiddenSyntax stx then
       return .error why
     if let some why := forbiddenLoop stx then
