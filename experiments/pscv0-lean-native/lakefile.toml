@@ -1,6 +1,6 @@
 name = "pscv0_lean_native"
 version = "0.1.0"
-defaultTargets = ["pscv0"]
+defaultTargets = ["psc"]
 
 [[lean_lib]]
 name = "PSCVL"
