@@ -9,6 +9,7 @@ keywords resemble facilities from the normative PSCV language reference.
 -/
 
 open Lean
+open Lean.Parser.Term
 
 namespace PSCVL
 
