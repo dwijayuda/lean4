@@ -51,6 +51,8 @@ if [ -x "$DIST/bin/pscv0" ]; then
     exit 1
   fi
   grep -q "PSCV0-APP-02" slim-pscv0-rejected.log
+  "$DIST/bin/psc" check pscv0-tests/pass_minimal.ps > slim-psc-launcher.log 2>&1 || { cat slim-psc-launcher.log; exit 1; }
+  grep -q "UNCERTIFIED" slim-psc-launcher.log
   echo "DISTRIBUTED_PSCV0_PASSED:$MODE"
 fi
 echo "SLIM_SMOKE_PASSED:$MODE"

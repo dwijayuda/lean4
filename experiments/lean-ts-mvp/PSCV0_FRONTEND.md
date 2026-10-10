@@ -55,7 +55,11 @@ No proof of JavaScript semantics or unrestricted Lean conformance is claimed.
 
 ## Distribution test
 
-The same branch also tests bundling the compiled native `pscv0` executable and PSCVL
+The same branch also tests bundling the compiled native `pscv0` executable, a relocatable `bin/psc` launcher, and PSCVL
 compiled modules with the slim Lean proof host. The isolated runtime test uses
 `env -i` and does not require another Lean/elan/Lake installation. The first
 CI step tests an unpacked copy; packaging does not certify Mathlib or full PSCV0.
+
+Unpack the CI archive on Linux x86-64 and invoke `./lean-pscv0/bin/psc check example.ps`.
+The `psc` wrapper selects only its bundled Lean sysroot, module path and runtime
+libraries; no separate Lean toolchain is required for checking the supported `.ps` subset.

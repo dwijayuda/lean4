@@ -46,6 +46,16 @@ def main():
     if pscv0_exe.is_file():
         copy(pscv0_exe, out / "bin/pscv0")
         (out / "bin/pscv0").chmod(0o755)
+        psc_launcher = out / "bin/psc"
+        psc_launcher.write_text(
+            '#!/bin/sh\nset -eu\n'
+            'root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)\n'
+            'export LEAN_SYSROOT="$root"\n'
+            'export LEAN_PATH="$root/lib/lean"\n'
+            'export LD_LIBRARY_PATH="$root/lib/lean:$root/lib"\n'
+            'exec "$root/bin/pscv0" "$@"\n',
+            encoding="utf-8")
+        psc_launcher.chmod(0o755)
     numbers = {"olean": 0, "ir": 0, "private": 0, "server": 0, "shared": 0, "plugin": 0}
     for p in (root / "lib/lean").rglob("*"):
         if not p.is_file():
