@@ -179,17 +179,17 @@ syntax (name := pscvBracedStructureDeriving)
   "structure " ident " where " "{" structFields "}" " deriving " pscvDeriver,+ : command
 
 macro_rules (kind := pscvBracedStructureDeriving)
-  | `(structure $s:ident where { $fields:structFields } deriving $ds:pscvDeriver,+) => do
+  | `(structure $s:ident where { $fields:structFields } deriving $[$ds:pscvDeriver],*) => do
     let names ← ds.mapM pscvDeriverIdent
     `(structure $s:ident where
       $fields:structFields
-      deriving $names:ident,*)
+      deriving $[$names:ident],*)
 
 syntax (name := pscvBracedInductiveDeriving)
   "inductive " ident " where " "{" pscvConstructor+ "}" " deriving " pscvDeriver,+ : command
 
 macro_rules (kind := pscvBracedInductiveDeriving)
-  | `(inductive $s:ident where { $ctors:pscvConstructor* } deriving $ds:pscvDeriver,+) => do
+  | `(inductive $s:ident where { $ctors:pscvConstructor* } deriving $[$ds:pscvDeriver],*) => do
     let mut native : Array (TSyntax ``Lean.Parser.Command.ctor) := #[]
     for c in ctors do
       match c with
@@ -202,7 +202,7 @@ macro_rules (kind := pscvBracedInductiveDeriving)
     let names ← ds.mapM pscvDeriverIdent
     `(inductive $s:ident where
       $native:ctor*
-      deriving $names:ident,*)
+      deriving $[$names:ident],*)
 
 /-- PSCV0 matches use a braced alternative sequence while keeping Lean's
 native discriminants, pattern elaborator, motive inference, and exhaustiveness. -/
