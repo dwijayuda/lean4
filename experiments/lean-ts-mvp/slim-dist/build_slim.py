@@ -18,6 +18,7 @@ def metrics(directory):
 def retain(filename, profile):
     return (filename.endswith(".olean")
             or (profile != "no-ir" and (filename.endswith(".ir") or filename.endswith(".ir.sig")))
+            or filename.endswith(".olean.server")
             or (profile == "with-private" and filename.endswith(".olean.private")))
 
 def copy(src, dest):
@@ -42,7 +43,7 @@ def main():
         raise FileExistsError("Refusing to overwrite existing package: " + str(out))
     out.mkdir(parents=True)
     copy(root / "bin/lean", out / "bin/lean")
-    numbers = {"olean": 0, "ir": 0, "private": 0, "shared": 0, "plugin": 0}
+    numbers = {"olean": 0, "ir": 0, "private": 0, "server": 0, "shared": 0, "plugin": 0}
     for p in (root / "lib/lean").rglob("*"):
         if not p.is_file():
             continue
@@ -50,7 +51,8 @@ def main():
             copy(p, out / p.relative_to(root))
             key = ("shared" if ".so" in p.name else
                    "olean" if p.name.endswith(".olean") else
-                   "private" if p.name.endswith(".olean.private") else "ir")
+                   "private" if p.name.endswith(".olean.private") else
+                   "server" if p.name.endswith(".olean.server") else "ir")
             numbers[key] += 1
     for p in (root / "lib").iterdir():
         if p.is_file() and ".so" in p.name and not p.name.lower().startswith(("libllvm", "libclang", "liblld")):

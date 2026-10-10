@@ -11,8 +11,8 @@ The headless profile includes:
 - Runtime support shared libraries, licenses, relocatable bin/lean-ts-lean script.
 
 The package omits Lake, leanc, Clang, LLVM, static .a archives, C headers, Lean
-sources, editor .ilean files, server-specific .olean.server files, and private
-olean payloads. Removal of .olean.private and .ir is an experimentally testable
+sources, editor .ilean files, private
+olean payloads. Lean 4.35 also requires .olean.server for ordinary imports. Removal of .olean.private and .ir is an experimentally testable
 claim, not an assumption that every Lean feature works.
 
 From experiments/lean-ts-mvp with elan and Node.js installed:
