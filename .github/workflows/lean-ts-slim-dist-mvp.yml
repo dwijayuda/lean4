@@ -26,40 +26,36 @@ jobs:
           auto-config: false
           build: true
           use-github-cache: false
-      - name: Inspect Lean 4.35 RC4 release layout and verify baseline
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Prepare TypeScript 7
         shell: bash
         run: |
           set -euo pipefail
-          lake env lean Example.lean >/dev/null
-          which lean
-          elan which lean
-          lean --version
-          python3 - <<'PY'
-          from pathlib import Path
-          from collections import defaultdict
-          import os,subprocess
-          lean=Path(subprocess.check_output(["elan","which","lean"],text=True).strip())
-          root=lean.parent.parent
-          print("root:",root,"resolve:",root.resolve())
-          totals=defaultdict(lambda:[0,0])
-          exts=defaultdict(lambda:[0,0])
-          files=[]
-          for p in root.rglob("*"):
-            if p.is_file() and not p.is_symlink():
-              b=p.stat().st_size
-              rel=p.relative_to(root)
-              grp="/".join(rel.parts[:2]) if len(rel.parts)>1 else str(rel)
-              ext="".join(p.suffixes) or "(none)"
-              totals[grp][0]+=b;totals[grp][1]+=1
-              exts[ext][0]+=b;exts[ext][1]+=1
-              files.append((b,str(rel)))
-          print("BASELINE",sum(x[0] for x in totals.values()),"bytes",len(files),"files")
-          print("LAYOUT");[print(f"{k} {v[0]/1048576:.1f} MiB {v[1]} files") for k,v in sorted(totals.items(),key=lambda x:-x[1][0])[:40]]
-          print("EXTENSIONS");[print(f"{k} {v[0]/1048576:.1f} MiB {v[1]} files") for k,v in sorted(exts.items(),key=lambda x:-x[1][0])[:30]]
-          print("TOP FILES");[print(f"{b/1048576:.1f} MiB {name}") for b,name in sorted(files,reverse=True)[:30]]
-          print("BIN", sorted(str(p.name) for p in (root/"bin").iterdir())[:100])
-          print("LIB", sorted(str(p.name) for p in (root/"lib").iterdir())[:100])
-          print("LEAN_ROOT",sorted(str(p.name) for p in (root/"lib/lean").iterdir())[:100])
-          print("PROJECT_ARTIFACTS",[str(p) for p in Path(".lake/build/lib/lean").rglob("*") if p.is_file()][:50])
-          subprocess.run(["ldd",str(lean)],check=False)
-          PY
+          npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+          test "$(node -p 'require("./node_modules/typescript/package.json").version')" = "7.0.2"
+      - name: Build and test independently copied Lean host
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 slim-dist/build_slim.py --output slim-dist-output/lean-ts-headless --mode headless
+          bash slim-dist/smoke.sh slim-dist-output/lean-ts-headless headless
+          cat slim-dist-output/lean-ts-headless-sizes.json
+      - name: Optional no-IR experiment
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 slim-dist/build_slim.py --output slim-dist-output/lean-ts-no-ir --mode no-ir --no-archive
+          bash slim-dist/smoke.sh slim-dist-output/lean-ts-no-ir no-ir
+      - name: Upload tested standalone distribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-ts-headless-4.35.0-rc4-linux-x86_64
+          path: |
+            experiments/lean-ts-mvp/slim-dist-output/lean-ts-headless.tar.gz
+            experiments/lean-ts-mvp/slim-dist-output/lean-ts-headless-sizes.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
