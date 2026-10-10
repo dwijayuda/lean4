@@ -1,0 +1,15 @@
+structure Box(α: Type) where {
+  value: α
+}
+
+class HasKey(α: Type) where {
+  key: α → Nat
+}
+
+instance : HasKey Nat where
+  key := fun n => n
+
+const boxed: Box Nat := { value := 3 }
+theorem boxedThree: boxed.value = 3 := by { rfl }
+#check HasKey.key
+#check boxed.value

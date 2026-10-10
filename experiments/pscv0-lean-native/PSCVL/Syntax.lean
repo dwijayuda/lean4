@@ -136,6 +136,29 @@ macro_rules (kind := pscvBracedStructure)
   | `(structure $s:ident where { $fields:structFields }) =>
     `(structure $s:ident where $fields:structFields)
 
+
+/-- Parameterized data declarations reuse Lean's dependent structure elaborator. -/
+syntax (name := pscvParameterizedStructure)
+  "structure " ident "(" pscvBinder,+ ")" " where " "{" structFields "}" : command
+
+macro_rules (kind := pscvParameterizedStructure)
+  | `(structure $name:ident ($[$args:pscvBinder],*) where { $fields:structFields }) => do
+    let binders ← explicitLeanBinders args
+    `(structure $name:ident $binders* where $fields:structFields)
+
+/-- Classes are native Lean type classes; the braces own only field layout. -/
+syntax (name := pscvBracedClass)
+  "class " ident " where " "{" structFields "}" : command
+syntax (name := pscvParameterizedClass)
+  "class " ident "(" pscvBinder,+ ")" " where " "{" structFields "}" : command
+
+macro_rules
+  | `(class $name:ident where { $fields:structFields }) =>
+    `(class $name:ident where $fields:structFields)
+  | `(class $name:ident ($[$args:pscvBinder],*) where { $fields:structFields }) => do
+    let binders ← explicitLeanBinders args
+    `(class $name:ident $binders* where $fields:structFields)
+
 /-- PSCV0 constructors preserve Lean's original positivity and recursor rules. -/
 declare_syntax_cat pscvConstructor
 syntax "| " ident ":" term : pscvConstructor
