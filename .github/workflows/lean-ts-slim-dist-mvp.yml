@@ -39,22 +39,30 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          zstd --version
           python3 slim-dist/build_slim.py --output slim-dist-output/lean-ts-headless --mode headless
           bash slim-dist/smoke.sh slim-dist-output/lean-ts-headless headless
+          mkdir -p slim-dist-output/extracted
+          tar --zstd -xf slim-dist-output/lean-ts-headless.tar.zst -C slim-dist-output/extracted
+          bash slim-dist/smoke.sh slim-dist-output/extracted/lean-ts-headless relocated
           cat slim-dist-output/lean-ts-headless-sizes.json
-      - name: Optional no-IR experiment
-        continue-on-error: true
+      - name: Prove no-IR candidate still fails the compatibility smoke
         shell: bash
         run: |
           set -euo pipefail
           python3 slim-dist/build_slim.py --output slim-dist-output/lean-ts-no-ir --mode no-ir --no-archive
-          bash slim-dist/smoke.sh slim-dist-output/lean-ts-no-ir no-ir
+          if bash slim-dist/smoke.sh slim-dist-output/lean-ts-no-ir no-ir > no-ir-failure.log 2>&1; then
+            echo "Unexpected success of IR-free variant: review the contract"
+            exit 1
+          fi
+          cat no-ir-failure.log
+          grep -q 'missing data file for module' no-ir-failure.log
       - name: Upload tested standalone distribution
         uses: actions/upload-artifact@v4
         with:
           name: lean-ts-headless-4.35.0-rc4-linux-x86_64
           path: |
-            experiments/lean-ts-mvp/slim-dist-output/lean-ts-headless.tar.gz
+            experiments/lean-ts-mvp/slim-dist-output/lean-ts-headless.tar.zst
             experiments/lean-ts-mvp/slim-dist-output/lean-ts-headless-sizes.json
           if-no-files-found: error
           compression-level: 0

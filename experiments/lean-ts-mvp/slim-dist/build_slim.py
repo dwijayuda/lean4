@@ -7,7 +7,6 @@ import json
 import platform
 import shutil
 import subprocess
-import tarfile
 
 PIN = "c29b6dda4f7c20e3eeaa717c4e565663c5cfa364"
 
@@ -46,6 +45,10 @@ def main():
     numbers = {"olean": 0, "ir": 0, "private": 0, "server": 0, "shared": 0, "plugin": 0}
     for p in (root / "lib/lean").rglob("*"):
         if not p.is_file():
+            continue
+        top = p.relative_to(root / "lib/lean").parts[0]
+        if (top == "Lake" or top == "libLake_shared.so" or
+                top.startswith(("Lake.", "LakeMain.", "LeanIR.", "LeanExport.", "LeanChecker.", "Leanc."))):
             continue
         if ".so" in p.name or retain(p.name, args.mode):
             copy(p, out / p.relative_to(root))
@@ -86,12 +89,18 @@ def main():
             "reduction_percent": round(100*(1-slim_bytes/full_bytes), 2),
             "selected": numbers}
     if not args.no_archive:
-        archive = out.parent / (out.name + ".tar.gz")
-        with tarfile.open(archive, "w:gz", compresslevel=4) as tar:
-            tar.add(out, arcname=out.name)
+        archive = out.parent / (out.name + ".tar.zst")
+        tar = subprocess.Popen(["tar", "-cf", "-", "-C", str(out.parent), out.name], stdout=subprocess.PIPE)
+        try:
+            subprocess.run(["zstd", "-T2", "-9", "-q", "-o", str(archive)], stdin=tar.stdout, check=True)
+        finally:
+            tar.stdout.close()
+        if tar.wait() != 0:
+            raise RuntimeError("tar archiving failed")
         with archive.open("rb") as file:
             data["sha256"] = hashlib.file_digest(file, "sha256").hexdigest()
         data["archive_bytes"] = archive.stat().st_size
+        data["compression"] = "tar.zst zstd -9"
     (out.parent / (out.name + "-sizes.json")).write_text(json.dumps(data, indent=2) + "\n")
     print("SLIM_METRICS", json.dumps(data), flush=True)
 

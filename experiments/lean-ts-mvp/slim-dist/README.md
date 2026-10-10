@@ -22,7 +22,7 @@ From experiments/lean-ts-mvp with elan and Node.js installed:
     bash slim-dist/smoke.sh slim-dist-output/lean-ts-headless headless
 
 The GitHub workflow measures the official and trimmed directories, publishes
-a compressed tarball plus JSON metrics, and verifies the copied standalone lean
+a Zstandard-compressed tarball plus JSON metrics, and verifies the copied standalone lean
 binary without relying on elan or Lake. It checks simp, omega, grind, #eval,
 the tiny Lean-to-TypeScript backend, proof rejection and Node.js execution.
 
@@ -30,6 +30,8 @@ Use bin/lean-ts-lean on an unpacked distribution to launch Lean with the
 correct bundled module and library directories, without a separately installed
 Lean toolchain. This does not include Node.js/TypeScript 7: install those
 separately to compile the generated TypeScript.
+
+The full official Lean RC4 Linux tar.zst is 594452193 bytes. Compare with the slim tar.zst size, not gzip.
 
 Caveats: not a universal Lean distribution, not evaluated for Mathlib, native
 plugins, Lean4Checker, language-server/editor functionality, or all tactics.
