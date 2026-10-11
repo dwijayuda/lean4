@@ -6,11 +6,11 @@ on:
     paths:
       - experiments/pscv0-lean-native/**
       - .github/workflows/pscv0-native-language.yml
-  pull_request:
-    paths:
-      - experiments/pscv0-lean-native/**
-      - .github/workflows/pscv0-native-language.yml
   workflow_dispatch:
+
+concurrency:
+  group: pscv0-native-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   pscv0-native:
