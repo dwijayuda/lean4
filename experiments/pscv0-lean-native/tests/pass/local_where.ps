@@ -1,0 +1,7 @@
+function twiceThenOne(n: Nat): Nat := {
+  helper(n) + 1
+} where {
+  helper (k : Nat) : Nat := k + k
+}
+
+theorem twiceFour: twiceThenOne(4) = 9 := by { rfl }
