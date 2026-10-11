@@ -38,7 +38,7 @@ theorem sumZero: sum({ x := 0, y := 0 }) = 0 := by {
 }
 ```
 
-Native Lean-dependent types, tactics, pattern matching and code generation remain the source of truth. The current tests also include `mutual { ... }`, local `where { ... }`, Lean-native deriving, named/default function calls, sections and dependent conditionals.
+Native Lean-dependent types, tactics, pattern matching and code generation remain the source of truth. The current tests also include `mutual { ... }`, local `where { ... }`, Lean-native deriving, named/default function calls, sections, dependent conditionals, and braced typed `try`/`catch` with rejection of native layout-only handler bodies.
 
 ## Assurance and limitations
 

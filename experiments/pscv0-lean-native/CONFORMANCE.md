@@ -2,7 +2,7 @@
 
 **Source of requirements:** [PSCV0_LANGUAGE_REFERENCE.md](PSCV0_LANGUAGE_REFERENCE.md), the user's 2,888-line Lean-first unified language reference dated 2026-10-11. This ledger reflects **implemented/tested functionality**, not mere capability present somewhere in upstream Lean. The Lean runtime and kernel are upstream 4.35.0-rc4 at commit `c29b6dda4f7c20e3eeaa717c4e565663c5cfa364`.
 
-**Last verified checkpoint:** GitHub Actions [380? see below] replaced by [run 38108189965](https://github.com/dwijayuda/lean4/actions/runs/38108189965), all stages successful at commit `f86c042dff0d5396a4220d937e39285d1e0f631d`. CI has **25 positive .ps inputs and 38 expected-rejection .ps inputs**, plus native executable linking and runtime execution. This is sample conformance only, not all production requirements.
+**Last verified checkpoint:** GitHub Actions [38110308510](https://github.com/dwijayuda/lean4/actions/runs/38110308510), commit `e74437f1ee377b1e7f04244257c20bcfa02b46dc` — the PSCV0 parser/frontend, 30 positive tests, 45 expected negative tests, and native linked executable all passed. This is finite example coverage, not complete language conformance.
 
 ## Source and semantics matrix
 
@@ -29,8 +29,12 @@
 - **FAIL** means the compiler accepted malformed source or rejected intended source; correct the grammar family or its policy rather than hiding the case.
 - No native executable, user import or proof tactic becomes *certified* merely by succeeding at ordinary Lean checking.
 - Every new grammar family must add: at least one positive source test, matching negative tests, exact Lean lowering, proof/axiom checks where relevant, and a native regression.
-- The current negative test harness confirms **nonzero exit** for all 38 cases, but only checks the exact error ID for the ASCII `.` bullet. Extend diagnostic-class checks for other critical negative families.
+- The current negative test harness confirms **nonzero exit** for all 45 cases, but also checks exact error IDs for the ASCII `.` bullet and unbraced `try`/`catch` syntax. Extend diagnostic-class checks for other critical negative families.
 - The parser's `choice` alternatives and pinned token/notation environment need a dedicated source grammar audit. Current selection relies on a finite allowlist and recursive token restrictions; this is **not** proven complete or a security sandbox.
+
+## Typed exception syntax checkpoint
+
+Lean RC4 permits both indented and braced `doSeq` in the `doTry` parser family. PSCV0 selects braces for `try` and `catch` bodies; the frontend validates the native AST before elaboration, reports `PSCV0-TRY-BRACES`, and retains Lean's typed `Except` elaboration. `typed_error.ps` and `throw_typed.ps` pass; `typed_error_unbraced.ps`, `typed_error_try_unbraced.ps`, and `typed_error_catch_unbraced.ps` must reject. `finally`, nested exception-handler grammar, and full typed effect/assumption closure remain incomplete.
 
 ## Immediate acceptance priorities
 

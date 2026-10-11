@@ -6,7 +6,7 @@
 **Draft PR:** [#4](https://github.com/dwijayuda/lean4/pull/4) (stacked, do not merge until accepted)
 **Target:** ProofScript `pscv0` grammar and semantics, pinned to upstream **Lean 4.35.0-rc4** (`c29b6dda4f7c20e3eeaa717c4e565663c5cfa364`).
 **Authority:** `PSCV0_LANGUAGE_REFERENCE.md` copied from the user's latest Lean-first language reference. It is a design target, not implemented conformance.
-**Last full green CI:** [38108189965](https://github.com/dwijayuda/lean4/actions/runs/38108189965), commit `f86c042dff0d5396a4220d937e39285d1e0f631d`.
+**Last full green CI:** [38110308510](https://github.com/dwijayuda/lean4/actions/runs/38110308510), commit `e74437f1ee377b1e7f04244257c20bcfa02b46dc`; 30 accepted PSCV0 examples, 45 expected rejections, and a Lean-linked native executable all passed.
 
 ## Non-negotiable intent
 - **Focus only on completing the PSCV0 language and reusing native Lean codegen/proofs.** Do not add TypeScript backends, slim distributions, an independent kernel or new codegen. No regression-work churn in unrelated experiments.
@@ -26,12 +26,14 @@
 - `CONFORMANCE.md`: live feature evidence/gap ledger.
 
 ## Current verified behavior
-At full green CI above there were **25 passing `.ps` examples, 38 rejected `.ps` examples, and a successful Lean-native binary**. Since the green checkpoint, code may have changed: always inspect latest CI/head and do not assume green again without evidence.
+At full green CI above there were **30 passing `.ps` examples, 45 rejected `.ps` examples, and a successful Lean-native binary**. Always inspect HEAD and latest CI before further writes; do not assume future commits remain green.
 
 Language accepted and tested:
 `const`, `def`, `function`, comma-binder `theorem`; exact/unit/defaulted `f()`, named/default `f(a, b := c)`, positional and unparenthesized Lean application; braced `if`, dependent `if`, `if let`, `match` with multiple/named/generalized discriminants; Nat successor patterns; structs/classes/typeclasses/inductives/allowlisted deriving; namespaces/sections, private declarations; native `mutual { ... }` and local `where { ... }`; selected tactics and `#check`/`#print axioms`/`#reduce`; `Std`, arrays/strings/quantifiers/subtypes and intrinsic `requires`/`ensures`.
 
 Source rejection includes unsafe/partial, axioms/sorry, old `ghost`/`refine type`, unexpected imports, unsupported grammar, bad function call spacing, unbraced `by`/`do`/matching/structures/mutual/where, and **ASCII `.` goal bullets**. Lean defines the ASCII bullet as a native alternative (`Init/NotationExtra.lean`); PSCV0's source validator deliberately rejects it under the `Lean.cdot` AST only, without blocking field projections.
+
+**Latest grammar fix:** RC4's `Lean.Parser.Term.doTry` permits layout-only `doSeqIndent` in `try` and `catch`. PSCV0 now rejects it with `PSCV0-TRY-BRACES`; the positive typed-error example and three negative unbraced variants are tested. A positive/negative `finally` case and complete exception grammar audit remain pending.
 
 ## Follow-up instructions
 1. Read GitHub live branch/PR/CI first (new commits may exist); identify failing step and root architectural family. Do not chase individual test errors by weakening grammar.
