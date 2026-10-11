@@ -63,6 +63,7 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "PSCVL.pscvFunction", "PSCVL.pscvImplicitFunction", "PSCVL.pscvTheorem",
       "PSCVL.pscvDefinition", "PSCVL.pscvBracedStructure", "PSCVL.pscvBracedInductive",
       "PSCVL.pscvParameterizedStructure", "PSCVL.pscvBracedClass", "PSCVL.pscvParameterizedClass",
+      "PSCVL.pscvBracedMutual",
       "PSCVL.pscvBracedStructureDeriving", "PSCVL.pscvBracedInductiveDeriving",
       "PSCVL.pscvFunctionContract", "PSCVL.pscvFunctionEnsures", "PSCVL.pscvFunctionRequires",
       

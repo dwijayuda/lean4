@@ -206,6 +206,17 @@ macro_rules
     let binders ← explicitLeanBinders args
     `(class $name:ident $binders* where $fields:structFields)
 
+/-- Mutual recursion is only a braced grouping of the official Lean mutual
+declaration elaborator and termination checker. -/
+syntax (name := pscvBracedMutual)
+  "mutual " "{" command+ "}" : command
+
+macro_rules (kind := pscvBracedMutual)
+  | `(mutual { $cmds:command* }) =>
+    `(mutual
+      $cmds:command*
+    end)
+
 /-- PSCV0 constructors preserve Lean's original positivity and recursor rules. -/
 declare_syntax_cat pscvConstructor
 syntax "| " ident ":" term : pscvConstructor
