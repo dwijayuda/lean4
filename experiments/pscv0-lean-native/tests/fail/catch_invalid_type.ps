@@ -1,0 +1,8 @@
+function recover(action: Except String Nat): Except String Nat := do {
+  try {
+    let n ← action
+    return n
+  } catch (e : Nat) => {
+    return 0
+  }
+}

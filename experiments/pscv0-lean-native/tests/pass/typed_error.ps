@@ -1,0 +1,11 @@
+function recover(action: Except String Nat): Except String Nat := do {
+  try {
+    let n ← action
+    return n
+  } catch err => {
+    return 0
+  }
+}
+
+theorem recoverOk: recover(.ok(7)) = .ok(7) := by { rfl }
+theorem recoverError: recover(.error("bad")) = .ok(0) := by { rfl }
