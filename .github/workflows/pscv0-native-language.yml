@@ -85,6 +85,18 @@ jobs:
             exit 1
           fi
           grep -F "PSCV0-EVAL-TYPE" rejected-eval.log
+      - name: Reject native emission when source or proof obligations fail
+        run: |
+          set -euo pipefail
+          for file in tests/fail/sorry.ps tests/fail/unsafe.ps tests/fail/function_state_false_spec.ps; do
+            if lake exe psc build "$file" Rejected build/rejected > rejected-native.log 2>&1; then
+              cat rejected-native.log
+              echo "PSCV0 improperly emitted native artifacts for: $file"
+              exit 1
+            fi
+            test ! -e build/rejected/Rejected.olean
+            test ! -e build/rejected/Rejected.c
+          done
       - name: Compile checked PSCV0 to Lean native executable
         run: |
           set -euo pipefail

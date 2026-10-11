@@ -19,6 +19,8 @@ lake exe psc syntax-kinds tests/pass/match_named_generalized.ps
 lake exe psc build tests/pass/native_math.ps NativeMath build/native
 ```
 
+`psc environment` reports the provisional pinned Standard module/deriving/eval registry; CI compares it with `PSCV0_STANDARD_ENV.json`. This is not a full Lean semantic registry digest.
+
 `psc check` accepts a selected `.ps` grammar, lowers PSCV0 sugar into **native Lean syntax trees**, then elaborates and checks with Lean. It reports **UNCERTIFIED**, never a verified-executable certificate.
 
 `psc build` performs the same source and proof preflight and delegates to the official `Lean.Elab.runFrontend`/`Lean.Compiler.LCNF.emitC` APIs to generate `.olean` and C. Linking uses the installed `leanc` toolchain; see `.github/workflows/pscv0-native-language.yml` for the end-to-end native executable test.
@@ -38,7 +40,7 @@ theorem sumZero: sum({ x := 0, y := 0 }) = 0 := by {
 }
 ```
 
-Native Lean-dependent types, tactics, pattern matching and code generation remain the source of truth. The current tests also include `mutual { ... }`, local `where { ... }`, Lean-native deriving, named/default function calls, sections, dependent conditionals, and braced typed `try`/`catch` with rejection of native layout-only handler bodies.
+Native Lean-dependent types, tactics, pattern matching and code generation remain the source of truth. The current tests also include `mutual { ... }`, local `where { ... }`, Lean-native deriving, named/default function calls, sections, dependent conditionals, native `given`, verified `while`, StateM `for` contracts, `function` contract aliases, guarded scalar `#eval`, pinned Std/Init imports, and braced typed `try`/`catch` with rejection of native layout-only handler bodies.
 
 ## Assurance and limitations
 
