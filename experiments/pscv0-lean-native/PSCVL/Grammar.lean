@@ -67,7 +67,7 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "PSCVL.pscvParameterizedStructure", "PSCVL.pscvBracedClass", "PSCVL.pscvParameterizedClass",
       "PSCVL.pscvBracedMutual",
       "PSCVL.pscvBracedStructureDeriving", "PSCVL.pscvBracedInductiveDeriving",
-      "PSCVL.pscvFunctionContract", "PSCVL.pscvFunctionEnsures", "PSCVL.pscvFunctionRequires",
+      "PSCVL.pscvFunctionGivenContract", "PSCVL.pscvFunctionContract", "PSCVL.pscvFunctionEnsures", "PSCVL.pscvFunctionRequires",
       
       "Lean.Parser.Command.namespace", "Lean.Parser.Command.section",
       "Lean.Parser.Command.end", "Lean.Parser.Command.open",

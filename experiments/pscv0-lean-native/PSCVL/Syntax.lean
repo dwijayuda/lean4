@@ -159,6 +159,23 @@ macro_rules
         requires $pre:term
         ensures $rv:ident => $post:term := $body:term)
 
+/-- Lean RC4 given binds logical specification parameters, not runtime
+arguments. This syntax uses precisely the native given/contract elaborator. -/
+syntax (name := pscvFunctionGivenContract)
+  "function " ident "(" pscvBinder,* ")" ":" term
+  "given" "(" ident ":" term ")" "requires" term
+  "ensures" ident "=>" term ":=" term : command
+
+macro_rules (kind := pscvFunctionGivenContract)
+  | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
+      given ($logical:ident : $logicTy:term)
+      requires $pre:term ensures $rv:ident => $post:term := $body:term) => do
+    let binders ← explicitLeanBinders bs
+    `(def $f:ident $binders* : $result:term
+        given ($logical:ident : $logicTy:term)
+        requires $pre:term
+        ensures $rv:ident => $post:term := $body:term)
+
 /-- Empty source calls use Lean's own optional-argument elaboration. A source
 nullary function is a required Unit binder, not a second function type. -/
 syntax:max (name := pscvEmptyCall) term:max noWs "(" ")" : term
