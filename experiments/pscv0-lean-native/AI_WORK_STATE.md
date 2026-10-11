@@ -6,7 +6,7 @@
 **Draft PR:** [#4](https://github.com/dwijayuda/lean4/pull/4) (stacked, do not merge until accepted)
 **Target:** ProofScript `pscv0` grammar and semantics, pinned to upstream **Lean 4.35.0-rc4** (`c29b6dda4f7c20e3eeaa717c4e565663c5cfa364`).
 **Authority:** `PSCV0_LANGUAGE_REFERENCE.md` copied from the user's latest Lean-first language reference. It is a design target, not implemented conformance.
-**Last full green baseline CI:** [38112451935](https://github.com/dwijayuda/lean4/actions/runs/38112451935), commit `75c8a207b718c0f1433c59a76087ae41da68400a`; 37 accepted PSCV0 examples, 56 expected rejections, pinned Standard JSON verification and a Lean-linked native executable all passed. The additional differential/no-artifact tests below require their own green CI before counting as verified.
+**Last fully green CI:** [38112654962](https://github.com/dwijayuda/lean4/actions/runs/38112654962), commit `ec658e24832933759bedc70e656d1dd931b9cf0f`; 37 accepted PSCV0 source cases, 56 expected rejections, Standard manifest equality, no-artifact invalid-source native emission, definitional-equality correspondence proofs and native linked executable all passed.
 
 ## Non-negotiable intent
 - **Focus only on completing the PSCV0 language and reusing native Lean codegen/proofs.** Do not add TypeScript backends, slim distributions, an independent kernel or new codegen. No regression-work churn in unrelated experiments.
@@ -27,7 +27,7 @@
 - `CONFORMANCE.md`: live feature evidence/gap ledger.
 
 ## Current verified behavior
-At full green CI above there were **37 passing `.ps` examples, 56 rejected `.ps` examples, matched compiled Standard environment manifest, and a successful Lean-native binary**. Always inspect HEAD and latest CI before further writes; do not assume future commits remain green.
+At full green CI above there were **37 passing `.ps` examples, 56 rejected `.ps` examples, matched compiled Standard environment manifest, rejection of three invalid native builds without artifacts, two Lean definitional-equality reference proofs, and a successful Lean-native binary**. Always inspect HEAD and latest CI before further writes; do not assume future commits remain green.
 
 Language accepted and tested:
 `const`, `def`, `function`, comma-binder `theorem`; exact/unit/defaulted `f()`, named/default `f(a, b := c)`, positional and unparenthesized Lean application; braced `if`, dependent `if`, `if let`, `match` with multiple/named/generalized discriminants; Nat successor patterns; structs/classes/typeclasses/inductives/allowlisted deriving; namespaces/sections, private declarations; native `mutual { ... }` and local `where { ... }`; selected tactics and guarded scalar `#eval`/`#check`/`#print axioms`/`#reduce`; `Std`, arrays/strings/quantifiers/subtypes and intrinsic `given`/`requires`/`ensures`, StateM `for` contracts and total verified `while` loops.
@@ -46,5 +46,5 @@ Source rejection includes unsafe/partial, axioms/sorry, old `ghost`/`refine type
 ## New work in this checkpoint
 
 - The native harness now proves (with `rfl`, kernel checked) the generated PSCV0 arithmetic definitions correspond to direct reference Lean definitions and executes compiled operations under the official RC4 toolchain.
-- Native negative-path CI checks that malformed proof/source and a false StateM postcondition produce neither `.olean` nor C artifacts. The tests were added after the last green baseline and must be re-verified.
+- Native negative-path CI checks that malformed proof/source and a false StateM postcondition produce neither `.olean` nor C artifacts. These negative build tests passed run 38112654962. They are not a formal proof of compiler semantics.
 - Next key gaps: full `.ps` module/import graph and `public import`, exact function-call/source-position metamorphic corpus, stable full Lean environment identity, additional verification/effect/loop combinations, full proof and erasure obligations. Do not call this spec complete.

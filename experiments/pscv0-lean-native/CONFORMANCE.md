@@ -2,13 +2,13 @@
 
 **Source of requirements:** [PSCV0_LANGUAGE_REFERENCE.md](PSCV0_LANGUAGE_REFERENCE.md), the user's 2,888-line Lean-first unified language reference dated 2026-10-11. This ledger reflects **implemented/tested functionality**, not mere capability present somewhere in upstream Lean. The Lean runtime and kernel are upstream 4.35.0-rc4 at commit `c29b6dda4f7c20e3eeaa717c4e565663c5cfa364`.
 
-**Last fully verified baseline:** GitHub Actions [38112451935](https://github.com/dwijayuda/lean4/actions/runs/38112451935), commit `75c8a207b718c0f1433c59a76087ae41da68400a` — 37 positive `.ps` cases, 56 negative `.ps` cases, native linked executable and Standard module-manifest correspondence all passed. Further proof-correspondence and native fail-closed tests are under CI validation; a prior green checkpoint does not certify untested additions.
+**Last verified CI:** GitHub Actions [38112654962](https://github.com/dwijayuda/lean4/actions/runs/38112654962), commit `ec658e24832933759bedc70e656d1dd931b9cf0f` — 37 positive `.ps` source cases, 56 expected negative cases, compiled Standard registry equality, three invalid native builds emitting no output, reference-equality Lean proofs and native execution all passed. Finite tests do not constitute full language or backend verification.
 
 ## Source and semantics matrix
 
 | Area | Verified in our source tests | Missing / not certified |
 | --- | --- | --- |
-| Lean native type theory & kernel | Lean checks elaborated terms; proof tests and axiom preflight | Differential proof-term comparison at scale; imported environment trust inventory |
+| Lean native type theory & kernel | Lean checks elaborated terms; proof tests and axiom preflight | Large-scale differential proof-term comparison; imported environment trust inventory (two native arithmetic `rfl` correspondence proofs now pass) |
 | `const`, `def`, `function`, `theorem` | Typed and inferred definitions, named parameters, selected implicit/instance binders, non-explicit default parameters | All declaration modifiers, trailing comma, all native declaration signatures |
 | Function application | Adjacent `f(x, y)`, curried `f x y`, named/default arguments, strict `f()` completion including Unit; negative spacing, arity, duplicate/out-of-order/unknown names | Systematic whitespace/trivia, projections, source macro expansion and type-directed elaboration equivalence tests |
 | Scopes and visibility | `namespace`, `section`, `variable`, private `const` and `function`, native private theorem | `public import` re-export/visibility and full project module graph |
@@ -19,7 +19,7 @@
 | Totality & recursion | Native Lean checking, braced `mutual` and `where`; reject source `partial`, `unsafe`, `sorry`, axioms; Lean compiler-generated `_unsafe_rec` exception for total parent | Systematic structural/well-founded termination, `termination_by` and `decreasing_by` surface tests; compiler runtime-helper semantic assurance |
 | Intrinsic verification | RC4 `given`, `requires`/`ensures`, verified `while` termination and StateM `for` invariant examples, including PSCV0 `function` contract lowering | Full effect/assumption/erasure closure, exceptional/cross-module VC cases and verified-executable build gate |
 | Diagnostics | `#check`, `#print axioms`, `#reduce` and guarded pure scalar `#eval` | Full diagnostic evaluation dependency/effect audit; source mapping, interactive proof goal tree and IDE parity |
-| Compiled native programs | Checked `.ps` to Lean-generated `.olean` and C via `runFrontend`/`LCNF.emitC`; `leanc` linked and ran example | Multi-module packaging, native semantic differential suite, runtime-assumption attestation |
+| Compiled native programs | Checked `.ps` to Lean-generated `.olean` and C via `runFrontend`/`LCNF.emitC`; `leanc` linked and ran example | Multi-module packaging, broader semantic differential suite beyond two arithmetic `rfl` proofs, runtime-assumption attestation |
 | Verified executable status | No PSCV certificate is issued; output is labeled `UNCERTIFIED` | Complete source/spec/proof/effect/axiom/erasure checks and evidence identity, with blockers on unresolved requirements |
 
 ## Conformance rules

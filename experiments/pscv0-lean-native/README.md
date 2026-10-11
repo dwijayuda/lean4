@@ -51,3 +51,7 @@ The source gate rejects user `partial`/`unsafe`/`axiom`/`sorry` and intentionall
 CI is evidence for a finite corpus of examples and a single native execution path, not formal proof of compiler translation correctness or foreign runtime semantics. Current frontend is a copy/refinement of the user's earlier PSCVL experiment; all upstream Lean kernel and compiler source remains unchanged.
 
 **Out of scope in this branch:** TypeScript 7 output, WebAssembly, Rust, a slim Lean distribution, independent PSKernel metatheory or self-hosting.
+
+## Latest cloud-verified milestone
+
+[GitHub Actions run 38112654962](https://github.com/dwijayuda/lean4/actions/runs/38112654962) passed the RC4 source conformance checks (37 accepted and 56 rejected source cases), compared the checked-in Standard registry against the compiled frontend, and executed native Lean code. The native harness proves two direct definitional-equality correspondences by `rfl`; separate negative native-build checks confirm that `sorry`, source `unsafe`, and a false StateM postcondition do not produce `.olean`/C artifacts. This is finite acceptance evidence, not full PSCV0 conformance or verified native compilation.
