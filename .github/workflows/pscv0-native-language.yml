@@ -35,6 +35,19 @@ jobs:
           set -euo pipefail
           lake build PSCVL psc
           lake env lean --version
+      - name: Validate pinned Standard environment identity
+        run: |
+          set -euo pipefail
+          lake exe psc environment > emitted-environment.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          declared=json.loads(Path("PSCV0_STANDARD_ENV.json").read_text())
+          compiled=json.loads(Path("emitted-environment.json").read_text())
+          assert declared==compiled, (declared, compiled)
+          assert compiled["lean_commit"]=="c29b6dda4f7c20e3eeaa717c4e565663c5cfa364"
+          print("PSCV0_STANDARD_ENV_MATCH")
+          PY
       - name: Check ProofScript source and Lean proofs
         run: |
           set -euo pipefail
