@@ -351,6 +351,17 @@ macro_rules (kind := pscvBracedGeneralizedMatch)
     let native ← pscvMatchAltsToLean alts
     `(match (generalizing := true) $discrs:matchDiscr,* with $native:matchAlt*)
 
+/-- The type family of a dependent match remains Lean's checked motive. -/
+syntax (name := pscvBracedMotiveMatch)
+  "match " motive matchDiscr,+ " with " "{" pscvMatchAlt+ "}" : term
+
+macro_rules (kind := pscvBracedMotiveMatch)
+  | `(match (motive := $result:term) $discrs:matchDiscr,*
+      with { $alts:pscvMatchAlt* }) => do
+    let native ← pscvMatchAltsToLean alts
+    `(match (motive := $result:term) $discrs:matchDiscr,*
+      with $native:matchAlt*)
+
 /-- PSCV pure conditional with explicit grouping and braces. It lowers to
 Lean's ordinary typed `if`, and retains proof obligations. -/
 syntax (name := pscvBracedIf)
