@@ -176,6 +176,20 @@ macro_rules (kind := pscvFunctionGivenContract)
         requires $pre:term
         ensures $rv:ident => $post:term := $body:term)
 
+/-- A function over StateM/ReaderM/Except may bind the pre/post-state in
+native Lean basicFun clauses. VC generation and proof remain upstream. -/
+syntax (name := pscvFunctionEffectContract)
+  "function " ident "(" pscvBinder,* ")" ":" term
+  "requires" basicFun "ensures" basicFun ":=" term : command
+
+macro_rules (kind := pscvFunctionEffectContract)
+  | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
+      requires $pre:basicFun ensures $post:basicFun := $body:term) => do
+    let binders ← explicitLeanBinders bs
+    `(def $f:ident $binders* : $result:term
+        requires $pre:basicFun
+        ensures $post:basicFun := $body:term)
+
 /-- Empty source calls use Lean's own optional-argument elaboration. A source
 nullary function is a required Unit binder, not a second function type. -/
 syntax:max (name := pscvEmptyCall) term:max noWs "(" ")" : term

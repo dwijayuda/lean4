@@ -1,0 +1,9 @@
+function sumStateFunction(xs: List Nat): StateM Nat Unit
+    requires s => s = 0
+    ensures _ s => s = xs.sum := do {
+  for x in xs invariant pref _ s => s = pref.sum do {
+    modify((· + x))
+  }
+}
+#check sumStateFunction
+#check sumStateFunction.spec
