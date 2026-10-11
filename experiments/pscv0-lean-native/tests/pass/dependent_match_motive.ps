@@ -1,7 +1,7 @@
-function predecessorMotive(n: Nat): Nat := {
-  match (motive := Nat) n with {
+function zeroIndex(n: Nat): Fin(n + 1) := {
+  match (motive := (index : Nat) → Fin(index + 1)) n with {
     | 0 => 0
-    | k + 1 => k
+    | k + 1 => 0
   }
 }
-theorem predecessorFive: predecessorMotive(5) = 4 := by { rfl }
+theorem zeroIndexFour: (zeroIndex(4)).val = 0 := by { rfl }
