@@ -280,20 +280,34 @@ declare_syntax_cat pscvMatchAlt
 syntax "| " term,+ " => " term : pscvMatchAlt
 
 syntax (name := pscvBracedMatch)
-  "match " optional generalizingParam optional motive
-  matchDiscr,+ " with " "{" pscvMatchAlt+ "}" : term
+  "match " matchDiscr,+ " with " "{" pscvMatchAlt+ "}" : term
+
+private def pscvMatchAltsToLean
+    (alts : Array (TSyntax `pscvMatchAlt)) :
+    MacroM (Array (TSyntax ``Lean.Parser.Term.matchAlt)) := do
+  let mut native := #[]
+  for alt in alts do
+    match alt with
+    | `(pscvMatchAlt| | $pats:term,* => $rhs:term) =>
+      native := native.push (← `(matchAltExpr| | $pats:term,* => $rhs:term))
+    | _ => Macro.throwUnsupported
+  return native
 
 macro_rules (kind := pscvBracedMatch)
-  | `(match $[(generalizing := $generalizing?)]? $[(motive := $motive?)]?
-       $discrs:matchDiscr,* with { $alts:pscvMatchAlt* }) => do
-    let mut native : Array (TSyntax ``Lean.Parser.Term.matchAlt) := #[]
-    for alt in alts do
-      match alt with
-      | `(pscvMatchAlt| | $pats:term,* => $rhs:term) =>
-        native := native.push (← `(matchAltExpr| | $pats:term,* => $rhs:term))
-      | _ => Macro.throwUnsupported
-    `(match $[(generalizing := $generalizing?)]? $[(motive := $motive?)]?
-      $discrs:matchDiscr,* with $native:matchAlt*)
+  | `(match $discrs:matchDiscr,* with { $alts:pscvMatchAlt* }) => do
+    let native ← pscvMatchAltsToLean alts
+    `(match $discrs:matchDiscr,* with $native:matchAlt*)
+
+/-- Explicit generalization is the exact native Lean dependent-match flag. -/
+syntax (name := pscvBracedGeneralizedMatch)
+  "match " "(" "generalizing" " := " "true" ")" matchDiscr,+
+  " with " "{" pscvMatchAlt+ "}" : term
+
+macro_rules (kind := pscvBracedGeneralizedMatch)
+  | `(match (generalizing := true) $discrs:matchDiscr,*
+      with { $alts:pscvMatchAlt* }) => do
+    let native ← pscvMatchAltsToLean alts
+    `(match (generalizing := true) $discrs:matchDiscr,* with $native:matchAlt*)
 
 /-- PSCV pure conditional with explicit grouping and braces. It lowers to
 Lean's ordinary typed `if`, and retains proof obligations. -/
