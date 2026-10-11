@@ -112,8 +112,8 @@ macro_rules (kind := pscvFunctionWhere)
       where { $locals:pscvWhereDef* }) => do
     let binders ← explicitLeanBinders bs
     let mut nativeLocals : Array (TSyntax ``Lean.Parser.Term.letRecDecl) := #[]
-    for local in locals do
-      match local with
+    for localStx in locals do
+      match localStx with
       | `(pscvWhereDef| def $n:ident ($[$args:pscvBinder],*) : $ty:term := $value:term) =>
         let localBinders ← explicitLeanBinders args
         nativeLocals := nativeLocals.push
