@@ -136,11 +136,21 @@ private partial def firstSeqIsBraced (s : Syntax) (braced indented : Name) : Opt
   else if s.getKind == indented then some false
   else s.getArgs.toList.findSome? fun arg => firstSeqIsBraced arg braced indented
 
+/-- Lean's native tactic cdot accepts "." as an ASCII synonym for "·".
+PSCV0 deliberately selects only the actual Unicode goal bullet. -/
+private partial def hasAsciiDotToken (s : Syntax) : Bool :=
+  match s with
+  | .atom _ "." => true
+  | .node _ _ children => children.any hasAsciiDotToken
+  | _ => false
+
 private partial def forbiddenSyntax (s : Syntax) : Option String :=
   match s with
   | .node _ kind args =>
     let k := kind.toString
-    if kind == ``Lean.Parser.Term.byTactic &&
+    if kind == ``Lean.cdot && hasAsciiDotToken s[0] then
+      some "PSCV0-BULLET: use the native '·' goal bullet, not ASCII '.'"
+    else if kind == ``Lean.Parser.Term.byTactic &&
         firstSeqIsBraced s ``Lean.Parser.Tactic.tacticSeqBracketed
           ``Lean.Parser.Tactic.tacticSeq1Indented != some true then
       some "PSCV0-BY: source tactic proofs must use by { ... }"

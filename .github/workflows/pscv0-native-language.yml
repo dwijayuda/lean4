@@ -43,10 +43,6 @@ jobs:
             lake exe psc check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
             grep -q UNCERTIFIED accepted.log
           done
-      - name: Audit source AST for ASCII proof-goal punctuation
-        run: |
-          set -euo pipefail
-          lake exe psc syntax-kinds tests/fail/ascii_bullet.ps
       - name: Reject invalid source and proof terms
         run: |
           set -euo pipefail
@@ -58,6 +54,11 @@ jobs:
               exit 1
             fi
           done
+          if lake exe psc check tests/fail/ascii_bullet.ps > rejected-bullet.log 2>&1; then
+            echo "PSCV0 unexpectedly accepted the ASCII proof bullet"
+            exit 1
+          fi
+          grep -F "PSCV0-BULLET" rejected-bullet.log
       - name: Compile checked PSCV0 to Lean native executable
         run: |
           set -euo pipefail
