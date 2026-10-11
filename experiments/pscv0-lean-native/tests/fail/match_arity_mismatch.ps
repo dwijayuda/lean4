@@ -1,0 +1,7 @@
+function both(x: Option Nat, y: Option Nat): Nat := {
+  match x, y with {
+    | .some n => n
+    | .none, _ => 0
+    | _, .none => 0
+  }
+}
