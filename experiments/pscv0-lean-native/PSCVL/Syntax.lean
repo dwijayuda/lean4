@@ -98,6 +98,20 @@ macro_rules
     let binders ← explicitLeanBinders bs
     `(private def $f:ident $binders* : $ret:term := $body:term)
 
+/-- Local where declarations are ordinary Lean recursive local definitions
+with PSCV0's canonical braced layout. -/
+syntax (name := pscvFunctionWhere)
+  "function " ident "(" pscvBinder,* ")" ":" term ":=" term
+  "where " "{" letRecDecl+ "}" : command
+
+macro_rules (kind := pscvFunctionWhere)
+  | `(function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term
+      where { $locals:letRecDecl* }) => do
+    let binders ← explicitLeanBinders bs
+    `(def $f:ident $binders* : $ret:term := $body:term
+      where
+        $locals:letRecDecl*)
+
 /-- Theorem comma-binders are source-only sugar; Lean elaborates the same proof. -/
 syntax (name := pscvTheorem)
   "theorem " ident "(" pscvBinder,* ")" ":" term ":=" term : command

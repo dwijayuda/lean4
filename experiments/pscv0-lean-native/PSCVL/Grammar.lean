@@ -60,6 +60,7 @@ private partial def allowedCommand (s : Syntax) : Bool :=
   else
     ([
       "PSCVL.pscvConst", "PSCVL.pscvConstInferred",
+      "PSCVL.pscvFunctionWhere",
       "PSCVL.pscvPrivateConst", "PSCVL.pscvPrivateConstInferred", "PSCVL.pscvPrivateFunction",
       "PSCVL.pscvFunction", "PSCVL.pscvImplicitFunction", "PSCVL.pscvTheorem",
       "PSCVL.pscvDefinition", "PSCVL.pscvBracedStructure", "PSCVL.pscvBracedInductive",
