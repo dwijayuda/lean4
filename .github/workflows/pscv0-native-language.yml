@@ -43,6 +43,10 @@ jobs:
             lake exe psc check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
             grep -q UNCERTIFIED accepted.log
           done
+      - name: Audit source AST for ASCII proof-goal punctuation
+        run: |
+          set -euo pipefail
+          lake exe psc syntax-kinds tests/fail/ascii_bullet.ps
       - name: Reject invalid source and proof terms
         run: |
           set -euo pipefail
