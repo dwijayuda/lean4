@@ -23,7 +23,7 @@ theorem withOmega(n: Nat): n + 0 = n := by { omega }
 theorem withGrind(n: Nat): n = n := by { grind }
 theorem withCalc(n: Nat): n + 0 = n := by {
   calc
-    n + 0 = n := by simp
+    n + 0 = n := by { simp }
 }
 theorem withShow(P: Prop, hp: P): P := by {
   show P
