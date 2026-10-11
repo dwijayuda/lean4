@@ -73,7 +73,7 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "Lean.Parser.Command.end", "Lean.Parser.Command.open",
       "Lean.Parser.Command.variable", "Lean.Parser.Command.universe",
       "Lean.Parser.Command.include", "Lean.Parser.Command.omit",
-      "Lean.Parser.Command.check", "Lean.Parser.Command.print",
+      "Lean.Parser.Command.check", "Lean.Parser.Command.eval", "Lean.Parser.Command.print",
       "Lean.Parser.Command.printAxioms", "Lean.reduceCmd"
     ] : List String).contains k
 

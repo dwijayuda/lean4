@@ -13,7 +13,7 @@ compilation remains a distinct, explicitly UNCERTIFIED operation.
 Lean elaboration/kernel checking is delegated to the pinned official Lean build.
 -/
 
-open Lean Elab Command
+open Lean Elab Command Meta
 
 namespace PSCVL
 
@@ -39,6 +39,34 @@ private def compilerRecursiveHelper (env : Environment) (n : Name) : Bool :=
       !parentInfo.isUnsafe && !parentInfo.isPartial &&
         (match parentInfo with | .defnInfo _ => true | _ => false)
     | none => false
+
+
+/-- Pure diagnostic evaluation is restricted to concrete scalar value types. -/
+private def pscvDiagnosticType (ty : Expr) : Bool :=
+  match ty with
+  | .const n _ => [`Nat, `Int, `Bool, `String, `Char, `Unit].contains n
+  | _ => false
+
+/-- Prevent Lean's general-purpose #eval from executing arbitrary monadic
+commands under a PSCV0 source profile. No verification certificate is issued. -/
+@[command_elab Lean.Parser.Command.eval]
+def elabPscvPureEval : CommandElab
+  | `(#eval%$tk $term) => do
+    withoutModifyingEnv <| runTermElabM fun _ => Term.withDeclName `Q_pscv_eval do
+      let e ← Term.elabTerm term none
+      Term.synthesizeSyntheticMVarsNoPostponing
+      withRef tk <| Meta.check e
+      if e.hasSyntheticSorry then
+        throwError "PSCV0-EVAL-HOLE: diagnostic has an unsolved proof or placeholder"
+      let ty ← whnf (← inferType e)
+      unless pscvDiagnosticType ty do
+        throwError "PSCV0-EVAL-TYPE: #eval requires a pure scalar result"
+      for used in e.getUsedConstants do
+        if let some ci := (← getEnv).find? used then
+          if ci.isUnsafe || ci.isPartial || Lean.isNoncomputable (← getEnv) used then
+            throwError "PSCV0-EVAL-UNSAFE: unsafe, partial or noncomputable dependency"
+    Lean.Elab.Command.elabEvalCore false tk term none
+  | _ => throwUnsupportedSyntax
 
 syntax (name := pscvGate) "#pscv_gate" : command
 
