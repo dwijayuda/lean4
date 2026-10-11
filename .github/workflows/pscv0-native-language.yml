@@ -38,7 +38,7 @@ jobs:
       - name: Validate pinned Standard environment identity
         run: |
           set -euo pipefail
-          lake exe psc environment > emitted-environment.json
+          lake env .lake/build/bin/psc environment > emitted-environment.json
           python3 - <<'PY'
           import json
           from pathlib import Path

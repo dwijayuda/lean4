@@ -125,7 +125,9 @@ private def syntaxKinds (path : String) : IO UInt32 := do
 def cli (args : List String) : IO UInt32 := do
   try
     match args with
-    | ["environment"] => IO.println StandardEnv.manifest.pretty; return 0
+    | ["environment"] => do
+        IO.println StandardEnv.manifest.pretty
+        return 0
     | ["check", path] => checkFile path
     | ["build", path, moduleName, outputDir] => buildFile path moduleName outputDir
     | ["syntax-kinds", path] => syntaxKinds path
