@@ -115,7 +115,9 @@ macro_rules (kind := pscvFunctionWhere)
     for localStx in locals do
       match localStx with
       | `(pscvWhereDef| def $n:ident ($[$args:pscvBinder],*) : $ty:term := $value:term) =>
-        let localBinders ← explicitLeanBinders args
+        let explicit ← explicitLeanBinders args
+        let localBinders : Array (TSyntax ``Lean.Parser.Term.letIdBinder) :=
+          explicit.map fun binder => ⟨binder.raw⟩
         nativeLocals := nativeLocals.push
           (← `(letRecDecl| $n:ident $localBinders* : $ty:term := $value:term))
       | _ => Macro.throwUnsupported
