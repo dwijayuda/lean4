@@ -136,8 +136,6 @@ private partial def firstSeqIsBraced (s : Syntax) (braced indented : Name) : Opt
   else if s.getKind == indented then some false
   else s.getArgs.toList.findSome? fun arg => firstSeqIsBraced arg braced indented
 
-/-- Lean's native tactic cdot accepts "." as an ASCII synonym for "·".
-PSCV0 deliberately selects only the actual Unicode goal bullet. -/
 /-- Lean's try/catch parser accepts either indented or braced do sequences.
     The PSCV0 source profile selects only the braced alternative. -/
 private partial def containsUnbracedDoSeq (s : Syntax) : Bool :=
@@ -146,6 +144,8 @@ private partial def containsUnbracedDoSeq (s : Syntax) : Bool :=
     k == ``Lean.Parser.Term.doSeqIndent || args.any containsUnbracedDoSeq
   | _ => false
 
+/-- Lean's native tactic cdot accepts "." as an ASCII synonym for "·".
+PSCV0 deliberately selects only the actual Unicode goal bullet. -/
 private partial def hasAsciiDotToken (s : Syntax) : Bool :=
   match s with
   | .atom _ "." => true
