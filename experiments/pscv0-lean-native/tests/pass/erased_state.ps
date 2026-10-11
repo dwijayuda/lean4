@@ -1,0 +1,5 @@
+function eraseOnly(n: Nat): Id Nat := do {
+  erased mut steps : Nat := 0
+  return n
+}
+theorem eraseReturns(n: Nat): eraseOnly(n) = pure n := by { rfl }
