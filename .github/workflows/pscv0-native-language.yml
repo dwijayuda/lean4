@@ -42,6 +42,9 @@ jobs:
             echo "PSCV0_ACCEPT:$file"
             lake exe psc check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
             grep -q UNCERTIFIED accepted.log
+            if [ "$file" = "tests/pass/eval_pure.ps" ]; then
+              grep -F "42" accepted.log
+            fi
           done
       - name: Reject invalid source and proof terms
         run: |
@@ -64,6 +67,11 @@ jobs:
             exit 1
           fi
           grep -F "PSCV0-TRY-BRACES" rejected-try.log
+          if lake exe psc check tests/fail/eval_function.ps > rejected-eval.log 2>&1; then
+            echo "PSCV0 unexpectedly evaluated a function-valued expression"
+            exit 1
+          fi
+          grep -F "PSCV0-EVAL-TYPE" rejected-eval.log
       - name: Compile checked PSCV0 to Lean native executable
         run: |
           set -euo pipefail
