@@ -2,12 +2,14 @@ import Lean
 import Std.WP
 import PSCVL.Effect
 import Lean.Compiler.NoncomputableAttr
+import Lean.Compiler.Old
 import Lean.Util.FoldConsts
 import PSCVL.Syntax
 
 /-!
 Experimental, fail-closed *preflight*, not PSCV-CERT-v1.
-The frontend never issues a verified-executable certificate or native artifact.
+The frontend never issues a verified-executable certificate. Ordinary Lean-native
+compilation remains a distinct, explicitly UNCERTIFIED operation.
 Lean elaboration/kernel checking is delegated to the pinned official Lean build.
 -/
 
@@ -25,6 +27,19 @@ initialize pscvTypeSpecAttr : TagAttribute ←
 private def permittedFoundationAxiom (n : Name) : Bool :=
   n == ``propext || n == ``Quot.sound || n == ``Classical.choice
 
+/-- Lean emits an unsafe runtime helper for some logically total,
+kernel-checked recursive declarations. Such helpers are not source-level
+permissions and are not logical proof dependencies. -/
+private def compilerRecursiveHelper (env : Environment) (n : Name) : Bool :=
+  match Lean.Compiler.isUnsafeRecName? n with
+  | none => false
+  | some parent =>
+    match env.find? parent with
+    | some parentInfo =>
+      !parentInfo.isUnsafe && !parentInfo.isPartial &&
+        (match parentInfo with | .defnInfo _ => true | _ => false)
+    | none => false
+
 syntax (name := pscvGate) "#pscv_gate" : command
 
 @[command_elab pscvGate]
@@ -36,13 +51,16 @@ def elabPscvGate : CommandElab := fun _ => do
   let mut roots : Nat := 0
   for c in locals do
     let info := c.toConstantInfo
-    if info.isUnsafe then
-      throwError "PSCVL rejects unsafe declaration: {c.name}"
-    if info.isPartial then
-      throwError "PSCVL rejects partial declaration: {c.name}"
-    if let .axiomInfo _ := info then
-      throwError "PSCVL rejects source axiom: {c.name}"
+    unless compilerRecursiveHelper env c.name do
+      if info.isUnsafe then
+        throwError "PSCVL rejects unsafe declaration: {c.name}"
+      if info.isPartial then
+        throwError "PSCVL rejects partial declaration: {c.name}"
+      if let .axiomInfo _ := info then
+        throwError "PSCVL rejects source axiom: {c.name}"
     if pscvExportAttr.hasTag env c.name then
+      if compilerRecursiveHelper env c.name then
+        throwError "PSCVL cannot export a compiler-generated recursive helper"
       if Lean.isNoncomputable env c.name then
         throwError "PSCVL executable export {c.name} is noncomputable"
       if info.type.getUsedConstants.contains ``IO then
@@ -56,10 +74,11 @@ def elabPscvGate : CommandElab := fun _ => do
   -- Every local declaration must have permitted logical foundations, not only
   -- exported roots: an unexported theorem or helper cannot silently carry sorry.
   for c in locals do
-    let axioms ← collectAxioms c.name
-    for ax in axioms do
-      unless permittedFoundationAxiom ax do
-        throwError "PSCVL declaration {c.name} depends on disallowed axiom {ax}"
+    unless compilerRecursiveHelper env c.name do
+      let axioms ← collectAxioms c.name
+      for ax in axioms do
+        unless permittedFoundationAxiom ax do
+          throwError "PSCVL declaration {c.name} depends on disallowed axiom {ax}"
   if roots == 0 then
     logInfo "PSCVL: ordinary checked source (no annotated executable roots); UNCERTIFIED"
   logInfo m!"PSCVL preflight: {roots} candidate root(s) passed; NO PSCV-CERT-v1 claim or executable emission"
