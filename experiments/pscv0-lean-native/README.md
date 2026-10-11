@@ -1,32 +1,51 @@
-# PSCV0 Lean 4.35.0-rc4 native language frontend
+# ProofScript `pscv0` — Lean-native language frontend
 
-This independent language-only experiment preserves official Lean parsing, elaboration,
-typeclasses, tactics, theorem checking, and **native code generation**. It is copied
-from the working PSCVL prototype in the user's Lean fork, which itself originated
-from `dwijayuda/pskernel` branch `feature/pscvl-lean-frontend`.
+**Purpose:** complete the ProofScript `pscv0` source language as a semantic subset of Lean 4.35.0-rc4, with small, TypeScript-friendly syntax deviations and reuse of Lean's parser, elaborator, tactics, kernel and native compiler. This is a **language-conformance workstream**, not a new typechecker, Lean distro, or JavaScript compiler.
 
-The separate TypeScript backend and slim-distribution experiments remain on their
-existing branches and are NOT dependencies of this project. Source is `.ps`.
-No Lean C++, kernel, bootstrap or stage0 files are changed.
+**Pinned upstream:** `leanprover/lean4:v4.35.0-rc4`, git `c29b6dda4f7c20e3eeaa717c4e565663c5cfa364`.
+**Specification:** [PSCV0_LANGUAGE_REFERENCE.md](PSCV0_LANGUAGE_REFERENCE.md).
+**Verified functionality vs. gaps:** [CONFORMANCE.md](CONFORMANCE.md).
+**Continuation state:** [AI_WORK_STATE.md](AI_WORK_STATE.md).
 
-From this directory:
+## Workflow
 
-    lake build PSCVL psc
-    lake exe psc check tests/pass/basic.ps
-    lake exe psc build tests/pass/native_math.ps NativeMath build/native
+From `experiments/pscv0-lean-native` with the pinned official Lean toolchain:
 
-`psc check` validates the selected PSCV0 syntax and uses Lean's ordinary
-elaboration/kernel checking. `psc build` first performs the same gate, then
-uses Lean.Elab.runFrontend to write .olean module metadata and
-Lean.Compiler.LCNF.emitC to emit native C. Compile/link with Lean's
-official `leanc`. The CI tests the compiled PSCV0 module through a small
-Lean native executable harness.
+```sh
+lake build PSCVL psc
+lake exe psc check tests/pass/basic.ps
+lake exe psc check tests/pass/contract_pure.ps
+lake exe psc syntax-kinds tests/pass/match_named_generalized.ps
+lake exe psc build tests/pass/native_math.ps NativeMath build/native
+```
 
-The source profile is NOT fully conformant with the 2026-10-11 PSCV0 language
-reference. In particular, controlled user imports, full native syntax grammar
-restrictions, rich braced match/structure/inductive forms, deriving allowlist,
-#eval effect restrictions, full default/named argument semantics, source maps,
-and complete verification policy are pending.
+`psc check` accepts a selected `.ps` grammar, lowers PSCV0 sugar into **native Lean syntax trees**, then elaborates and checks with Lean. It reports **UNCERTIFIED**, never a verified-executable certificate.
 
-This profile reports `UNCERTIFIED`. It does not issue verified-executable
-certificates or assert native backend semantic preservation proofs.
+`psc build` performs the same source and proof preflight and delegates to the official `Lean.Elab.runFrontend`/`Lean.Compiler.LCNF.emitC` APIs to generate `.olean` and C. Linking uses the installed `leanc` toolchain; see `.github/workflows/pscv0-native-language.yml` for the end-to-end native executable test.
+
+## Example
+
+```lean
+structure Point where {
+  x: Nat
+  y: Nat
+}
+
+private function sum(p: Point): Nat := { p.x + p.y }
+
+theorem sumZero: sum({ x := 0, y := 0 }) = 0 := by {
+  rfl
+}
+```
+
+Native Lean-dependent types, tactics, pattern matching and code generation remain the source of truth. The current tests also include `mutual { ... }`, local `where { ... }`, Lean-native deriving, named/default function calls, sections and dependent conditionals.
+
+## Assurance and limitations
+
+The source gate rejects user `partial`/`unsafe`/`axiom`/`sorry` and intentionally rejects ordinary Lean aliases incompatible with PSCV0's canonical source, such as ASCII `.` goal bullets and spaced parenthesized applications. For recursively defined, logically total Lean functions, native compilation may generate compiler-specific `_unsafe_rec` helpers. The policy treats those separately from user-written unsafe definitions and does not give them proof authority.
+
+**Not fully implemented:** complete language-reference grammar closure, first-class `.ps` project imports and re-exports, versioned environment/deriving/tactic registries, pure-total `#eval`, complete indexed pattern/equation and verification forms, precise source/IDE mapping, total proof/effect/erasure closure and verified-executable certification. Refer to CONFORMANCE.md rather than inferring support merely from Lean's upstream capabilities.
+
+CI is evidence for a finite corpus of examples and a single native execution path, not formal proof of compiler translation correctness or foreign runtime semantics. Current frontend is a copy/refinement of the user's earlier PSCVL experiment; all upstream Lean kernel and compiler source remains unchanged.
+
+**Out of scope in this branch:** TypeScript 7 output, WebAssembly, Rust, a slim Lean distribution, independent PSKernel metatheory or self-hosting.
