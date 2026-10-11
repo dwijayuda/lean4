@@ -98,19 +98,30 @@ macro_rules
     let binders ← explicitLeanBinders bs
     `(private def $f:ident $binders* : $ret:term := $body:term)
 
-/-- Local where declarations are ordinary Lean recursive local definitions
-with PSCV0's canonical braced layout. -/
+/-- Local where definitions use the explicit PSCV0 def grammar and are
+lowered to Lean's native recursive local declarations. -/
+declare_syntax_cat pscvWhereDef
+syntax "def " ident "(" pscvBinder,+ ")" ":" term ":=" term : pscvWhereDef
+
 syntax (name := pscvFunctionWhere)
   "function " ident "(" pscvBinder,* ")" ":" term ":=" term
-  "where " "{" letRecDecl+ "}" : command
+  "where " "{" pscvWhereDef+ "}" : command
 
 macro_rules (kind := pscvFunctionWhere)
   | `(function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term
-      where { $locals:letRecDecl* }) => do
+      where { $locals:pscvWhereDef* }) => do
     let binders ← explicitLeanBinders bs
+    let mut nativeLocals : Array (TSyntax ``Lean.Parser.Term.letRecDecl) := #[]
+    for local in locals do
+      match local with
+      | `(pscvWhereDef| def $n:ident ($[$args:pscvBinder],*) : $ty:term := $value:term) =>
+        let localBinders ← explicitLeanBinders args
+        nativeLocals := nativeLocals.push
+          (← `(letRecDecl| $n:ident $localBinders* : $ty:term := $value:term))
+      | _ => Macro.throwUnsupported
     `(def $f:ident $binders* : $ret:term := $body:term
       where
-        $locals:letRecDecl*)
+        $nativeLocals:letRecDecl*)
 
 /-- Theorem comma-binders are source-only sugar; Lean elaborates the same proof. -/
 syntax (name := pscvTheorem)
