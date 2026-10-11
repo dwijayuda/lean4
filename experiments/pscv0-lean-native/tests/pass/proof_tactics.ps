@@ -1,0 +1,34 @@
+theorem fromCase(P: Prop, Q: Prop, hp: P, hq: Q): P ∧ Q := by {
+  constructor
+  case left => exact hp
+  case right => exact hq
+}
+
+theorem fromNext(P: Prop, Q: Prop, hp: P, hq: Q): P ∧ Q := by {
+  constructor
+  next => exact hp
+  next => exact hq
+}
+
+theorem goals: True ∧ True := by {
+  constructor
+  all_goals trivial
+}
+
+theorem combined: True ∧ True := by {
+  constructor <;> trivial
+}
+
+theorem withOmega(n: Nat): n + 0 = n := by { omega }
+theorem withGrind(n: Nat): n = n := by { grind }
+theorem withCalc(n: Nat): n + 0 = n := by {
+  calc
+    n + 0 = n := by simp
+}
+theorem withShow(P: Prop, hp: P): P := by {
+  show P
+  exact (hp)
+}
+
+#print axioms withOmega
+#reduce (Nat.add 2 3)

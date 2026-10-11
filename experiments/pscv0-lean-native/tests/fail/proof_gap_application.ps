@@ -1,0 +1,3 @@
+theorem bad(P: Prop, Q: Prop, h: P → Q, hp: P): Q := by {
+  exact h (hp)
+}
