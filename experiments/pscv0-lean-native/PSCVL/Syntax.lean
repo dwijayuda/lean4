@@ -300,7 +300,7 @@ macro_rules (kind := pscvBracedMatch)
 
 /-- Explicit generalization is the exact native Lean dependent-match flag. -/
 syntax (name := pscvBracedGeneralizedMatch)
-  "match " "(" "generalizing" " := " "true" ")" matchDiscr,+
+  "match " generalizingParam matchDiscr,+
   " with " "{" pscvMatchAlt+ "}" : term
 
 macro_rules (kind := pscvBracedGeneralizedMatch)
