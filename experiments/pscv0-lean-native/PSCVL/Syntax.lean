@@ -81,6 +81,23 @@ macro_rules
     `(def $f:ident $binders* : $result:term := $body:term)
 
 
+/-- Visibility maps to Lean's native private declaration modifier. -/
+syntax (name := pscvPrivateConst)
+  "private " "const " ident ":" term ":=" term : command
+syntax (name := pscvPrivateConstInferred)
+  "private " "const " ident ":=" term : command
+syntax (name := pscvPrivateFunction)
+  "private " "function " ident "(" pscvBinder,* ")" ":" term ":=" term : command
+
+macro_rules
+  | `(private const $name:ident : $ty:term := $val:term) =>
+    `(private def $name:ident : $ty:term := $val:term)
+  | `(private const $name:ident := $val:term) =>
+    `(private def $name:ident := $val:term)
+  | `(private function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term) => do
+    let binders ← explicitLeanBinders bs
+    `(private def $f:ident $binders* : $ret:term := $body:term)
+
 /-- Theorem comma-binders are source-only sugar; Lean elaborates the same proof. -/
 syntax (name := pscvTheorem)
   "theorem " ident "(" pscvBinder,* ")" ":" term ":=" term : command
