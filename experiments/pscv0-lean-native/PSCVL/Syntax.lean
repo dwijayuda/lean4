@@ -280,17 +280,20 @@ declare_syntax_cat pscvMatchAlt
 syntax "| " term,+ " => " term : pscvMatchAlt
 
 syntax (name := pscvBracedMatch)
-  "match " matchDiscr,+ " with " "{" pscvMatchAlt+ "}" : term
+  "match " optional generalizingParam optional motive
+  matchDiscr,+ " with " "{" pscvMatchAlt+ "}" : term
 
 macro_rules (kind := pscvBracedMatch)
-  | `(match $discrs:matchDiscr,* with { $alts:pscvMatchAlt* }) => do
+  | `(match $[(generalizing := $generalizing?)]? $[(motive := $motive?)]?
+       $discrs:matchDiscr,* with { $alts:pscvMatchAlt* }) => do
     let mut native : Array (TSyntax ``Lean.Parser.Term.matchAlt) := #[]
     for alt in alts do
       match alt with
       | `(pscvMatchAlt| | $pats:term,* => $rhs:term) =>
         native := native.push (← `(matchAltExpr| | $pats:term,* => $rhs:term))
       | _ => Macro.throwUnsupported
-    `(match $discrs:matchDiscr,* with $native:matchAlt*)
+    `(match $[(generalizing := $generalizing?)]? $[(motive := $motive?)]?
+      $discrs:matchDiscr,* with $native:matchAlt*)
 
 /-- PSCV pure conditional with explicit grouping and braces. It lowers to
 Lean's ordinary typed `if`, and retains proof obligations. -/
