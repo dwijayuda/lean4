@@ -1,0 +1,6 @@
+import Std
+function greet(name: String): String := s!"Hello, {name}!"
+function oneMore(n: Nat): String := s!"n={n + 1}"
+const rawLine: String := r#"C:\folder\file.txt"#
+#check greet("Lean")
+#check oneMore(2)

@@ -1,0 +1,4 @@
+function invalid(n: Nat): Id Nat
+  given (expected: Nat)
+  requires n = expected
+  ensures result => result = expected + 1 := pure n

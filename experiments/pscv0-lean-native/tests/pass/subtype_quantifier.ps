@@ -1,0 +1,9 @@
+abbrev Positive := { n : Nat // n > 0 }
+const positive: Positive := ⟨3, by { decide }⟩
+theorem everySelf: ∀ n : Nat, n = n := by {
+  intro n
+  rfl
+}
+theorem existsZero: exists n : Nat, n = 0 := by { exact ⟨0, rfl⟩ }
+#check forall n : Nat, n = n
+#check positive.val

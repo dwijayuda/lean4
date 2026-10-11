@@ -1,0 +1,7 @@
+function guarded(n: Nat): Id Nat
+  given (expected: Nat)
+  requires n = expected
+  ensures result => result = expected := pure n
+
+#check guarded
+#check guarded.spec

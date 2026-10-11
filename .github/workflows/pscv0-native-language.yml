@@ -2,15 +2,15 @@ name: PSCV0 Lean 4.35 native language
 
 on:
   push:
-    branches: [experiment/pscv0-native-language-rc4]
-    paths:
-      - experiments/pscv0-lean-native/**
-      - .github/workflows/pscv0-native-language.yml
-  pull_request:
+    branches: [experiment/pscv0-native-language-rc4, experiment/pscv0-native-language-closure-v1]
     paths:
       - experiments/pscv0-lean-native/**
       - .github/workflows/pscv0-native-language.yml
   workflow_dispatch:
+
+concurrency:
+  group: pscv0-native-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   pscv0-native:
@@ -35,6 +35,19 @@ jobs:
           set -euo pipefail
           lake build PSCVL psc
           lake env lean --version
+      - name: Validate pinned Standard environment identity
+        run: |
+          set -euo pipefail
+          lake env .lake/build/bin/psc environment > emitted-environment.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          declared=json.loads(Path("PSCV0_STANDARD_ENV.json").read_text())
+          compiled=json.loads(Path("emitted-environment.json").read_text())
+          assert declared==compiled, (declared, compiled)
+          assert compiled["lean_commit"]=="c29b6dda4f7c20e3eeaa717c4e565663c5cfa364"
+          print("PSCV0_STANDARD_ENV_MATCH")
+          PY
       - name: Check ProofScript source and Lean proofs
         run: |
           set -euo pipefail
@@ -42,6 +55,9 @@ jobs:
             echo "PSCV0_ACCEPT:$file"
             lake exe psc check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
             grep -q UNCERTIFIED accepted.log
+            if [ "$file" = "tests/pass/eval_pure.ps" ]; then
+              grep -F "42" accepted.log
+            fi
           done
       - name: Reject invalid source and proof terms
         run: |
@@ -53,6 +69,33 @@ jobs:
               echo "invalid PSCV0 source accepted: $file"
               exit 1
             fi
+          done
+          if lake exe psc check tests/fail/ascii_bullet.ps > rejected-bullet.log 2>&1; then
+            echo "PSCV0 unexpectedly accepted the ASCII proof bullet"
+            exit 1
+          fi
+          grep -F "PSCV0-BULLET" rejected-bullet.log
+          if lake exe psc check tests/fail/typed_error_unbraced.ps > rejected-try.log 2>&1; then
+            echo "PSCV0 unexpectedly accepted a layout-only try/catch body"
+            exit 1
+          fi
+          grep -F "PSCV0-TRY-BRACES" rejected-try.log
+          if lake exe psc check tests/fail/eval_function.ps > rejected-eval.log 2>&1; then
+            echo "PSCV0 unexpectedly evaluated a function-valued expression"
+            exit 1
+          fi
+          grep -F "PSCV0-EVAL-TYPE" rejected-eval.log
+      - name: Reject native emission when source or proof obligations fail
+        run: |
+          set -euo pipefail
+          for file in tests/fail/sorry.ps tests/fail/unsafe.ps tests/fail/function_state_false_spec.ps; do
+            if lake exe psc build "$file" Rejected build/rejected > rejected-native.log 2>&1; then
+              cat rejected-native.log
+              echo "PSCV0 improperly emitted native artifacts for: $file"
+              exit 1
+            fi
+            test ! -e build/rejected/Rejected.olean
+            test ! -e build/rejected/Rejected.c
           done
       - name: Compile checked PSCV0 to Lean native executable
         run: |

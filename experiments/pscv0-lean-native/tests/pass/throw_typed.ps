@@ -1,0 +1,4 @@
+function emitError(): Except String Nat := do {
+  throw "bad"
+}
+theorem throwsBad: emitError() = .error("bad") := by { rfl }

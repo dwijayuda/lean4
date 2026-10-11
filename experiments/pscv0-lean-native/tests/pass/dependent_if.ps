@@ -1,0 +1,10 @@
+function getOrZero(xs: Array Nat, i: Nat): Nat := {
+  if (h : i < xs.size) { xs[i]'h } else { 0 }
+}
+
+function proveIndex(xs: Array Nat, i: Nat): Nat := {
+  if (h : i < xs.size) { xs[i]'h } else { 0 }
+}
+
+theorem emptyZero: getOrZero(#[], 0) = 0 := by { rfl }
+#check getOrZero(#[1, 2], 0)

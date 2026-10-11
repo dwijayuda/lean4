@@ -33,7 +33,9 @@ private partial def attributeIdentifiers (s : Syntax) : List Name :=
   | .node _ _ args => args.toList.flatMap attributeIdentifiers
   | _ => []
 
-private def rejectAttributes (s : Syntax) : Option String := Id.run do
+private partial def rejectAttributes (s : Syntax) : Option String := Id.run do
+  if s.isOfKind choiceKind then
+    return s.getArgs.toList.findSome? rejectAttributes
   unless s.getKind.toString == "Lean.Parser.Command.declaration" do
     return none
   -- declaration[0] is declModifiers; its optional attribute block is field 1.
@@ -50,22 +52,28 @@ private def rejectAttributes (s : Syntax) : Option String := Id.run do
 private partial def allowedCommand (s : Syntax) : Bool :=
   let k := s.getKind.toString
   if s.isOfKind choiceKind then
-    s.getArgs.all allowedCommand
+    -- One selected PSCV0 parser alternative is sufficient; reject all candidates
+    -- below unless at least one belongs to the explicitly accepted grammar.
+    s.getArgs.any allowedCommand
   else if k == "Lean.Parser.Command.declaration" then
     allowedDeclarationKind s[1].getKind.toString
   else
     ([
       "PSCVL.pscvConst", "PSCVL.pscvConstInferred",
+      "PSCVL.pscvFunctionWhere",
+      "PSCVL.pscvPrivateConst", "PSCVL.pscvPrivateConstInferred", "PSCVL.pscvPrivateFunction",
       "PSCVL.pscvFunction", "PSCVL.pscvImplicitFunction", "PSCVL.pscvTheorem",
       "PSCVL.pscvDefinition", "PSCVL.pscvBracedStructure", "PSCVL.pscvBracedInductive",
+      "PSCVL.pscvParameterizedStructure", "PSCVL.pscvBracedClass", "PSCVL.pscvParameterizedClass",
+      "PSCVL.pscvBracedMutual",
       "PSCVL.pscvBracedStructureDeriving", "PSCVL.pscvBracedInductiveDeriving",
-      "PSCVL.pscvFunctionContract", "PSCVL.pscvFunctionEnsures", "PSCVL.pscvFunctionRequires",
+      "PSCVL.pscvFunctionGivenContract", "PSCVL.pscvFunctionEffectContract", "PSCVL.pscvFunctionContract", "PSCVL.pscvFunctionEnsures", "PSCVL.pscvFunctionRequires",
       
       "Lean.Parser.Command.namespace", "Lean.Parser.Command.section",
       "Lean.Parser.Command.end", "Lean.Parser.Command.open",
       "Lean.Parser.Command.variable", "Lean.Parser.Command.universe",
       "Lean.Parser.Command.include", "Lean.Parser.Command.omit",
-      "Lean.Parser.Command.check", "Lean.Parser.Command.print",
+      "Lean.Parser.Command.check", "Lean.Parser.Command.eval", "Lean.Parser.Command.print",
       "Lean.Parser.Command.printAxioms", "Lean.reduceCmd"
     ] : List String).contains k
 
@@ -121,11 +129,46 @@ private partial def groupedApplicationArg (s : Syntax) : Bool :=
   else
     false
 
+/-- Determine only the first (outer) syntax sequence, not nested tactic branches.
+The native Lean parser emits distinct nodes for braced and indented sequences. -/
+private partial def firstSeqIsBraced (s : Syntax) (braced indented : Name) : Option Bool :=
+  if s.getKind == braced then some true
+  else if s.getKind == indented then some false
+  else s.getArgs.toList.findSome? fun arg => firstSeqIsBraced arg braced indented
+
+/-- Lean's try/catch parser accepts either indented or braced do sequences.
+    The PSCV0 source profile selects only the braced alternative. -/
+private partial def containsUnbracedDoSeq (s : Syntax) : Bool :=
+  match s with
+  | .node _ k args =>
+    k == ``Lean.Parser.Term.doSeqIndent || args.any containsUnbracedDoSeq
+  | _ => false
+
+/-- Lean's native tactic cdot accepts "." as an ASCII synonym for "·".
+PSCV0 deliberately selects only the actual Unicode goal bullet. -/
+private partial def hasAsciiDotToken (s : Syntax) : Bool :=
+  match s with
+  | .atom _ "." => true
+  | .node _ _ children => children.any hasAsciiDotToken
+  | _ => false
+
 private partial def forbiddenSyntax (s : Syntax) : Option String :=
   match s with
   | .node _ kind args =>
     let k := kind.toString
-    if kind == ``Lean.Parser.Term.match then
+    if kind == ``Lean.Parser.Term.doTry && containsUnbracedDoSeq s then
+      some "PSCV0-TRY-BRACES: try, catch and finally bodies must use { ... }"
+    else if kind == ``Lean.cdot && hasAsciiDotToken s[0] then
+      some "PSCV0-BULLET: use the native '·' goal bullet, not ASCII '.'"
+    else if kind == ``Lean.Parser.Term.byTactic &&
+        firstSeqIsBraced s ``Lean.Parser.Tactic.tacticSeqBracketed
+          ``Lean.Parser.Tactic.tacticSeq1Indented != some true then
+      some "PSCV0-BY: source tactic proofs must use by { ... }"
+    else if kind == ``Lean.Parser.Term.do &&
+        firstSeqIsBraced s ``Lean.Parser.Term.doSeqBracketed
+          ``Lean.Parser.Term.doSeqIndent != some true then
+      some "PSCV0-DO: source monadic blocks must use do { ... }"
+    else if kind == ``Lean.Parser.Term.match then
       some "PSCV0-MATCH: native unbraced match is not a valid .ps term; use match ... with { ... }"
     else if kind == ``Lean.Parser.Term.app && s[1].getArgs.any groupedApplicationArg then
       some "PSCV0-APP-02: spaced parenthesized application is forbidden; use f(x) or f((x, y))"

@@ -1,0 +1,8 @@
+def guardedCopy (n : Nat) : Id Nat
+    given (expected : Nat)
+    requires n = expected
+    ensures result => result = expected := pure n
+
+theorem equalAssumption(n: Nat): n = n := by { rfl }
+#check guardedCopy
+#check guardedCopy.spec

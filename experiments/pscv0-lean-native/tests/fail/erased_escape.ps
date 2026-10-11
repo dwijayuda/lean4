@@ -1,0 +1,4 @@
+function leakErased(n: Nat): Id Nat := do {
+  erased internal : Nat := n
+  return internal
+}

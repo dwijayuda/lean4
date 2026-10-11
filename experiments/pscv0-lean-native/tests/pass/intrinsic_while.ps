@@ -1,0 +1,13 @@
+def countDown (n : Nat) : Id Nat
+    ensures result => result = 0 := do {
+  let mut i := n
+  while i > 0
+      invariant exit => if (exit) { i = 0 } else { True }
+      decreasing i
+    do {
+    i := i - 1
+  }
+  return i
+}
+#check countDown
+#check countDown.spec

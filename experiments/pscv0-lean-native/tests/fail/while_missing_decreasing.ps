@@ -1,0 +1,9 @@
+function badWhile(n: Nat): Id Nat := do {
+  let mut i := n
+  while i > 0
+      invariant exit => True
+    do {
+    i := i - 1
+  }
+  return i
+}

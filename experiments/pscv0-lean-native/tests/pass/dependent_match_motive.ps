@@ -1,0 +1,7 @@
+function zeroIndex(n: Nat): Fin(n + 1) := {
+  match (motive := (index : Nat) → Fin(index + 1)) n with {
+    | 0 => 0
+    | k + 1 => 0
+  }
+}
+theorem zeroIndexFour: (zeroIndex(4)).val = 0 := by { rfl }

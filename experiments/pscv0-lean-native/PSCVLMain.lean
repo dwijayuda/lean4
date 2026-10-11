@@ -4,6 +4,7 @@ import Lean.Elab.Import
 import Lean.Compiler.LCNF.EmitC
 import PSCVL.Grammar
 import PSCVL.Policy
+import PSCVL.StandardEnv
 
 /-!
 PSCV0 Lean-native frontend. Lean performs all declaration elaboration, proof
@@ -31,7 +32,7 @@ private def approvedSource (src filename : String) :
     return .error "explicit module headers are not yet supported in PSCV0"
   let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
   for imported in imports do
-    unless imported.module == `Std && !imported.isMeta && !imported.importAll do
+    unless StandardEnv.allowsImport imported.module && !imported.isMeta && !imported.importAll do
       return .error s!"unapproved PSCV0 imported module: {imported.module}"
   let bytes := src.toByteArray.extract state.pos.byteIdx src.utf8ByteSize
   let some body := bytes.utf8Decode?
@@ -124,11 +125,14 @@ private def syntaxKinds (path : String) : IO UInt32 := do
 def cli (args : List String) : IO UInt32 := do
   try
     match args with
+    | ["environment"] => do
+        IO.println StandardEnv.manifest.pretty
+        return 0
     | ["check", path] => checkFile path
     | ["build", path, moduleName, outputDir] => buildFile path moduleName outputDir
     | ["syntax-kinds", path] => syntaxKinds path
     | _ =>
-        IO.eprintln "usage: psc check FILE.ps | psc build FILE.ps ModuleName OUTPUT_DIR | psc syntax-kinds FILE.ps"
+        IO.eprintln "usage: psc {environment|check FILE.ps|build FILE.ps ModuleName OUTPUT_DIR|syntax-kinds FILE.ps}"
         return 2
   catch ex =>
     IO.eprintln s!"PSCV0 error: {ex}"

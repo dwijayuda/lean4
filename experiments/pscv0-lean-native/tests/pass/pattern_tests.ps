@@ -1,0 +1,9 @@
+function isSome(x: Option Nat): Bool := { x matches .some _ }
+function emptyList(xs: List Nat): Bool := { xs matches [] }
+function singleItem(xs: List Nat): Bool := { xs matches [_] }
+
+theorem oneSome: isSome(.some(1)) = true := by { rfl }
+theorem noneSome: isSome(.none) = false := by { rfl }
+theorem emptyValue: emptyList([]) = true := by { rfl }
+theorem nonEmptyValue: emptyList([1]) = false := by { rfl }
+theorem oneElement: singleItem([7]) = true := by { rfl }

@@ -1,0 +1,7 @@
+function sumBoth(xs: List Nat, ys: List Nat): Id Nat := do {
+  let mut value := 0
+  for x in xs, y in ys do {
+    value := value + x + y
+  }
+  return value
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "pscv0-standard-env/1",
+  "status": "provisional-module-allowlist-not-complete-semantic-snapshot",
+  "lean_commit": "c29b6dda4f7c20e3eeaa717c4e565663c5cfa364",
+  "lean_version": "4.35.0-rc4",
+  "allowed_imports": [
+    "Std",
+    "Init.Data.List",
+    "Init.Data.Array",
+    "Std.Data.HashMap",
+    "Std.Data.HashSet",
+    "Std.Data.TreeMap",
+    "Std.Data.TreeSet",
+    "Std.Data.String",
+    "Std.Data.Iterators"
+  ],
+  "deriving_handlers": [
+    "Repr",
+    "BEq",
+    "DecidableEq",
+    "Inhabited",
+    "Hashable"
+  ],
+  "eval_scalar_types": [
+    "Nat",
+    "Int",
+    "Bool",
+    "String",
+    "Char",
+    "Unit"
+  ]
+}

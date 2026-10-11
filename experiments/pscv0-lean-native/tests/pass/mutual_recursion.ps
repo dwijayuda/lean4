@@ -1,0 +1,19 @@
+mutual {
+  function parityEven(n: Nat): Bool := {
+    match n with {
+      | 0 => true
+      | k + 1 => parityOdd(k)
+    }
+  }
+
+  function parityOdd(n: Nat): Bool := {
+    match n with {
+      | 0 => false
+      | k + 1 => parityEven(k)
+    }
+  }
+}
+
+theorem zeroEven: parityEven(0) = true := by { rfl }
+theorem oneOdd: parityOdd(1) = true := by { rfl }
+#check parityEven(12)
