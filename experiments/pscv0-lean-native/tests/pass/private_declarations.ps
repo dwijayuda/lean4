@@ -1,0 +1,9 @@
+private const secret: Nat := 7
+
+private function addSecret(n: Nat): Nat := { secret + n }
+
+private theorem secretSeven: secret = 7 := by { rfl }
+
+theorem accessibleWithinModule: addSecret(5) = 12 := by { rfl }
+
+#check addSecret(3)
