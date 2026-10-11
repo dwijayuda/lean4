@@ -138,6 +138,14 @@ private partial def firstSeqIsBraced (s : Syntax) (braced indented : Name) : Opt
 
 /-- Lean's native tactic cdot accepts "." as an ASCII synonym for "·".
 PSCV0 deliberately selects only the actual Unicode goal bullet. -/
+/-- Lean's try/catch parser accepts either indented or braced do sequences.
+    The PSCV0 source profile selects only the braced alternative. -/
+private partial def containsUnbracedDoSeq (s : Syntax) : Bool :=
+  match s with
+  | .node _ k args =>
+    k == ``Lean.Parser.Term.doSeqIndent || args.any containsUnbracedDoSeq
+  | _ => false
+
 private partial def hasAsciiDotToken (s : Syntax) : Bool :=
   match s with
   | .atom _ "." => true
@@ -148,7 +156,9 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
   match s with
   | .node _ kind args =>
     let k := kind.toString
-    if kind == ``Lean.cdot && hasAsciiDotToken s[0] then
+    if kind == ``Lean.Parser.Term.doTry && containsUnbracedDoSeq s then
+      some "PSCV0-TRY-BRACES: try, catch and finally bodies must use { ... }"
+    else if kind == ``Lean.cdot && hasAsciiDotToken s[0] then
       some "PSCV0-BULLET: use the native '·' goal bullet, not ASCII '.'"
     else if kind == ``Lean.Parser.Term.byTactic &&
         firstSeqIsBraced s ``Lean.Parser.Tactic.tacticSeqBracketed

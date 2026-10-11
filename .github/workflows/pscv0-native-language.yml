@@ -59,6 +59,11 @@ jobs:
             exit 1
           fi
           grep -F "PSCV0-BULLET" rejected-bullet.log
+          if lake exe psc check tests/fail/typed_error_unbraced.ps > rejected-try.log 2>&1; then
+            echo "PSCV0 unexpectedly accepted a layout-only try/catch body"
+            exit 1
+          fi
+          grep -F "PSCV0-TRY-BRACES" rejected-try.log
       - name: Compile checked PSCV0 to Lean native executable
         run: |
           set -euo pipefail
