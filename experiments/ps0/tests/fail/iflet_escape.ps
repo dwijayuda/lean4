@@ -1,0 +1,4 @@
+-- Pattern binder n belongs to the success arm only.
+function bad(x: Option Nat): Nat := {
+  if let .some n := x { n } else { n }
+}
