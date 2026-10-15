@@ -1,0 +1,87 @@
+name: PS0 Lean 4.35.0 stable native proof frontend
+
+on:
+  push:
+    branches: [feature/ps0-lean435-stable-v1]
+    paths:
+      - experiments/ps0/**
+      - experiments/pscv0-lean-native/**
+      - .github/workflows/ps0-lean435.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ps0-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lean-backed:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: experiments/ps0
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          sparse-checkout: |
+            experiments/ps0
+            experiments/pscv0-lean-native
+      - uses: leanprover/lean-action@f061402b660e0c34644504b324e830f2991d4865
+        with:
+          lake-package-directory: experiments/ps0
+          auto-config: false
+          build: true
+          use-github-cache: false
+      - name: Compile PS0 and assert exact stable Lean pin
+        run: |
+          set -euo pipefail
+          lake build ps0
+          lake env lean --version | tee lean-version.txt
+          grep -F '4.35.0' lean-version.txt
+          lake exe ps0 environment > stable-env.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          actual=json.loads(Path("stable-env.json").read_text())
+          expected=json.loads(Path("../pscv0-lean-native/PSCV0_STANDARD_ENV.json").read_text())
+          assert actual == expected, (actual, expected)
+          assert actual["lean_commit"]=="eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
+          assert actual["lean_version"]=="4.35.0"
+          print("PS0_PIN_AND_SELECTED_ENV: PASS")
+          PY
+      - name: Check PS0 and inherited positive PSCV0 programs
+        run: |
+          set -euo pipefail
+          for file in tests/pass/*.ps ../pscv0-lean-native/tests/pass/*.ps; do
+            lake exe ps0 check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
+            grep -Fq UNCERTIFIED accepted.log
+          done
+      - name: Reject malformed and forbidden source
+        run: |
+          set -euo pipefail
+          for file in tests/fail/*.ps ../pscv0-lean-native/tests/fail/*.ps; do
+            if lake exe ps0 check "$file" > rejected.log 2>&1; then
+              cat rejected.log
+              echo "PS0 accidentally accepted: $file"
+              exit 1
+            fi
+          done
+      - name: Native artifact qualification and refusal
+        run: |
+          set -euo pipefail
+          for file in tests/fail/sorry.ps tests/fail/unsafe.ps ../pscv0-lean-native/tests/fail/function_state_false_spec.ps; do
+            rm -rf build/rejected
+            if lake exe ps0 build "$file" Rejected build/rejected > rejected-native.log 2>&1; then
+              cat rejected-native.log
+              echo "PS0 emitted after rejection: $file"
+              exit 1
+            fi
+            test ! -e build/rejected/Rejected.c
+            test ! -e build/rejected/Rejected.olean
+          done
+          lake exe ps0 build ../pscv0-lean-native/tests/pass/native_math.ps NativeMath build/native
+          test -s build/native/NativeMath.olean
+          test -s build/native/NativeMath.c
+          echo 'PS0_NATIVE_ARTIFACT_UNCERTIFIED: PASS'
