@@ -186,6 +186,14 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
       IO.eprintln s!"PSCV0 source-profile error: {msg}"
       return 1
   | .ok () => pure ()
+  -- A .ps module's imports are private by default. Re-emitting them in a
+  -- legacy Lean header would silently re-export those dependencies, and
+  -- v7 also requires public-name/hidden-body checking. Until PS0-03
+  -- native module emission is complete, refuse artifacts for source imports.
+  -- check / module-header remain available as unqualified analysis modes.
+  unless approved.isEmpty do
+    IO.eprintln "PSCV0-MODULE-BUILD-PENDING: module-style imports require checked v7 export/body lowering"
+    return 1
   let imports := String.join (approved.toList.map fun im => s!"import {im.module}\n")
   let src := "import PS0.Policy\n" ++ imports ++ body ++ "\n\n#pscv_gate\n"
   -- The final bundle directory is published with one same-filesystem
