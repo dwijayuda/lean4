@@ -95,6 +95,7 @@ jobs:
           for pair in \
             'public_import_pending.ps:PSCV0-MODULE-PUBLIC-IMPORT-PENDING' \
             'module_header.ps:PSCV0-MODULE-HEADER-PENDING' \
+            'prelude_header.ps:PSCV0-MODULE-PRELUDE-REFUSED' \
             'meta_import.ps:PSCV0-ENV-META-IMPORT-REFUSED' \
             'import_all.ps:PSCV0-ENV-IMPORT-ALL-REFUSED'; do
             fixture="${pair%%:*}"
