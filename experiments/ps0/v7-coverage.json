@@ -1444,7 +1444,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/pass/do_conditionals.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "N-DO-IFLET-ARROW",
@@ -1905,7 +1907,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/pass/do_conditionals.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "P-DO-ERASED-VERIFIED",
