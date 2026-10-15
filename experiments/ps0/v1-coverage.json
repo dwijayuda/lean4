@@ -114,7 +114,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/implicit_public_module.ps",
+      "candidateCoverage": "MODERN_FRONTEND_CANDIDATE"
     },
     {
       "id": "V1-012",
@@ -132,7 +134,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/implicit_public_module.ps",
+      "candidateCoverage": "MODERN_IMPORT_METADATA_CANDIDATE"
     },
     {
       "id": "V1-014",
@@ -708,7 +712,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/host_category_bridge.ps",
+      "candidateCoverage": "INITIAL_NATIVE_SUBCATEGORY_ONLY"
     },
     {
       "id": "V1-078",
@@ -1170,7 +1176,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/explicit_private_module.ps",
+      "candidateCoverage": "SOURCE_ADMISSION_CANDIDATE"
     },
     {
       "id": "PS0-P-SCOPE-04",
@@ -1181,7 +1189,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/implicit_public_module.ps",
+      "candidateCoverage": "SOURCE_ADMISSION_CANDIDATE"
     },
     {
       "id": "PS0-P-SCOPE-05",
