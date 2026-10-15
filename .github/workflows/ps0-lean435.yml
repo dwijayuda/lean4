@@ -214,6 +214,8 @@ jobs:
           assert len(sm['mappings'].split(';'))==len(js.splitlines())
           assert 'export declare function add(' in ts
           assert 'export declare const bigValue: bigint;' in ts
+          assert 'export declare const fromHostCall: bigint;' in ts
+          assert 'export declare function addTrailing(' in ts
           print('PS0V1_JS_DTS_MAP: PASS')
           PY
           node --input-type=module -e '
@@ -227,6 +229,8 @@ jobs:
             assert.equal(m.clock(),42n);
             assert.equal(m.computedValue,42n);
             assert.equal(m.twice(11n),22n);
+            assert.equal(m.addTrailing(20n,22n),42n);
+            assert.equal(m.fromHostCall,42n);
             assert.throws(()=>m.add(-1n,0n),TypeError);
             console.log("PS0V1_JS_RUNTIME: PASS");
           '
