@@ -91,3 +91,22 @@ modules, Standard, contracts, effects, checked sessions, IDE and release gates.
 Current isolated PR: [dwijayuda/lean4 #5](https://github.com/dwijayuda/lean4/pull/5),
 draft, not merged. The independent PSC0 multi-backend compiler and PR #109
 remain separate and untouched.
+
+## Normative v7 conformance inventory
+
+The [machine-readable v7 inventory](v7-coverage.json) extracts the 150 named
+`13` acceptance/refusal cases from the pinned PSCV0 v7 source reference
+(72 positive, 78 negative), plus 4 E1–E4 errata, 22 F01–F22 findings and
+5 C01–C05 corrections. The local [validator](scripts/validate-v7-coverage.mjs)
+checks integrity and fixture provenance:
+
+```sh
+node scripts/validate-v7-coverage.mjs
+node scripts/validate-v7-coverage.mjs --require-complete  # expected to refuse today
+```
+
+All 181 named rows currently remain **PENDING**. Selected source examples
+have candidate fixture links, **not** verified PASS status. A PASS must cite an
+actual fixture, required negative diagnosis, exact commit and CI run. CI now
+checks the registry integrity but does not falsely demand full v7 acceptance
+from the current bounded native frontend.
