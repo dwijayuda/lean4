@@ -36,8 +36,8 @@ reject negative or non-bigint arguments. TypeScript uses `bigint`
 because its type system cannot itself express the nonnegative refinement.
 
 All other runtime types/commands, imported modules, nested namespaces,
-recursive functions, pattern matching, typeclass/implicit/defaulted
-arguments, effects and foreign calls are currently **explicitly rejected**
+forward/recursive or higher-order functions, named/defaulted calls,
+pattern matching, typeclass/implicit/defaulted parameters, effects and foreign calls are currently **explicitly rejected**
 for the JS backend. Do not silently transpile unknown constructs.
 
 ## Architecture — scalable rather than throwaway
@@ -51,11 +51,11 @@ for the JS backend. Do not silently transpile unknown constructs.
 | `PS0/Backend/Js.lean` | Backend composition |
 | `PS0Main.lean` | One source read, Lean check/policy gate, lowering, staged publication |
 
-`build-js` obtains and retains one accepted Lean environment from
- the same checking pass; every JS export is matched against a safe Core
- definition with an exact Nat (or nullary Unit → Nat) telescope.
+`build-js` obtains and retains one accepted Lean environment from the
+same checking pass; every JS export is matched against a safe Core
+definition with an exact Nat (or nullary Unit → Nat) telescope.
 
- `build-js` runs the existing source admission path first: official pinned Lean
+`build-js` runs the existing source admission path first: official pinned Lean
 elaboration/kernel checking and `#pscv_gate`. Only then does it lower
 the exact original `.ps` source to typed runtime IR and emit artifacts.
 Unsupported source or failed proof checks cause **no output bundle**.
