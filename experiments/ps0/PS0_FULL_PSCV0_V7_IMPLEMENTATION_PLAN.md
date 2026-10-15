@@ -408,3 +408,27 @@ normative `13` IDs** (72 positive and 78 negative) and **31 additional audit IDs
 PASS without exact-commit CI; `--require-complete` currently intentionally
 refuses. This is conformance infrastructure, **not proof that v7 features have
 been fully implemented**.
+
+
+### Declaration grammar implementation checkpoint (15 October 2026)
+
+PS0 now has typed and **inferred-result** `.ps` declaration forms for
+`function`, `def`, private `function` and implicit/instance-headed functions.
+The source-owned `pscvTelescopeSegment` accepts a sequence of nonempty
+comma-separated explicit groups interleaved with native Lean implicit,
+strict-implicit and instance-implicit groups, preserving binder order and
+dependent binder types. Corresponding `function`, `def` and `theorem`
+declarations lower through official Lean 4.35.0 declaration elaboration.
+
+`PSCV0-BIND-02` rejects two adjacent explicit groups. The new source
+macro and native Lean declaration-alternative validator both check this
+rule inside `.ps`, preventing an alternative-spelling bypass. Positive
+and negative PS0-owned source fixtures and independent native `.lean`
+reference examples are under `experiments/ps0/tests/`. They are included
+in CI definitions but **have not yet passed an independently verified
+stable-4.35 workflow run**.
+
+The equal-weight 20-family implementation rubric now estimates **38%
+language readiness** (binder family 3/5 vs 2/5 before); strict normative
+v7 qualification remains **0/181** pending exact-commit CI evidence.
+The v7 source restrictions never constrain ordinary `.lean` files.
