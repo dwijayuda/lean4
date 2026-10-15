@@ -1,5 +1,50 @@
 # PS0 — AI work state (15 October 2026)
 
+## Lean-native JS backend MVP — 15 October 2026
+
+- **User request:** create the *smallest useful* JS backend in **Lean**,
+  exporting `.ps` to `.js`, `.d.ts` and a source map, with a scalable
+  architecture rather than a disposable source-string demo.
+- Added six Lean files under `PS0/Backend/Js`:
+  `IR.lean`, `Lower.lean`, `SourceMap.lean`, `Emit.lean`, the composition
+  `Js.lean` and integration in `PS0Main.lean`.
+- CLI: `lake exe ps0 build-js FILE.ps ModuleName OUTPUT_DIR`.
+  The source is read once, must pass the pinned Lean 4.35 elaborator,
+  kernel checks and `#pscv_gate`, then a **closed** supported syntax
+  fragment lowers to typed Nat runtime IR. No unrecognized construct
+  silently falls back to hand-written JS.
+- Emitter produces exact BigInt ESM arithmetic including saturating
+  `Nat.sub`, TypeScript `bigint` signatures and genuine Source Map v3
+  Base64 VLQ (original source, declaration-line anchors).
+  Runtime function inputs reject JS numbers or negative bigints.
+  All three artifacts are staged as a bundle and published together.
+- Supported initial slice: public `Nat` constants and explicitly
+  typed `Nat` functions with Nat literals, variables, parentheses,
+  braces, add/multiply/subtract and source-nullary calls. No imports,
+  namespaces, ADTs, recursion, non-Nat types or effects yet.
+- Added `tests/js/nat_mvp.ps` and negative unsupported type,
+  expression and import fixtures. CI executes generated ESM through
+  Node, validates big values > 2^53, runtime guards, `.d.ts`,
+  source-map structure, byte-for-byte reproducibility, rejection and
+  no overwrite. **No authored JS/MJS implementation source files.**
+- **Assurance:** Lean checking of source is not a proof that backend
+  JS preserves Lean semantics. This is a bounded, reviewable
+  implementation with differential runtime tests; *not* verified
+  executable JS or full v7 backend completeness. No new trusted
+  axioms or JS runtime adapter was added.
+- The v7 **language feature** readiness metric stays **41%**
+  engineering estimate, strict source conformance **0/181**
+  recorded exact-CI passes until actual build evidence is observed.
+  Track the JS backend separately from the v7 language score.
+
+**Next:** inspect exact-commit Lean 4.35 CI; resolve any real
+quotation/parser/type errors in the new backend as a family.
+Then add checked-core semantic linkage and monomorphic function calls
+to typed IR, followed by Bool and selected ADTs; do not add
+string-based fallback transpilation. Full module linkage depends on
+PS0-03's real module graph and source/public-body exposure rules.
+See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md).
+
 ## PS0-03 implicit modules and export/import metadata — 15 October 2026
 
 **Implementation checkpoint preceding this update:** `80d2ceb23dde531973ab60d2229c6856609573c2`. Always inspect the live PR #5 HEAD before further writes.
