@@ -27,7 +27,8 @@ Exports supported:
 - `function f(x: Nat, y: Nat): Nat := expression`
 - `function f(): Nat := expression` (selected v7 Unit nullary call)
 - Nat literals, parameters, parentheses, one-term braces and Nat `+`,
-  `*`, `-` (saturating subtraction)
+  `*`, `-` (saturating subtraction); exact-arity calls to earlier eligible
+  Nat functions, source-nullary calls, and references to earlier Nat constants
 
 Nat is represented by **nonnegative JS bigint**, not floating-point
 number, preserving integers greater than 2^53. Generated functions
@@ -50,7 +51,11 @@ for the JS backend. Do not silently transpile unknown constructs.
 | `PS0/Backend/Js.lean` | Backend composition |
 | `PS0Main.lean` | One source read, Lean check/policy gate, lowering, staged publication |
 
-`build-js` runs existing `checkSource` first: official pinned Lean
+`build-js` obtains and retains one accepted Lean environment from
+ the same checking pass; every JS export is matched against a safe Core
+ definition with an exact Nat (or nullary Unit → Nat) telescope.
+
+ `build-js` runs the existing source admission path first: official pinned Lean
 elaboration/kernel checking and `#pscv_gate`. Only then does it lower
 the exact original `.ps` source to typed runtime IR and emit artifacts.
 Unsupported source or failed proof checks cause **no output bundle**.
