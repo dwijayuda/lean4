@@ -1,0 +1,12 @@
+-- PSCV0 v7 inferred result types use official Lean declaration elaboration.
+function twice(n: Nat) := { n + n }
+function zero() := { (42 : Nat) }
+private function privateNext(n: Nat) := { n + 1 }
+def triple(n: Nat) := { n + n + n }
+function keep {α: Type}[Inhabited α](x: α) := x
+
+theorem twiceCorrect(n: Nat): twice(n) = n + n := by { rfl }
+theorem zeroCorrect: zero() = 42 := by { rfl }
+theorem privateNextCorrect(n: Nat): privateNext(n) = n + 1 := by { rfl }
+theorem tripleCorrect(n: Nat): triple(n) = n + n + n := by { rfl }
+theorem keepCorrect {α: Type}[Inhabited α](x: α): keep(x) = x := by { rfl }
