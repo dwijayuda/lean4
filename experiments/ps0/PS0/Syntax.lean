@@ -157,7 +157,7 @@ macro_rules
     let binders ← explicitLeanBinders bs true
     `(private def $f:ident $binders* := $body:term)
 
-/-- Local where definitions use the explicit PSCV0 def grammar and are
+/-- Local where definitions use the explicit PS0V1 def grammar and are
 lowered to Lean's native recursive local declarations. -/
 declare_syntax_cat pscvWhereDef
 syntax "def " ident "(" pscvBinder,+ ")" ":" term ":=" term : pscvWhereDef
@@ -230,7 +230,7 @@ private def orderedLeanBinders
     match part with
     | `(pscvTelescopeSegment| ($[$bs:pscvBinder],*)) =>
         if precedingExplicit then
-          Macro.throwError "PSCV0-BIND-02: adjacent explicit groups must be joined by commas"
+          Macro.throwError "PS0V1-BIND-02: adjacent explicit groups must be joined by commas"
         let native ← explicitLeanBinders bs
         result := result ++ native
         precedingExplicit := true
@@ -335,16 +335,16 @@ def elabPscvEmptyCall : TermElab := fun stx expectedType? => do
   let fnType ← whnf (← inferType fn)
   match fnType with
   | .forallE .. => pure ()
-  | _ => throwError "PSCV0-CALL-EMPTY: head is not callable"
+  | _ => throwError "PS0V1-CALL-EMPTY: head is not callable"
   let applied ← elabAppArgs fn #[] #[] expectedType? false false
   let restType ← whnf (← inferType applied)
   match restType with
   | .forallE binderName domain _ binderInfo =>
     unless binderInfo.isExplicit do
-      throwError "PSCV0-CALL-EMPTY: unresolved implicit argument"
+      throwError "PS0V1-CALL-EMPTY: unresolved implicit argument"
     let domain ← instantiateMVars domain
     if domain.hasMVar || !(← isDefEq domain (mkConst `Unit)) then
-      throwError "PSCV0-CALL-EMPTY: unresolved required non-Unit argument"
+      throwError "PS0V1-CALL-EMPTY: unresolved required non-Unit argument"
     let unitValue ← elabTerm (← `(term| ())) (some domain)
     let completed := mkApp applied unitValue
     let remaining ← whnf (← inferType completed)
@@ -352,13 +352,13 @@ def elabPscvEmptyCall : TermElab := fun stx expectedType? => do
       match remaining with
       | .forallE nextName _ _ nextInfo =>
         if nextInfo.isExplicit && !nextName.isAnonymous then
-          throwError "PSCV0-CALL-EMPTY: more than one required argument"
+          throwError "PS0V1-CALL-EMPTY: more than one required argument"
       | _ => pure ()
     return completed
   | _ =>
     return applied
 
-/-- PSCV0 comma applications are curried Lean applications. Named arguments are
+/-- PS0V1 comma applications are curried Lean applications. Named arguments are
 native Lean binder names and must follow all source positional arguments. -/
 declare_syntax_cat pscvCallArg
 syntax ident " := " term : pscvCallArg
@@ -374,21 +374,21 @@ macro_rules (kind := pscvCall)
       match arg with
       | `(pscvCallArg| $n:ident := $v:term) =>
         if used.contains n.getId then
-          Macro.throwError "PSCV0-CALL-NAMED: duplicate argument name"
+          Macro.throwError "PS0V1-CALL-NAMED: duplicate argument name"
         seenNamed := true
         used := used.push n.getId
         let named ← `(Lean.Parser.Term.namedArgument| ($n:ident := $v:term))
         parsedArgs := parsedArgs.push named.raw
       | `(pscvCallArg| $v:term) =>
         if seenNamed then
-          Macro.throwError "PSCV0-CALL-ORDER: positional arguments cannot follow named arguments"
+          Macro.throwError "PS0V1-CALL-ORDER: positional arguments cannot follow named arguments"
         parsedArgs := parsedArgs.push v.raw
       | _ => Macro.throwUnsupported
     -- A single Lean application node keeps defaults and named arguments in the
     -- same elaboration pass, rather than prematurely applying partial calls.
     return mkNode ``Lean.Parser.Term.app #[f.raw, mkNullNode parsedArgs]
 
-/-- Use the native Lean structure-field parser inside PSCV0 braces. -/
+/-- Use the native Lean structure-field parser inside PS0V1 braces. -/
 syntax (name := pscvBracedStructure)
   "structure " ident " where " "{" structFields "}" : command
 
@@ -439,7 +439,7 @@ macro_rules (kind := pscvBracedInstanceNamed)
       `(instance $name:ident : $classTy:term := $fields:term)
 
 /-- Instance headers have the same ordered, Lean-grounded binder telescope
-as PSCV0 definitions. They never acquire a synthetic Unit parameter. -/
+as PS0V1 definitions. They never acquire a synthetic Unit parameter. -/
 syntax (name := pscvBracedInstanceTelescopeAnonymous)
   "instance " pscvTelescopeSegment+ ":" term " where " term : command
 syntax (name := pscvBracedInstanceTelescopeNamed)
@@ -511,7 +511,7 @@ macro_rules (kind := pscvBracedMutual)
       $cmds:command*
     end)
 
-/-- PSCV0 constructors preserve Lean's original positivity and recursor rules. -/
+/-- PS0V1 constructors preserve Lean's original positivity and recursor rules. -/
 declare_syntax_cat pscvConstructor
 syntax "| " ident ":" term : pscvConstructor
 syntax "| " ident "(" pscvBinder,+ ")" ":" term : pscvConstructor
@@ -579,7 +579,7 @@ macro_rules (kind := pscvBracedInductiveDeriving)
       $native:ctor*
       deriving $[$names:ident],*)
 
-/-- PSCV0 matches use a braced alternative sequence while keeping Lean's
+/-- PS0V1 matches use a braced alternative sequence while keeping Lean's
 native discriminants, pattern elaborator, motive inference, and exhaustiveness. -/
 declare_syntax_cat pscvMatchAlt
 syntax "| " term,+ " => " term : pscvMatchAlt
@@ -651,7 +651,7 @@ macro_rules (kind := pscvBracedIfLet)
     `(if let $pat:term := $discr:term then $success:term else $failure:term)
 
 /-!
-Source-only PSCV0 do-conditionals.  The pinned Lean Parser.Do.doIf already
+Source-only PS0V1 do-conditionals.  The pinned Lean Parser.Do.doIf already
 owns typed statements and pattern-binding scope.  We only replace v7's
 parenthesized condition and braced doSeq spelling with that native syntax.
 Do NOT reimplement branch typing or pattern matching.
