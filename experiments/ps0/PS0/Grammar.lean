@@ -233,6 +233,8 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
     else if k == "Lean.Parser.Command.instance" &&
         s[5].isOfKind ``Lean.Parser.Command.declValSimple then
       some "PSCV0-INSTANCE-VALUE-REFUSED: use selected instance where fields"
+    else if k == "Lean.Parser.Command.instance" then
+      some "PSCV0-INSTANCE-BRACES: instance field declarations require where { ... }"
     else if (kind == ``PS0.pscvDoIfElse || kind == ``PS0.pscvDoIf ||
              kind == ``PS0.pscvDoIfLetElse || kind == ``PS0.pscvDoIfLet) &&
              containsUnbracedDoSeq s then
