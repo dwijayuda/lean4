@@ -2,12 +2,12 @@ import Lean
 import Lean.Elab.Frontend
 import Lean.Elab.Import
 import Lean.Compiler.LCNF.EmitC
-import PSCVL.Grammar
-import PSCVL.Policy
-import PSCVL.StandardEnv
+import PS0.Grammar
+import PS0.Policy
+import PS0.StandardEnv
 
 /-!
-PSCV0 Lean-native frontend. Lean performs all declaration elaboration, proof
+PS0 standalone Lean-native frontend. Lean performs all declaration elaboration, proof
 checking, compiler lowering and C emission. No alternative typechecker.
 -/
 
@@ -15,8 +15,7 @@ open Lean
 
 namespace PS0
 
--- PS0 reuses the existing PSCVL grammar, macros, and policy implementations.
-open PSCVL
+-- The imported PS0-owned modules are the only ProofScript frontend authority.
 
 private def options : Options :=
   ({} : Options)
@@ -42,17 +41,13 @@ private def approvedSource (src filename : String) :
     | return .error "invalid UTF-8 boundary at PSCV0 import header"
   return .ok (imports, String.ofList body.toList)
 
-private def checkFile (path : String) : IO UInt32 := do
-  unless path.endsWith ".ps" do
-    IO.eprintln "PSCV0 expects a .ps source file"
-    return 2
-  let source ← IO.FS.readFile path
+private def checkSource (path source : String) : IO UInt32 := do
   let (approved, body) ← match ← approvedSource source path with
     | .ok v => pure v
     | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  let env ← importModules (#[{ module := `PSCVL.Policy : Import }] ++ approved) {}
+  let env ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
     (trustLevel := 0) (loadExts := true)
   match validateSourceSyntax body path env options with
   | .error msg =>
@@ -68,6 +63,13 @@ private def checkFile (path : String) : IO UInt32 := do
   IO.println "PSCV0: Lean checking passed (UNCERTIFIED)"
   return 0
 
+private def checkFile (path : String) : IO UInt32 := do
+  unless path.endsWith ".ps" do
+    IO.eprintln "PS0 expects a .ps source file"
+    return 2
+  let source ← IO.FS.readFile path
+  checkSource path source
+
 private def validModuleName (s : String) : Bool :=
   !s.isEmpty && !(s.contains '/') && !(s.contains '.') &&
     !(s.contains '\\') && !(s.contains ' ')
@@ -79,14 +81,19 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   unless validModuleName moduleName do
     IO.eprintln "PSCV0 native module name must be a simple identifier"
     return 2
-  let status ← checkFile path
-  if status != 0 then return status
+  -- Freeze user-authored source once: check and emit use identical bytes.
+  -- A future fully checked session must also bind Lean environment identity.
+  unless path.endsWith ".ps" do
+    IO.eprintln "PS0 expects a .ps source file"
+    return 2
   let raw ← IO.FS.readFile path
+  let status ← checkSource path raw
+  if status != 0 then return status
   let (approved, body) ← match ← approvedSource raw path with
     | .ok v => pure v
     | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
   let imports := String.join (approved.toList.map fun im => s!"import {im.module}\n")
-  let src := "import PSCVL.Policy\n" ++ imports ++ body ++ "\n\n#pscv_gate\n"
+  let src := "import PS0.Policy\n" ++ imports ++ body ++ "\n\n#pscv_gate\n"
   let out := System.FilePath.mk outputDir
   IO.FS.createDirAll out
   -- The preceding in-process check consumes the importer initialization flag.
@@ -107,7 +114,7 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
 
 private def syntaxKinds (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
-    IO.eprintln "PSCV0 expects a .ps source file"
+    IO.eprintln "PS0 expects a .ps source file"
     return 2
   let source ← IO.FS.readFile path
   let (approved, body) ← match ← approvedSource source path with
@@ -115,7 +122,7 @@ private def syntaxKinds (path : String) : IO UInt32 := do
     | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  let env ← importModules (#[{ module := `PSCVL.Policy : Import }] ++ approved) {}
+  let env ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
     (trustLevel := 0) (loadExts := true)
   match auditSourceSyntax body path env options with
   | .ok kinds =>
@@ -128,7 +135,7 @@ private def syntaxKinds (path : String) : IO UInt32 := do
 def cli (args : List String) : IO UInt32 := do
   -- Do not accept an accidental RC4 / nightly / local Lean binary.
   let expected := "eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
-  if Lean.githash != expected || PSCVL.StandardEnv.leanRevision != expected then
+  if Lean.githash != expected || PS0.StandardEnv.leanRevision != expected then
     IO.eprintln s!"PS0-LEAN-PIN: expected official Lean 4.35.0 ({expected}); found {Lean.githash}"
     return 2
   try
