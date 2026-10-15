@@ -85,6 +85,28 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "Lean.Parser.Command.printAxioms", "Lean.reduceCmd"
     ] : List String).contains k
 
+/-- Lean 4.35.0 Parser.Command.optDeclSig and declSig each store
+    native binders in their first repetition child. V7 selects at most one
+    consecutive explicit group; all intervening implicit/instance groups
+    preserve the ordinary native binder telescope. This also covers
+    unrestricted Lean *declaration* alternatives accepted by our overlay,
+    rather than relying only on PS0 macro syntax to reject the gap. -/
+private def hasAdjacentNativeExplicitGroups (decl : Syntax) : Bool := Id.run do
+  let kind := decl.getKind.toString
+  unless (["Lean.Parser.Command.definition",
+           "Lean.Parser.Command.theorem",
+           "Lean.Parser.Command.abbrev",
+           "Lean.Parser.Command.opaque"] : List String).contains kind do
+    return false
+  let binders := decl[2][0].getArgs
+  let mut lastExplicit := false
+  for binder in binders do
+    let isExplicit := binder.getKind == ``Lean.Parser.Term.explicitBinder
+    if isExplicit && lastExplicit then
+      return true
+    lastExplicit := isExplicit
+  return false
+
 /-- Reject known metaprogramming and proof escapes before the Lean elaborator
 runs. Ordinary strings and comments are syntax leaves, not command text. -/
 private def excludedName (name : Name) : Bool :=
@@ -166,7 +188,9 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
     let k := kind.toString
     -- Pinned Lean Command.opaque has an optional declaration value at [3].
     -- v7 never admits a bodyless opaque assumption as ordinary .ps source.
-    if k == "Lean.Parser.Command.opaque" && s[3].isNone then
+    if hasAdjacentNativeExplicitGroups s then
+      some "PSCV0-BIND-02: adjacent explicit binder groups are not selected v7 source"
+    else if k == "Lean.Parser.Command.opaque" && s[3].isNone then
       some "PSCV0-OPAQUE-BODY-REQUIRED: opaque declarations need a checked value"
     -- Native value-form instance := is intentionally excluded by the v7
     -- selected instance header/field grammar; require the where-field form.
