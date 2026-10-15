@@ -1861,9 +1861,7 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null,
-      "fixtureCandidate": "tests/pass/interleaved_binders.ps",
-      "fixtureCandidateStatus": "NOT_QUALIFIED"
+      "qualifiedCiRun": null
     },
     {
       "id": "N-DECL-HEAD-MUTUAL-NULLARY",
