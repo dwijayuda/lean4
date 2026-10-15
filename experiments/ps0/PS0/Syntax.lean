@@ -81,6 +81,24 @@ macro_rules
     let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term := $body:term)
 
+/-- V7 permits inference of the result type for both def and function.
+    The native Lean elaborator still decides every implicit type/term. -/
+syntax (name := pscvDefinitionInferred)
+  "def " ident "(" pscvBinder,+ ")" ":=" term : command
+syntax (name := pscvFunctionInferred)
+  "function " ident "(" pscvBinder,* ")" ":=" term : command
+
+macro_rules (kind := pscvDefinitionInferred)
+  | `(def $f:ident ($[$bs:pscvBinder],*) := $body:term) => do
+    let binders ← explicitLeanBinders bs
+    `(def $f:ident $binders* := $body:term)
+
+macro_rules (kind := pscvFunctionInferred)
+  | `(function $f:ident ($[$bs:pscvBinder],*) := $body:term) => do
+    let binders ← explicitLeanBinders bs true
+    `(def $f:ident $binders* := $body:term)
+
+
 
 /-- Visibility maps to Lean's native private declaration modifier. -/
 syntax (name := pscvPrivateConst)
@@ -89,6 +107,8 @@ syntax (name := pscvPrivateConstInferred)
   "private " "const " ident ":=" term : command
 syntax (name := pscvPrivateFunction)
   "private " "function " ident "(" pscvBinder,* ")" ":" term ":=" term : command
+syntax (name := pscvPrivateFunctionInferred)
+  "private " "function " ident "(" pscvBinder,* ")" ":=" term : command
 
 macro_rules
   | `(private const $name:ident : $ty:term := $val:term) =>
@@ -98,6 +118,9 @@ macro_rules
   | `(private function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term) => do
     let binders ← explicitLeanBinders bs true
     `(private def $f:ident $binders* : $ret:term := $body:term)
+  | `(private function $f:ident ($[$bs:pscvBinder],*) := $body:term) => do
+    let binders ← explicitLeanBinders bs true
+    `(private def $f:ident $binders* := $body:term)
 
 /-- Local where definitions use the explicit PSCV0 def grammar and are
 lowered to Lean's native recursive local declarations. -/
@@ -139,12 +162,18 @@ macro_rules
 instance elaborator, rather than emulating the semantics in a new compiler. -/
 syntax (name := pscvImplicitFunction)
   "function " ident pscvNonExplicitBinder+ "(" pscvBinder,* ")" ":" term ":=" term : command
+syntax (name := pscvImplicitFunctionInferred)
+  "function " ident pscvNonExplicitBinder+ "(" pscvBinder,* ")" ":=" term : command
 
 macro_rules
   | `(function $f:ident $implicitBs:pscvNonExplicitBinder* ($[$bs:pscvBinder],*) : $result:term := $body:term) => do
     let imps ← nonExplicitLeanBinders implicitBs
     let args ← explicitLeanBinders bs true
     `(def $f:ident $imps* $args* : $result:term := $body:term)
+  | `(function $f:ident $implicitBs:pscvNonExplicitBinder* ($[$bs:pscvBinder],*) := $body:term) => do
+    let imps ← nonExplicitLeanBinders implicitBs
+    let args ← explicitLeanBinders bs true
+    `(def $f:ident $imps* $args* := $body:term)
 
 /-- Contracted functions use the proof-producing intrinsic Lean 4.35
 WP semantics: `f.spec` must be discharged by pinned `vcgen`. -/
