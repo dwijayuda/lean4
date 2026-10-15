@@ -31,4 +31,4 @@ instance selected {α: Type} : IdentityBox(α) where {
 theorem defaultBoxNat :
     (inferInstance : DefaultBox(Nat)).fallback = 0 := by { rfl }
 theorem identityBoxNat :
-    selected.identity(4) = 4 := by { rfl }
+    (selected : IdentityBox(Nat)).identity(4) = 4 := by { rfl }
