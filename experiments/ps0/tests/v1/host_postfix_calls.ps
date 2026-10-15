@@ -1,0 +1,19 @@
+-- PS0 v1: explicit host category call lowering preserves PS argument
+-- arity, argument order, nested application, tuple and native syntax data.
+macro "psApply " e:psTerm : term => do
+  let syntax ← PS0.Syntax.lower `psTerm e.raw
+  return ⟨syntax⟩
+
+def addNat (x : Nat) (y : Nat) : Nat := x + y
+def twice (x : Nat) : Nat := x * 2
+def pairSum (p : Nat × Nat) : Nat := p.1 + p.2
+
+theorem hostTwoArgs : psApply addNat(20, 22) = 42 := by rfl
+theorem hostNested : psApply addNat(twice(20), 2) = 42 := by rfl
+theorem hostNamed : psApply addNat(y := 22, x := 20) = 42 := by rfl
+theorem hostTuple : psApply pairSum((20, 22)) = 42 := by rfl
+
+-- Native quotations are independently owned syntax data, not rewritten
+-- by the PS category lowering bridge unless explicitly passed to it.
+def nativeQuotation : Lean.MacroM (Lean.TSyntax `term) :=
+  `(term| addNat 20 22)
