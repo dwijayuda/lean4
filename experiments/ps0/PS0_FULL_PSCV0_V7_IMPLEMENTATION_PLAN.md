@@ -6,6 +6,34 @@
 **Normative language authority:** [PSCV0 v7 reference in dwijayuda/pskernel](https://github.com/dwijayuda/pskernel/blob/f79d334ef922eb7f71f7527dbc798ebb0dbeb610/psc0/PSCV0_LANGUAGE_REFERENCE.md) (Git blob `25e1ef788794db175a2183679e37ff8c8e9b6a2e`). The **2026-10-14 stable pin amendment** at its beginning supersedes the historical RC4 pin cited in older sections. Source grammar ownership is ``0A/0B`; detailed language semantics ``1–12`; normative test/evidence matrix ``13–14`.
 **Isolation:** PS0 lives in the user's Lean fork. Preserve the current independent multi-backend PSC0 in `dwijayuda/pskernel` and its PR #109. Do not replace, rewrite, merge or discard PSC0. Preserve the older PS0 parent experiment branch and upstream Lean sources.
 
+## Source-extension boundary amendment — 15 October 2026
+
+**Normative PS0 direction:** v7 source-language policy applies **only**
+to `.ps` files. An ordinary `.lean` source is always delegated to the
+official Lean 4.35.0 executable and is not filtered through ProofScript
+grammar, `#pscv_gate`, source axioms, effect restrictions, or
+PSCV0-only declarations. Thus native Lean `axiom`, `sorry`, `unsafe`,
+`partial`, imports, user tactics/macros and unrestricted `#eval` retain
+ordinary Lean behavior. Source extension classification must occur
+*before* selecting a compiler frontend.
+
+PS0 implements `ps0 lean <native arguments...>`, `ps0 check file.lean`
+and `ps0 build file.lean Name out/` through a separate OS process that
+executes the Lean binary inside the selected sysroot. This prevents the
+PS0 executable's imported syntax/policy registrations from leaking into
+a native Lean module. The ordinary native route produces no PSCV0
+verified-source claim. The `.ps` route continues to enforce all selected
+v7 restrictions. See [SOURCE_PROFILE_BOUNDARY.md](SOURCE_PROFILE_BOUNDARY.md).
+
+**Acceptance obligation:** CI must demonstrate unrestricted native
+`.lean` with `axiom`, `unsafe`, `partial`, `sorry`, and effectful
+`#eval`, while the corresponding `.ps` inputs fail closed. Any future
+mixed-module graph keeps `.lean` semantics unrestricted but audits
+its imported dependencies when a `.ps` verified executable uses them.
+The 20-family v7 completion rubric applies only to `.ps`; do not count
+native Lean capabilities or this routing improvement as completed v7
+language features.
+
 ## 1. Objective, guarantees and deliberate non-goals
 
 Build a **complete PSCV0 v7 compiler variant called PS0** with authoritative `.ps` files, precisely v7-selected syntax and Lean-compatible semantics. Use the **PS0-owned, reviewed adaptation** of the historical Lean-native PSCVL syntax macros and grammar validator now in `experiments/ps0/PS0/` (not the independent PSC0 portable parser), while the **official Lean 4.35.0 elaborator, type system, termination checker, tactics, kernel and native compiler** perform their real work. No second PS0 typechecker, no new dependent unification engine, no separate kernel, and no parallel JS/Rust/Wasm backend.
