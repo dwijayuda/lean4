@@ -1594,7 +1594,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/fail/instance_header_missing_type.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "N-INSTANCE-HDR-EMPTY",
@@ -1607,7 +1609,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/fail/instance_header_nullary.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "N-INSTANCE-HDR-ADJACENT",
@@ -1620,7 +1624,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/fail/instance_header_adjacent.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "N-INSTANCE-HDR-VALUE",
