@@ -420,6 +420,26 @@ macro_rules
     let binders ← explicitLeanBinders args
     `(class $name:ident $binders* where $fields:structFields)
 
+/-!
+PSCV0-INSTANCE-01: the initial v7 instance value is a braced field list
+after `where`. We reuse Lean's `structInst` term elaboration and `instance`
+declaration checker. Generated native Lean may use `:= { ... }`, although
+that spelling is forbidden in user-authored .ps.
+-/
+
+syntax (name := pscvBracedInstanceAnonymous)
+  "instance " ":" term " where " term : command
+syntax (name := pscvBracedInstanceNamed)
+  "instance " ident ":" term " where " term : command
+
+macro_rules (kind := pscvBracedInstanceAnonymous)
+  | `(instance : $classTy:term where $fields:term) =>
+      `(instance : $classTy:term := $fields:term)
+
+macro_rules (kind := pscvBracedInstanceNamed)
+  | `(instance $name:ident : $classTy:term where $fields:term) =>
+      `(instance $name:ident : $classTy:term := $fields:term)
+
 /-- Mutual recursion is only a braced grouping of the official Lean mutual
 declaration elaborator and termination checker. -/
 syntax (name := pscvBracedMutual)
