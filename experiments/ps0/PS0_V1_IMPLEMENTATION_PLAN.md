@@ -20,7 +20,7 @@ Compile the PS0 Lake package with the exact Lean pin. Run v1 ordinary source tes
 
 ### G1 — Core PS category ownership and lowering
 
-Extend the new native-capture foundation `psTerm`, `psCommand`, `psTactic`, `psDoSeq` and `PS0.Syntax.lower` with actual PS-owned host lowering. Preserve native syntax quotations, distinct DSL categories, and token/source spans. Implement protected PS adjacent calls, strict gap/tuple/Unit completion, type-directed default and named arguments, and the standard operand-slot adaptation registry. No regex transpiler, typechecker fork or silent native fallback.
+Extend the new native-capture foundation `psTerm`, `psCommand`, `psTactic`, `psDoSeq` and `PS0.Syntax.lower` with actual PS-owned host lowering. Preserve native syntax quotations, distinct DSL categories, and token/source spans. Extend the first explicit `psTerm` adjacent identifier-call/argument lowering through the full standard operand-slot adapter. It already constructs a native Lean application from owned positional/named arguments and preserves native syntax subtrees, but does not cover arbitrary postfix heads, source-nullary calls, trailing commas or all standard host entry positions. Then complete strict gap/tuple/Unit completion, type-directed defaults, quotation ownership, and the standard operand-slot registration map. No regex transpiler, typechecker fork or silent native fallback.
 
 ### G2 — Full declaration, data, recursion, proof and effect families
 
