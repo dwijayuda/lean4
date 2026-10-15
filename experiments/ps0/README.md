@@ -49,17 +49,21 @@ The resulting bundle contains `NatMvp.js` (ESM), `NatMvp.d.ts`
 (TypeScript declarations), and `NatMvp.js.map` (Source Map v3,
 signed Base64-VLQ declaration mappings). The initial runtime fragment
 is publicly exported `Nat` constants and selected `Nat` functions
-(literals, explicit Nat parameters, `+`, `*` and saturating `-`).
+(literals, explicit Nat parameters, `+`, `*`, saturating `-`,
+exact-arity calls to preceding Nat functions, and earlier Nat constants).
 `Nat` values are exact JS `bigint` and runtime inputs are guarded as
 nonnegative bigints. Everything else — including module imports,
 effects, patterns and JS platform interop — is explicitly unsupported
 rather than guessed.
 
+The backend additionally validates emitted signatures against the
+same checked Lean Core environment that admitted the source.
+
 The architecture separates source AST lowering, typed portable
 runtime IR, JS/TS emission, and source-map construction under
 `PS0/Backend/Js/*.lean`. The files are atomically staged and
 publication refuses overwrites. Future typed IR cases can add
-ADTs, calls, total recursion and audited effects without replacing
+ADTs, richer calls, total recursion and audited effects without replacing
 the backend. See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md)
 for feature boundaries, assurance caveats, CLI and expansion plan.
 
