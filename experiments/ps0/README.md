@@ -45,10 +45,13 @@ program with the local `PS0:static` library.
   closed command policy, rather than accepting whenever one happens to be
   allowed. This is deliberately conservative and may need finer resolution
   during PS0-01 grammar closure.
-- `build` now reads its user `.ps` source bytes **once** and passes those
-  bytes to preflight and compilation. The current pipeline still uses separate
-  Lean elaboration calls and direct artifact publication; immutable checked
-  graph identity and transactional staging remain PS0-09 requirements.
+- `build` reads its user `.ps` source bytes **once**, validates source syntax,
+  and uses one official `runFrontend` elaboration for policy checking and C/olean
+  emission. Output is produced in a same-filesystem sibling staging directory
+  and atomically renamed into the requested **previously absent** bundle
+  directory only after both outputs exist. Existing bundles are never overwritten.
+  Complete module/environment identity, race-resistant path policy and a signed
+  claim manifest remain PS0-09 work.
 
 These are bounded improvements, **not** an assurance proof, complete grammar
 closure, semantic correspondence theorem, or a security sandbox.
@@ -64,7 +67,7 @@ lake exe ps0 check tests/pass/basic.ps
 lake exe ps0 build tests/pass/native_math.ps NativeMath build/native
 ```
 
-The last command uses official `Lean.Elab.runFrontend` /
+The last command uses one official `Lean.Elab.runFrontend` /
 `Lean.Compiler.LCNF.emitC` and produces `.olean` and C (both **UNCERTIFIED**).
 The CI also tests native linking/execution using the PS0-owned harness.
 The source's `partial`, `unsafe`, `axiom`, `sorry` and unselected syntax
