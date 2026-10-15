@@ -23,20 +23,58 @@ syntax (name := ps0NativeCommandBridge) command : psCommand
 syntax (name := ps0NativeTacticBridge) tactic : psTactic
 syntax (name := ps0NativeDoBridge) doSeq : psDoSeq
 
+/-!
+PS0V1-APP-01: the first host-owned postfix production. The high-priority
+native/extension head categories and broader standard operand-slot registry
+are separate work. The syntax captures comma-separated host arguments as
+syntax data and checks source adjacency via Lean's native noWs token parser.
+-/
+declare_syntax_cat psCallArg
+syntax (name := ps0PositionalArg) psTerm : psCallArg
+syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
+
+-- Deliberately limit this initial bridge to an identifier head. A native
+-- projection/indexed/explicit-universe postfix needs the full head adapter.
+syntax:max (name := ps0HostAdjacentCall)
+  ident noWs "(" psCallArg,+ ")" : psTerm
+
 namespace PS0.Syntax
 
-/-- Explicit bridge from a supported native-capture host category into its
-    underlying native syntax. This does not elaborate the source or synthesize
-    arguments; it preserves the original input subtree and scope references.
-
-    Host-specific call nodes must use their semantic elaborator before they
-    become native executable terms. Until that adapter is complete, this
-    function rejects unsupported raw PS nodes rather than repairing them
-    or reparsing their printed text. -/
-def lower (category : Name) (source : Lean.Syntax) :
+/-- Explicit PS host-category → native-syntax bridge. No source-text
+    reparsing, name lookup, type inference, or tactic/proof execution occurs.
+    For an ordinary native capture the original tree is preserved exactly.
+    For the owned adjacent call, each host argument is lowered in order and
+    assembled into Lean's native application node. Quoted native syntax,
+    extension-owned categories, and patterns are opaque to this function.
+    Missing/malformed source category nodes fail closed. -/
+partial def lower (category : Name) (source : Lean.Syntax) :
     Lean.MacroM Lean.Syntax := do
   if category == `psTerm then
     match source with
+    | `(psTerm| $head:ident($[$args:psCallArg],*)) => do
+        let mut positional := true
+        let mut seen : Array Name := #[]
+        let mut nativeArgs : Array Lean.Syntax := #[]
+        for arg in args do
+          match arg with
+          | `(psCallArg| $name:ident := $value:psTerm) =>
+              let n := name.getId
+              if seen.contains n then
+                throwError "PS0V1-CALL-NAMED: duplicate named argument {n}"
+              positional := false
+              seen := seen.push n
+              let lowered ← lower `psTerm value.raw
+              let term : TSyntax `term := ⟨lowered⟩
+              let named ← `(Lean.Parser.Term.namedArgument| ($name:ident := $term:term))
+              nativeArgs := nativeArgs.push named.raw
+          | `(psCallArg| $value:psTerm) =>
+              unless positional do
+                throwError "PS0V1-CALL-ORDER: positional argument after named argument"
+              nativeArgs := nativeArgs.push (← lower `psTerm value.raw)
+          | _ =>
+              throwError "PS0V1-HOST-LOWER: malformed psCallArg"
+        return mkNode ``Lean.Parser.Term.app
+          #[head.raw, mkNullNode nativeArgs]
     | `(psTerm| $native:term) => return native.raw
     | _ => throwError "PS0V1-HOST-LOWER: unsupported psTerm source production"
   else if category == `psCommand then
