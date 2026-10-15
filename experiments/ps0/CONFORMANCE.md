@@ -168,3 +168,35 @@ because native Lean possesses the underlying features.
 **Progress:** estimated `.ps` language readiness **40%** (previous 39%;
 classes/instances/deriving family 3/5); normative CI-qualified
 acceptance **0/181 (0%)**, unchanged.
+
+
+## PSCV0-INSTANCE-PRIO-01 — source priority variants (pending qualification)
+
+Following the first named/anonymous braced instance adapter, PS0 now owns
+selected priority-bearing variants with and without parameter telescopes:
+`instance (priority := high) : C where { ... }`,
+`instance (priority := 750) chosen : C where { ... }`, and
+`instance (priority := low) {α: Type}[Inhabited α] : C(α) where { ... }`.
+The source syntax reuses Lean's native `prio` parser and translates the
+instance into a native declaration. Lean remains responsible for priority
+interpretation, instance registration, and typeclass search. It has **not**
+implemented a separate instance-ordering algorithm.
+
+Positive and negative candidate fixtures:
+`tests/pass/instance_priority.ps`,
+`tests/fail/instance_priority_expression.ps`,
+`tests/fail/instance_priority_unknown.ps`,
+`tests/fail/instance_header_missing_type.ps`,
+`tests/fail/instance_header_nullary.ps` and
+`tests/fail/instance_header_adjacent.ps`. The native counterpart in
+`tests/lean/instance_priority_reference.lean` confirms the intended
+unrestricted Lean spelling. The v7 inventory has **32 candidate IDs**
+and **zero** confirmed PASS receipts.
+
+**Important qualification limit:** no stable Lean 4.35 CI run has been
+retrieved for this branch. The native parser and custom source syntax
+must be tested together before claiming that every form elaborates or
+rejects at its specified phase. Source priority atom policy and the
+frozen instance/priority registry still need complete v7 conformance
+work. Language implementation readiness remains **40%**, not 41%
+merely for adding another syntax variant.
