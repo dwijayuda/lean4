@@ -87,7 +87,7 @@ macro_rules
     let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term := $body:term)
 
-/-- V7 permits inference of the result type for both def and function.
+/-- PS0 v1 permits inference of the result type for both def and function.
     The native Lean elaborator still decides every implicit type/term. -/
 syntax (name := pscvDefinitionInferred)
   "def " ident "(" pscvBinder,+ ")" ":=" term : command
@@ -107,11 +107,10 @@ macro_rules (kind := pscvFunctionInferred)
 
 
 /-!
-PSCV0-TERM-01: bounded well-founded recursion with a required measure
-when a source-owned `decreasing_by by { ... }` proof is supplied.
-Lean 4.35.0's Termination.suffix / native termination elaborator owns
-all actual decrease proof checking; PS0 does not admit partial recursion.
-These branches are distinct from Lean's full native .lean syntax.
+PS0 v1 uses native total and well-founded recursion with a measure
+when the source uses the optional proof wrapper.
+Lean's termination elaborator and all native partial/fixpoint forms remain
+available according to their actual declaration and modifier categories.
 -/
 syntax (name := pscvFunctionTermination)
   "function " ident "(" pscvBinder,+ ")" ":" term ":=" term
@@ -213,7 +212,7 @@ macro_rules
 
 
 /-!
-V7's ordered binder telescope can mix explicit comma-groups with implicit,
+PS0 v1's ordered binder telescope can mix explicit comma-groups with implicit,
 strict-implicit and instance binders. The order is semantically significant:
 dependent binder types are resolved by the native Lean declaration elaborator.
 The source restriction forbids two adjacent explicit groups (BIND-02).
@@ -421,10 +420,9 @@ macro_rules
     `(class $name:ident $binders* where $fields:structFields)
 
 /-!
-PSCV0-INSTANCE-01: the initial v7 instance value is a braced field list
-after `where`. We reuse Lean's `structInst` term elaboration and `instance`
-declaration checker. Generated native Lean may use `:= { ... }`, although
-that spelling is forbidden in user-authored .ps.
+PS0 v1 includes braced instance initializers alongside native value-form
+instance syntax. We reuse Lean's `structInst` term elaboration and
+native instance declaration checker, including value-form instances.
 -/
 
 syntax (name := pscvBracedInstanceAnonymous)
@@ -459,68 +457,47 @@ macro_rules (kind := pscvBracedInstanceTelescopeNamed)
     `(instance $name:ident $binders* : $classTy:term := $fields:term)
 
 /-!
-PSCV0-INSTANCE-PRIO-01: reuse Lean.Parser.Priority's native priority
-parser and native instance typeclass registration. The source v7 grammar
-permits only the selected named or nonnegative decimal priorities, which
-PS0.Grammar validates before any source command elaboration.
+PS0 v1: reuse Lean.Parser.Priority's native priority
+parser and native instance typeclass registration, preserving imported
+priority extensions and user-defined attributes.
 -/
-declare_syntax_cat pscvSelectedPriority
-syntax num : pscvSelectedPriority
-syntax "low" : pscvSelectedPriority
-syntax "mid" : pscvSelectedPriority
-syntax "default" : pscvSelectedPriority
-syntax "high" : pscvSelectedPriority
-
-/-- Finite source profile; each case is parsed again by the pinned Lean
-native priority grammar. We do NOT interpret or renumber priorities in PS0. -/
-private def lowerSelectedPriority
-    (source : TSyntax `pscvSelectedPriority) : MacroM (TSyntax `prio) := do
-  match source with
-  | `(pscvSelectedPriority| $n:num) => `(prio| $n:num)
-  | `(pscvSelectedPriority| low) => `(prio| low)
-  | `(pscvSelectedPriority| mid) => `(prio| mid)
-  | `(pscvSelectedPriority| default) => `(prio| default)
-  | `(pscvSelectedPriority| high) => `(prio| high)
-  | _ => Macro.throwUnsupported
-
+/-- PS0 v1 uses the *registered native Lean priority grammar*, not a
+    frozen source-level shortlist. Imports and extensions can register
+    additional valid priority forms under Lean's own rules. -/
 syntax (name := pscvPrioritizedInstanceAnonymous)
-  "instance " "(priority := " pscvSelectedPriority ")" ":" term " where " term : command
+  "instance " "(priority := " prio ")" ":" term " where " term : command
 syntax (name := pscvPrioritizedInstanceNamed)
-  "instance " "(priority := " pscvSelectedPriority ")" ident ":" term
+  "instance " "(priority := " prio ")" ident ":" term
   " where " term : command
 syntax (name := pscvPrioritizedInstanceTelescopeAnonymous)
-  "instance " "(priority := " pscvSelectedPriority ")" pscvTelescopeSegment+ ":" term
+  "instance " "(priority := " prio ")" pscvTelescopeSegment+ ":" term
   " where " term : command
 syntax (name := pscvPrioritizedInstanceTelescopeNamed)
-  "instance " "(priority := " pscvSelectedPriority ")" ident pscvTelescopeSegment+ ":" term
+  "instance " "(priority := " prio ")" ident pscvTelescopeSegment+ ":" term
   " where " term : command
 
 macro_rules (kind := pscvPrioritizedInstanceAnonymous)
-  | `(instance (priority := $sourcePriority:pscvSelectedPriority) : $ty:term where $fields:term) => do
-      let p ← lowerSelectedPriority sourcePriority
-      `(instance (priority := $p:prio) : $ty:term := $fields:term)
+  | `(instance (priority := $sourcePriority:prio) : $ty:term where $fields:term) => do
+        `(instance (priority := $sourcePriority:prio) : $ty:term := $fields:term)
 
 macro_rules (kind := pscvPrioritizedInstanceNamed)
-  | `(instance (priority := $sourcePriority:pscvSelectedPriority) $name:ident :
+  | `(instance (priority := $sourcePriority:prio) $name:ident :
       $ty:term where $fields:term) => do
-      let p ← lowerSelectedPriority sourcePriority
-      `(instance (priority := $p:prio) $name:ident :
+        `(instance (priority := $sourcePriority:prio) $name:ident :
         $ty:term := $fields:term)
 
 macro_rules (kind := pscvPrioritizedInstanceTelescopeAnonymous)
-  | `(instance (priority := $sourcePriority:pscvSelectedPriority) $parts:pscvTelescopeSegment* :
+  | `(instance (priority := $sourcePriority:prio) $parts:pscvTelescopeSegment* :
       $ty:term where $fields:term) => do
     let binders ← orderedLeanBinders parts
-    let p ← lowerSelectedPriority sourcePriority
-    `(instance (priority := $p:prio) $binders* :
+    `(instance (priority := $sourcePriority:prio) $binders* :
       $ty:term := $fields:term)
 
 macro_rules (kind := pscvPrioritizedInstanceTelescopeNamed)
-  | `(instance (priority := $sourcePriority:pscvSelectedPriority) $name:ident
+  | `(instance (priority := $sourcePriority:prio) $name:ident
       $parts:pscvTelescopeSegment* : $ty:term where $fields:term) => do
     let binders ← orderedLeanBinders parts
-    let p ← lowerSelectedPriority sourcePriority
-    `(instance (priority := $p:prio) $name:ident $binders* :
+    `(instance (priority := $sourcePriority:prio) $name:ident $binders* :
       $ty:term := $fields:term)
 
 /-- Mutual recursion is only a braced grouping of the official Lean mutual
@@ -556,7 +533,7 @@ macro_rules (kind := pscvBracedInductive)
     `(inductive $s:ident where $native:ctor*)
 
 
-/-- Deriving is restricted to the selected Lean RC4 handlers. -/
+/-- The PS0 alias derives through Lean's native registered handlers. -/
 declare_syntax_cat pscvDeriver
 syntax "Repr" : pscvDeriver
 syntax "BEq" : pscvDeriver
