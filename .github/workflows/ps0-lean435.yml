@@ -94,6 +94,25 @@ jobs:
             cat host-category.log
             exit 1
           }
+          lake exe ps0 check tests/v1/host_postfix_calls.ps > host-calls.log 2>&1 || {
+            cat host-calls.log
+            exit 1
+          }
+          # Require intended lowerer diagnostics for malformed source calls.
+          for item in \
+            'host_call_named_then_positional.ps:PS0V1-CALL-ORDER' \
+            'host_call_duplicate_named.ps:PS0V1-CALL-NAMED'; do
+            file="${item%%:*}"
+            reason="${item#*:}"
+            if lake exe ps0 check "tests/v1/$file" > host-negative.log 2>&1; then
+              echo "PS0 accepted malformed host call: $file"
+              exit 1
+            fi
+            grep -F "$reason" host-negative.log || {
+              cat host-negative.log
+              exit 1
+            }
+          done
           grep -F 'PS0V1_IO_OK' v1-io_diagnostics.ps.log
           grep -F 'assumption policy NOT assessed' v1-native_capabilities.ps.log
           echo 'PS0V1_NATIVE_LANGUAGE: PASS'
