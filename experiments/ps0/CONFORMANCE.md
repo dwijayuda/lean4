@@ -138,3 +138,33 @@ Engineering readiness **39%** (was 38%; recursion family 2/5 → 3/5),
 strict v7 conformance **0/181 qualified**. Complete mutual/local
 recursion, all termination suffix variants selected by v7, and full
 Lean-Core correspondence remain open.
+
+
+## PSCV0-INSTANCE-01 — braced native-Lean instance adapter (unqualified)
+
+PS0 now has source syntax for `instance : C where { field := value }`
+and `instance chosen : C where { field := value }`, including selected
+ordered binder telescopes on parametric instances. It lowers these
+to the equivalent native Lean `instance : C := { field := value }`,
+so all typeclass inference, class field elaboration, and proof checking
+remain Lean-owned. The source-only `.ps` profile rejects arbitrary
+`where value`, native unbraced instance fields and source value-form
+instance definitions; `.lean` retains those official Lean forms.
+
+**Source and tests:** `PS0/Syntax.lean`, `PS0/Grammar.lean`,
+`tests/pass/instance_braced_fields.ps`,
+`tests/fail/instance_fields_not_record.ps`,
+`tests/fail/instance_unbraced_fields.ps` and
+`tests/lean/instance_reference.lean`. The CI checks named source
+diagnostics and compares the corresponding native Lean reference.
+No successful exact-commit build has been observed yet.
+
+**Remaining v7 instance requirements:** optional selected priority
+atoms, numeric priorities, all constructor/method binder and
+class/instance registration details, frozen priority ordering and
+source/environment identity. These must not be marked complete merely
+because native Lean possesses the underlying features.
+
+**Progress:** estimated `.ps` language readiness **40%** (previous 39%;
+classes/instances/deriving family 3/5); normative CI-qualified
+acceptance **0/181 (0%)**, unchanged.
