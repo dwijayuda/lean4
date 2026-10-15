@@ -1,0 +1,5 @@
+-- Native instance value syntax is admitted by PS0 v1.
+class ExampleValueClass where
+  value : Nat
+instance : ExampleValueClass := { value := 4 }
+example : (inferInstance : ExampleValueClass).value = 4 := by rfl
