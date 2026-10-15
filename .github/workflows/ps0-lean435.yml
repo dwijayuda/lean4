@@ -412,6 +412,21 @@ jobs:
             fi
             test ! -e build/js-refused
           done
+          # Negative source tests must fail for the intended JS-backend
+          # language subset rule, not merely because the file cannot parse.
+          rm -rf build/js-named-refused
+          if lake exe ps0 build-js tests/js/unsupported_named_call.ps Refused build/js-named-refused > named-call.log 2>&1; then
+            echo "PS0 incorrectly emitted named-argument JS calls"
+            exit 1
+          fi
+          grep -F "PS0-JS-CALL" named-call.log
+          test ! -e build/js-named-refused
+          if lake exe ps0 build-js tests/js/nat_mvp.ps 'Bad-Name' build/js-bad-stem > bad-stem.log 2>&1; then
+            echo "PS0 accepted an unsafe JS output/module name"
+            exit 1
+          fi
+          grep -F "PS0-JS-MODULE" bad-stem.log
+          test ! -e build/js-bad-stem
           # Deterministic backend: identical checked .ps and module identity
           # must produce identical output bytes even in a fresh output dir.
           lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat-second
