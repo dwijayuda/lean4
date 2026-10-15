@@ -11,3 +11,8 @@ function differenceOfProducts(x: Nat, y: Nat): Nat := {
 function usingGlobal(x: Nat): Nat := { x + bigValue }
 function clockPlus(x: Nat): Nat := { add(clock(), x) }
 const computedValue: Nat := multiply(6, 7)
+
+-- The same host-category function/const RHS must remain eligible for the
+-- checked Nat-only JS IR after standard operand migration.
+function addTrailing(x: Nat, y: Nat): Nat := add(x, y,)
+const fromHostCall: Nat := addTrailing(20, 22,)
