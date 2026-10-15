@@ -438,6 +438,41 @@ macro_rules (kind := pscvBracedIfLet)
   | `(pscvBracedIfLet| if let $pat:term := $discr:term { $success:term } else { $failure:term }) =>
     `(if let $pat:term := $discr:term then $success:term else $failure:term)
 
+/-!
+Source-only PSCV0 do-conditionals.  The pinned Lean Parser.Do.doIf already
+owns typed statements and pattern-binding scope.  We only replace v7's
+parenthesized condition and braced doSeq spelling with that native syntax.
+Do NOT reimplement branch typing or pattern matching.
+-/
+
+syntax (name := pscvDoIfElse)
+  "if" "(" term ")" doSeq "else" doSeq : doElem
+syntax (name := pscvDoIf)
+  "if" "(" term ")" doSeq : doElem
+
+macro_rules (kind := pscvDoIfElse)
+  | `(doElem| if ($cond:term) $yes:doSeq else $no:doSeq) =>
+      `(doElem| if $cond:term then $yes:doSeq else $no:doSeq)
+
+macro_rules (kind := pscvDoIf)
+  | `(doElem| if ($cond:term) $yes:doSeq) =>
+      `(doElem| if $cond:term then $yes:doSeq)
+
+-- This is the doSeqItem form, distinct from the term-level if-let:
+-- do branches are *sequences*, may omit else, and preserve Lean's pattern scope.
+syntax (name := pscvDoIfLetElse)
+  "if let " term " := " term:max doSeq "else" doSeq : doElem
+syntax (name := pscvDoIfLet)
+  "if let " term " := " term:max doSeq : doElem
+
+macro_rules (kind := pscvDoIfLetElse)
+  | `(doElem| if let $pat:term := $value:term $yes:doSeq else $no:doSeq) =>
+      `(doElem| if let $pat:term := $value:term then $yes:doSeq else $no:doSeq)
+
+macro_rules (kind := pscvDoIfLet)
+  | `(doElem| if let $pat:term := $value:term $yes:doSeq) =>
+      `(doElem| if let $pat:term := $value:term then $yes:doSeq)
+
 /-- A one-term braced body is grouping, not a record/object literal. -/
 syntax (name := pscvBracedExpression) "{" term "}" : term
 
