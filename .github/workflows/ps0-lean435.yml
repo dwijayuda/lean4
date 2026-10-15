@@ -202,6 +202,13 @@ jobs:
             exit 1
           }
           grep -F 'UNCERTIFIED' priority-positive.log
+          for fixture in instance_header_missing_type.ps instance_header_nullary.ps instance_header_adjacent.ps; do
+            if lake exe ps0 check "tests/fail/$fixture" > header-negative.log 2>&1; then
+              echo "PS0 accepted invalid v7 instance header: $fixture"
+              cat header-negative.log
+              exit 1
+            fi
+          done
           for fixture in instance_priority_expression.ps instance_priority_unknown.ps; do
             if lake exe ps0 check "tests/fail/$fixture" > priority-negative.log 2>&1; then
               echo "PS0 accepted invalid priority: $fixture"
