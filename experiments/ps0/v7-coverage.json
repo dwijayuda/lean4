@@ -1098,7 +1098,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/pass/pattern_predicates.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "P-DITE",
@@ -1124,7 +1126,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/fail/iflet_escape.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "P-NOMATCH",
@@ -1137,7 +1141,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/pass/empty_elimination.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "N-NOMATCH",
@@ -1150,7 +1156,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/fail/nomatch_nonempty.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "P-DERIVING",
