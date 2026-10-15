@@ -124,6 +124,15 @@ jobs:
           lake exe ps0 build tests/pass/native_math.ps NativeMath build/native
           test -s build/native/NativeMath.olean
           test -s build/native/NativeMath.c
+          # Native C and olean are published only as one completed directory.
+          test -z "$(find build -type d -name '.ps0-stage-*' -print -quit)"
+          sha256sum build/native/NativeMath.olean build/native/NativeMath.c > published.sha256
+          if lake exe ps0 build tests/pass/native_math.ps NativeMath build/native > overwrite.log 2>&1; then
+            echo "PS0 must not overwrite an already qualified bundle"
+            exit 1
+          fi
+          grep -F "PS0-OUTPUT-EXISTS" overwrite.log
+          sha256sum -c published.sha256
           LAKE_PATH="$(lake env printenv LEAN_PATH)"
           LEAN_PATH="$PWD/build/native:$LAKE_PATH" lake env lean -c build/native/NativeHarness.c -o build/native/NativeHarness.olean tests/NativeHarness.lean
           lake build PS0:static
