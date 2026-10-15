@@ -1,5 +1,15 @@
 # PS0 — AI work state (15 October 2026)
 
+## Priority ordering and acceptance checkpoint — 15 October 2026
+
+- Last inspected implementation HEAD before this state update: `29d2efbfab2fda271cc5a0de364174ec6b54a439`. Re-read the live branch before subsequent edits.
+- Added an overlapping **low-priority vs high-priority instance** theorem in `tests/pass/instance_priority_order.ps` with an independent native Lean comparison at `tests/lean/instance_priority_order_reference.lean`. This tests actual typeclass selection, not mere syntax acceptance.
+- `tests/pass/instance_priority.ps` and the native reference now cover **all four** named v7 atoms (`low`, `mid`, `default`, `high`) plus numeric priority 750 and parametric instances.
+- The PS0-owned `pscvSelectedPriority` is now a finite source grammar; each accepted priority is lowered to official Lean `prio`. Native `.lean` remains unrestricted.
+- The v7 coverage ledger contains **32 source-case candidate links**, all unqualified; estimated `.ps` implementation readiness remains **40%**, strict acceptance remains **0/181**.
+- The connected GitHub checks yielded zero accessible run/status records at that HEAD; a further attempt to access public Actions/checks pages was inaccessible. This is **unknown CI state**, not a pass or a failure.
+- Next critical path: obtain a real stable 4.35.0 build log, fix the first exact parser/quotation/compiler error, freeze the selected instance registry, then implement `.ps` imports/public visibility with no restrictions on native `.lean`. Keep PR #5 draft.
+
 ## Closed v7 instance-priority grammar — 15 October 2026
 
 A subsequent PS0 implementation pass tightened source priority selection from
