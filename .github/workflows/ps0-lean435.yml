@@ -7,6 +7,12 @@ on:
       - experiments/ps0/**
       - experiments/pscv0-lean-native/**
       - .github/workflows/ps0-lean435.yml
+  pull_request:
+    branches: [experiment/pscv0-native-language-closure-v1]
+    paths:
+      - experiments/ps0/**
+      - experiments/pscv0-lean-native/**
+      - .github/workflows/ps0-lean435.yml
   workflow_dispatch:
 
 permissions:
