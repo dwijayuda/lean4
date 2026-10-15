@@ -13,6 +13,10 @@ namespace PS0.Backend.Js
 private partial def emitNat : NatExpr → String
   | .literal n => toString n ++ "n"
   | .local x => x
+  | .globalConst name => name
+  | .call name args =>
+      name ++ "(" ++ String.intercalate ", "
+        (args.toList.map emitNat) ++ ")"
   | .add l r => "(" ++ emitNat l ++ " + " ++ emitNat r ++ ")"
   | .mul l r => "(" ++ emitNat l ++ " * " ++ emitNat r ++ ")"
   | .sub l r =>
