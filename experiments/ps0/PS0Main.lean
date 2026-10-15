@@ -64,6 +64,40 @@ private def approvedSource (src filename : String) :
     | return .error "invalid UTF-8 boundary at PSCV0 import header"
   return .ok (imports, String.ofList body.toList)
 
+/-- First PS0-03 primitive: inspect *Lean's actual parsed module header*
+    without authorizing its use as a v7 checked source. This preserves
+    isModule/isExported/isMeta/importAll identities instead of inferring them
+    by searching header text. The eventual project compiler must still enforce
+    default-public names and non-exposed bodies before emitting any artifacts.
+    Native .lean continues through an unrestricted external Lean process. -/
+private def inspectModuleHeader (path : String) : IO UInt32 := do
+  unless path.endsWith ".ps" do
+    IO.eprintln "PS0-MODULE-INFO: expects a .ps file"
+    return 2
+  let source ← IO.FS.readFile path
+  let input := Parser.mkInputContext source path
+  let (header, _, diagnostics) ← Parser.parseHeader input
+  if diagnostics.hasErrors then
+    IO.eprintln "PS0-MODULE-INFO: official Lean parser rejected module header"
+    return 1
+  let modules := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
+  let entries : List Json := modules.toList.map fun item =>
+    Json.mkObj [
+      ("module", toJson item.module.toString),
+      ("public", toJson item.isExported),
+      ("meta", toJson item.isMeta),
+      ("all", toJson item.importAll)
+    ]
+  let result := Json.mkObj [
+    ("schema", toJson ("ps0-source-module-header/1" : String)),
+    ("source", toJson path),
+    ("is_module", toJson (Lean.Elab.HeaderSyntax.isModule header)),
+    ("imports", toJson entries),
+    ("compile_ready", toJson false)
+  ]
+  IO.println result.pretty
+  return 0
+
 private def checkSource (path source : String) : IO UInt32 := do
   let (approved, body) ← match ← approvedSource source path with
     | .ok v => pure v
@@ -246,6 +280,7 @@ def cli (args : List String) : IO UInt32 := do
     | ["environment"] => do
         IO.println StandardEnv.manifest.pretty
         return 0
+    | ["module-header", path] => inspectModuleHeader path
     | "lean" :: nativeArgs => runUnrestrictedLean nativeArgs
     | ["check", path] =>
         if path.endsWith ".lean" then
@@ -259,7 +294,7 @@ def cli (args : List String) : IO UInt32 := do
           buildFile path moduleName outputDir
     | ["syntax-kinds", path] => syntaxKinds path
     | _ =>
-        IO.eprintln "usage: ps0 {environment|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
+        IO.eprintln "usage: ps0 {environment|module-header FILE.ps|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
         return 2
   catch ex =>
     IO.eprintln s!"PSCV0 error: {ex}"
