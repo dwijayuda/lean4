@@ -1,13 +1,17 @@
--- PS0 v1 `0B: explicitly selected host-category quotation bridge.
--- Native-compatible expressions retain Lean syntax and do not reparse
--- pretty-printed syntax or lose identifier hygiene.
+-- PS0 v1 section 0B: the native-capture bridge must preserve syntax data,
+-- source information and identifier hygiene rather than reparse text.
 macro "ps0Bridge " e:psTerm : term => do
-  PS0.Syntax.lower `psTerm e.raw
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  match e with
+  | `(psTerm| $native:term) =>
+      unless native.raw.eqWithInfo lowered do
+        Lean.Macro.throwError "PS0V1-TEST-NATIVE-IDENTITY: native capture changed"
+  | _ => Lean.Macro.throwError "PS0V1-TEST-NATIVE-IDENTITY: expected native capture"
+  return ⟨lowered⟩
 
 def bridgedValue : Nat := ps0Bridge (40 + 2)
 example : bridgedValue = 42 := by rfl
 
--- Native syntax quotations remain distinct from host syntax data;
--- the bridge only applies to a caller-declared host input category.
+-- Native quotations are syntax data in their own category.
 def nativeQuoted : Lean.MacroM (Lean.TSyntax `term) :=
   `(term| (40 + 2))
