@@ -1630,7 +1630,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/fail/def_empty_group.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "P-BINDER-INTERLEAVED",
@@ -1643,7 +1645,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/pass/interleaved_binders.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "N-BINDER-ADJACENT",
@@ -1656,7 +1660,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/fail/adjacent_explicit_groups.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "P-LAMBDA-BINDER",
@@ -1855,7 +1861,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/pass/interleaved_binders.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "N-DECL-HEAD-MUTUAL-NULLARY",
