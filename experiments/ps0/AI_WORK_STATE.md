@@ -1,5 +1,54 @@
 # PS0 — AI Work State (16 October 2026)
 
+## New implementation checkpoint — 16 October 2026
+
+- **Actual work committed:** `PS0/HostCategories.lean` defines the four
+  concrete v1 extension-category names (`psTerm`, `psCommand`,
+  `psTactic`, `psDoSeq`) plus an initial `PS0.Syntax.lower`
+  meta-stage bridge for native-compatible captures. It returns
+  the original syntax tree unchanged rather than printing/reparsing
+  expressions or recursively modifying quotations/DSLs.
+  PS-owned postfix call/category adaptation remains a significant
+  next feature. This is **foundation, not full `0B closure**.
+- Source admission `check FILE.ps` now passes a modern Lean module,
+  reconstructed from its exact native header AST, to official
+  `Elab.runFrontend`. It preserves `public`, `meta` and `all`
+  import flags; native grammar extensions are interleaved with
+  elaboration. Headerless sources are wrapped in `public section`
+  while an explicitly written `module` retains native visibility.
+- Native `build FILE.ps ...` also consumes that modern module
+  input. Existing Lean-native import dependencies may now
+  produce the requested native module without conversion to
+  legacy/re-exported imports. Complete source origins, .ps project
+  import resolution, module graph reproducibility and checked
+  artifact provenance remain unqualified.
+- Actual v1 `prelude` is **valid by specification** but cannot yet
+  be compiled by this frontend without PS0's current policy/module
+  source dependency importing full Lean/Init. The frontend now
+  refuses that unsupported *implementation* path with the explicit
+  `PS0V1-PRELUDE-PENDING` diagnostic instead of violating native
+  bootstrap semantics.
+- Added `tests/v1/host_category_bridge.ps`,
+  `implicit_public_module.ps`, `explicit_private_module.ps` and
+  `prelude_implementation_pending.ps`, and candidate CI checks for
+  actual parsed module flags, native module emission, the category
+  bridge and the prelude refusal.
+- Five applicable v1 source/feature requirements have **candidate**
+  fixtures in `v1-coverage.json`; statuses remain `PENDING`.
+  CI accepts a future `PASS` only with a fixture and actual
+  commit/run evidence. **0 of 242 currently qualified**, not a
+  measured feature implementation percentage.
+- All work stays under `experiments/ps0/**` and its single CI
+  workflow. Ordinary `.lean` still routes through the unmodified
+  external Lean compiler. The independent PSC0 compiler and
+  historical PSCVL experiment remain untouched.
+
+**Next:** obtain real stable Lean 4.35.0 CI/build diagnostics and
+fix actual compilation/API mismatches, then complete owned PS host
+operand dispatch and `PS0.Syntax.lower` (including calls and
+residual empty-call elaboration) without flattening native quotation
+syntax. Fully implement v1 prelude isolation and project graphs.
+
 ## Authoritative language edition
 
 **PS0 v1 R2** is now the sole normative programming-language target.
