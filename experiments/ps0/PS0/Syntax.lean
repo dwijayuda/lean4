@@ -33,6 +33,8 @@ declare_syntax_cat pscvNonExplicitBinder
 syntax "{" ident ":" term "}" : pscvNonExplicitBinder
 syntax "⦃" ident ":" term "⦄" : pscvNonExplicitBinder
 syntax "[" ident ":" term "]" : pscvNonExplicitBinder
+syntax "[" term "]" : pscvNonExplicitBinder
+syntax "{{" ident ":" term "}}" : pscvNonExplicitBinder
 
 private def explicitLeanBinders (bs : Array (TSyntax `pscvBinder))
     (nullaryFunction : Bool := false) :
@@ -62,6 +64,10 @@ private def nonExplicitLeanBinders (bs : Array (TSyntax `pscvNonExplicitBinder))
         result := result.push (← `(bracketedBinder| ⦃$x:ident : $t:term⦄))
     | `(pscvNonExplicitBinder| [$x:ident : $t:term]) =>
         result := result.push (← `(bracketedBinder| [$x:ident : $t:term]))
+    | `(pscvNonExplicitBinder| [$t:term]) =>
+        result := result.push (← `(bracketedBinder| [$t:term]))
+    | `(pscvNonExplicitBinder| {{$x:ident : $t:term}}) =>
+        result := result.push (← `(bracketedBinder| ⦃$x:ident : $t:term⦄))
     | _ => Macro.throwUnsupported
   return result
 
@@ -174,6 +180,73 @@ macro_rules
     let imps ← nonExplicitLeanBinders implicitBs
     let args ← explicitLeanBinders bs true
     `(def $f:ident $imps* $args* := $body:term)
+
+
+/-!
+V7's ordered binder telescope can mix explicit comma-groups with implicit,
+strict-implicit and instance binders. The order is semantically significant:
+dependent binder types are resolved by the native Lean declaration elaborator.
+The source restriction forbids two adjacent explicit groups (BIND-02).
+-/
+declare_syntax_cat pscvTelescopeSegment
+syntax "(" pscvBinder,+ ")" : pscvTelescopeSegment
+syntax pscvNonExplicitBinder : pscvTelescopeSegment
+
+private def orderedLeanBinders
+    (parts : Array (TSyntax `pscvTelescopeSegment)) :
+    MacroM (Array (TSyntax ``Lean.Parser.Term.bracketedBinder)) := do
+  let mut result := #[]
+  let mut precedingExplicit := false
+  for part in parts do
+    match part with
+    | `(pscvTelescopeSegment| ($[$bs:pscvBinder],*)) =>
+        if precedingExplicit then
+          Macro.throwError "PSCV0-BIND-02: adjacent explicit groups must be joined by commas"
+        let native ← explicitLeanBinders bs
+        result := result ++ native
+        precedingExplicit := true
+    | `(pscvTelescopeSegment| $b:pscvNonExplicitBinder) =>
+        let native ← nonExplicitLeanBinders #[b]
+        result := result ++ native
+        precedingExplicit := false
+    | _ => Macro.throwUnsupported
+  return result
+
+syntax (name := pscvTelescopeFunction)
+  "function " ident pscvTelescopeSegment+ ":" term ":=" term : command
+syntax (name := pscvTelescopeFunctionInferred)
+  "function " ident pscvTelescopeSegment+ ":=" term : command
+syntax (name := pscvTelescopeDefinition)
+  "def " ident pscvTelescopeSegment+ ":" term ":=" term : command
+syntax (name := pscvTelescopeDefinitionInferred)
+  "def " ident pscvTelescopeSegment+ ":=" term : command
+syntax (name := pscvTelescopeTheorem)
+  "theorem " ident pscvTelescopeSegment+ ":" term ":=" term : command
+
+macro_rules (kind := pscvTelescopeFunction)
+  | `(function $f:ident $parts:pscvTelescopeSegment* : $ty:term := $body:term) => do
+    let native ← orderedLeanBinders parts
+    `(def $f:ident $native* : $ty:term := $body:term)
+
+macro_rules (kind := pscvTelescopeFunctionInferred)
+  | `(function $f:ident $parts:pscvTelescopeSegment* := $body:term) => do
+    let native ← orderedLeanBinders parts
+    `(def $f:ident $native* := $body:term)
+
+macro_rules (kind := pscvTelescopeDefinition)
+  | `(def $f:ident $parts:pscvTelescopeSegment* : $ty:term := $body:term) => do
+    let native ← orderedLeanBinders parts
+    `(def $f:ident $native* : $ty:term := $body:term)
+
+macro_rules (kind := pscvTelescopeDefinitionInferred)
+  | `(def $f:ident $parts:pscvTelescopeSegment* := $body:term) => do
+    let native ← orderedLeanBinders parts
+    `(def $f:ident $native* := $body:term)
+
+macro_rules (kind := pscvTelescopeTheorem)
+  | `(theorem $f:ident $parts:pscvTelescopeSegment* : $ty:term := $proof:term) => do
+    let native ← orderedLeanBinders parts
+    `(theorem $f:ident $native* : $ty:term := $proof:term)
 
 /-- Contracted functions use the proof-producing intrinsic Lean 4.35
 WP semantics: `f.spec` must be discharged by pinned `vcgen`. -/
