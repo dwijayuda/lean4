@@ -17,6 +17,48 @@
 - Keep the independent PSC0 compiler and historical PSCVL experiment unchanged.
   Ordinary `.lean` remains native and unrestricted.
 
+## Typed standard host RHS integration — 16 October 2026
+
+- The PS0 v1 parser now owns the typed `function` and typed `const`
+  right-hand-side syntax through `psTerm`. Each source form delegates
+  to the existing `PS0.Syntax.lower` bridge before constructing the
+  official Lean `def` declaration; binder ordering and nullary Unit
+  sugar still use the existing Lean-backed declaration adapter.
+- This is the first migration of actual **standard declaration body**
+  operand slots from native `term` to PS-owned `psTerm`. The source
+  adapter is higher priority than the previous native-body alias,
+  while native `.lean` syntax remains unchanged.
+- New `tests/v1/standard_host_declarations.ps` checks nested,
+  named, trailing-comma, partial and constant-initializer source
+  calls. Three negative sources cover named-before-positional,
+  duplicate named arguments and comma-only calls. The full PS0
+  CI workflow includes target-specific checks.
+- The existing Nat-only, Lean-written JS IR lowerer was extended
+  to accept the new `psTerm` body nodes. It continues to reject
+  unsupported argument semantics and only emits exact-arity calls
+  to earlier checked Nat functions. JS tests now include a host
+  trailing-comma function call and const initializer, with Node
+  BigInt and TypeScript declaration checks.
+- Seven existing v1 call acceptance cases gained **additional
+  standard-host candidate fixtures**; none has been marked PASS.
+  The normative 242-item inventory remains unchanged.
+- Work is committed directly in the existing draft branch.
+  **No exact-commit Lean/Lake build or Actions test execution
+  has been observed**. Earlier branch-wide Actions and check-runs
+  returned zero, and the working container has no Lean/Lake or
+  working GitHub DNS access.
+- Significant work remains: inferred-result source aliases,
+  native `def`/`theorem` body slots, proof/tactic/do/contract
+  expression slots, generalized postfix/tuple/head ownership,
+  empty calls, priority collision resolution and source
+  identity/provenance. This is an initial source-category
+  integration, not complete PS0 v1 language conformance.
+
+**Next critical gate:** qualify a real pinned Lean 4.35.0 build,
+correct any actual macro quotation/parser ambiguities, and
+systematically cover other standard expression operand positions
+without rewriting unrelated DSLs or native syntax quotations.
+
 ## This continuation: real host-category implementation and fixture repairs
 
 1. `PS0/HostCategories.lean` now gives the owned adjacent-call production
