@@ -1,0 +1,3 @@
+-- A comma alone is not a missing default, tuple or Unit argument.
+function addNative(x: Nat, y: Nat): Nat := { x + y }
+const bad: Nat := addNative(,)
