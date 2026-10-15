@@ -37,6 +37,8 @@ private def approvedSource (src filename : String) :
   -- inspecting Import.isExported alone cannot distinguish the written forms.
   match header with
   | `(Parser.Module.header| $[module%$moduleTk]? $[prelude%$preludeTk]? $importStx*) =>
+    if preludeTk.isSome then
+      return .error "PSCV0-MODULE-PRELUDE-REFUSED: source cannot bypass selected Standard"
     for imp in importStx do
       match imp with
       | `(Parser.Module.import| $[public%$publicTk]? $[meta%$metaTk]? import $[all%$allTk]? $name) =>
