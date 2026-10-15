@@ -160,3 +160,25 @@ The v1 coverage ledger has seven additional **standard-operand
 candidate fixture links** on existing call-case IDs, not seven new
 requirements or qualifying PASS records. All 242 entries remain
 unqualified until an exact-commit Lean 4.35.0 CI result is examined.
+
+
+### Inferred-result and private source alias parity
+
+The same explicit `psTerm` standard-body adapter now covers
+`function` and `const` with either a declared result type or Lean-inferred
+result, plus typed/inferred `private function` and `private const`.
+Inferred declarations reuse the official Lean elaborator, while source
+`function f()` retains the synthetic required `Unit` binder; ordinary
+native `def` and `.lean` remain unchanged.
+
+`tests/v1/standard_host_declarations.ps` includes Lean `rfl`
+oracles for the public/private and inferred variants, typed
+host-call composition, and the source-nullary Unit conversion.
+The existing Nat-only JS backend continues to accept the checked
+typed/public subset and explicitly rejects inferred/private exports
+until its IR/export contract is widened. This split is backend
+capability, not a PS0 v1 language restriction.
+
+**Implementation code and test fixtures are committed but still
+unqualified:** no actual Lean 4.35.0 build or test run has been observed
+for the branch. No v1 requirement was promoted to PASS.
