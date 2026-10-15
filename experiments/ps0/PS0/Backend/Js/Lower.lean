@@ -132,6 +132,45 @@ private def lowerCommand (input : Parser.InputContext) (cmd : Syntax)
   | _ =>
       throw s!"PS0-JS-COMMAND: unsupported runtime declaration {cmd.getKind}"
 
+/-- Confirm source exports against actual official Lean checked declarations.
+    Only pure, total definitions with exactly the selected Core Nat telescope
+    are permitted. This is stricter than matching a .ps header: no unchecked
+    function name, implicit/default parameter or non-Nat Core result can be
+    admitted to JS. Unit occurs only as the source-nullary function sugar. -/
+private def exactCoreType (decl : Decl) (coreType : Expr) : Bool :=
+  if decl.isConst then
+    coreType == mkConst `Nat
+  else Id.run do
+    let mut ty := coreType
+    if decl.params.isEmpty then
+      match ty with
+      | .forallE _ domain body info =>
+          if !info.isExplicit || domain != mkConst `Unit then return false
+          ty := body
+      | _ => return false
+    else
+      for _ in [:decl.params.size] do
+        match ty with
+        | .forallE _ domain body info =>
+            if !info.isExplicit || domain != mkConst `Nat then return false
+            ty := body
+        | _ => return false
+    return ty == mkConst `Nat
+
+def validateCheckedExports (checked : Environment) (p : Program) :
+    Except String Unit := do
+  for decl in p.declarations do
+    let some info := checked.find? (Name.mkSimple decl.name)
+      | throw s!"PS0-JS-CORE: checked Lean declaration missing: {decl.name}"
+    match info with
+    | .defnInfo d =>
+        if d.safety != .safe then
+          throw s!"PS0-JS-CORE: unsafe or partial declaration: {decl.name}"
+        unless exactCoreType decl d.type do
+          throw s!"PS0-JS-CORE: Core Nat signature mismatch for {decl.name}"
+    | _ =>
+        throw s!"PS0-JS-CORE: export {decl.name} is not a checked definition"
+
 def lower (sourceName source : String) (env : Environment)
     (opts : Options) : Except String Program := Id.run do
   let input := Parser.mkInputContext source sourceName
