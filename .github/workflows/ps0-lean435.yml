@@ -82,6 +82,10 @@ jobs:
             cat priority-reference.log
             exit 1
           }
+          lake exe ps0 check tests/lean/instance_priority_order_reference.lean > priority-order-reference.log 2>&1 || {
+            cat priority-order-reference.log
+            exit 1
+          }
           lake exe ps0 check tests/lean/termination_reference.lean > termination-reference.log 2>&1 || {
             cat termination-reference.log
             exit 1
@@ -201,6 +205,11 @@ jobs:
             cat priority-positive.log
             exit 1
           }
+          lake exe ps0 check tests/pass/instance_priority_order.ps > priority-order.log 2>&1 || {
+            cat priority-order.log
+            exit 1
+          }
+          grep -F 'UNCERTIFIED' priority-order.log
           grep -F 'UNCERTIFIED' priority-positive.log
           for fixture in instance_header_missing_type.ps instance_header_nullary.ps instance_header_adjacent.ps; do
             if lake exe ps0 check "tests/fail/$fixture" > header-negative.log 2>&1; then
