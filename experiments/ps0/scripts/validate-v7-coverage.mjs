@@ -36,7 +36,8 @@ for (const [section, expected] of sections) {
       }
       complete++;
     }
-    const fixtures = section === "cases" ? (row.fixture ? [row.fixture] : []) : (row.fixtureIds ?? []);
+    const fixtures = section === "cases" ? [row.fixture, row.fixtureCandidate].filter(Boolean) : (row.fixtureIds ?? []);
+    if (section === "cases" && row.fixtureCandidate && row.fixtureCandidateStatus !== "NOT_QUALIFIED") fail("unverified candidate status " + row.id);
     for (const candidate of fixtures) {
       if (typeof candidate !== "string" || isAbsolute(candidate) || candidate.includes("\\") ||
           candidate.split("/").some(x => x === "" || x === "." || x === "..")) fail("unsafe fixture " + candidate);
