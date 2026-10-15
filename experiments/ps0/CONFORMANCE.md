@@ -94,7 +94,7 @@ the native file remains unrestricted. See
 [SOURCE_PROFILE_BOUNDARY.md](SOURCE_PROFILE_BOUNDARY.md).
 
 **Percentage treatment:** this does not increase `.ps` feature readiness
-(the existing 37% heuristic) or strict PSCV0 v7 qualified acceptance
+(the earlier 37% estimate (now 38% following the new binder implementation)) or strict PSCV0 v7 qualified acceptance
 (0/181). Lean already had full expressive power; PS0 is preserving it
 rather than implementing those features as ProofScript capabilities.
 
