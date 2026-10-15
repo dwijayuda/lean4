@@ -1,5 +1,41 @@
 # PS0 — AI Work State (16 October 2026)
 
+## Host psTerm adjacent-call lowering — 16 October 2026
+
+- Continued PS0 v1 `0B` architecture with a first PS-owned
+  `psCallArg` category and source `ps0HostAdjacentCall` production.
+  The production uses native `noWs` adjacency and takes a
+  nonempty identifier-head parameter list.
+- `PS0.Syntax.lower` now recognizes the PS-owned call and recursively
+  lowers its host operands to a genuine native Lean application node,
+  preserving curried argument order and named arguments. It rejects
+  duplicate names and positional-after-named source arguments.
+  Native captured subtrees and native quotations stay unmodified.
+- Added `tests/v1/host_postfix_calls.ps` with native semantic
+  oracles for positional/nested/named/tuple calls and a macro
+  verifying the raw host call AST is visible *before* lowering.
+  Added malformed named-call source tests and exact-diagnostic CI
+  expectations.
+- Linked 5 additional positive/negative `v1-coverage.json`
+  acceptance cases to the new fixtures, all `PENDING` and explicitly
+  scoped to host-category extension contexts. The previous 5
+  candidates and all remaining 242-row inventory remain unqualified.
+- **Limit:** standard native declaration, tactic and do-term
+  operand slots have not yet been systematically converted to
+  `psTerm`. Arbitrary postfix heads, empty call completion inside
+  this host bridge, trailing comma, native-adapter mapping,
+  source-position proofs and parser ambiguity normalization are
+  not complete. Existing PS term macros are not a substitute for
+  that extension-level contract.
+- **Qualification:** no exact-commit successful Lean 4.35.0
+  PS0 run has been observed. This is committed source and test
+  definitions, not a measured completion percentage.
+
+**Next:** qualify the host-call parse/quotation API against real
+Lean 4.35.0 CI logs, correct family-level source syntax defects, then
+map pinned native standard operand sites to the host categories
+without transforming separately-owned DSL syntax.
+
 ## New implementation checkpoint — 16 October 2026
 
 - **Actual work committed:** `PS0/HostCategories.lean` defines the four
@@ -9,7 +45,7 @@
   the original syntax tree unchanged rather than printing/reparsing
   expressions or recursively modifying quotations/DSLs.
   PS-owned postfix call/category adaptation remains a significant
-  next feature. This is **foundation, not full `0B closure**.
+  next feature. This is **foundation, not full §0B§ closure**.
 - Source admission `check FILE.ps` now passes a modern Lean module,
   reconstructed from its exact native header AST, to official
   `Elab.runFrontend`. It preserves `public`, `meta` and `all`
