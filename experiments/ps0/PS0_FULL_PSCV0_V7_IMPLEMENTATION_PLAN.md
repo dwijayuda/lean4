@@ -8,12 +8,12 @@
 
 ## 1. Objective, guarantees and deliberate non-goals
 
-Build a **complete PSCV0 v7 compiler variant called PS0** with authoritative `.ps` files, precisely v7-selected syntax and Lean-compatible semantics. Reuse the **existing Lean-native PSCVL syntax macros and grammar validator** in `experiments/pscv0-lean-native/` (not the independent portable PSC0 parser), while the **official Lean 4.35.0 elaborator, type system, termination checker, tactics, kernel and native compiler** perform their real work. No second PS0 typechecker, no new dependent unification engine, no separate kernel, and no parallel JS/Rust/Wasm backend.
+Build a **complete PSCV0 v7 compiler variant called PS0** with authoritative `.ps` files, precisely v7-selected syntax and Lean-compatible semantics. Use the **PS0-owned, reviewed adaptation** of the historical Lean-native PSCVL syntax macros and grammar validator now in `experiments/ps0/PS0/` (not the independent PSC0 portable parser), while the **official Lean 4.35.0 elaborator, type system, termination checker, tactics, kernel and native compiler** perform their real work. No second PS0 typechecker, no new dependent unification engine, no separate kernel, and no parallel JS/Rust/Wasm backend.
 
 ```text
 source .ps + project manifest + pinned Standard/profile
   -> immutable source/module graph and UTF-8 origin spans
-  -> one closed PSCV0 syntax-category validator (reuse PSCVL/Lean parser)
+  -> PS0-owned v7 syntax-category validator (adapted from PSCVL; Lean parser)
   -> hygienic source-syntax-to-native-Lean-Syntax lowering
   -> official Lean elaboration + tactic and VC generation + kernel
   -> original checked declarations + transitive assumptions/spec/effects audit
@@ -36,16 +36,23 @@ A green bounded test suite, a printed `UNCERTIFIED` label, or kernel-checking a 
 | Existing source / receipt | What actually exists | Critical gap |
 | --- | --- | --- |
 | `experiments/ps0/PS0Main.lean` + `lakefile.toml` | Separate PS0 CLI with `check`, `build`, `environment`, `syntax-kinds`, and a stable toolchain guard | New stable-4.35 PS0 CI not independently confirmed green at plan creation |
-| `../pscv0-lean-native/PSCVL/Syntax.lean` | Existing Lean-native `.ps` syntax bridge, macro quotations, typed `f()` elaboration, contracts, records, control | Bounded syntax selections; many v7 forms and forbidden alternatives not fully covered |
-| `PSCVL/Grammar.lean` | Command-family whitelist and nested source-pattern refusals | Some `choice` alternatives accepted based on *any* acceptable branch, not proven selected elaborated branch; dynamic grammar safety not closed |
-| `PSCVL/Policy.lean` | Source `unsafe`/`partial`/`axiom`/`sorry` checking, `#pscv_gate` and transitive axiom checks for local declarations | Imported provenance/assumptions, spec/effect/erasure coverage and verified-build policies incomplete; inherited `Classical.choice` allowance differs from PSC0 |
-| `PSCVL/Effect.lean` | Genuine Lean-grounded relations for pure, reader, state and typed-error WP and proofs | Not complete P0/P1 effect capability or external-world boundary model |
-| `PSCVL/StandardEnv.lean` + `PSCV0_STANDARD_ENV.json` | Provisional selected imports/deriving/pure scalar manifest, updated stable version in PS0 branch | No complete modules/instances/notations/tactics/effects/axioms/priority/exposure snapshot |
+| `PS0/Syntax.lean` | Owns the adapted Lean-native syntax bridge. Nullary Unit sugar now applies only to `function`; non-callable `f()` is rejected; head-specific `def`/theorem/ctor binders are tightened. | Full v7 semantic coverage and stable-4.35 qualification remain open |
+| `PS0/Grammar.lean` | Owns closed command syntax. Ambiguous `choice` now requires *every* candidate to be permitted, rather than accepting any one. | Conservative rule may reject some valid source; exact resolved-parser choice audit remains open |
+| `PS0/Policy.lean` | PS0-owned local `#pscv_gate`, prohibition of source `unsafe`/`partial`/`axiom`/`sorry` and local-transitive assumption checks | Imported provenance/spec/effect/erasure closure incomplete; inherited `Classical.choice` allowance is explicitly disclosed |
+| `PS0/Effect.lean` | PS0-owned Lean-grounded relations and proofs for pure, reader, state and typed-error WP | Not complete P0/P1 effect capability or external-world boundary model |
+| `PS0/StandardEnv.lean` + `PS0_STANDARD_ENV.json` | Local pinned 4.35.0 Standard manifest, no sibling package dependency | No complete modules/instances/notations/tactics/effects/axioms/priority/exposure snapshot |
 | Historic [Lean-native RC4 workflow](https://github.com/dwijayuda/lean4/actions/runs/38112654962) | 37 accepted, 56 rejected `.ps` fixtures, native executable, two basic `rfl` correspondences | **RC4** run is not a new stable PS0 acceptance or full normative v7 coverage |
 | `.github/workflows/ps0-lean435.yml` | PS0 branch CI definition for stable toolchain, selected tests and C/olean artifact checks | Exact-commit passing CI and end-to-end native linker execution still require confirmation |
 | Current `PS0Main.buildFile` | Separate `checkFile` and `runFrontend` calls; direct output creation | Need immutable checked source snapshot and staged atomic/recoverable publication; no assumptions about source unchanged between checks |
 
-**Important distinct ownership:** PSC0's portable syntax parser, independent elaborator and JS/TS/Rust/Wasm backends stay in `dwijayuda/pskernel`. PS0 only reuses the historical **Lean-native PSCVL** frontend and official Lean native backend. Do not carry over PSC0 differential/runtime qualification receipts into PS0.
+**Important distinct ownership:** PSC0's portable syntax parser, independent elaborator and JS/TS/Rust/Wasm backends stay in `dwijayuda/pskernel`. PS0 owns an **independent adapted copy** of the historical Lean-native PSCVL frontend and uses the official Lean native backend. Do not carry over PSC0 differential/runtime qualification receipts into PS0.
+
+
+### 2.1 Standalone implementation checkpoint (2026-10-15)
+
+Following this roadmap's creation, PS0 gained source-owned `PS0/Syntax.lean`, `Grammar.lean`, `Policy.lean`, `Effect.lean`, and `StandardEnv.lean`; a root `PS0.lean` and local `PS0_STANDARD_ENV.json`; no sibling Lake dependency; and a PS0-only sparse-checkout CI. The historical PSCVL package's original RC4 toolchain/manifest were restored, so this branch does not need to change its source to compile PS0. See [CONFORMANCE.md](CONFORMANCE.md) for each module's actual adaptation and gap classification.
+
+Specific semantic fixes: head-specific Unit insertion only for nullary `function`, rejection of empty calls on non-callable values, refusal of ambiguous command parses unless every alternative meets the command allowlist. These are **implementation candidates awaiting exact-commit CI**, not full v7 source/parser closure or evidence of universally equivalent Core. The command source is read once for preflight and emission, but two Lean elaboration passes and non-transactional output remain acceptance blockers in PS0-09.
 
 ## 3. Lean 4.35.0 source concordance and reuse constraints
 
@@ -69,7 +76,7 @@ Official supplemental docs: [Lean 4.35.0 release notes](https://lean-lang.org/do
 
 ### 4.1 One source/grammar authority
 
-Keep the existing `PSCVL` syntax owners until their consumers have migrated; do **not** duplicate them under `PS0`. Proposed eventual PS0 modules: `SourceProfile.lean` (finite category registry), `Parse.lean` (source bytes/trivia), `Lower.lean` (hygienic quotations), `Modules.lean` (imports/visibility), `Standard.lean` (environment identity), `Contracts.lean` and `ProofPolicy.lean` (verified claim gates), `Compile.lean` (checked compilation session), `Publication.lean` (staging), `Diagnostics.lean` (origins/InfoTree). These are **target file names**, not asserted existing modules.
+The migration is now self-contained: `PS0/{Syntax,Grammar,Policy,Effect,StandardEnv}.lean` and `PS0Main.lean` live in one Lake package; there is no sibling `require`. The prior PSCVL code is historical provenance only, not a second runtime or grammar authority. Proposed future decomposition: `SourceProfile.lean` (finite category registry), `Parse.lean` (source bytes/trivia), `Lower.lean` (hygienic quotations), `Modules.lean` (imports/visibility), `Standard.lean` (environment identity), `Contracts.lean` and `ProofPolicy.lean` (verified claim gates), `Compile.lean` (checked compilation session), `Publication.lean` (staging), `Diagnostics.lean` (origins/InfoTree). These are **target file names**, not asserted existing modules.
 
 - Source grammar is `0B`'s closed Lean-category overlay. Select a **resolved** AST alternative, not “any alternative is allowed”; forbid source-supplied new macros, arbitrary attributes, tactics, parsers, elaborators and `run_tac/run_cmd` before execution.
 - After macro expansion, audit produced syntax/handler identities and check real Core. Do not turn a validator into a separate elaborator.
@@ -130,7 +137,7 @@ These milestones **PS0-00 to PS0-11 are separate from** PSC0's original M0–M5/
 
 | Milestone | Ordered implementation tasks and reusable Lean owner | Acceptance / exit evidence |
 | --- | --- | --- |
-| **PS0-00 — stable baseline and CI** | Inspect current branch/PR/CI; pin stable 4.35.0 in the PS0 and reused PSCVL toolchains/manifests; compile the actual source and resolve RC4→stable incompatibilities from pinned Lean source. Execute inherited 37 positive and 56 negative fixtures, native build plus `leanc` link/run and resource baseline. Never label old RC4 results as stable-qualified. | One exact commit has successful full PS0 CI; logs record Lean commit, full positive/negative count, rejection reasons, native program execution, selected environment identity and cold/warm startup baseline. |
+| **PS0-00 — stable baseline and CI** | Inspect current branch/PR/CI; pin stable 4.35.0 in the PS0-owned toolchain/manifest (leave the old PSCVL RC4 experiment untouched); compile the actual source and resolve RC4→stable incompatibilities from pinned Lean source. Execute inherited 37 positive and 56 negative fixtures, native build plus `leanc` link/run and resource baseline. Never label old RC4 results as stable-qualified. | One exact commit has successful full PS0 CI; logs record Lean commit, full positive/negative count, rejection reasons, native program execution, selected environment identity and cold/warm startup baseline. |
 | **PS0-01 — closed syntax/grammar ownership** | From v7 `0B` enumerate selected `command`, `term`, `binder`, `tactic`, `doSeqItem`, `match_pattern`, `structField`. Resolve parser `choice` to the actual admitted branch, eliminate silent unselected Lean fallbacks, restrict imports' handler registrations, inspect post-macro trees. Extend source trivia, braces and initial source offset tracking. | Every `APP-01..04`, `BIND-01/02`, `DECL-01`, `PATTERN-01` and ownership rule's malformed cases reject at the **correct stage**; valid binder/fresh-term grouping unaffected. |
 | **PS0-02 — syntax sugar / Lean Core parity** | Complete head-specific `const/def/function/theorem`, typed/default/named args, unit/nullary `f()`, adjacent and native juxtaposition calls, lambda/forall/universes/coercion, source position, `section` generalization. Use Lean `elabAppArgs` and native defeq, not another unifier. | `f(x,y)`, `f((x,y))`, `f(())`, `f()`, `useAlias()`, `f x(y)` and named defaults have the intended Lean Core, with precise error-phase tests for spaced applications/comment gaps and non-callable values. |
 | **PS0-03 — source graph / multi-module visibility** | True `.ps` modules, `public import`/plain `import`, optional allowed `module` header, namespace/name identities, default-public-name/non-exposed-body translation to real Lean module AST; paths/lockfile/graph and Lake integration. | Multi-file app and import/export theorem cases pass, cross-module `f.spec` preserved, public name/private/exposure/cycle/path/duplicate-name/version refusals qualify. No unrestricted Lean imports. |
@@ -252,7 +259,7 @@ Native execution contracts: typed integer widths/overflow, Float nan/signed zero
 
 ### 9.1 Standard environment snapshot
 
-`PSCVL.StandardEnv` currently records a **provisional** JSON roster. To finish v7, generate and validate a canonical complete selected-semantic snapshot containing:
+`PS0.StandardEnv` currently records a **provisional** local JSON roster. To finish v7, generate and validate a canonical complete selected-semantic snapshot containing:
 
 - exact Lean toolchain/commit; source/library module digests and public/private import/re-export/expose graph;
 - selected tokens/notation identities, precedence, source syntax categories and approved custom sugar;
@@ -317,7 +324,7 @@ Failure at ANY stage (syntax, dependencies, source drift, proof/VC, kernel, assu
 | R4 — compile-time plugin side effects | Lean tactics/attributes/initializers may run code | Narrow registered handlers, capability/resource isolation; do not treat source allowlist as OS sandbox |
 | R5 — assumed complete proof coverage | Existing `#pscv_gate` handles selected local declarations/axioms, not complete import/effect/spec obligations | Build full transitive coverage/assumption ledger, true generated spec proof and negative VC matrix |
 | R6 — assurance overclaim | Lean kernel source acceptance != verified emitted C/native behavior | Explicit layered evidence labels and separate preservation/FFI obligations |
-| R7 — costly duplicated compiler design | PSC0 has separate parser/elab/backend, Lean-native PSCVL already exists | One source grammar owner, native Lean elaboration/compiler, retain PSC0 as separate product |
+| R7 — costly duplicated compiler design | PSC0 has separate parser/elab/backend, Lean-native PSCVL already exists | One **PS0-local** grammar owner, native Lean elaboration/compiler, retain PSC0 and historical PSCVL separately |
 | R8 — inaccurate milestone credit | RC4 37/56 historical tests do not qualify stable 4.35 | Re-run stable exact-commit gates; map every v7 normative ID, no unsupported completion percentage |
 | R9 — performance drift/churn | Repeated full-repo Lean test loops slow feature delivery | Incremental three-tier CI, architecture-family edits, measured cold/warm build and native runtime baselines |
 | R10 — incompatible import or hidden foundational axiom | Pinned Lean imports can include `Classical.choice` and handlers | Explicit per-profile assumption roster, no silent widening; package/CI digest guards |
