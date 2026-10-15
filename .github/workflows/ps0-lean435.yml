@@ -152,7 +152,7 @@ jobs:
       - name: Reject artifact emission for disallowed source
         run: |
           set -euo pipefail
-          for file in tests/fail/sorry.ps tests/fail/unsafe.ps tests/fail/function_state_false_spec.ps; do
+          for file in tests/fail/sorry.ps tests/fail/unsafe.ps tests/fail/partial.ps tests/fail/axiom.ps tests/fail/function_state_false_spec.ps; do
             rm -rf build/rejected
             if lake exe ps0 build "$file" Rejected build/rejected > native-negative.log 2>&1; then
               cat native-negative.log
