@@ -1,5 +1,20 @@
 # PS0 — AI work state (15 October 2026)
 
+## Language-feature continuation — 15 October 2026
+
+**Latest inspected code checkpoint:** `47b3bca21fc8b8b55f9da766479cdc9baea4619e`. Read live HEAD before new writes.
+
+- **Estimated language-feature readiness: 37%**, produced by [language-feature-progress.json](language-feature-progress.json) and [report-language-progress.mjs](scripts/report-language-progress.mjs). This is a **subjective, equal-weight 20-family rubric** (37 points of 100), **not** measured code coverage or normative acceptance.
+- **Strict v7 qualification: 0/181 = 0%**. These are the 150 §13 source cases + 31 v7 audit/erratum/correction IDs in [v7-coverage.json](v7-coverage.json). No current stable PS0 exact-commit CI pass is independently confirmed. The completion validator refuses any unsupported PASS record.
+- Readiness breakdown: source/declaration/call/scope foundation **12/25 = 48%**; dependent types/data/control **14/35 = 40%**; tactics/verified do/contracts/typed effects **8/20 = 40%**; modules/selected libraries/environment/assurance **3/20 = 15%**.
+- Added candidate [pattern_predicates.ps](tests/pass/pattern_predicates.ps) for Lean-native `matches` and braced `if let` with `rfl` proofs, [empty_elimination.ps](tests/pass/empty_elimination.ps) for checked `Empty` elimination by `nomatch`, and negative `nomatch_nonempty.ps` / `iflet_escape.ps`. Normative P-IFLET, P-NOMATCH, N-IFLET-SCOPE and N-NOMATCH are now linked to candidate fixtures but remain pending.
+- Studied official pinned [Init/NotationExtra.lean](https://github.com/leanprover/lean4/blob/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/src/Init/NotationExtra.lean): Lean itself lowers `e matches p` to a Bool-returning match. PS0 must use that checked semantics rather than implement an independent pattern matching primitive.
+- Implemented explicit `PSCV0-DO-IFLET-ARROW` source refusal for Lean's `doIfLetBind` parser form (pinned `Parser/Do.lean`), preserving v7's staged P1 distinction and binding N-DO-IFLET-ARROW to a negative source fixture. Added an exact diagnostic check in PS0 CI; positive v7 do-if-let lowering remains a separate grammar implementation task.
+- CI now runs the machine-readable language-readiness validator as well as the v7 inventory integrity checker. It must report readiness and qualified percentages **separately**.
+- **No stable Lean CI evidence yet.** All new positive/negative fixtures are committed **unqualified**, and a green build remains PS0-00's first acceptance gate.
+
+**Next:** independently obtain a stable Lean build/CI receipt; correct any compiler/fixture failures; complete parser §0B and phase-specific negative tests; implement v7 statement-level braced `do if`/ `if let`, modules/imports and dependent patterns with real Lean semantic correspondence. Do not infer a new percent solely from adding tests; reassess the 20-family rubric only after meaningful implementation.
+  
 ## Exact live checkpoint
 
 - Repository: [dwijayuda/lean4](https://github.com/dwijayuda/lean4); branch: `feature/ps0-lean435-stable-v1`.
