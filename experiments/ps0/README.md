@@ -37,6 +37,40 @@ See [SOURCE_PROFILE_BOUNDARY.md](SOURCE_PROFILE_BOUNDARY.md) for the full
 language/trust-boundary contract, including future mixed `.ps`/`.lean`
 project imports. **The v7 completion percentage counts only `.ps` features.**
 
+## Small scalable JavaScript backend (written in Lean)
+
+PS0 now includes a deliberately narrow `build-js` backend, implemented
+exclusively through Lean modules, not a JavaScript/.mjs transpiler.
+It typechecks and applies the existing `.ps` policy before emitting:
+
+`lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat`
+
+The resulting bundle contains `NatMvp.js` (ESM), `NatMvp.d.ts`
+(TypeScript declarations), and `NatMvp.js.map` (Source Map v3,
+signed Base64-VLQ declaration mappings). The initial runtime fragment
+is publicly exported `Nat` constants and straight-line `Nat` functions
+(literals, explicit Nat parameters, `+`, `*` and saturating `-`).
+`Nat` values are exact JS `bigint` and runtime inputs are guarded as
+nonnegative bigints. Everything else — including module imports,
+effects, patterns and JS platform interop — is explicitly unsupported
+rather than guessed.
+
+The architecture separates source AST lowering, typed portable
+runtime IR, JS/TS emission, and source-map construction under
+`PS0/Backend/Js/*.lean`. The files are atomically staged and
+publication refuses overwrites. Future typed IR cases can add
+ADTs, calls, total recursion and audited effects without replacing
+the backend. See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md)
+for feature boundaries, assurance caveats, CLI and expansion plan.
+
+**Qualification:** CI includes generated Node BigInt execution,
+`.d.ts`/source-map validation, deterministic output and negative
+tests, but a successful exact-commit Lean 4.35.0 run has not been
+independently observed. This is ordinary checked-source emission,
+**not** a proof of JS semantic preservation or a verified JS backend.
+The existing v7 **language** completion score is not increased
+by adding a separate backend. Native `.lean` remains unrestricted.
+
 ## Owned source layout
 
 | Source | Responsibility |
