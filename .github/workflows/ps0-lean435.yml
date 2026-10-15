@@ -367,11 +367,13 @@ jobs:
             assert.equal(m.usingGlobal(7n), 9007199254741000n);
             assert.equal(m.clockPlus(5n), 47n);
             assert.equal(m.computedValue, 42n);
+            assert.throws(() => m.clockPlus(-4n), TypeError);
+            assert.throws(() => m.differenceOfProducts(4, 5n), TypeError);
             assert.throws(() => m.add(-1n, 1n), TypeError);
             assert.throws(() => m.add(1, 1n), TypeError);
             console.log("PS0_JS_BIGINT_RUNTIME: PASS");
           '
-          for fixture in unsupported_type.ps unsupported_expression.ps unsupported_import.ps; do
+          for fixture in unsupported_type.ps unsupported_expression.ps unsupported_import.ps unsupported_named_call.ps unsupported_call_target.ps; do
             rm -rf build/js-refused
             if lake exe ps0 build-js "tests/js/$fixture" Refused build/js-refused > js-negative.log 2>&1; then
               cat js-negative.log
