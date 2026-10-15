@@ -1,89 +1,90 @@
-# PS0 — Lean-backed ProofScript PSCV0 v7 variant
+# PS0 — standalone Lean-backed PSCV0 v7 compiler experiment
 
-**Status: implemented experimental frontend, NOT full v7 conformance or verified-executable certification.**
+**Status: independent, selected-v7 Lean-native frontend. Not full v7, not a verified-executable certificate.**
 
-PS0 keeps `.ps` as the authoritative application source and reuses the existing
-`experiments/pscv0-lean-native/PSCVL` grammar, syntax macros, source admission
-checks, effect support and proof-policy gate. It does **not** copy a parser or
-elaborator into another compiler. After source syntax admission, official
-**Lean 4.35.0 stable**, git `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`,
-owns elaboration, dependent typing, tactic elaboration, kernel checking and
-native code generation.
+PS0 is an independently buildable Lake package in `experiments/ps0`. It keeps
+authoritative `.ps` files, the selected ProofScript surface grammar, and the
+official Lean 4.35.0 stable elaborator/kernel/native compiler. It **does not
+depend on `../pscv0-lean-native` or on `dwijayuda/pskernel`** at build time.
 
-This experiment lives in **dwijayuda/lean4** on
-`feature/ps0-lean435-stable-v1`, based on the preserved Lean-native PSCV0
-experimental branch. The independent `dwijayuda/pskernel` PSC0 compiler,
-its backend work, PR #109 and all existing PSKernel branches are unchanged.
+**Historical provenance:** the earlier PSCVL Lean-native experiment at
+`experiment/pscv0-native-language-closure-v1` provided the reviewed starting
+point. Its five implementation modules were **adapted**, not copied as an
+untouched opaque dependency; the original experiment remains unchanged.
 
-## Full PSCV0 v7 implementation roadmap
+## Owned source layout
 
-The [complete Lean-backed v7 implementation plan](PS0_FULL_PSCV0_V7_IMPLEMENTATION_PLAN.md)
-tracks PS0-00 through PS0-11, exact Lean source reuse, normative syntax/semantic
-coverage, imported Standard and module identities, proof/effect/assumption
-closure, native publication safeguards, and release acceptance. It is a plan,
-**not** evidence that all v7 requirements have been implemented or qualified.
+| Source | Responsibility |
+| --- | --- |
+| `PS0/Syntax.lean` | ProofScript-specific function/const syntax, calls, braces and contracts lowered through hygienic Lean syntax |
+| `PS0/Grammar.lean` | Closed command-family source validation and forbidden syntax/attribute checks; ambiguous command choices are conservatively refused unless all alternatives qualify |
+| `PS0/Policy.lean` | Post-elaboration kernel/axiom preflight, selected diagnostic `#eval`, candidate root validation; not full verified-output coverage |
+| `PS0/Effect.lean` | Lean-grounded pure/reader/state/typed-error relations and WP theorems |
+| `PS0/StandardEnv.lean` | Stable Lean pin and provisional curated import/deriving/eval environment |
+| `PS0Main.lean` | Standalone `ps0` CLI, source preflight and official Lean native emission |
+| `PS0_STANDARD_ENV.json` | Exact local provisional environment snapshot |
+| `tests/` | PS0-owned positive/negative source and native executable correspondence fixtures |
 
-## Architecture
+`lakefile.toml` has one local `lean_lib PS0` and `lean_exe ps0`, **no
+`require` dependency**. The CI uses a **PS0-only sparse checkout**, verifies
+the sibling source tree is absent, builds the library and executable, runs
+positive/negative fixtures, checks emission refusal, and links/runs a native
+program with the local `PS0:static` library.
 
-```text
-source.ps
-  -> existing PSCVL closed .ps grammar + Lean hygienic syntax macros
-  -> selected Lean syntax tree / validated imports
-  -> official Lean 4.35.0 elaborator + tactics + kernel
-  -> PS0 preflight policy (no source unsafe/partial/axioms/sorry)
-  -> check: report UNCERTIFIED; no executable output
-  -> build: official Lean frontend + LCNF.emitC (.olean, C, UNCERTIFIED)
-```
+## Design changes made during the migration
 
-The main adapter is `PS0Main.lean`. Its CLI host logic currently follows
-the previously qualified PSCVL native entrypoint, but imports the existing
-PSCVL grammar and policy rather than maintaining another PSCV0 language engine.
-The pin guard rejects execution with a mismatched Lean toolchain.
-The sibling PSCVL source, toolchain and provisional environment manifest
-were advanced to the exact stable Lean 4.35.0 pin *only on this branch*.
+- Namespaces, imports and source validator category names now belong to PS0.
+- The older PSCVL experiment stays pinned to its original RC4 version on its
+  own branch, while PS0 uses official stable Lean 4.35.0 commit
+  `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
+- Empty source binder groups only insert a `Unit` parameter for nullary
+  **`function`**, not ordinary `def`, `theorem` or constructors.
+- `f()` rejects non-callable values and delegates default/definitionally
+  `Unit` resolution to Lean. New positive/negative fixtures cover this.
+- Ambiguous command parse alternatives are **all required** to satisfy the
+  closed command policy, rather than accepting whenever one happens to be
+  allowed. This is deliberately conservative and may need finer resolution
+  during PS0-01 grammar closure.
+- `build` now reads its user `.ps` source bytes **once** and passes those
+  bytes to preflight and compilation. The current pipeline still uses separate
+  Lean elaboration calls and direct artifact publication; immutable checked
+  graph identity and transactional staging remain PS0-09 requirements.
 
-## Run
+These are bounded improvements, **not** an assurance proof, complete grammar
+closure, semantic correspondence theorem, or a security sandbox.
 
-From `experiments/ps0`:
+## Build and check
 
 ```sh
-lake build ps0
+cd experiments/ps0
+lake build PS0 ps0
 lake exe ps0 environment
 lake exe ps0 syntax-kinds tests/pass/basic.ps
 lake exe ps0 check tests/pass/basic.ps
-lake exe ps0 build ../pscv0-lean-native/tests/pass/native_math.ps NativeMath build/native
+lake exe ps0 build tests/pass/native_math.ps NativeMath build/native
 ```
 
-A successful `build` produces `build/native/NativeMath.olean` and
-`build/native/NativeMath.c`. Linking an executable with the official
-`leanc` and imported PSCVL static library is a separate integration check.
-Use only supported inputs; PS0 must not treat Lean source acceptance as proof
-of full PSCV0 source-profile acceptance.
+The last command uses official `Lean.Elab.runFrontend` /
+`Lean.Compiler.LCNF.emitC` and produces `.olean` and C (both **UNCERTIFIED**).
+The CI also tests native linking/execution using the PS0-owned harness.
+The source's `partial`, `unsafe`, `axiom`, `sorry` and unselected syntax
+are refused in supported cases; this does not yet establish all transitive
+source/ABI/effect/erasure conditions.
 
-The pinned provisional `environment` manifest reports selected imports,
-deriving and scalar-evaluation types; it is **not** a complete transitive
-instance, notation, tactic, effect or axiom inventory.
+The inherited assumption policy currently admits `Classical.choice`,
+`propext`, and `Quot.sound`; do not conflate it with PSC0's portable
+`propext`/`Quot.sound` policy. Full environment locking, imports/public
+modules, IDE source maps, complete verification and binary publication are
+future milestones. **Lean source proofs do not prove native machine-code
+semantic preservation**.
 
-## Assurance and exact limits
+## Implementation roadmap
 
-- `.ps` syntax is the existing **bounded** PSCVL v7 implementation, not
-  complete coverage of the current PSCV0 v7 normative reference.
-- Source `partial`, `unsafe`, `axiom`, `sorry` and disallowed grammar
-  must fail before artifact emission. Additional source/trust checks remain open.
-- `#pscv_gate` is a source/axiom preflight, **not** a proof that every
-  executable function satisfies a complete formal contract.
-- `Classical.choice` remains in the inherited Lean-native policy allowance.
-  A stricter verified PSCV0 profile needs a versioned, independently audited
-  permitted-assumption closure before certification.
-- Multi-module `.ps` project imports, precise source/IDE positions, full
-  verification/effect and erasure obligations, complete pattern/termination
-  syntax, and certified executable semantics are NOT implemented.
-- Only native Lean targets are built. PS0 does not claim JS, TS, Rust, direct
-  Wasm support or translation correctness. The existing PSC0 compiler owns
-  those independently.
+The [full v7 research and execution plan](PS0_FULL_PSCV0_V7_IMPLEMENTATION_PLAN.md)
+defines PS0-00 through PS0-11, including source grammar/Lean-Core conformance,
+modules, Standard, contracts, effects, checked sessions, IDE and release gates.
+[CONFORMANCE.md](CONFORMANCE.md) records the current limited evidence and gaps.
 
-Development acceptance is tracked in [CONFORMANCE.md](CONFORMANCE.md).
-Any failing/pending feature must reject rather than silently pass through
-unrestricted Lean syntax. Do not merge this branch into upstream Lean master,
-rebase away the preserved experiment, or replace PSC0 without an explicit
-future decision.
+Current isolated PR: [dwijayuda/lean4 #5](https://github.com/dwijayuda/lean4/pull/5),
+draft, not merged. The independent PSC0 multi-backend compiler and PR #109
+remain separate and untouched.
