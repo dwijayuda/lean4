@@ -464,39 +464,62 @@ parser and native instance typeclass registration. The source v7 grammar
 permits only the selected named or nonnegative decimal priorities, which
 PS0.Grammar validates before any source command elaboration.
 -/
+declare_syntax_cat pscvSelectedPriority
+syntax num : pscvSelectedPriority
+syntax "low" : pscvSelectedPriority
+syntax "mid" : pscvSelectedPriority
+syntax "default" : pscvSelectedPriority
+syntax "high" : pscvSelectedPriority
+
+/-- Finite source profile; each case is parsed again by the pinned Lean
+native priority grammar. We do NOT interpret or renumber priorities in PS0. -/
+private def lowerSelectedPriority
+    (source : TSyntax `pscvSelectedPriority) : MacroM (TSyntax `prio) := do
+  match source with
+  | `(pscvSelectedPriority| $n:num) => `(prio| $n:num)
+  | `(pscvSelectedPriority| low) => `(prio| low)
+  | `(pscvSelectedPriority| mid) => `(prio| mid)
+  | `(pscvSelectedPriority| default) => `(prio| default)
+  | `(pscvSelectedPriority| high) => `(prio| high)
+  | _ => Macro.throwUnsupported
+
 syntax (name := pscvPrioritizedInstanceAnonymous)
-  "instance " "(priority := " prio ")" ":" term " where " term : command
+  "instance " "(priority := " pscvSelectedPriority ")" ":" term " where " term : command
 syntax (name := pscvPrioritizedInstanceNamed)
-  "instance " "(priority := " prio ")" ident ":" term
+  "instance " "(priority := " pscvSelectedPriority ")" ident ":" term
   " where " term : command
 syntax (name := pscvPrioritizedInstanceTelescopeAnonymous)
-  "instance " "(priority := " prio ")" pscvTelescopeSegment+ ":" term
+  "instance " "(priority := " pscvSelectedPriority ")" pscvTelescopeSegment+ ":" term
   " where " term : command
 syntax (name := pscvPrioritizedInstanceTelescopeNamed)
-  "instance " "(priority := " prio ")" ident pscvTelescopeSegment+ ":" term
+  "instance " "(priority := " pscvSelectedPriority ")" ident pscvTelescopeSegment+ ":" term
   " where " term : command
 
 macro_rules (kind := pscvPrioritizedInstanceAnonymous)
-  | `(instance (priority := $p:prio) : $ty:term where $fields:term) =>
+  | `(instance (priority := $sourcePriority:pscvSelectedPriority) : $ty:term where $fields:term) => do
+      let p ← lowerSelectedPriority sourcePriority
       `(instance (priority := $p:prio) : $ty:term := $fields:term)
 
 macro_rules (kind := pscvPrioritizedInstanceNamed)
-  | `(instance (priority := $p:prio) $name:ident :
-      $ty:term where $fields:term) =>
+  | `(instance (priority := $sourcePriority:pscvSelectedPriority) $name:ident :
+      $ty:term where $fields:term) => do
+      let p ← lowerSelectedPriority sourcePriority
       `(instance (priority := $p:prio) $name:ident :
         $ty:term := $fields:term)
 
 macro_rules (kind := pscvPrioritizedInstanceTelescopeAnonymous)
-  | `(instance (priority := $p:prio) $parts:pscvTelescopeSegment* :
+  | `(instance (priority := $sourcePriority:pscvSelectedPriority) $parts:pscvTelescopeSegment* :
       $ty:term where $fields:term) => do
     let binders ← orderedLeanBinders parts
+    let p ← lowerSelectedPriority sourcePriority
     `(instance (priority := $p:prio) $binders* :
       $ty:term := $fields:term)
 
 macro_rules (kind := pscvPrioritizedInstanceTelescopeNamed)
-  | `(instance (priority := $p:prio) $name:ident
+  | `(instance (priority := $sourcePriority:pscvSelectedPriority) $name:ident
       $parts:pscvTelescopeSegment* : $ty:term where $fields:term) => do
     let binders ← orderedLeanBinders parts
+    let p ← lowerSelectedPriority sourcePriority
     `(instance (priority := $p:prio) $name:ident $binders* :
       $ty:term := $fields:term)
 
