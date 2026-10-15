@@ -1,0 +1,9 @@
+-- v7 delegates matches and if-let semantics to pinned Lean's elaborator.
+function isSome(x: Option Nat): Bool := { x matches .some _ }
+function valueOrZero(x: Option Nat): Nat := {
+  if let .some n := x { n } else { 0 }
+}
+theorem isSomeSome: isSome(.some(3)) = true := by { rfl }
+theorem isSomeNone: isSome(.none) = false := by { rfl }
+theorem valueOrZeroSome: valueOrZero(.some(4)) = 4 := by { rfl }
+theorem valueOrZeroNone: valueOrZero(.none) = 0 := by { rfl }
