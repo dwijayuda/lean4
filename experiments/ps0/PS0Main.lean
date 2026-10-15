@@ -186,8 +186,11 @@ private def buildUnrestrictedLean (path moduleName outputDir : String) : IO UInt
     return 2
   let parent := out.parent.getD "."
   IO.FS.createDirAll parent
-  -- This is a host output-safety policy, not a restriction on Lean source.
-  let stage ← IO.FS.createTempDir
+  -- Host output safety is not a restriction on Lean source. Use a sibling
+  -- path so successful publication stays on the same filesystem.
+  let nonce ← IO.monoMsNow
+  let stage := parent / s!".ps0-lean-stage-{moduleName}-{nonce}"
+  IO.FS.createDir stage
   try
     let olean := stage / s!"{moduleName}.olean"
     let c := stage / s!"{moduleName}.c"
