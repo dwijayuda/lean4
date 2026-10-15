@@ -255,7 +255,9 @@ private def buildJs (path moduleName outputDir : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
     IO.eprintln "PS0-JS-INPUT: expected .ps"
     return 2
-  unless validModuleName moduleName do
+  -- The output stem occurs in the sourceMappingURL and file names. Restrict
+  -- it to one ASCII JS-safe atom, not arbitrary CLI text or file paths.
+  unless validModuleName moduleName && Backend.Js.safePublicName moduleName do
     IO.eprintln "PS0-JS-MODULE: invalid output module name"
     return 2
   let raw ← IO.FS.readFile path
