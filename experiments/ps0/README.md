@@ -81,6 +81,28 @@ modules, IDE source maps, complete verification and binary publication are
 future milestones. **Lean source proofs do not prove native machine-code
 semantic preservation**.
 
+## Language-feature completion estimate (October 15, 2026)
+
+PS0 reports **37% estimated v7 language-feature readiness** across
+20 equally weighted source/semantic feature families. This is a subjective,
+evidence-linked implementation-readiness rubric, **not** measured code coverage
+or language acceptance. Strict normative v7 qualification remains
+**0/181 (0%)**, because an exact-commit stable Lean 4.35.0 CI pass and full
+per-case evidence are not available.
+
+The breakdown is: source/declarations/calls/scopes **48% (12/25)**;
+types/data/conditionals/patterns/recursion **40% (14/35)**;
+proofs/do/contracts/effects **40% (8/20)**; and modules/selected libraries/
+environment/assurance **15% (3/20)**.
+
+See [language-feature-progress.json](language-feature-progress.json) for
+the per-family score and grounded code paths. PS0 CI executes
+`node scripts/report-language-progress.mjs`; the stricter
+[v7-coverage.json](v7-coverage.json) maintains all 150 normative source
+cases plus 31 audit requirements as PENDING until real exact-commit evidence
+is recorded. New `matches`/`if let`/`nomatch` fixtures are *candidate*
+tests only and do not by themselves increase qualified completion.
+
 ## Implementation roadmap
 
 The [full v7 research and execution plan](PS0_FULL_PSCV0_V7_IMPLEMENTATION_PLAN.md)
