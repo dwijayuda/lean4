@@ -64,7 +64,7 @@ See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md).
 
 | Lean implementation | Responsibility |
 |---|---|
-| `PS0/HostCategories.lean` | Initial four PS v1 host-category interfaces and `PS0.Syntax.lower` native capture bridge; full host operand lowering pending |
+| `PS0/HostCategories.lean` | Four PS v1 host categories, a selected adjacent `psTerm` identifier-call parser, and `PS0.Syntax.lower` to native Lean application AST; full standard operand adaptation pending |
 | `PS0/Syntax.lean` | Owned PS surface adaptations; full category-aware call/quote/record lowering pending |
 | `PS0/Grammar.lean` | Non-normative static syntax-kind inspection; official interleaved Lean parser is authoritative |
 | `PS0/Policy.lean` | Local declaration **information only**, no implicit axiom approval or source-language bans |
