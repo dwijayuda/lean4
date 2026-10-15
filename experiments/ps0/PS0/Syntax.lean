@@ -440,6 +440,24 @@ macro_rules (kind := pscvBracedInstanceNamed)
   | `(instance $name:ident : $classTy:term where $fields:term) =>
       `(instance $name:ident : $classTy:term := $fields:term)
 
+/-- Instance headers have the same ordered, Lean-grounded binder telescope
+as PSCV0 definitions. They never acquire a synthetic Unit parameter. -/
+syntax (name := pscvBracedInstanceTelescopeAnonymous)
+  "instance " pscvTelescopeSegment+ ":" term " where " term : command
+syntax (name := pscvBracedInstanceTelescopeNamed)
+  "instance " ident pscvTelescopeSegment+ ":" term " where " term : command
+
+macro_rules (kind := pscvBracedInstanceTelescopeAnonymous)
+  | `(instance $parts:pscvTelescopeSegment* : $classTy:term where $fields:term) => do
+    let binders ← orderedLeanBinders parts
+    `(instance $binders* : $classTy:term := $fields:term)
+
+macro_rules (kind := pscvBracedInstanceTelescopeNamed)
+  | `(instance $name:ident $parts:pscvTelescopeSegment* :
+      $classTy:term where $fields:term) => do
+    let binders ← orderedLeanBinders parts
+    `(instance $name:ident $binders* : $classTy:term := $fields:term)
+
 /-- Mutual recursion is only a braced grouping of the official Lean mutual
 declaration elaborator and termination checker. -/
 syntax (name := pscvBracedMutual)
