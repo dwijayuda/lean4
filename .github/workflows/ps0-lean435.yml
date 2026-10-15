@@ -74,6 +74,10 @@ jobs:
           # Native Lean must accept standard Lean constructs forbidden in .ps:
           # user axioms, unsafe/partial declarations, sorry, and IO #eval.
           lake exe ps0 check tests/lean/unrestricted.lean > lean-check.log 2>&1 || { cat lean-check.log; exit 1; }
+          lake exe ps0 check tests/lean/v7_signature_reference.lean > signature-reference.log 2>&1 || {
+            cat signature-reference.log
+            exit 1
+          }
           grep -F 'PS0_LEAN_UNRESTRICTED_OK' lean-check.log
           grep -F '42' lean-check.log
           lake exe ps0 lean tests/lean/unrestricted.lean > lean-native.log 2>&1 || { cat lean-native.log; exit 1; }
