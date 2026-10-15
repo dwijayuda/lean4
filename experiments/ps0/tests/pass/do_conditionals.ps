@@ -15,6 +15,13 @@ function chooseOption(x: Option Nat): Id Nat := do {
   }
 }
 
+function optionalPatternNoElse(x: Option Nat): Id Nat := do {
+  if let .some n := x {
+    let observed ← pure(n)
+  }
+  return 5
+}
+
 function optionalNoElse(flag: Bool): Id Nat := do {
   if (flag) {
     let ignored ← pure(17)
@@ -22,6 +29,8 @@ function optionalNoElse(flag: Bool): Id Nat := do {
   return 5
 }
 
+theorem patternNoElseSome: optionalPatternNoElse(.some(8)) = 5 := by { rfl }
+theorem patternNoElseNone: optionalPatternNoElse(.none) = 5 := by { rfl }
 theorem chooseTrue: choose(true) = 42 := by { rfl }
 theorem chooseFalse: choose(false) = 0 := by { rfl }
 theorem optionSome: chooseOption(.some(7)) = 7 := by { rfl }
