@@ -177,7 +177,7 @@ selected priority-bearing variants with and without parameter telescopes:
 `instance (priority := high) : C where { ... }`,
 `instance (priority := 750) chosen : C where { ... }`, and
 `instance (priority := low) {α: Type}[Inhabited α] : C(α) where { ... }`.
-The source syntax reuses Lean's native `prio` parser and translates the
+The source syntax now uses a closed `pscvSelectedPriority` grammar (`low`, `mid`, `default`, `high`, or a decimal), and translates the
 instance into a native declaration. Lean remains responsible for priority
 interpretation, instance registration, and typeclass search. It has **not**
 implemented a separate instance-ordering algorithm.
@@ -196,7 +196,7 @@ and **zero** confirmed PASS receipts.
 **Important qualification limit:** no stable Lean 4.35 CI run has been
 retrieved for this branch. The native parser and custom source syntax
 must be tested together before claiming that every form elaborates or
-rejects at its specified phase. Source priority atom policy and the
-frozen instance/priority registry still need complete v7 conformance
-work. Language implementation readiness remains **40%**, not 41%
+rejects at its specified phase. The source atom allowlist is now
+explicit, while the frozen imported instance/priority registry and
+exact semantic correspondence remain unfinished. Language implementation readiness remains **40%**, not 41%
 merely for adding another syntax variant.
