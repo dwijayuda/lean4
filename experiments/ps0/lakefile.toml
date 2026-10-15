@@ -1,0 +1,14 @@
+name = "ps0"
+version = "0.1.0"
+defaultTargets = ["ps0"]
+
+# Reuse the existing Lean-native PSCV0 grammar, macros, and verification gate.
+# Do not import or modify the independent pskernel PSC0 compiler.
+[[require]]
+name = "pscv0_lean_native"
+path = "../pscv0-lean-native"
+
+[[lean_exe]]
+name = "ps0"
+root = "PS0Main"
+supportInterpreter = true
