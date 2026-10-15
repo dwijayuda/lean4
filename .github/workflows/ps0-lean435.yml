@@ -117,6 +117,17 @@ jobs:
             exit 1
           fi
           grep -F 'PSCV0-MODULE-EXPLICIT-HEADER' bad-public.log
+          # Before proper v7 module lowering, native .ps emission must not
+          # accidentally turn a module-private import into a legacy public one.
+          rm -rf build/module-not-ready
+          if lake exe ps0 build tests/headers/legacy_import.ps ModuleProbe build/module-not-ready > import-build.log 2>&1; then
+            cat import-build.log
+            echo 'PS0 emitted legacy visibility artifacts for a .ps import'
+            exit 1
+          fi
+          grep -F 'PSCV0-MODULE-BUILD-PENDING' import-build.log
+          test ! -e build/module-not-ready
+
       - name: Preserve unrestricted native Lean for .lean sources
         run: |
           set -euo pipefail
