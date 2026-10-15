@@ -122,3 +122,41 @@ Five relevant `v1-coverage.json` cases have new candidate links;
 all remain `PENDING` until actually qualified by pinned Lean CI.
 
 The canonical normative PS0 v1 R2 document remains unchanged.
+
+
+## Standard declaration-body psTerm integration — 16 October 2026
+
+PS0 now provides owned source-command forms for **typed** `function` and
+`const` bodies whose RHS category is `psTerm` rather than silently taking a
+native `term` operand. These forms have higher source-parser priority than
+the older partial native-term-backed alias forms. They call the shared
+`PS0.Syntax.lower` bridge, constructing real native Lean declarations with
+the existing source binder/Unit sugar and ordinary Lean elaboration.
+
+`tests/v1/standard_host_declarations.ps` exercises composed and nested
+adjacent calls, reordered named arguments, trailing commas, a
+partially applied function, and const initializers. Negative fixtures
+`standard_host_order_negative.ps` and
+`standard_host_duplicate_negative.ps` demand their specific
+`PS0V1-CALL-ORDER`/`PS0V1-CALL-NAMED` rejections; a separate comma-only
+fixture must not pass. These tests are **not** current CI PASS receipts.
+
+The Lean-native Nat-only JS backend now recognizes the same new
+`psTerm` body nodes, lowering only prior, exact-arity, monomorphic Nat
+function calls and constant references into its closed typed IR.
+`tests/js/nat_mvp.ps` includes calls with trailing commas in typed
+`function` and `const` source forms, with a Node/TypeScript check in CI.
+Broader JS semantics or proof-of-runtime-preservation are not claimed.
+
+**Unfinished:** inferred-result declarations, dependent type/binder
+slots, standard native `def` and `theorem` RHS, native tactic/do/contract
+operands, complete high-postfix call heads, empty-call type-directed
+completion inside `psTerm`, ambiguous parse coalescence, expression
+source-provenance proof, and imported extension/DSL boundaries.
+Only these two typed declaration aliases have migrated standard
+body operands. Native `.lean` is unaffected.
+
+The v1 coverage ledger has seven additional **standard-operand
+candidate fixture links** on existing call-case IDs, not seven new
+requirements or qualifying PASS records. All 242 entries remain
+unqualified until an exact-commit Lean 4.35.0 CI result is examined.
