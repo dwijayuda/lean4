@@ -12,6 +12,31 @@ depend on `../pscv0-lean-native` or on `dwijayuda/pskernel`** at build time.
 point. Its five implementation modules were **adapted**, not copied as an
 untouched opaque dependency; the original experiment remains unchanged.
 
+## Two source modes — v7 restrictions apply only to .ps
+
+**`.ps`: PSCV0 v7 profile.** The selected syntax/grammar, source bans,
+`#pscv_gate`, permitted imports and verification requirements apply.
+
+**`.lean`: full ordinary Lean 4.35.0.** No PSCV0 source restrictions.
+PS0 invokes the official Lean sysroot executable in a separate process so
+ordinary Lean `unsafe`, `partial`, `axiom`, `sorry`, imports, tactics,
+user macros and unrestricted native `#eval` behave as Lean defines them.
+
+```sh
+lake exe ps0 check tests/pass/basic.ps               # v7-checked ProofScript
+lake exe ps0 check tests/lean/unrestricted.lean      # unrestricted Lean
+lake exe ps0 lean tests/lean/unrestricted.lean       # exact native Lean pass-through
+lake exe ps0 build tests/lean/unrestricted.lean NativeUnrestricted build/lean-native
+```
+
+The command `ps0 lean ...` passes all arguments to the official Lean CLI
+without parsing or translating source in PS0. Native `.lean` compilation
+does not automatically receive a ProofScript source-verification certificate.
+
+See [SOURCE_PROFILE_BOUNDARY.md](SOURCE_PROFILE_BOUNDARY.md) for the full
+language/trust-boundary contract, including future mixed `.ps`/`.lean`
+project imports. **The v7 completion percentage counts only `.ps` features.**
+
 ## Owned source layout
 
 | Source | Responsibility |
