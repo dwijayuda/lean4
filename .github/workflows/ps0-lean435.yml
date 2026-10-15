@@ -78,6 +78,10 @@ jobs:
             cat termination-reference.log
             exit 1
           }
+          lake exe ps0 check tests/lean/termination_native_extensions.lean > native-termination.log 2>&1 || {
+            cat native-termination.log
+            exit 1
+          }
           lake exe ps0 check tests/lean/v7_signature_reference.lean > signature-reference.log 2>&1 || {
             cat signature-reference.log
             exit 1
@@ -177,6 +181,18 @@ jobs:
               cat wf-negative.log
               exit 1
             fi
+          done
+          for rule in \
+            'termination_native_structural.ps:PSCV0-TERM-01' \
+            'termination_native_suggest.ps:PSCV0-TERM-01' \
+            'termination_native_decreasing_without_measure.ps:PSCV0-TERM-01'; do
+            fixture="${rule%%:*}"
+            code="${rule#*:}"
+            if lake exe ps0 check "tests/fail/$fixture" > native-term-negative.log 2>&1; then
+              cat native-term-negative.log
+              exit 1
+            fi
+            grep -F "$code" native-term-negative.log
           done
           echo 'PS0_TERMINATION_FAMILY: PASS'
       - name: Reject artifact emission for disallowed source
