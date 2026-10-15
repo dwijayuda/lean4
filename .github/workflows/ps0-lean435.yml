@@ -86,6 +86,11 @@ jobs:
           grep -F "PSCV0-TRY-BRACES" try.log
           lake exe ps0 check tests/fail/eval_function.ps > eval.log 2>&1 && exit 1 || true
           grep -F "PSCV0-EVAL-TYPE" eval.log
+          if lake exe ps0 check tests/fail/noncallable_empty.ps > empty.log 2>&1; then
+            echo "PS0 incorrectly accepted an empty call on a Nat value"
+            exit 1
+          fi
+          grep -F "PSCV0-CALL-EMPTY" empty.log
       - name: Reject artifact emission for disallowed source
         run: |
           set -euo pipefail
