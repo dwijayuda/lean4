@@ -129,15 +129,18 @@ CI-qualified v7 requirements: a stable exact-commit CI receipt is pending.
 
 The source profile now adapts selected `instance : C where { ... }` and
 `instance chosen : C where { ... }`, including ordered binder
-telescopes, to the equivalent official Lean typeclass declarations.
+telescopes and native Lean priority annotations such as
+`instance (priority := high)` or `instance (priority := 750)`,
+to the equivalent official Lean typeclass declarations.
 `.ps` requires genuine braced fields; native `.lean` keeps its broader
 instance syntax, including `instance : C := value`.
 
 See `tests/pass/instance_braced_fields.ps`, corresponding native
 `tests/lean/instance_reference.lean`, and
 [CONFORMANCE.md](CONFORMANCE.md). This implementation is currently
-**unqualified until exact-commit stable-Lean CI**. Selected instance
-priorities and the frozen typeclass registry remain pending.
+**unqualified until exact-commit stable-Lean CI**. The priority syntax is now implemented as a candidate, but the complete
+selected priority policy, frozen typeclass registry, and successful stable CI
+qualification remain pending.
 
 ## Language-feature completion estimate (October 15, 2026)
 
