@@ -106,6 +106,36 @@ macro_rules (kind := pscvFunctionInferred)
 
 
 
+/-!
+PSCV0-TERM-01: bounded well-founded recursion with a required measure
+when a source-owned `decreasing_by by { ... }` proof is supplied.
+Lean 4.35.0's Termination.suffix / native termination elaborator owns
+all actual decrease proof checking; PS0 does not admit partial recursion.
+These branches are distinct from Lean's full native .lean syntax.
+-/
+syntax (name := pscvFunctionTermination)
+  "function " ident "(" pscvBinder,+ ")" ":" term ":=" term
+  "termination_by " term : command
+
+macro_rules (kind := pscvFunctionTermination)
+  | `(function $f:ident ($[$bs:pscvBinder],*) : $ty:term := $body:term
+      termination_by $measure:term) => do
+    let binders ← explicitLeanBinders bs
+    `(def $f:ident $binders* : $ty:term := $body:term
+        termination_by $measure:term)
+
+syntax (name := pscvFunctionTerminationProof)
+  "function " ident "(" pscvBinder,+ ")" ":" term ":=" term
+  "termination_by " term "decreasing_by " "by " tacticSeq : command
+
+macro_rules (kind := pscvFunctionTerminationProof)
+  | `(function $f:ident ($[$bs:pscvBinder],*) : $ty:term := $body:term
+      termination_by $measure:term decreasing_by by $proof:tacticSeq) => do
+    let binders ← explicitLeanBinders bs
+    `(def $f:ident $binders* : $ty:term := $body:term
+        termination_by $measure:term
+        decreasing_by $proof:tacticSeq)
+
 /-- Visibility maps to Lean's native private declaration modifier. -/
 syntax (name := pscvPrivateConst)
   "private " "const " ident ":" term ":=" term : command
