@@ -98,3 +98,17 @@ the native file remains unrestricted. See
 (0/181). Lean already had full expressive power; PS0 is preserving it
 rather than implementing those features as ProofScript capabilities.
 
+
+## Implemented .ps signature additions — 15 October 2026
+
+**Source forms added:**
+
+- `function sum(x: Nat, y: Nat) := x + y` and `def triple(x: Nat) := ...` infer their return types through Lean's native declaration elaborator. Inference also covers `private function`, implicit/instance-headed functions, and source-nullary `function zero() := ...` (retaining the required Unit binder).
+- Ordered telescopes such as `function choose(n: Nat)[Decidable(n = 0)](x: Fin(n + 1)): Nat := ...` and `def select {α: Type}(x: α)[Inhabited α](y: α): α := ...` preserve Lean's dependent argument and class-search order.
+- The same ordering applies to v7 `theorem` declarations with selected explicit, implicit and instance groups.
+- Source `{{α: Type}}` strict-implicit spelling maps to Lean's strict-implicit binder.
+- `PSCV0-BIND-02` refuses adjacent explicit groups both in the PS0 overlay and selected native `def`/`theorem` alternatives inside `.ps`; unrestricted `.lean` is unchanged.
+
+**Evidence status:** PS0-owned positive, negative and independent native-Lean reference fixtures and CI definitions are committed. They are **unqualified** until an observed stable-Lean exact-commit CI success; normalized expression/type equivalence for all selected binder permutations is still open. `v7-coverage.json` stores candidates without assigning PASS.
+
+**Readiness rubric:** binder family 3/5 (formerly 2/5), estimated overall `.ps` readiness **38%**. The strict v7 acceptance ledger remains **0/181 CI-qualified**, not 38% tested/proven. `ps0 lean` and the `check/build *.lean` routes continue using official Lean without PSCV0 source restrictions.
