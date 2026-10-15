@@ -24,22 +24,62 @@ private def checkedName (n : Ident) : Except String String := do
     throw s!"PS0-JS-NAME: unsupported JS/TypeScript identifier {value}"
   return value
 
+/-- The current module graph is intentionally acyclic and source-ordered.
+    Only preceding declarations with exact Nat signatures can be referenced.
+    Lean checks meaning first; this second check proves the JS IR has no
+    unchecked forward imports, unknown globals, partial applications or
+    recursive calls. -/
+private def findPrevious (previous : Array Decl) (name : String) :
+    Option Decl :=
+  previous.toList.find? (fun d => d.name == name)
+
 private partial def lowerExpr (locals : Array String)
-    (e : TSyntax `term) : Except String NatExpr := do
+    (previous : Array Decl) (e : TSyntax `term) :
+    Except String NatExpr := do
   match e with
-  | `(term| { $inner:term }) => lowerExpr locals inner
-  | `(term| ($inner:term)) => lowerExpr locals inner
+  | `(term| { $inner:term }) => lowerExpr locals previous inner
+  | `(term| ($inner:term)) => lowerExpr locals previous inner
   | `(term| $n:num) => return .literal n.getNat
+  | `(term| $fn:term()) =>
+      unless fn.raw.isIdent do
+        throw "PS0-JS-CALL: callable head must be a previous named function"
+      let name := fn.raw.getId.toString
+      let some decl := findPrevious previous name
+        | throw s!"PS0-JS-CALL: unresolved or forward function {name}"
+      if decl.isConst || !decl.params.isEmpty then
+        throw s!"PS0-JS-CALL: {name} is not a nullary Nat function"
+      return .call name #[]
+  | `(term| $fn:term($[$args:pscvCallArg],*)) =>
+      unless fn.raw.isIdent do
+        throw "PS0-JS-CALL: callable head must be a previous named function"
+      let name := fn.raw.getId.toString
+      let some decl := findPrevious previous name
+        | throw s!"PS0-JS-CALL: unresolved or forward function {name}"
+      if decl.isConst || decl.params.size != args.size then
+        throw s!"PS0-JS-CALL: {name} has incompatible Nat argument arity"
+      let mut lowered : Array NatExpr := #[]
+      for arg in args do
+        match arg with
+        | `(pscvCallArg| $v:term) =>
+            lowered := lowered.push (← lowerExpr locals previous v)
+        | _ =>
+            throw "PS0-JS-CALL: named/defaulted arguments are not supported"
+      return .call name lowered
   | `(term| $n:ident) =>
       let name := n.getId.toString
       if locals.contains name then return .local name
+      if let some decl := findPrevious previous name then
+        if decl.isConst then return .globalConst name
       throw s!"PS0-JS-EXPR: nonlocal value {name} is outside the Nat MVP"
   | `(term| $a:term + $b:term) =>
-      return .add (← lowerExpr locals a) (← lowerExpr locals b)
+      return .add (← lowerExpr locals previous a)
+        (← lowerExpr locals previous b)
   | `(term| $a:term * $b:term) =>
-      return .mul (← lowerExpr locals a) (← lowerExpr locals b)
+      return .mul (← lowerExpr locals previous a)
+        (← lowerExpr locals previous b)
   | `(term| $a:term - $b:term) =>
-      return .sub (← lowerExpr locals a) (← lowerExpr locals b)
+      return .sub (← lowerExpr locals previous a)
+        (← lowerExpr locals previous b)
   | _ =>
       throw s!"PS0-JS-EXPR: unsupported Nat expression syntax {e.raw.getKind}"
 
@@ -69,7 +109,8 @@ private def declOrigin (input : Parser.InputContext) (cmd : Syntax) :
   let pos := input.fileMap.toPosition offset
   return { line := pos.line - 1, column := pos.column }
 
-private def lowerCommand (input : Parser.InputContext) (cmd : Syntax) :
+private def lowerCommand (input : Parser.InputContext) (cmd : Syntax)
+    (previous : Array Decl) :
     Except String Decl := do
   let origin ← declOrigin input cmd
   match cmd with
@@ -77,7 +118,7 @@ private def lowerCommand (input : Parser.InputContext) (cmd : Syntax) :
       unless isNatType ty do
         throw "PS0-JS-TYPE: MVP only exports explicitly typed Nat constants"
       let name ← checkedName n
-      return { name, body := (← lowerExpr #[] body), isConst := true, origin }
+      return { name, body := (← lowerExpr #[] previous body), isConst := true, origin }
   | `(command| function $n:ident ($[$bs:pscvBinder],*) :
       $ty:term := $body:term) =>
       unless isNatType ty do
@@ -85,7 +126,7 @@ private def lowerCommand (input : Parser.InputContext) (cmd : Syntax) :
       let name ← checkedName n
       let params ← lowerParams bs
       return {
-        name, params, body := (← lowerExpr params body),
+        name, params, body := (← lowerExpr params previous body),
         isConst := false, origin
       }
   | _ =>
@@ -107,7 +148,7 @@ def lower (sourceName source : String) (env : Environment)
     if cmd.isOfKind ``Parser.Command.eoi then break
     if next.pos == parserState.pos then
       return .error "PS0-JS-PARSE: parser did not advance"
-    let decl ← match lowerCommand input cmd with
+    let decl ← match lowerCommand input cmd declarations with
       | .ok v => pure v
       | .error e => return .error e
     if declarations.any (fun d => d.name == decl.name) then
