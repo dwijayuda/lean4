@@ -59,6 +59,52 @@ correct any actual macro quotation/parser ambiguities, and
 systematically cover other standard expression operand positions
 without rewriting unrelated DSLs or native syntax quotations.
 
+## New PS0 v1 implementation checkpoint — 16 October 2026
+
+- Migrated the **standard source declaration-body** operand from
+  native `term` to the specified PS-owned `psTerm` category in
+  source `function` and `const` aliases. Typed and inferred
+  result types, plus typed/inferred private variants, now invoke
+  `PS0.Syntax.lower` before building official Lean `def` syntax.
+  Existing Lean elaboration and nullary Unit sugar are reused;
+  this is not a second typechecker or a source-text transpiler.
+- Added `tests/v1/standard_host_declarations.ps` with Lean
+  theorem oracles for nested, named, trailing-comma and partial
+  application, public constants, private functions/constants,
+  inferred results and source-nullary Unit behavior. Three
+  source-invalid cases exercise duplicate named parameters,
+  invalid positional-after-named order and comma-only calls.
+- Added a family CI step in the full PS0 workflow with exact
+  intended diagnostic assertions for named argument errors.
+- Updated the Lean-authored Nat JS lowering to recognize the
+  new typed standard `psTerm` RHS syntax, maintaining its
+  closed IR contract: exact-arity calls to earlier Nat functions,
+  native Nat operators and constants only; other sources fail
+  closed. Expanded the JS runtime and TypeScript regression
+  to cover trailing-comma calls and const initializer exports.
+- Seven already-existing v1 call requirements gained an
+  additional **standard-host operand candidate** mapping in
+  `v1-coverage.json`. These are not new requirements or PASS
+  evidence. The 242-item normative registry remains unqualified.
+- **Remaining G1 work:** general high-postfix call heads,
+  type-directed empty-call completion, source-gap provenance,
+  full native `def`, theorem/proof, binder/type, tactic, do,
+  contract/configuration operand slot selection, and imported
+  extension/quotation disambiguation. The current contribution
+  closes only the standard `function`/`const` BODY family.
+- The GitHub Actions endpoint returned **zero recorded branch
+  workflow runs** before these edits, and this environment
+  has no accessible pinned Lean/Lake toolchain. The code was
+  committed through the authorized GitHub connection but
+  **has not passed an observed Lean 4.35.0 compiler run**.
+  Keep PR #5 draft; do not infer language completion percentages.
+
+**Next critical path:** obtain the focused/full Lean CI results
+and correct any actual macro parser/API errors in one coherent
+family; then extend the same category-owner pattern to standard
+types, theorem statements, tactic and effectful `do` slots,
+while preserving native quotations and independent DSL operands.
+
 ## This continuation: real host-category implementation and fixture repairs
 
 1. `PS0/HostCategories.lean` now gives the owned adjacent-call production
