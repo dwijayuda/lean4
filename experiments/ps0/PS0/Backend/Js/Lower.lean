@@ -101,7 +101,7 @@ def lower (sourceName source : String) (env : Environment)
         parserState messages
     if nextMessages.hasErrors then
       return .error "PS0-JS-PARSE: official Lean parser rejected source"
-    if cmd.isOfKind `Parser.Command.eoi then break
+    if cmd.isOfKind ``Parser.Command.eoi then break
     if next.pos == parserState.pos then
       return .error "PS0-JS-PARSE: parser did not advance"
     let decl ← match lowerCommand input cmd with
