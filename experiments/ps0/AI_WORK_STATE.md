@@ -1,5 +1,17 @@
 # PS0 — AI work state (15 October 2026)
 
+## Inferred signatures and ordered v7 binders — 15 October 2026
+
+**New implementation checkpoint before this log update:** `8f5c4e9ebe11aa6758f0f8866a0e13fdcd222018`. Read live branch HEAD before further commits.
+
+- PS0 now implements `.ps` **inferred result types** in comma-bound `function`/`def` and private/implicit function declarations, delegating inference to official Lean 4.35.0.
+- Introduced an explicitly ordered `pscvTelescopeSegment` for mixed explicit parameter groups, implicit/strict-implicit type parameters, named/anonymous typeclass instance binders, and corresponding `function`, `def`, `theorem` forms. Binder order and dependent types are passed to Lean; no new solver or kernel.
+- `PSCV0-BIND-02` enforces no consecutive explicit binder groups both in PS0's owned syntax and in native Lean `def`/`theorem` parse alternatives when embedded in `.ps`. This does **not** change native `.lean` behavior.
+- Positive `inferred_signatures.ps` and `interleaved_binders.ps`, negative `adjacent_explicit_groups.ps`, `native_def_adjacent_groups.ps`, `native_theorem_adjacent_groups.ps`, and nullary `def`/`theorem` negatives added; native official-Lean companion source in `tests/lean/v7_signature_reference.lean`. New tests are **candidate fixtures**, not independently qualified.
+- Added `P-BINDER-INTERLEAVED`, `N-BINDER-ADJACENT` and `N-BINDER-NULLARY` candidate links in `v7-coverage.json`; all canonical IDs remain PENDING until exact-commit CI.
+- **Estimated `.ps` language feature readiness is now 38/100 = 38%** (previously 37%) using a 20-family rubric. Binder family moves 2/5 → 3/5; foundation category 13/25 = 52%; data 14/35 = 40%; proofs/effects 8/20 = 40%; modules/libraries/assurance 3/20 = 15%. **Strict qualified: 0/181 = 0%**, unchanged. This 38% is an *engineering readiness estimate*, not measured test coverage.
+- Next qualification gate is a real stable Lean 4.35.0 GitHub workflow run for PR #5, fixing any compile failures and then qualifying the new grammar family. No matching green workflow run was observed prior to this checkpoint.
+
 ## User decision: v7 applies only to `.ps` (15 October 2026)
 
 **Implementation checkpoint before this documentation update:** `4bacc4b612db05554a0be7b651e23e2e2c2df4cc`. Check current GitHub PR #5 HEAD before new writes.
