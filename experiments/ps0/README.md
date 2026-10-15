@@ -138,9 +138,10 @@ instance syntax, including `instance : C := value`.
 See `tests/pass/instance_braced_fields.ps`, corresponding native
 `tests/lean/instance_reference.lean`, and
 [CONFORMANCE.md](CONFORMANCE.md). This implementation is currently
-**unqualified until exact-commit stable-Lean CI**. The priority syntax is now implemented as a candidate, but the complete
-selected priority policy, frozen typeclass registry, and successful stable CI
-qualification remain pending.
+**unqualified until exact-commit stable-Lean CI**. The source priority syntax now has a finite allowlist (low/mid/default/high
+or a decimal literal) mapped into Lean's native priority grammar. The
+frozen instance/typeclass registry and successful stable CI qualification
+remain pending.
 
 ## Language-feature completion estimate (October 15, 2026)
 
