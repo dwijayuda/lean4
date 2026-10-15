@@ -74,6 +74,10 @@ jobs:
           # Native Lean must accept standard Lean constructs forbidden in .ps:
           # user axioms, unsafe/partial declarations, sorry, and IO #eval.
           lake exe ps0 check tests/lean/unrestricted.lean > lean-check.log 2>&1 || { cat lean-check.log; exit 1; }
+          lake exe ps0 check tests/lean/instance_reference.lean > instance-reference.log 2>&1 || {
+            cat instance-reference.log
+            exit 1
+          }
           lake exe ps0 check tests/lean/termination_reference.lean > termination-reference.log 2>&1 || {
             cat termination-reference.log
             exit 1
@@ -170,6 +174,26 @@ jobs:
             fi
             grep -F "$diagnostic" classified.log
           done
+      - name: V7 braced instance language acceptance
+        run: |
+          set -euo pipefail
+          lake exe ps0 check tests/pass/instance_braced_fields.ps > instance-positive.log 2>&1 || {
+            cat instance-positive.log
+            exit 1
+          }
+          grep -F "UNCERTIFIED" instance-positive.log
+          for pair in \
+            'instance_fields_not_record.ps:PSCV0-INSTANCE-FIELDS' \
+            'instance_unbraced_fields.ps:PSCV0-INSTANCE-BRACES'; do
+            fixture="${pair%%:*}"
+            reason="${pair#*:}"
+            if lake exe ps0 check "tests/fail/$fixture" > instance-negative.log 2>&1; then
+              cat instance-negative.log
+              exit 1
+            fi
+            grep -F "$reason" instance-negative.log
+          done
+          echo 'PS0_INSTANCE_BRACED_FIELDS: PASS'
       - name: V7 well-founded total recursion semantic gate
         run: |
           set -euo pipefail
