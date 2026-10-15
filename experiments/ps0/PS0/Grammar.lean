@@ -183,13 +183,33 @@ private partial def hasAsciiDotToken (s : Syntax) : Bool :=
   | .node _ _ children => children.any hasAsciiDotToken
   | _ => false
 
+/-- Restricted v7 measure-first source policy. Native Lean 4.35.0 supports
+additional termination modes; preserve those in .lean but do not admit them
+through native command alternatives inside .ps. -/
+private partial def hasSourceAtom (s : Syntax) (value : String) : Bool :=
+  match s with
+  | .atom _ v => v == value
+  | .node _ _ args => args.any (hasSourceAtom · value)
+  | _ => false
+
 private partial def forbiddenSyntax (s : Syntax) : Option String :=
   match s with
   | .node _ kind args =>
     let k := kind.toString
     -- Pinned Lean Command.opaque has an optional declaration value at [3].
     -- v7 never admits a bodyless opaque assumption as ordinary .ps source.
-    if hasAdjacentNativeExplicitGroups s then
+    if k == "Lean.Parser.Termination.suffix" &&
+        s[0].isNone && !s[1].isNone then
+      some "PSCV0-TERM-01: decreasing_by requires a preceding termination_by measure"
+    else if (["Lean.Parser.Termination.terminationBy?",
+              "Lean.Parser.Termination.partialFixpoint",
+              "Lean.Parser.Termination.coinductiveFixpoint",
+              "Lean.Parser.Termination.inductiveFixpoint"] : List String).contains k then
+      some "PSCV0-TERM-01: non-measure recursion modes are not selected v7 .ps syntax"
+    else if k == "Lean.Parser.Termination.terminationBy" &&
+        hasSourceAtom s "structural" then
+      some "PSCV0-TERM-01: structural termination_by spelling is excluded from selected v7 .ps"
+    else if hasAdjacentNativeExplicitGroups s then
       some "PSCV0-BIND-02: adjacent explicit binder groups are not selected v7 source"
     else if k == "Lean.Parser.Command.opaque" && s[3].isNone then
       some "PSCV0-OPAQUE-BODY-REQUIRED: opaque declarations need a checked value"
