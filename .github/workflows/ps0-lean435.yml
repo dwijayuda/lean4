@@ -117,6 +117,13 @@ jobs:
             exit 1
           fi
           grep -F "PSCV0-CALL-EMPTY" empty.log
+          # Ordered v7 binder groups may interleave with implicit/instance
+          # groups, but two adjacent explicit comma-groups are forbidden.
+          if lake exe ps0 check tests/fail/adjacent_explicit_groups.ps > bind.log 2>&1; then
+            echo "PS0 incorrectly accepted adjacent explicit binder groups"
+            exit 1
+          fi
+          grep -F "PSCV0-BIND-02" bind.log
           if lake exe ps0 check tests/fail/do_iflet_arrow.ps > do-iflet.log 2>&1; then
             echo "PS0 incorrectly admitted deferred monadic do-if-let"
             exit 1
