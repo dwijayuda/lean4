@@ -1,5 +1,18 @@
 # PS0 — AI work state (15 October 2026)
 
+## Well-founded recursion implementation — 15 October 2026
+
+**Code checkpoint before this log entry:** `046797c9f88f041b96554c3ace1dc4fc83faa983`. Re-read live PR #5 HEAD before further commits.
+
+- Source study against stable Lean 4.35.0 commit `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`: `src/Lean/Parser/Term.lean`, `Lean.Parser.Termination.terminationBy` / `decreasingBy` / `suffix`, `src/Lean/Parser/Command.lean` `declValSimple`, and `src/Lean/Elab/PreDefinition/TerminationHint.lean`. Native Lean performs well-founded recursion construction and checks the decrease proof; PS0 must not reimplement it.
+- Implemented selected `.ps` `function f(n: Nat): Nat := body termination_by n` and `decreasing_by by { omega }` source proof adapter in `PS0/Syntax.lean`, lowering to the pinned Lean termination hints and tactic elaborator. The source grammar owns the `by { ... }` wrapper and native Lean owns the proof obligation.
+- Tightened `PS0/Grammar.lean` source closure so native Lean declaration parsing inside `.ps` cannot silently admit `termination_by structural`, `termination_by?`, partial/coinductive/inductive fixpoint modes or `decreasing_by` without a preceding selected measure. These remain allowed in native `.lean` wherever official Lean allows them.
+- Added source-positive `tests/pass/termination_total.ps`, negative non-decreasing/missing-measure tests, additional negative native-source alternative tests, and native `tests/lean/termination_reference.lean` / `termination_native_extensions.lean`. CI invokes the family, checks named `PSCV0-TERM-01` refusals, and verifies that the corresponding unrestricted Lean syntax remains native.
+- **No new PASS evidence:** the stable PS0 workflow is still not independently confirmed running/passing at this HEAD; all new fixtures are unqualified.
+- Engineering readiness estimate: **39%** across twenty equal-weight `.ps` feature families (recursion 2/5 → 3/5). Strict qualified v7 acceptance remains **0/181 (0%)**. This does not count native `.lean` capabilities.
+
+**Next:** get exact-commit stable Lean CI evidence; fix the first actual parser/quotation/compilation failure rather than adjusting test expectations, then close the complete v7 termination/call/dependent-pattern families and source-to-Lean semantic correspondence. Prefer architecture-wide fixes and feature gates over one-test patch loops.
+
 ## Inferred signatures and ordered v7 binders — 15 October 2026
 
 **New implementation checkpoint before this log update:** `8f5c4e9ebe11aa6758f0f8866a0e13fdcd222018`. Read live branch HEAD before further commits.
