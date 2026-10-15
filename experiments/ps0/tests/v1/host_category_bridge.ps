@@ -1,0 +1,13 @@
+-- PS0 v1 `0B: explicitly selected host-category quotation bridge.
+-- Native-compatible expressions retain Lean syntax and do not reparse
+-- pretty-printed syntax or lose identifier hygiene.
+macro "ps0Bridge " e:psTerm : term => do
+  PS0.Syntax.lower `psTerm e.raw
+
+def bridgedValue : Nat := ps0Bridge (40 + 2)
+example : bridgedValue = 42 := by rfl
+
+-- Native syntax quotations remain distinct from host syntax data;
+-- the bridge only applies to a caller-declared host input category.
+def nativeQuoted : Lean.MacroM (Lean.TSyntax `term) :=
+  `(term| (40 + 2))
