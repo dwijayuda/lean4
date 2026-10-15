@@ -1,0 +1,4 @@
+-- A duplicate named source argument is invalid even when native
+-- elaboration could otherwise find a matching implicit binder.
+function addNative(x: Nat, y: Nat): Nat := { x + y }
+const bad: Nat := addNative(x := 20, x := 22)
