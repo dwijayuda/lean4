@@ -1,14 +1,11 @@
 import Lean
 
 /-!
-PS0 v1 `0B: concrete host-category extension interfaces.
+PS0 v1 section 0B: explicit host-category interfaces.
 
-These four bridge rules are an INITIAL native-subcategory foundation only:
-they preserve native Syntax nodes, source references and quotation payloads.
-A true PS-host operand adapter must additionally own PS postfix calls,
-record/body distinction and category-specific lowering before the claim
-of complete PS0 v1 conformance. Never recursively transform independently
-owned DSL/quotation payloads here.
+This is a bounded host-category adapter, not full standard operand-slot
+coverage. Independently owned native syntax, quotations and DSL operands
+must remain opaque to this lowerer. No source text is printed or reparsed.
 -/
 
 open Lean
@@ -18,37 +15,44 @@ declare_syntax_cat psCommand
 declare_syntax_cat psTactic
 declare_syntax_cat psDoSeq
 
-syntax (name := ps0NativeTermBridge) term : psTerm
+-- An owned host call must win over the native term bridge for the same
+-- input span. Do not let a native application interpretation change the
+-- host argument partition or hide the raw host node from an extension.
+syntax (name := ps0NativeTermBridge) (priority := low) term : psTerm
 syntax (name := ps0NativeCommandBridge) command : psCommand
 syntax (name := ps0NativeTacticBridge) tactic : psTactic
 syntax (name := ps0NativeDoBridge) doSeq : psDoSeq
 
-/-!
-PS0V1-APP-01: the first host-owned postfix production. The high-priority
-native/extension head categories and broader standard operand-slot registry
-are separate work. The syntax captures comma-separated host arguments as
-syntax data and checks source adjacency via Lean's native noWs token parser.
--/
 declare_syntax_cat psCallArg
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
 
--- Deliberately limit this initial bridge to an identifier head. A native
--- projection/indexed/explicit-universe postfix needs the full head adapter.
-syntax:max (name := ps0HostAdjacentCall)
-  ident noWs "(" psCallArg,+ ")" : psTerm
+-- The pinned Lean syntax-description grammar supplies allowTrailingSep.
+-- sepBy1 retains nonemptiness: a comma alone is not an empty invocation,
+-- and a repeated comma cannot manufacture a missing operand.
+-- Identifier heads only; other high-postfix heads remain a separate task.
+syntax:max (name := ps0HostAdjacentCall) (priority := high)
+  ident noWs "(" sepBy1(psCallArg, ",", allowTrailingSep) ")" : psTerm
 
 namespace PS0.Syntax
 
-/-- Explicit PS host-category → native-syntax bridge. No source-text
-    reparsing, name lookup, type inference, or tactic/proof execution occurs.
-    For an ordinary native capture the original tree is preserved exactly.
-    For the owned adjacent call, each host argument is lowered in order and
-    assembled into Lean's native application node. Quoted native syntax,
-    extension-owned categories, and patterns are opaque to this function.
-    Missing/malformed source category nodes fail closed. -/
+/-- Generated native nodes retain the source extent for diagnostics, but
+    are marked synthetic rather than pretending to be original native
+    source. This is not an assertion of source-fidelity certification. -/
+private def loweringInfo (source : Lean.Syntax) : SourceInfo :=
+  match source.getRange? with
+  | some span => .synthetic span.start span.stop false
+  | none => .none
+
+/-- Lower only explicitly owned PS nodes to native elaboration syntax.
+    Native captures are returned unchanged, including their syntax info,
+    scopes and pre-resolved identifiers. An unresolved parser choice is
+    not permission to choose a more convenient native interpretation.
+    Type inference, coercion and proof checking remain Lean's work. -/
 partial def lower (category : Name) (source : Lean.Syntax) :
-    Lean.MacroM Lean.Syntax := do
+    Lean.MacroM Lean.Syntax := withRef source do
+  if source.isOfKind choiceKind then
+    throwError "PS0V1-HOST-AMBIGUITY: resolve the host syntax alternative before lowering"
   if category == `psTerm then
     match source with
     | `(psTerm| $head:ident($[$args:psCallArg],*)) => do
@@ -60,20 +64,23 @@ partial def lower (category : Name) (source : Lean.Syntax) :
           | `(psCallArg| $name:ident := $value:psTerm) =>
               let n := name.getId
               if seen.contains n then
-                throwError "PS0V1-CALL-NAMED: duplicate named argument {n}"
+                withRef name do
+                  throwError "PS0V1-CALL-NAMED: duplicate named argument {n}"
               positional := false
               seen := seen.push n
-              let lowered ← lower `psTerm value.raw
-              let term : TSyntax `term := ⟨lowered⟩
-              let named ← `(Lean.Parser.Term.namedArgument| ($name:ident := $term:term))
+              let lowered <- lower `psTerm value.raw
+              let nativeTerm : TSyntax `term := ⟨lowered⟩
+              let named <- withRef arg do
+                `(Lean.Parser.Term.namedArgument| ($name:ident := $nativeTerm:term))
               nativeArgs := nativeArgs.push named.raw
           | `(psCallArg| $value:psTerm) =>
               unless positional do
-                throwError "PS0V1-CALL-ORDER: positional argument after named argument"
+                withRef arg do
+                  throwError "PS0V1-CALL-ORDER: positional argument after named argument"
               nativeArgs := nativeArgs.push (← lower `psTerm value.raw)
           | _ =>
               throwError "PS0V1-HOST-LOWER: malformed psCallArg"
-        return mkNode ``Lean.Parser.Term.app
+        return Lean.Syntax.node (loweringInfo source) ``Lean.Parser.Term.app
           #[head.raw, mkNullNode nativeArgs]
     | `(psTerm| $native:term) => return native.raw
     | _ => throwError "PS0V1-HOST-LOWER: unsupported psTerm source production"
