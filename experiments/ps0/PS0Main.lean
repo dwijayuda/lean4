@@ -113,10 +113,16 @@ private def inspectModuleHeader (path : String) : IO UInt32 := do
   IO.println result.pretty
   return 0
 
-private def checkSource (path source : String) : IO UInt32 := do
+/-- One official elaboration is the authority for both source acceptance
+    and checked-runtime export signatures. Do not certify a separate
+    independently parsed IR without retaining the accepted Lean environment. -/
+private def checkSourceEnvironment (path source : String) :
+    IO (Option Environment) := do
   let (approved, body) ← match ← approvedSource source path with
     | .ok v => pure v
-    | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
+    | .error err =>
+        IO.eprintln s!"PSCV0 source-profile error: {err}"
+        return none
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
   let env ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
@@ -124,14 +130,20 @@ private def checkSource (path source : String) : IO UInt32 := do
   match validateSourceSyntax body path env options with
   | .error msg =>
       IO.eprintln s!"PSCV0 source-profile error: {msg}"
-      return 1
+      return none
   | .ok () => pure ()
-  let (_, messages) ← Elab.process (body ++ "\n\n#pscv_gate\n") env options (some path)
+  let (checked, messages) ← Elab.process (body ++ "\n\n#pscv_gate\n")
+    env options (some path)
   for msg in messages.markAllReported.reported do
     IO.eprintln (← msg.toString)
   if messages.hasErrors then
     IO.eprintln "PSCV0: Lean checking failed; no artifacts emitted"
-    return 1
+    return none
+  return some checked
+
+private def checkSource (path source : String) : IO UInt32 := do
+  let some _ ← checkSourceEnvironment path source
+    | return 1
   IO.println "PSCV0: Lean checking passed (UNCERTIFIED)"
   return 0
 
@@ -253,17 +265,19 @@ private def buildJs (path moduleName outputDir : String) : IO UInt32 := do
   unless imports.isEmpty do
     IO.eprintln "PS0-JS-IMPORTS: module linkage is not yet implemented"
     return 1
-  let status ← checkSource path raw
-  if status != 0 then return status
-  initSearchPath (← findSysroot)
-  unsafe enableInitializersExecution
-  let env ← importModules (#[{ module := `PS0.Policy : Import }]) {}
-    (trustLevel := 0) (loadExts := true)
+  let some checked ← checkSourceEnvironment path raw
+    | return 1
+  -- Reuse the actual environment that passed Lean checking, rather than
+  -- importing a different declaration/assumption environment for emission.
+  let env := checked
   -- Parse the ORIGINAL source (not a header-stripped copy) to retain
   -- exact declaration locations, leading trivia and sourcesContent.
   let program ← match Backend.Js.lower path raw env options with
     | .ok p => pure p
     | .error e => IO.eprintln e; return 1
+  match Backend.Js.validateCheckedExports checked program with
+  | .error e => IO.eprintln e; return 1
+  | .ok () => pure ()
   let artifacts := Backend.Js.emit program moduleName
   let out := System.FilePath.mk outputDir
   if ← out.pathExists then
