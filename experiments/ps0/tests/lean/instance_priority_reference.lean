@@ -18,3 +18,14 @@ instance (priority := low) {α : Type} [Inhabited α] :
 theorem highSelected : (inferInstance : ChosenPriority).value = 73 := by rfl
 theorem numericSelected : chosenNumber.value = 75 := by rfl
 theorem genericSelected : (inferInstance : GenericPriority Nat).value = 0 := by rfl
+
+class MidPriority where
+  value : Nat
+instance (priority := mid) : MidPriority where
+  value := 44
+class DefaultPriority where
+  value : Nat
+instance (priority := default) : DefaultPriority where
+  value := 55
+theorem midSelected : (inferInstance : MidPriority).value = 44 := by rfl
+theorem defaultSelected : (inferInstance : DefaultPriority).value = 55 := by rfl
