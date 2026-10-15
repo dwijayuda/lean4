@@ -140,7 +140,7 @@ Pinned Lean 4.35 modules support `public import`, `meta import`, `import all` an
 | S03 ordered explicit/implicit/strict/instance binders (BIND-01/02; `0B`) | Partial | Lean binder elaboration plus canonical group/adjacency validators; dependent defaults and section variables |
 | S04 adjacent/mixed/named/default/partial/`Unit` calls (APP-01..04) | Partial | Lean term elaboration `elabAppArgs`; no-gap semantics; `f()` only defaults or one required definitionally-`Unit` |
 | S05 namespaces/sections/`open`/`include/omit`/visibility (`1`) | Partial | Native Lean generalization, theorem-header and fixed recursion variable rules |
-| S06 `.ps` modules, `public import`, source-public names and hidden bodies (MODULE-01/02) | Missing | Lean module AST and import closure, path-safe project graph and actual public/exposure checks |
+| S06 `.ps` modules, `public import`, source-public names and hidden bodies (MODULE-01/02) | **Header foundation only**: implicit module parsing, native import flags and fail-closed artifact gate; true module compilation missing | Lean module emission, path-safe project graph and actual public/exposure checks |
 | S07 universes/Prop/Type/Sort/Pi/quantifiers/coercions (`3`) | Partial | Native universe and dependent elaboration, genuine `∀/forall` and `∃/exists` spellings |
 | S08 literals, Float/words/BitVec/strings/arrays/tuples (`3/`8`) | Partial | Exact pinned Lean values/conversions, native scalar semantics and boundary fixtures |
 | S09 dependent `if`, `if let`, `matches`, pattern let (`3/4`) | Partial | Native dependent branching, selected braces and necessary surface-only sugar |
@@ -432,3 +432,36 @@ The equal-weight 20-family implementation rubric now estimates **38%
 language readiness** (binder family 3/5 vs 2/5 before); strict normative
 v7 qualification remains **0/181** pending exact-commit CI evidence.
 The v7 source restrictions never constrain ordinary `.lean` files.
+
+
+### PS0-03 implicit-module parsing checkpoint (15 October 2026)
+
+The pinned Lean 4.35.0 `Lean/Parser/Module.lean` and
+`Lean/Elab/Import.lean` were studied against the v7 `MODULE-01/02`
+source rules. The source must **not** contain `module`: each
+`.ps` file implicitly targets Lean module mode, with private
+`import M` and exported `public import M`. The earlier legacy-source
+parsing path was incorrect for these flags.
+
+`PS0Main.lean` now uses a synthetic `module\n` prefix in the
+**official native header parser only**, removes that prefix
+from the source body byte boundary, rejects user-authored
+`module`, and records exact `Import.isExported`/`isMeta`/
+`importAll` flags. The `ps0 module-header FILE.ps` command
+provides a versioned JSON interface for future project graph
+construction. The command explicitly states `compile_ready=false`.
+Tests include private vs public imports, source-module refusal,
+meta detection, and a Unicode body-offset fixture.
+
+This is **not** implementation of the module graph, output
+of real `module`/`public section` declaration scopes,
+public-by-default names or non-exposed definition bodies.
+Native `.ps` artifact emission from files with imports is
+blocked until those semantics can be faithfully lowered;
+otherwise plain module imports could silently become legacy
+Lean re-exports. `.lean` remains fully native and unrestricted.
+
+**Readiness:** the modules family is now 1/5, and the
+subjective v7 `.ps` estimate increases 40 → **41%**.
+All 181 normative evidence rows remain unqualified until
+real exact-commit stable-Lean CI results are available.
