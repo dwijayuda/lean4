@@ -55,3 +55,14 @@ The original `experiments/pscv0-lean-native` experiment was restored to its RC4 
 - [ ] Complete PS0-01..PS0-11 in the [full v7 plan](PS0_FULL_PSCV0_V7_IMPLEMENTATION_PLAN.md).
 
 Do not label standalone build, bounded CI or native source kernel acceptance as full PSCV0 v7, verified source contract closure, or verified machine semantics.
+
+## Normative coverage inventory (unqualified)
+
+`v7-coverage.json` captures **150 exact `13` case IDs**, including 72 P-positive
+and 78 N-negative cases, and records E1–E4, F01–F22 and C01–C05. A Node
+validator rejects incomplete/duplicate inventories, unsafe or missing fixture
+references, drifting canonical spec/Lean pin, and any PASS without exact commit,
+CI run and corresponding positive or phase-specific negative fixture.
+The inventory has candidate fixture references for ten cases; these links are
+not PASS evidence. All 181 tracked requirements currently remain PENDING and
+`--require-complete` must fail until a fully qualified exact-commit v7 run exists.
