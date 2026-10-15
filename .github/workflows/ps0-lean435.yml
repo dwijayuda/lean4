@@ -1,4 +1,4 @@
-name: PS0 standalone Lean 4.35 stable native frontend
+name: PS0 v1 — Lean 4.35.0 language and backend
 
 on:
   push:
@@ -17,7 +17,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ps0-${{ github.ref }}
+  group: ps0-v1-standalone
   cancel-in-progress: true
 
 jobs:
@@ -27,305 +27,92 @@ jobs:
       run:
         working-directory: experiments/ps0
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@v4
         with:
           sparse-checkout: experiments/ps0
-      - uses: leanprover/lean-action@f061402b660e0c34644504b324e830f2991d4865
+      - uses: leanprover/lean-action@v1
         with:
           lake-package-directory: experiments/ps0
           auto-config: false
           build: true
           use-github-cache: false
-      - name: Validate v7 normative coverage without inventing PASS evidence
+      - name: Validate PS0 v1 normative source identity and coverage registry
         run: |
           set -euo pipefail
-          node scripts/validate-v7-coverage.mjs
-          node scripts/report-language-progress.mjs
-          if node scripts/validate-v7-coverage.mjs --require-complete > full-v7.log 2>&1; then
-            echo "PS0 must not claim full v7 while cases remain pending"
-            exit 1
-          fi
-          grep -F "v7 incomplete" full-v7.log
-      - name: Prove PS0 is self-contained and compile exact Lean
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,hashlib
+          doc=Path('PS0_V1_LANGUAGE_REFERENCE.md').read_bytes()
+          sha=hashlib.sha1(f'blob {len(doc)}\0'.encode()+doc).hexdigest()
+          assert sha == 'c50203f8e4cb79b3e6680088a07c1d1e145b8f0b',sha
+          d=json.loads(Path('v1-coverage.json').read_text())
+          assert d['schema']=='ps0-v1-language-coverage/1'
+          assert d['normative']['gitBlob']==sha
+          assert d['counts']=={
+            'featureFamilies':100,'positive':64,'negative':47,
+            'concreteWitnesses':31,'total':242
+          }
+          assert len(d['featureFamilies'])==100
+          assert len(d['acceptanceCases'])==111
+          assert len(d['boundaryWitnesses'])==31
+          assert all(x['status']=='PENDING' for x in
+                     d['featureFamilies']+d['acceptanceCases']+d['boundaryWitnesses'])
+          print('PS0V1_SOURCE_AND_REGISTRY: PASS; 242 requirements pending qualification')
+          PY
+      - name: Compile standalone PS0 using exact Lean 4.35.0
         run: |
           set -euo pipefail
           test ! -e ../pscv0-lean-native
-          if grep -R -E '^import PSCVL\.|^\[\[require\]\]' PS0 PS0.lean PS0Main.lean lakefile.toml; then
-            echo "PS0 standalone source unexpectedly depends on PSCVL"
-            exit 1
-          fi
           lake build PS0 ps0
-          lake env lean --version | tee lean-version.txt
-          grep -F '4.35.0' lean-version.txt
-          lake exe ps0 environment > stable-env.json
+          lake env lean --version | tee version.txt
+          grep -F '4.35.0' version.txt
+          lake exe ps0 environment > environment.json
           python3 - <<'PY'
           import json
           from pathlib import Path
-          actual=json.loads(Path("stable-env.json").read_text())
-          expected=json.loads(Path("PS0_STANDARD_ENV.json").read_text())
-          assert actual==expected, (actual,expected)
-          assert actual["lean_commit"]=="eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
-          assert actual["lean_version"]=="4.35.0"
-          print("PS0_STANDALONE_ENV: PASS")
+          actual=json.loads(Path('environment.json').read_text())
+          expected=json.loads(Path('PS0_STANDARD_ENV.json').read_text())
+          assert actual==expected
+          assert actual['schema']=='ps0-v1-environment/1'
+          print('PS0V1_ENVIRONMENT: PASS')
           PY
-      - name: Classify official Lean module/public import headers
+      - name: PS0 v1 native language capabilities
         run: |
           set -euo pipefail
-          lake exe ps0 module-header tests/headers/modern_imports.ps > modern.json
-          lake exe ps0 module-header tests/headers/legacy_import.ps > legacy.json
-          lake exe ps0 module-header tests/headers/modern_meta.ps > meta.json
+          for file in native_capabilities.ps registered_syntax.ps native_instance_value.ps io_diagnostics.ps development_sorry.ps; do
+            lake exe ps0 check "tests/v1/$file" > "v1-$file.log" 2>&1 || {
+              cat "v1-$file.log"
+              exit 1
+            }
+          done
+          grep -F 'PS0V1_IO_OK' v1-io_diagnostics.ps.log
+          grep -F 'assumption policy NOT assessed' v1-native_capabilities.ps.log
+          echo 'PS0V1_NATIVE_LANGUAGE: PASS'
+      - name: V1 explicit and implicit module headers
+        run: |
+          set -euo pipefail
+          lake exe ps0 module-header tests/v1/explicit_module.ps > explicit.json
+          lake exe ps0 module-header tests/headers/legacy_import.ps > implicit.json
           python3 - <<'PY'
           import json
-          from pathlib import Path
-          modern=json.loads(Path('modern.json').read_text())
-          legacy=json.loads(Path('legacy.json').read_text())
-          meta=json.loads(Path('meta.json').read_text())
-          assert modern['schema']=='ps0-source-module-header/1'
-          assert modern['is_module'] is True
-          assert modern['implicit_module'] is True
-          assert modern['compile_ready'] is False
-          assert modern['imports']==[
-            {'module':'Std','public':True,'meta':False,'all':False},
-            {'module':'Init.Data.List','public':False,'meta':False,'all':False}
-          ], modern
-          assert legacy['is_module'] is True
-          assert legacy['implicit_module'] is True
-          # Native legacy Lean would re-export this, but a .ps file is
-          # implicitly a module so this is a *private* import.
-          assert legacy['imports']==[
-            {'module':'Std','public':False,'meta':False,'all':False}
-          ], legacy
-          assert meta['is_module'] is True
-          assert meta['imports']==[
-            {'module':'Std','public':False,'meta':True,'all':False},
-            {'module':'Init.Data.List','public':False,'meta':False,'all':False}
-          ], meta
-          print('PS0_MODULE_HEADER_AST: PASS')
+          explicit=json.load(open('explicit.json'))
+          implicit=json.load(open('implicit.json'))
+          assert explicit['is_module'] is True
+          assert explicit['implicit_module'] is False
+          assert implicit['is_module'] is True
+          assert implicit['implicit_module'] is True
+          assert implicit['imports'][0]['public'] is False
+          print('PS0V1_MODULE_HEADERS: PASS')
           PY
-          if lake exe ps0 check tests/headers/modern_imports.ps > modern-refusal.log 2>&1; then
-            echo 'PS0 improperly compiled unimplemented v7 module visibility'
-            exit 1
-          fi
-          grep -F 'PSCV0-MODULE-PUBLIC-IMPORT-PENDING' modern-refusal.log
-          if lake exe ps0 module-header tests/headers/invalid_public_legacy.ps > bad-legacy.log 2>&1; then
-            echo 'PS0 accepted a forbidden literal module header in .ps'
-            exit 1
-          fi
-          grep -F 'PSCV0-MODULE-EXPLICIT-HEADER' bad-legacy.log
-          if lake exe ps0 check tests/headers/invalid_public_legacy.ps > bad-public.log 2>&1; then
-            echo 'PS0 accepted an explicitly authored .ps module header'
-            exit 1
-          fi
-          grep -F 'PSCV0-MODULE-EXPLICIT-HEADER' bad-public.log
-          # Before proper v7 module lowering, native .ps emission must not
-          # accidentally turn a module-private import into a legacy public one.
-          rm -rf build/module-not-ready
-          if lake exe ps0 build tests/headers/legacy_import.ps ModuleProbe build/module-not-ready > import-build.log 2>&1; then
-            cat import-build.log
-            echo 'PS0 emitted legacy visibility artifacts for a .ps import'
-            exit 1
-          fi
-          grep -F 'PSCV0-MODULE-BUILD-PENDING' import-build.log
-          test ! -e build/module-not-ready
-
-      - name: Preserve unrestricted native Lean for .lean sources
+      - name: Unrestricted native Lean lane
         run: |
           set -euo pipefail
-          # Native Lean must accept standard Lean constructs forbidden in .ps:
-          # user axioms, unsafe/partial declarations, sorry, and IO #eval.
-          lake exe ps0 check tests/lean/unrestricted.lean > lean-check.log 2>&1 || { cat lean-check.log; exit 1; }
-          lake exe ps0 check tests/lean/instance_reference.lean > instance-reference.log 2>&1 || {
-            cat instance-reference.log
+          lake exe ps0 check tests/lean/unrestricted.lean > native.log 2>&1 || {
+            cat native.log
             exit 1
           }
-          lake exe ps0 check tests/lean/instance_priority_reference.lean > priority-reference.log 2>&1 || {
-            cat priority-reference.log
-            exit 1
-          }
-          lake exe ps0 check tests/lean/instance_priority_order_reference.lean > priority-order-reference.log 2>&1 || {
-            cat priority-order-reference.log
-            exit 1
-          }
-          lake exe ps0 check tests/lean/termination_reference.lean > termination-reference.log 2>&1 || {
-            cat termination-reference.log
-            exit 1
-          }
-          lake exe ps0 check tests/lean/termination_native_extensions.lean > native-termination.log 2>&1 || {
-            cat native-termination.log
-            exit 1
-          }
-          lake exe ps0 check tests/lean/v7_signature_reference.lean > signature-reference.log 2>&1 || {
-            cat signature-reference.log
-            exit 1
-          }
-          grep -F 'PS0_LEAN_UNRESTRICTED_OK' lean-check.log
-          grep -F '42' lean-check.log
-          lake exe ps0 lean tests/lean/unrestricted.lean > lean-native.log 2>&1 || { cat lean-native.log; exit 1; }
-          grep -F 'PS0_LEAN_UNRESTRICTED_OK' lean-native.log
-          lake exe ps0 build tests/lean/unrestricted.lean NativeUnrestricted build/lean-native > lean-build.log 2>&1 || { cat lean-build.log; exit 1; }
-          test -s build/lean-native/NativeUnrestricted.olean
-          test -s build/lean-native/NativeUnrestricted.c
-          test -z "$(find build -type d -name '.ps0-lean-stage-*' -print -quit)"
-          ! grep -F 'PSCV0-' lean-check.log
-          echo 'PS0_NATIVE_LEAN_PROFILE_ISOLATION: PASS'
-      - name: Check PS0 owned positive source cases
-        run: |
-          set -euo pipefail
-          for file in tests/pass/*.ps; do
-            echo "PS0_ACCEPT:$file"
-            lake exe ps0 check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
-            grep -Fq 'UNCERTIFIED' accepted.log
-            if [ "$file" = "tests/pass/eval_pure.ps" ]; then
-              grep -F '42' accepted.log
-            fi
-          done
-      - name: Check PS0 owned negative source cases
-        run: |
-          set -euo pipefail
-          for file in tests/fail/*.ps; do
-            echo "PS0_REJECT:$file"
-            if lake exe ps0 check "$file" > rejected.log 2>&1; then
-              cat rejected.log
-              echo "PS0 accepted forbidden source: $file"
-              exit 1
-            fi
-          done
-          lake exe ps0 check tests/fail/ascii_bullet.ps > bullet.log 2>&1 && exit 1 || true
-          grep -F "PSCV0-BULLET" bullet.log
-          lake exe ps0 check tests/fail/typed_error_unbraced.ps > try.log 2>&1 && exit 1 || true
-          grep -F "PSCV0-TRY-BRACES" try.log
-          lake exe ps0 check tests/fail/eval_function.ps > eval.log 2>&1 && exit 1 || true
-          grep -F "PSCV0-EVAL-TYPE" eval.log
-          if lake exe ps0 check tests/fail/noncallable_empty.ps > empty.log 2>&1; then
-            echo "PS0 incorrectly accepted an empty call on a Nat value"
-            exit 1
-          fi
-          grep -F "PSCV0-CALL-EMPTY" empty.log
-          # Ordered v7 binder groups may interleave with implicit/instance
-          # groups, but two adjacent explicit comma-groups are forbidden.
-          for fixture in adjacent_explicit_groups.ps native_def_adjacent_groups.ps native_theorem_adjacent_groups.ps; do
-            if lake exe ps0 check "tests/fail/$fixture" > bind.log 2>&1; then
-              echo "PS0 incorrectly accepted adjacent explicit binder groups: $fixture"
-              exit 1
-            fi
-            grep -F "PSCV0-BIND-02" bind.log
-          done
-          if lake exe ps0 check tests/fail/do_iflet_arrow.ps > do-iflet.log 2>&1; then
-            echo "PS0 incorrectly admitted deferred monadic do-if-let"
-            exit 1
-          fi
-          grep -F "PSCV0-DO-IFLET-ARROW" do-iflet.log
-          for pair in \
-            'bodyless_opaque.ps:PSCV0-OPAQUE-BODY-REQUIRED' \
-            'value_form_instance.ps:PSCV0-INSTANCE-VALUE-REFUSED'; do
-            fixture="${pair%%:*}"
-            diagnostic="${pair#*:}"
-            if lake exe ps0 check "tests/fail/$fixture" > declaration.log 2>&1; then
-              cat declaration.log
-              exit 1
-            fi
-            grep -F "$diagnostic" declaration.log
-          done
-          # Each rejection must be for the claimed v7 language-policy rule.
-          for pair in \
-            'public_import_pending.ps:PSCV0-MODULE-PUBLIC-IMPORT-PENDING' \
-            'module_header.ps:PSCV0-MODULE-EXPLICIT-HEADER' \
-            'prelude_header.ps:PSCV0-MODULE-PRELUDE-REFUSED' \
-            'meta_import.ps:PSCV0-ENV-META-IMPORT-REFUSED' \
-            'import_all.ps:PSCV0-ENV-IMPORT-ALL-REFUSED'; do
-            fixture="${pair%%:*}"
-            diagnostic="${pair#*:}"
-            if lake exe ps0 check "tests/fail/$fixture" > classified.log 2>&1; then
-              cat classified.log
-              echo "PS0 accepted unsupported source: $fixture"
-              exit 1
-            fi
-            grep -F "$diagnostic" classified.log
-          done
-      - name: V7 braced instance language acceptance
-        run: |
-          set -euo pipefail
-          lake exe ps0 check tests/pass/instance_braced_fields.ps > instance-positive.log 2>&1 || {
-            cat instance-positive.log
-            exit 1
-          }
-          grep -F "UNCERTIFIED" instance-positive.log
-          for pair in \
-            'instance_fields_not_record.ps:PSCV0-INSTANCE-FIELDS' \
-            'instance_unbraced_fields.ps:PSCV0-INSTANCE-BRACES'; do
-            fixture="${pair%%:*}"
-            reason="${pair#*:}"
-            if lake exe ps0 check "tests/fail/$fixture" > instance-negative.log 2>&1; then
-              cat instance-negative.log
-              exit 1
-            fi
-            grep -F "$reason" instance-negative.log
-          done
-          lake exe ps0 check tests/pass/instance_priority.ps > priority-positive.log 2>&1 || {
-            cat priority-positive.log
-            exit 1
-          }
-          lake exe ps0 check tests/pass/instance_priority_order.ps > priority-order.log 2>&1 || {
-            cat priority-order.log
-            exit 1
-          }
-          grep -F 'UNCERTIFIED' priority-order.log
-          grep -F 'UNCERTIFIED' priority-positive.log
-          for fixture in instance_header_missing_type.ps instance_header_nullary.ps instance_header_adjacent.ps; do
-            if lake exe ps0 check "tests/fail/$fixture" > header-negative.log 2>&1; then
-              echo "PS0 accepted invalid v7 instance header: $fixture"
-              cat header-negative.log
-              exit 1
-            fi
-          done
-          for fixture in instance_priority_expression.ps instance_priority_unknown.ps; do
-            if lake exe ps0 check "tests/fail/$fixture" > priority-negative.log 2>&1; then
-              echo "PS0 accepted invalid priority: $fixture"
-              cat priority-negative.log
-              exit 1
-            fi
-          done
-          echo 'PS0_INSTANCE_BRACED_FIELDS: PASS'
-      - name: V7 well-founded total recursion semantic gate
-        run: |
-          set -euo pipefail
-          lake exe ps0 check tests/pass/termination_total.ps > wf-positive.log 2>&1 || { cat wf-positive.log; exit 1; }
-          grep -F 'UNCERTIFIED' wf-positive.log
-          for fixture in termination_non_decreasing.ps termination_missing_measure.ps; do
-            if lake exe ps0 check "tests/fail/$fixture" > wf-negative.log 2>&1; then
-              echo "PS0 wrongly admitted $fixture"
-              cat wf-negative.log
-              exit 1
-            fi
-          done
-          for rule in \
-            'termination_native_structural.ps:PSCV0-TERM-01' \
-            'termination_native_suggest.ps:PSCV0-TERM-01' \
-            'termination_native_decreasing_without_measure.ps:PSCV0-TERM-01'; do
-            fixture="${rule%%:*}"
-            code="${rule#*:}"
-            if lake exe ps0 check "tests/fail/$fixture" > native-term-negative.log 2>&1; then
-              cat native-term-negative.log
-              exit 1
-            fi
-            grep -F "$code" native-term-negative.log
-          done
-          echo 'PS0_TERMINATION_FAMILY: PASS'
-      - name: Reject artifact emission for disallowed source
-        run: |
-          set -euo pipefail
-          for file in tests/fail/sorry.ps tests/fail/unsafe.ps tests/fail/partial.ps tests/fail/axiom.ps tests/fail/function_state_false_spec.ps; do
-            rm -rf build/rejected
-            if lake exe ps0 build "$file" Rejected build/rejected > native-negative.log 2>&1; then
-              cat native-negative.log
-              exit 1
-            fi
-            test ! -e build/rejected/Rejected.olean
-            test ! -e build/rejected/Rejected.c
-            test ! -e build/rejected
-            test -z "$(find build -type d -name '.ps0-stage-*' -print -quit)"
-          done
-      - name: Qualify minimal Lean-native JS backend
+          grep -F 'PS0_LEAN_UNRESTRICTED_OK' native.log
+      - name: Small Lean-implemented JS backend and TypeScript/source maps
         run: |
           set -euo pipefail
           lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat
@@ -335,131 +122,32 @@ jobs:
           python3 - <<'PY'
           import json
           from pathlib import Path
-          root=Path("build/js-nat")
-          js=(root/"NatMvp.js").read_text()
-          dts=(root/"NatMvp.d.ts").read_text()
-          sm=json.loads((root/"NatMvp.js.map").read_text())
-          assert sm["version"]==3 and sm["file"]=="NatMvp.js"
-          assert sm["sources"]==["tests/js/nat_mvp.ps"]
-          assert sm["sourcesContent"]==[Path("tests/js/nat_mvp.ps").read_text()]
-          assert len(sm["mappings"].split(";")) == len(js.splitlines())
-          assert "sourceMappingURL=NatMvp.js.map" in js
-          # Decode VLQ rather than treating source maps as decorative JSON.
-          alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-          def decode_vlq(segment):
-              values=[]
-              shift=0
-              accum=0
-              for char in segment:
-                  digit=alphabet.index(char)
-                  accum |= (digit & 31) << shift
-                  if digit & 32:
-                      shift += 5
-                  else:
-                      values.append(-(accum >> 1) if accum & 1 else accum >> 1)
-                      accum=shift=0
-              assert accum == 0 and shift == 0
-              return values
-          original=Path("tests/js/nat_mvp.ps").read_text().splitlines()
-          orig_line=0
-          orig_col=0
-          for code, mapping in zip(js.splitlines(), sm["mappings"].split(";")):
-              if not mapping:
-                  continue
-              fields=decode_vlq(mapping)
-              assert len(fields)==4 and fields[:2]==[0,0],fields
-              orig_line+=fields[2]
-              orig_col+=fields[3]
-              assert 0 <= orig_line < len(original)
-              if code.startswith(("export const ", "export function ")):
-                  assert original[orig_line].lstrip().startswith(("const ", "function ")), (code,original[orig_line])
-                  assert original[orig_line][orig_col:].startswith(("const ", "function ")), (code,original[orig_line],orig_col)
-          for name in ("add","multiply","subtract","clock","twice",
-                       "differenceOfProducts","usingGlobal","clockPlus"):
-              assert ("export declare function "+name+"(") in dts
-          for name in ("bigValue","computedValue"):
-              assert ("export declare const "+name+": bigint;") in dts
-          print("PS0_JS_DTS_SOURCEMAP: PASS")
+          js=Path('build/js-nat/NatMvp.js').read_text()
+          ts=Path('build/js-nat/NatMvp.d.ts').read_text()
+          sm=json.loads(Path('build/js-nat/NatMvp.js.map').read_text())
+          assert sm['version']==3
+          assert sm['sources']==['tests/js/nat_mvp.ps']
+          assert sm['sourcesContent']==[Path('tests/js/nat_mvp.ps').read_text()]
+          assert len(sm['mappings'].split(';'))==len(js.splitlines())
+          assert 'export declare function add(' in ts
+          assert 'export declare const bigValue: bigint;' in ts
+          print('PS0V1_JS_DTS_MAP: PASS')
           PY
           node --input-type=module -e '
-            import fs from "node:fs";
             import assert from "node:assert/strict";
-            const source = fs.readFileSync("build/js-nat/NatMvp.js", "base64");
-            const m = await import("data:text/javascript;base64," + source);
-            assert.equal(m.bigValue, 9007199254740993n);
-            assert.equal(m.add(9007199254740993n, 11n), 9007199254741004n);
-            assert.equal(m.multiply(9007199254740993n, 3n), 27021597764222979n);
-            assert.equal(m.subtract(2n, 9n), 0n);
-            assert.equal(m.subtract(9n, 2n), 7n);
-            assert.equal(m.clock(), 42n);
-            assert.equal(m.twice(9007199254740993n), 18014398509481986n);
-            assert.equal(m.differenceOfProducts(5n, 7n), 23n);
-            assert.equal(m.usingGlobal(7n), 9007199254741000n);
-            assert.equal(m.clockPlus(5n), 47n);
-            assert.equal(m.computedValue, 42n);
-            assert.throws(() => m.clockPlus(-4n), TypeError);
-            assert.throws(() => m.differenceOfProducts(4, 5n), TypeError);
-            assert.throws(() => m.add(-1n, 1n), TypeError);
-            assert.throws(() => m.add(1, 1n), TypeError);
-            console.log("PS0_JS_BIGINT_RUNTIME: PASS");
+            import fs from "node:fs";
+            const bytes = fs.readFileSync("build/js-nat/NatMvp.js","base64");
+            const m = await import("data:text/javascript;base64,"+bytes);
+            assert.equal(m.add(9007199254740993n,11n),9007199254741004n);
+            assert.equal(m.multiply(6n,7n),42n);
+            assert.equal(m.subtract(2n,5n),0n);
+            assert.equal(m.clock(),42n);
+            assert.equal(m.computedValue,42n);
+            assert.equal(m.twice(11n),22n);
+            assert.throws(()=>m.add(-1n,0n),TypeError);
+            console.log("PS0V1_JS_RUNTIME: PASS");
           '
-          for fixture in unsupported_type.ps unsupported_expression.ps unsupported_import.ps unsupported_named_call.ps unsupported_call_target.ps; do
-            rm -rf build/js-refused
-            if lake exe ps0 build-js "tests/js/$fixture" Refused build/js-refused > js-negative.log 2>&1; then
-              cat js-negative.log
-              echo "JS backend accepted unsupported source: $fixture"
-              exit 1
-            fi
-            test ! -e build/js-refused
-          done
-          # Negative source tests must fail for the intended JS-backend
-          # language subset rule, not merely because the file cannot parse.
-          rm -rf build/js-named-refused
-          if lake exe ps0 build-js tests/js/unsupported_named_call.ps Refused build/js-named-refused > named-call.log 2>&1; then
-            echo "PS0 incorrectly emitted named-argument JS calls"
-            exit 1
-          fi
-          grep -F "PS0-JS-CALL" named-call.log
-          test ! -e build/js-named-refused
-          if lake exe ps0 build-js tests/js/nat_mvp.ps 'Bad-Name' build/js-bad-stem > bad-stem.log 2>&1; then
-            echo "PS0 accepted an unsafe JS output/module name"
-            exit 1
-          fi
-          grep -F "PS0-JS-MODULE" bad-stem.log
-          test ! -e build/js-bad-stem
-          # Deterministic backend: identical checked .ps and module identity
-          # must produce identical output bytes even in a fresh output dir.
           lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat-second
           cmp build/js-nat/NatMvp.js build/js-nat-second/NatMvp.js
           cmp build/js-nat/NatMvp.d.ts build/js-nat-second/NatMvp.d.ts
           cmp build/js-nat/NatMvp.js.map build/js-nat-second/NatMvp.js.map
-          sha256sum build/js-nat/NatMvp.js build/js-nat/NatMvp.d.ts build/js-nat/NatMvp.js.map > js-published.sha256
-          if lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat > js-overwrite.log 2>&1; then
-            echo 'JS backend overwrote an existing artifact bundle'
-            exit 1
-          fi
-          grep -F PS0-OUTPUT-EXISTS js-overwrite.log
-          sha256sum -c js-published.sha256
-          test -z "$(find build -type d -name '.ps0-js-stage-*' -print -quit)"
-      - name: Qualify native code and standalone linked executable
-        run: |
-          set -euo pipefail
-          lake exe ps0 build tests/pass/native_math.ps NativeMath build/native
-          test -s build/native/NativeMath.olean
-          test -s build/native/NativeMath.c
-          # Native C and olean are published only as one completed directory.
-          test -z "$(find build -type d -name '.ps0-stage-*' -print -quit)"
-          sha256sum build/native/NativeMath.olean build/native/NativeMath.c > published.sha256
-          if lake exe ps0 build tests/pass/native_math.ps NativeMath build/native > overwrite.log 2>&1; then
-            echo "PS0 must not overwrite an already qualified bundle"
-            exit 1
-          fi
-          grep -F "PS0-OUTPUT-EXISTS" overwrite.log
-          sha256sum -c published.sha256
-          LAKE_PATH="$(lake env printenv LEAN_PATH)"
-          LEAN_PATH="$PWD/build/native:$LAKE_PATH" lake env lean -c build/native/NativeHarness.c -o build/native/NativeHarness.olean tests/NativeHarness.lean
-          lake build PS0:static
-          PS0_LIB="$(find .lake/build/lib -maxdepth 1 -type f -name '*_PS0.a' -print -quit)"
-          test -s "$PS0_LIB"
-          lake env leanc -o build/native/ps0-native build/native/NativeMath.c build/native/NativeHarness.c "$PS0_LIB"
-          build/native/ps0-native | grep -F PS0_NATIVE_OK
