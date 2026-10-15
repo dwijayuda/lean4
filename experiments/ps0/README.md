@@ -125,9 +125,23 @@ source-owned and native declaration parsing. This raises the binder family's
 **estimated readiness from 2/5 to 3/5**, but does not record any new
 CI-qualified v7 requirements: a stable exact-commit CI receipt is pending.
 
+## Braced v7 instance declarations
+
+The source profile now adapts selected `instance : C where { ... }` and
+`instance chosen : C where { ... }`, including ordered binder
+telescopes, to the equivalent official Lean typeclass declarations.
+`.ps` requires genuine braced fields; native `.lean` keeps its broader
+instance syntax, including `instance : C := value`.
+
+See `tests/pass/instance_braced_fields.ps`, corresponding native
+`tests/lean/instance_reference.lean`, and
+[CONFORMANCE.md](CONFORMANCE.md). This implementation is currently
+**unqualified until exact-commit stable-Lean CI**. Selected instance
+priorities and the frozen typeclass registry remain pending.
+
 ## Language-feature completion estimate (October 15, 2026)
 
-PS0 reports **38% estimated v7 language-feature readiness** across
+PS0 reports **40% estimated v7 language-feature readiness** across
 20 equally weighted source/semantic feature families. This is a subjective,
 evidence-linked implementation-readiness rubric, **not** measured code coverage
 or language acceptance. Strict normative v7 qualification remains
@@ -135,7 +149,7 @@ or language acceptance. Strict normative v7 qualification remains
 per-case evidence are not available.
 
 The breakdown is: source/declarations/calls/scopes **52% (13/25)**;
-types/data/conditionals/patterns/recursion **40% (14/35)**;
+types/data/conditionals/patterns/recursion **46% (16/35)**;
 proofs/do/contracts/effects **40% (8/20)**; and modules/selected libraries/
 environment/assurance **15% (3/20)**.
 
