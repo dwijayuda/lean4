@@ -74,6 +74,10 @@ jobs:
           # Native Lean must accept standard Lean constructs forbidden in .ps:
           # user axioms, unsafe/partial declarations, sorry, and IO #eval.
           lake exe ps0 check tests/lean/unrestricted.lean > lean-check.log 2>&1 || { cat lean-check.log; exit 1; }
+          lake exe ps0 check tests/lean/termination_reference.lean > termination-reference.log 2>&1 || {
+            cat termination-reference.log
+            exit 1
+          }
           lake exe ps0 check tests/lean/v7_signature_reference.lean > signature-reference.log 2>&1 || {
             cat signature-reference.log
             exit 1
@@ -162,6 +166,19 @@ jobs:
             fi
             grep -F "$diagnostic" classified.log
           done
+      - name: V7 well-founded total recursion semantic gate
+        run: |
+          set -euo pipefail
+          lake exe ps0 check tests/pass/termination_total.ps > wf-positive.log 2>&1 || { cat wf-positive.log; exit 1; }
+          grep -F 'UNCERTIFIED' wf-positive.log
+          for fixture in termination_non_decreasing.ps termination_missing_measure.ps; do
+            if lake exe ps0 check "tests/fail/$fixture" > wf-negative.log 2>&1; then
+              echo "PS0 wrongly admitted $fixture"
+              cat wf-negative.log
+              exit 1
+            fi
+          done
+          echo 'PS0_TERMINATION_FAMILY: PASS'
       - name: Reject artifact emission for disallowed source
         run: |
           set -euo pipefail
