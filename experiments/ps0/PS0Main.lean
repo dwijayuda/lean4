@@ -32,6 +32,18 @@ private def approvedSource (src filename : String) :
     return .error "invalid Lean import header"
   if Lean.Elab.HeaderSyntax.isModule header then
     return .error "explicit module headers are not yet supported in PSCV0"
+  -- A source-level public import needs v7's explicit module/public exposure
+  -- translation. Lean treats all imports in legacy modules as exported, so
+  -- inspecting Import.isExported alone cannot distinguish the written forms.
+  match header with
+  | `(Parser.Module.header| $[module%$_]? $[prelude%$_]? $importStx*) =>
+    for imp in importStx do
+      match imp with
+      | `(Parser.Module.import| $[public%$publicTk]? $[meta%$_]? import $[all%$_]? $_) =>
+        if publicTk.isSome then
+          return .error "PSCV0-MODULE-PUBLIC-IMPORT-PENDING"
+      | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
+  | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
   let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
   for imported in imports do
     unless StandardEnv.allowsImport imported.module && !imported.isMeta && !imported.importAll do
@@ -81,23 +93,33 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   unless validModuleName moduleName do
     IO.eprintln "PSCV0 native module name must be a simple identifier"
     return 2
-  -- Freeze user-authored source once: check and emit use identical bytes.
-  -- A future fully checked session must also bind Lean environment identity.
+  -- Freeze user-authored source once. No source re-read or duplicate Lean
+  -- elaboration is permitted in this single-module native build.
   unless path.endsWith ".ps" do
     IO.eprintln "PS0 expects a .ps source file"
     return 2
   let raw ← IO.FS.readFile path
-  let status ← checkSource path raw
-  if status != 0 then return status
+  -- The build does *one* full Lean elaboration: the same runFrontend that
+  -- produces the checked environment also executes #pscv_gate before emission.
+  -- Parsing/source-policy admission occurs first but does not create output.
   let (approved, body) ← match ← approvedSource raw path with
     | .ok v => pure v
     | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
+  initSearchPath (← findSysroot)
+  unsafe enableInitializersExecution
+  let sourceEnv ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
+    (trustLevel := 0) (loadExts := true)
+  match validateSourceSyntax body path sourceEnv options with
+  | .error msg =>
+      IO.eprintln s!"PSCV0 source-profile error: {msg}"
+      return 1
+  | .ok () => pure ()
   let imports := String.join (approved.toList.map fun im => s!"import {im.module}\n")
   let src := "import PS0.Policy\n" ++ imports ++ body ++ "\n\n#pscv_gate\n"
   let out := System.FilePath.mk outputDir
   IO.FS.createDirAll out
-  -- The preceding in-process check consumes the importer initialization flag.
-  unsafe enableInitializersExecution
+  -- No separate source elaboration pass: runFrontend's checked environment
+  -- is the sole authority for the subsequently emitted native C.
   let moduleId := Name.mkSimple moduleName
   let oleanPath := out / s!"{moduleName}.olean"
   let cPath := out / s!"{moduleName}.c"
