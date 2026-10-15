@@ -77,6 +77,10 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "PS0.pscvBracedInstanceAnonymous", "PS0.pscvBracedInstanceNamed",
       "PS0.pscvBracedInstanceTelescopeAnonymous",
       "PS0.pscvBracedInstanceTelescopeNamed",
+      "PS0.pscvPrioritizedInstanceAnonymous",
+      "PS0.pscvPrioritizedInstanceNamed",
+      "PS0.pscvPrioritizedInstanceTelescopeAnonymous",
+      "PS0.pscvPrioritizedInstanceTelescopeNamed",
       "PS0.pscvBracedMutual",
       "PS0.pscvBracedStructureDeriving", "PS0.pscvBracedInductiveDeriving",
       "PS0.pscvFunctionGivenContract", "PS0.pscvFunctionEffectContract", "PS0.pscvFunctionContract", "PS0.pscvFunctionEnsures", "PS0.pscvFunctionRequires",
@@ -224,7 +228,11 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
     else if (k == "PS0.pscvBracedInstanceAnonymous" ||
              k == "PS0.pscvBracedInstanceNamed" ||
              k == "PS0.pscvBracedInstanceTelescopeAnonymous" ||
-             k == "PS0.pscvBracedInstanceTelescopeNamed") &&
+             k == "PS0.pscvBracedInstanceTelescopeNamed" ||
+             k == "PS0.pscvPrioritizedInstanceAnonymous" ||
+             k == "PS0.pscvPrioritizedInstanceNamed" ||
+             k == "PS0.pscvPrioritizedInstanceTelescopeAnonymous" ||
+             k == "PS0.pscvPrioritizedInstanceTelescopeNamed") &&
         (s.getArgs.isEmpty ||
           !sourceInstanceFields s[s.getArgs.size - 1]) then
       some "PSCV0-INSTANCE-FIELDS: instance where requires a braced record field initializer"
