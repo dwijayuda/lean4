@@ -1044,7 +1044,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
     },
     {
       "id": "PS0-P-CALL-02",
@@ -1055,7 +1057,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
     },
     {
       "id": "PS0-P-CALL-03",
@@ -1077,7 +1081,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
     },
     {
       "id": "PS0-P-CALL-05",
@@ -1730,7 +1736,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/host_call_named_then_positional.ps",
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
     },
     {
       "id": "PS0-N-CALL-10",
@@ -1741,7 +1749,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "fixtureCandidate": "tests/v1/host_call_duplicate_named.ps",
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
     },
     {
       "id": "PS0-N-CALL-11",
