@@ -17,7 +17,7 @@ function chooseOption(x: Option Nat): Id Nat := do {
 
 function optionalNoElse(flag: Bool): Id Nat := do {
   if (flag) {
-    let ignored ← pure (17 : Nat)
+    let ignored ← pure(17)
   }
   return 5
 }
