@@ -197,25 +197,17 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   -- The build does *one* full Lean elaboration: the same runFrontend that
   -- produces the checked environment also executes #ps0_evidence before emission.
   -- Parsing/source-policy admission occurs first but does not create output.
-  let (approved, body) ← match ← approvedSource raw path with
-    | .ok v => pure v
-    | .error err => IO.eprintln s!"PS0V1 source-profile error: {err}"; return 1
+  let src ← match ← preparedPsModule raw path with
+    | .ok native => pure native
+    | .error err =>
+        IO.eprintln s!"PS0V1 module frontend preparation failed: {err}"
+        return 1
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  let sourceEnv ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
-    (trustLevel := 0) (loadExts := true)
-  -- Native runFrontend performs the interleaved source parse/elaboration.
-  -- Full modern export/expose semantics still require the project graph.
-  -- A .ps module's imports are private by default. Re-emitting them in a
-  -- legacy Lean header would silently re-export those dependencies, and
-  -- v7 also requires public-name/hidden-body checking. Until PS0-03
-  -- native module emission is complete, refuse artifacts for source imports.
-  -- check / module-header remain available as unqualified analysis modes.
-  unless approved.isEmpty do
-    IO.eprintln "PS0V1-MODULE-BUILD-PENDING: module-style imports require checked v1 export/body lowering"
-    return 1
-  let imports := String.join (approved.toList.map fun im => s!"import {im.module}\n")
-  let src := "import PS0.Policy\n" ++ imports ++ body ++ "\n\n#ps0_evidence\n"
+  -- A real module header and its source-accurate import flags are now
+  -- passed to native Lean. Bare source imports are not rebuilt as
+  -- transitive legacy exports. Mixed .ps project dependency resolution
+  -- and output provenance are separate, still-unqualified layers.
   -- The final bundle directory is published with one same-filesystem
   -- directory rename. Lean may write .olean before later C emission fails;
   -- neither file becomes visible in the requested output on such a failure.
