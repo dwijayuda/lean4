@@ -62,13 +62,16 @@ private def lowerParams (bs : Array (TSyntax `pscvBinder)) :
     result := result.push name
   return result
 
-private def declOrigin (input : Parser.InputContext) (cmd : Syntax) : Origin :=
-  let pos := input.fileMap.toPosition (cmd.getPos?.getD 0)
-  { line := pos.line - 1, column := pos.column }
+private def declOrigin (input : Parser.InputContext) (cmd : Syntax) :
+    Except String Origin := do
+  let some offset := cmd.getPos?
+    | throw "PS0-JS-MAP: original source declaration position is unavailable"
+  let pos := input.fileMap.toPosition offset
+  return { line := pos.line - 1, column := pos.column }
 
 private def lowerCommand (input : Parser.InputContext) (cmd : Syntax) :
     Except String Decl := do
-  let origin := declOrigin input cmd
+  let origin ← declOrigin input cmd
   match cmd with
   | `(command| const $n:ident : $ty:term := $body:term) =>
       unless isNatType ty do
