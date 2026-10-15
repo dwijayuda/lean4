@@ -1,7 +1,7 @@
 import Lean
 
 /-!
-A compile-time, frozen module selection for the Lean 4.35.0 PSCV0 frontend.
+A compile-time, frozen module selection for the Lean 4.35.0-rc4 PSCV0 frontend.
 This is not the full semantic environment digest or a trusted plugin registry.
 -/
 
@@ -9,8 +9,8 @@ open Lean
 
 namespace PSCVL.StandardEnv
 
-def leanRevision : String := "eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
-def leanVersion : String := "4.35.0"
+def leanRevision : String := "c29b6dda4f7c20e3eeaa717c4e565663c5cfa364"
+def leanVersion : String := "4.35.0-rc4"
 
 def imports : List Lean.Name := [
   `Std, `Init.Data.List, `Init.Data.Array,
