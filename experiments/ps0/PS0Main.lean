@@ -31,7 +31,7 @@ private def approvedSource (src filename : String) :
   if messages.hasErrors then
     return .error "invalid Lean import header"
   if Lean.Elab.HeaderSyntax.isModule header then
-    return .error "explicit module headers are not yet supported in PSCV0"
+    return .error "PSCV0-MODULE-HEADER-PENDING: v7 module exposure not implemented"
   -- A source-level public import needs v7's explicit module/public exposure
   -- translation. Lean treats all imports in legacy modules as exported, so
   -- inspecting Import.isExported alone cannot distinguish the written forms.
@@ -46,8 +46,12 @@ private def approvedSource (src filename : String) :
   | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
   let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
   for imported in imports do
-    unless StandardEnv.allowsImport imported.module && !imported.isMeta && !imported.importAll do
-      return .error s!"unapproved PSCV0 imported module: {imported.module}"
+    if imported.isMeta then
+      return .error s!"PSCV0-ENV-META-IMPORT-REFUSED: {imported.module}"
+    if imported.importAll then
+      return .error s!"PSCV0-ENV-IMPORT-ALL-REFUSED: {imported.module}"
+    unless StandardEnv.allowsImport imported.module do
+      return .error s!"PSCV0-ENV-UNAPPROVED-IMPORT: {imported.module}"
   let bytes := src.toByteArray.extract state.pos.byteIdx src.utf8ByteSize
   let some body := bytes.utf8Decode?
     | return .error "invalid UTF-8 boundary at PSCV0 import header"
