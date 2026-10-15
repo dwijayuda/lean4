@@ -1,274 +1,109 @@
-# PS0 — AI work state (15 October 2026)
+# PS0 — AI Work State (16 October 2026)
 
-## JS backend compositional MVP hardening — 16 October 2026
+## Authoritative language edition
 
-- Extended the Lean `NatExpr` IR with references to earlier public Nat
-  constants and direct, monomorphic, exact-arity calls to earlier
-  eligible Nat functions, including source-nullary functions.
-  Forward, recursive, higher-order and named/defaulted calls remain
-  explicitly unsupported rather than silently producing JS.
-- Refactored source checking to return the **actual Lean checked
-  Environment**. `build-js` reuses that session and verifies every
-  emitted IR export against its checked Core definition:
-  Nat constants have Core type Nat; functions have only Nat parameters
-  and Nat result, or Unit → Nat for source-nullary functions.
-- Nat BigInt subtraction now evaluates both operands exactly once.
-  The output module stem must be safe for JS/source-map publication.
-- CI exercises composed calls, large Nat references, nullary calls,
-  invalid-call refusals, TypeScript exports and true Source Map v3
-  by **decoding Base64 VLQ** and checking original declaration lines.
-- All backend implementation modules remain `.lean`. No authored
-  `.js`/`.mjs` backend source files were introduced; Node is only
-  used by CI to test generated runtime output.
-- **Qualification still pending:** no Lean/Lake executable is installed
-  in the current container, the container cannot fetch a toolchain
-  over the network, and GitHub has not exposed an exact-commit CI
-  result. Do not mark this MVP compiled, passing or verified.
-- Estimated language feature readiness remains **41%**; recorded strict
-  PSCV0 v7 qualified requirements remain **0/181**. JS-backend
-  acceptance is separate from v7 language-feature conformance.
+**PS0 v1 R2** is now the sole normative programming-language target.
+The user's complete uploaded 4,163-line Markdown reference was
+installed **byte-for-byte** as
+[PS0_V1_LANGUAGE_REFERENCE.md](PS0_V1_LANGUAGE_REFERENCE.md).
+Its exact Git blob is
+`c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
 
-**Next:** compile with official Lean 4.35.0 and fix any exact error;
-execute the Node/source-map/type-declaration CI checks, qualify the
-committed artifacts, and only then expand to Bool/ADT/module/effects
-using typed IR cases rather than source-text heuristics.
+Official Lean semantic pin remains **4.35.0**,
+`eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
 
-## Lean-native JS backend MVP — 15 October 2026
+The PS0 reference supersedes PSCV0 v7 **without backward compatibility,
+normative fallback, or inherited v7 profile restrictions**.
+The independent compiler `dwijayuda/pskernel` and the prior
+`experiments/pscv0-lean-native` experiment remain unchanged.
 
-- **User request:** create the *smallest useful* JS backend in **Lean**,
-  exporting `.ps` to `.js`, `.d.ts` and a source map, with a scalable
-  architecture rather than a disposable source-string demo.
-- Added six Lean files under `PS0/Backend/Js`:
-  `IR.lean`, `Lower.lean`, `SourceMap.lean`, `Emit.lean`, the composition
-  `Js.lean` and integration in `PS0Main.lean`.
-- CLI: `lake exe ps0 build-js FILE.ps ModuleName OUTPUT_DIR`.
-  The source is read once, must pass the pinned Lean 4.35 elaborator,
-  kernel checks and `#pscv_gate`, then a **closed** supported syntax
-  fragment lowers to typed Nat runtime IR. No unrecognized construct
-  silently falls back to hand-written JS.
-- Emitter produces exact BigInt ESM arithmetic including saturating
-  `Nat.sub`, TypeScript `bigint` signatures and genuine Source Map v3
-  Base64 VLQ (original source, declaration-line anchors).
-  Runtime function inputs reject JS numbers or negative bigints.
-  All three artifacts are staged as a bundle and published together.
-- Supported initial slice: public `Nat` constants and explicitly
-  typed `Nat` functions with Nat literals, variables, parentheses,
-  braces, add/multiply/subtract and source-nullary calls. No imports,
-  namespaces, ADTs, recursion, non-Nat types or effects yet.
-- Added `tests/js/nat_mvp.ps` and negative unsupported type,
-  expression and import fixtures. CI executes generated ESM through
-  Node, validates big values > 2^53, runtime guards, `.d.ts`,
-  source-map structure, byte-for-byte reproducibility, rejection and
-  no overwrite. **No authored JS/MJS implementation source files.**
-- **Assurance:** Lean checking of source is not a proof that backend
-  JS preserves Lean semantics. This is a bounded, reviewable
-  implementation with differential runtime tests; *not* verified
-  executable JS or full v7 backend completeness. No new trusted
-  axioms or JS runtime adapter was added.
-- The v7 **language feature** readiness metric stays **41%**
-  engineering estimate, strict source conformance **0/181**
-  recorded exact-CI passes until actual build evidence is observed.
-  Track the JS backend separately from the v7 language score.
+## Current branch, PR, safety
 
-**Next:** inspect exact-commit Lean 4.35 CI; resolve any real
-quotation/parser/type errors in the new backend as a family.
-Then add checked-core semantic linkage and monomorphic function calls
-to typed IR, followed by Bool and selected ADTs; do not add
-string-based fallback transpilation. Full module linkage depends on
-PS0-03's real module graph and source/public-body exposure rules.
-See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md).
+- Repository: `dwijayuda/lean4`
+- Branch: `feature/ps0-lean435-stable-v1`
+- Draft PR: [#5](https://github.com/dwijayuda/lean4/pull/5)
+- Re-read live GitHub HEAD before any future write; preserve history
+  and do not merge/force-push without an explicit request.
 
-## PS0-03 implicit modules and export/import metadata — 15 October 2026
+## Work implemented in this migration
 
-**Implementation checkpoint preceding this update:** `80d2ceb23dde531973ab60d2229c6856609573c2`. Always inspect the live PR #5 HEAD before further writes.
+1. Replaced the existing smaller `PS0_V1_LANGUAGE_REFERENCE.md` with
+   the exact uploaded standalone R2 language document.
+2. Replaced frozen v7 grammar-command/attribute/keyword exclusions with
+   native registered grammar and a **diagnostic-only** static
+   syntax-kind inspector. Official Lean's interleaved
+   parse/elaboration is the language-checking authority.
+3. Replaced the blanket v7 proof gate with informational
+   `#ps0_evidence`. Ordinary `axiom`, `unsafe`, `partial`, IO,
+   native meta features and development `sorry` are language
+   capabilities; this reporting command issues no verification claims.
+4. Updated source headers to admit written native `module` and
+   implicit headerless modules with distinct source visibility
+   defaults. Imports are no longer governed by a v7 Standard allowlist.
+   Full module export, public-body/exposure and prelude semantics
+   are still unfinished.
+5. Changed instance-priority source adapters to use registered
+   Lean priority grammar rather than a closed named list.
+6. Replaced `PS0_STANDARD_ENV.json` and `PS0/StandardEnv.lean`
+   finite allowlist metadata with a v1 environment-identity
+   placeholder. A complete imported registration digest is
+   still required for reproducible stronger claims.
+7. Created `v1-coverage.json` from the new reference, covering
+   **100** capability families, **64** positive source cases,
+   **47** negative source/disallowed-claim cases, and **31** R2
+   boundary witnesses: **242** requirements, all `PENDING`
+   qualification.
+8. Added selected native-capability v1 source candidates under
+   `tests/v1` and replaced active CI v7 acceptance tests with
+   v1 source/registry and bounded JS backend checks.
+9. Wrote [PS0_V1_IMPLEMENTATION_PLAN.md](PS0_V1_IMPLEMENTATION_PLAN.md)
+   and updated README, CONFORMANCE and SOURCE_PROFILE_BOUNDARY.
 
-- The v7 `PSCV0-MODULE-01/02` reference requires **implicit** `.ps` modules: users do not write the `module` keyword. A plain `import M` is private, while `public import M` re-exports its public scope. This contrasts with legacy Lean, where plain imports are transitive/public.
-- Inspected exact official Lean 4.35.0 source at `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`: `src/Lean/Parser/Module.lean`, `src/Lean/Elab/Import.lean`. `HeaderSyntax.imports` computes `isExported` as the source public flag or a legacy/non-module header.
-- `PS0Main.lean` now runs the pinned native header parser with a synthetic `module\n` prefix (parser input only), then subtracts the injected UTF-8 prefix to recover the original source command-body boundary. An explicitly written source `module` is refused. This also corrects the diagnostic-order bug whereby Lean's legacy parser rejection of `public import`/`meta import`/`import all` masked the selected v7 source-policy diagnostics.
-- Implemented the read-only `ps0 module-header FILE.ps` JSON command, exposing `is_module`, `implicit_module` and the precise native import `public`/`meta`/`all` flags. It explicitly advertises `compile_ready=false`: this is a project-graph primitive, **not** full v7 module semantics.
-- **Emission remains fail-closed:** `ps0 build` refuses `.ps` sources with imports (`PSCV0-MODULE-BUILD-PENDING`), avoiding incorrect legacy re-export behavior until real module mode, public-by-default source declarations, hidden bodies and imported proof/spec/effect closure can be implemented. Source-only `check`/header introspection remain unqualified analytical operations.
-- Added header fixtures for private/plain vs public imports, allowed metadata inspection of meta imports (without compilation), explicit source-module rejection, and a Unicode post-header body-offset regression. CI asserts actual Lean-derived flags, expected negative reasons and no published native artifacts for unsupported imports.
-- The project-modules feature family advances **0/5 → 1/5 (foundation only)**. Estimated overall `.ps` language readiness **41%** (previous 40%). Strict conformance **0/181** until a successful exact-commit Lean 4.35.0 build/semantic CI is observed. Ordinary `.lean` remains fully unrestricted.
+## Important limitations and known gaps
 
-**Immediate next task:** qualify this exact branch against actual official stable Lean CI, then implement *real* module graph/visibility lowering (`module`/`public section` in generated Lean), import-closure and public-name/hidden-body proofs. Never claim those are implemented from header metadata alone.
+- No exact-commit, successful Lean 4.35.0 PS0 CI run has been
+  independently observed. **Do not claim the compiler is green.**
+- The full `psTerm`, `psCommand`, `psTactic`, `psDoSeq`
+  category architecture and `PS0.Syntax.lower` normalizer
+  remain unimplemented. This is the main language-completeness gap.
+- The actual frontend currently imports `PS0.Policy` as a host
+  parsing environment, so the v1 `prelude` guarantee of
+  **no hidden ordinary/meta Init** requires further architectural
+  separation and targeted qualification.
+- Public-by-default names, actual native modern-module compilation,
+  exported body transparency and mixed `.ps`/`.lean` graphs
+  are not yet fully implemented. Import-era native emission may
+  still refuse unsupported paths; that is a compiler limitation,
+  **not** a v1 source-language ban.
+- The old source adapter code contains some internal `pscv*`
+  identifiers, but these are historical *implementation names*
+  only. No v7 semantics or v7 admission policy should be inferred
+  from their spelling. Refactor them cleanly when adapting
+  the host-category grammar.
+- The Lean-native Nat-only JS backend remains a selected
+  executable backend subset. Its unsupported types and effects
+  do not narrow the PS0 v1 source-language definition.
+  JS correctness/semantics-preservation remains unqualified.
+- **No v1 completion percentage is established.** The former
+  41% estimate and 181-case v7 ledger are retired. The new
+  242-item registry is a requirements inventory, not a test PASS
+  count or measured implementation percentage.
 
-## Priority ordering and acceptance checkpoint — 15 October 2026
+## Next critical implementation work
 
-- Last inspected implementation HEAD before this state update: `29d2efbfab2fda271cc5a0de364174ec6b54a439`. Re-read the live branch before subsequent edits.
-- Added an overlapping **low-priority vs high-priority instance** theorem in `tests/pass/instance_priority_order.ps` with an independent native Lean comparison at `tests/lean/instance_priority_order_reference.lean`. This tests actual typeclass selection, not mere syntax acceptance.
-- `tests/pass/instance_priority.ps` and the native reference now cover **all four** named v7 atoms (`low`, `mid`, `default`, `high`) plus numeric priority 750 and parametric instances.
-- The PS0-owned `pscvSelectedPriority` is now a finite source grammar; each accepted priority is lowered to official Lean `prio`. Native `.lean` remains unrestricted.
-- The v7 coverage ledger contains **32 source-case candidate links**, all unqualified; estimated `.ps` implementation readiness remains **40%**, strict acceptance remains **0/181**.
-- The connected GitHub checks yielded zero accessible run/status records at that HEAD; a further attempt to access public Actions/checks pages was inaccessible. This is **unknown CI state**, not a pass or a failure.
-- Next critical path: obtain a real stable 4.35.0 build log, fix the first exact parser/quotation/compiler error, freeze the selected instance registry, then implement `.ps` imports/public visibility with no restrictions on native `.lean`. Keep PR #5 draft.
+1. Obtain the actual official 4.35.0 build result; fix API/grammar
+   compile errors at the family level. Test the new native
+   v1 source cases and basic JS backend.
+2. Implement native-vs-PS category ownership and the `PS0.Syntax.lower`
+   meta interface without losing syntax data or provenance.
+3. Implement source call/brace/binder/record ownership, the PS
+   extension dispatch boundary and exact v1 negative oracles.
+4. Complete module/stage/import/public-body behavior and
+   prelude isolation via pinned Lean module APIs.
+5. Expand native language families, effect/erasure/contract
+   support and claim-specific assurance `12`, then qualify
+   v1-coverage entries one by one with real CI evidence.
 
-## Closed v7 instance-priority grammar — 15 October 2026
-
-A subsequent PS0 implementation pass tightened source priority selection from
-the open native parser category to an explicit **`pscvSelectedPriority`**
-category admitting `low`, `mid`, `default`, `high` and a numeric literal
-only. `lowerSelectedPriority` maps these cases back through native Lean
-`prio` syntax quotations; actual numeric/name meaning, instance search and
-priority ordering remain Lean-owned. This category applies to `.ps` only.
-The native `.lean` compiler/process is unchanged and unrestricted.
-
-The four instance priority forms (anonymous/named, with/without an ordered
-telescope) now use the source priority category, and CI candidate fixtures
-exercise all named priorities, numeric priority 750, and malformed
-`highest`/arithmetic forms. Separate negatives cover missing type,
-forbidden nullary instance headers, and adjacent explicit groups.
-`v7-coverage.json` has **32 candidate IDs** (no new PASS).
-
-**Qualification:** exact-commit Lean 4.35 CI success remains unconfirmed
-through the available GitHub connector. The strict ledger stays
-**0/181**. The 20-family engineering readiness estimate remains
-**40%** because this change extends the same partially implemented
-class/instance family rather than closing its full v7/registry contract.
-
-## Instance priorities and complete header candidate suite — 15 October 2026
-
-**Checkpoint preceding this log update:** GitHub branch `feature/ps0-lean435-stable-v1` (read live HEAD before new writes). Draft PR #5, do not merge until qualification.
-
-- Studied official pinned Lean `src/Lean/Parser/Command.lean` `namedPrio` and the `instance` parser, `src/Lean/Parser/Attr.lean` `priorityParser` and numeric priority parser. **Lean** owns actual numeric/named-priority semantics and class resolution. No PS0 typeclass engine was written.
-- Added four source-only `.ps` adapter commands for priority-bearing anonymous/named instances with/without ordered parameter telescopes. The source forms emit ordinary native Lean `instance (priority := ...) ... := record` after profile admission. `.lean` continues using unrestricted Lean native syntax.
-- Added `tests/pass/instance_priority.ps` for named priority `high`/`low`, numeric priority `750` and parametric instances. Added manual native Lean correspondence source `tests/lean/instance_priority_reference.lean`, and negative priority-expression/unknown-name source cases. The pinned native priority parser, rather than a second PS0 priority evaluator, determines permissible native priority atoms.
-- Added negative v7 instance header fixtures for missing class type, forbidden empty group, and adjacent explicit groups. Their expected outcomes are indexed in `v7-coverage.json`; CI checks all candidate header/priority cases. **Do not count rejected source purely because of an unrelated parser or type error**; phase-specific assertion still remains incomplete for the newest malformed header cases.
-- Source/CI edits are **unqualified**: no successful exact-commit Lean 4.35.0 GitHub Actions run was independently retrieved. Verify parser quotations/overlap and first compilation failure before declaring this family complete.
-- Candidate v7 source-ID links now total **32/150**, with all 181 normative + audit rows still unqualified. Estimated twenty-family `.ps` implementation readiness stays **40%**; the classes/instance/deriving family remains 3/5, not 4/5 until broader runtime/registry acceptance and CI. Strict qualified coverage **0/181 = 0%**.
-- Next critical path: independently obtain real stable build logs; resolve source/parser priority category mismatches first if any; complete frozen priority ordering/instance environment roster, then `.ps` modules/visibility and the full acceptance matrix. Keep native `.lean` unrestricted.
-
-## Braced instance family — 15 October 2026
-
-PS0 implementation continued under draft PR #5. Read current live HEAD before
-any further write. **The stable Lean 4.35.0 native build has not been verified
-passing** for this new family; all tests remain unqualified.
-
-- Studied official Lean 4.35.0 `src/Lean/Parser/Command.lean`:
-  native `instance` uses the class declaration elaborator; value-form
-  `:= { fields }` is valid in native Lean. The v7 `.ps` surface instead
-  selects `instance [name] : Class where { fields }`, not native
-  `instance : Class := value` or unbraced `where`.
-- Implemented PS0-owned source macros in `PS0/Syntax.lean` for anonymous
-  and named class instances, plus ordered explicit/implicit/instance binder
-  telescopes. Native Lean elaborates class fields and the actual instance
-  declarations, including typeclass evidence; PS0 adds no new checker.
-- Added pre-elaboration `PSCV0-INSTANCE-FIELDS` for non-record `where`
-  bodies and `PSCV0-INSTANCE-BRACES` for unbraced native instance field
-  declarations embedded in `.ps`. `PSCV0-INSTANCE-VALUE-REFUSED` remains.
-  All these restrictions apply exclusively to `.ps`; `.lean` retains
-  full native instance grammar.
-- Added `tests/pass/instance_braced_fields.ps` with anonymous, named,
-  polymorphic and ordered binder cases and kernel-checkable properties,
-  `tests/fail/instance_fields_not_record.ps` and
-  `instance_unbraced_fields.ps`, and matched native declarations in
-  `tests/lean/instance_reference.lean`. CI gates these cases with
-  specific negative diagnostic codes.
-- Linked P-INSTANCE-HDR-ANON, P-INSTANCE-HDR-NAMED,
-  N-INSTANCE-HDR-VALUE and N-INSTANCE-VALUE to **candidate** fixtures
-  in `v7-coverage.json` without promoting them to PASS.
-- Estimated 20-family `.ps` readiness: **40%**, up from 39% as the
-  classes/instances/deriving family rose 2/5 → 3/5. Strict qualified
-  completion: **0/181**, unchanged. The percentage is a planning
-  estimate, not CI-tested language coverage.
-
-**Next critical path:** obtain genuine stable-4.35 build/CI logs and
-fix any parser/quotation/type-checking failures. Then complete v7
-instance priorities (selected priority names and nonnegative numeric
-literals), ordinary field/method binders, and frozen instance registry;
-continue module/import visibility and full source assurance.
-Native `.lean` remains unrestricted and is not included in v7 scoring.
-
-## Well-founded recursion implementation — 15 October 2026
-
-**Code checkpoint before this log entry:** `046797c9f88f041b96554c3ace1dc4fc83faa983`. Re-read live PR #5 HEAD before further commits.
-
-- Source study against stable Lean 4.35.0 commit `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`: `src/Lean/Parser/Term.lean`, `Lean.Parser.Termination.terminationBy` / `decreasingBy` / `suffix`, `src/Lean/Parser/Command.lean` `declValSimple`, and `src/Lean/Elab/PreDefinition/TerminationHint.lean`. Native Lean performs well-founded recursion construction and checks the decrease proof; PS0 must not reimplement it.
-- Implemented selected `.ps` `function f(n: Nat): Nat := body termination_by n` and `decreasing_by by { omega }` source proof adapter in `PS0/Syntax.lean`, lowering to the pinned Lean termination hints and tactic elaborator. The source grammar owns the `by { ... }` wrapper and native Lean owns the proof obligation.
-- Tightened `PS0/Grammar.lean` source closure so native Lean declaration parsing inside `.ps` cannot silently admit `termination_by structural`, `termination_by?`, partial/coinductive/inductive fixpoint modes or `decreasing_by` without a preceding selected measure. These remain allowed in native `.lean` wherever official Lean allows them.
-- Added source-positive `tests/pass/termination_total.ps`, negative non-decreasing/missing-measure tests, additional negative native-source alternative tests, and native `tests/lean/termination_reference.lean` / `termination_native_extensions.lean`. CI invokes the family, checks named `PSCV0-TERM-01` refusals, and verifies that the corresponding unrestricted Lean syntax remains native.
-- **No new PASS evidence:** the stable PS0 workflow is still not independently confirmed running/passing at this HEAD; all new fixtures are unqualified.
-- Engineering readiness estimate: **39%** across twenty equal-weight `.ps` feature families (recursion 2/5 → 3/5). Strict qualified v7 acceptance remains **0/181 (0%)**. This does not count native `.lean` capabilities.
-
-**Next:** get exact-commit stable Lean CI evidence; fix the first actual parser/quotation/compilation failure rather than adjusting test expectations, then close the complete v7 termination/call/dependent-pattern families and source-to-Lean semantic correspondence. Prefer architecture-wide fixes and feature gates over one-test patch loops.
-
-## Inferred signatures and ordered v7 binders — 15 October 2026
-
-**New implementation checkpoint before this log update:** `8f5c4e9ebe11aa6758f0f8866a0e13fdcd222018`. Read live branch HEAD before further commits.
-
-- PS0 now implements `.ps` **inferred result types** in comma-bound `function`/`def` and private/implicit function declarations, delegating inference to official Lean 4.35.0.
-- Introduced an explicitly ordered `pscvTelescopeSegment` for mixed explicit parameter groups, implicit/strict-implicit type parameters, named/anonymous typeclass instance binders, and corresponding `function`, `def`, `theorem` forms. Binder order and dependent types are passed to Lean; no new solver or kernel.
-- `PSCV0-BIND-02` enforces no consecutive explicit binder groups both in PS0's owned syntax and in native Lean `def`/`theorem` parse alternatives when embedded in `.ps`. This does **not** change native `.lean` behavior.
-- Positive `inferred_signatures.ps` and `interleaved_binders.ps`, negative `adjacent_explicit_groups.ps`, `native_def_adjacent_groups.ps`, `native_theorem_adjacent_groups.ps`, and nullary `def`/`theorem` negatives added; native official-Lean companion source in `tests/lean/v7_signature_reference.lean`. New tests are **candidate fixtures**, not independently qualified.
-- Added `P-BINDER-INTERLEAVED`, `N-BINDER-ADJACENT` and `N-BINDER-NULLARY` candidate links in `v7-coverage.json`; all canonical IDs remain PENDING until exact-commit CI.
-- **Estimated `.ps` language feature readiness is now 38/100 = 38%** (previously 37%) using a 20-family rubric. Binder family moves 2/5 → 3/5; foundation category 13/25 = 52%; data 14/35 = 40%; proofs/effects 8/20 = 40%; modules/libraries/assurance 3/20 = 15%. **Strict qualified: 0/181 = 0%**, unchanged. This 38% is an *engineering readiness estimate*, not measured test coverage.
-- Next qualification gate is a real stable Lean 4.35.0 GitHub workflow run for PR #5, fixing any compile failures and then qualifying the new grammar family. No matching green workflow run was observed prior to this checkpoint.
-
-## User decision: v7 applies only to `.ps` (15 October 2026)
-
-**Implementation checkpoint before this documentation update:** `4bacc4b612db05554a0be7b651e23e2e2c2df4cc`. Check current GitHub PR #5 HEAD before new writes.
-
-- Official Lean **4.35.0** is the unchanged semantic authority. `.ps` continues through PS0's selected v7 parser, local `PS0.Policy` and generated `#pscv_gate` on checked source.
-- **Unrestricted `.lean` route implemented:** `ps0 check file.lean`, `ps0 build file.lean Name out/`, and `ps0 lean <args>` now spawn the official native Lean executable from the selected Lean sysroot in a **separate process**, with no `PS0.Policy`/PSCV0 syntax profile injected. Windows chooses `lean.exe`. Arbitrary native Lean syntax and standard Lean compiler assumptions remain available.
-- Created `tests/lean/unrestricted.lean` containing native `axiom`, `unsafe`, `partial`, `sorry`, and effectful IO `#eval`. GitHub CI includes positive native-mode check/build/pass-through and compares output to unrestricted native Lean; `.ps` has additional axiom and partial negative emission tests alongside existing unsafe/sorry refusals.
-- `ps0 build file.lean` retains host publication-safety behavior (staging, refusal to overwrite) but **does not restrict source syntax, tactics, axioms, imports or effects**. For full native compiler options, `ps0 lean ...` forwards all arguments.
-- Detailed [SOURCE_PROFILE_BOUNDARY.md](SOURCE_PROFILE_BOUNDARY.md) documents separate source and assurance semantics, including eventual mixed `.ps` dependencies on unrestricted `.lean` modules, which must be audited **when incorporated in verified `.ps` emission**, not by restricting `.lean`.
-- **Language readiness remains 37% subjective `.ps` coverage, strict qualification 0/181 pending stable CI.** The native Lean route is not included in v7 feature scoring. All new regression results remain unqualified until a successful stable-4.35 CI run is inspected.
-
-**Next critical gate:** independently qualify compilation of both PS0 `.ps` and unrestricted `.lean` lanes, and fix any exact-commit CI errors; continue v7 grammar only on `.ps`. Preserve draft PR, original PSCVL and independent PSC0.
-
-## Language-feature continuation — 15 October 2026
-
-**Latest inspected code checkpoint:** `47b3bca21fc8b8b55f9da766479cdc9baea4619e`. Read live HEAD before new writes.
-
-- **Estimated language-feature readiness: 37%**, produced by [language-feature-progress.json](language-feature-progress.json) and [report-language-progress.mjs](scripts/report-language-progress.mjs). This is a **subjective, equal-weight 20-family rubric** (37 points of 100), **not** measured code coverage or normative acceptance.
-- **Strict v7 qualification: 0/181 = 0%**. These are the 150 §13 source cases + 31 v7 audit/erratum/correction IDs in [v7-coverage.json](v7-coverage.json). No current stable PS0 exact-commit CI pass is independently confirmed. The completion validator refuses any unsupported PASS record.
-- Readiness breakdown: source/declaration/call/scope foundation **12/25 = 48%**; dependent types/data/control **14/35 = 40%**; tactics/verified do/contracts/typed effects **8/20 = 40%**; modules/selected libraries/environment/assurance **3/20 = 15%**.
-- Added candidate [pattern_predicates.ps](tests/pass/pattern_predicates.ps) for Lean-native `matches` and braced `if let` with `rfl` proofs, [empty_elimination.ps](tests/pass/empty_elimination.ps) for checked `Empty` elimination by `nomatch`, and negative `nomatch_nonempty.ps` / `iflet_escape.ps`. Normative P-IFLET, P-NOMATCH, N-IFLET-SCOPE and N-NOMATCH are now linked to candidate fixtures but remain pending.
-- Studied official pinned [Init/NotationExtra.lean](https://github.com/leanprover/lean4/blob/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/src/Init/NotationExtra.lean): Lean itself lowers `e matches p` to a Bool-returning match. PS0 must use that checked semantics rather than implement an independent pattern matching primitive.
-- Implemented explicit `PSCV0-DO-IFLET-ARROW` source refusal for Lean's `doIfLetBind` parser form (pinned `Parser/Do.lean`), preserving v7's staged P1 distinction and binding N-DO-IFLET-ARROW to a negative source fixture. Added an exact diagnostic check in PS0 CI; positive v7 do-if-let lowering remains a separate grammar implementation task.
-- CI now runs the machine-readable language-readiness validator as well as the v7 inventory integrity checker. It must report readiness and qualified percentages **separately**.
-- **No stable Lean CI evidence yet.** All new positive/negative fixtures are committed **unqualified**, and a green build remains PS0-00's first acceptance gate.
-
-**Next:** independently obtain a stable Lean build/CI receipt; correct any compiler/fixture failures; complete parser §0B and phase-specific negative tests; implement v7 statement-level braced `do if`/ `if let`, modules/imports and dependent patterns with real Lean semantic correspondence. Do not infer a new percent solely from adding tests; reassess the 20-family rubric only after meaningful implementation.
-  
-## Exact live checkpoint
-
-- Repository: [dwijayuda/lean4](https://github.com/dwijayuda/lean4); branch: `feature/ps0-lean435-stable-v1`.
-- Draft [PR #5](https://github.com/dwijayuda/lean4/pull/5) targets `experiment/pscv0-native-language-closure-v1`; preserve the base, draft status and unrelated history. Do not merge or force-push.
-- Last inspected implementation/plan HEAD before this handoff update: `4a19c4001739a0783ee26378a8220c19d337e9ef`. **Read live GitHub HEAD again before any new write.**
-- Toolchain: official Lean **4.35.0** at `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
-- **CI qualification: NOT VERIFIED.** The connected GitHub workflow/status inspection returned no runs/statuses at this HEAD. Do not claim a green stable PS0 build, full language conformance, or machine-code proof.
-- All changed files in draft PR #5 remain under `experiments/ps0/**` or `.github/workflows/ps0-lean435.yml`. The independent PSC0 and historical RC4 PSCVL experiment remain untouched.
-
-## Implemented source checkpoints
-
-1. Standalone Lake package with PS0-owned Syntax, Grammar, Policy, Effect, StandardEnv and CLI; no sibling `[[require]]` or imported `PSCVL.*`.
-2. V7 head-specific nullary `Unit`/defaulted function calls and source-specific declaration restrictions; PS0 refuses a non-callable `f()`. Selected native Lean Core correspondence harness has a Unit nullary theorem.
-3. V7 source-policy checks for module/public-import/prelude/meta-import/import-all declarations, bodyless `opaque` and unselected value-form `instance`, with specific negative fixtures and CI assertion of diagnostic labels.
-4. Native build now uses one user-source read and one authoritative official Lean `runFrontend` elaboration, then emits C from its accepted environment. C and olean are staged in a sibling directory, published only when both exist, and existing destination bundles are not overwritten. This is bounded, not yet a full transitive module identity / crash-safe publication protocol.
-5. [Normative coverage inventory](v7-coverage.json): **150** v7 §13 cases (72 positive, 78 negative) and **31** erratum/finding/correction identifiers (4 E, 22 F, 5 C). All remain **PENDING**, including ten cases with candidate fixture links. [Validator](scripts/validate-v7-coverage.mjs) rejects missing IDs, drift, nonexistent candidate fixtures, unsupported PASS evidence and intentionally fails `--require-complete`. CI runs this check.
-
-## Immediate critical path
-
-1. **Obtain actual exact-commit stable Lean CI evidence.** The workflow `.github/workflows/ps0-lean435.yml` has push/PR/workflow_dispatch triggers, but this chat's available GitHub connector has no workflow-dispatch action and did not expose any new runs. Determine in GitHub Actions whether the fork's Actions are enabled, locate exact run/job logs, and fix the **first genuine compile/test failure** before declaring baseline PS0-00 complete. Do not invent CI receipts.
-2. Resolve parser-`choice` conservatism only using the **actual Lean-selected alternative** and complete v7 source category registry; correct semantic family root causes, not individual negative tests.
-3. Add all missing v7 §13 fixture IDs and attach actual Lean-Core correspondence and error-phase diagnosis. After exact CI, promote each case to PASS with the recorded fixture, commit and run; never bulk-promote based on historical RC4 tests.
-4. Implement PS0-03 module/public-import/visibility semantics with real pinned Lean module AST, then dependent language, Standard/P0/P1, contracts/verified effects, transitive assurance, and source tooling per [full plan](PS0_FULL_PSCV0_V7_IMPLEMENTATION_PLAN.md).
-5. Improve staged publication to a canonical checked graph/environment digest, hardened no-replace safety, provenance manifest, and native compiler/runtime evidence. Keep verified SOURCE obligations separate from machine semantic preservation.
-
-**Non-goals:** no independent typechecker/kernel, no PSKernel-C0 integration, no compiler self-hosting or PSC0 backend reimplementation in PS0 at this stage.
-
-## Useful acceptance commands (to run in GitHub Linux CI)
-
-```sh
-cd experiments/ps0
-node scripts/validate-v7-coverage.mjs
-node scripts/validate-v7-coverage.mjs --require-complete  # expected to fail while pending
-lake build PS0 ps0
-lake exe ps0 check tests/pass/basic.ps
-lake exe ps0 check tests/pass/default_empty.ps
-lake exe ps0 check tests/pass/unit_alias.ps
-lake exe ps0 build tests/pass/native_math.ps NativeMath build/native
-```
-
-The workflow also executes scoped negative fixtures and links the compiled `NativeMath` executable. Test success **must be observed**, not inferred from these commands' presence in a file.
+No background work, implicit approval policy, certification or
+verified-runtime result has been promised. All committed work
+remains on the draft branch.
