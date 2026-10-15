@@ -13,6 +13,8 @@ namespace PS0.Backend.Js
 inductive NatExpr where
   | literal (value : Nat)
   | local (name : String)
+  | globalConst (name : String)
+  | call (name : String) (args : Array NatExpr)
   | add (lhs rhs : NatExpr)
   | mul (lhs rhs : NatExpr)
   | sub (lhs rhs : NatExpr)
