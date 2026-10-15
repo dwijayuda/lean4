@@ -101,6 +101,11 @@ jobs:
             exit 1
           fi
           grep -F "PSCV0-CALL-EMPTY" empty.log
+          if lake exe ps0 check tests/fail/do_iflet_arrow.ps > do-iflet.log 2>&1; then
+            echo "PS0 incorrectly admitted deferred monadic do-if-let"
+            exit 1
+          fi
+          grep -F "PSCV0-DO-IFLET-ARROW" do-iflet.log
           for pair in \
             'bodyless_opaque.ps:PSCV0-OPAQUE-BODY-REQUIRED' \
             'value_form_instance.ps:PSCV0-INSTANCE-VALUE-REFUSED'; do
