@@ -1,0 +1,5 @@
+namespace NativeMath
+function add(x: Nat, y: Nat): Nat := { x + y }
+function square(n: Nat): Nat := n * n
+theorem addZero(n: Nat): add(n, 0) = n := by { simp [add] }
+end NativeMath
