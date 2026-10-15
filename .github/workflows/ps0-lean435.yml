@@ -85,6 +85,10 @@ jobs:
               exit 1
             }
           done
+          lake exe ps0 check tests/v1/host_category_bridge.ps > host-category.log 2>&1 || {
+            cat host-category.log
+            exit 1
+          }
           grep -F 'PS0V1_IO_OK' v1-io_diagnostics.ps.log
           grep -F 'assumption policy NOT assessed' v1-native_capabilities.ps.log
           echo 'PS0V1_NATIVE_LANGUAGE: PASS'
@@ -104,6 +108,34 @@ jobs:
           assert implicit['imports'][0]['public'] is False
           print('PS0V1_MODULE_HEADERS: PASS')
           PY
+      - name: True native-modern .ps source checking and emission
+        run: |
+          set -euo pipefail
+          for file in implicit_public_module.ps explicit_private_module.ps; do
+            lake exe ps0 check "tests/v1/$file" > "native-$file.log" 2>&1 || {
+              cat "native-$file.log"
+              exit 1
+            }
+          done
+          lake exe ps0 build tests/v1/implicit_public_module.ps V1Implicit build/v1-implicit > implicit-build.log 2>&1 || {
+            cat implicit-build.log
+            exit 1
+          }
+          test -s build/v1-implicit/V1Implicit.olean
+          test -s build/v1-implicit/V1Implicit.c
+          lake exe ps0 build tests/v1/explicit_private_module.ps V1Explicit build/v1-explicit > explicit-build.log 2>&1 || {
+            cat explicit-build.log
+            exit 1
+          }
+          test -s build/v1-explicit/V1Explicit.olean
+          test -s build/v1-explicit/V1Explicit.c
+          # Valid bootstrap language must refuse this unavailable backend
+          # without violating its no-implicit-Init semantic contract.
+          if lake exe ps0 check tests/v1/prelude_implementation_pending.ps > prelude.log 2>&1; then
+            echo 'PS0 silently admitted a prelude with hidden Init'
+            exit 1
+          fi
+          grep -F 'PS0V1-PRELUDE-PENDING' prelude.log
       - name: Unrestricted native Lean lane
         run: |
           set -euo pipefail
