@@ -20,3 +20,17 @@ class NativeValueForm where
   value : Nat
 instance : NativeValueForm := { value := 31 }
 theorem nativeValueInstance : (inferInstance : NativeValueForm).value = 31 := by rfl
+
+// Semantically equivalent to braced PSCV0 parametric instance source.
+class DefaultBox (α : Type) where
+  fallback : α
+instance {α : Type} [Inhabited α] : DefaultBox α where
+  fallback := default
+
+class IdentityBox (α : Type) where
+  identity : α → α
+instance selected {α : Type} : IdentityBox α where
+  identity := fun x => x
+
+theorem defaultBoxNat : (inferInstance : DefaultBox Nat).fallback = 0 := by rfl
+theorem identityBoxNat : selected.identity 4 = 4 := by rfl
