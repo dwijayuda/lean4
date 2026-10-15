@@ -1,5 +1,18 @@
 # PS0 — AI work state (15 October 2026)
 
+## User decision: v7 applies only to `.ps` (15 October 2026)
+
+**Implementation checkpoint before this documentation update:** `4bacc4b612db05554a0be7b651e23e2e2c2df4cc`. Check current GitHub PR #5 HEAD before new writes.
+
+- Official Lean **4.35.0** is the unchanged semantic authority. `.ps` continues through PS0's selected v7 parser, local `PS0.Policy` and generated `#pscv_gate` on checked source.
+- **Unrestricted `.lean` route implemented:** `ps0 check file.lean`, `ps0 build file.lean Name out/`, and `ps0 lean <args>` now spawn the official native Lean executable from the selected Lean sysroot in a **separate process**, with no `PS0.Policy`/PSCV0 syntax profile injected. Windows chooses `lean.exe`. Arbitrary native Lean syntax and standard Lean compiler assumptions remain available.
+- Created `tests/lean/unrestricted.lean` containing native `axiom`, `unsafe`, `partial`, `sorry`, and effectful IO `#eval`. GitHub CI includes positive native-mode check/build/pass-through and compares output to unrestricted native Lean; `.ps` has additional axiom and partial negative emission tests alongside existing unsafe/sorry refusals.
+- `ps0 build file.lean` retains host publication-safety behavior (staging, refusal to overwrite) but **does not restrict source syntax, tactics, axioms, imports or effects**. For full native compiler options, `ps0 lean ...` forwards all arguments.
+- Detailed [SOURCE_PROFILE_BOUNDARY.md](SOURCE_PROFILE_BOUNDARY.md) documents separate source and assurance semantics, including eventual mixed `.ps` dependencies on unrestricted `.lean` modules, which must be audited **when incorporated in verified `.ps` emission**, not by restricting `.lean`.
+- **Language readiness remains 37% subjective `.ps` coverage, strict qualification 0/181 pending stable CI.** The native Lean route is not included in v7 feature scoring. All new regression results remain unqualified until a successful stable-4.35 CI run is inspected.
+
+**Next critical gate:** independently qualify compilation of both PS0 `.ps` and unrestricted `.lean` lanes, and fix any exact-commit CI errors; continue v7 grammar only on `.ps`. Preserve draft PR, original PSCVL and independent PSC0.
+
 ## Language-feature continuation — 15 October 2026
 
 **Latest inspected code checkpoint:** `47b3bca21fc8b8b55f9da766479cdc9baea4619e`. Read live HEAD before new writes.
