@@ -1,0 +1,4 @@
+-- This must be the PS0V1-CALL-ORDER source rule, not an unrelated
+-- elaboration error in a malformed test declaration.
+function addNative(x: Nat, y: Nat): Nat := { x + y }
+function bad(n: Nat): Nat := addNative(x := n, 2)

@@ -1,0 +1,5 @@
+-- PSCV0-INSTANCE-PRIO-01 does not allow arbitrary priority expressions.
+class FailPriority where {
+  value: Nat
+}
+instance (priority := high + 1) : FailPriority where { value := 1 }

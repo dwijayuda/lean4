@@ -1,0 +1,33 @@
+-- PS0 v1 standard declaration values are host expressions.
+-- Native Lean must check the resulting definitions and proof terms.
+function addNative(x: Nat, y: Nat): Nat := { x + y }
+function twicePlus(n: Nat): Nat := addNative(addNative(n, 1), 1)
+function fromNamed(n: Nat): Nat := addNative(y := 2, x := n)
+function fromTrailing(n: Nat): Nat := addNative(n, 2,)
+function partialAdd(n: Nat): Nat → Nat := addNative(n,)
+const fortyTwo: Nat := addNative(40, 2)
+const nestedValue: Nat := twicePlus(40)
+
+theorem standardHostNested: twicePlus 40 = 42 := by rfl
+theorem standardHostNamed: fromNamed 40 = 42 := by rfl
+theorem standardHostTrailing: fromTrailing 40 = 42 := by rfl
+theorem standardHostConst: fortyTwo = 42 := by rfl
+theorem standardHostNestedConst: nestedValue = 42 := by rfl
+theorem standardHostPartial: partialAdd 40 2 = 42 := by rfl
+
+-- Inferred and private aliases must use the same owned host-body category.
+function inferredSum(x: Nat, y: Nat) := addNative(x, y,)
+function inferredNullary() := { (42 : Nat) }
+private function privateTyped(x: Nat): Nat := inferredSum(x, 2,)
+private function privateInferred(x: Nat) := inferredSum(x, 2,)
+const inferredAnswer := inferredSum(40, 2,)
+private const privateTypedAnswer: Nat := inferredSum(40, 2,)
+private const privateInferredAnswer := inferredSum(40, 2,)
+
+theorem inferredHostFunction: inferredSum 40 2 = 42 := by rfl
+theorem inferredHostConst: inferredAnswer = 42 := by rfl
+theorem privateHostTyped: privateTyped 40 = 42 := by rfl
+theorem privateHostInferred: privateInferred 40 = 42 := by rfl
+theorem privateHostConst: privateTypedAnswer = 42 := by rfl
+theorem privateHostConstInferred: privateInferredAnswer = 42 := by rfl
+theorem inferredNullaryUnit: inferredNullary () = 42 := by rfl

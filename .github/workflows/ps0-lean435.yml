@@ -1,0 +1,240 @@
+name: PS0 v1 — Lean 4.35.0 language and backend
+
+on:
+  push:
+    branches: [feature/ps0-lean435-stable-v1]
+    paths:
+      - experiments/ps0/**
+      - .github/workflows/ps0-lean435.yml
+  pull_request:
+    branches: [experiment/pscv0-native-language-closure-v1]
+    paths:
+      - experiments/ps0/**
+      - .github/workflows/ps0-lean435.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ps0-v1-standalone
+  cancel-in-progress: true
+
+jobs:
+  standalone:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: experiments/ps0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/ps0
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: experiments/ps0
+          auto-config: false
+          build: true
+          use-github-cache: false
+      - name: Validate PS0 v1 normative source identity and coverage registry
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,hashlib
+          doc=Path('PS0_V1_LANGUAGE_REFERENCE.md').read_bytes()
+          sha=hashlib.sha1(f'blob {len(doc)}\0'.encode()+doc).hexdigest()
+          assert sha == 'c50203f8e4cb79b3e6680088a07c1d1e145b8f0b',sha
+          d=json.loads(Path('v1-coverage.json').read_text())
+          assert d['schema']=='ps0-v1-language-coverage/1'
+          assert d['normative']['gitBlob']==sha
+          assert d['counts']=={
+            'featureFamilies':100,'positive':64,'negative':47,
+            'concreteWitnesses':31,'total':242
+          }
+          assert len(d['featureFamilies'])==100
+          assert len(d['acceptanceCases'])==111
+          assert len(d['boundaryWitnesses'])==31
+          rows=d['featureFamilies']+d['acceptanceCases']+d['boundaryWitnesses']
+          for row in rows:
+            assert row['status'] in {'PENDING','PASS','FAIL'}
+            if row['status']=='PASS':
+              assert row.get('fixture') and row.get('qualifiedCommit')
+              assert row.get('ciRun')
+          completed=sum(row['status']=='PASS' for row in rows)
+          print(f'PS0V1_SOURCE_AND_REGISTRY: PASS; {completed}/242 qualified')
+          PY
+      - name: Compile standalone PS0 using exact Lean 4.35.0
+        run: |
+          set -euo pipefail
+          test ! -e ../pscv0-lean-native
+          lake build PS0 ps0
+          lake env lean --version | tee version.txt
+          grep -F '4.35.0' version.txt
+          lake exe ps0 environment > environment.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          actual=json.loads(Path('environment.json').read_text())
+          expected=json.loads(Path('PS0_STANDARD_ENV.json').read_text())
+          assert actual==expected
+          assert actual['schema']=='ps0-v1-environment/1'
+          print('PS0V1_ENVIRONMENT: PASS')
+          PY
+      - name: PS0 v1 native language capabilities
+        run: |
+          set -euo pipefail
+          for file in native_capabilities.ps registered_syntax.ps native_instance_value.ps io_diagnostics.ps development_sorry.ps; do
+            lake exe ps0 check "tests/v1/$file" > "v1-$file.log" 2>&1 || {
+              cat "v1-$file.log"
+              exit 1
+            }
+          done
+          lake exe ps0 check tests/v1/host_category_bridge.ps > host-category.log 2>&1 || {
+            cat host-category.log
+            exit 1
+          }
+          lake exe ps0 check tests/v1/host_postfix_calls.ps > host-calls.log 2>&1 || {
+            cat host-calls.log
+            exit 1
+          }
+          # Require intended lowerer diagnostics for malformed source calls.
+          for item in \
+            'host_call_named_then_positional.ps:PS0V1-CALL-ORDER' \
+            'host_call_duplicate_named.ps:PS0V1-CALL-NAMED'; do
+            file="${item%%:*}"
+            reason="${item#*:}"
+            if lake exe ps0 check "tests/v1/$file" > host-negative.log 2>&1; then
+              echo "PS0 accepted malformed host call: $file"
+              exit 1
+            fi
+            grep -F "$reason" host-negative.log || {
+              cat host-negative.log
+              exit 1
+            }
+          done
+          grep -F 'PS0V1_IO_OK' v1-io_diagnostics.ps.log
+          grep -F 'assumption policy NOT assessed' v1-native_capabilities.ps.log
+          echo 'PS0V1_NATIVE_LANGUAGE: PASS'
+      - name: PS0 v1 standard host declaration-body category acceptance
+        run: |
+          set -euo pipefail
+          lake exe ps0 check tests/v1/standard_host_declarations.ps > standard-host-positive.log 2>&1 || {
+            cat standard-host-positive.log
+            exit 1
+          }
+          # The typed function/const RHS is a PS-owned host expression.
+          for item in \
+            'standard_host_order_negative.ps:PS0V1-CALL-ORDER' \
+            'standard_host_duplicate_negative.ps:PS0V1-CALL-NAMED'; do
+            fixture="${item%%:*}"
+            reason="${item#*:}"
+            if lake exe ps0 check "tests/v1/$fixture" > standard-host-negative.log 2>&1; then
+              echo "PS0 accepted invalid standard host expression: $fixture"
+              exit 1
+            fi
+            grep -F "$reason" standard-host-negative.log || {
+              cat standard-host-negative.log
+              exit 1
+            }
+          done
+          if lake exe ps0 check tests/v1/standard_host_call_comma_negative.ps > standard-host-comma.log 2>&1; then
+            echo "PS0 accepted comma-only host application"
+            exit 1
+          fi
+          echo 'PS0V1_STANDARD_HOST_RHS: PASS'
+      - name: V1 explicit and implicit module headers
+        run: |
+          set -euo pipefail
+          lake exe ps0 module-header tests/v1/explicit_module.ps > explicit.json
+          lake exe ps0 module-header tests/headers/legacy_import.ps > implicit.json
+          python3 - <<'PY'
+          import json
+          explicit=json.load(open('explicit.json'))
+          implicit=json.load(open('implicit.json'))
+          assert explicit['is_module'] is True
+          assert explicit['implicit_module'] is False
+          assert implicit['is_module'] is True
+          assert implicit['implicit_module'] is True
+          assert implicit['imports'][0]['public'] is False
+          print('PS0V1_MODULE_HEADERS: PASS')
+          PY
+      - name: True native-modern .ps source checking and emission
+        run: |
+          set -euo pipefail
+          for file in implicit_public_module.ps explicit_private_module.ps; do
+            lake exe ps0 check "tests/v1/$file" > "native-$file.log" 2>&1 || {
+              cat "native-$file.log"
+              exit 1
+            }
+          done
+          lake exe ps0 build tests/v1/implicit_public_module.ps V1Implicit build/v1-implicit > implicit-build.log 2>&1 || {
+            cat implicit-build.log
+            exit 1
+          }
+          test -s build/v1-implicit/V1Implicit.olean
+          test -s build/v1-implicit/V1Implicit.c
+          lake exe ps0 build tests/v1/explicit_private_module.ps V1Explicit build/v1-explicit > explicit-build.log 2>&1 || {
+            cat explicit-build.log
+            exit 1
+          }
+          test -s build/v1-explicit/V1Explicit.olean
+          test -s build/v1-explicit/V1Explicit.c
+          # Valid bootstrap language must refuse this unavailable backend
+          # without violating its no-implicit-Init semantic contract.
+          if lake exe ps0 check tests/v1/prelude_implementation_pending.ps > prelude.log 2>&1; then
+            echo 'PS0 silently admitted a prelude with hidden Init'
+            exit 1
+          fi
+          grep -F 'PS0V1-PRELUDE-PENDING' prelude.log
+      - name: Unrestricted native Lean lane
+        run: |
+          set -euo pipefail
+          lake exe ps0 check tests/lean/unrestricted.lean > native.log 2>&1 || {
+            cat native.log
+            exit 1
+          }
+          grep -F 'PS0_LEAN_UNRESTRICTED_OK' native.log
+      - name: Small Lean-implemented JS backend and TypeScript/source maps
+        run: |
+          set -euo pipefail
+          lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat
+          test -s build/js-nat/NatMvp.js
+          test -s build/js-nat/NatMvp.d.ts
+          test -s build/js-nat/NatMvp.js.map
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          js=Path('build/js-nat/NatMvp.js').read_text()
+          ts=Path('build/js-nat/NatMvp.d.ts').read_text()
+          sm=json.loads(Path('build/js-nat/NatMvp.js.map').read_text())
+          assert sm['version']==3
+          assert sm['sources']==['tests/js/nat_mvp.ps']
+          assert sm['sourcesContent']==[Path('tests/js/nat_mvp.ps').read_text()]
+          assert len(sm['mappings'].split(';'))==len(js.splitlines())
+          assert 'export declare function add(' in ts
+          assert 'export declare const bigValue: bigint;' in ts
+          assert 'export declare const fromHostCall: bigint;' in ts
+          assert 'export declare function addTrailing(' in ts
+          print('PS0V1_JS_DTS_MAP: PASS')
+          PY
+          node --input-type=module -e '
+            import assert from "node:assert/strict";
+            import fs from "node:fs";
+            const bytes = fs.readFileSync("build/js-nat/NatMvp.js","base64");
+            const m = await import("data:text/javascript;base64,"+bytes);
+            assert.equal(m.add(9007199254740993n,11n),9007199254741004n);
+            assert.equal(m.multiply(6n,7n),42n);
+            assert.equal(m.subtract(2n,5n),0n);
+            assert.equal(m.clock(),42n);
+            assert.equal(m.computedValue,42n);
+            assert.equal(m.twice(11n),22n);
+            assert.equal(m.addTrailing(20n,22n),42n);
+            assert.equal(m.fromHostCall,42n);
+            assert.throws(()=>m.add(-1n,0n),TypeError);
+            console.log("PS0V1_JS_RUNTIME: PASS");
+          '
+          lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat-second
+          cmp build/js-nat/NatMvp.js build/js-nat-second/NatMvp.js
+          cmp build/js-nat/NatMvp.d.ts build/js-nat-second/NatMvp.d.ts
+          cmp build/js-nat/NatMvp.js.map build/js-nat-second/NatMvp.js.map

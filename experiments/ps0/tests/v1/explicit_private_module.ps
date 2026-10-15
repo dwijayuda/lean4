@@ -1,0 +1,5 @@
+-- PS0 v1: written module follows native visibility defaults.
+module
+import Init
+def privateByDefault : Nat := 42
+theorem privateByDefaultEq : privateByDefault = 42 := by rfl

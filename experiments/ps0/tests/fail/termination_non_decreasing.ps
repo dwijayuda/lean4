@@ -1,0 +1,6 @@
+-- A false WF measure must not emit a checked executable.
+function broken(n: Nat): Nat := {
+  broken(n)
+}
+termination_by n
+decreasing_by by { omega }

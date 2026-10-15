@@ -1,0 +1,58 @@
+name: PS0 v1 host-category component
+
+on:
+  push:
+    branches: [feature/ps0-lean435-stable-v1]
+    paths:
+      - experiments/ps0/PS0/HostCategories.lean
+      - experiments/ps0/tests/v1/host_*.ps
+      - experiments/ps0/tests/run-host-categories.sh
+      - experiments/ps0/lean-toolchain
+      - experiments/ps0/lakefile.toml
+      - .github/workflows/ps0-host-categories.yml
+  pull_request:
+    branches: [experiment/pscv0-native-language-closure-v1]
+    paths:
+      - experiments/ps0/PS0/HostCategories.lean
+      - experiments/ps0/tests/v1/host_*.ps
+      - experiments/ps0/tests/run-host-categories.sh
+      - experiments/ps0/lean-toolchain
+      - experiments/ps0/lakefile.toml
+      - .github/workflows/ps0-host-categories.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ps0-host-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  host-categories:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: experiments/ps0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/ps0
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: experiments/ps0
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+      - name: Build and qualify the host category component
+        run: bash tests/run-host-categories.sh
+      - name: Retain exact component diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps0-host-${{ github.sha }}-${{ github.run_id }}
+          path: experiments/ps0/build/host-categories/
+          if-no-files-found: warn

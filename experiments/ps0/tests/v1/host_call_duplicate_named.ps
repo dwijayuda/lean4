@@ -1,0 +1,6 @@
+-- PS0V1-CALL-NAMED: duplicate keyword argument is an error.
+macro "psApply " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  return ⟨lowered⟩
+def addNat (x y : Nat) : Nat := x + y
+#check psApply addNat(x := 20, x := 22)

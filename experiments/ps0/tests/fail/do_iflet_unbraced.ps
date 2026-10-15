@@ -1,0 +1,8 @@
+-- PSCV0-DO-IF-01: pattern-bound branch requires { ... }.
+function invalid(x: Option Nat): Id Nat := do {
+  if let .some n := x
+    return n
+  else {
+    return 0
+  }
+}

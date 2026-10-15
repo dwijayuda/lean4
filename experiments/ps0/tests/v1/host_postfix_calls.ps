@@ -1,0 +1,46 @@
+-- Explicit host-category extensions: semantic, AST and provenance probes.
+macro "psApply " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  return ⟨lowered⟩
+
+def addNat (x : Nat) (y : Nat) : Nat := x + y
+def twice (x : Nat) : Nat := x * 2
+def pairSum (p : Nat × Nat) : Nat := p.1 + p.2
+
+-- Parentheses bound the extension operand so the oracle's equality is
+-- not itself part of the captured host term.
+theorem hostTwoArgs : (psApply addNat(20, 22)) = 42 := by rfl
+theorem hostNested : (psApply addNat(twice(20), 2)) = 42 := by rfl
+theorem hostNamed : (psApply addNat(y := 22, x := 20)) = 42 := by rfl
+theorem hostTuple : (psApply pairSum((20, 22))) = 42 := by rfl
+theorem hostTrailing : (psApply addNat(20, 22,)) = 42 := by rfl
+theorem hostNamedTrailing : (psApply addNat(y := 22, x := 20,)) = 42 := by rfl
+theorem hostTupleTrailing : (psApply pairSum((20, 22),)) = 42 := by rfl
+theorem hostCommentInside : (psApply addNat(/- inside -/ 20, 22,)) = 42 := by rfl
+theorem hostPartial : (psApply addNat(20,)) 22 = 42 := by rfl
+
+-- Observe the raw host node before lowering, then check the native app's
+-- actual argument partition and complete original call span. A trailing
+-- comma must not create a second tuple/Unit/missing argument.
+macro "psHostArity " expected:num e:psTerm : term => do
+  unless e.raw.isOfKind ``ps0HostAdjacentCall do
+    Lean.Macro.throwError "PS0V1-TEST-HOST-SHAPE: expected raw host call"
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless lowered.isOfKind ``Lean.Parser.Term.app do
+    Lean.Macro.throwError "PS0V1-TEST-NATIVE-SHAPE: expected native application"
+  unless lowered[1].getArgs.size == expected.getNat do
+    Lean.Macro.throwError "PS0V1-TEST-ARITY: argument partition changed"
+  unless e.raw.getRange?.isSome do
+    Lean.Macro.throwError "PS0V1-TEST-ORIGIN: original source range missing"
+  unless lowered.getRange? == e.raw.getRange? do
+    Lean.Macro.throwError "PS0V1-TEST-ORIGIN: lowering lost the call source extent"
+  `(term| True)
+
+example : psHostArity 2 addNat(20, 22) := by trivial
+example : psHostArity 2 addNat(20, 22,) := by trivial
+example : psHostArity 1 pairSum((20, 22),) := by trivial
+example : psHostArity 1 addNat(20,) := by trivial
+
+-- Native quotations remain independently owned syntax data.
+def nativeQuotation : Lean.MacroM (Lean.TSyntax `term) :=
+  `(term| addNat 20 22)

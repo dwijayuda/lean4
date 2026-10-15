@@ -1,0 +1,16 @@
+function chooseNamed(x: Option Nat): Nat := {
+  match h : x with {
+    | .none => 0
+    | .some n => n
+  }
+}
+
+function chooseGeneralized(x: Option Nat): Nat := {
+  match (generalizing := true) x with {
+    | .none => 0
+    | .some n => n
+  }
+}
+
+theorem namedSome: chooseNamed(.some(9)) = 9 := by { rfl }
+theorem generalizedSome: chooseGeneralized(.some(9)) = 9 := by { rfl }

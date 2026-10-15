@@ -1,0 +1,5 @@
+-- Only function gets hidden Unit; instances never accept () binders.
+class EmptyInstanceExample where {
+  value: Nat
+}
+instance chosen() : EmptyInstanceExample where { value := 3 }

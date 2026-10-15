@@ -1,0 +1,6 @@
+.lake/
+.lake-packages/
+/out/
+/build/
+*.log
+*-environment.json
