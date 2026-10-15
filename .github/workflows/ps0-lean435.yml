@@ -344,6 +344,36 @@ jobs:
           assert sm["sourcesContent"]==[Path("tests/js/nat_mvp.ps").read_text()]
           assert len(sm["mappings"].split(";")) == len(js.splitlines())
           assert "sourceMappingURL=NatMvp.js.map" in js
+          # Decode VLQ rather than treating source maps as decorative JSON.
+          alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+          def decode_vlq(segment):
+              values=[]
+              shift=0
+              accum=0
+              for char in segment:
+                  digit=alphabet.index(char)
+                  accum |= (digit & 31) << shift
+                  if digit & 32:
+                      shift += 5
+                  else:
+                      values.append(-(accum >> 1) if accum & 1 else accum >> 1)
+                      accum=shift=0
+              assert accum == 0 and shift == 0
+              return values
+          original=Path("tests/js/nat_mvp.ps").read_text().splitlines()
+          orig_line=0
+          orig_col=0
+          for code, mapping in zip(js.splitlines(), sm["mappings"].split(";")):
+              if not mapping:
+                  continue
+              fields=decode_vlq(mapping)
+              assert len(fields)==4 and fields[:2]==[0,0],fields
+              orig_line+=fields[2]
+              orig_col+=fields[3]
+              assert 0 <= orig_line < len(original)
+              if code.startswith(("export const ", "export function ")):
+                  assert original[orig_line].lstrip().startswith(("const ", "function ")), (code,original[orig_line])
+                  assert original[orig_line][orig_col:].startswith(("const ", "function ")), (code,original[orig_line],orig_col)
           for name in ("add","multiply","subtract","clock","twice",
                        "differenceOfProducts","usingGlobal","clockPlus"):
               assert ("export declare function "+name+"(") in dts
