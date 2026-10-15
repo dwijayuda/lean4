@@ -34,7 +34,8 @@ syntax "{" ident ":" term "}" : pscvNonExplicitBinder
 syntax "⦃" ident ":" term "⦄" : pscvNonExplicitBinder
 syntax "[" ident ":" term "]" : pscvNonExplicitBinder
 
-private def explicitLeanBinders (bs : Array (TSyntax `pscvBinder)) :
+private def explicitLeanBinders (bs : Array (TSyntax `pscvBinder))
+    (nullaryFunction : Bool := false) :
     MacroM (Array (TSyntax ``Lean.Parser.Term.bracketedBinder)) := do
   let mut result := #[]
   for b in bs do
@@ -44,7 +45,7 @@ private def explicitLeanBinders (bs : Array (TSyntax `pscvBinder)) :
     | `(pscvBinder| $x:ident : $t:term) =>
         result := result.push (← `(bracketedBinder| ($x:ident : $t:term)))
     | _ => Macro.throwUnsupported
-  if bs.isEmpty then
+  if bs.isEmpty && nullaryFunction then
     -- Exact PSCV zero-source-parameter sugar: a required Unit binder,
     -- NOT a distinct JavaScript-style zero-arity function.
     result := result.push (← `(bracketedBinder| (_unit : Unit)))
@@ -67,7 +68,7 @@ private def nonExplicitLeanBinders (bs : Array (TSyntax `pscvNonExplicitBinder))
 
 /-- Comma-separated explicit binders on normal 'def' preserve Lean semantics. -/
 syntax (name := pscvDefinition)
-  "def " ident "(" pscvBinder,* ")" ":" term ":=" term : command
+  "def " ident "(" pscvBinder,+ ")" ":" term ":=" term : command
 
 macro_rules
   | `(def $f:ident ($[$bs:pscvBinder],*) : $result:term := $body:term) => do
@@ -77,7 +78,7 @@ macro_rules
 syntax (name := pscvFunction) "function " ident "(" pscvBinder,* ")" ":" term ":=" term : command
 macro_rules
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term := $body:term) => do
-    let binders ← explicitLeanBinders bs
+    let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term := $body:term)
 
 
@@ -95,7 +96,7 @@ macro_rules
   | `(private const $name:ident := $val:term) =>
     `(private def $name:ident := $val:term)
   | `(private function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term) => do
-    let binders ← explicitLeanBinders bs
+    let binders ← explicitLeanBinders bs true
     `(private def $f:ident $binders* : $ret:term := $body:term)
 
 /-- Local where definitions use the explicit PSCV0 def grammar and are
@@ -110,7 +111,7 @@ syntax (name := pscvFunctionWhere)
 macro_rules (kind := pscvFunctionWhere)
   | `(function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term
       where { $locals:pscvWhereDef* }) => do
-    let binders ← explicitLeanBinders bs
+    let binders ← explicitLeanBinders bs true
     let mut nativeLocals : Array (TSyntax ``Lean.Parser.Term.letRecDecl) := #[]
     for localStx in locals do
       match localStx with
@@ -127,7 +128,7 @@ macro_rules (kind := pscvFunctionWhere)
 
 /-- Theorem comma-binders are source-only sugar; Lean elaborates the same proof. -/
 syntax (name := pscvTheorem)
-  "theorem " ident "(" pscvBinder,* ")" ":" term ":=" term : command
+  "theorem " ident "(" pscvBinder,+ ")" ":" term ":=" term : command
 
 macro_rules
   | `(theorem $name:ident ($[$bs:pscvBinder],*) : $statement:term := $proof:term) => do
@@ -142,7 +143,7 @@ syntax (name := pscvImplicitFunction)
 macro_rules
   | `(function $f:ident $implicitBs:pscvNonExplicitBinder* ($[$bs:pscvBinder],*) : $result:term := $body:term) => do
     let imps ← nonExplicitLeanBinders implicitBs
-    let args ← explicitLeanBinders bs
+    let args ← explicitLeanBinders bs true
     `(def $f:ident $imps* $args* : $result:term := $body:term)
 
 /-- Contracted functions use the proof-producing intrinsic Lean 4.35
@@ -154,7 +155,7 @@ syntax (name := pscvFunctionContract)
 macro_rules
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       requires $pre:term ensures $rv:ident => $post:term := $body:term) => do
-    let binders ← explicitLeanBinders bs
+    let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term
         requires $pre:term
         ensures $rv:ident => $post:term := $body:term)
@@ -170,7 +171,7 @@ macro_rules (kind := pscvFunctionGivenContract)
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       given ($logical:ident : $logicTy:term)
       requires $pre:term ensures $rv:ident => $post:term := $body:term) => do
-    let binders ← explicitLeanBinders bs
+    let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term
         given ($logical:ident : $logicTy:term)
         requires $pre:term
@@ -185,7 +186,7 @@ syntax (name := pscvFunctionEffectContract)
 macro_rules (kind := pscvFunctionEffectContract)
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       requires $pre:basicFun ensures $post:basicFun := $body:term) => do
-    let binders ← explicitLeanBinders bs
+    let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term
         requires $pre:basicFun
         ensures $post:basicFun := $body:term)
@@ -198,6 +199,12 @@ syntax:max (name := pscvEmptyCall) term:max noWs "(" ")" : term
 def elabPscvEmptyCall : TermElab := fun stx expectedType? => do
   let f : Term := ⟨stx[0]⟩
   let fn ← elabTerm f none
+  -- Explicit empty-call punctuation is not a no-op on a non-callable value.
+  -- Lean elaborates the head and determines whether it has a Pi telescope.
+  let fnType ← whnf (← inferType fn)
+  match fnType with
+  | .forallE .. => pure ()
+  | _ => throwError "PSCV0-CALL-EMPTY: head is not callable"
   let applied ← elabAppArgs fn #[] #[] expectedType? false false
   let restType ← whnf (← inferType applied)
   match restType with
@@ -295,7 +302,7 @@ macro_rules (kind := pscvBracedMutual)
 /-- PSCV0 constructors preserve Lean's original positivity and recursor rules. -/
 declare_syntax_cat pscvConstructor
 syntax "| " ident ":" term : pscvConstructor
-syntax "| " ident "(" pscvBinder,* ")" ":" term : pscvConstructor
+syntax "| " ident "(" pscvBinder,+ ")" ":" term : pscvConstructor
 
 syntax (name := pscvBracedInductive)
   "inductive " ident " where " "{" pscvConstructor+ "}" : command
@@ -446,7 +453,7 @@ syntax (name := pscvFunctionEnsures)
 macro_rules
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       ensures $rv:ident => $post:term := $body:term) => do
-    let binders ← explicitLeanBinders bs
+    let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term
         ensures $rv:ident => $post:term := $body:term)
 
@@ -457,7 +464,7 @@ syntax (name := pscvFunctionRequires)
 macro_rules
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       requires $pre:term := $body:term) => do
-    let binders ← explicitLeanBinders bs
+    let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term
         requires $pre:term := $body:term)
 
