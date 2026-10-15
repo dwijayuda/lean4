@@ -1,5 +1,38 @@
 # PS0 — AI work state (15 October 2026)
 
+## JS backend compositional MVP hardening — 16 October 2026
+
+- Extended the Lean `NatExpr` IR with references to earlier public Nat
+  constants and direct, monomorphic, exact-arity calls to earlier
+  eligible Nat functions, including source-nullary functions.
+  Forward, recursive, higher-order and named/defaulted calls remain
+  explicitly unsupported rather than silently producing JS.
+- Refactored source checking to return the **actual Lean checked
+  Environment**. `build-js` reuses that session and verifies every
+  emitted IR export against its checked Core definition:
+  Nat constants have Core type Nat; functions have only Nat parameters
+  and Nat result, or Unit → Nat for source-nullary functions.
+- Nat BigInt subtraction now evaluates both operands exactly once.
+  The output module stem must be safe for JS/source-map publication.
+- CI exercises composed calls, large Nat references, nullary calls,
+  invalid-call refusals, TypeScript exports and true Source Map v3
+  by **decoding Base64 VLQ** and checking original declaration lines.
+- All backend implementation modules remain `.lean`. No authored
+  `.js`/`.mjs` backend source files were introduced; Node is only
+  used by CI to test generated runtime output.
+- **Qualification still pending:** no Lean/Lake executable is installed
+  in the current container, the container cannot fetch a toolchain
+  over the network, and GitHub has not exposed an exact-commit CI
+  result. Do not mark this MVP compiled, passing or verified.
+- Estimated language feature readiness remains **41%**; recorded strict
+  PSCV0 v7 qualified requirements remain **0/181**. JS-backend
+  acceptance is separate from v7 language-feature conformance.
+
+**Next:** compile with official Lean 4.35.0 and fix any exact error;
+execute the Node/source-map/type-declaration CI checks, qualify the
+committed artifacts, and only then expand to Bool/ADT/module/effects
+using typed IR cases rather than source-text heuristics.
+
 ## Lean-native JS backend MVP — 15 October 2026
 
 - **User request:** create the *smallest useful* JS backend in **Lean**,
