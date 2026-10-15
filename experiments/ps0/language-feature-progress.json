@@ -12,12 +12,12 @@
   },
   "scope": "20 equally weighted v7 language-semantic families including libraries, import semantics, and mandatory source assurance; excludes native backend optimization, IDE polish and standalone packaging.",
   "score": {
-    "sum": 37,
+    "sum": 38,
     "max": 100,
-    "estimatedPercent": 37,
+    "estimatedPercent": 38,
     "qualifiedPercent": 0
   },
-  "qualification": "No v7 family has a complete, exact-commit PS0 stable CI receipt. Language-readiness 37% is a subjective planning metric, not conformance pass rate.",
+  "qualification": "37%→38% is an engineering reassessment of the binder-family implementation; NOT an observed exact-commit pass. Strict 0/181 v7 qualification remains 0%.",
   "families": [
     {
       "id": "lexical-grammar",
@@ -48,14 +48,17 @@
     {
       "id": "binders",
       "name": "Explicit, implicit, instance and dependent binder telescopes",
-      "score": 2,
+      "score": 3,
       "maxScore": 5,
-      "implementationStatus": "PARTIAL",
+      "implementationStatus": "COHERENT_SUBSET",
       "stableCiQualified": false,
-      "rationale": "Comma/implicit binder bridges exist; full interleaved groups and source category ownership incomplete",
+      "rationale": "PS0 now models ordered explicit comma-groups interleaved with implicit, strict-implicit and anonymous/named typeclass binders in native Lean declarations; native fallback def/theorem adjacency is also checked. Exact stable CI and full v7 grammar closure remain missing.",
       "sourceEvidence": [
         "PS0/Syntax.lean",
-        "tests/pass/basic.ps"
+        "tests/pass/basic.ps",
+        "tests/pass/interleaved_binders.ps",
+        "tests/fail/adjacent_explicit_groups.ps",
+        "tests/fail/native_def_adjacent_groups.ps"
       ]
     },
     {
