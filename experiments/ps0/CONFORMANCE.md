@@ -86,3 +86,39 @@ refusal of unsupported constructs and runtime semantics.
 See [PS0_V1_IMPLEMENTATION_PLAN.md](PS0_V1_IMPLEMENTATION_PLAN.md)
 for remaining architecture gates and [AI_WORK_STATE.md](AI_WORK_STATE.md)
 for the latest development handoff.
+
+
+## PS0 v1 host psTerm postfix-call extension — 16 October 2026
+
+Implemented a first PS-owned, **nonempty identifier-head** adjacent-call
+source production in `PS0/HostCategories.lean`. It uses Lean's
+`noWs` lexical/position-sensitive parser to distinguish a PS postfix
+from a spaced native application. The separate `psCallArg` category
+captures positional and named host operands.
+
+The explicit `PS0.Syntax.lower` bridge lowers this source category
+recursively to a native `Lean.Parser.Term.app` node, preserving the
+argument tree. Named parameters use the genuine
+`Lean.Parser.Term.namedArgument` category and reject duplicate names
+or positional arguments after named parameters. No source-string
+transpilation, name resolution or typechecker fork was added.
+Native subtrees remain unmodified and other native, quotation and
+DSL categories retain their own syntax ownership.
+
+**Bounded scope:** identifier-head calls with nonempty argument lists
+in **explicit host-category extension operands**. Full standard
+declaration/tactic/do `psTerm` operand wiring, generalized callable
+postfix heads, source-nullary completion, optional trailing commas,
+parser ambiguity reconciliation and source-provenance verification
+remain pending. Existing native term macros may support some source
+forms but do not qualify the v1 host-category contract by themselves.
+
+Candidate tests: `tests/v1/host_postfix_calls.ps` exercises
+two-argument, nested, tuple-preserving and named calls, and an
+extension verifying it receives the raw host-call syntax before
+lowering. Separate negative fixtures assert the expected
+`PS0V1-CALL-ORDER` and `PS0V1-CALL-NAMED` diagnostic categories.
+Five relevant `v1-coverage.json` cases have new candidate links;
+all remain `PENDING` until actually qualified by pinned Lean CI.
+
+The canonical normative PS0 v1 R2 document remains unchanged.
