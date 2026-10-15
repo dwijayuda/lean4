@@ -1,12 +1,11 @@
 name = "ps0"
-version = "0.1.0"
+version = "0.2.0"
 defaultTargets = ["ps0"]
 
-# Reuse the existing Lean-native PSCV0 grammar, macros, and verification gate.
-# Do not import or modify the independent pskernel PSC0 compiler.
-[[require]]
-name = "pscv0_lean_native"
-path = "../pscv0-lean-native"
+# All PSCV0 grammar, macros, effects, policy and Standard registration are
+# authored in this package; it has no sibling Lake-package dependency.
+[[lean_lib]]
+name = "PS0"
 
 [[lean_exe]]
 name = "ps0"
