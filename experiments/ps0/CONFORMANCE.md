@@ -112,3 +112,29 @@ rather than implementing those features as ProofScript capabilities.
 **Evidence status:** PS0-owned positive, negative and independent native-Lean reference fixtures and CI definitions are committed. They are **unqualified** until an observed stable-Lean exact-commit CI success; normalized expression/type equivalence for all selected binder permutations is still open. `v7-coverage.json` stores candidates without assigning PASS.
 
 **Readiness rubric:** binder family 3/5 (formerly 2/5), estimated overall `.ps` readiness **38%**. The strict v7 acceptance ledger remains **0/181 CI-qualified**, not 38% tested/proven. `ps0 lean` and the `check/build *.lean` routes continue using official Lean without PSCV0 source restrictions.
+
+
+## PSCV0-TERM-01 — measured recursion family (unqualified implementation)
+
+Official pinned Lean 4.35.0 provides `Termination.terminationBy`,
+`Termination.decreasingBy` and its native termination elaborator. PS0
+has added `function f(n: Nat): Nat := body termination_by n` and the v7
+`decreasing_by by { omega }` proof wrapper. The source wrapper lowers
+to native Lean termination hints; Lean owns the actual decrease proof.
+No new recursion axiom or evaluator is introduced.
+
+PS0 source admission now refuses native-only `termination_by structural`,
+`termination_by?`, the other native fixpoint hints and `decreasing_by`
+without a preceding measure. These refusals affect only `.ps`, never
+ordinary `.lean` sources. Positive and negative tests are under
+`tests/pass/termination_total.ps` and `tests/fail/termination_*.ps`.
+Native Lean comparison cases are in `tests/lean/termination_reference.lean`
+and `tests/lean/termination_native_extensions.lean`.
+
+**Qualification:** no exact-commit green Lean 4.35.0 PS0 CI run
+verified. The feature syntax, source refusals and CI definitions are
+committed but their successful compilation remains unconfirmed.
+Engineering readiness **39%** (was 38%; recursion family 2/5 → 3/5),
+strict v7 conformance **0/181 qualified**. Complete mutual/local
+recursion, all termination suffix variants selected by v7, and full
+Lean-Core correspondence remain open.
