@@ -373,6 +373,12 @@ jobs:
             fi
             test ! -e build/js-refused
           done
+          # Deterministic backend: identical checked .ps and module identity
+          # must produce identical output bytes even in a fresh output dir.
+          lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat-second
+          cmp build/js-nat/NatMvp.js build/js-nat-second/NatMvp.js
+          cmp build/js-nat/NatMvp.d.ts build/js-nat-second/NatMvp.d.ts
+          cmp build/js-nat/NatMvp.js.map build/js-nat-second/NatMvp.js.map
           sha256sum build/js-nat/NatMvp.js build/js-nat/NatMvp.d.ts build/js-nat/NatMvp.js.map > js-published.sha256
           if lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat > js-overwrite.log 2>&1; then
             echo 'JS backend overwrote an existing artifact bundle'
