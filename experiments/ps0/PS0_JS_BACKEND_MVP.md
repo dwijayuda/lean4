@@ -25,7 +25,7 @@ Exports supported:
 
 - `const x: Nat := expression`
 - `function f(x: Nat, y: Nat): Nat := expression`
-- `function f(): Nat := expression` (selected v7 Unit nullary call)
+- `function f(): Nat := expression` (selected PS0 v1 Unit nullary call)
 - Nat literals, parameters, parentheses, one-term braces and Nat `+`,
   `*`, `-` (saturating subtraction); exact-arity calls to earlier eligible
   Nat functions, source-nullary calls, and references to earlier Nat constants
@@ -94,6 +94,6 @@ TypeScript declaration shape, Source Map v3 integrity, unsupported
 source rejection, reproducible output and safe publication.
 
 No generated `.js`/`.mjs` implementation sources are checked in.
-The existing `language-feature-progress.json` readiness score is for
-PSCV0 v7 language features, not backends: adding this JS backend alone
+The existing `v1-coverage.json` readiness score is for
+PSCV0 PS0 v1 language features, not backends: adding this JS backend alone
 must not inflate that percentage.
