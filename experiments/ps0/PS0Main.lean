@@ -130,7 +130,8 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
     return 2
   let parent := out.parent.getD "."
   IO.FS.createDirAll parent
-  let stage := parent / s!".ps0-stage-{moduleName}-{← IO.monoMsNow}"
+  let nonce ← IO.monoMsNow
+  let stage := parent / s!".ps0-stage-{moduleName}-{nonce}"
   IO.FS.createDir stage
   try
     let moduleId := Name.mkSimple moduleName
