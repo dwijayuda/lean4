@@ -1457,7 +1457,9 @@
       "fixture": null,
       "expectedDiagnostic": null,
       "qualifiedCommit": null,
-      "qualifiedCiRun": null
+      "qualifiedCiRun": null,
+      "fixtureCandidate": "tests/fail/do_iflet_arrow.ps",
+      "fixtureCandidateStatus": "NOT_QUALIFIED"
     },
     {
       "id": "P-INSTANCE-PRIO-NAMED",
