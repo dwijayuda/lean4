@@ -12,12 +12,12 @@
   },
   "scope": "20 equally weighted v7 language-semantic families including libraries, import semantics, and mandatory source assurance; excludes native backend optimization, IDE polish and standalone packaging.",
   "score": {
-    "sum": 40,
+    "sum": 41,
     "max": 100,
-    "estimatedPercent": 40,
+    "estimatedPercent": 41,
     "qualifiedPercent": 0
   },
-  "qualification": "Implementation readiness remains subjective 40/100. Priority source selection/ordering candidate tests deepen one family but do not close missing registry or produce CI receipts; strict 0/181 qualification remains unchanged.",
+  "qualification": "41% is an engineering estimate after implementing the v7 implicit-module parsing and metadata foundation (project-modules 0/5 to 1/5). Public-name/hidden-body lowering and multi-module builds remain missing; 0/181 normative requirements have exact-commit CI PASS receipts.",
   "families": [
     {
       "id": "lexical-grammar",
@@ -91,14 +91,16 @@
     {
       "id": "project-modules",
       "name": "PS modules, imports and re-exports",
-      "score": 0,
+      "score": 1,
       "maxScore": 5,
-      "implementationStatus": "MISSING",
+      "implementationStatus": "FOUNDATION_ONLY",
       "stableCiQualified": false,
-      "rationale": "PS project headers and public imports correctly fail closed; real graph and v7 visibility not implemented",
+      "rationale": "PS0 now parses v7 source as an implicit native Lean module; module-header CLI exposes accurate private/plain versus exported/public and meta/import-all flags from Lean's pinned header AST. Explicit source module headers are refused; native emission with unresolved module imports is blocked. Actual module graph, default-public name/hidden-body semantics and multi-module compilation are still missing.",
       "sourceEvidence": [
         "PS0Main.lean",
-        "tests/fail/public_import_pending.ps"
+        "tests/headers/modern_imports.ps",
+        "tests/headers/legacy_import.ps",
+        "tests/headers/invalid_public_legacy.ps"
       ]
     },
     {
