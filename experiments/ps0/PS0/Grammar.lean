@@ -167,6 +167,8 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
     else if k == "Lean.Parser.Command.instance" &&
         s[5].isOfKind ``Lean.Parser.Command.declValSimple then
       some "PSCV0-INSTANCE-VALUE-REFUSED: use selected instance where fields"
+    else if kind == ``Lean.Parser.Term.doIfLetBind then
+      some "PSCV0-DO-IFLET-ARROW: v7 Standard admits :=, not a monadic left-arrow condition"
     else if kind == ``Lean.Parser.Term.doTry && containsUnbracedDoSeq s then
       some "PSCV0-TRY-BRACES: try, catch and finally bodies must use { ... }"
     else if kind == ``Lean.cdot && hasAsciiDotToken s[0] then
