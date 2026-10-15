@@ -125,6 +125,33 @@ source-owned and native declaration parsing. This raises the binder family's
 **estimated readiness from 2/5 to 3/5**, but does not record any new
 CI-qualified v7 requirements: a stable exact-commit CI receipt is pending.
 
+## Implicit PSCV0 v7 module headers (PS0-03 foundation)
+
+The v7 source specification does **not** require users to write `module`
+in a `.ps` file: every `.ps` file is **implicitly** a native Lean module.
+`import M` is module-private; `public import M` exports the public
+scope of M. To avoid Lean's *legacy* transitive-import semantics, PS0
+uses a synthetic `module\n` **only in the official Lean header parser**
+and subtracts that prefix from the source byte offset before any body
+admission. Literal `module` in a `.ps` source is refused.
+
+```sh
+lake exe ps0 module-header tests/headers/modern_imports.ps
+```
+
+This returns an inspectable JSON of Lean's actual import flags
+(`isExported`, `isMeta`, `importAll`) and marks
+`"compile_ready": false`. Positive inspection of `public import`
+**does not** authorize compilation: public names, hidden definition
+bodies, project graph imports and deterministic environment identity
+are still pending. In particular, `ps0 build` now rejects `.ps`
+source modules with imports rather than accidentally publishing
+legacy Lean re-export behavior. Ordinary `.lean` remains unrestricted.
+
+Tests cover plain/private and exported/public import flags, meta
+classification, forbidden literal module headers, and UTF-8 source
+body boundaries. No exact-commit stable Lean CI receipt is available.
+
 ## Braced v7 instance declarations
 
 The source profile now adapts selected `instance : C where { ... }` and
@@ -145,7 +172,7 @@ remain pending.
 
 ## Language-feature completion estimate (October 15, 2026)
 
-PS0 reports **40% estimated v7 language-feature readiness** across
+PS0 reports **41% estimated v7 language-feature readiness** across
 20 equally weighted source/semantic feature families. This is a subjective,
 evidence-linked implementation-readiness rubric, **not** measured code coverage
 or language acceptance. Strict normative v7 qualification remains
@@ -155,7 +182,7 @@ per-case evidence are not available.
 The breakdown is: source/declarations/calls/scopes **52% (13/25)**;
 types/data/conditionals/patterns/recursion **46% (16/35)**;
 proofs/do/contracts/effects **40% (8/20)**; and modules/selected libraries/
-environment/assurance **15% (3/20)**.
+environment/assurance **20% (4/20)**.
 
 See [language-feature-progress.json](language-feature-progress.json) for
 the per-family score and grounded code paths. PS0 CI executes
