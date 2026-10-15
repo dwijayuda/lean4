@@ -17,7 +17,7 @@
     "estimatedPercent": 40,
     "qualifiedPercent": 0
   },
-  "qualification": "Engineering readiness estimate 40% (class/instance source family 2→3/5). Full stable Lean CI and all 181 normative qualification IDs still lack PASS evidence. No score credit from unrestricted .lean.",
+  "qualification": "Implementation readiness remains subjective 40/100. Priority source selection/ordering candidate tests deepen one family but do not close missing registry or produce CI receipts; strict 0/181 qualification remains unchanged.",
   "families": [
     {
       "id": "lexical-grammar",
@@ -159,13 +159,17 @@
       "maxScore": 5,
       "implementationStatus": "COHERENT_SUBSET",
       "stableCiQualified": false,
-      "rationale": "PS0 now owns class structure and selected braced named/anonymous instance sources, enforces real record-initializer fields before macros run, refuses native Lean instance value/unbraced forms in .ps, and lowers to official Lean class/instance elaboration. Full v7 instance binder telescopes, priority names/numeric priorities, handler manifest and exact stable CI remain unfinished.",
+      "rationale": "PS0 now owns braced named/anonymous and parametric instance syntax with ordered binders plus a finite v7 source priority category (low/mid/default/high or decimal) mapped to Lean native prio. Candidate tests include overlapping high-vs-low priority semantics and exact negative instance-header/priority cases. Full handler/priority/instance manifest, method field grammar and green Lean 4.35 CI remain open.",
       "sourceEvidence": [
         "PS0/Syntax.lean",
         "PS0/Grammar.lean",
         "tests/pass/instance_braced_fields.ps",
         "tests/fail/instance_unbraced_fields.ps",
-        "tests/lean/instance_reference.lean"
+        "tests/lean/instance_reference.lean",
+        "tests/pass/instance_priority.ps",
+        "tests/pass/instance_priority_order.ps",
+        "tests/fail/instance_priority_expression.ps",
+        "tests/lean/instance_priority_order_reference.lean"
       ]
     },
     {
