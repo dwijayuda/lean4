@@ -28,24 +28,29 @@ private def approvedSource (src filename : String) :
     IO (Except String (Array Import × String)) := do
   let inputCtx := Parser.mkInputContext src filename
   let (header, state, messages) ← Parser.parseHeader inputCtx
-  if messages.hasErrors then
-    return .error "invalid Lean import header"
-  if Lean.Elab.HeaderSyntax.isModule header then
-    return .error "PSCV0-MODULE-HEADER-PENDING: v7 module exposure not implemented"
-  -- A source-level public import needs v7's explicit module/public exposure
-  -- translation. Lean treats all imports in legacy modules as exported, so
-  -- inspecting Import.isExported alone cannot distinguish the written forms.
+  -- Diagnose the concrete source header AST *before* turning Lean's
+  -- module-system validation errors into a generic header error.
+  -- In particular, pinned Lean rejects public/meta/import-all directives
+  -- without a 'module' header; the v7 diagnostic must remain specific.
   match header with
   | `(Parser.Module.header| $[module%$moduleTk]? $[prelude%$preludeTk]? $importStx*) =>
+    if moduleTk.isSome then
+      return .error "PSCV0-MODULE-HEADER-PENDING: v7 public-name and hidden-body semantics not implemented"
     if preludeTk.isSome then
       return .error "PSCV0-MODULE-PRELUDE-REFUSED: source cannot bypass selected Standard"
     for imp in importStx do
       match imp with
       | `(Parser.Module.import| $[public%$publicTk]? $[meta%$metaTk]? import $[all%$allTk]? $name) =>
         if publicTk.isSome then
-          return .error "PSCV0-MODULE-PUBLIC-IMPORT-PENDING"
+          return .error "PSCV0-MODULE-PUBLIC-IMPORT-PENDING: requires v7 module semantics"
+        if metaTk.isSome then
+          return .error s!"PSCV0-ENV-META-IMPORT-REFUSED: {name.getId}"
+        if allTk.isSome then
+          return .error s!"PSCV0-ENV-IMPORT-ALL-REFUSED: {name.getId}"
       | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
   | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
+  if messages.hasErrors then
+    return .error "PSCV0-MODULE-HEADER-MALFORMED: official Lean parser rejected source header"
   let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
   for imported in imports do
     if imported.isMeta then
