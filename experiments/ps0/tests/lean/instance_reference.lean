@@ -33,4 +33,4 @@ instance selected {α : Type} : IdentityBox α where
   identity := fun x => x
 
 theorem defaultBoxNat : (inferInstance : DefaultBox Nat).fallback = 0 := by rfl
-theorem identityBoxNat : selected.identity 4 = 4 := by rfl
+theorem identityBoxNat : (selected : IdentityBox Nat).identity 4 = 4 := by rfl
