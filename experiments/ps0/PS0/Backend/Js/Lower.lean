@@ -83,6 +83,33 @@ private partial def lowerExpr (locals : Array String)
   | _ =>
       throw s!"PS0-JS-EXPR: unsupported Nat expression syntax {e.raw.getKind}"
 
+/-- The normal PS0 v1 typed function/const body is psTerm, not merely a
+    native Lean term. The Nat backend has an explicit, closed IR contract:
+    only native Nat expressions and exact-arity calls to earlier Nat functions
+    are eligible. This does not rewrite or trust arbitrary PS syntax. -/
+private partial def lowerHostExpr (locals : Array String)
+    (previous : Array Decl) (e : TSyntax `psTerm) :
+    Except String NatExpr := do
+  match e with
+  | `(psTerm| $native:term) =>
+      lowerExpr locals previous native
+  | `(psTerm| $head:ident($[$args:psCallArg],*)) =>
+      let name := head.getId.toString
+      let some decl := findPrevious previous name
+        | throw s!"PS0-JS-CALL: unresolved or forward function {name}"
+      if decl.isConst || decl.params.size != args.size then
+        throw s!"PS0-JS-CALL: {name} has incompatible Nat argument arity"
+      let mut lowered : Array NatExpr := #[]
+      for arg in args do
+        match arg with
+        | `(psCallArg| $v:psTerm) =>
+            lowered := lowered.push (← lowerHostExpr locals previous v)
+        | _ =>
+            throw "PS0-JS-CALL: named/defaulted host arguments are not yet supported"
+      return .call name lowered
+  | _ =>
+      throw s!"PS0-JS-EXPR: unsupported host expression kind {e.raw.getKind}"
+
 private def lowerBinder (b : TSyntax `pscvBinder) : Except String String := do
   match b with
   | `(pscvBinder| $n:ident : $t:term) =>
@@ -114,6 +141,21 @@ private def lowerCommand (input : Parser.InputContext) (cmd : Syntax)
     Except String Decl := do
   let origin ← declOrigin input cmd
   match cmd with
+  | `(command| const $n:ident : $ty:term := $body:psTerm) =>
+      unless isNatType ty do
+        throw "PS0-JS-TYPE: MVP only exports explicitly typed Nat constants"
+      let name ← checkedName n
+      return { name, body := (← lowerHostExpr #[] previous body), isConst := true, origin }
+  | `(command| function $n:ident ($[$bs:pscvBinder],*) :
+      $ty:term := $body:psTerm) =>
+      unless isNatType ty do
+        throw "PS0-JS-TYPE: MVP only exports functions returning Nat"
+      let name ← checkedName n
+      let params ← lowerParams bs
+      return {
+        name, params, body := (← lowerHostExpr params previous body),
+        isConst := false, origin
+      }
   | `(command| const $n:ident : $ty:term := $body:term) =>
       unless isNatType ty do
         throw "PS0-JS-TYPE: MVP only exports explicitly typed Nat constants"
