@@ -91,6 +91,17 @@ jobs:
             exit 1
           fi
           grep -F "PSCV0-CALL-EMPTY" empty.log
+          for pair in \
+            'bodyless_opaque.ps:PSCV0-OPAQUE-BODY-REQUIRED' \
+            'value_form_instance.ps:PSCV0-INSTANCE-VALUE-REFUSED'; do
+            fixture="${pair%%:*}"
+            diagnostic="${pair#*:}"
+            if lake exe ps0 check "tests/fail/$fixture" > declaration.log 2>&1; then
+              cat declaration.log
+              exit 1
+            fi
+            grep -F "$diagnostic" declaration.log
+          done
           # Each rejection must be for the claimed v7 language-policy rule.
           for pair in \
             'public_import_pending.ps:PSCV0-MODULE-PUBLIC-IMPORT-PENDING' \
