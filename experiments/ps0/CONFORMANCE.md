@@ -31,6 +31,19 @@ The original `experiments/pscv0-lean-native` experiment was restored to its RC4 
 
 **New conformance regression cases:** `tests/fail/noncallable_empty.ps` must reject a Nat value used as `answer()`; `tests/fail/def_nullary.ps` must reject source `def name()`. `tests/pass/unit_alias.ps` checks definitionally Unit empty calls and `default_empty.ps` checks optional parameter completion. All new cases must pass exact native Lean stable CI before being considered qualified.
 
+
+## New PS0-00/PS0-01 implementation slice — 15 October 2026
+
+**Implementation state: committed, exact-commit stable Lean CI not yet observed.**
+
+- The native `build` entry now reads `.ps` bytes once and performs **one full Lean elaboration** via the very `runFrontend` that controls C and olean emission. The source validator still runs first, but no second check-only Lean elaboration precedes emission.
+- The generated native C and `.olean` are placed in a newly created sibling staging directory, then committed as a single directory rename into a **previously absent** destination. Failure during Lean elaboration, proof policy, or C emission must leave no final directory. Existing published bundles are rejected rather than overwritten; CI compares their SHA-256 digests after an attempted overwrite.
+- Module policy now inspects actual pinned `Lean.Parser.Module` header AST, rather than relying solely on imported module flags: `module`, `prelude` and `public import` explicitly refuse until PS0-03; `meta import`, `import all` and unapproved modules refuse by their corresponding environment rule.
+- `Grammar.forbiddenSyntax` now rejects source `opaque` without a checked value and Lean value-form `instance : T := value` before elaboration, in keeping with the v7 selected grammar.
+- CI has exact-reason negative fixtures for source-module/import guards, bodyless opaque, instance value form, Unicode proof bullet, typed-error braces and non-callable `f()`. The native harness checks a nullary Unit → Nat correspondence with an actual Lean `rfl` proof and runs the compiled result.
+
+**Still open:** source code to generated Lean correspondence for all v7 categories; complete environment/module/scope metadata; verified `f.spec`/effect/erasure closure; origin-preserving diagnostics; imported assumption-policy closure; multi-module checked graph; signed/reproducible output provenance; proof of native compiler/runtime preservation; and green stable CI at the current PR HEAD. A same-filesystem directory rename prevents partially *published* C/olean files in the no-concurrent-mutation case, but is not yet a complete hardened/crash-recovery build protocol.
+
 ## Current milestone gates
 
 - [ ] Stable 4.35.0 PS0 native build and checked CI for this exact HEAD.
