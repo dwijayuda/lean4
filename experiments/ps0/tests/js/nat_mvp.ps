@@ -4,3 +4,10 @@ function add(x: Nat, y: Nat): Nat := { x + y }
 function multiply(x: Nat, y: Nat): Nat := { x * y }
 function subtract(x: Nat, y: Nat): Nat := { x - y }
 function clock(): Nat := { 42 }
+function twice(x: Nat): Nat := { add(x, x) }
+function differenceOfProducts(x: Nat, y: Nat): Nat := {
+  subtract(multiply(x, y), add(x, y))
+}
+function usingGlobal(x: Nat): Nat := { x + bigValue }
+function clockPlus(x: Nat): Nat := { add(clock(), x) }
+const computedValue: Nat := multiply(6, 7)
