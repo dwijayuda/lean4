@@ -1,8 +1,8 @@
 {
   "schema": "pscv0-standard-env/1",
   "status": "provisional-module-allowlist-not-complete-semantic-snapshot",
-  "lean_commit": "c29b6dda4f7c20e3eeaa717c4e565663c5cfa364",
-  "lean_version": "4.35.0-rc4",
+  "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+  "lean_version": "4.35.0",
   "allowed_imports": [
     "Std",
     "Init.Data.List",
