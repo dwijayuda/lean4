@@ -1,0 +1,16 @@
+-- PS0 v1 standard declaration values are host expressions.
+-- Native Lean must check the resulting definitions and proof terms.
+function addNative(x: Nat, y: Nat): Nat := { x + y }
+function twicePlus(n: Nat): Nat := addNative(addNative(n, 1), 1)
+function fromNamed(n: Nat): Nat := addNative(y := 2, x := n)
+function fromTrailing(n: Nat): Nat := addNative(n, 2,)
+function partialAdd(n: Nat): Nat → Nat := addNative(n,)
+const fortyTwo: Nat := addNative(40, 2)
+const nestedValue: Nat := twicePlus(40)
+
+theorem standardHostNested: twicePlus 40 = 42 := by rfl
+theorem standardHostNamed: fromNamed 40 = 42 := by rfl
+theorem standardHostTrailing: fromTrailing 40 = 42 := by rfl
+theorem standardHostConst: fortyTwo = 42 := by rfl
+theorem standardHostNestedConst: nestedValue = 42 := by rfl
+theorem standardHostPartial: partialAdd 40 2 = 42 := by rfl
