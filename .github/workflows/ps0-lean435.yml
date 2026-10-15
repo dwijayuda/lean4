@@ -1,17 +1,15 @@
-name: PS0 Lean 4.35.0 stable native proof frontend
+name: PS0 standalone Lean 4.35 stable native frontend
 
 on:
   push:
     branches: [feature/ps0-lean435-stable-v1]
     paths:
       - experiments/ps0/**
-      - experiments/pscv0-lean-native/**
       - .github/workflows/ps0-lean435.yml
   pull_request:
     branches: [experiment/pscv0-native-language-closure-v1]
     paths:
       - experiments/ps0/**
-      - experiments/pscv0-lean-native/**
       - .github/workflows/ps0-lean435.yml
   workflow_dispatch:
 
@@ -23,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lean-backed:
+  standalone:
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -31,19 +29,22 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          sparse-checkout: |
-            experiments/ps0
-            experiments/pscv0-lean-native
+          sparse-checkout: experiments/ps0
       - uses: leanprover/lean-action@f061402b660e0c34644504b324e830f2991d4865
         with:
           lake-package-directory: experiments/ps0
           auto-config: false
           build: true
           use-github-cache: false
-      - name: Compile PS0 and assert exact stable Lean pin
+      - name: Prove PS0 is self-contained and compile exact Lean
         run: |
           set -euo pipefail
-          lake build ps0
+          test ! -e ../pscv0-lean-native
+          if grep -R -E '^import PSCVL\.|^\[\[require\]\]' PS0 PS0.lean PS0Main.lean lakefile.toml; then
+            echo "PS0 standalone source unexpectedly depends on PSCVL"
+            exit 1
+          fi
+          lake build PS0 ps0
           lake env lean --version | tee lean-version.txt
           grep -F '4.35.0' lean-version.txt
           lake exe ps0 environment > stable-env.json
@@ -51,43 +52,62 @@ jobs:
           import json
           from pathlib import Path
           actual=json.loads(Path("stable-env.json").read_text())
-          expected=json.loads(Path("../pscv0-lean-native/PSCV0_STANDARD_ENV.json").read_text())
-          assert actual == expected, (actual, expected)
+          expected=json.loads(Path("PS0_STANDARD_ENV.json").read_text())
+          assert actual==expected, (actual,expected)
           assert actual["lean_commit"]=="eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
           assert actual["lean_version"]=="4.35.0"
-          print("PS0_PIN_AND_SELECTED_ENV: PASS")
+          print("PS0_STANDALONE_ENV: PASS")
           PY
-      - name: Check PS0 and inherited positive PSCV0 programs
+      - name: Check PS0 owned positive source cases
         run: |
           set -euo pipefail
-          for file in tests/pass/*.ps ../pscv0-lean-native/tests/pass/*.ps; do
+          for file in tests/pass/*.ps; do
+            echo "PS0_ACCEPT:$file"
             lake exe ps0 check "$file" > accepted.log 2>&1 || { cat accepted.log; exit 1; }
-            grep -Fq UNCERTIFIED accepted.log
+            grep -Fq 'UNCERTIFIED' accepted.log
+            if [ "$file" = "tests/pass/eval_pure.ps" ]; then
+              grep -F '42' accepted.log
+            fi
           done
-      - name: Reject malformed and forbidden source
+      - name: Check PS0 owned negative source cases
         run: |
           set -euo pipefail
-          for file in tests/fail/*.ps ../pscv0-lean-native/tests/fail/*.ps; do
+          for file in tests/fail/*.ps; do
+            echo "PS0_REJECT:$file"
             if lake exe ps0 check "$file" > rejected.log 2>&1; then
               cat rejected.log
-              echo "PS0 accidentally accepted: $file"
+              echo "PS0 accepted forbidden source: $file"
               exit 1
             fi
           done
-      - name: Native artifact qualification and refusal
+          lake exe ps0 check tests/fail/ascii_bullet.ps > bullet.log 2>&1 && exit 1 || true
+          grep -F "PSCV0-BULLET" bullet.log
+          lake exe ps0 check tests/fail/typed_error_unbraced.ps > try.log 2>&1 && exit 1 || true
+          grep -F "PSCV0-TRY-BRACES" try.log
+          lake exe ps0 check tests/fail/eval_function.ps > eval.log 2>&1 && exit 1 || true
+          grep -F "PSCV0-EVAL-TYPE" eval.log
+      - name: Reject artifact emission for disallowed source
         run: |
           set -euo pipefail
-          for file in tests/fail/sorry.ps tests/fail/unsafe.ps ../pscv0-lean-native/tests/fail/function_state_false_spec.ps; do
+          for file in tests/fail/sorry.ps tests/fail/unsafe.ps tests/fail/function_state_false_spec.ps; do
             rm -rf build/rejected
-            if lake exe ps0 build "$file" Rejected build/rejected > rejected-native.log 2>&1; then
-              cat rejected-native.log
-              echo "PS0 emitted after rejection: $file"
+            if lake exe ps0 build "$file" Rejected build/rejected > native-negative.log 2>&1; then
+              cat native-negative.log
               exit 1
             fi
-            test ! -e build/rejected/Rejected.c
             test ! -e build/rejected/Rejected.olean
+            test ! -e build/rejected/Rejected.c
           done
-          lake exe ps0 build ../pscv0-lean-native/tests/pass/native_math.ps NativeMath build/native
+      - name: Qualify native code and standalone linked executable
+        run: |
+          set -euo pipefail
+          lake exe ps0 build tests/pass/native_math.ps NativeMath build/native
           test -s build/native/NativeMath.olean
           test -s build/native/NativeMath.c
-          echo 'PS0_NATIVE_ARTIFACT_UNCERTIFIED: PASS'
+          LAKE_PATH="$(lake env printenv LEAN_PATH)"
+          LEAN_PATH="$PWD/build/native:$LAKE_PATH" lake env lean -c build/native/NativeHarness.c -o build/native/NativeHarness.olean tests/NativeHarness.lean
+          lake build PS0:static
+          PS0_LIB="$(find .lake/build/lib -maxdepth 1 -type f -name '*_PS0.a' -print -quit)"
+          test -s "$PS0_LIB"
+          lake env leanc -o build/native/ps0-native build/native/NativeMath.c build/native/NativeHarness.c "$PS0_LIB"
+          build/native/ps0-native | grep -F PS0_NATIVE_OK
