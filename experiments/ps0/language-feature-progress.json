@@ -12,12 +12,12 @@
   },
   "scope": "20 equally weighted v7 language-semantic families including libraries, import semantics, and mandatory source assurance; excludes native backend optimization, IDE polish and standalone packaging.",
   "score": {
-    "sum": 38,
+    "sum": 39,
     "max": 100,
-    "estimatedPercent": 38,
+    "estimatedPercent": 39,
     "qualifiedPercent": 0
   },
-  "qualification": "37%→38% is an engineering reassessment of the binder-family implementation; NOT an observed exact-commit pass. Strict 0/181 v7 qualification remains 0%.",
+  "qualification": "Engineering estimate only: 38→39% from implemented v7 measure-first recursion syntax and source-specific exclusions, not CI-tested. Strict v7 acceptance remains 0/181 until exact-commit qualification.",
   "families": [
     {
       "id": "lexical-grammar",
@@ -181,13 +181,16 @@
     {
       "id": "recursion",
       "name": "Structural, mutual, local where and well-founded recursion",
-      "score": 2,
+      "score": 3,
       "maxScore": 5,
-      "implementationStatus": "PARTIAL",
+      "implementationStatus": "COHERENT_SUBSET",
       "stableCiQualified": false,
-      "rationale": "Braced mutual/where lowering to Lean; full totality/equation/termination syntax incomplete",
+      "rationale": "PS0 now lowers selected source termination_by measure and braced decreasing_by by {tactics} to official Lean 4.35 total/well-founded recursion, while rejecting Lean-only modes and bare decrease hints in .ps. Structural/mutual/local recursion remains partial; no stable CI acceptance yet.",
       "sourceEvidence": [
-        "PS0/Syntax.lean"
+        "PS0/Syntax.lean",
+        "tests/pass/termination_total.ps",
+        "tests/fail/termination_non_decreasing.ps",
+        "tests/lean/termination_reference.lean"
       ]
     },
     {
