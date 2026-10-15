@@ -113,6 +113,63 @@ macro_rules (kind := ps0V1HostConst)
     let nativeValue : TSyntax `term := ⟨lowered⟩
     `(def $name:ident : $ty:term := $nativeValue:term)
 
+/-- PS0 v1's other ordinary declaration aliases share the same
+    host value-category boundary: implicit result inference and private
+    visibility do not silently switch a body back to native term syntax. -/
+syntax (name := ps0V1HostFunctionInferred) (priority := high)
+  "function " ident "(" pscvBinder,* ")" ":=" psTerm : command
+syntax (name := ps0V1HostConstInferred) (priority := high)
+  "const " ident ":=" psTerm : command
+syntax (name := ps0V1HostPrivateFunction) (priority := high)
+  "private " "function " ident "(" pscvBinder,* ")" ":" term
+  ":=" psTerm : command
+syntax (name := ps0V1HostPrivateFunctionInferred) (priority := high)
+  "private " "function " ident "(" pscvBinder,* ")" ":=" psTerm : command
+syntax (name := ps0V1HostPrivateConst) (priority := high)
+  "private " "const " ident ":" term ":=" psTerm : command
+syntax (name := ps0V1HostPrivateConstInferred) (priority := high)
+  "private " "const " ident ":=" psTerm : command
+
+macro_rules (kind := ps0V1HostFunctionInferred)
+  | `(function $f:ident ($[$bs:pscvBinder],*) := $body:psTerm) => do
+    let binders ← explicitLeanBinders bs true
+    let lowered ← PS0.Syntax.lower `psTerm body.raw
+    let nativeBody : TSyntax `term := ⟨lowered⟩
+    `(def $f:ident $binders* := $nativeBody:term)
+
+macro_rules (kind := ps0V1HostConstInferred)
+  | `(const $name:ident := $value:psTerm) => do
+    let lowered ← PS0.Syntax.lower `psTerm value.raw
+    let nativeValue : TSyntax `term := ⟨lowered⟩
+    `(def $name:ident := $nativeValue:term)
+
+macro_rules (kind := ps0V1HostPrivateFunction)
+  | `(private function $f:ident ($[$bs:pscvBinder],*) :
+      $result:term := $body:psTerm) => do
+    let binders ← explicitLeanBinders bs true
+    let lowered ← PS0.Syntax.lower `psTerm body.raw
+    let nativeBody : TSyntax `term := ⟨lowered⟩
+    `(private def $f:ident $binders* : $result:term := $nativeBody:term)
+
+macro_rules (kind := ps0V1HostPrivateFunctionInferred)
+  | `(private function $f:ident ($[$bs:pscvBinder],*) := $body:psTerm) => do
+    let binders ← explicitLeanBinders bs true
+    let lowered ← PS0.Syntax.lower `psTerm body.raw
+    let nativeBody : TSyntax `term := ⟨lowered⟩
+    `(private def $f:ident $binders* := $nativeBody:term)
+
+macro_rules (kind := ps0V1HostPrivateConst)
+  | `(private const $name:ident : $ty:term := $body:psTerm) => do
+    let lowered ← PS0.Syntax.lower `psTerm body.raw
+    let nativeBody : TSyntax `term := ⟨lowered⟩
+    `(private def $name:ident : $ty:term := $nativeBody:term)
+
+macro_rules (kind := ps0V1HostPrivateConstInferred)
+  | `(private const $name:ident := $body:psTerm) => do
+    let lowered ← PS0.Syntax.lower `psTerm body.raw
+    let nativeBody : TSyntax `term := ⟨lowered⟩
+    `(private def $name:ident := $nativeBody:term)
+
 /-- PS0 v1 permits inference of the result type for both def and function.
     The native Lean elaborator still decides every implicit type/term. -/
 syntax (name := pscvDefinitionInferred)
