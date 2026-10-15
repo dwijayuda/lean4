@@ -88,6 +88,31 @@ macro_rules
     let binders ← explicitLeanBinders bs true
     `(def $f:ident $binders* : $result:term := $body:term)
 
+/-!
+PS0 v1 standard host operand adaptation: typed function/const value
+positions consume psTerm, not an implicit native category fallback.
+The host tree reaches the explicit lowering boundary before Lean's
+normal definition elaboration. All native declaration APIs are reused.
+-/
+syntax (name := ps0V1HostFunction) (priority := high)
+  "function " ident "(" pscvBinder,* ")" ":" term ":=" psTerm : command
+syntax (name := ps0V1HostConst) (priority := high)
+  "const " ident ":" term ":=" psTerm : command
+
+macro_rules (kind := ps0V1HostFunction)
+  | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term :=
+      $body:psTerm) => do
+    let binders ← explicitLeanBinders bs true
+    let lowered ← PS0.Syntax.lower `psTerm body.raw
+    let nativeBody : TSyntax `term := ⟨lowered⟩
+    `(def $f:ident $binders* : $result:term := $nativeBody:term)
+
+macro_rules (kind := ps0V1HostConst)
+  | `(const $name:ident : $ty:term := $value:psTerm) => do
+    let lowered ← PS0.Syntax.lower `psTerm value.raw
+    let nativeValue : TSyntax `term := ⟨lowered⟩
+    `(def $name:ident : $ty:term := $nativeValue:term)
+
 /-- PS0 v1 permits inference of the result type for both def and function.
     The native Lean elaborator still decides every implicit type/term. -/
 syntax (name := pscvDefinitionInferred)
