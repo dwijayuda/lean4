@@ -1,0 +1,2394 @@
+{
+  "schema": "ps0-v1-language-coverage/1",
+  "normative": {
+    "repository": "dwijayuda/lean4",
+    "path": "experiments/ps0/PS0_V1_LANGUAGE_REFERENCE.md",
+    "gitBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "edition": "PS0 v1 R2",
+    "supersedes": "PSCV0 v7 (not a fallback)"
+  },
+  "meaning": "Every item is a design requirement, not a successful test. PASS requires exact source/spec/compiler identity, fixture, intended Lean diagnostic or semantic oracle, and real CI evidence. No v7 PASS/percentage is carried forward.",
+  "counts": {
+    "featureFamilies": 100,
+    "positive": 64,
+    "negative": 47,
+    "concreteWitnesses": 31,
+    "total": 242
+  },
+  "featureFamilies": [
+    {
+      "id": "V1-001",
+      "feature": "Unicode and escaped/hierarchical identifiers",
+      "sourceBasis": "L-TERM, L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-002",
+      "feature": "Comments and documentation comments",
+      "sourceBasis": "L-TERM, L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-003",
+      "feature": "Numeral, scientific, character, string and registered literals",
+      "sourceBasis": "L-TERM, L-INIT",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-004",
+      "feature": "Raw/interpolated strings and embedded expressions",
+      "sourceBasis": "[feature](#collection-indexing-array-literals-strings-and-interpolation), L-INIT, L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-005",
+      "feature": "Universes, `Sort`, `Type`, `Prop`, explicit level parameters",
+      "sourceBasis": "L-TERM, L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-006",
+      "feature": "Explicit, implicit, strict implicit and instance binders",
+      "sourceBasis": "L-TERM, [feature](#explicit-implicit-strict-implicit-instance-and-interleaved-binders)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-007",
+      "feature": "Dependent/interleaved binders and section generalization",
+      "sourceBasis": "L-CMD, [feature](#namespaces-sections-variables-open-and-export)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-008",
+      "feature": "Default/automatic parameters and type-directed completion",
+      "sourceBasis": "[feature](#defaults-named-arguments-coefun-and-empty-invocation), L-DEFS",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-009",
+      "feature": "Pi types, lambdas and pattern lambdas",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-010",
+      "feature": "Classes, instances, coercions and overloaded operations",
+      "sourceBasis": "L-CMD, L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-011",
+      "feature": "Modern/implicit PS modules and explicit native headers",
+      "sourceBasis": "L-MODULE, [feature](#source-kinds-module-headers-and-imports), §1",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-012",
+      "feature": "`prelude` and bootstrap import suppression",
+      "sourceBasis": "L-MODULE, L-INIT",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-013",
+      "feature": "Public/private imports and re-export",
+      "sourceBasis": "L-MODULE",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-014",
+      "feature": "Meta imports and public meta availability",
+      "sourceBasis": "L-MODULE, L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-015",
+      "feature": "`import all` and its invalid combinations",
+      "sourceBasis": "L-MODULE",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-016",
+      "feature": "Namespace/section/end and include/omit",
+      "sourceBasis": "L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-017",
+      "feature": "Open/hiding/renaming/only/scoped and namespace export",
+      "sourceBasis": "L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-018",
+      "feature": "Public/private/protected/expose and body visibility",
+      "sourceBasis": "L-CMD, L-DEFS",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-019",
+      "feature": "`meta`, `noncomputable`, `nonrec` and modifier legality",
+      "sourceBasis": "L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-020",
+      "feature": "Definition, theorem, example and abbreviation declarations",
+      "sourceBasis": "L-CMD, L-DECL",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-021",
+      "feature": "`function`/`const` and required-Unit nullary lowering",
+      "sourceBasis": "[feature](#nullary-function-declarations-and-required-unit)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-022",
+      "feature": "Opaque bodies and bodyless inhabitant synthesis",
+      "sourceBasis": "L-DEFS, L-DECL",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-023",
+      "feature": "Explicit axiom declarations and assumptions",
+      "sourceBasis": "L-CMD, L-DECL",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-024",
+      "feature": "Inductive types/families and generated eliminators",
+      "sourceBasis": "L-CMD, L-DECL",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-025",
+      "feature": "Mutual/nested inductives and positivity requirements",
+      "sourceBasis": "L-DECL, L-REF",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-026",
+      "feature": "Structures, inheritance, named parents and constructor specifications",
+      "sourceBasis": "L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-027",
+      "feature": "Implicit/instance/proof/default fields and computed fields",
+      "sourceBasis": "L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-028",
+      "feature": "Classes and class inductives",
+      "sourceBasis": "L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-029",
+      "feature": "Trailing and standalone deriving",
+      "sourceBasis": "L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-030",
+      "feature": "Custom deriving and generated-instance checking",
+      "sourceBasis": "L-LEAN, L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-031",
+      "feature": "PS comma calls, tuple/Unit distinction and argument ownership",
+      "sourceBasis": "[feature](#calls-grouping-tuple-arguments-and-postfix-precedence), §2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-032",
+      "feature": "Native unparenthesized application and explicit `@`",
+      "sourceBasis": "L-TERM, [feature](#calls-grouping-tuple-arguments-and-postfix-precedence)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-033",
+      "feature": "Named arguments, placeholders, ellipsis and partial application",
+      "sourceBasis": "L-TERM, [feature](#defaults-named-arguments-coefun-and-empty-invocation)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-034",
+      "feature": "Field/numeric projections and generalized receiver insertion",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-035",
+      "feature": "Type ascription, expected-type control and anonymous constructors",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-036",
+      "feature": "Let/have, local instances and binding configurations",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-037",
+      "feature": "Native local-binding aliases and deprecation semantics",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-038",
+      "feature": "Records, updates, punning and field equations",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-039",
+      "feature": "Conditional terms and braced PS conditionals",
+      "sourceBasis": "L-INIT, [feature](#term-conditionals-named-condition-proofs-and-if-let)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-040",
+      "feature": "Constructor, literal, successor and inaccessible patterns",
+      "sourceBasis": "L-TERM, [feature](#pattern-grammar-dependent-matching-and-empty-elimination)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-041",
+      "feature": "Multi-discriminant/dependent match, motive and generalization",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-042",
+      "feature": "Pattern aliases and named match equations",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-043",
+      "feature": "`if let`, pattern bindings, `matches`, `nomatch`, `nofun`",
+      "sourceBasis": "L-TERM, [feature](#pattern-grammar-dependent-matching-and-empty-elimination)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-044",
+      "feature": "Equation-style definitions and mutual function groups",
+      "sourceBasis": "L-CMD, L-PREDEF",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-045",
+      "feature": "Local recursion and complete where/finally facilities",
+      "sourceBasis": "L-TERM, L-PREDEF",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-046",
+      "feature": "Structural recursion and structural hints",
+      "sourceBasis": "L-PREDEF, L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-047",
+      "feature": "Well-founded recursion, measures and decreasing proofs",
+      "sourceBasis": "L-PREDEF, L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-048",
+      "feature": "Partial functions and opaque logical interfaces",
+      "sourceBasis": "L-PREDEF",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-049",
+      "feature": "Partial fixed points and monotonicity",
+      "sourceBasis": "L-TERM, L-PREDEF",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-050",
+      "feature": "Inductive/coinductive fixed points and predicate declarations",
+      "sourceBasis": "L-CMD, L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-051",
+      "feature": "Braced/native layout and category-specific semicolons",
+      "sourceBasis": "L-CMD, L-DO, §1",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-052",
+      "feature": "Generic do, monad operations and nested actions",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-053",
+      "feature": "Mutable locals and pure/monadic reassignment",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-054",
+      "feature": "Refutable let bindings and fallback control flow",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-055",
+      "feature": "Do-if, monadic if-let and unless",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-056",
+      "feature": "Single and zipped for iteration",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-057",
+      "feature": "While, repeat and repeat-until",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-058",
+      "feature": "Break, continue and early return",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-059",
+      "feature": "Forwarding `do←` and wrapper control effects",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-060",
+      "feature": "Typed/pattern catch, try/finally and term sugar",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-061",
+      "feature": "Term proofs, by blocks and full goal-control syntax",
+      "sourceBasis": "L-TERM, L-TACTIC",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-062",
+      "feature": "Imported tactics, configuration and proof construction",
+      "sourceBasis": "L-INIT, L-STD, L-LEAN",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-063",
+      "feature": "Simplifiers, simprocs, conversion and registered proof tools",
+      "sourceBasis": "L-INIT, L-LEAN",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-064",
+      "feature": "Arithmetic/bitvector/grind and decision procedures",
+      "sourceBasis": "L-INIT, L-STD, L-DECIDE, L-NATIVE",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-065",
+      "feature": "Custom tactics and compile-time proof programs",
+      "sourceBasis": "L-SYNTAX, L-LEAN",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-066",
+      "feature": "Development holes and error-recovery separation",
+      "sourceBasis": "L-TERM, L-PREDEF",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-067",
+      "feature": "Ordered contracts and logical given binders",
+      "sourceBasis": "L-CMD, [feature](#given-requires-ensures-and-generated-specification-proofs)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-068",
+      "feature": "Generated spec proofs and native finally subsections",
+      "sourceBasis": "L-TERM, [feature](#local-definitions-equation-bodies-and-wherefinally-tails)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-069",
+      "feature": "Verification-only assert versus runtime assertions",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-070",
+      "feature": "Loop invariants/decreasing annotations and WP facilities",
+      "sourceBasis": "L-DO, L-STD, [feature](#assertions-loop-invariants-and-decreasing-measures)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-071",
+      "feature": "Erased state, erased mutation and effectful erased-result bindings",
+      "sourceBasis": "L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-072",
+      "feature": "Notation/mixfix, local/scoped precedence and priorities",
+      "sourceBasis": "L-SYNTAX",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-073",
+      "feature": "Syntax categories, syntax abbreviations and binder predicates",
+      "sourceBasis": "L-SYNTAX",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-074",
+      "feature": "Parser descriptors/combinators and leading/trailing parsers",
+      "sourceBasis": "L-SYNTAX, L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-075",
+      "feature": "Macro declarations/rules and dispatch",
+      "sourceBasis": "L-SYNTAX",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-076",
+      "feature": "Quotations, antiquotations, splices, patterns and hygiene",
+      "sourceBasis": "L-TERM, L-CMD, L-SYNTAX",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-077",
+      "feature": "Native/PS category ownership and extension compatibility",
+      "sourceBasis": "L-MODULE, L-SYNTAX, §9",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-078",
+      "feature": "Elab/elab_rules and term/command/tactic elaborators",
+      "sourceBasis": "L-SYNTAX, L-LEAN",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-079",
+      "feature": "Names, levels, Expr, Syntax and metaprogramming contexts",
+      "sourceBasis": "L-DECL, L-LEAN",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-080",
+      "feature": "Environment extensions, declarations and registration APIs",
+      "sourceBasis": "L-LEAN, L-DECL",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-081",
+      "feature": "Reduction, unification, metavariables and elaboration scheduling",
+      "sourceBasis": "L-TERM, L-PREDEF",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-082",
+      "feature": "Match_expr/let_expr and reflection/evaluation facilities",
+      "sourceBasis": "L-TERM, L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-083",
+      "feature": "Low-level percent-suffixed and diagnostic helper syntax",
+      "sourceBasis": "L-TERM",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-084",
+      "feature": "Attribute declaration/use/removal and custom handlers",
+      "sourceBasis": "L-CMD, L-LEAN",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-085",
+      "feature": "Reducibility hints versus elaborator transparency",
+      "sourceBasis": "L-DECL",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-086",
+      "feature": "Options/configuration, scoped settings and trace registration",
+      "sourceBasis": "L-CMD, L-PREDEF, L-DECIDE",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-087",
+      "feature": "Initialize/builtin_initialize and startup effects",
+      "sourceBasis": "L-CMD, L-SYNTAX",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-088",
+      "feature": "Primitive/data types, collections and indexed access",
+      "sourceBasis": "L-INIT, L-STD, [feature](#universes-dependent-functions-equality-quotients-and-core-data)",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-089",
+      "feature": "Standard effects, IO and system APIs",
+      "sourceBasis": "L-INIT, L-STD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-090",
+      "feature": "References, StateRefT, tasks and synchronization",
+      "sourceBasis": "L-TERM, L-INIT, L-STD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-091",
+      "feature": "Extern/export/implemented_by and borrowed ABI arguments",
+      "sourceBasis": "L-TERM, L-DECL",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-092",
+      "feature": "Unsafe declarations/expressions and runtime correspondence",
+      "sourceBasis": "L-TERM, L-PREDEF",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-093",
+      "feature": "Panic, unreachable, tracing and runtime debugging",
+      "sourceBasis": "L-TERM, L-DO",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-094",
+      "feature": "Check/eval/reduce/print and native diagnostic extension closure",
+      "sourceBasis": "L-CMD, L-INIT",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-095",
+      "feature": "Import assertions, recall, version and scope diagnostics",
+      "sourceBasis": "L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-096",
+      "feature": "Documentation, Verso, tags, recommendations and error explanations",
+      "sourceBasis": "L-TERM, L-CMD",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-097",
+      "feature": "Quotient/parser/documentation bootstrap commands and internal scopes",
+      "sourceBasis": "L-CMD, L-SYNTAX",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-098",
+      "feature": "Pretty printers, editor/server and compiler-source library capabilities",
+      "sourceBasis": "L-LEAN",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-099",
+      "feature": "Lake DSL capability as an optional imported extension",
+      "sourceBasis": "L-LAKE",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "V1-100",
+      "feature": "Open-ended pinned registration and production-source closure",
+      "sourceBasis": "§0, §14",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "PS0-P-DECL-01",
+      "kind": "positive",
+      "sourceOrSetup": "`const count: Nat := 3`",
+      "requiredInterpretation": "Parameterless source `def` alias.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-02",
+      "kind": "positive",
+      "sourceOrSetup": "`function add(x: Nat, y: Nat): Nat := x + y`",
+      "requiredInterpretation": "Comma explicit telescope, native curried meaning.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-03",
+      "kind": "positive",
+      "sourceOrSetup": "`function tick(): Nat := 1`",
+      "requiredInterpretation": "Insert exactly one final required Unit parameter.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-04",
+      "kind": "positive",
+      "sourceOrSetup": "`def f (x y : Nat) := x + y`",
+      "requiredInterpretation": "Full native declaration telescope remains valid in v1.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-05",
+      "kind": "positive",
+      "sourceOrSetup": "`function same {α: Type}[BEq α](x: α, y: α) := x == y`",
+      "requiredInterpretation": "Implicit/instance/explicit order is preserved.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-06",
+      "kind": "positive",
+      "sourceOrSetup": "`function choose(n: Nat)[Decidable(n = 0)](x: Fin(n + 1)) := x.val`",
+      "requiredInterpretation": "Interleaved dependent binders.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-07",
+      "kind": "positive",
+      "sourceOrSetup": "`opaque value: Nat := 1`",
+      "requiredInterpretation": "Checked opaque body, not transparent def.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-08",
+      "kind": "positive",
+      "sourceOrSetup": "`opaque value: Nat`",
+      "requiredInterpretation": "Native inhabitant synthesis where available.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-09",
+      "kind": "positive",
+      "sourceOrSetup": "`axiom assumed: True`",
+      "requiredInterpretation": "An explicit assumption, not a proved theorem.",
+      "section": "§2, §12",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DECL-10",
+      "kind": "positive",
+      "sourceOrSetup": "`noncomputable def pick {α: Sort u}(h: Nonempty α): α := Classical.choice(h)`",
+      "requiredInterpretation": "Logical use under native noncomputability conditions.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-01",
+      "kind": "positive",
+      "sourceOrSetup": "`add(1, 2)` / `add 1 2`",
+      "requiredInterpretation": "Two arguments, same intended curried application.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-02",
+      "kind": "positive",
+      "sourceOrSetup": "`sumPair((1, 2))`",
+      "requiredInterpretation": "One tuple argument.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-03",
+      "kind": "positive",
+      "sourceOrSetup": "`tick()` / `tick(())`",
+      "requiredInterpretation": "Unit completion or explicit Unit for this function type.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-04",
+      "kind": "positive",
+      "sourceOrSetup": "`greet(name := \"Ada\")`",
+      "requiredInterpretation": "A declared named parameter; type must agree.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-05",
+      "kind": "positive",
+      "sourceOrSetup": "`greet()`",
+      "requiredInterpretation": "Complete the declared default, not a guessed value.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-06",
+      "kind": "positive",
+      "sourceOrSetup": "`add(1)`",
+      "requiredInterpretation": "A nonempty partial application when the expected type permits it.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-07",
+      "kind": "positive",
+      "sourceOrSetup": "`f(x,)`",
+      "requiredInterpretation": "A single argument with one trailing comma.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-08",
+      "kind": "positive",
+      "sourceOrSetup": "`f g(x, y)`",
+      "requiredInterpretation": "Required tree `f (g x y)`; types must support it.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-09",
+      "kind": "positive",
+      "sourceOrSetup": "`(f g)(x, y)`",
+      "requiredInterpretation": "Required tree `(f g) x y`; not CALL-08.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-CALL-10",
+      "kind": "positive",
+      "sourceOrSetup": "`f(/- inside -/ x)`",
+      "requiredInterpretation": "Comment inside the adjacent argument list.",
+      "section": "§2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-SCOPE-01",
+      "kind": "positive",
+      "sourceOrSetup": "`variable (n: Nat)`",
+      "requiredInterpretation": "A native explicit section binder, not application.",
+      "section": "§1",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-SCOPE-02",
+      "kind": "positive",
+      "sourceOrSetup": "`#check (f x)` / `exact (hp)`",
+      "requiredInterpretation": "Fresh grouped terms in command/tactic argument positions.",
+      "section": "§1, §2",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-SCOPE-03",
+      "kind": "positive",
+      "sourceOrSetup": "`module` with `public section`",
+      "requiredInterpretation": "Native explicit-module visibility.",
+      "section": "§1",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-SCOPE-04",
+      "kind": "positive",
+      "sourceOrSetup": "Headerless `.ps` with `public import Init`",
+      "requiredInterpretation": "Implicit modern module and public-name default.",
+      "section": "§1",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-SCOPE-05",
+      "kind": "positive",
+      "sourceOrSetup": "`meta import Lean` / `public meta import Lean`",
+      "requiredInterpretation": "Stage availability under native module rules.",
+      "section": "§1",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-SCOPE-06",
+      "kind": "positive",
+      "sourceOrSetup": "`import all M`",
+      "requiredInterpretation": "Native all/private access where valid.",
+      "section": "§1",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-SCOPE-07",
+      "kind": "positive",
+      "sourceOrSetup": "`open scoped N` / `open N renaming x → y`",
+      "requiredInterpretation": "Distinct scoped/naming behavior.",
+      "section": "§1",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-SCOPE-08",
+      "kind": "positive",
+      "sourceOrSetup": "`prelude` in a proper bootstrap module",
+      "requiredInterpretation": "No injected ordinary prelude dependency.",
+      "section": "§1, §11",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DATA-01",
+      "kind": "positive",
+      "sourceOrSetup": "Braced/native `structure` and `inductive`",
+      "requiredInterpretation": "Same typed data declarations with surface delimiters.",
+      "section": "§4",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DATA-02",
+      "kind": "positive",
+      "sourceOrSetup": "`instance : Inhabited Color := ⟨Color.red⟩`",
+      "requiredInterpretation": "Native instance value form included.",
+      "section": "§4",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DATA-03",
+      "kind": "positive",
+      "sourceOrSetup": "`deriving instance Repr for Point`",
+      "requiredInterpretation": "Standalone deriving when a handler exists.",
+      "section": "§4",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DATA-04",
+      "kind": "positive",
+      "sourceOrSetup": "`{ p with x := p.x + 1 }`",
+      "requiredInterpretation": "Typed structure update, not alias mutation.",
+      "section": "§4",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DATA-05",
+      "kind": "positive",
+      "sourceOrSetup": "`{ n: Nat // n < 10 }`",
+      "requiredInterpretation": "Native subtype, with proof required at construction.",
+      "section": "§4, §8",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-PAT-01",
+      "kind": "positive",
+      "sourceOrSetup": "`match n with { \\",
+      "requiredInterpretation": "0 => 0 \\",
+      "section": "k + 1 => k }` | Native successor-pattern meaning under braced syntax. | §4",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-PAT-02",
+      "kind": "positive",
+      "sourceOrSetup": "`some(n)` in an Option constructor-pattern position",
+      "requiredInterpretation": "Constructor-only adapter, not ordinary term call completion.",
+      "section": "§4",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-PAT-03",
+      "kind": "positive",
+      "sourceOrSetup": "Named equation/motive/generalizing match",
+      "requiredInterpretation": "Native dependent elimination and configuration categories.",
+      "section": "§4",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-PAT-04",
+      "kind": "positive",
+      "sourceOrSetup": "`nomatch impossible`",
+      "requiredInterpretation": "Only when the indexed/empty type makes all cases impossible.",
+      "section": "§4",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-REC-01",
+      "kind": "positive",
+      "sourceOrSetup": "Total recursion with a valid `termination_by`",
+      "requiredInterpretation": "Native proof-backed recursive construction.",
+      "section": "§5",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-REC-02",
+      "kind": "positive",
+      "sourceOrSetup": "`partial function spin(n: Nat): Nat := spin(n)`",
+      "requiredInterpretation": "Partial program, no totality claim.",
+      "section": "§5, §12",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-REC-03",
+      "kind": "positive",
+      "sourceOrSetup": "A valid `partial_fixpoint` definition",
+      "requiredInterpretation": "Checked fixed-point equations, not automatic termination.",
+      "section": "§5",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-REC-04",
+      "kind": "positive",
+      "sourceOrSetup": "Valid inductive/coinductive monotone fixed points",
+      "requiredInterpretation": "Native lattice construction, no new unchecked kernel primitive.",
+      "section": "§5",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DO-01",
+      "kind": "positive",
+      "sourceOrSetup": "`do { let mut n := 0; n := n + 1; return n }`",
+      "requiredInterpretation": "Native do separators and mutable-local semantics.",
+      "section": "§3",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DO-02",
+      "kind": "positive",
+      "sourceOrSetup": "`for x in xs, y in ys do { body }`",
+      "requiredInterpretation": "Zipped iteration, not nested Cartesian product.",
+      "section": "§3",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DO-03",
+      "kind": "positive",
+      "sourceOrSetup": "Native `repeat`, `while`, `repeat ... until`",
+      "requiredInterpretation": "General ordinary loops; claim-specific termination separate.",
+      "section": "§3",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DO-04",
+      "kind": "positive",
+      "sourceOrSetup": "Monadic `if let ... ← action`",
+      "requiredInterpretation": "Included with actual monad and pattern prerequisites.",
+      "section": "§3",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DO-05",
+      "kind": "positive",
+      "sourceOrSetup": "A correctly placed final-argument `do←`",
+      "requiredInterpretation": "Forward enclosing control effects through supported wrapper.",
+      "section": "§3",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DO-06",
+      "kind": "positive",
+      "sourceOrSetup": "Typed/pattern `catch` with `finally`",
+      "requiredInterpretation": "Native exception/cleanup semantics.",
+      "section": "§3",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-PROOF-01",
+      "kind": "positive",
+      "sourceOrSetup": "`by { intro h; exact h }` for `p → p`",
+      "requiredInterpretation": "A completed proof when context/type are correct.",
+      "section": "§6",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-PROOF-02",
+      "kind": "positive",
+      "sourceOrSetup": "A registered custom proof-producing tactic",
+      "requiredInterpretation": "Generated evidence and assumptions still checked.",
+      "section": "§6, §10",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-PROOF-03",
+      "kind": "positive",
+      "sourceOrSetup": "`native_decide` with its actual native-computation assumptions",
+      "requiredInterpretation": "Native language admission; not assumption-free qualification.",
+      "section": "§6, §12",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-VC-01",
+      "kind": "positive",
+      "sourceOrSetup": "Ordered `given` / `requires` / `ensures r => ...`",
+      "requiredInterpretation": "Requires pinned WP environment and actual spec proof.",
+      "section": "§7",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-VC-02",
+      "kind": "positive",
+      "sourceOrSetup": "Braced `where { finally { \\",
+      "requiredInterpretation": "spec => { ... } } }`",
+      "section": "A genuine proof must replace the schematic ellipsis. | §7",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-VC-03",
+      "kind": "positive",
+      "sourceOrSetup": "`erased x ← action`",
+      "requiredInterpretation": "Action still executes; result is verification-only.",
+      "section": "§7",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-EXT-01",
+      "kind": "positive",
+      "sourceOrSetup": "`syntax`, `macro`, `macro_rules`, `elab`, `elab_rules`",
+      "requiredInterpretation": "Admitted under category/stage/handler conditions.",
+      "section": "§9, §10",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-EXT-02",
+      "kind": "positive",
+      "sourceOrSetup": "Native quotation containing `f (x, y)`",
+      "requiredInterpretation": "Syntax data keeps the one-tuple native application.",
+      "section": "§9",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-EXT-03",
+      "kind": "positive",
+      "sourceOrSetup": "Custom deriving, attributes, simprocs, parser categories",
+      "requiredInterpretation": "Registration-driven feature closure.",
+      "section": "§4, §6, §9",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-META-01",
+      "kind": "positive",
+      "sourceOrSetup": "`initialize` / `builtin_initialize`",
+      "requiredInterpretation": "Preserve stage and registration effects.",
+      "section": "§11",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-META-02",
+      "kind": "positive",
+      "sourceOrSetup": "Native `%` elaboration helpers",
+      "requiredInterpretation": "Actual arity, category, and stage restrictions apply.",
+      "section": "§10",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-RUN-01",
+      "kind": "positive",
+      "sourceOrSetup": "`IO.println(\"hello\")` in an appropriate do block",
+      "requiredInterpretation": "Native effectful IO call.",
+      "section": "§7B",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-RUN-02",
+      "kind": "positive",
+      "sourceOrSetup": "Unsafe declaration or valid unsafe expression",
+      "requiredInterpretation": "Native safety classification; no runtime-proof promotion.",
+      "section": "§7B",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-RUN-03",
+      "kind": "positive",
+      "sourceOrSetup": "Properly linked `extern` / `implemented_by` / borrowed ABI",
+      "requiredInterpretation": "Native runtime boundary, separate correspondence evidence.",
+      "section": "§7B",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DIAG-01",
+      "kind": "positive",
+      "sourceOrSetup": "`#check`, `#eval`, `#print axioms`, guard commands",
+      "requiredInterpretation": "Diagnostic outcomes only.",
+      "section": "§7A",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-DOC-01",
+      "kind": "positive",
+      "sourceOrSetup": "Native Markdown/Verso documentation and bootstrap forms",
+      "requiredInterpretation": "Actual import/initialization conditions, not universal execution.",
+      "section": "§11",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-P-ENV-01",
+      "kind": "positive",
+      "sourceOrSetup": "Compatible imported native/Lake extension",
+      "requiredInterpretation": "Full extension availability, not automatic approved assumptions.",
+      "section": "§8A, §14",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-01",
+      "kind": "negative",
+      "sourceOrClaim": "`f (x)` in an ordinary host application",
+      "expectedCategory": "PARSE",
+      "reason": "PS host gap-parenthesized application.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-02",
+      "kind": "negative",
+      "sourceOrClaim": "`f (x, y)` in an ordinary host application",
+      "expectedCategory": "PARSE",
+      "reason": "Must preserve one tuple by writing `f((x,y))`.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-03",
+      "kind": "negative",
+      "sourceOrClaim": "`f ()` in an ordinary host application",
+      "expectedCategory": "PARSE",
+      "reason": "Use explicit `f(())` or the qualified empty-call rule.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-04",
+      "kind": "negative",
+      "sourceOrClaim": "`f/- gap -/(x)`",
+      "expectedCategory": "PARSE",
+      "reason": "Valid comment trivia still breaks adjacency.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-05",
+      "kind": "negative",
+      "sourceOrClaim": "`answer()` for `answer : Nat`",
+      "expectedCategory": "ELAB",
+      "reason": "A noncallable value has no empty invocation.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-06",
+      "kind": "negative",
+      "sourceOrClaim": "`one()` with a required Nat parameter",
+      "expectedCategory": "ELAB",
+      "reason": "No invented Nat/Inhabited argument.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-07",
+      "kind": "negative",
+      "sourceOrClaim": "`two()` with two required Unit parameters",
+      "expectedCategory": "ELAB",
+      "reason": "Exactly one required Unit is the only insertion exception.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-08",
+      "kind": "negative",
+      "sourceOrClaim": "`f()` with unresolved required argument type",
+      "expectedCategory": "ELAB",
+      "reason": "Do not guess Unit to resolve an unknown binder type.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-09",
+      "kind": "negative",
+      "sourceOrClaim": "`f(name := x, y)`",
+      "expectedCategory": "PARSE",
+      "reason": "Positional argument after a named argument.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-10",
+      "kind": "negative",
+      "sourceOrClaim": "`f(name := x, name := y)`",
+      "expectedCategory": "PARSE or ELAB",
+      "reason": "Duplicate named argument must reject no later than elaboration.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-11",
+      "kind": "negative",
+      "sourceOrClaim": "`f(unknownName := x)`",
+      "expectedCategory": "ELAB",
+      "reason": "Unknown parameter name.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-CALL-12",
+      "kind": "negative",
+      "sourceOrClaim": "`f(,)` / `f(x,,y)`",
+      "expectedCategory": "PARSE",
+      "reason": "No empty argument entries or repeated separator.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-BIND-01",
+      "kind": "negative",
+      "sourceOrClaim": "`function f(x: Nat)(y: Nat) := x + y`",
+      "expectedCategory": "PARSE",
+      "reason": "Alias requires one comma group or intervening nonexplicit binder; native def remains available.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-BIND-02",
+      "kind": "negative",
+      "sourceOrClaim": "`function f()(x: Nat) := x`",
+      "expectedCategory": "PARSE",
+      "reason": "Nullary group must be final and cannot mix with explicit parameters.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-BIND-03",
+      "kind": "negative",
+      "sourceOrClaim": "Assuming `def f()` inserts Unit",
+      "expectedCategory": "PARSE",
+      "reason": "No nullary-function sugar on ordinary def.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-BIND-04",
+      "kind": "negative",
+      "sourceOrClaim": "`const f(x: Nat) := x`",
+      "expectedCategory": "PARSE",
+      "reason": "Const has no source telescope.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-MOD-01",
+      "kind": "negative",
+      "sourceOrClaim": "`public import all M`",
+      "expectedCategory": "ENV/PARSE",
+      "reason": "Native header restriction: separate public import from all/private access.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-MOD-02",
+      "kind": "negative",
+      "sourceOrClaim": "Import following an ordinary declaration",
+      "expectedCategory": "PARSE",
+      "reason": "Imports belong in the header.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-MOD-03",
+      "kind": "negative",
+      "sourceOrClaim": "A runtime reference to a meta-only definition",
+      "expectedCategory": "ELAB",
+      "reason": "Native staging restriction.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-MOD-04",
+      "kind": "negative",
+      "sourceOrClaim": "Leaking a private declaration in a prohibited public signature",
+      "expectedCategory": "ELAB/ENV",
+      "reason": "Native module visibility rule.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-LEX-01",
+      "kind": "negative",
+      "sourceOrClaim": "Treating `/* ... */` as a Lean comment",
+      "expectedCategory": "LEX/PARSE",
+      "reason": "Not a comment delimiter; never evidence of a valid-trivia adjacency check.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-DATA-01",
+      "kind": "negative",
+      "sourceOrClaim": "Negative inductive occurrence violating positivity",
+      "expectedCategory": "KERNEL/ELAB",
+      "reason": "Data declaration does not qualify merely by parsing.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-DATA-02",
+      "kind": "negative",
+      "sourceOrClaim": "Missing/ill-typed dependent proof field",
+      "expectedCategory": "ELAB",
+      "reason": "Native dependent construction obligations.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-PAT-01",
+      "kind": "negative",
+      "sourceOrClaim": "Using arbitrary function calls as inverse constructor patterns",
+      "expectedCategory": "ELAB",
+      "reason": "Pattern adapter does not execute arbitrary functions backwards.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-PAT-02",
+      "kind": "negative",
+      "sourceOrClaim": "Using PS term-empty-call completion to supply a missing pattern field",
+      "expectedCategory": "ELAB/PARSE",
+      "reason": "PS Unit/default completion is not a pattern operation; native nonempty-pattern defaults remain native.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-PAT-03",
+      "kind": "negative",
+      "sourceOrClaim": "`nomatch` on an inhabited ordinary type without impossible indices",
+      "expectedCategory": "ELAB",
+      "reason": "Empty elimination is unjustified.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-REC-01",
+      "kind": "negative",
+      "sourceOrClaim": "Incompatible structural and decreasing hints",
+      "expectedCategory": "ELAB",
+      "reason": "Native termination-mode consistency.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-REC-02",
+      "kind": "negative",
+      "sourceOrClaim": "Unproved termination of a required total recursive definition",
+      "expectedCategory": "ELAB/VC-PROOF",
+      "reason": "No partial fallback that hides an error.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-REC-03",
+      "kind": "negative",
+      "sourceOrClaim": "A fixed-point body lacking required monotonicity/structure",
+      "expectedCategory": "ELAB/VC-PROOF",
+      "reason": "No arbitrary cyclic definition admission.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-DO-01",
+      "kind": "negative",
+      "sourceOrClaim": "Assignment to a nonmutable ordinary local",
+      "expectedCategory": "ELAB",
+      "reason": "Mutation requires the native mutable context.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-DO-02",
+      "kind": "negative",
+      "sourceOrClaim": "`break`/`continue` outside a valid surrounding loop",
+      "expectedCategory": "ELAB",
+      "reason": "Native control target is absent.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-DO-03",
+      "kind": "negative",
+      "sourceOrClaim": "`do←` in an unsupported nonfinal argument context",
+      "expectedCategory": "ELAB",
+      "reason": "Forwarding syntax has placement requirements.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-VC-01",
+      "kind": "negative",
+      "sourceOrClaim": "Reordered or repeated intrinsic contract clauses",
+      "expectedCategory": "PARSE",
+      "reason": "Fixed `given? requires? ensures?` ordering.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-VC-02",
+      "kind": "negative",
+      "sourceOrClaim": "A bare postcondition without its required result binder",
+      "expectedCategory": "PARSE",
+      "reason": "Ensures uses the basic-function production.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-VC-03",
+      "kind": "negative",
+      "sourceOrClaim": "`given target: Nat` as an intended typed logical binder",
+      "expectedCategory": "PARSE",
+      "reason": "Use `given (target: Nat)`.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-VC-04",
+      "kind": "negative",
+      "sourceOrClaim": "A contract/assertion without the necessary registered WP environment",
+      "expectedCategory": "ENV/ELAB",
+      "reason": "No silent metadata-only fallback.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-VC-05",
+      "kind": "negative",
+      "sourceOrClaim": "A required unproved spec/loop/erasure obligation",
+      "expectedCategory": "ELAB/VC-PROOF or ASSURANCE",
+      "reason": "Cannot qualify the stronger claim.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-ASSURE-01",
+      "kind": "negative",
+      "sourceOrClaim": "Claiming a theorem depending on source/generated/imported sorry is completed",
+      "expectedCategory": "ASSURANCE",
+      "reason": "The hole remains in the relevant dependency closure.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-ASSURE-02",
+      "kind": "negative",
+      "sourceOrClaim": "Hiding a native-computation or user axiom in an assumption-free claim",
+      "expectedCategory": "ASSURANCE",
+      "reason": "A tactic spelling does not remove generated assumptions.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-ASSURE-03",
+      "kind": "negative",
+      "sourceOrClaim": "Calling a partial program total because it compiled",
+      "expectedCategory": "ASSURANCE",
+      "reason": "Compilation is not termination evidence.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-ASSURE-04",
+      "kind": "negative",
+      "sourceOrClaim": "Dropping the effects of `erased x ← action`",
+      "expectedCategory": "ASSURANCE/semantic mismatch",
+      "reason": "Erased result is not erased execution.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-ASSURE-05",
+      "kind": "negative",
+      "sourceOrClaim": "Treating extern/implemented_by typing as native correspondence proof",
+      "expectedCategory": "ASSURANCE",
+      "reason": "Implementation behavior is a separate obligation.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-ASSURE-06",
+      "kind": "negative",
+      "sourceOrClaim": "Counting `.lean` pass-through as implemented `.ps` grammar",
+      "expectedCategory": "ASSURANCE/evidence error",
+      "reason": "Different source lanes.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-EXT-01",
+      "kind": "negative",
+      "sourceOrClaim": "Rewriting native quotation tuple calls into PS multiple arguments",
+      "expectedCategory": "semantic mismatch",
+      "reason": "Preserve syntax-data argument partition.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-EXT-02",
+      "kind": "negative",
+      "sourceOrClaim": "Falling back to unrestricted native parsing for malformed host terms",
+      "expectedCategory": "PARSE/semantic mismatch",
+      "reason": "No invisible grammar-contract change.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-EXT-03",
+      "kind": "negative",
+      "sourceOrClaim": "Assuming a name alone registers an attribute/deriving/tactic handler",
+      "expectedCategory": "ENV",
+      "reason": "Actual compatible import/registration is required.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "PS0-N-BOOT-01",
+      "kind": "negative",
+      "sourceOrClaim": "Repeating quotient/bootstrap initialization in an invalid environment",
+      "expectedCategory": "ENV/KERNEL",
+      "reason": "Full capability preserves native preconditions.",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    }
+  ],
+  "boundaryWitnesses": [
+    {
+      "id": "R2-01",
+      "title": "Plain semicolon leaves the second goal",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-02",
+      "title": "Two sequential tactics close two goals",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-03",
+      "title": "Distributing combinator closes both goals",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-04",
+      "title": "Empty and nonempty constructor adapters",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-05",
+      "title": "A Unit field is still a constructor field",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-06",
+      "title": "Native defaults in a nonempty pattern adapter",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-07",
+      "title": "Defaulted fields do not qualify an empty pattern adapter",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-08",
+      "title": "Braced data tails and constructor names",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-09",
+      "title": "Native operand ownership of a custom extension",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-10",
+      "title": "Explicit host operand ownership of a custom extension",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-11",
+      "title": "A host operand cannot fall back to native tuple syntax",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-12",
+      "title": "Explicit syntax bridge from PS capture to native result",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-13",
+      "title": "Quotation ownership is visible to syntax inspection",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-14",
+      "title": "A competing parser cannot override a PS call",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-15",
+      "title": "Record punning and body wrapping differ before coercion",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-16",
+      "title": "Malformed record cannot become a successful body wrapper",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-17",
+      "title": "A record inside a call in a marker-free loop header",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-18",
+      "title": "The same header boundary in if-let",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-19",
+      "title": "Native and comma binders compose in order",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-20",
+      "title": "Function alias keeps its existing telescope restriction",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-21",
+      "title": "Default proof term versus automatic parameter syntax",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-22",
+      "title": "Local record-valued helper has explicit lowering",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-23",
+      "title": "Nested local recursion remains expressible",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-24",
+      "title": "Duplicate named argument uses the allowed phase set",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-25",
+      "title": "Function-valued result preserves strict whole-Pi completion",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-26",
+      "title": "Two Unit binders are not an empty call",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-27",
+      "title": "Named contract and proof-generation positive candidate",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-28",
+      "title": "A false written contract cannot be ordinary completed output",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-29",
+      "title": "Indexing can produce a callable postfix head",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-30",
+      "title": "Explicit universe suffix can precede a PS call",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    },
+    {
+      "id": "R2-31",
+      "title": "Real source gaps are not repaired by normalization",
+      "status": "PENDING",
+      "fixture": null,
+      "qualifiedCommit": null,
+      "ciRun": null
+    }
+  ]
+}
