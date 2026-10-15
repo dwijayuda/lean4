@@ -256,3 +256,33 @@ overall estimated `.ps` readiness **41%** (previous 40%).
 Strict v7 qualification remains **0/181**, pending an observed
 exact-commit Lean 4.35.0 stable build and successful semantic checks.
 The .lean route remains the unrestricted native toolchain.
+
+
+## JS target MVP — source checked, backend still unqualified
+
+The new `build-js` command is a deliberately **small real backend**, not
+a demo that prints a JavaScript example. It has independent Lean modules
+for typed Nat runtime IR, closed source AST lowering, deterministic
+ESM/`.d.ts` emission, and signed VLQ Source Map v3. Runtime Nat values
+use exact nonnegative BigInt with input guards and saturating subtraction.
+The .js/.d.ts/.js.map bundle is staged and published together after the
+existing Lean source elaboration/kernel/`#pscv_gate` succeeds.
+
+The eligible runtime subset is limited to public explicitly typed Nat
+constants/functions, numeric literals, formal Nat variables, parentheses,
+source braced grouping and Nat `+`/`*`/`-`. The backend refuses all
+unhandled constructs, including source modules/imports, instead of
+silently changing semantics. Source code is not emitted until those
+checks succeed. No compiler implementation .js/.mjs files are added.
+
+`tests/js/nat_mvp.ps` and PS0 CI specify checks for JS execution,
+Nat arithmetic beyond 2^53, TypeScript exports, Source Map v3 source
+identity, unsupported-source refusal, deterministic artifacts, staged
+publication and non-overwrite. **These are configured tests but no
+exact-commit Lean 4.35.0 green CI run has been observed**. A typechecked
+Lean source is *not* a proof of JS backend semantic preservation; this
+MVP issues no verified JS certificate.
+
+See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md). The separate PSCV0
+v7 language-feature engineering readiness metric remains **41%**;
+adding a backend is not completing new v7 grammar/semantic families.
