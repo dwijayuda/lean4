@@ -17,3 +17,11 @@ theorem hostTuple : psApply pairSum((20, 22)) = 42 := by rfl
 -- by the PS category lowering bridge unless explicitly passed to it.
 def nativeQuotation : Lean.MacroM (Lean.TSyntax `term) :=
   `(term| addNat 20 22)
+
+// A host-category extension can inspect PS-owned syntax before invoking
+// lower. It is *not* handed an already rewritten native text rendering.
+macro "psHostShape " e:psTerm : term => do
+  unless e.raw.getKind == ``ps0HostAdjacentCall do
+    Lean.Macro.throwError "PS0V1-CATEGORY-02: expected raw host postfix call"
+  `(term| True)
+example : psHostShape addNat(20, 22) := by trivial
