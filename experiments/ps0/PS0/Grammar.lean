@@ -67,6 +67,7 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "PS0.pscvFunction", "PS0.pscvImplicitFunction", "PS0.pscvTheorem",
       "PS0.pscvDefinition", "PS0.pscvFunctionInferred",
       "PS0.pscvDefinitionInferred", "PS0.pscvPrivateFunctionInferred",
+      "PS0.pscvFunctionTermination", "PS0.pscvFunctionTerminationProof",
       "PS0.pscvImplicitFunctionInferred",
       "PS0.pscvTelescopeFunction", "PS0.pscvTelescopeFunctionInferred",
       "PS0.pscvTelescopeDefinition", "PS0.pscvTelescopeDefinitionInferred",
