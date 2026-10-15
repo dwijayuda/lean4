@@ -5,6 +5,7 @@ import Lean.Compiler.LCNF.EmitC
 import PS0.Grammar
 import PS0.Policy
 import PS0.StandardEnv
+import PS0.Backend.Js
 
 /-!
 PS0 standalone Lean-native frontend. Lean performs all declaration elaboration, proof
@@ -234,6 +235,55 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
     if ← stage.pathExists then
       IO.FS.removeDirAll stage
 
+/-- Checked .ps → minimal real JS target. Source is read once; the same
+bytes are checked by official Lean (including #pscv_gate) before selected
+runtime declarations lower into typed IR. Unsupported semantics fail closed.
+This does NOT certify JS backend semantic preservation or arbitrary v7 code. -/
+private def buildJs (path moduleName outputDir : String) : IO UInt32 := do
+  unless path.endsWith ".ps" do
+    IO.eprintln "PS0-JS-INPUT: expected .ps"
+    return 2
+  unless validModuleName moduleName do
+    IO.eprintln "PS0-JS-MODULE: invalid output module name"
+    return 2
+  let raw ← IO.FS.readFile path
+  let (imports, _) ← match ← approvedSource raw path with
+    | .ok x => pure x
+    | .error e => IO.eprintln s!"PS0-JS-HEADER: {e}"; return 1
+  unless imports.isEmpty do
+    IO.eprintln "PS0-JS-IMPORTS: module linkage is not yet implemented"
+    return 1
+  let status ← checkSource path raw
+  if status != 0 then return status
+  initSearchPath (← findSysroot)
+  unsafe enableInitializersExecution
+  let env ← importModules (#[{ module := `PS0.Policy : Import }]) {}
+    (trustLevel := 0) (loadExts := true)
+  -- Parse the ORIGINAL source (not a header-stripped copy) to retain
+  -- exact declaration locations, leading trivia and sourcesContent.
+  let program ← match Backend.Js.lower path raw env options with
+    | .ok p => pure p
+    | .error e => IO.eprintln e; return 1
+  let artifacts := Backend.Js.emit program moduleName
+  let out := System.FilePath.mk outputDir
+  if ← out.pathExists then
+    IO.eprintln s!"PS0-OUTPUT-EXISTS: refusing to replace {out}"
+    return 2
+  let parent := out.parent.getD "."
+  IO.FS.createDirAll parent
+  let nonce ← IO.monoMsNow
+  let stage := parent / s!".ps0-js-stage-{moduleName}-{nonce}"
+  IO.FS.createDir stage
+  try
+    IO.FS.writeFile (stage / s!"{moduleName}.js") artifacts.js
+    IO.FS.writeFile (stage / s!"{moduleName}.d.ts") artifacts.dts
+    IO.FS.writeFile (stage / s!"{moduleName}.js.map") artifacts.jsMap
+    IO.FS.rename stage out
+    IO.println s!"PS0 JS Nat subset emitted (UNCERTIFIED): {out}"
+    return 0
+  finally
+    if ← stage.pathExists then IO.FS.removeDirAll stage
+
 /-- Compile an ordinary .lean module using the *native external Lean
 process*. Do not inject #pscv_gate, PS0.Policy or v7 parser restrictions.
 The native output is not a PSCV0 certificate. -/
@@ -314,9 +364,11 @@ def cli (args : List String) : IO UInt32 := do
           buildUnrestrictedLean path moduleName outputDir
         else
           buildFile path moduleName outputDir
+    | ["build-js", path, moduleName, outputDir] =>
+        buildJs path moduleName outputDir
     | ["syntax-kinds", path] => syntaxKinds path
     | _ =>
-        IO.eprintln "usage: ps0 {environment|module-header FILE.ps|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
+        IO.eprintln "usage: ps0 {environment|module-header FILE.ps|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|build-js FILE.ps ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
         return 2
   catch ex =>
     IO.eprintln s!"PSCV0 error: {ex}"
