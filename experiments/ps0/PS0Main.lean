@@ -87,7 +87,8 @@ tactics, attributes, source imports, and usual unsafe/partial/axiom/sorry rules.
 This output is native Lean, never a PSCV0 verified-source certificate. -/
 private def runUnrestrictedLean (argv : List String) : IO UInt32 := do
   -- Resolve Lean from the installed sysroot, never a different binary on PATH.
-  let native := (← findSysroot) / "bin" / "lean"
+  let executable := if System.Platform.isWindows then "lean.exe" else "lean"
+  let native := (← findSysroot) / "bin" / executable
   let result ← IO.Process.output { cmd := native.toString, args := argv.toArray }
   IO.print result.stdout
   IO.eprint result.stderr
