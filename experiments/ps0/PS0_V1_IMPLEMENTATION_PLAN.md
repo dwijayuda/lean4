@@ -20,7 +20,7 @@ Compile the PS0 Lake package with the exact Lean pin. Run v1 ordinary source tes
 
 ### G1 — Core PS category ownership and lowering
 
-Implement `psTerm`, `psCommand`, `psTactic`, `psDoSeq` and explicit `PS0.Syntax.lower`. Preserve native syntax quotations, distinct DSL categories, and token/source spans. Implement protected PS adjacent calls, strict gap/tuple/Unit completion, type-directed default and named arguments, and the standard operand-slot adaptation registry. No regex transpiler, typechecker fork or silent native fallback.
+Extend the new native-capture foundation `psTerm`, `psCommand`, `psTactic`, `psDoSeq` and `PS0.Syntax.lower` with actual PS-owned host lowering. Preserve native syntax quotations, distinct DSL categories, and token/source spans. Implement protected PS adjacent calls, strict gap/tuple/Unit completion, type-directed default and named arguments, and the standard operand-slot adaptation registry. No regex transpiler, typechecker fork or silent native fallback.
 
 ### G2 — Full declaration, data, recursion, proof and effect families
 
@@ -28,7 +28,7 @@ Adapt native/comma mixed binders without losing order, defaults or automatic par
 
 ### G3 — Modules and effective environment identity
 
-Build a genuine module dependency graph: source-file kinds, cycle/path rejection, import stage, public/meta/all access, exports, names, hidden definition bodies, and native `@[expose]` distinctions. Preserve explicit/implicit module defaults; never inject implicit prelude into a `prelude` source. Record applicable imported registries, axioms, source hashes and effective options.
+Build the full module dependency graph: current check/native build now use official modern Lean headers and imported stages, but source-file kinds, .ps import resolution, cycle/path rejection, complete public-name/body exposure and native `@[expose]` distinctions still need qualification. Preserve explicit/implicit module defaults; never inject implicit prelude into a `prelude` source. Record applicable imported registries, axioms, source hashes and effective options.
 
 ### G4 — Qualified evidence and runtime backends
 
