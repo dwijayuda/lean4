@@ -1,5 +1,17 @@
 # PS0 — AI work state (15 October 2026)
 
+## Instance priorities and complete header candidate suite — 15 October 2026
+
+**Checkpoint preceding this log update:** GitHub branch `feature/ps0-lean435-stable-v1` (read live HEAD before new writes). Draft PR #5, do not merge until qualification.
+
+- Studied official pinned Lean `src/Lean/Parser/Command.lean` `namedPrio` and the `instance` parser, `src/Lean/Parser/Attr.lean` `priorityParser` and numeric priority parser. **Lean** owns actual numeric/named-priority semantics and class resolution. No PS0 typeclass engine was written.
+- Added four source-only `.ps` adapter commands for priority-bearing anonymous/named instances with/without ordered parameter telescopes. The source forms emit ordinary native Lean `instance (priority := ...) ... := record` after profile admission. `.lean` continues using unrestricted Lean native syntax.
+- Added `tests/pass/instance_priority.ps` for named priority `high`/`low`, numeric priority `750` and parametric instances. Added manual native Lean correspondence source `tests/lean/instance_priority_reference.lean`, and negative priority-expression/unknown-name source cases. The pinned native priority parser, rather than a second PS0 priority evaluator, determines permissible native priority atoms.
+- Added negative v7 instance header fixtures for missing class type, forbidden empty group, and adjacent explicit groups. Their expected outcomes are indexed in `v7-coverage.json`; CI checks all candidate header/priority cases. **Do not count rejected source purely because of an unrelated parser or type error**; phase-specific assertion still remains incomplete for the newest malformed header cases.
+- Source/CI edits are **unqualified**: no successful exact-commit Lean 4.35.0 GitHub Actions run was independently retrieved. Verify parser quotations/overlap and first compilation failure before declaring this family complete.
+- Candidate v7 source-ID links now total **32/150**, with all 181 normative + audit rows still unqualified. Estimated twenty-family `.ps` implementation readiness stays **40%**; the classes/instance/deriving family remains 3/5, not 4/5 until broader runtime/registry acceptance and CI. Strict qualified coverage **0/181 = 0%**.
+- Next critical path: independently obtain real stable build logs; resolve source/parser priority category mismatches first if any; complete frozen priority ordering/instance environment roster, then `.ps` modules/visibility and the full acceptance matrix. Keep native `.lean` unrestricted.
+
 ## Braced instance family — 15 October 2026
 
 PS0 implementation continued under draft PR #5. Read current live HEAD before
