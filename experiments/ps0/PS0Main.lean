@@ -81,6 +81,16 @@ private def checkSource (path source : String) : IO UInt32 := do
   IO.println "PSCV0: Lean checking passed (UNCERTIFIED)"
   return 0
 
+/-- Run ordinary .lean with the official external Lean executable, not through
+PS0.Policy or PS0.Syntax. An OS child process gives Lean its unmodified parser,
+tactics, attributes, source imports, and usual unsafe/partial/axiom/sorry rules.
+This output is native Lean, never a PSCV0 verified-source certificate. -/
+private def runUnrestrictedLean (argv : List String) : IO UInt32 := do
+  let result ← IO.Process.output { cmd := "lean", args := argv.toArray }
+  IO.print result.stdout
+  IO.eprint result.stderr
+  return result.exitCode
+
 private def checkFile (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
     IO.eprintln "PS0 expects a .ps source file"
@@ -160,6 +170,40 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
     if ← stage.pathExists then
       IO.FS.removeDirAll stage
 
+/-- Compile an ordinary .lean module using the *native external Lean
+process*. Do not inject #pscv_gate, PS0.Policy or v7 parser restrictions.
+The native output is not a PSCV0 certificate. -/
+private def buildUnrestrictedLean (path moduleName outputDir : String) : IO UInt32 := do
+  unless path.endsWith ".lean" do
+    IO.eprintln "PS0-LEAN-INPUT: expected .lean"
+    return 2
+  unless validModuleName moduleName do
+    IO.eprintln "PS0-LEAN-MODULE: invalid native module name"
+    return 2
+  let out := System.FilePath.mk outputDir
+  if ← out.pathExists then
+    IO.eprintln s!"PS0-OUTPUT-EXISTS: refusing to replace {out}"
+    return 2
+  let parent := out.parent.getD "."
+  IO.FS.createDirAll parent
+  -- This is a host output-safety policy, not a restriction on Lean source.
+  let stage ← IO.FS.createTempDir
+  try
+    let olean := stage / s!"{moduleName}.olean"
+    let c := stage / s!"{moduleName}.c"
+    let status ← runUnrestrictedLean
+      ["-o", olean.toString, "-c", c.toString, path]
+    if status != 0 then return status
+    if !(← olean.pathExists) || !(← c.pathExists) then
+      IO.eprintln "PS0-LEAN-NATIVE-ARTIFACT-MISSING"
+      return 1
+    IO.FS.rename stage out
+    IO.println s!"PS0 native Lean bundle (ordinary Lean semantics): {out}"
+    return 0
+  finally
+    if ← stage.pathExists then
+      IO.FS.removeDirAll stage
+
 private def syntaxKinds (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
     IO.eprintln "PS0 expects a .ps source file"
@@ -191,11 +235,20 @@ def cli (args : List String) : IO UInt32 := do
     | ["environment"] => do
         IO.println StandardEnv.manifest.pretty
         return 0
-    | ["check", path] => checkFile path
-    | ["build", path, moduleName, outputDir] => buildFile path moduleName outputDir
+    | "lean" :: nativeArgs => runUnrestrictedLean nativeArgs
+    | ["check", path] =>
+        if path.endsWith ".lean" then
+          runUnrestrictedLean [path]
+        else
+          checkFile path
+    | ["build", path, moduleName, outputDir] =>
+        if path.endsWith ".lean" then
+          buildUnrestrictedLean path moduleName outputDir
+        else
+          buildFile path moduleName outputDir
     | ["syntax-kinds", path] => syntaxKinds path
     | _ =>
-        IO.eprintln "usage: ps0 {environment|check FILE.ps|build FILE.ps ModuleName OUTPUT_DIR|syntax-kinds FILE.ps}"
+        IO.eprintln "usage: ps0 {environment|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
         return 2
   catch ex =>
     IO.eprintln s!"PSCV0 error: {ex}"
