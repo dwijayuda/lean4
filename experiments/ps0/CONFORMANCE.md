@@ -66,3 +66,35 @@ CI run and corresponding positive or phase-specific negative fixture.
 The inventory has candidate fixture references for ten cases; these links are
 not PASS evidence. All 181 tracked requirements currently remain PENDING and
 `--require-complete` must fail until a fully qualified exact-commit v7 run exists.
+
+## Source-language isolation — `.ps` restricted, `.lean` unrestricted
+
+**Policy decision (15 October 2026): PSCV0 v7 applies ONLY to `.ps`.**
+Ordinary `.lean` is not a source dialect of PSCV0 and must remain full
+official Lean 4.35.0. PS0 now routes `check *.lean`, `build *.lean` and
+`lean ...` through a **separate native Lean OS process** resolved from the
+exact pinned sysroot. It does not inject `PS0.Policy`, `PS0.Syntax`,
+`#pscv_gate` or the selected v7 Standard into native Lean.
+
+The standalone native fixture
+[tests/lean/unrestricted.lean](tests/lean/unrestricted.lean) contains native
+`axiom`, `unsafe`, `partial`, `sorry`, and unrestricted `#eval` with
+`IO.println`. CI checks both the direct native pass-through and the
+`.lean` check/build routes, including C and olean output. In contrast,
+new `.ps` negative fixtures for source axiom and partial join the existing
+unsafe/sorry refusals. **Not qualified yet**: stable-4.35 exact-commit CI
+has not been observed succeeding in this conversation.
+
+Separate language semantics from build publication policy: the wrapper
+still avoids overwriting existing native bundles, but restricts no valid
+Lean language feature. For arbitrary native Lean CLI flags use
+`ps0 lean ...` directly. Mixed `.ps` importing `.lean` will require
+explicit imported-assumption/effect obligations at the `.ps` boundary;
+the native file remains unrestricted. See
+[SOURCE_PROFILE_BOUNDARY.md](SOURCE_PROFILE_BOUNDARY.md).
+
+**Percentage treatment:** this does not increase `.ps` feature readiness
+(the existing 37% heuristic) or strict PSCV0 v7 qualified acceptance
+(0/181). Lean already had full expressive power; PS0 is preserving it
+rather than implementing those features as ProofScript capabilities.
+
