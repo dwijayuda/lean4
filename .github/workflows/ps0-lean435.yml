@@ -325,6 +325,62 @@ jobs:
             test ! -e build/rejected
             test -z "$(find build -type d -name '.ps0-stage-*' -print -quit)"
           done
+      - name: Qualify minimal Lean-native JS backend
+        run: |
+          set -euo pipefail
+          lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat
+          test -s build/js-nat/NatMvp.js
+          test -s build/js-nat/NatMvp.d.ts
+          test -s build/js-nat/NatMvp.js.map
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("build/js-nat")
+          js=(root/"NatMvp.js").read_text()
+          dts=(root/"NatMvp.d.ts").read_text()
+          sm=json.loads((root/"NatMvp.js.map").read_text())
+          assert sm["version"]==3 and sm["file"]=="NatMvp.js"
+          assert sm["sources"]==["tests/js/nat_mvp.ps"]
+          assert sm["sourcesContent"]==[Path("tests/js/nat_mvp.ps").read_text()]
+          assert len(sm["mappings"].split(";")) == len(js.splitlines())
+          assert "sourceMappingURL=NatMvp.js.map" in js
+          for name in ("add","multiply","subtract","clock"):
+              assert ("export declare function "+name+"(") in dts
+          assert "export declare const bigValue: bigint;" in dts
+          print("PS0_JS_DTS_SOURCEMAP: PASS")
+          PY
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import assert from "node:assert/strict";
+            const source = fs.readFileSync("build/js-nat/NatMvp.js", "base64");
+            const m = await import("data:text/javascript;base64," + source);
+            assert.equal(m.bigValue, 9007199254740993n);
+            assert.equal(m.add(9007199254740993n, 11n), 9007199254741004n);
+            assert.equal(m.multiply(9007199254740993n, 3n), 27021597764222979n);
+            assert.equal(m.subtract(2n, 9n), 0n);
+            assert.equal(m.subtract(9n, 2n), 7n);
+            assert.equal(m.clock(), 42n);
+            assert.throws(() => m.add(-1n, 1n), TypeError);
+            assert.throws(() => m.add(1, 1n), TypeError);
+            console.log("PS0_JS_BIGINT_RUNTIME: PASS");
+          '
+          for fixture in unsupported_type.ps unsupported_expression.ps unsupported_import.ps; do
+            rm -rf build/js-refused
+            if lake exe ps0 build-js "tests/js/$fixture" Refused build/js-refused > js-negative.log 2>&1; then
+              cat js-negative.log
+              echo "JS backend accepted unsupported source: $fixture"
+              exit 1
+            fi
+            test ! -e build/js-refused
+          done
+          sha256sum build/js-nat/NatMvp.js build/js-nat/NatMvp.d.ts build/js-nat/NatMvp.js.map > js-published.sha256
+          if lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat > js-overwrite.log 2>&1; then
+            echo 'JS backend overwrote an existing artifact bundle'
+            exit 1
+          fi
+          grep -F PS0-OUTPUT-EXISTS js-overwrite.log
+          sha256sum -c js-published.sha256
+          test -z "$(find build -type d -name '.ps0-js-stage-*' -print -quit)"
       - name: Qualify native code and standalone linked executable
         run: |
           set -euo pipefail
