@@ -1,5 +1,19 @@
 # PS0 — AI work state (15 October 2026)
 
+## PS0-03 implicit modules and export/import metadata — 15 October 2026
+
+**Implementation checkpoint preceding this update:** `80d2ceb23dde531973ab60d2229c6856609573c2`. Always inspect the live PR #5 HEAD before further writes.
+
+- The v7 `PSCV0-MODULE-01/02` reference requires **implicit** `.ps` modules: users do not write the `module` keyword. A plain `import M` is private, while `public import M` re-exports its public scope. This contrasts with legacy Lean, where plain imports are transitive/public.
+- Inspected exact official Lean 4.35.0 source at `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`: `src/Lean/Parser/Module.lean`, `src/Lean/Elab/Import.lean`. `HeaderSyntax.imports` computes `isExported` as the source public flag or a legacy/non-module header.
+- `PS0Main.lean` now runs the pinned native header parser with a synthetic `module\n` prefix (parser input only), then subtracts the injected UTF-8 prefix to recover the original source command-body boundary. An explicitly written source `module` is refused. This also corrects the diagnostic-order bug whereby Lean's legacy parser rejection of `public import`/`meta import`/`import all` masked the selected v7 source-policy diagnostics.
+- Implemented the read-only `ps0 module-header FILE.ps` JSON command, exposing `is_module`, `implicit_module` and the precise native import `public`/`meta`/`all` flags. It explicitly advertises `compile_ready=false`: this is a project-graph primitive, **not** full v7 module semantics.
+- **Emission remains fail-closed:** `ps0 build` refuses `.ps` sources with imports (`PSCV0-MODULE-BUILD-PENDING`), avoiding incorrect legacy re-export behavior until real module mode, public-by-default source declarations, hidden bodies and imported proof/spec/effect closure can be implemented. Source-only `check`/header introspection remain unqualified analytical operations.
+- Added header fixtures for private/plain vs public imports, allowed metadata inspection of meta imports (without compilation), explicit source-module rejection, and a Unicode post-header body-offset regression. CI asserts actual Lean-derived flags, expected negative reasons and no published native artifacts for unsupported imports.
+- The project-modules feature family advances **0/5 → 1/5 (foundation only)**. Estimated overall `.ps` language readiness **41%** (previous 40%). Strict conformance **0/181** until a successful exact-commit Lean 4.35.0 build/semantic CI is observed. Ordinary `.lean` remains fully unrestricted.
+
+**Immediate next task:** qualify this exact branch against actual official stable Lean CI, then implement *real* module graph/visibility lowering (`module`/`public section` in generated Lean), import-closure and public-name/hidden-body proofs. Never claim those are implemented from header metadata alone.
+
 ## Priority ordering and acceptance checkpoint — 15 October 2026
 
 - Last inspected implementation HEAD before this state update: `29d2efbfab2fda271cc5a0de364174ec6b54a439`. Re-read the live branch before subsequent edits.
