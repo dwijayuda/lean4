@@ -1046,7 +1046,9 @@
       "qualifiedCommit": null,
       "ciRun": null,
       "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
-      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
+      "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
     },
     {
       "id": "PS0-P-CALL-02",
@@ -1083,7 +1085,9 @@
       "qualifiedCommit": null,
       "ciRun": null,
       "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
-      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
+      "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
     },
     {
       "id": "PS0-P-CALL-05",
@@ -1105,7 +1109,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
     },
     {
       "id": "PS0-P-CALL-07",
@@ -1116,7 +1122,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
     },
     {
       "id": "PS0-P-CALL-08",
@@ -1738,7 +1746,9 @@
       "qualifiedCommit": null,
       "ciRun": null,
       "fixtureCandidate": "tests/v1/host_call_named_then_positional.ps",
-      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
+      "standardHostOperandFixture": "tests/v1/standard_host_order_negative.ps",
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
     },
     {
       "id": "PS0-N-CALL-10",
@@ -1751,7 +1761,9 @@
       "qualifiedCommit": null,
       "ciRun": null,
       "fixtureCandidate": "tests/v1/host_call_duplicate_named.ps",
-      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
+      "standardHostOperandFixture": "tests/v1/standard_host_duplicate_negative.ps",
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
     },
     {
       "id": "PS0-N-CALL-11",
@@ -1773,7 +1785,9 @@
       "status": "PENDING",
       "fixture": null,
       "qualifiedCommit": null,
-      "ciRun": null
+      "ciRun": null,
+      "standardHostOperandFixture": "tests/v1/standard_host_call_comma_negative.ps",
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
     },
     {
       "id": "PS0-N-BIND-01",
