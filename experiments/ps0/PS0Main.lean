@@ -135,25 +135,20 @@ private def inspectModuleHeader (path : String) : IO UInt32 := do
     independently parsed IR without retaining the accepted Lean environment. -/
 private def checkSourceEnvironment (path source : String) :
     IO (Option Environment) := do
-  let (approved, body) ← match ← approvedSource source path with
-    | .ok v => pure v
+  let frontendSource ← match ← preparedPsModule source path with
+    | .ok text => pure text
     | .error err =>
-        IO.eprintln s!"PS0V1 source-profile error: {err}"
+        IO.eprintln s!"PS0V1 source-profile implementation error: {err}"
         return none
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  let env ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
-    (trustLevel := 0) (loadExts := true)
-  -- PS0 v1 grammar can change after each registered syntax/elab command.
-  -- Lean's interleaved elaboration is authoritative; a frozen-source
-  -- syntax audit cannot decide the full import-driven language.
-  let (checked, messages) ← Elab.process (body ++ "\n\n#ps0_evidence\n")
-    env options (some path)
-  for msg in messages.markAllReported.reported do
-    IO.eprintln (← msg.toString)
-  if messages.hasErrors then
-    IO.eprintln "PS0V1: Lean checking failed; no artifacts emitted"
-    return none
+  -- Official runFrontend recognizes modern module headers, import stages
+  -- and interleaved changes to syntax/macro/elaborator registrations.
+  -- Checking does not write an olean or executable artifact.
+  let some checked ← Elab.runFrontend frontendSource options path
+      `PS0_SourceCheck (trustLevel := 0)
+    | IO.eprintln "PS0V1: official Lean module frontend rejected source"
+      return none
   return some checked
 
 private def checkSource (path source : String) : IO UInt32 := do
