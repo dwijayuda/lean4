@@ -1,6 +1,6 @@
 -- PS0V1-CALL-ORDER: only named arguments may follow the first named.
 macro "psApply " e:psTerm : term => do
-  let syntax ← PS0.Syntax.lower `psTerm e.raw
-  return ⟨syntax⟩
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  return ⟨lowered⟩
 def addNat (x y : Nat) : Nat := x + y
 #check psApply addNat(x := 20, 22)
