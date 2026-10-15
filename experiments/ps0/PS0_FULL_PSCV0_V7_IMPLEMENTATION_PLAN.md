@@ -370,3 +370,13 @@ At each coherent checkpoint: inspect current branch HEAD/CI before writes; prese
 - The official Lean contract implementation synthesizes `f.spec` with `vcgen`; an actual checkable theorem is the authority, **not** the presence of the keyword `ensures`.
 
 **Plan/research evidence limit:** this document reflects inspected GitHub sources and official pinned Lean implementation, **not** a new stable PS0 CI pass, full v7 translator proof, complete environment registry, or formal semantics-preserving native compiler. Those results must be generated and inspected before the corresponding claims are promoted.
+
+### Machine-readable implementation update (15 October 2026)
+
+The [v7 conformance inventory](v7-coverage.json) has been committed with **150
+normative `13` IDs** (72 positive and 78 negative) and **31 additional audit IDs**
+(E1–E4, F01–F22, C01–C05). A standalone Node validator in
+`scripts/validate-v7-coverage.mjs` runs in PS0 CI. No case has been promoted to
+PASS without exact-commit CI; `--require-complete` currently intentionally
+refuses. This is conformance infrastructure, **not proof that v7 features have
+been fully implemented**.
