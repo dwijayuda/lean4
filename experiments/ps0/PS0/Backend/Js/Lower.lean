@@ -3,7 +3,7 @@ import PS0.Grammar
 import PS0.Backend.Js.IR
 
 /-!
-Selected v7 source AST -> typed portable runtime IR.
+Selected PS0 v1 source AST -> typed portable runtime IR.
 This is NOT regex/string transpilation and never runs without a successful
 official Lean elaboration plus PS0 proof/assumption preflight in PS0Main.
 For now accept only exact explicit Nat signatures and straight-line Nat
