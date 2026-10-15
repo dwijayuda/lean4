@@ -48,7 +48,7 @@ It typechecks and applies the existing `.ps` policy before emitting:
 The resulting bundle contains `NatMvp.js` (ESM), `NatMvp.d.ts`
 (TypeScript declarations), and `NatMvp.js.map` (Source Map v3,
 signed Base64-VLQ declaration mappings). The initial runtime fragment
-is publicly exported `Nat` constants and straight-line `Nat` functions
+is publicly exported `Nat` constants and selected `Nat` functions
 (literals, explicit Nat parameters, `+`, `*` and saturating `-`).
 `Nat` values are exact JS `bigint` and runtime inputs are guarded as
 nonnegative bigints. Everything else — including module imports,
