@@ -1,194 +1,106 @@
 # PS0 — AI Work State (16 October 2026)
 
-## Host psTerm adjacent-call lowering — 16 October 2026
+## Repository and authority
 
-- Continued PS0 v1 `0B` architecture with a first PS-owned
-  `psCallArg` category and source `ps0HostAdjacentCall` production.
-  The production uses native `noWs` adjacency and takes a
-  nonempty identifier-head parameter list.
-- `PS0.Syntax.lower` now recognizes the PS-owned call and recursively
-  lowers its host operands to a genuine native Lean application node,
-  preserving curried argument order and named arguments. It rejects
-  duplicate names and positional-after-named source arguments.
-  Native captured subtrees and native quotations stay unmodified.
-- Added `tests/v1/host_postfix_calls.ps` with native semantic
-  oracles for positional/nested/named/tuple calls and a macro
-  verifying the raw host call AST is visible *before* lowering.
-  Added malformed named-call source tests and exact-diagnostic CI
-  expectations.
-- Linked 5 additional positive/negative `v1-coverage.json`
-  acceptance cases to the new fixtures, all `PENDING` and explicitly
-  scoped to host-category extension contexts. The previous 5
-  candidates and all remaining 242-row inventory remain unqualified.
-- **Limit:** standard native declaration, tactic and do-term
-  operand slots have not yet been systematically converted to
-  `psTerm`. Arbitrary postfix heads, empty call completion inside
-  this host bridge, trailing comma, native-adapter mapping,
-  source-position proofs and parser ambiguity normalization are
-  not complete. Existing PS term macros are not a substitute for
-  that extension-level contract.
-- **Qualification:** no exact-commit successful Lean 4.35.0
-  PS0 run has been observed. This is committed source and test
-  definitions, not a measured completion percentage.
+- Repository: `dwijayuda/lean4`.
+- Branch: `feature/ps0-lean435-stable-v1`; draft PR #5.
+- This continuation began at `99c825d01eac4a15025974213afb6440232d7da6`.
+- Latest code/workflow checkpoint before this state update:
+  `6120a40370fba616c77449137352d8530e781dff`.
+- Re-read live HEAD before further writes. No force-push, merge or branch deletion.
+- Sole language authority: `PS0_V1_LANGUAGE_REFERENCE.md`, PS0 v1 R2,
+  Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
+- Official Lean semantic pin: 4.35.0,
+  `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
+- PSCV0 v7 is superseded without backward compatibility. Its 41% estimate
+  and 181-item ledger must not be reused for v1.
+- Keep the independent PSC0 compiler and historical PSCVL experiment unchanged.
+  Ordinary `.lean` remains native and unrestricted.
 
-**Next:** qualify the host-call parse/quotation API against real
-Lean 4.35.0 CI logs, correct family-level source syntax defects, then
-map pinned native standard operand sites to the host categories
-without transforming separately-owned DSL syntax.
+## This continuation: real host-category implementation and fixture repairs
 
-## New implementation checkpoint — 16 October 2026
+1. `PS0/HostCategories.lean` now gives the owned adjacent-call production
+   higher parser priority than the native-capture bridge for an equal input
+   span. Unresolved `choice` nodes are explicitly refused by the lowerer;
+   this is not a complete ambiguity-coalescing implementation.
+2. Nonempty host calls now use pinned Lean's
+   `sepBy1(psCallArg, ",", allowTrailingSep)` grammar. One trailing comma
+   is allowed without manufacturing an extra argument. Comma-only and
+   repeated-comma inputs have negative regression fixtures.
+3. Generated native application nodes retain the complete source-call range
+   as **synthetic** source info. Native captured subtrees are returned
+   unchanged. This improves diagnostic provenance but does not prove a
+   source-fidelity claim or validate fabricated syntax provenance.
+4. Fixed concrete regression-fixture problems: C-style `//` comments in a
+   purported positive `.ps` fixture, a macro returning raw `Syntax` where
+   the native macro command expects `TSyntax term`, and reserved-looking
+   local names. Test setup must succeed before a language rejection is
+   meaningful.
+5. Strengthened the positive host fixture with checked examples for nested,
+   named, tuple, partial and trailing-comma calls. A macro inspects the raw
+   host syntax, native application argument count and original source range.
+   Native capture identity is checked with Lean's `Syntax.eqWithInfo`.
+6. Added `tests/run-host-categories.sh` and the independent
+   `.github/workflows/ps0-host-categories.yml` job. It checks the exact
+   Lean git hash, builds only `+PS0.HostCategories`, and runs the same
+   committed fixtures through a minimal native harness. This isolates
+   component failures from unfinished PS0.Syntax/CLI/JS backend work.
+   It checks 2 positive fixtures and 4 intended negative fixtures, retains
+   diagnostic logs as a workflow artifact, and does not replace full PS0 CI.
 
-- **Actual work committed:** `PS0/HostCategories.lean` defines the four
-  concrete v1 extension-category names (`psTerm`, `psCommand`,
-  `psTactic`, `psDoSeq`) plus an initial `PS0.Syntax.lower`
-  meta-stage bridge for native-compatible captures. It returns
-  the original syntax tree unchanged rather than printing/reparsing
-  expressions or recursively modifying quotations/DSLs.
-  PS-owned postfix call/category adaptation remains a significant
-  next feature. This is **foundation, not full §0B§ closure**.
-- Source admission `check FILE.ps` now passes a modern Lean module,
-  reconstructed from its exact native header AST, to official
-  `Elab.runFrontend`. It preserves `public`, `meta` and `all`
-  import flags; native grammar extensions are interleaved with
-  elaboration. Headerless sources are wrapped in `public section`
-  while an explicitly written `module` retains native visibility.
-- Native `build FILE.ps ...` also consumes that modern module
-  input. Existing Lean-native import dependencies may now
-  produce the requested native module without conversion to
-  legacy/re-exported imports. Complete source origins, .ps project
-  import resolution, module graph reproducibility and checked
-  artifact provenance remain unqualified.
-- Actual v1 `prelude` is **valid by specification** but cannot yet
-  be compiled by this frontend without PS0's current policy/module
-  source dependency importing full Lean/Init. The frontend now
-  refuses that unsupported *implementation* path with the explicit
-  `PS0V1-PRELUDE-PENDING` diagnostic instead of violating native
-  bootstrap semantics.
-- Added `tests/v1/host_category_bridge.ps`,
-  `implicit_public_module.ps`, `explicit_private_module.ps` and
-  `prelude_implementation_pending.ps`, and candidate CI checks for
-  actual parsed module flags, native module emission, the category
-  bridge and the prelude refusal.
-- Five applicable v1 source/feature requirements have **candidate**
-  fixtures in `v1-coverage.json`; statuses remain `PENDING`.
-  CI accepts a future `PASS` only with a fixture and actual
-  commit/run evidence. **0 of 242 currently qualified**, not a
-  measured feature implementation percentage.
-- All work stays under `experiments/ps0/**` and its single CI
-  workflow. Ordinary `.lean` still routes through the unmodified
-  external Lean compiler. The independent PSC0 compiler and
-  historical PSCVL experiment remain untouched.
+## Evidence obtained, not inferred
 
-**Next:** obtain real stable Lean 4.35.0 CI/build diagnostics and
-fix actual compilation/API mismatches, then complete owned PS host
-operand dispatch and `PS0.Syntax.lower` (including calls and
-residual empty-call elaboration) without flattening native quotation
-syntax. Fully implement v1 prelude isolation and project graphs.
+- Confirmed GitHub reads and successful file-update/create commit responses.
+- `bash -n tests/run-host-categories.sh`: PASS in the working container.
+- Focused workflow YAML parse and job-configuration assertions: PASS locally.
+- Lean/Lake execution: NOT RUN successfully. Neither executable is installed
+  in the working container, public GitHub DNS resolution failed, and the
+  separate download attempt did not supply a toolchain.
+- The branch-wide Actions GET at the starting checkpoint returned
+  `total_count: 0`. This query did not filter to pull-request events.
+- No Lean compilation, kernel proof, JS runtime, or exact-commit full PS0
+  conformance PASS has been claimed. The new workflow is a test definition
+  until an actual run and its logs are inspected.
+- `v1-coverage.json` was not promoted or rescaled: its 242 requirements and
+  existing candidate links retain their previous qualification status.
+  Adding a fixture or parser rule is not a new conformance percentage.
 
-## Authoritative language edition
+## Current architecture carried forward
 
-**PS0 v1 R2** is now the sole normative programming-language target.
-The user's complete uploaded 4,163-line Markdown reference was
-installed **byte-for-byte** as
-[PS0_V1_LANGUAGE_REFERENCE.md](PS0_V1_LANGUAGE_REFERENCE.md).
-Its exact Git blob is
-`c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
+- Four explicit extension categories exist: `psTerm`, `psCommand`,
+  `psTactic`, `psDoSeq`, with `PS0.Syntax.lower` as the explicit bridge.
+- Owned nonempty identifier-head calls work by syntactic lowering to the
+  native Lean application AST; positional/named ordering is enforced.
+- Full standard declaration, proof, tactic and do operand slots are NOT
+  systematically mapped to host categories. Native term macros do not
+  establish the complete v1 category contract.
+- `check` and native `build` prepare modern Lean modules, preserve imported
+  public/meta/all flags, and give implicit `.ps` modules public-name defaults.
+  Full mixed-source module graphs, body exposure and source-origin fidelity
+  remain unqualified.
+- `prelude` is valid v1 source. The current implementation explicitly refuses
+  its unsupported bootstrap path rather than secretly importing Init.
+- `#ps0_evidence` is informational, not a policy approval or certificate.
+  Native axioms, unsafe/partial source, IO, extensions and development holes
+  are not globally banned by the v1 language.
+- The all-Lean JS backend remains a bounded Nat/BigInt implementation with
+  typed IR, `.js`, `.d.ts` and Source Map v3 output. Full runtime preservation
+  and wider language/backend support are still unqualified.
 
-Official Lean semantic pin remains **4.35.0**,
-`eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
+## Next implementation priorities
 
-The PS0 reference supersedes PSCV0 v7 **without backward compatibility,
-normative fallback, or inherited v7 profile restrictions**.
-The independent compiler `dwijayuda/pskernel` and the prior
-`experiments/pscv0-lean-native` experiment remain unchanged.
+1. Inspect the new focused host-category workflow. Fix its first real
+   compiler/parser/quotation failure before expanding this component again.
+   A green focused job is only component evidence, not full `.ps` conformance.
+2. Run full `ps0-lean435.yml` and fix blocking API/grammar errors by coherent
+   families. Keep negative tests tied to their intended diagnostic.
+3. Implement the pinned standard host operand-slot map without entering
+   native quotations, independently owned extensions or DSL syntax.
+4. Complete generalized high-postfix heads, host empty-call completion,
+   host-gap rejection without native fallback, and ambiguity coalescence.
+5. Complete bootstrap isolation, actual project graphs/public-body exposure,
+   imported registration identity and claim-specific assurance.
 
-## Current branch, PR, safety
-
-- Repository: `dwijayuda/lean4`
-- Branch: `feature/ps0-lean435-stable-v1`
-- Draft PR: [#5](https://github.com/dwijayuda/lean4/pull/5)
-- Re-read live GitHub HEAD before any future write; preserve history
-  and do not merge/force-push without an explicit request.
-
-## Work implemented in this migration
-
-1. Replaced the existing smaller `PS0_V1_LANGUAGE_REFERENCE.md` with
-   the exact uploaded standalone R2 language document.
-2. Replaced frozen v7 grammar-command/attribute/keyword exclusions with
-   native registered grammar and a **diagnostic-only** static
-   syntax-kind inspector. Official Lean's interleaved
-   parse/elaboration is the language-checking authority.
-3. Replaced the blanket v7 proof gate with informational
-   `#ps0_evidence`. Ordinary `axiom`, `unsafe`, `partial`, IO,
-   native meta features and development `sorry` are language
-   capabilities; this reporting command issues no verification claims.
-4. Updated source headers to admit written native `module` and
-   implicit headerless modules with distinct source visibility
-   defaults. Imports are no longer governed by a v7 Standard allowlist.
-   Full module export, public-body/exposure and prelude semantics
-   are still unfinished.
-5. Changed instance-priority source adapters to use registered
-   Lean priority grammar rather than a closed named list.
-6. Replaced `PS0_STANDARD_ENV.json` and `PS0/StandardEnv.lean`
-   finite allowlist metadata with a v1 environment-identity
-   placeholder. A complete imported registration digest is
-   still required for reproducible stronger claims.
-7. Created `v1-coverage.json` from the new reference, covering
-   **100** capability families, **64** positive source cases,
-   **47** negative source/disallowed-claim cases, and **31** R2
-   boundary witnesses: **242** requirements, all `PENDING`
-   qualification.
-8. Added selected native-capability v1 source candidates under
-   `tests/v1` and replaced active CI v7 acceptance tests with
-   v1 source/registry and bounded JS backend checks.
-9. Wrote [PS0_V1_IMPLEMENTATION_PLAN.md](PS0_V1_IMPLEMENTATION_PLAN.md)
-   and updated README, CONFORMANCE and SOURCE_PROFILE_BOUNDARY.
-
-## Important limitations and known gaps
-
-- No exact-commit, successful Lean 4.35.0 PS0 CI run has been
-  independently observed. **Do not claim the compiler is green.**
-- The full `psTerm`, `psCommand`, `psTactic`, `psDoSeq`
-  category architecture and `PS0.Syntax.lower` normalizer
-  remain unimplemented. This is the main language-completeness gap.
-- The actual frontend currently imports `PS0.Policy` as a host
-  parsing environment, so the v1 `prelude` guarantee of
-  **no hidden ordinary/meta Init** requires further architectural
-  separation and targeted qualification.
-- Public-by-default names, actual native modern-module compilation,
-  exported body transparency and mixed `.ps`/`.lean` graphs
-  are not yet fully implemented. Import-era native emission may
-  still refuse unsupported paths; that is a compiler limitation,
-  **not** a v1 source-language ban.
-- The old source adapter code contains some internal `pscv*`
-  identifiers, but these are historical *implementation names*
-  only. No v7 semantics or v7 admission policy should be inferred
-  from their spelling. Refactor them cleanly when adapting
-  the host-category grammar.
-- The Lean-native Nat-only JS backend remains a selected
-  executable backend subset. Its unsupported types and effects
-  do not narrow the PS0 v1 source-language definition.
-  JS correctness/semantics-preservation remains unqualified.
-- **No v1 completion percentage is established.** The former
-  41% estimate and 181-case v7 ledger are retired. The new
-  242-item registry is a requirements inventory, not a test PASS
-  count or measured implementation percentage.
-
-## Next critical implementation work
-
-1. Obtain the actual official 4.35.0 build result; fix API/grammar
-   compile errors at the family level. Test the new native
-   v1 source cases and basic JS backend.
-2. Implement native-vs-PS category ownership and the `PS0.Syntax.lower`
-   meta interface without losing syntax data or provenance.
-3. Implement source call/brace/binder/record ownership, the PS
-   extension dispatch boundary and exact v1 negative oracles.
-4. Complete module/stage/import/public-body behavior and
-   prelude isolation via pinned Lean module APIs.
-5. Expand native language families, effect/erasure/contract
-   support and claim-specific assurance `12`, then qualify
-   v1-coverage entries one by one with real CI evidence.
-
-No background work, implicit approval policy, certification or
-verified-runtime result has been promised. All committed work
-remains on the draft branch.
+Do not mark a v1 requirement PASS without the exact fixture, source/compiler
+identity, intended semantic or diagnostic oracle, and inspected CI evidence.
+Earlier development narrative is retained in Git history.
