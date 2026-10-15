@@ -36,10 +36,10 @@ private def approvedSource (src filename : String) :
   -- translation. Lean treats all imports in legacy modules as exported, so
   -- inspecting Import.isExported alone cannot distinguish the written forms.
   match header with
-  | `(Parser.Module.header| $[module%$_]? $[prelude%$_]? $importStx*) =>
+  | `(Parser.Module.header| $[module%$moduleTk]? $[prelude%$preludeTk]? $importStx*) =>
     for imp in importStx do
       match imp with
-      | `(Parser.Module.import| $[public%$publicTk]? $[meta%$_]? import $[all%$_]? $_) =>
+      | `(Parser.Module.import| $[public%$publicTk]? $[meta%$metaTk]? import $[all%$allTk]? $name) =>
         if publicTk.isSome then
           return .error "PSCV0-MODULE-PUBLIC-IMPORT-PENDING"
       | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
