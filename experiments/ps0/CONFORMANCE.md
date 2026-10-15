@@ -207,3 +207,52 @@ rejects at its specified phase. The source atom allowlist is now
 explicit, while the frozen imported instance/priority registry and
 exact semantic correspondence remain unfinished. Language implementation readiness remains **40%**, not 41%
 merely for adding another syntax variant.
+
+
+## PS0-03 — implicit v7 module parser and import metadata (candidate)
+
+**Normative source rule:** A `.ps` file is *implicitly* a module.
+Users do not write `module`. Plain `import M` is module-private;
+`public import M` re-exports M's public scope. This differs from
+official Lean's *legacy* module imports, which are exported.
+
+PS0 now parses the exact `.ps` bytes through official pinned Lean
+`Parser.parseHeader` with a synthetic `module\n` header, then removes
+the synthetic UTF-8 prefix from the command-body byte offset.
+`HeaderSyntax.imports (includeInit := false)` retains Lean's actual
+`isExported`/`isMeta`/`importAll` metadata; `module-header FILE.ps`
+prints that information as JSON with `compile_ready=false`.
+Literal user-written `module` in `.ps` is rejected by the native
+header AST check. Pinned source:
+`Lean/Parser/Module.lean` and `Lean/Elab/Import.lean`.
+
+The implementation corrected a concrete diagnostic-order defect:
+Lean rejects `public import`, `meta import` or `import all` in legacy
+source without `module`. Previously this generic header error could
+mask the intended PSCV0-specific diagnostic. PS0's new synthetic
+module parse allows these directives to be classified correctly:
+`public import` remains **pending full v7 visibility semantics**,
+while `meta import` and `import all` are refused by the selected
+environment policy. Source `prelude` and literal `module` are refused.
+
+**Native emission boundary:** The source profile's module-private imports
+must not be accidentally rebuilt as legacy exported imports. Until
+PS0-03 implements native module-mode output, public-by-default
+declaration names, and non-exposed definition bodies, `ps0 build`
+refuses to publish native artifacts for `.ps` inputs with imports
+(`PSCV0-MODULE-BUILD-PENDING`). Ordinary syntax/typechecking can
+still run as **UNCERTIFIED**; module-interface conformance is not claimed.
+
+Fixtures: `tests/headers/modern_imports.ps`,
+`legacy_import.ps`, `modern_meta.ps`,
+`invalid_public_legacy.ps`, plus
+`tests/pass/implicit_module_import_utf8.ps`. CI checks actual
+import flag identities, refuses the forbidden source module header,
+verifies that public imports cannot yet be compiled, and requires
+no emitted artifact for unsupported module imports.
+
+**Progress:** module family 0/5 → 1/5 (**foundation only**);
+overall estimated `.ps` readiness **41%** (previous 40%).
+Strict v7 qualification remains **0/181**, pending an observed
+exact-commit Lean 4.35.0 stable build and successful semantic checks.
+The .lean route remains the unrestricted native toolchain.
