@@ -78,6 +78,10 @@ jobs:
             cat instance-reference.log
             exit 1
           }
+          lake exe ps0 check tests/lean/instance_priority_reference.lean > priority-reference.log 2>&1 || {
+            cat priority-reference.log
+            exit 1
+          }
           lake exe ps0 check tests/lean/termination_reference.lean > termination-reference.log 2>&1 || {
             cat termination-reference.log
             exit 1
@@ -192,6 +196,18 @@ jobs:
               exit 1
             fi
             grep -F "$reason" instance-negative.log
+          done
+          lake exe ps0 check tests/pass/instance_priority.ps > priority-positive.log 2>&1 || {
+            cat priority-positive.log
+            exit 1
+          }
+          grep -F 'UNCERTIFIED' priority-positive.log
+          for fixture in instance_priority_expression.ps instance_priority_unknown.ps; do
+            if lake exe ps0 check "tests/fail/$fixture" > priority-negative.log 2>&1; then
+              echo "PS0 accepted invalid priority: $fixture"
+              cat priority-negative.log
+              exit 1
+            fi
           done
           echo 'PS0_INSTANCE_BRACED_FIELDS: PASS'
       - name: V7 well-founded total recursion semantic gate
