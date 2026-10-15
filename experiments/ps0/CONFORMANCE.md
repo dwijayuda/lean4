@@ -190,7 +190,14 @@ Positive and negative candidate fixtures:
 `tests/fail/instance_header_nullary.ps` and
 `tests/fail/instance_header_adjacent.ps`. The native counterpart in
 `tests/lean/instance_priority_reference.lean` confirms the intended
-unrestricted Lean spelling. The v7 inventory has **32 candidate IDs**
+unrestricted Lean spelling. The separate source theorem in `tests/pass/instance_priority_order.ps`
+checks that high-priority typeclass evidence wins over an overlapping
+low-priority instance. It has a manual official Lean comparison in
+`tests/lean/instance_priority_order_reference.lean`. CI runs both.
+This validates selection **only if they actually pass**; do not claim
+priority-order conformance merely from the syntax adapters.
+
+The v7 inventory has **32 candidate IDs**
 and **zero** confirmed PASS receipts.
 
 **Important qualification limit:** no stable Lean 4.35 CI run has been
