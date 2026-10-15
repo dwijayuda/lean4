@@ -15,6 +15,14 @@ This experiment lives in **dwijayuda/lean4** on
 experimental branch. The independent `dwijayuda/pskernel` PSC0 compiler,
 its backend work, PR #109 and all existing PSKernel branches are unchanged.
 
+## Full PSCV0 v7 implementation roadmap
+
+The [complete Lean-backed v7 implementation plan](PS0_FULL_PSCV0_V7_IMPLEMENTATION_PLAN.md)
+tracks PS0-00 through PS0-11, exact Lean source reuse, normative syntax/semantic
+coverage, imported Standard and module identities, proof/effect/assumption
+closure, native publication safeguards, and release acceptance. It is a plan,
+**not** evidence that all v7 requirements have been implemented or qualified.
+
 ## Architecture
 
 ```text
