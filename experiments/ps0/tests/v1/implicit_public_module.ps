@@ -1,0 +1,5 @@
+-- PS0 v1: absent module header means a modern module with public
+-- names by default, and private local dependencies unless exported.
+import Init
+def publicByDefault : Nat := 21 + 21
+theorem publicByDefaultEq : publicByDefault = 42 := by rfl
