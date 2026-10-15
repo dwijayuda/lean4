@@ -158,7 +158,16 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
   match s with
   | .node _ kind args =>
     let k := kind.toString
-    if kind == ``Lean.Parser.Term.doTry && containsUnbracedDoSeq s then
+    -- Pinned Lean Command.opaque has an optional declaration value at [3].
+    -- v7 never admits a bodyless opaque assumption as ordinary .ps source.
+    if k == "Lean.Parser.Command.opaque" && s[3].isNone then
+      some "PSCV0-OPAQUE-BODY-REQUIRED: opaque declarations need a checked value"
+    -- Native value-form instance := is intentionally excluded by the v7
+    -- selected instance header/field grammar; require the where-field form.
+    else if k == "Lean.Parser.Command.instance" &&
+        s[5].isOfKind ``Lean.Parser.Command.declValSimple then
+      some "PSCV0-INSTANCE-VALUE-REFUSED: use selected instance where fields"
+    else if kind == ``Lean.Parser.Term.doTry && containsUnbracedDoSeq s then
       some "PSCV0-TRY-BRACES: try, catch and finally bodies must use { ... }"
     else if kind == ``Lean.cdot && hasAsciiDotToken s[0] then
       some "PSCV0-BULLET: use the native '·' goal bullet, not ASCII '.'"
