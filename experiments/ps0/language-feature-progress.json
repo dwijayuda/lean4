@@ -12,12 +12,12 @@
   },
   "scope": "20 equally weighted v7 language-semantic families including libraries, import semantics, and mandatory source assurance; excludes native backend optimization, IDE polish and standalone packaging.",
   "score": {
-    "sum": 39,
+    "sum": 40,
     "max": 100,
-    "estimatedPercent": 39,
+    "estimatedPercent": 40,
     "qualifiedPercent": 0
   },
-  "qualification": "Engineering estimate only: 38→39% from implemented v7 measure-first recursion syntax and source-specific exclusions, not CI-tested. Strict v7 acceptance remains 0/181 until exact-commit qualification.",
+  "qualification": "Engineering readiness estimate 40% (class/instance source family 2→3/5). Full stable Lean CI and all 181 normative qualification IDs still lack PASS evidence. No score credit from unrestricted .lean.",
   "families": [
     {
       "id": "lexical-grammar",
@@ -155,14 +155,17 @@
     {
       "id": "classes-deriving",
       "name": "Classes, instances, priorities and deriving",
-      "score": 2,
+      "score": 3,
       "maxScore": 5,
-      "implementationStatus": "PARTIAL",
+      "implementationStatus": "COHERENT_SUBSET",
       "stableCiQualified": false,
-      "rationale": "Native class macros and finite deriving names; full instances/handler and priority registry missing",
+      "rationale": "PS0 now owns class structure and selected braced named/anonymous instance sources, enforces real record-initializer fields before macros run, refuses native Lean instance value/unbraced forms in .ps, and lowers to official Lean class/instance elaboration. Full v7 instance binder telescopes, priority names/numeric priorities, handler manifest and exact stable CI remain unfinished.",
       "sourceEvidence": [
         "PS0/Syntax.lean",
-        "PS0/Grammar.lean"
+        "PS0/Grammar.lean",
+        "tests/pass/instance_braced_fields.ps",
+        "tests/fail/instance_unbraced_fields.ps",
+        "tests/lean/instance_reference.lean"
       ]
     },
     {
