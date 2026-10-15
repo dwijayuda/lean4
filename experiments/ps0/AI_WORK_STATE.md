@@ -1,5 +1,46 @@
 # PS0 — AI work state (15 October 2026)
 
+## Braced instance family — 15 October 2026
+
+PS0 implementation continued under draft PR #5. Read current live HEAD before
+any further write. **The stable Lean 4.35.0 native build has not been verified
+passing** for this new family; all tests remain unqualified.
+
+- Studied official Lean 4.35.0 `src/Lean/Parser/Command.lean`:
+  native `instance` uses the class declaration elaborator; value-form
+  `:= { fields }` is valid in native Lean. The v7 `.ps` surface instead
+  selects `instance [name] : Class where { fields }`, not native
+  `instance : Class := value` or unbraced `where`.
+- Implemented PS0-owned source macros in `PS0/Syntax.lean` for anonymous
+  and named class instances, plus ordered explicit/implicit/instance binder
+  telescopes. Native Lean elaborates class fields and the actual instance
+  declarations, including typeclass evidence; PS0 adds no new checker.
+- Added pre-elaboration `PSCV0-INSTANCE-FIELDS` for non-record `where`
+  bodies and `PSCV0-INSTANCE-BRACES` for unbraced native instance field
+  declarations embedded in `.ps`. `PSCV0-INSTANCE-VALUE-REFUSED` remains.
+  All these restrictions apply exclusively to `.ps`; `.lean` retains
+  full native instance grammar.
+- Added `tests/pass/instance_braced_fields.ps` with anonymous, named,
+  polymorphic and ordered binder cases and kernel-checkable properties,
+  `tests/fail/instance_fields_not_record.ps` and
+  `instance_unbraced_fields.ps`, and matched native declarations in
+  `tests/lean/instance_reference.lean`. CI gates these cases with
+  specific negative diagnostic codes.
+- Linked P-INSTANCE-HDR-ANON, P-INSTANCE-HDR-NAMED,
+  N-INSTANCE-HDR-VALUE and N-INSTANCE-VALUE to **candidate** fixtures
+  in `v7-coverage.json` without promoting them to PASS.
+- Estimated 20-family `.ps` readiness: **40%**, up from 39% as the
+  classes/instances/deriving family rose 2/5 → 3/5. Strict qualified
+  completion: **0/181**, unchanged. The percentage is a planning
+  estimate, not CI-tested language coverage.
+
+**Next critical path:** obtain genuine stable-4.35 build/CI logs and
+fix any parser/quotation/type-checking failures. Then complete v7
+instance priorities (selected priority names and nonnegative numeric
+literals), ordinary field/method binders, and frozen instance registry;
+continue module/import visibility and full source assurance.
+Native `.lean` remains unrestricted and is not included in v7 scoring.
+
 ## Well-founded recursion implementation — 15 October 2026
 
 **Code checkpoint before this log entry:** `046797c9f88f041b96554c3ace1dc4fc83faa983`. Re-read live PR #5 HEAD before further commits.
