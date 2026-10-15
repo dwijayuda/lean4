@@ -1,5 +1,28 @@
 # PS0 — AI work state (15 October 2026)
 
+## Closed v7 instance-priority grammar — 15 October 2026
+
+A subsequent PS0 implementation pass tightened source priority selection from
+the open native parser category to an explicit **`pscvSelectedPriority`**
+category admitting `low`, `mid`, `default`, `high` and a numeric literal
+only. `lowerSelectedPriority` maps these cases back through native Lean
+`prio` syntax quotations; actual numeric/name meaning, instance search and
+priority ordering remain Lean-owned. This category applies to `.ps` only.
+The native `.lean` compiler/process is unchanged and unrestricted.
+
+The four instance priority forms (anonymous/named, with/without an ordered
+telescope) now use the source priority category, and CI candidate fixtures
+exercise all named priorities, numeric priority 750, and malformed
+`highest`/arithmetic forms. Separate negatives cover missing type,
+forbidden nullary instance headers, and adjacent explicit groups.
+`v7-coverage.json` has **32 candidate IDs** (no new PASS).
+
+**Qualification:** exact-commit Lean 4.35 CI success remains unconfirmed
+through the available GitHub connector. The strict ledger stays
+**0/181**. The 20-family engineering readiness estimate remains
+**40%** because this change extends the same partially implemented
+class/instance family rather than closing its full v7/registry contract.
+
 ## Instance priorities and complete header candidate suite — 15 October 2026
 
 **Checkpoint preceding this log update:** GitHub branch `feature/ps0-lean435-stable-v1` (read live HEAD before new writes). Draft PR #5, do not merge until qualification.
