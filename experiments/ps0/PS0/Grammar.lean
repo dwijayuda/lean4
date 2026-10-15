@@ -167,6 +167,10 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
     else if k == "Lean.Parser.Command.instance" &&
         s[5].isOfKind ``Lean.Parser.Command.declValSimple then
       some "PSCV0-INSTANCE-VALUE-REFUSED: use selected instance where fields"
+    else if (kind == ``PS0.pscvDoIfElse || kind == ``PS0.pscvDoIf ||
+             kind == ``PS0.pscvDoIfLetElse || kind == ``PS0.pscvDoIfLet) &&
+             containsUnbracedDoSeq s then
+      some "PSCV0-DO-IF-BRACES: do conditional branches must be braced do sequences"
     else if kind == ``Lean.Parser.Term.doIfLetBind then
       some "PSCV0-DO-IFLET-ARROW: v7 Standard admits :=, not a monadic left-arrow condition"
     else if kind == ``Lean.Parser.Term.doTry && containsUnbracedDoSeq s then
