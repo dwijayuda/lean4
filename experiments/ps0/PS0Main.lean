@@ -23,61 +23,40 @@ private def options : Options :=
     |>.setBool `experimental.vcgen true
     |>.setBool `experimental.intrinsic true
 
-/-- v7 .ps source implicitly has an official Lean module header. The
-    synthetic header is parser input only, never user-authored .ps text.
-    Its byte length must be removed from the parsed command-body offset. -/
-private def psModulePrefix : String := "module\n"
-
-/-- Use exactly the pinned native Lean header parser, but in module mode.
-    A literal source 'module' header is not valid v7 .ps; public imports
-    are valid source syntax even though source-public body exposure is
-    still not implemented for compiled PS0 modules. -/
+/-- Preserve the original header's meaning. Headerless .ps source is
+    parsed as a modern Lean module with public names by default; a
+    written 'module' header follows native modern-module defaults.
+    Source provenance tracks the synthetic prefix length, if any. -/
 private def parsePsModuleHeader (src filename : String) :
-    IO (Except String (Lean.Elab.HeaderSyntax × Parser.ModuleParserState)) := do
+    IO (Except String (Lean.Elab.HeaderSyntax × Parser.ModuleParserState × Nat)) := do
   let original := Parser.mkInputContext src filename
-  let (sourceHeader, _, _) ← Parser.parseHeader original
+  let (sourceHeader, sourceState, sourceMessages) ← Parser.parseHeader original
   if Lean.Elab.HeaderSyntax.isModule sourceHeader then
-    return .error "PSCV0-MODULE-EXPLICIT-HEADER: .ps source modules are implicit"
-  let injected := Parser.mkInputContext (psModulePrefix ++ src) filename
+    if sourceMessages.hasErrors then
+      return .error "PS0V1-MODULE: invalid explicit native module header"
+    return .ok (sourceHeader, sourceState, 0)
+  let prefix := "module\n"
+  let injected := Parser.mkInputContext (prefix ++ src) filename
   let (header, state, diagnostics) ← Parser.parseHeader injected
   if diagnostics.hasErrors then
-    return .error "PSCV0-MODULE-HEADER-MALFORMED: invalid selected .ps header"
-  return .ok (header, state)
+    return .error "PS0V1-MODULE: invalid implicit module import header"
+  return .ok (header, state, prefix.utf8ByteSize)
 
-/-- Only named upstream modules in the pinned PSCV0 Standard snapshot
-    may enter the runtime and syntax environment. -/
+/-- Import-driven v1 native language, not a finite Standard allowlist.
+    Source imports remain subject to the official Lean 4.35.0 header
+    semantics, availability and stage/visibility checks. -/
 private def approvedSource (src filename : String) :
     IO (Except String (Array Import × String)) := do
-  let (header, state) ← match ← parsePsModuleHeader src filename with
+  let (header, state, prefixBytes) ← match ← parsePsModuleHeader src filename with
     | .ok answer => pure answer
     | .error why => return .error why
-  match header with
-  | `(Parser.Module.header| $[module%$_]? $[prelude%$preludeTk]? $importStx*) =>
-    if preludeTk.isSome then
-      return .error "PSCV0-MODULE-PRELUDE-REFUSED: source cannot bypass selected Standard"
-    for imp in importStx do
-      match imp with
-      | `(Parser.Module.import| $[public%$publicTk]? $[meta%$metaTk]? import $[all%$allTk]? $name) =>
-        if publicTk.isSome then
-          return .error "PSCV0-MODULE-PUBLIC-IMPORT-PENDING: source-public name/body policy is not implemented"
-        if metaTk.isSome then
-          return .error s!"PSCV0-ENV-META-IMPORT-REFUSED: {name.getId}"
-        if allTk.isSome then
-          return .error s!"PSCV0-ENV-IMPORT-ALL-REFUSED: {name.getId}"
-      | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
-  | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
   let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
-  for imported in imports do
-    if imported.isMeta then
-      return .error s!"PSCV0-ENV-META-IMPORT-REFUSED: {imported.module}"
-    if imported.importAll then
-      return .error s!"PSCV0-ENV-IMPORT-ALL-REFUSED: {imported.module}"
-    unless StandardEnv.allowsImport imported.module do
-      return .error s!"PSCV0-ENV-UNAPPROVED-IMPORT: {imported.module}"
-  let inputEnd := state.pos.byteIdx - psModulePrefix.utf8ByteSize
-  let bytes := src.toByteArray.extract inputEnd src.utf8ByteSize
+  if state.pos.byteIdx < prefixBytes then
+    return .error "PS0V1-MODULE: invalid source offset after module header"
+  let start := state.pos.byteIdx - prefixBytes
+  let bytes := src.toByteArray.extract start src.utf8ByteSize
   let some body := bytes.utf8Decode?
-    | return .error "invalid UTF-8 boundary at PSCV0 import header"
+    | return .error "PS0V1-MODULE: invalid UTF-8 source boundary"
   return .ok (imports, String.ofList body.toList)
 
 /-- First PS0-03 primitive: inspect *Lean's actual parsed module header*
@@ -91,8 +70,8 @@ private def inspectModuleHeader (path : String) : IO UInt32 := do
     IO.eprintln "PS0-MODULE-INFO: expects a .ps file"
     return 2
   let source ← IO.FS.readFile path
-  let header ← match ← parsePsModuleHeader source path with
-    | .ok answer => pure answer.1
+  let (header, _, prefixBytes) ← match ← parsePsModuleHeader source path with
+    | .ok answer => pure answer
     | .error why => IO.eprintln why; return 1
   let modules := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
   let entries : List Json := modules.toList.map fun item =>
@@ -106,7 +85,7 @@ private def inspectModuleHeader (path : String) : IO UInt32 := do
     ("schema", toJson ("ps0-source-module-header/1" : String)),
     ("source", toJson path),
     ("is_module", toJson (Lean.Elab.HeaderSyntax.isModule header)),
-    ("implicit_module", toJson true),
+    ("implicit_module", toJson (prefixBytes != 0)),
     ("imports", toJson entries),
     ("compile_ready", toJson false)
   ]
@@ -127,12 +106,10 @@ private def checkSourceEnvironment (path source : String) :
   unsafe enableInitializersExecution
   let env ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
     (trustLevel := 0) (loadExts := true)
-  match validateSourceSyntax body path env options with
-  | .error msg =>
-      IO.eprintln s!"PSCV0 source-profile error: {msg}"
-      return none
-  | .ok () => pure ()
-  let (checked, messages) ← Elab.process (body ++ "\n\n#pscv_gate\n")
+  -- PS0 v1 grammar can change after each registered syntax/elab command.
+  -- Lean's interleaved elaboration is authoritative; a frozen-source
+  -- syntax audit cannot decide the full import-driven language.
+  let (checked, messages) ← Elab.process (body ++ "\n\n#ps0_evidence\n")
     env options (some path)
   for msg in messages.markAllReported.reported do
     IO.eprintln (← msg.toString)
@@ -185,7 +162,7 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
     return 2
   let raw ← IO.FS.readFile path
   -- The build does *one* full Lean elaboration: the same runFrontend that
-  -- produces the checked environment also executes #pscv_gate before emission.
+  -- produces the checked environment also executes #ps0_evidence before emission.
   -- Parsing/source-policy admission occurs first but does not create output.
   let (approved, body) ← match ← approvedSource raw path with
     | .ok v => pure v
@@ -194,21 +171,18 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   unsafe enableInitializersExecution
   let sourceEnv ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
     (trustLevel := 0) (loadExts := true)
-  match validateSourceSyntax body path sourceEnv options with
-  | .error msg =>
-      IO.eprintln s!"PSCV0 source-profile error: {msg}"
-      return 1
-  | .ok () => pure ()
+  -- Native runFrontend performs the interleaved source parse/elaboration.
+  -- Full modern export/expose semantics still require the project graph.
   -- A .ps module's imports are private by default. Re-emitting them in a
   -- legacy Lean header would silently re-export those dependencies, and
   -- v7 also requires public-name/hidden-body checking. Until PS0-03
   -- native module emission is complete, refuse artifacts for source imports.
   -- check / module-header remain available as unqualified analysis modes.
   unless approved.isEmpty do
-    IO.eprintln "PSCV0-MODULE-BUILD-PENDING: module-style imports require checked v7 export/body lowering"
+    IO.eprintln "PS0V1-MODULE-BUILD-PENDING: module-style imports require checked v7 export/body lowering"
     return 1
   let imports := String.join (approved.toList.map fun im => s!"import {im.module}\n")
-  let src := "import PS0.Policy\n" ++ imports ++ body ++ "\n\n#pscv_gate\n"
+  let src := "import PS0.Policy\n" ++ imports ++ body ++ "\n\n#ps0_evidence\n"
   -- The final bundle directory is published with one same-filesystem
   -- directory rename. Lean may write .olean before later C emission fails;
   -- neither file becomes visible in the requested output on such a failure.
@@ -248,7 +222,7 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
       IO.FS.removeDirAll stage
 
 /-- Checked .ps → minimal real JS target. Source is read once; the same
-bytes are checked by official Lean (including #pscv_gate) before selected
+bytes are checked by official Lean (including #ps0_evidence) before selected
 runtime declarations lower into typed IR. Unsupported semantics fail closed.
 This does NOT certify JS backend semantic preservation or arbitrary v7 code. -/
 private def buildJs (path moduleName outputDir : String) : IO UInt32 := do
@@ -301,7 +275,7 @@ private def buildJs (path moduleName outputDir : String) : IO UInt32 := do
     if ← stage.pathExists then IO.FS.removeDirAll stage
 
 /-- Compile an ordinary .lean module using the *native external Lean
-process*. Do not inject #pscv_gate, PS0.Policy or v7 parser restrictions.
+process*. Do not inject #ps0_evidence, PS0.Policy or v7 parser restrictions.
 The native output is not a PSCV0 certificate. -/
 private def buildUnrestrictedLean (path moduleName outputDir : String) : IO UInt32 := do
   unless path.endsWith ".lean" do
