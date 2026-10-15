@@ -59,6 +59,44 @@ private def approvedSource (src filename : String) :
     | return .error "PS0V1-MODULE: invalid UTF-8 source boundary"
   return .ok (imports, String.ofList body.toList)
 
+/-- Prepare source for the real native modern module frontend.
+    Headerless .ps implicitly exports names, while a written module
+    follows its native visibility defaults. Preserve source import flags,
+    instead of accidentally using legacy transitive import semantics.
+
+    Bootstrap prelude needs a syntax-only PS0 substrate, while the present
+    PS0.Policy imports full Lean/Init. Refuse compiling it instead of
+    injecting a hidden Init dependency in violation of v1. -/
+private def preparedPsModule (raw filename : String) :
+    IO (Except String String) := do
+  let (header, _, prefixBytes) ← match ← parsePsModuleHeader raw filename with
+    | .ok answer => pure answer
+    | .error err => return .error err
+  let prelude ← match header with
+    | `(Parser.Module.header| $[module%$_]? $[prelude%$p]? $imports*) =>
+        pure p.isSome
+    | _ => return .error "PS0V1-MODULE: invalid pinned Lean header syntax"
+  if prelude then
+    return .error "PS0V1-PRELUDE-PENDING: bootstrap compiler must not inject hidden Init"
+  let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
+  let (_, body) ← match ← approvedSource raw filename with
+    | .ok data => pure data
+    | .error err => return .error err
+  let flags (im : Import) : String :=
+    (if im.isExported then "public " else "") ++
+    (if im.isMeta then "meta " else "") ++
+    "import " ++ (if im.importAll then "all " else "") ++
+    im.module.toString ++ "\n"
+  let headerSource := String.join (imports.toList.map flags)
+  let visibility := if prefixBytes == 0 then "" else "public section\n"
+  return .ok (
+    "module\n" ++
+    "import PS0.Policy\n" ++
+    headerSource ++
+    visibility ++
+    body ++ "\n\n#ps0_evidence\n"
+  )
+
 /-- First PS0-03 primitive: inspect *Lean's actual parsed module header*
     without authorizing its use as a v1 checked source. This preserves
     isModule/isExported/isMeta/importAll identities instead of inferring them
