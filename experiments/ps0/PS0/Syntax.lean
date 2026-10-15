@@ -458,6 +458,48 @@ macro_rules (kind := pscvBracedInstanceTelescopeNamed)
     let binders ← orderedLeanBinders parts
     `(instance $name:ident $binders* : $classTy:term := $fields:term)
 
+/-!
+PSCV0-INSTANCE-PRIO-01: reuse Lean.Parser.Priority's native priority
+parser and native instance typeclass registration. The source v7 grammar
+permits only the selected named or nonnegative decimal priorities, which
+PS0.Grammar validates before any source command elaboration.
+-/
+syntax (name := pscvPrioritizedInstanceAnonymous)
+  "instance " "(priority := " prio ")" ":" term " where " term : command
+syntax (name := pscvPrioritizedInstanceNamed)
+  "instance " "(priority := " prio ")" ident ":" term
+  " where " term : command
+syntax (name := pscvPrioritizedInstanceTelescopeAnonymous)
+  "instance " "(priority := " prio ")" pscvTelescopeSegment+ ":" term
+  " where " term : command
+syntax (name := pscvPrioritizedInstanceTelescopeNamed)
+  "instance " "(priority := " prio ")" ident pscvTelescopeSegment+ ":" term
+  " where " term : command
+
+macro_rules (kind := pscvPrioritizedInstanceAnonymous)
+  | `(instance (priority := $p:prio) : $ty:term where $fields:term) =>
+      `(instance (priority := $p:prio) : $ty:term := $fields:term)
+
+macro_rules (kind := pscvPrioritizedInstanceNamed)
+  | `(instance (priority := $p:prio) $name:ident :
+      $ty:term where $fields:term) =>
+      `(instance (priority := $p:prio) $name:ident :
+        $ty:term := $fields:term)
+
+macro_rules (kind := pscvPrioritizedInstanceTelescopeAnonymous)
+  | `(instance (priority := $p:prio) $parts:pscvTelescopeSegment* :
+      $ty:term where $fields:term) => do
+    let binders ← orderedLeanBinders parts
+    `(instance (priority := $p:prio) $binders* :
+      $ty:term := $fields:term)
+
+macro_rules (kind := pscvPrioritizedInstanceTelescopeNamed)
+  | `(instance (priority := $p:prio) $name:ident
+      $parts:pscvTelescopeSegment* : $ty:term where $fields:term) => do
+    let binders ← orderedLeanBinders parts
+    `(instance (priority := $p:prio) $name:ident $binders* :
+      $ty:term := $fields:term)
+
 /-- Mutual recursion is only a braced grouping of the official Lean mutual
 declaration elaborator and termination checker. -/
 syntax (name := pscvBracedMutual)
