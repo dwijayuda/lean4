@@ -1,0 +1,11 @@
+-- PS0 v1: ordinary programming can use native axioms, unsafe and
+-- partial declarations without claiming they are verified executable code.
+axiom assumedLaw : True
+unsafe def unsafeCount : Nat := 7
+partial def partialCount (n : Nat) : Nat :=
+  if n == 0 then 0 else partialCount (n - 1)
+
+example : True := assumedLaw
+#check unsafeCount
+#check partialCount
+#ps0_evidence
