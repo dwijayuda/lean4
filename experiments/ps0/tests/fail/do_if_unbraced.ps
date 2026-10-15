@@ -1,0 +1,8 @@
+-- PSCV0-DO-IF-01: native indentation-only branch is not valid .ps.
+function invalid(flag: Bool): Id Nat := do {
+  if (flag)
+    return 1
+  else {
+    return 0
+  }
+}
