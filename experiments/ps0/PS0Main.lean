@@ -22,35 +22,49 @@ private def options : Options :=
     |>.setBool `experimental.vcgen true
     |>.setBool `experimental.intrinsic true
 
+/-- v7 .ps source implicitly has an official Lean module header. The
+    synthetic header is parser input only, never user-authored .ps text.
+    Its byte length must be removed from the parsed command-body offset. -/
+private def psModulePrefix : String := "module\n"
+
+/-- Use exactly the pinned native Lean header parser, but in module mode.
+    A literal source 'module' header is not valid v7 .ps; public imports
+    are valid source syntax even though source-public body exposure is
+    still not implemented for compiled PS0 modules. -/
+private def parsePsModuleHeader (src filename : String) :
+    IO (Except String (Lean.Elab.HeaderSyntax × Parser.ModuleParserState)) := do
+  let original := Parser.mkInputContext src filename
+  let (sourceHeader, _, _) ← Parser.parseHeader original
+  if Lean.Elab.HeaderSyntax.isModule sourceHeader then
+    return .error "PSCV0-MODULE-EXPLICIT-HEADER: .ps source modules are implicit"
+  let injected := Parser.mkInputContext (psModulePrefix ++ src) filename
+  let (header, state, diagnostics) ← Parser.parseHeader injected
+  if diagnostics.hasErrors then
+    return .error "PSCV0-MODULE-HEADER-MALFORMED: invalid selected .ps header"
+  return .ok (header, state)
+
 /-- Only named upstream modules in the pinned PSCV0 Standard snapshot
     may enter the runtime and syntax environment. -/
 private def approvedSource (src filename : String) :
     IO (Except String (Array Import × String)) := do
-  let inputCtx := Parser.mkInputContext src filename
-  let (header, state, messages) ← Parser.parseHeader inputCtx
-  -- Diagnose the concrete source header AST *before* turning Lean's
-  -- module-system validation errors into a generic header error.
-  -- In particular, pinned Lean rejects public/meta/import-all directives
-  -- without a 'module' header; the v7 diagnostic must remain specific.
+  let (header, state) ← match ← parsePsModuleHeader src filename with
+    | .ok answer => pure answer
+    | .error why => return .error why
   match header with
-  | `(Parser.Module.header| $[module%$moduleTk]? $[prelude%$preludeTk]? $importStx*) =>
-    if moduleTk.isSome then
-      return .error "PSCV0-MODULE-HEADER-PENDING: v7 public-name and hidden-body semantics not implemented"
+  | `(Parser.Module.header| $[module%$_]? $[prelude%$preludeTk]? $importStx*) =>
     if preludeTk.isSome then
       return .error "PSCV0-MODULE-PRELUDE-REFUSED: source cannot bypass selected Standard"
     for imp in importStx do
       match imp with
       | `(Parser.Module.import| $[public%$publicTk]? $[meta%$metaTk]? import $[all%$allTk]? $name) =>
         if publicTk.isSome then
-          return .error "PSCV0-MODULE-PUBLIC-IMPORT-PENDING: requires v7 module semantics"
+          return .error "PSCV0-MODULE-PUBLIC-IMPORT-PENDING: source-public name/body policy is not implemented"
         if metaTk.isSome then
           return .error s!"PSCV0-ENV-META-IMPORT-REFUSED: {name.getId}"
         if allTk.isSome then
           return .error s!"PSCV0-ENV-IMPORT-ALL-REFUSED: {name.getId}"
       | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
   | _ => return .error "PSCV0-MODULE-IMPORT-HEADER-UNSUPPORTED"
-  if messages.hasErrors then
-    return .error "PSCV0-MODULE-HEADER-MALFORMED: official Lean parser rejected source header"
   let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
   for imported in imports do
     if imported.isMeta then
@@ -59,7 +73,8 @@ private def approvedSource (src filename : String) :
       return .error s!"PSCV0-ENV-IMPORT-ALL-REFUSED: {imported.module}"
     unless StandardEnv.allowsImport imported.module do
       return .error s!"PSCV0-ENV-UNAPPROVED-IMPORT: {imported.module}"
-  let bytes := src.toByteArray.extract state.pos.byteIdx src.utf8ByteSize
+  let inputEnd := state.pos.byteIdx - psModulePrefix.utf8ByteSize
+  let bytes := src.toByteArray.extract inputEnd src.utf8ByteSize
   let some body := bytes.utf8Decode?
     | return .error "invalid UTF-8 boundary at PSCV0 import header"
   return .ok (imports, String.ofList body.toList)
@@ -75,11 +90,9 @@ private def inspectModuleHeader (path : String) : IO UInt32 := do
     IO.eprintln "PS0-MODULE-INFO: expects a .ps file"
     return 2
   let source ← IO.FS.readFile path
-  let input := Parser.mkInputContext source path
-  let (header, _, diagnostics) ← Parser.parseHeader input
-  if diagnostics.hasErrors then
-    IO.eprintln "PS0-MODULE-INFO: official Lean parser rejected module header"
-    return 1
+  let header ← match ← parsePsModuleHeader source path with
+    | .ok answer => pure answer.1
+    | .error why => IO.eprintln why; return 1
   let modules := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
   let entries : List Json := modules.toList.map fun item =>
     Json.mkObj [
@@ -92,6 +105,7 @@ private def inspectModuleHeader (path : String) : IO UInt32 := do
     ("schema", toJson ("ps0-source-module-header/1" : String)),
     ("source", toJson path),
     ("is_module", toJson (Lean.Elab.HeaderSyntax.isModule header)),
+    ("implicit_module", toJson true),
     ("imports", toJson entries),
     ("compile_ready", toJson false)
   ]
