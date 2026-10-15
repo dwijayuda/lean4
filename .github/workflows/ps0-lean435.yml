@@ -116,6 +116,33 @@ jobs:
           grep -F 'PS0V1_IO_OK' v1-io_diagnostics.ps.log
           grep -F 'assumption policy NOT assessed' v1-native_capabilities.ps.log
           echo 'PS0V1_NATIVE_LANGUAGE: PASS'
+      - name: PS0 v1 standard host declaration-body category acceptance
+        run: |
+          set -euo pipefail
+          lake exe ps0 check tests/v1/standard_host_declarations.ps > standard-host-positive.log 2>&1 || {
+            cat standard-host-positive.log
+            exit 1
+          }
+          # The typed function/const RHS is a PS-owned host expression.
+          for item in \
+            'standard_host_order_negative.ps:PS0V1-CALL-ORDER' \
+            'standard_host_duplicate_negative.ps:PS0V1-CALL-NAMED'; do
+            fixture="${item%%:*}"
+            reason="${item#*:}"
+            if lake exe ps0 check "tests/v1/$fixture" > standard-host-negative.log 2>&1; then
+              echo "PS0 accepted invalid standard host expression: $fixture"
+              exit 1
+            fi
+            grep -F "$reason" standard-host-negative.log || {
+              cat standard-host-negative.log
+              exit 1
+            }
+          done
+          if lake exe ps0 check tests/v1/standard_host_call_comma_negative.ps > standard-host-comma.log 2>&1; then
+            echo "PS0 accepted comma-only host application"
+            exit 1
+          fi
+          echo 'PS0V1_STANDARD_HOST_RHS: PASS'
       - name: V1 explicit and implicit module headers
         run: |
           set -euo pipefail
