@@ -120,23 +120,42 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   | .ok () => pure ()
   let imports := String.join (approved.toList.map fun im => s!"import {im.module}\n")
   let src := "import PS0.Policy\n" ++ imports ++ body ++ "\n\n#pscv_gate\n"
+  -- The final bundle directory is published with one same-filesystem
+  -- directory rename. Lean may write .olean before later C emission fails;
+  -- neither file becomes visible in the requested output on such a failure.
+  -- Refuse replacement of an existing published bundle.
   let out := System.FilePath.mk outputDir
-  IO.FS.createDirAll out
-  -- No separate source elaboration pass: runFrontend's checked environment
-  -- is the sole authority for the subsequently emitted native C.
-  let moduleId := Name.mkSimple moduleName
-  let oleanPath := out / s!"{moduleName}.olean"
-  let cPath := out / s!"{moduleName}.c"
-  let env? ← Elab.runFrontend src options path moduleId
-    (trustLevel := 0) (oleanFileName? := some oleanPath)
-  let some env := env?
-    | IO.eprintln "PSCV0 native compilation rejected Lean frontend output"
+  if ← out.pathExists then
+    IO.eprintln s!"PS0-OUTPUT-EXISTS: refusing to replace {out}"
+    return 2
+  let parent := out.parent.getD "."
+  IO.FS.createDirAll parent
+  let stage := parent / s!".ps0-stage-{moduleName}-{← IO.monoMsNow}"
+  IO.FS.createDir stage
+  try
+    let moduleId := Name.mkSimple moduleName
+    let stagedOlean := stage / s!"{moduleName}.olean"
+    let stagedC := stage / s!"{moduleName}.c"
+    -- One authoritative Lean elaboration and policy gate for both outputs.
+    let env? ← Elab.runFrontend src options path moduleId
+      (trustLevel := 0) (oleanFileName? := some stagedOlean)
+    let some env := env?
+      | IO.eprintln "PS0-NATIVE-ELAB: Lean frontend or source policy refused emission"
+        return 1
+    let cText ← Compiler.LCNF.emitC moduleId
+      |>.toIO' { fileName := path, fileMap := default } { env }
+    IO.FS.writeFile stagedC cText
+    if !(← stagedOlean.pathExists) || !(← stagedC.pathExists) then
+      IO.eprintln "PS0-NATIVE-ARTIFACT-MISSING"
       return 1
-  let cText ← Compiler.LCNF.emitC moduleId
-    |>.toIO' { fileName := path, fileMap := default } { env }
-  IO.FS.writeFile cPath cText
-  IO.println s!"PSCV0 native module ready (UNCERTIFIED): {cPath} and {oleanPath}"
-  return 0
+    -- stage and final output are siblings, so the directory rename is
+    -- atomic on the same filesystem. No verified-executable claim is made.
+    IO.FS.rename stage out
+    IO.println s!"PS0 native bundle (UNCERTIFIED): {out}"
+    return 0
+  finally
+    if ← stage.pathExists then
+      IO.FS.removeDirAll stage
 
 private def syntaxKinds (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
