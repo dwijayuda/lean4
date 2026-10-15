@@ -1,32 +1,8 @@
 {
-  "schema": "pscv0-standard-env/1",
-  "status": "provisional-module-allowlist-not-complete-semantic-snapshot",
+  "schema": "ps0-v1-environment/1",
+  "edition": "PS0 v1 R2",
+  "status": "import-driven-registration-closure-not-fully-digested",
   "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
   "lean_version": "4.35.0",
-  "allowed_imports": [
-    "Std",
-    "Init.Data.List",
-    "Init.Data.Array",
-    "Std.Data.HashMap",
-    "Std.Data.HashSet",
-    "Std.Data.TreeMap",
-    "Std.Data.TreeSet",
-    "Std.Data.String",
-    "Std.Data.Iterators"
-  ],
-  "deriving_handlers": [
-    "Repr",
-    "BEq",
-    "DecidableEq",
-    "Inhabited",
-    "Hashable"
-  ],
-  "eval_scalar_types": [
-    "Nat",
-    "Int",
-    "Bool",
-    "String",
-    "Char",
-    "Unit"
-  ]
+  "language_reference": "PS0_V1_LANGUAGE_REFERENCE.md"
 }
