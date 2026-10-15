@@ -20,9 +20,10 @@ private partial def emitNat : NatExpr → String
   | .add l r => "(" ++ emitNat l ++ " + " ++ emitNat r ++ ")"
   | .mul l r => "(" ++ emitNat l ++ " * " ++ emitNat r ++ ")"
   | .sub l r =>
-      let a := emitNat l
-      let b := emitNat r
-      "((" ++ a ++ ") >= (" ++ b ++ ") ? (" ++ a ++ ") - (" ++ b ++ ") : 0n)"
+      -- Evaluate each operand exactly once, including nested calls.
+      -- The arrow's local binder names cannot capture surrounding names.
+      "((__ps0_l, __ps0_r) => __ps0_l >= __ps0_r ? " ++
+      "__ps0_l - __ps0_r : 0n)(" ++ emitNat l ++ ", " ++ emitNat r ++ ")"
 
 structure Artifacts where
   js : String
