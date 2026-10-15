@@ -15,7 +15,7 @@ private def base64 : Array Char :=
 
 private partial def vlqUnsigned (n : Nat) : String :=
   let remainder := n / 32
-  let digit := n % 32 + if remainder == 0 then 0 else 32
+  let digit := (n % 32) + (if remainder == 0 then 0 else 32)
   let head := String.singleton (base64[digit]!)
   if remainder == 0 then head else head ++ vlqUnsigned remainder
 
