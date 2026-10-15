@@ -60,7 +60,7 @@ private def approvedSource (src filename : String) :
   return .ok (imports, String.ofList body.toList)
 
 /-- First PS0-03 primitive: inspect *Lean's actual parsed module header*
-    without authorizing its use as a v7 checked source. This preserves
+    without authorizing its use as a v1 checked source. This preserves
     isModule/isExported/isMeta/importAll identities instead of inferring them
     by searching header text. The eventual project compiler must still enforce
     default-public names and non-exposed bodies before emitting any artifacts.
@@ -100,7 +100,7 @@ private def checkSourceEnvironment (path source : String) :
   let (approved, body) ← match ← approvedSource source path with
     | .ok v => pure v
     | .error err =>
-        IO.eprintln s!"PSCV0 source-profile error: {err}"
+        IO.eprintln s!"PS0V1 source-profile error: {err}"
         return none
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
@@ -114,20 +114,20 @@ private def checkSourceEnvironment (path source : String) :
   for msg in messages.markAllReported.reported do
     IO.eprintln (← msg.toString)
   if messages.hasErrors then
-    IO.eprintln "PSCV0: Lean checking failed; no artifacts emitted"
+    IO.eprintln "PS0V1: Lean checking failed; no artifacts emitted"
     return none
   return some checked
 
 private def checkSource (path source : String) : IO UInt32 := do
   let some _ ← checkSourceEnvironment path source
     | return 1
-  IO.println "PSCV0: Lean checking passed (UNCERTIFIED)"
+  IO.println "PS0V1: Lean checking passed (UNCERTIFIED)"
   return 0
 
 /-- Run ordinary .lean with the official external Lean executable, not through
 PS0.Policy or PS0.Syntax. An OS child process gives Lean its unmodified parser,
 tactics, attributes, source imports, and usual unsafe/partial/axiom/sorry rules.
-This output is native Lean, never a PSCV0 verified-source certificate. -/
+This output is native Lean, never a PS0V1 verified-source certificate. -/
 private def runUnrestrictedLean (argv : List String) : IO UInt32 := do
   -- Resolve Lean from the installed sysroot, never a different binary on PATH.
   let executable := if System.Platform.isWindows then "lean.exe" else "lean"
@@ -153,7 +153,7 @@ It uses Lean's official runFrontend and LCNF emitC without an intermediate
 textual .lean file. Native codegen does not confer verified-executable status. -/
 private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   unless validModuleName moduleName do
-    IO.eprintln "PSCV0 native module name must be a simple identifier"
+    IO.eprintln "PS0V1 native module name must be a simple identifier"
     return 2
   -- Freeze user-authored source once. No source re-read or duplicate Lean
   -- elaboration is permitted in this single-module native build.
@@ -166,7 +166,7 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   -- Parsing/source-policy admission occurs first but does not create output.
   let (approved, body) ← match ← approvedSource raw path with
     | .ok v => pure v
-    | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
+    | .error err => IO.eprintln s!"PS0V1 source-profile error: {err}"; return 1
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
   let sourceEnv ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
@@ -179,7 +179,7 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
   -- native module emission is complete, refuse artifacts for source imports.
   -- check / module-header remain available as unqualified analysis modes.
   unless approved.isEmpty do
-    IO.eprintln "PS0V1-MODULE-BUILD-PENDING: module-style imports require checked v7 export/body lowering"
+    IO.eprintln "PS0V1-MODULE-BUILD-PENDING: module-style imports require checked v1 export/body lowering"
     return 1
   let imports := String.join (approved.toList.map fun im => s!"import {im.module}\n")
   let src := "import PS0.Policy\n" ++ imports ++ body ++ "\n\n#ps0_evidence\n"
@@ -224,7 +224,7 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
 /-- Checked .ps → minimal real JS target. Source is read once; the same
 bytes are checked by official Lean (including #ps0_evidence) before selected
 runtime declarations lower into typed IR. Unsupported semantics fail closed.
-This does NOT certify JS backend semantic preservation or arbitrary v7 code. -/
+This does NOT certify JS backend semantic preservation or arbitrary v1 code. -/
 private def buildJs (path moduleName outputDir : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
     IO.eprintln "PS0-JS-INPUT: expected .ps"
@@ -275,8 +275,8 @@ private def buildJs (path moduleName outputDir : String) : IO UInt32 := do
     if ← stage.pathExists then IO.FS.removeDirAll stage
 
 /-- Compile an ordinary .lean module using the *native external Lean
-process*. Do not inject #ps0_evidence, PS0.Policy or v7 parser restrictions.
-The native output is not a PSCV0 certificate. -/
+process*. Do not inject #ps0_evidence, PS0.Policy or v1 parser restrictions.
+The native output is not a PS0V1 certificate. -/
 private def buildUnrestrictedLean (path moduleName outputDir : String) : IO UInt32 := do
   unless path.endsWith ".lean" do
     IO.eprintln "PS0-LEAN-INPUT: expected .lean"
@@ -318,7 +318,7 @@ private def syntaxKinds (path : String) : IO UInt32 := do
   let source ← IO.FS.readFile path
   let (approved, body) ← match ← approvedSource source path with
     | .ok v => pure v
-    | .error err => IO.eprintln s!"PSCV0 source-profile error: {err}"; return 1
+    | .error err => IO.eprintln s!"PS0V1 source-profile error: {err}"; return 1
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
   let env ← importModules (#[{ module := `PS0.Policy : Import }] ++ approved) {}
@@ -328,7 +328,7 @@ private def syntaxKinds (path : String) : IO UInt32 := do
       for kind in kinds do IO.println kind
       return 0
   | .error msg =>
-      IO.eprintln s!"PSCV0 source-profile error: {msg}"
+      IO.eprintln s!"PS0V1 source-profile error: {msg}"
       return 1
 
 def cli (args : List String) : IO UInt32 := do
@@ -361,7 +361,7 @@ def cli (args : List String) : IO UInt32 := do
         IO.eprintln "usage: ps0 {environment|module-header FILE.ps|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|build-js FILE.ps ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
         return 2
   catch ex =>
-    IO.eprintln s!"PSCV0 error: {ex}"
+    IO.eprintln s!"PS0V1 error: {ex}"
     return 1
 
 end PS0
