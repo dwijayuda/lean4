@@ -75,6 +75,8 @@ private partial def allowedCommand (s : Syntax) : Bool :=
       "PS0.pscvBracedStructure", "PS0.pscvBracedInductive",
       "PS0.pscvParameterizedStructure", "PS0.pscvBracedClass", "PS0.pscvParameterizedClass",
       "PS0.pscvBracedInstanceAnonymous", "PS0.pscvBracedInstanceNamed",
+      "PS0.pscvBracedInstanceTelescopeAnonymous",
+      "PS0.pscvBracedInstanceTelescopeNamed",
       "PS0.pscvBracedMutual",
       "PS0.pscvBracedStructureDeriving", "PS0.pscvBracedInductiveDeriving",
       "PS0.pscvFunctionGivenContract", "PS0.pscvFunctionEffectContract", "PS0.pscvFunctionContract", "PS0.pscvFunctionEnsures", "PS0.pscvFunctionRequires",
@@ -220,7 +222,9 @@ private partial def forbiddenSyntax (s : Syntax) : Option String :=
         hasSourceAtom s "structural" then
       some "PSCV0-TERM-01: structural termination_by spelling is excluded from selected v7 .ps"
     else if (k == "PS0.pscvBracedInstanceAnonymous" ||
-             k == "PS0.pscvBracedInstanceNamed") &&
+             k == "PS0.pscvBracedInstanceNamed" ||
+             k == "PS0.pscvBracedInstanceTelescopeAnonymous" ||
+             k == "PS0.pscvBracedInstanceTelescopeNamed") &&
         (s.getArgs.isEmpty ||
           !sourceInstanceFields s[s.getArgs.size - 1]) then
       some "PSCV0-INSTANCE-FIELDS: instance where requires a braced record field initializer"
