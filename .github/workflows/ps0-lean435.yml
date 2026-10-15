@@ -129,6 +129,8 @@ jobs:
             fi
             test ! -e build/rejected/Rejected.olean
             test ! -e build/rejected/Rejected.c
+            test ! -e build/rejected
+            test -z "$(find build -type d -name '.ps0-stage-*' -print -quit)"
           done
       - name: Qualify native code and standalone linked executable
         run: |
