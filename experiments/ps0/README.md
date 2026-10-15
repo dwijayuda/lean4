@@ -43,9 +43,10 @@ multibackend compiler and from the earlier PSCVL experiment.
 `lake exe ps0 lean [native Lean args]`
 
 The `module-header` subcommand is an introspection aid, not a
-module-completion certificate. Full modern PS modules, public
-name defaults, body exposure, dependency graph and prelude handling
-are still implementation milestones.
+module-completion certificate. Native module-mode checking/building and imported Lean module flags
+are now wired. Complete PS project graph, body exposure,
+source-origin fidelity and bootstrap `prelude` isolation remain
+implementation milestones.
 
 ### Small JS backend, entirely in Lean
 
@@ -63,7 +64,8 @@ See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md).
 
 | Lean implementation | Responsibility |
 |---|---|
-| `PS0/Syntax.lean` | Existing owned PS surface adaptations; v1 full category adaptation pending |
+| `PS0/HostCategories.lean` | Initial four PS v1 host-category interfaces and `PS0.Syntax.lower` native capture bridge; full host operand lowering pending |
+| `PS0/Syntax.lean` | Owned PS surface adaptations; full category-aware call/quote/record lowering pending |
 | `PS0/Grammar.lean` | Non-normative static syntax-kind inspection; official interleaved Lean parser is authoritative |
 | `PS0/Policy.lean` | Local declaration **information only**, no implicit axiom approval or source-language bans |
 | `PS0/StandardEnv.lean` | Pinned edition/source metadata, not an import/tactic/attribute allowlist |
