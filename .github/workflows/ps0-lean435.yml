@@ -55,9 +55,14 @@ jobs:
           assert len(d['featureFamilies'])==100
           assert len(d['acceptanceCases'])==111
           assert len(d['boundaryWitnesses'])==31
-          assert all(x['status']=='PENDING' for x in
-                     d['featureFamilies']+d['acceptanceCases']+d['boundaryWitnesses'])
-          print('PS0V1_SOURCE_AND_REGISTRY: PASS; 242 requirements pending qualification')
+          rows=d['featureFamilies']+d['acceptanceCases']+d['boundaryWitnesses']
+          for row in rows:
+            assert row['status'] in {'PENDING','PASS','FAIL'}
+            if row['status']=='PASS':
+              assert row.get('fixture') and row.get('qualifiedCommit')
+              assert row.get('ciRun')
+          completed=sum(row['status']=='PASS' for row in rows)
+          print(f'PS0V1_SOURCE_AND_REGISTRY: PASS; {completed}/242 qualified')
           PY
       - name: Compile standalone PS0 using exact Lean 4.35.0
         run: |
