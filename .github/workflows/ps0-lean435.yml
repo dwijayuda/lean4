@@ -82,14 +82,18 @@ jobs:
           meta=json.loads(Path('meta.json').read_text())
           assert modern['schema']=='ps0-source-module-header/1'
           assert modern['is_module'] is True
+          assert modern['implicit_module'] is True
           assert modern['compile_ready'] is False
           assert modern['imports']==[
             {'module':'Std','public':True,'meta':False,'all':False},
             {'module':'Init.Data.List','public':False,'meta':False,'all':False}
           ], modern
-          assert legacy['is_module'] is False
+          assert legacy['is_module'] is True
+          assert legacy['implicit_module'] is True
+          # Native legacy Lean would re-export this, but a .ps file is
+          # implicitly a module so this is a *private* import.
           assert legacy['imports']==[
-            {'module':'Std','public':True,'meta':False,'all':False}
+            {'module':'Std','public':False,'meta':False,'all':False}
           ], legacy
           assert meta['is_module'] is True
           assert meta['imports']==[
@@ -102,16 +106,17 @@ jobs:
             echo 'PS0 improperly compiled unimplemented v7 module visibility'
             exit 1
           fi
-          grep -F 'PSCV0-MODULE-HEADER-PENDING' modern-refusal.log
+          grep -F 'PSCV0-MODULE-PUBLIC-IMPORT-PENDING' modern-refusal.log
           if lake exe ps0 module-header tests/headers/invalid_public_legacy.ps > bad-legacy.log 2>&1; then
-            echo 'PS0 unexpectedly accepted invalid native legacy header'
+            echo 'PS0 accepted a forbidden literal module header in .ps'
             exit 1
           fi
+          grep -F 'PSCV0-MODULE-EXPLICIT-HEADER' bad-legacy.log
           if lake exe ps0 check tests/headers/invalid_public_legacy.ps > bad-public.log 2>&1; then
-            echo 'PS0 accepted public import without selected module semantics'
+            echo 'PS0 accepted an explicitly authored .ps module header'
             exit 1
           fi
-          grep -F 'PSCV0-MODULE-PUBLIC-IMPORT-PENDING' bad-public.log
+          grep -F 'PSCV0-MODULE-EXPLICIT-HEADER' bad-public.log
       - name: Preserve unrestricted native Lean for .lean sources
         run: |
           set -euo pipefail
@@ -213,7 +218,7 @@ jobs:
           # Each rejection must be for the claimed v7 language-policy rule.
           for pair in \
             'public_import_pending.ps:PSCV0-MODULE-PUBLIC-IMPORT-PENDING' \
-            'module_header.ps:PSCV0-MODULE-HEADER-PENDING' \
+            'module_header.ps:PSCV0-MODULE-EXPLICIT-HEADER' \
             'prelude_header.ps:PSCV0-MODULE-PRELUDE-REFUSED' \
             'meta_import.ps:PSCV0-ENV-META-IMPORT-REFUSED' \
             'import_all.ps:PSCV0-ENV-IMPORT-ALL-REFUSED'; do
