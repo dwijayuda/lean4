@@ -36,6 +36,15 @@ jobs:
           auto-config: false
           build: true
           use-github-cache: false
+      - name: Validate v7 normative coverage without inventing PASS evidence
+        run: |
+          set -euo pipefail
+          node scripts/validate-v7-coverage.mjs
+          if node scripts/validate-v7-coverage.mjs --require-complete > full-v7.log 2>&1; then
+            echo "PS0 must not claim full v7 while cases remain pending"
+            exit 1
+          fi
+          grep -F "v7 incomplete" full-v7.log
       - name: Prove PS0 is self-contained and compile exact Lean
         run: |
           set -euo pipefail
