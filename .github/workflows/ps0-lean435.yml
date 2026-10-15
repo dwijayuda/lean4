@@ -344,9 +344,11 @@ jobs:
           assert sm["sourcesContent"]==[Path("tests/js/nat_mvp.ps").read_text()]
           assert len(sm["mappings"].split(";")) == len(js.splitlines())
           assert "sourceMappingURL=NatMvp.js.map" in js
-          for name in ("add","multiply","subtract","clock"):
+          for name in ("add","multiply","subtract","clock","twice",
+                       "differenceOfProducts","usingGlobal","clockPlus"):
               assert ("export declare function "+name+"(") in dts
-          assert "export declare const bigValue: bigint;" in dts
+          for name in ("bigValue","computedValue"):
+              assert ("export declare const "+name+": bigint;") in dts
           print("PS0_JS_DTS_SOURCEMAP: PASS")
           PY
           node --input-type=module -e '
@@ -360,6 +362,11 @@ jobs:
             assert.equal(m.subtract(2n, 9n), 0n);
             assert.equal(m.subtract(9n, 2n), 7n);
             assert.equal(m.clock(), 42n);
+            assert.equal(m.twice(9007199254740993n), 18014398509481986n);
+            assert.equal(m.differenceOfProducts(5n, 7n), 23n);
+            assert.equal(m.usingGlobal(7n), 9007199254741000n);
+            assert.equal(m.clockPlus(5n), 47n);
+            assert.equal(m.computedValue, 42n);
             assert.throws(() => m.add(-1n, 1n), TypeError);
             assert.throws(() => m.add(1, 1n), TypeError);
             console.log("PS0_JS_BIGINT_RUNTIME: PASS");
