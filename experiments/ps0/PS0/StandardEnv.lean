@@ -1,8 +1,13 @@
 import Lean
 
 /-!
-PS0-owned compile-time, provisional module selection for the Lean 4.35.0 PSCV0 frontend.
-This is not the full semantic environment digest or a trusted plugin registry.
+PS0 v1 environment identity metadata. Language availability is determined
+by the exact Lean 4.35.0 imports, registered syntax, attributes,
+tactics, deriving handlers and actual native module scopes.
+
+This module does NOT define a finite language-level Standard whitelist,
+a mandatory axiom approval policy or a replacement Lean elaborator.
+A complete dependency/registration digest is future conformance work.
 -/
 
 open Lean
@@ -12,29 +17,13 @@ namespace PS0.StandardEnv
 def leanRevision : String := "eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
 def leanVersion : String := "4.35.0"
 
-def imports : List Lean.Name := [
-  `Std, `Init.Data.List, `Init.Data.Array,
-  `Std.Data.HashMap, `Std.Data.HashSet,
-  `Std.Data.TreeMap, `Std.Data.TreeSet,
-  `Std.Data.String, `Std.Data.Iterators
-]
-
-def derivingHandlers : List String :=
-  ["Repr", "BEq", "DecidableEq", "Inhabited", "Hashable"]
-
-def evalScalarTypes : List String :=
-  ["Nat", "Int", "Bool", "String", "Char", "Unit"]
-
-def allowsImport (modName : Lean.Name) : Bool := imports.contains modName
-
 def manifest : Lean.Json := Lean.Json.mkObj [
-  ("schema", toJson ("pscv0-standard-env/1" : String)),
-  ("status", toJson ("provisional-module-allowlist-not-complete-semantic-snapshot" : String)),
+  ("schema", toJson ("ps0-v1-environment/1" : String)),
+  ("edition", toJson ("PS0 v1 R2" : String)),
+  ("status", toJson ("import-driven-registration-closure-not-fully-digested" : String)),
   ("lean_commit", toJson leanRevision),
   ("lean_version", toJson leanVersion),
-  ("allowed_imports", toJson (imports.map Name.toString)),
-  ("deriving_handlers", toJson derivingHandlers),
-  ("eval_scalar_types", toJson evalScalarTypes)
+  ("language_reference", toJson ("PS0_V1_LANGUAGE_REFERENCE.md" : String))
 ]
 
 end PS0.StandardEnv
