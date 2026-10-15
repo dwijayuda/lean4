@@ -286,3 +286,36 @@ MVP issues no verified JS certificate.
 See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md). The separate PSCV0
 v7 language-feature engineering readiness metric remains **41%**;
 adding a backend is not completing new v7 grammar/semantic families.
+
+
+## JS backend MVP — compositional checked-Core closure (16 October 2026)
+
+The selected Lean-native JS runtime IR now supports prior Nat-constant
+references and exact-arity monomorphic calls to previously declared Nat
+functions, including the v7 nullary-Unit surface call. The backend
+**rejects** forward/recursive references, higher-order functions,
+named/defaulted calls, and foreign runtime dependencies. It does not
+attempt to reconstruct unsupported Lean semantics in JavaScript.
+
+Before emitting, `build-js` obtains and retains one actual Lean
+`Elab.process` environment whose declarations have passed source
+validation and `#pscv_gate`. The source AST is lowered from the same
+original input, then every IR export is checked against the Core
+`ConstantInfo.defnInfo`, safe definition status, and the exact Nat or
+Unit→Nat function telescope. Syntax alone is not sufficient to
+authorize JS emission. Nat subtraction evaluates each operand once.
+
+CI candidate tests now execute composed ESM functions, check exact
+BigInt arithmetic above 2^53 and negative input guards, check matching
+`.d.ts` exports, decode Base64-VLQ source-map declaration positions,
+and validate deterministic files and staged publication. Unsupported
+named-call and higher-order fixtures are explicitly rejected; invalid
+module output names are refused.
+
+**Still unqualified:** an actual passing pinned-Lean 4.35.0 build,
+the generated Node runtime pass, TypeScript compiler integration,
+full source-to-Core semantic correspondence, cross-module JS imports,
+Bool/ADTs/recursion/effects, and formal JS semantic preservation.
+The JS MVP is not full v7 backend coverage or a verified executable.
+The separate v7 source-language readiness remains 41% estimated,
+with zero independently recorded `v7-coverage.json` PASS receipts.
