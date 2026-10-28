@@ -1,7 +1,7 @@
 module
-public import Lean
+public meta import Lean
 
-public section
+public meta section
 
 /-!
 PS0 v1 section 0B: explicit host-category interfaces.
