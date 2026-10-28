@@ -14,5 +14,10 @@ command -v bwrap
 # An unavailable sandbox is a gate failure. Do not disable the sandbox or
 # globally relax runner security to manufacture a passing qualification.
 bwrap --ro-bind / / --unshare-all --die-with-parent -- /bin/true
+lake build +PS0.Verified.Extract
+lake env lean tests/verified-resource-bound.lean > build/verified-logs/resource-bound.log 2>&1 || {
+  cat build/verified-logs/resource-bound.log
+  exit 1
+}
 python3 tests/test-proof-linked-host.py
 python3 tests/proof-linked-qualification.py
