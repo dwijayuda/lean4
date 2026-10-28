@@ -7,6 +7,8 @@
 - Draft PR: https://github.com/dwijayuda/lean4/pull/6
 - Architecture/base commit: `60ca3b645e0fc05c6b6416b7f9ea46afa10b46fc`.
 - First workflow checkpoint: `20279d58b045e3ffad3865ed1869311ad3050813`.
+- Implementation checkpoint: `5aecd139989a8755b541de3c3e457ec1b0f23a26`.
+- Evidence receipt: [proof-linked-status-20261029.json](proof-linked-status-20261029.json).
 - Re-read live HEAD before further writes; use non-force expected-SHA updates.
 - Official Lean 4.35.0 pin remains `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
 - R2 authority remains blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
@@ -44,8 +46,14 @@ runtime types, functions, modules, effects, FFI and other backends are open.
 ## Validation evidence and blockers
 
 - GitHub confirmed the design base, created this separate branch and draft PR.
-- The initial branch-wide Actions query, after the workflow push and PR
-  creation, returned `total_count: 0`.
+- Both initial and post-implementation branch-wide Actions queries returned
+  `total_count: 0`. The exact implementation commit's check-runs query also
+  returned `total_count: 0`.
+- Therefore no run ID or log URL exists to cite for this implementation.
+  The cause of non-dispatch has NOT been established; do not call it a
+  compiler failure, disabled Actions, or an approval problem without evidence.
+- Available connector actions provide workflow reads and reruns but no
+  initial dispatch/enable action. No unrelated workflow was rerun.
 - No successful Lean build, source proof, model proof, TypeScript consumer,
   target runtime or publication regression run is observed at authorship.
 - Test definitions are candidate evidence, NOT PASS receipts. No R2 coverage
@@ -55,11 +63,12 @@ runtime types, functions, modules, effects, FFI and other backends are open.
 
 ## Required next actions
 
-1. Inspect `PS0 proof-linked JS and TypeScript` Actions at the exact live
-   implementation commit. If no run appears, investigate workflow/event
-   activation; do not invent a failure reason or replace CI with a claimed pass.
-2. First qualify the unchanged PS0 standalone baseline. Fix actual pinned
-   parser/API errors from logs before expanding the slice.
+1. Obtain a real run of `PS0 proof-linked JS and TypeScript` at the exact
+   implementation commit. Investigate repository Actions/event activation
+   using an authorized workflow-dispatch/admin path, without merging main.
+2. First qualify the standalone PS0 package. Fix actual pinned parser/API
+   errors from logs before expanding the slice. The full package target may
+   include new Verified modules; distinguish these failures from old code.
 3. Qualify the model/extractor and both comparator phases. Preserve exact
    source/IR statement checks and standard-axiom policy; do not disable bwrap.
 4. Run all host and semantic negatives and inspect their intended diagnostics.
