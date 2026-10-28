@@ -1,10 +1,10 @@
 module
-public import Lean
-public import Lean.Compiler.ExternAttr
-public import Lean.Compiler.ImplementedByAttr
-public import PS0.Verified.Emit
+public meta import Lean
+public meta import Lean.Compiler.ExternAttr
+public meta import Lean.Compiler.ImplementedByAttr
+public meta import PS0.Verified.Emit
 
-public section
+public meta section
 
 /-!
 Untrusted proof-producing extraction candidate from the ADMITTED Lean body.
