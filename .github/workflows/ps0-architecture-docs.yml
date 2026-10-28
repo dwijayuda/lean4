@@ -1,0 +1,80 @@
+name: PS0 architecture documentation only
+
+on:
+  push:
+    branches: [research/ps0-verified-multibackend-20261029]
+    paths:
+      - experiments/ps0/PS0_VERIFIED_MULTIBACKEND_ARCHITECTURE.md
+      - .github/workflows/ps0-architecture-docs.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ps0-architecture-docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  documentation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          sparse-checkout: |
+            experiments/ps0
+            .github/workflows/ps0-architecture-docs.yml
+      - name: Check proposal structure and unchanged normative baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+          import re
+          import subprocess
+
+          root = Path('experiments/ps0')
+          path = root / 'PS0_VERIFIED_MULTIBACKEND_ARCHITECTURE.md'
+          raw = path.read_bytes()
+          text = raw.decode('utf-8')
+          assert '\x00' not in text
+          assert 'Status: research proposal' in text
+          assert len(re.findall(r'^```', text, re.M)) % 2 == 0
+          sections = [int(n) for n in re.findall(r'^## (\d+)\.', text, re.M)]
+          assert sections == list(range(1, 21)), sections
+          refs = set(re.findall(r'^- \[(U\d{2})\]', text, re.M))
+          assert refs == {f'U{i:02}' for i in range(1, 31)}, refs
+          for target in ('TypeScript', 'JavaScript', 'Python', 'PHP', 'Rust'):
+              assert target in text
+          for required in ('fail-closed', 'sorryAx', 'correspondence', 'proofs/',
+                           'explicit-assumption', 'Validation status at authorship'):
+              assert required in text, required
+          for link in re.findall(r'\]\(([^)]+)\)', text):
+              if '://' not in link and not link.startswith('#'):
+                  assert (root / link.split('#', 1)[0]).exists(), link
+
+          spec = (root / 'PS0_V1_LANGUAGE_REFERENCE.md').read_bytes()
+          blob = hashlib.sha1(b'blob ' + str(len(spec)).encode() + b'\0' + spec).hexdigest()
+          assert blob == 'c50203f8e4cb79b3e6680088a07c1d1e145b8f0b', blob
+          ledger = json.loads((root / 'v1-coverage.json').read_text())
+          rows = ledger['featureFamilies'] + ledger['acceptanceCases'] + ledger['boundaryWitnesses']
+          assert len(rows) == 242
+          assert all(row['status'] == 'PENDING' for row in rows)
+          assert (root / 'lean-toolchain').read_text().strip() == 'leanprover/lean4:v4.35.0'
+
+          changed = set(subprocess.check_output(
+              ['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', 'HEAD'], text=True
+          ).splitlines())
+          permitted = {
+              'experiments/ps0/PS0_VERIFIED_MULTIBACKEND_ARCHITECTURE.md',
+              '.github/workflows/ps0-architecture-docs.yml'
+          }
+          assert changed and changed <= permitted, changed
+          print('PS0_ARCHITECTURE_DOCS: PASS')
+          print('Documentation structure, links and unchanged baseline only.')
+          print('No Lean compilation, proof replay, backend execution or conformance PASS is claimed.')
+          PY
