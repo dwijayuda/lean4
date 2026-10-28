@@ -1,5 +1,8 @@
-import Lean
-import PS0.Syntax
+module
+public import Lean
+public import PS0.Syntax
+
+public section
 
 /-!
 PS0 v1 distinguishes language acceptance from explicit assurance claims.
