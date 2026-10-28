@@ -1,9 +1,9 @@
 module
-public import Lean
+public meta import Lean
 public import PS0.HostCategories
 public import PS0.Effect
 
-public section
+public meta section
 
 /-!
 PS0-owned Lean-syntax adapter, migrated from the earlier PSCVL experiment. It always lowers to genuine Lean
@@ -256,7 +256,7 @@ macro_rules (kind := pscvFunctionWhere)
   | `(function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term
       where { $locals:pscvWhereDef* }) => do
     let binders ← explicitLeanBinders bs true
-    let mut nativeLocals : Array (TSyntax ``Lean.Parser.Term.letRecDecl) := #[]
+    let mut nativeLocals : Array (TSyntax ``Lean.Parser.Term.letRecDecl)) := #[]
     for localStx in locals do
       match localStx with
       | `(pscvWhereDef| def $n:ident ($[$args:pscvBinder],*) : $ty:term := $value:term) =>
