@@ -35,12 +35,12 @@ private def parsePsModuleHeader (src filename : String) :
     if sourceMessages.hasErrors then
       return .error "PS0V1-MODULE: invalid explicit native module header"
     return .ok (sourceHeader, sourceState, 0)
-  let prefix := "module\n"
-  let injected := Parser.mkInputContext (prefix ++ src) filename
+  let headerPrefix := "module\n"
+  let injected := Parser.mkInputContext (headerPrefix ++ src) filename
   let (header, state, diagnostics) ← Parser.parseHeader injected
   if diagnostics.hasErrors then
     return .error "PS0V1-MODULE: invalid implicit module import header"
-  return .ok (header, state, prefix.utf8ByteSize)
+  return .ok (header, state, headerPrefix.utf8ByteSize)
 
 /-- Import-driven v1 native language, not a finite Standard allowlist.
     Source imports remain subject to the official Lean 4.35.0 header
@@ -311,12 +311,10 @@ private def buildUnrestrictedLean (path moduleName outputDir : String) : IO UInt
     return 2
   let out := System.FilePath.mk outputDir
   if ← out.pathExists then
-    IO.eprintln s!"PS0-OUTPUT-EXISTS: refusing to replace {out}"
+    IO.eprintln "PS0-OUTPUT-EXISTS: refusing to replace {out}"
     return 2
   let parent := out.parent.getD "."
   IO.FS.createDirAll parent
-  -- Host output safety is not a restriction on Lean source. Use a sibling
-  -- path so successful publication stays on the same filesystem.
   let nonce ← IO.monoMsNow
   let stage := parent / s!".ps0-lean-stage-{moduleName}-{nonce}"
   IO.FS.createDir stage
