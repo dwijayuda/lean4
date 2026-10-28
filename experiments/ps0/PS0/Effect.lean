@@ -1,4 +1,7 @@
-import Std.WP
+module
+public import Std.WP
+
+public section
 
 /-!
 PS0 v0 effect relations, inside Lean's single logic.
@@ -20,14 +23,14 @@ open scoped Std.WP Lean.Order
 universe u v
 
 /-- A pure computation's weakest precondition is its requested postcondition. -/
-def pureWP {α : Type u} (value : α) (post : α → Prop) : Prop :=
+@[expose] def pureWP {α : Type u} (value : α) (post : α → Prop) : Prop :=
   post value
 
 @[simp] theorem pureWP_apply {α : Type u} (x : α) (post : α → Prop) :
     pureWP x post ↔ post x := Iff.rfl
 
 /-- A read-only computation is specified at an explicit, unchanged environment. -/
-def readerWP {ρ α : Type u} (prog : ReaderM ρ α)
+@[expose] def readerWP {ρ α : Type u} (prog : ReaderM ρ α)
     (post : α → ρ → Prop) (env : ρ) : Prop :=
   post (prog env) env
 
@@ -41,7 +44,7 @@ theorem readerWP_bind {ρ α β : Type u} (prog : ReaderM ρ α)
       readerWP prog (fun value original => readerWP (k value) post original) env := Iff.rfl
 
 /-- Typed error contracts distinguish the successful and exceptional branches. -/
-def errorWP {ε α : Type u} (prog : Except ε α)
+@[expose] def errorWP {ε α : Type u} (prog : Except ε α)
     (ok : α → Prop) (failed : ε → Prop) : Prop :=
   match prog with
   | .ok value => ok value
@@ -63,7 +66,7 @@ theorem errorWP_bind {ε α β : Type u} (prog : Except ε α)
 
 /-- Stateful contracts preserve explicit logical pre-state rather than
 conflating a mutation with an ambient host-memory side effect. -/
-def stateWP {σ α : Type u} (prog : StateM σ α)
+@[expose] def stateWP {σ α : Type u} (prog : StateM σ α)
     (post : α → σ → Prop) (initial : σ) : Prop :=
   let (value, final) := prog.run initial
   post value final
@@ -74,7 +77,7 @@ def stateWP {σ α : Type u} (prog : StateM σ α)
 
 /-- The relational form of a state effect's postcondition. The first
 state is 'old' / pre-state, the second the actual produced post-state. -/
-def stateRel {σ α : Type u} (prog : StateM σ α)
+@[expose] def stateRel {σ α : Type u} (prog : StateM σ α)
     (pre : σ → Prop) (post : σ → α → σ → Prop) : Prop :=
   ∀ old, pre old →
     let (value, newState) := prog.run old
@@ -82,7 +85,7 @@ def stateRel {σ α : Type u} (prog : StateM σ α)
 
 /-- A frame obligation over an explicitly selected observation. Proof of this
 relation does not establish a full modifies/reads capability registry. -/
-def preserves {σ α β : Type u} (prog : StateM σ α) (view : σ → β) : Prop :=
+@[expose] def preserves {σ α β : Type u} (prog : StateM σ α) (view : σ → β) : Prop :=
   ∀ before, view (prog.run before).2 = view before
 
 /-- A checked frame lemma is an ordinary theorem about observable state. -/
