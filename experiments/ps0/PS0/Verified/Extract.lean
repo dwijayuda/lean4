@@ -75,6 +75,8 @@ private def extractRoot (root : Name) : MetaM NatExpr := do
 elab "#ps0_extract " root:ident : command => do
   let name := root.getId
   let ir ← liftTermElabM do extractRoot name
+  unless ir.withinOutputBudget do
+    throwError "PS0-VEXEC-SIZE: candidate expansion exceeds the slice budget"
   let js := emit ir false
   let ts := emit ir true
   if js.utf8ByteSize > 65536 || ts.utf8ByteSize > 65536 then
