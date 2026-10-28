@@ -268,11 +268,13 @@ def prepare_workspace(root: Path, work: Path, source: bytes, proof: bytes) -> di
     (work / "Admitted.lean").write_bytes(header + source + b"\n#ps0_evidence\n")
     (work / "proofs").mkdir()
     (work / "proofs/Inventory.lean").write_bytes(proof)
-    prefix = "module\nimport all Admitted\npublic section\n"
+    # Public interface names and private body access are different imports.
+    # `public import all` is not a legal substitute in modern Lean modules.
+    prefix = "module\npublic import Admitted\nimport all Admitted\npublic section\n"
     proposition = "(stock requested : Nat) : Inventory.remaining stock requested = stock - requested"
     write(work / "ChallengeSource.lean", prefix + "axiom source_spec " + proposition + "\n")
     write(work / "SourceProof.lean",
-          "module\nimport all Admitted\nimport proofs.Inventory\nimport PS0.Verified.Extract\npublic section\n"
+          "module\npublic import Admitted\nimport all Admitted\nimport proofs.Inventory\nimport PS0.Verified.Extract\npublic section\n"
           + "theorem source_spec " + proposition + " := InventoryProof.remaining_spec stock requested\n"
           + "#ps0_extract Inventory.remaining\n")
     write(work / "source-comparator.json", comparator_config("ChallengeSource", "SourceProof", ["source_spec"]))
@@ -283,7 +285,7 @@ def write_correspondence(work: Path, ir: list[Any]) -> None:
     validate_ir(ir)
     write(work / "Candidate.lean", "module\npublic import PS0.Verified.Core\npublic section\n"
           f"@[expose] def candidateIR : PS0.Verified.NatExpr := {lean_expr(ir)}\n")
-    prelude = "module\nimport all Admitted\nimport all Candidate\n"
+    prelude = "module\npublic import Admitted\nimport all Admitted\npublic import Candidate\nimport all Candidate\n"
     statements = {
         "extraction_correct": "(stock requested : Nat) : candidateIR.eval stock requested = Inventory.remaining stock requested",
         "target_correct": "(stock requested : Nat) : (PS0.Verified.lower candidateIR).eval stock requested = some (Inventory.remaining stock requested)",
