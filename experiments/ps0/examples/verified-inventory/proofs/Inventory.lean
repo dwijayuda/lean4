@@ -1,4 +1,5 @@
 module
+public import Admitted
 import all Admitted
 import Lean
 
