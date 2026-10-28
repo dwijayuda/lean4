@@ -27,19 +27,20 @@ for name, expected in evidence['artifacts'].items():
 
 original_source = (EXAMPLE / 'src/Inventory.ps').read_text()
 original_proof = (EXAMPLE / 'proofs/Inventory.lean').read_text()
+proof_header = 'module\npublic import Admitted\nimport all Admitted\npublic section\nnamespace InventoryProof\n'
 cases = [
     ('wrong-body', original_source.replace('stock - requested', 'stock + requested'), original_proof, ['rfl']),
     ('proof-hole', original_source, original_proof.replace('  rfl', '  sorry', 1), ['sorryAx']),
     ('unapproved-axiom', original_source,
-     'module\nimport all Admitted\npublic section\nnamespace InventoryProof\n'
+     proof_header +
      'axiom cheat (stock requested : Nat) : Inventory.remaining stock requested = stock - requested\n'
      'theorem remaining_spec (stock requested : Nat) : Inventory.remaining stock requested = stock - requested := cheat stock requested\n'
      'end InventoryProof\n', ['cheat', 'axiom']),
     ('irrelevant-proof', original_source,
-     'module\nimport all Admitted\npublic section\nnamespace InventoryProof\n'
+     proof_header +
      'theorem remaining_spec : True := True.intro\nend InventoryProof\n', ['remaining_spec']),
     ('missing-proof', original_source,
-     'module\nimport all Admitted\npublic section\nnamespace InventoryProof\nend InventoryProof\n', ['remaining_spec']),
+     proof_header + 'end InventoryProof\n', ['remaining_spec']),
 ]
 refusals = []
 for name, source, proof, markers in cases:
