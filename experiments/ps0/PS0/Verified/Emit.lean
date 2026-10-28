@@ -1,4 +1,7 @@
-import PS0.Verified.Core
+module
+public import PS0.Verified.Core
+
+public section
 
 /-! Candidate-only emitter. It cannot publish a verified artifact. The host
 pipeline must independently replay the proofs and check the exact bytes.
@@ -8,7 +11,7 @@ namespace PS0.Verified
 /-- Saturating size of the ASCII expression emitted after lowering.
     Subtraction duplicates both operands; count before building that expanded
     target tree or string. This is a resource guard, not semantic evidence. -/
-def NatExpr.targetSize : NatExpr → Nat
+@[expose] def NatExpr.targetSize : NatExpr → Nat
   | .first => 5
   | .second => 9
   | .literal n => min 65537 ((toString n).utf8ByteSize + 1)
@@ -17,7 +20,7 @@ def NatExpr.targetSize : NatExpr → Nat
   | .sub a b => min 65537 (2 * (a.targetSize + b.targetSize) + 21)
 
 /-- Reserve more than the complete fixed wrapper before rendering either target. -/
-def NatExpr.withinOutputBudget (e : NatExpr) : Bool :=
+@[expose] def NatExpr.withinOutputBudget (e : NatExpr) : Bool :=
   e.targetSize + 512 ≤ 65536
 
 private def render : TargetExpr → String
