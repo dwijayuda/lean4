@@ -1,1 +1,2 @@
-import PS0.Policy
+module
+public import PS0.Policy
