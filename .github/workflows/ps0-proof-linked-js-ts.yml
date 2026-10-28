@@ -1,0 +1,67 @@
+name: PS0 proof-linked JS and TypeScript
+
+on:
+  push:
+    branches: [feature/ps0-proof-linked-js-ts-20261029]
+    paths:
+      - experiments/ps0/**
+      - .github/workflows/ps0-proof-linked-js-ts.yml
+  pull_request:
+    branches: [research/ps0-verified-multibackend-20261029]
+    paths:
+      - experiments/ps0/**
+      - .github/workflows/ps0-proof-linked-js-ts.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ps0-proof-linked-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  proof-linked:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: experiments/ps0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/ps0
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: experiments/ps0
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+      - name: Exact official Lean toolchain and unchanged language authority
+        run: |
+          set -euo pipefail
+          mkdir -p build/verified-logs
+          printf 'import Lean\n#eval Lean.githash\n' > build/verified-logs/Pin.lean
+          lake env lean build/verified-logs/Pin.lean | tee build/verified-logs/pin.log
+          grep -Fx '"eb6cafb7290e8bd5f2937522d8d804f58f02bafc"' build/verified-logs/pin.log
+          test "$(git hash-object PS0_V1_LANGUAGE_REFERENCE.md)" = c50203f8e4cb79b3e6680088a07c1d1e145b8f0b
+      - name: Existing PS0 standalone build
+        run: |
+          set -euo pipefail
+          lake build PS0 ps0 2>&1 | tee build/verified-logs/baseline-build.log
+      - name: Proof-linked source, IR and JS/TS qualification
+        run: |
+          set -euo pipefail
+          test -f tests/run-proof-linked.sh
+          bash tests/run-proof-linked.sh 2>&1 | tee build/verified-logs/qualification.log
+      - name: Preserve exact diagnostics, not a certification assertion
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps0-proof-linked-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            experiments/ps0/build/verified-logs/
+            experiments/ps0/build/proof-linked/
+          if-no-files-found: warn
