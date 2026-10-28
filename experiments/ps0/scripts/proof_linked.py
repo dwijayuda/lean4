@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -28,6 +29,8 @@ ROOT = "Inventory.remaining"
 AXIOMS = ["propext", "Quot.sound", "Classical.choice"]
 SCHEMA = "ps0-nat2-candidate/1"
 MAX_BYTES = 65536
+NODE_VERSION = "v22.23.3"
+TSC_VERSION = "Version 5.7.3"
 
 
 class Refusal(RuntimeError):
@@ -41,7 +44,15 @@ def digest(data: bytes) -> str:
 def regular_bytes(path: Path, limit: int = MAX_BYTES) -> bytes:
     if path.is_symlink() or not path.is_file():
         raise Refusal(f"PS0-FILE: not a regular input: {path}")
-    data = path.read_bytes()
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+    try:
+        fd = os.open(path, flags)
+    except OSError as exc:
+        raise Refusal(f"PS0-FILE: cannot open regular input: {path}") from exc
+    with os.fdopen(fd, "rb") as stream:
+        if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+            raise Refusal(f"PS0-FILE: not a regular input: {path}")
+        data = stream.read(limit + 1)
     if len(data) > limit:
         raise Refusal(f"PS0-SIZE: oversized input: {path}")
     return data
@@ -88,6 +99,23 @@ def lean_expr(ir: list[Any]) -> str:
     return f"(.{tag} {lean_expr(ir[1])} {lean_expr(ir[2])})"
 
 
+def target_size(ir: list[Any]) -> int:
+    """Saturating byte count before expanding repeated subtraction operands.
+
+    Call only after validate_ir. Every emitted atom is ASCII. Counting the
+    tree does not allocate the potentially exponential target expression.
+    """
+    tag = ir[0]
+    if tag == "first":
+        return 5
+    if tag == "second":
+        return 9
+    if tag == "literal":
+        return len(ir[1]) + 1
+    children = target_size(ir[1]) + target_size(ir[2])
+    return min(MAX_BYTES + 1, 2 * children + 21 if tag == "sub" else children + 5)
+
+
 def target_expr(ir: list[Any]) -> str:
     tag = ir[0]
     if tag == "first":
@@ -104,6 +132,9 @@ def target_expr(ir: list[Any]) -> str:
 
 def expected_source(ir: list[Any], typed: bool) -> bytes:
     validate_ir(ir)
+    # Reserve more than the complete fixed JS/TS wrapper before allocating.
+    if target_size(ir) + 512 > MAX_BYTES:
+        raise Refusal("PS0-OUTPUT-SIZE: target expansion too large")
     args = "stock: bigint, requested: bigint" if typed else "stock, requested"
     ret = ": bigint" if typed else ""
     text = (
@@ -191,8 +222,26 @@ def comparator_config(challenge: str, solution: str, theorems: list[str]) -> str
 
 
 def snapshot_files(root: Path) -> dict[str, str]:
-    return {str(p.relative_to(root)): digest(regular_bytes(p, 1024 * 1024))
-            for p in sorted(root.rglob("*")) if p.is_file() and ".lake" not in p.relative_to(root).parts}
+    result: dict[str, str] = {}
+    for path in sorted(root.rglob("*")):
+        relative = path.relative_to(root)
+        if ".lake" in relative.parts:
+            continue
+        if path.is_symlink():
+            raise Refusal(f"PS0-SNAPSHOT: symbolic-link input: {relative}")
+        if path.is_file():
+            result[str(relative)] = digest(regular_bytes(path, 1024 * 1024))
+    return result
+
+
+def verify_snapshot(root: Path, expected: dict[str, str],
+                    allowed_new: Sequence[str] = ()) -> dict[str, str]:
+    actual = snapshot_files(root)
+    if any(actual.get(name) != value for name, value in expected.items()):
+        raise Refusal("PS0-SNAPSHOT: an identified input changed or disappeared")
+    if set(actual) - set(expected) - set(allowed_new):
+        raise Refusal("PS0-SNAPSHOT: unexpected input added")
+    return actual
 
 
 def prepare_workspace(root: Path, work: Path, source: bytes, proof: bytes) -> dict[str, str]:
@@ -203,7 +252,7 @@ def prepare_workspace(root: Path, work: Path, source: bytes, proof: bytes) -> di
     for path in root.glob("*.lean"):
         shutil.copyfile(path, vendor / path.name)
     shutil.copytree(root / "PS0", vendor / "PS0")
-    for name in ["lakefile.toml", "lean-toolchain"]:
+    for name in ["lakefile.toml", "lean-toolchain", "lake-manifest.json"]:
         shutil.copyfile(root / name, vendor / name)
     write(work / "lean-toolchain", "leanprover/lean4:v4.35.0\n")
     libraries = ["Admitted", "proofs", "ChallengeSource", "SourceProof", "Candidate", "Challenge", "Solution"]
@@ -270,8 +319,15 @@ def check_targets(root: Path, work: Path, files: dict[str, bytes], logs: Path) -
     tsc = Path(os.environ.get("PS0_TSC", ""))
     if not tsc.is_absolute() or not tsc.is_file():
         raise Refusal("PS0-TSC: PS0_TSC must identify the pinned TypeScript compiler")
-    target = work / "target-check"
+    target = work / ".lake/ps0-target-check"
     target.mkdir()
+    node_version = run(["node", "--version"], target, logs / "node-version.log", "PS0-NODE").strip()
+    ts_version = run(["node", str(tsc), "--version"], target, logs / "ts-version.log", "PS0-TSC").strip()
+    if node_version != NODE_VERSION or ts_version != TSC_VERSION:
+        raise Refusal("PS0-TARGET-PIN: unsupported Node/TypeScript version")
+    tsc_hash = digest(regular_bytes(tsc, 20 * 1024 * 1024))
+    harness = root / "tests/proof-linked-runtime.mjs"
+    harness_hash = digest(regular_bytes(harness))
     for name in ["inventory.js", "inventory.ts"]:
         (target / name).write_bytes(files[name])
     write(target / "package.json", '{"type":"module"}\n')
@@ -288,16 +344,14 @@ def check_targets(root: Path, work: Path, files: dict[str, bytes], logs: Path) -
     declarations = regular_bytes(target / "compiled/inventory.d.ts")
     if declarations != b"export declare function remaining(stock: bigint, requested: bigint): bigint;\n":
         raise Refusal("PS0-TSC-ABI: unexpected declaration interface")
-    harness = root / "tests/proof-linked-runtime.mjs"
     run(["node", str(harness), str(target / "inventory.js")], target, logs / "js-runtime.log", "PS0-JS-RUNTIME")
     run(["node", str(harness), str(target / "compiled/inventory.js")], target, logs / "ts-runtime.log", "PS0-TS-RUNTIME")
+    if digest(regular_bytes(tsc, 20 * 1024 * 1024)) != tsc_hash or digest(regular_bytes(harness)) != harness_hash:
+        raise Refusal("PS0-SNAPSHOT: target tool or runtime harness changed")
     files["inventory.d.ts"] = declarations
     files["inventory.from-ts.js"] = compiled
-    return {
-        "node": run(["node", "--version"], target, logs / "node-version.log", "PS0-NODE").strip(),
-        "typescript": run(["node", str(tsc), "--version"], target, logs / "ts-version.log", "PS0-TSC").strip(),
-        "tsc_sha256": digest(regular_bytes(tsc, 20 * 1024 * 1024)),
-    }
+    return {"node": node_version, "typescript": ts_version,
+            "tsc_sha256": tsc_hash, "runtime_harness_sha256": harness_hash}
 
 
 def build(root: Path, example: Path, output: Path, profile: str) -> Path:
@@ -309,6 +363,8 @@ def build(root: Path, example: Path, output: Path, profile: str) -> Path:
         raise Refusal("PS0-OUTPUT-EXISTS: refusing to replace an existing bundle")
     source = regular_bytes(example / "src/Inventory.ps")
     proof = regular_bytes(example / "proofs/Inventory.lean")
+    host_path = root / "scripts/proof_linked.py"
+    host_hash = digest(regular_bytes(host_path))
     output.parent.mkdir(parents=True, exist_ok=True)
     logs = output.parent / (output.name + "-logs")
     logs.mkdir(exist_ok=False)
@@ -317,23 +373,37 @@ def build(root: Path, example: Path, output: Path, profile: str) -> Path:
     stage = holder / "bundle"
     try:
         vendor_before = prepare_workspace(root, work, source, proof)
+        inputs_before = snapshot_files(work)
         # The original CLI remains independently covered; it is not the proof authority.
         run(["lake", "exe", "ps0", "check", str(work / "source.ps")], root, logs / "ps0-check.log", "PS0-SOURCE-CHECK")
+        verify_snapshot(work, inputs_before)
         run(["lake", "update"], work, logs / "resolve.log", "PS0-RESOLVE")
+        inputs_before = verify_snapshot(work, inputs_before, ["lake-manifest.json"])
         run(["lake", "comparator", "--config", "source-comparator.json"], work, logs / "source-proof.log", "PS0-SOURCE-PROOF")
+        verify_snapshot(work, inputs_before)
         ir, files = read_candidate(work / ".lake/ps0-candidate")
         frozen_candidates = {name: digest(data) for name, data in files.items()}
         write_correspondence(work, ir)
+        inputs_before = verify_snapshot(work, inputs_before,
+                                        ["Candidate.lean", "Challenge.lean", "Solution.lean", "target-comparator.json"])
         run(["lake", "comparator", "--config", "target-comparator.json"], work, logs / "target-proof.log", "PS0-TARGET-PROOF")
+        verify_snapshot(work, inputs_before)
         # A stale or rewritten private candidate is never combined with old proofs.
         ir_after, after = read_candidate(work / ".lake/ps0-candidate")
         if ir_after != ir or {n: digest(b) for n, b in after.items()} != frozen_candidates:
             raise Refusal("PS0-SNAPSHOT: candidate changed during proof replay")
-        if snapshot_files(work / ".lake/packages/ps0") != vendor_before:
-            raise Refusal("PS0-SNAPSHOT: compiler/model inputs changed during build")
+        verify_snapshot(work / ".lake/packages/ps0", vendor_before)
         if regular_bytes(work / "source.ps") != source or regular_bytes(work / "proofs/Inventory.lean") != proof:
             raise Refusal("PS0-SNAPSHOT: source/proof bytes changed during build")
         runtimes = check_targets(root, work, files, logs)
+        # Check again after target tools, immediately before release staging.
+        verify_snapshot(work, inputs_before)
+        verify_snapshot(work / ".lake/packages/ps0", vendor_before)
+        if digest(regular_bytes(host_path)) != host_hash:
+            raise Refusal("PS0-SNAPSHOT: publication host changed")
+        _, final_candidates = read_candidate(work / ".lake/ps0-candidate")
+        if {n: digest(b) for n, b in final_candidates.items()} != frozen_candidates:
+            raise Refusal("PS0-SNAPSHOT: candidate changed during target qualification")
         stage.mkdir()
         for name, data in files.items():
             (stage / name).write_bytes(data)
@@ -344,7 +414,8 @@ def build(root: Path, example: Path, output: Path, profile: str) -> Path:
             "claim": "source specification and exact IR/target-model correspondence, conditional on reviewed realization",
             "lean_commit": LEAN_PIN, "permitted_axioms": AXIOMS,
             "source_sha256": digest(source), "proof_sha256": digest(proof),
-            "compiler_inputs": vendor_before,
+            "compiler_inputs": vendor_before, "challenge_inputs": inputs_before,
+            "publication_host_sha256": host_hash,
             "artifacts": {name: digest(data) for name, data in sorted(files.items())},
             "runtime_tools": runtimes,
             "proof_replay": {"source": digest(regular_bytes(logs / "source-proof.log", 20 * 1024 * 1024)),
