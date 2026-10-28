@@ -1,6 +1,9 @@
-import Lean
-import PS0.HostCategories
-import PS0.Effect
+module
+public import Lean
+public import PS0.HostCategories
+public import PS0.Effect
+
+public section
 
 /-!
 PS0-owned Lean-syntax adapter, migrated from the earlier PSCVL experiment. It always lowers to genuine Lean
