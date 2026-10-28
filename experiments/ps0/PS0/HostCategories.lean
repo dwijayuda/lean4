@@ -27,12 +27,13 @@ declare_syntax_cat psCallArg
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
 
--- The pinned Lean syntax-description grammar supplies allowTrailingSep.
+-- The third descriptor argument is the separator's formatting parser;
+-- allowTrailingSep occupies the fourth slot in pinned Lean 4.35.0.
 -- sepBy1 retains nonemptiness: a comma alone is not an empty invocation,
 -- and a repeated comma cannot manufacture a missing operand.
 -- Identifier heads only; other high-postfix heads remain a separate task.
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
-  ident noWs "(" sepBy1(psCallArg, ",", allowTrailingSep) ")" : psTerm
+  ident noWs "(" sepBy1(psCallArg, ",", ppSpace, allowTrailingSep) ")" : psTerm
 
 namespace PS0.Syntax
 
