@@ -1,4 +1,7 @@
-import Lean
+module
+public import Lean
+
+public section
 
 /-!
 A deliberately small, typed-by-construction executable fragment.
@@ -23,7 +26,7 @@ inductive NatExpr where
   | sub (left right : NatExpr)
   deriving Repr, DecidableEq, Inhabited
 
-def NatExpr.eval : NatExpr → Nat → Nat → Nat
+@[expose] def NatExpr.eval : NatExpr → Nat → Nat → Nat
   | .first, x, _ => x
   | .second, _, y => y
   | .literal n, _, _ => n
@@ -40,7 +43,7 @@ inductive TargetExpr where
   | chooseGe (left right yes no : TargetExpr)
   deriving Repr, Inhabited
 
-def TargetExpr.eval : TargetExpr → Nat → Nat → Option Nat
+@[expose] def TargetExpr.eval : TargetExpr → Nat → Nat → Option Nat
   | .first, x, _ => some x
   | .second, _, y => some y
   | .literal n, _, _ => some n
@@ -61,7 +64,7 @@ def TargetExpr.eval : TargetExpr → Nat → Nat → Option Nat
       | some l, some r => if r ≤ l then yes.eval x y else no.eval x y
       | _, _ => none
 
-def lower : NatExpr → TargetExpr
+@[expose] def lower : NatExpr → TargetExpr
   | .first => .first
   | .second => .second
   | .literal n => .literal n
