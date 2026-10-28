@@ -24,9 +24,9 @@ syntax (name := ps0Evidence) "#ps0_evidence" : command
 @[command_elab ps0Evidence]
 def elabPs0Evidence : CommandElab := fun _ => do
   let locals ← (← getEnv).getLocalConstantInfos
-  let mut axioms := 0
-  let mut unsafeDecls := 0
-  let mut partialDecls := 0
+  let mut axioms : Nat := 0
+  let mut unsafeDecls : Nat := 0
+  let mut partialDecls : Nat := 0
   for c in locals do
     let info := c.toConstantInfo
     if let .axiomInfo _ := info then
