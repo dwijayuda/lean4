@@ -21,9 +21,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  host-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/ps0
+      - name: Independent host schema, artifact and publication negatives
+        working-directory: experiments/ps0
+        run: python3 tests/test-proof-linked-host.py
+
   proof-linked:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: experiments/ps0
@@ -31,6 +42,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: experiments/ps0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.3'
       - uses: leanprover/lean-action@v1
         with:
           lake-package-directory: experiments/ps0
@@ -39,10 +53,20 @@ jobs:
           test: false
           lint: false
           use-github-cache: false
+      - name: Install official replay sandbox and pinned target compiler
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y bubblewrap
+          mkdir -p "$RUNNER_TEMP/ps0-tsc" build/verified-logs
+          printf '%s\n' '{"private":true,"dependencies":{"typescript":"5.7.3"}}' > "$RUNNER_TEMP/ps0-tsc/package.json"
+          npm install --prefix "$RUNNER_TEMP/ps0-tsc" --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci --prefix "$RUNNER_TEMP/ps0-tsc" --ignore-scripts --no-audit --no-fund
+          cp "$RUNNER_TEMP/ps0-tsc/package-lock.json" build/verified-logs/target-package-lock.json
+          echo "PS0_TSC=$RUNNER_TEMP/ps0-tsc/node_modules/typescript/lib/tsc.js" >> "$GITHUB_ENV"
       - name: Exact official Lean toolchain and unchanged language authority
         run: |
           set -euo pipefail
-          mkdir -p build/verified-logs
           printf 'import Lean\n#eval Lean.githash\n' > build/verified-logs/Pin.lean
           lake env lean build/verified-logs/Pin.lean | tee build/verified-logs/pin.log
           grep -Fx '"eb6cafb7290e8bd5f2937522d8d804f58f02bafc"' build/verified-logs/pin.log
@@ -54,7 +78,6 @@ jobs:
       - name: Proof-linked source, IR and JS/TS qualification
         run: |
           set -euo pipefail
-          test -f tests/run-proof-linked.sh
           bash tests/run-proof-linked.sh 2>&1 | tee build/verified-logs/qualification.log
       - name: Preserve exact diagnostics, not a certification assertion
         if: always()
