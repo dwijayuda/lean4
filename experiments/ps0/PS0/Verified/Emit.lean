@@ -5,6 +5,21 @@ pipeline must independently replay the proofs and check the exact bytes.
 TypeScript output is actual typed source, not just declarations. -/
 namespace PS0.Verified
 
+/-- Saturating size of the ASCII expression emitted after lowering.
+    Subtraction duplicates both operands; count before building that expanded
+    target tree or string. This is a resource guard, not semantic evidence. -/
+def NatExpr.targetSize : NatExpr → Nat
+  | .first => 5
+  | .second => 9
+  | .literal n => min 65537 ((toString n).utf8ByteSize + 1)
+  | .add a b => min 65537 (a.targetSize + b.targetSize + 5)
+  | .mul a b => min 65537 (a.targetSize + b.targetSize + 5)
+  | .sub a b => min 65537 (2 * (a.targetSize + b.targetSize) + 21)
+
+/-- Reserve more than the complete fixed wrapper before rendering either target. -/
+def NatExpr.withinOutputBudget (e : NatExpr) : Bool :=
+  e.targetSize + 512 ≤ 65536
+
 private def render : TargetExpr → String
   | .first => "stock"
   | .second => "requested"
@@ -17,7 +32,8 @@ private def render : TargetExpr → String
       render yes ++ " : " ++ render no ++ ")"
 
 /-- The fixed export ABI is intentionally not a general FFI. Invalid host
-    inputs throw before arithmetic; valid inputs are primitive BigInts. -/
+    inputs throw before arithmetic; valid inputs are primitive BigInts.
+    The staging command checks withinOutputBudget before invoking this function. -/
 def emit (e : NatExpr) (typescript : Bool) : String :=
   let args := if typescript then "stock: bigint, requested: bigint" else "stock, requested"
   let result := if typescript then ": bigint" else ""
