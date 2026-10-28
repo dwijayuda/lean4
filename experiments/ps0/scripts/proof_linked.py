@@ -221,6 +221,17 @@ def comparator_config(challenge: str, solution: str, theorems: list[str]) -> str
                        "theorem_names": theorems, "permitted_axioms": AXIOMS}, indent=2) + "\n"
 
 
+def challenge_goal(name: str, proposition: str) -> str:
+    """Upstream comparator requires theorem/theorem declaration-kind parity.
+
+    This is a goal template, never solution evidence. The pinned comparator
+    compares its exact statement and dependencies, then checks axioms and
+    replays ONLY the solution export. The solution may not import a challenge;
+    sorryAx remains forbidden by AXIOMS and the proof-hole negative test.
+    """
+    return f"theorem {name} {proposition} := by sorry\n"
+
+
 def snapshot_files(root: Path) -> dict[str, str]:
     result: dict[str, str] = {}
     for path in sorted(root.rglob("*")):
@@ -272,7 +283,7 @@ def prepare_workspace(root: Path, work: Path, source: bytes, proof: bytes) -> di
     # `public import all` is not a legal substitute in modern Lean modules.
     prefix = "module\npublic import Admitted\nimport all Admitted\npublic section\n"
     proposition = "(stock requested : Nat) : Inventory.remaining stock requested = stock - requested"
-    write(work / "ChallengeSource.lean", prefix + "axiom source_spec " + proposition + "\n")
+    write(work / "ChallengeSource.lean", prefix + challenge_goal("source_spec", proposition))
     write(work / "SourceProof.lean",
           "module\npublic import Admitted\nimport all Admitted\nimport proofs.Inventory\nimport PS0.Verified.Extract\npublic section\n"
           + "theorem source_spec " + proposition + " := InventoryProof.remaining_spec stock requested\n"
@@ -293,7 +304,7 @@ def write_correspondence(work: Path, ir: list[Any]) -> None:
     }
     challenge = prelude + "public section\n"
     for name, proposition in statements.items():
-        challenge += f"axiom {name} {proposition}\n"
+        challenge += challenge_goal(name, proposition)
     solution = prelude + "import proofs.Inventory\npublic section\n"
     solution += "theorem extraction_correct " + statements["extraction_correct"] + " := by rfl\n"
     solution += "theorem target_correct " + statements["target_correct"] + " := by\n  rw [PS0.Verified.lower_correct, extraction_correct]\n"
