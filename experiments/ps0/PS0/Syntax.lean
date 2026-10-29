@@ -1,6 +1,9 @@
-import Lean
-import PS0.HostCategories
-import PS0.Effect
+module
+public meta import Lean
+public import PS0.HostCategories
+public import PS0.Effect
+
+public meta section
 
 /-!
 PS0-owned Lean-syntax adapter, migrated from the earlier PSCVL experiment. It always lowers to genuine Lean
@@ -80,13 +83,13 @@ syntax (name := pscvDefinition)
 macro_rules
   | `(def $f:ident ($[$bs:pscvBinder],*) : $result:term := $body:term) => do
     let binders ← explicitLeanBinders bs
-    `(def $f:ident $binders* : $result:term := $body:term)
+    `(def $f:ident $binders:bracketedBinder* : $result:term := $body:term)
 
 syntax (name := pscvFunction) "function " ident "(" pscvBinder,* ")" ":" term ":=" term : command
 macro_rules
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(def $f:ident $binders* : $result:term := $body:term)
+    `(def $f:ident $binders:bracketedBinder* : $result:term := $body:term)
 
 /-!
 PS0 v1 standard host operand adaptation: typed function/const value
@@ -105,7 +108,7 @@ macro_rules (kind := ps0V1HostFunction)
     let binders ← explicitLeanBinders bs true
     let lowered ← PS0.Syntax.lower `psTerm body.raw
     let nativeBody : TSyntax `term := ⟨lowered⟩
-    `(def $f:ident $binders* : $result:term := $nativeBody:term)
+    `(def $f:ident $binders:bracketedBinder* : $result:term := $nativeBody:term)
 
 macro_rules (kind := ps0V1HostConst)
   | `(const $name:ident : $ty:term := $value:psTerm) => do
@@ -135,7 +138,7 @@ macro_rules (kind := ps0V1HostFunctionInferred)
     let binders ← explicitLeanBinders bs true
     let lowered ← PS0.Syntax.lower `psTerm body.raw
     let nativeBody : TSyntax `term := ⟨lowered⟩
-    `(def $f:ident $binders* := $nativeBody:term)
+    `(def $f:ident $binders:bracketedBinder* := $nativeBody:term)
 
 macro_rules (kind := ps0V1HostConstInferred)
   | `(const $name:ident := $value:psTerm) => do
@@ -149,14 +152,14 @@ macro_rules (kind := ps0V1HostPrivateFunction)
     let binders ← explicitLeanBinders bs true
     let lowered ← PS0.Syntax.lower `psTerm body.raw
     let nativeBody : TSyntax `term := ⟨lowered⟩
-    `(private def $f:ident $binders* : $result:term := $nativeBody:term)
+    `(private def $f:ident $binders:bracketedBinder* : $result:term := $nativeBody:term)
 
 macro_rules (kind := ps0V1HostPrivateFunctionInferred)
   | `(private function $f:ident ($[$bs:pscvBinder],*) := $body:psTerm) => do
     let binders ← explicitLeanBinders bs true
     let lowered ← PS0.Syntax.lower `psTerm body.raw
     let nativeBody : TSyntax `term := ⟨lowered⟩
-    `(private def $f:ident $binders* := $nativeBody:term)
+    `(private def $f:ident $binders:bracketedBinder* := $nativeBody:term)
 
 macro_rules (kind := ps0V1HostPrivateConst)
   | `(private const $name:ident : $ty:term := $body:psTerm) => do
@@ -180,12 +183,12 @@ syntax (name := pscvFunctionInferred)
 macro_rules (kind := pscvDefinitionInferred)
   | `(def $f:ident ($[$bs:pscvBinder],*) := $body:term) => do
     let binders ← explicitLeanBinders bs
-    `(def $f:ident $binders* := $body:term)
+    `(def $f:ident $binders:bracketedBinder* := $body:term)
 
 macro_rules (kind := pscvFunctionInferred)
-  | `(function $f:ident ($[$bs:pscvBinder],*) := $body:term) => do
+  | `(pscvFunctionInferred| function $f:ident ($[$bs:pscvBinder],*) := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(def $f:ident $binders* := $body:term)
+    `(def $f:ident $binders:bracketedBinder* := $body:term)
 
 
 
@@ -203,7 +206,7 @@ macro_rules (kind := pscvFunctionTermination)
   | `(function $f:ident ($[$bs:pscvBinder],*) : $ty:term := $body:term
       termination_by $measure:term) => do
     let binders ← explicitLeanBinders bs
-    `(def $f:ident $binders* : $ty:term := $body:term
+    `(def $f:ident $binders:bracketedBinder* : $ty:term := $body:term
         termination_by $measure:term)
 
 syntax (name := pscvFunctionTerminationProof)
@@ -214,7 +217,7 @@ macro_rules (kind := pscvFunctionTerminationProof)
   | `(function $f:ident ($[$bs:pscvBinder],*) : $ty:term := $body:term
       termination_by $measure:term decreasing_by by $proof:tacticSeq) => do
     let binders ← explicitLeanBinders bs
-    `(def $f:ident $binders* : $ty:term := $body:term
+    `(def $f:ident $binders:bracketedBinder* : $ty:term := $body:term
         termination_by $measure:term
         decreasing_by $proof:tacticSeq)
 
@@ -229,16 +232,16 @@ syntax (name := pscvPrivateFunctionInferred)
   "private " "function " ident "(" pscvBinder,* ")" ":=" term : command
 
 macro_rules
-  | `(private const $name:ident : $ty:term := $val:term) =>
+  | `(pscvPrivateConst| private const $name:ident : $ty:term := $val:term) =>
     `(private def $name:ident : $ty:term := $val:term)
-  | `(private const $name:ident := $val:term) =>
+  | `(pscvPrivateConstInferred| private const $name:ident := $val:term) =>
     `(private def $name:ident := $val:term)
-  | `(private function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term) => do
+  | `(pscvPrivateFunction| private function $f:ident ($[$bs:pscvBinder],*) : $ret:term := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(private def $f:ident $binders* : $ret:term := $body:term)
-  | `(private function $f:ident ($[$bs:pscvBinder],*) := $body:term) => do
+    `(private def $f:ident $binders:bracketedBinder* : $ret:term := $body:term)
+  | `(pscvPrivateFunctionInferred| private function $f:ident ($[$bs:pscvBinder],*) := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(private def $f:ident $binders* := $body:term)
+    `(private def $f:ident $binders:bracketedBinder* := $body:term)
 
 /-- Local where definitions use the explicit PS0V1 def grammar and are
 lowered to Lean's native recursive local declarations. -/
@@ -263,7 +266,7 @@ macro_rules (kind := pscvFunctionWhere)
         nativeLocals := nativeLocals.push
           (← `(letRecDecl| $n:ident $localBinders* : $ty:term := $value:term))
       | _ => Macro.throwUnsupported
-    `(def $f:ident $binders* : $ret:term := $body:term
+    `(def $f:ident $binders:bracketedBinder* : $ret:term := $body:term
       where
         $nativeLocals:letRecDecl*)
 
@@ -274,7 +277,7 @@ syntax (name := pscvTheorem)
 macro_rules
   | `(theorem $name:ident ($[$bs:pscvBinder],*) : $statement:term := $proof:term) => do
     let binders ← explicitLeanBinders bs
-    `(theorem $name:ident $binders* : $statement:term := $proof:term)
+    `(theorem $name:ident $binders:bracketedBinder* : $statement:term := $proof:term)
 
 /-- Non-explicit PSCV binders share Lean's implicit, strict-implicit, and
 instance elaborator, rather than emulating the semantics in a new compiler. -/
@@ -287,11 +290,11 @@ macro_rules
   | `(function $f:ident $implicitBs:pscvNonExplicitBinder* ($[$bs:pscvBinder],*) : $result:term := $body:term) => do
     let imps ← nonExplicitLeanBinders implicitBs
     let args ← explicitLeanBinders bs true
-    `(def $f:ident $imps* $args* : $result:term := $body:term)
+    `(def $f:ident $imps:bracketedBinder* $args:bracketedBinder* : $result:term := $body:term)
   | `(function $f:ident $implicitBs:pscvNonExplicitBinder* ($[$bs:pscvBinder],*) := $body:term) => do
     let imps ← nonExplicitLeanBinders implicitBs
     let args ← explicitLeanBinders bs true
-    `(def $f:ident $imps* $args* := $body:term)
+    `(def $f:ident $imps:bracketedBinder* $args:bracketedBinder* := $body:term)
 
 
 /-!
@@ -338,27 +341,27 @@ syntax (name := pscvTelescopeTheorem)
 macro_rules (kind := pscvTelescopeFunction)
   | `(function $f:ident $parts:pscvTelescopeSegment* : $ty:term := $body:term) => do
     let native ← orderedLeanBinders parts
-    `(def $f:ident $native* : $ty:term := $body:term)
+    `(def $f:ident $native:bracketedBinder* : $ty:term := $body:term)
 
 macro_rules (kind := pscvTelescopeFunctionInferred)
   | `(function $f:ident $parts:pscvTelescopeSegment* := $body:term) => do
     let native ← orderedLeanBinders parts
-    `(def $f:ident $native* := $body:term)
+    `(def $f:ident $native:bracketedBinder* := $body:term)
 
 macro_rules (kind := pscvTelescopeDefinition)
   | `(def $f:ident $parts:pscvTelescopeSegment* : $ty:term := $body:term) => do
     let native ← orderedLeanBinders parts
-    `(def $f:ident $native* : $ty:term := $body:term)
+    `(def $f:ident $native:bracketedBinder* : $ty:term := $body:term)
 
 macro_rules (kind := pscvTelescopeDefinitionInferred)
   | `(def $f:ident $parts:pscvTelescopeSegment* := $body:term) => do
     let native ← orderedLeanBinders parts
-    `(def $f:ident $native* := $body:term)
+    `(def $f:ident $native:bracketedBinder* := $body:term)
 
 macro_rules (kind := pscvTelescopeTheorem)
   | `(theorem $f:ident $parts:pscvTelescopeSegment* : $ty:term := $proof:term) => do
     let native ← orderedLeanBinders parts
-    `(theorem $f:ident $native* : $ty:term := $proof:term)
+    `(theorem $f:ident $native:bracketedBinder* : $ty:term := $proof:term)
 
 /-- Contracted functions use the proof-producing intrinsic Lean 4.35
 WP semantics: `f.spec` must be discharged by pinned `vcgen`. -/
@@ -370,7 +373,7 @@ macro_rules
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       requires $pre:term ensures $rv:ident => $post:term := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(def $f:ident $binders* : $result:term
+    `(def $f:ident $binders:bracketedBinder* : $result:term
         requires $pre:term
         ensures $rv:ident => $post:term := $body:term)
 
@@ -386,7 +389,7 @@ macro_rules (kind := pscvFunctionGivenContract)
       given ($logical:ident : $logicTy:term)
       requires $pre:term ensures $rv:ident => $post:term := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(def $f:ident $binders* : $result:term
+    `(def $f:ident $binders:bracketedBinder* : $result:term
         given ($logical:ident : $logicTy:term)
         requires $pre:term
         ensures $rv:ident => $post:term := $body:term)
@@ -401,7 +404,7 @@ macro_rules (kind := pscvFunctionEffectContract)
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       requires $pre:basicFun ensures $post:basicFun := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(def $f:ident $binders* : $result:term
+    `(def $f:ident $binders:bracketedBinder* : $result:term
         requires $pre:basicFun
         ensures $post:basicFun := $body:term)
 
@@ -487,7 +490,7 @@ syntax (name := pscvParameterizedStructure)
 macro_rules (kind := pscvParameterizedStructure)
   | `(structure $name:ident ($[$args:pscvBinder],*) where { $fields:structFields }) => do
     let binders ← explicitLeanBinders args
-    `(structure $name:ident $binders* where $fields:structFields)
+    `(structure $name:ident $binders:bracketedBinder* where $fields:structFields)
 
 /-- Classes are native Lean type classes; the braces own only field layout. -/
 syntax (name := pscvBracedClass)
@@ -500,7 +503,7 @@ macro_rules
     `(class $name:ident where $fields:structFields)
   | `(class $name:ident ($[$args:pscvBinder],*) where { $fields:structFields }) => do
     let binders ← explicitLeanBinders args
-    `(class $name:ident $binders* where $fields:structFields)
+    `(class $name:ident $binders:bracketedBinder* where $fields:structFields)
 
 /-!
 PS0 v1 includes braced instance initializers alongside native value-form
@@ -531,13 +534,13 @@ syntax (name := pscvBracedInstanceTelescopeNamed)
 macro_rules (kind := pscvBracedInstanceTelescopeAnonymous)
   | `(instance $parts:pscvTelescopeSegment* : $classTy:term where $fields:term) => do
     let binders ← orderedLeanBinders parts
-    `(instance $binders* : $classTy:term := $fields:term)
+    `(instance $binders:bracketedBinder* : $classTy:term := $fields:term)
 
 macro_rules (kind := pscvBracedInstanceTelescopeNamed)
   | `(instance $name:ident $parts:pscvTelescopeSegment* :
       $classTy:term where $fields:term) => do
     let binders ← orderedLeanBinders parts
-    `(instance $name:ident $binders* : $classTy:term := $fields:term)
+    `(instance $name:ident $binders:bracketedBinder* : $classTy:term := $fields:term)
 
 /-!
 PS0 v1: reuse Lean.Parser.Priority's native priority
@@ -548,15 +551,15 @@ priority extensions and user-defined attributes.
     frozen source-level shortlist. Imports and extensions can register
     additional valid priority forms under Lean's own rules. -/
 syntax (name := pscvPrioritizedInstanceAnonymous)
-  "instance " "(priority := " prio ")" ":" term " where " term : command
+  "instance " "(" &"priority" ":=" prio ")" ":" term " where " term : command
 syntax (name := pscvPrioritizedInstanceNamed)
-  "instance " "(priority := " prio ")" ident ":" term
+  "instance " "(" &"priority" ":=" prio ")" ident ":" term
   " where " term : command
 syntax (name := pscvPrioritizedInstanceTelescopeAnonymous)
-  "instance " "(priority := " prio ")" pscvTelescopeSegment+ ":" term
+  "instance " "(" &"priority" ":=" prio ")" pscvTelescopeSegment+ ":" term
   " where " term : command
 syntax (name := pscvPrioritizedInstanceTelescopeNamed)
-  "instance " "(priority := " prio ")" ident pscvTelescopeSegment+ ":" term
+  "instance " "(" &"priority" ":=" prio ")" ident pscvTelescopeSegment+ ":" term
   " where " term : command
 
 macro_rules (kind := pscvPrioritizedInstanceAnonymous)
@@ -573,14 +576,14 @@ macro_rules (kind := pscvPrioritizedInstanceTelescopeAnonymous)
   | `(instance (priority := $sourcePriority:prio) $parts:pscvTelescopeSegment* :
       $ty:term where $fields:term) => do
     let binders ← orderedLeanBinders parts
-    `(instance (priority := $sourcePriority:prio) $binders* :
+    `(instance (priority := $sourcePriority:prio) $binders:bracketedBinder* :
       $ty:term := $fields:term)
 
 macro_rules (kind := pscvPrioritizedInstanceTelescopeNamed)
   | `(instance (priority := $sourcePriority:prio) $name:ident
       $parts:pscvTelescopeSegment* : $ty:term where $fields:term) => do
     let binders ← orderedLeanBinders parts
-    `(instance (priority := $sourcePriority:prio) $name:ident $binders* :
+    `(instance (priority := $sourcePriority:prio) $name:ident $binders:bracketedBinder* :
       $ty:term := $fields:term)
 
 /-- Mutual recursion is only a braced grouping of the official Lean mutual
@@ -611,7 +614,7 @@ macro_rules (kind := pscvBracedInductive)
         native := native.push (← `(ctor| | $ctor:ident : $ty:term))
       | `(pscvConstructor| | $ctor:ident ($[$bs:pscvBinder],*) : $ty:term) =>
         let bs ← explicitLeanBinders bs
-        native := native.push (← `(ctor| | $ctor:ident $bs* : $ty:term))
+        native := native.push (← `(ctor| | $ctor:ident $bs:bracketedBinder* : $ty:term))
       | _ => Macro.throwUnsupported
     `(inductive $s:ident where $native:ctor*)
 
@@ -655,7 +658,7 @@ macro_rules (kind := pscvBracedInductiveDeriving)
         native := native.push (← `(ctor| | $ctor:ident : $ty:term))
       | `(pscvConstructor| | $ctor:ident ($[$bs:pscvBinder],*) : $ty:term) =>
         let bs ← explicitLeanBinders bs
-        native := native.push (← `(ctor| | $ctor:ident $bs* : $ty:term))
+        native := native.push (← `(ctor| | $ctor:ident $bs:bracketedBinder* : $ty:term))
       | _ => Macro.throwUnsupported
     let names ← ds.mapM pscvDeriverIdent
     `(inductive $s:ident where
@@ -756,9 +759,9 @@ macro_rules (kind := pscvDoIf)
 -- This is the doSeqItem form, distinct from the term-level if-let:
 -- do branches are *sequences*, may omit else, and preserve Lean's pattern scope.
 syntax (name := pscvDoIfLetElse)
-  "if let " term " := " term:max doSeq "else" doSeq : doElem
+  "if " "let " term " := " term:max doSeq "else" doSeq : doElem
 syntax (name := pscvDoIfLet)
-  "if let " term " := " term:max doSeq : doElem
+  "if " "let " term " := " term:max doSeq : doElem
 
 macro_rules (kind := pscvDoIfLetElse)
   | `(doElem| if let $pat:term := $value:term $yes:doSeq else $no:doSeq) =>
@@ -784,7 +787,7 @@ macro_rules
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       ensures $rv:ident => $post:term := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(def $f:ident $binders* : $result:term
+    `(def $f:ident $binders:bracketedBinder* : $result:term
         ensures $rv:ident => $post:term := $body:term)
 
 syntax (name := pscvFunctionRequires)
@@ -795,7 +798,7 @@ macro_rules
   | `(function $f:ident ($[$bs:pscvBinder],*) : $result:term
       requires $pre:term := $body:term) => do
     let binders ← explicitLeanBinders bs true
-    `(def $f:ident $binders* : $result:term
+    `(def $f:ident $binders:bracketedBinder* : $result:term
         requires $pre:term := $body:term)
 
 

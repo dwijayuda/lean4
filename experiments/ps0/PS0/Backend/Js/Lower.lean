@@ -141,12 +141,12 @@ private def lowerCommand (input : Parser.InputContext) (cmd : Syntax)
     Except String Decl := do
   let origin ← declOrigin input cmd
   match cmd with
-  | `(command| const $n:ident : $ty:term := $body:psTerm) =>
+  | `(PS0.ps0V1HostConst| const $n:ident : $ty:term := $body:psTerm) =>
       unless isNatType ty do
         throw "PS0-JS-TYPE: MVP only exports explicitly typed Nat constants"
       let name ← checkedName n
       return { name, body := (← lowerHostExpr #[] previous body), isConst := true, origin }
-  | `(command| function $n:ident ($[$bs:pscvBinder],*) :
+  | `(PS0.ps0V1HostFunction| function $n:ident ($[$bs:pscvBinder],*) :
       $ty:term := $body:psTerm) =>
       unless isNatType ty do
         throw "PS0-JS-TYPE: MVP only exports functions returning Nat"
@@ -156,12 +156,12 @@ private def lowerCommand (input : Parser.InputContext) (cmd : Syntax)
         name, params, body := (← lowerHostExpr params previous body),
         isConst := false, origin
       }
-  | `(command| const $n:ident : $ty:term := $body:term) =>
+  | `(PS0.pscvConst| const $n:ident : $ty:term := $body:term) =>
       unless isNatType ty do
         throw "PS0-JS-TYPE: MVP only exports explicitly typed Nat constants"
       let name ← checkedName n
       return { name, body := (← lowerExpr #[] previous body), isConst := true, origin }
-  | `(command| function $n:ident ($[$bs:pscvBinder],*) :
+  | `(PS0.pscvFunction| function $n:ident ($[$bs:pscvBinder],*) :
       $ty:term := $body:term) =>
       unless isNatType ty do
         throw "PS0-JS-TYPE: MVP only exports functions returning Nat"
@@ -199,8 +199,9 @@ private def exactCoreType (decl : Decl) (coreType : Expr) : Bool :=
         | _ => return false
     return ty == mkConst `Nat
 
-def validateCheckedExports (checked : Environment) (p : Program) :
-    Except String Unit := do
+-- Use a native arrow signature here: importing source syntax for quotation
+-- matching must not reinterpret this implementation telescope as PS source.
+def validateCheckedExports : Environment → Program → Except String Unit := fun checked p => do
   for decl in p.declarations do
     let some info := checked.find? (Name.mkSimple decl.name)
       | throw s!"PS0-JS-CORE: checked Lean declaration missing: {decl.name}"

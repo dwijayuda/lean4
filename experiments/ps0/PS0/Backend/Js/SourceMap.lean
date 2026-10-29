@@ -43,12 +43,12 @@ def sourceMap (program : Program) (jsFile : String)
         prevLine := loc.line
         prevColumn := loc.column
   let result := Lean.Json.mkObj [
-    ("version", toJson (3 : Nat)),
-    ("file", toJson jsFile),
-    ("sources", toJson #[program.sourceName]),
-    ("sourcesContent", toJson #[program.sourceText]),
-    ("names", toJson (#[] : Array String)),
-    ("mappings", toJson (String.intercalate ";" rows.toList))
+    ("version", Lean.toJson (3 : Nat)),
+    ("file", Lean.toJson jsFile),
+    ("sources", Lean.toJson #[program.sourceName]),
+    ("sourcesContent", Lean.toJson #[program.sourceText]),
+    ("names", Lean.toJson (#[] : Array String)),
+    ("mappings", Lean.toJson (String.intercalate ";" rows.toList))
   ]
   return result.compress
 

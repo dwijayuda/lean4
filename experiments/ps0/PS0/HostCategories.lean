@@ -1,4 +1,7 @@
-import Lean
+module
+public meta import Lean
+
+public meta section
 
 /-!
 PS0 v1 section 0B: explicit host-category interfaces.
@@ -27,12 +30,13 @@ declare_syntax_cat psCallArg
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
 
--- The pinned Lean syntax-description grammar supplies allowTrailingSep.
+-- The third descriptor argument is the separator's formatting parser;
+-- allowTrailingSep occupies the fourth slot in pinned Lean 4.35.0.
 -- sepBy1 retains nonemptiness: a comma alone is not an empty invocation,
 -- and a repeated comma cannot manufacture a missing operand.
 -- Identifier heads only; other high-postfix heads remain a separate task.
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
-  ident noWs "(" sepBy1(psCallArg, ",", allowTrailingSep) ")" : psTerm
+  ident noWs "(" sepBy1(psCallArg, ",", ppSpace, allowTrailingSep) ")" : psTerm
 
 namespace PS0.Syntax
 
@@ -52,7 +56,7 @@ private def loweringInfo (source : Lean.Syntax) : SourceInfo :=
 partial def lower (category : Name) (source : Lean.Syntax) :
     Lean.MacroM Lean.Syntax := withRef source do
   if source.isOfKind choiceKind then
-    throwError "PS0V1-HOST-AMBIGUITY: resolve the host syntax alternative before lowering"
+    Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve the host syntax alternative before lowering"
   if category == `psTerm then
     match source with
     | `(psTerm| $head:ident($[$args:psCallArg],*)) => do
@@ -65,7 +69,7 @@ partial def lower (category : Name) (source : Lean.Syntax) :
               let n := name.getId
               if seen.contains n then
                 withRef name do
-                  throwError "PS0V1-CALL-NAMED: duplicate named argument {n}"
+                  Macro.throwError s!"PS0V1-CALL-NAMED: duplicate named argument {n}"
               positional := false
               seen := seen.push n
               let lowered <- lower `psTerm value.raw
@@ -76,27 +80,27 @@ partial def lower (category : Name) (source : Lean.Syntax) :
           | `(psCallArg| $value:psTerm) =>
               unless positional do
                 withRef arg do
-                  throwError "PS0V1-CALL-ORDER: positional argument after named argument"
+                  Macro.throwError "PS0V1-CALL-ORDER: positional argument after named argument"
               nativeArgs := nativeArgs.push (← lower `psTerm value.raw)
           | _ =>
-              throwError "PS0V1-HOST-LOWER: malformed psCallArg"
+              Macro.throwError "PS0V1-HOST-LOWER: malformed psCallArg"
         return Lean.Syntax.node (loweringInfo source) ``Lean.Parser.Term.app
           #[head.raw, mkNullNode nativeArgs]
     | `(psTerm| $native:term) => return native.raw
-    | _ => throwError "PS0V1-HOST-LOWER: unsupported psTerm source production"
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTerm source production"
   else if category == `psCommand then
     match source with
     | `(psCommand| $native:command) => return native.raw
-    | _ => throwError "PS0V1-HOST-LOWER: unsupported psCommand source production"
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psCommand source production"
   else if category == `psTactic then
     match source with
     | `(psTactic| $native:tactic) => return native.raw
-    | _ => throwError "PS0V1-HOST-LOWER: unsupported psTactic source production"
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTactic source production"
   else if category == `psDoSeq then
     match source with
     | `(psDoSeq| $native:doSeq) => return native.raw
-    | _ => throwError "PS0V1-HOST-LOWER: unsupported psDoSeq source production"
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoSeq source production"
   else
-    throwError "PS0V1-HOST-LOWER: unrecognized PS category {category}"
+    Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
 
 end PS0.Syntax

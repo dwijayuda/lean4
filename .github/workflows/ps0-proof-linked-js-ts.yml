@@ -1,0 +1,98 @@
+name: PS0 proof-linked JS and TypeScript
+
+on:
+  push:
+    branches: [feature/ps0-proof-linked-js-ts-20261029]
+    paths:
+      - experiments/ps0/**
+      - .github/workflows/ps0-proof-linked-js-ts.yml
+  pull_request:
+    branches: [research/ps0-verified-multibackend-20261029]
+    paths:
+      - experiments/ps0/**
+      - .github/workflows/ps0-proof-linked-js-ts.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ps0-proof-linked-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  host-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/ps0
+          persist-credentials: false
+      - name: Independent host schema, artifact and publication negatives
+        working-directory: experiments/ps0
+        run: python3 tests/test-proof-linked-host.py
+
+  proof-linked:
+    # 24.04 rejected bwrap loopback setup in run 40767673691.
+    # 22.04 retains the official comparator's namespace/network isolation.
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: experiments/ps0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: experiments/ps0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.3'
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: experiments/ps0
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+      - name: Install official replay sandbox and pinned target compiler
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y bubblewrap
+          mkdir -p "$RUNNER_TEMP/ps0-tsc" build/verified-logs
+          printf '%s\n' '{"private":true,"dependencies":{"typescript":"5.7.3"}}' > "$RUNNER_TEMP/ps0-tsc/package.json"
+          npm install --prefix "$RUNNER_TEMP/ps0-tsc" --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci --prefix "$RUNNER_TEMP/ps0-tsc" --ignore-scripts --no-audit --no-fund
+          cp "$RUNNER_TEMP/ps0-tsc/package-lock.json" build/verified-logs/target-package-lock.json
+          echo "PS0_TSC=$RUNNER_TEMP/ps0-tsc/node_modules/typescript/lib/tsc.js" >> "$GITHUB_ENV"
+      - name: Exact official Lean toolchain and unchanged language authority
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD > build/verified-logs/source-sha.txt
+          uname -a > build/verified-logs/system.txt
+          cat /etc/os-release >> build/verified-logs/system.txt
+          bwrap --version >> build/verified-logs/system.txt
+          printf 'import Lean\n#eval Lean.githash\n' > build/verified-logs/Pin.lean
+          lake env lean build/verified-logs/Pin.lean | tee build/verified-logs/pin.log
+          grep -Fx '"eb6cafb7290e8bd5f2937522d8d804f58f02bafc"' build/verified-logs/pin.log
+          test "$(git hash-object PS0_V1_LANGUAGE_REFERENCE.md)" = c50203f8e4cb79b3e6680088a07c1d1e145b8f0b
+      - name: Existing PS0 standalone and proof-model build
+        run: |
+          set -euo pipefail
+          lake build PS0 ps0 +PS0.Verified.Core +PS0.Verified.Emit +PS0.Verified.Extract 2>&1 | tee build/verified-logs/baseline-build.log
+      - name: Proof-linked source, IR and JS/TS qualification
+        run: |
+          set -euo pipefail
+          bash tests/run-proof-linked.sh 2>&1 | tee build/verified-logs/qualification.log
+      - name: Preserve exact diagnostics, not a certification assertion
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps0-proof-linked-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            experiments/ps0/build/verified-logs/
+            experiments/ps0/build/proof-linked/
+          if-no-files-found: warn
