@@ -83,7 +83,7 @@ partial def lower (category : Name) (source : Lean.Syntax) :
           return (⟨← lower `psTactic item.raw⟩ : TSyntax `tactic)
         return (← `(by { $[$items:tactic];* })).raw
     | `(psTerm| do $seq:psDoSeq) => do
-        let seq : TSyntax `doSeq := ⟨← lower `psDoSeq seq.raw⟩
+        let seq : TSyntax ``Lean.Parser.Term.doSeq := ⟨← lower `psDoSeq seq.raw⟩
         return (← `(do $seq:doSeq)).raw
     | `(psTerm| $native:term) =>
         rejectHostGap native.raw
