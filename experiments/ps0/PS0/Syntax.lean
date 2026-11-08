@@ -1,6 +1,6 @@
 module
 public meta import Lean
-public import PS0.HostCategories
+public import PS0.Binders
 public import PS0.Effect
 
 public meta section
