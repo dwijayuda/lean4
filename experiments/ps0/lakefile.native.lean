@@ -81,8 +81,11 @@ target nativeC pkg : FilePath := do
   buildFileAfterDep cFile deps (fun _ => do
     let stage := nativeDir pkg / s!"emit-{← IO.monoMsNow}"
     try
-      proc {cmd := compiler.toString,
-        args := #["build", psSource.toString, psModule, stage.toString], env := env}
+      proc {
+        cmd := compiler.toString
+        args := #["build", psSource.toString, psModule, stage.toString]
+        env := env
+      }
       for entry in ← stage.readDir do
         IO.FS.rename entry.path (nativeDir pkg / entry.fileName)
     finally

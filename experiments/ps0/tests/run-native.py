@@ -84,6 +84,10 @@ bad_alias = WORK / 'BadAlias.ps'
 bad_alias.write_text('function f(x: Nat)(y: Nat): Nat := x + y\n')
 out = run(['lake', 'exe', 'ps0', 'check', bad_alias], ok=False)
 assert 'PS0V1-BIND-02' in out
+private_leak = WORK / 'PrivateLeak.ps'
+private_leak.write_text('private const hidden: Nat := 42\ntheorem leak: hidden = 42 := by rfl\n')
+out = run(['lake', 'exe', 'ps0', 'check', private_leak], ok=False)
+assert 'private declaration' in out
 print('PS0_NATIVE_ELAB_LINK_AND_PUBLICATION_NEGATIVES: PASS', flush=True)
 
 print('PS0_LAKE_NATIVE: PASS', flush=True)

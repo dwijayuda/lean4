@@ -26,8 +26,9 @@ private const privateInferredAnswer := inferredSum(40, 2,)
 
 theorem inferredHostFunction: inferredSum 40 2 = 42 := by rfl
 theorem inferredHostConst: inferredAnswer = 42 := by rfl
-theorem privateHostTyped: privateTyped 40 = 42 := by rfl
-theorem privateHostInferred: privateInferred 40 = 42 := by rfl
-theorem privateHostConst: privateTypedAnswer = 42 := by rfl
-theorem privateHostConstInferred: privateInferredAnswer = 42 := by rfl
+private theorem privateHostTyped: privateTyped 40 = 42 := by rfl
+private theorem privateHostInferred: privateInferred 40 = 42 := by rfl
+private theorem privateHostConst: privateTypedAnswer = 42 := by rfl
+private theorem privateHostConstInferred: privateInferredAnswer = 42 := by rfl
 theorem inferredNullaryUnit: inferredNullary () = 42 := by rfl
+
