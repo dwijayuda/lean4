@@ -419,6 +419,7 @@ def cli (args : List String) : IO UInt32 := do
     | ["module-header", path] => inspectModuleHeader path
     | ["lake-header", path] => LakeFrontend.printHeader path
     | ["source-map", path] => LakeFrontend.printSourceMap path
+    | ["census-source", path, moduleName, output] => LakeFrontend.censusSource path moduleName output
     | ["source-origin", path, offset] =>
         let some offset := offset.toNat? | IO.eprintln "PS0-SOURCE-OFFSET: expected byte offset"; return 2
         LakeFrontend.printSourceOrigin path offset

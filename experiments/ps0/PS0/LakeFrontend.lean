@@ -6,6 +6,7 @@ import Lean
 import Lean.Elab.Frontend
 import Lean.Elab.Import
 import Lean.Compiler.LCNF.EmitC
+import PS0.SourceCensus
 
 /-! Source-kind adaptation for Lean's ordinary Lake module compilation protocol. -/
 
@@ -135,6 +136,31 @@ def printHeader (path : String) : IO UInt32 := do
     | .error e => IO.eprintln e; return 1
   let header ← Lean.parseImports' source path
   IO.println (toJson header).compress
+  return 0
+
+def censusSource (path moduleName output : String) : IO UInt32 := do
+  let raw ← IO.FS.readFile path
+  let source ← match ← prepare raw path with
+    | .ok source => pure source
+    | .error e => IO.eprintln e; return 1
+  let target : FilePath := output
+  IO.FS.createDirAll (target.parent.getD ".")
+  if ← target.pathExists then IO.FS.removeFile target
+  let stage := target.addExtension "pending"
+  if ← stage.pathExists then IO.FS.removeFile stage
+  initSearchPath (← findSysroot)
+  unsafe enableInitializersExecution
+  let opts := ({} : Options) |>.setString `ps0.sourceCensusPath stage.toString
+    |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
+  let env ← Elab.runFrontend source opts path moduleName.toName (trustLevel := 0)
+  if env.isNone then
+    if ← stage.pathExists then IO.FS.removeFile stage
+    return 1
+  unless ← stage.pathExists do
+    IO.eprintln "PS0-CENSUS-MISSING: native module linter did not produce evidence"
+    return 1
+  IO.FS.rename stage target
+  IO.println s!"PS0_NATIVE_SOURCE_CENSUS_WRITTEN: {target}"
   return 0
 
 def compile (args : List String) : IO UInt32 := do
