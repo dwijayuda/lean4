@@ -16,13 +16,13 @@ namespace PS0.StandardAdapters
 private def nativeTerm (body : TSyntax `psTerm) : MacroM (TSyntax `term) := do
   return ⟨← PS0.Syntax.lower `psTerm body.raw⟩
 
-scoped syntax (name := ps0StandardDef) (priority := 2000)
+scoped syntax (name := ps0StandardDef) (priority := 20000)
   declModifiers "def " declId psDeclBinder* (":" psTerm)? ":=" psTerm : command
-scoped syntax (name := ps0StandardAbbrev) (priority := 2000)
+scoped syntax (name := ps0StandardAbbrev) (priority := 20000)
   declModifiers "abbrev " declId psDeclBinder* (":" psTerm)? ":=" psTerm : command
-scoped syntax (name := ps0StandardTheorem) (priority := 2000)
+scoped syntax (name := ps0StandardTheorem) (priority := 20000)
   declModifiers "theorem " declId psDeclBinder* ":" psTerm ":=" psTerm : command
-scoped syntax (name := ps0StandardExample) (priority := 2000)
+scoped syntax (name := ps0StandardExample) (priority := 20000)
   declModifiers "example " psDeclBinder* (":" psTerm)? ":=" psTerm : command
 
 open scoped PS0.StandardAdapters in
@@ -61,7 +61,7 @@ macro_rules (kind := ps0StandardExample)
       let decl ← `(Lean.Parser.Command.example| example $bs:bracketedBinder* $[: $ty:term]? := $body:term)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
-scoped syntax (name := ps0StandardFunction) (priority := 2000)
+scoped syntax (name := ps0StandardFunction) (priority := 20000)
   declModifiers "function " declId psDeclBinder+ (":" psTerm)? ":=" psTerm : command
 
 open scoped PS0.StandardAdapters in
@@ -73,13 +73,13 @@ macro_rules (kind := ps0StandardFunction)
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? := $body:term)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
-scoped syntax (name := ps0StandardOpaque) (priority := 2000)
+scoped syntax (name := ps0StandardOpaque) (priority := 20000)
   declModifiers "opaque " declId psDeclBinder* ":" psTerm (":=" psTerm)? : command
-scoped syntax (name := ps0StandardAxiom) (priority := 2000)
+scoped syntax (name := ps0StandardAxiom) (priority := 20000)
   declModifiers "axiom " declId psDeclBinder* ":" psTerm : command
-scoped syntax (name := ps0StandardConst) (priority := 2000)
+scoped syntax (name := ps0StandardConst) (priority := 20000)
   declModifiers "const " declId (":" psTerm)? ":=" psTerm : command
-scoped syntax (name := ps0StandardInstance) (priority := 2000)
+scoped syntax (name := ps0StandardInstance) (priority := 20000)
   declModifiers attrKind "instance" optNamedPrio (declId)? psDeclBinder* ":" psTerm ":=" psTerm : command
 
 open scoped PS0.StandardAdapters in
