@@ -11,7 +11,7 @@ example : evaluatedMixed = 3 := by rfl
 def nativeDefault (x : Nat := add(1, 2)) : Nat := x
 def dependentType (x: sized(add(1, 2)), y: Nat := add(x.val, 1)) : Nat := y
 def nativeShared (x y : sized(add(1, 2))) : Nat := x.val + y.val
-def nativeInferred (x y) : Nat := x + y
+def nativeInferred (x y) := Nat.add x y
 def nativeAnonymous (_ : Nat) (y: Nat, z: Nat) : Nat := y + z
 
 function interleaved {α: Type}(x: α)[Inhabited α](n: Nat := add(1, 2)): Nat := n
@@ -19,8 +19,10 @@ function tick {α: Type}(): Nat := add(1, 2)
 
 def autoProof (n: Nat, h: agree(n, n) := by rfl) : Nat := n
 def ordinaryProof (n: Nat, h: agree(n, n) := (by rfl)) : Nat := n
-example : autoProof(3) = 3 := by rfl
-example : ordinaryProof(3) = 3 := by rfl
+def evaluatedAuto : Nat := autoProof(3)
+def evaluatedOrdinary : Nat := ordinaryProof(3)
+example : evaluatedAuto = 3 := by rfl
+example : evaluatedOrdinary = 3 := by rfl
 
 run_meta do
   let auto ← Lean.getConstInfo `autoProof
@@ -41,6 +43,8 @@ macro "nativeBinder " b:bracketedBinder : term => do
   `(True)
 example : nativeBinder (x : Fin (1 + 2)) := by trivial
 
+set_option pp.explicit true in
+#check @nativeDefault
 def evaluatedDefault : Nat := nativeDefault()
 def evaluatedDependent : Nat := dependentType(⟨1, by omega⟩)
 def evaluatedInterleaved : Nat := interleaved((), α := Unit)

@@ -24,7 +24,7 @@ syntax (name := psExplicitBinder) "(" Lean.Parser.Term.binderIdent+ (":" psTerm)
 syntax (name := psImplicitBinder) "{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}" : psDeclBinder
 syntax (name := psStrictBinder) "⦃" Lean.Parser.Term.binderIdent+ (":" psTerm)? "⦄" : psDeclBinder
 syntax (name := psAsciiStrictBinder) "{{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}}" : psDeclBinder
-syntax (name := psInstanceBinder) "[" (ident ":")? psTerm "]" : psDeclBinder
+syntax (name := psInstanceBinder) "[" Lean.Parser.Term.optIdent psTerm "]" : psDeclBinder
 syntax (name := psIdentifierBinder) Lean.Parser.Term.binderIdent : psDeclBinder
 syntax (name := psNullaryBinder) "(" ")" : psDeclBinder
 
