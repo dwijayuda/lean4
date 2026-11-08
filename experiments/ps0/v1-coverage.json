@@ -2822,11 +2822,27 @@
     ],
     "assurance": "mixed_signature_heads.ps intentionally declares one unused axiom to test the axiom signature grammar; it is reported, not approved as a proof assumption. No formal source/execution certificate.",
     "compilerRebuild": {
-      "status": "PENDING",
+      "source": "9826bdd9dc422fe021de953a570972d7b85df2f4",
       "runner": "332ed8372583f2c1a2b08ed3aacd182aa3aa95d2",
-      "branch": "ci/ps0-binder-compiler-20261109",
-      "pr": "https://github.com/dwijayuda/pskernel/pull/223",
-      "scope": "independent full native-compatible PS source forest and fixed-point regression; not ProofScript-specific grammar migration"
+      "run": 42511359592,
+      "status": "STAGE_ONE_PASS_STAGE_TWO_FAIL_NATIVE_EXIT_139",
+      "stageOne": {
+        "job": 128825446119,
+        "modules": 2565,
+        "lakeJobs": 5134,
+        "artifact": 13630277856,
+        "sha256": "9cd6ca6db18c631390bcd4f6b762c38c8227f60a21a84d3eee52fac2a2f0ccf2"
+      },
+      "stageTwo": {
+        "job": 128831905726,
+        "failedModule": "PS0.Binders",
+        "exitCode": 139,
+        "artifact": 13631615771,
+        "sha256": "6261b2be9f790dd8fdf07f17bc070fb934119281bf18a0e7ad78d3d5aa33cbb9"
+      },
+      "fixedPointReached": false,
+      "grammarMigrationComplete": false,
+      "pr": 223
     },
     "projectCompletion": {
       "status": "ACTIVE_NOT_COMPLETE",
@@ -2915,12 +2931,111 @@
       "source": "9826bdd9dc422fe021de953a570972d7b85df2f4",
       "runner": "332ed8372583f2c1a2b08ed3aacd182aa3aa95d2",
       "run": 42511359592,
-      "status": "IN_PROGRESS_STAGE_ONE",
-      "job": 128825446119,
+      "status": "STAGE_ONE_PASS_STAGE_TWO_FAIL_NATIVE_EXIT_139",
+      "stageOne": {
+        "job": 128825446119,
+        "modules": 2565,
+        "lakeJobs": 5134,
+        "artifact": 13630277856,
+        "sha256": "9cd6ca6db18c631390bcd4f6b762c38c8227f60a21a84d3eee52fac2a2f0ccf2"
+      },
+      "stageTwo": {
+        "job": 128831905726,
+        "failedModule": "PS0.Binders",
+        "exitCode": 139,
+        "artifact": 13631615771,
+        "sha256": "6261b2be9f790dd8fdf07f17bc070fb934119281bf18a0e7ad78d3d5aa33cbb9"
+      },
+      "fixedPointReached": false,
+      "grammarMigrationComplete": false,
       "pr": 223
     },
     "goalStatus": "ACTIVE_NOT_COMPLETE",
     "next": "Native module-linter census of actual parsed compiler commands, then explicit PS source grammar migration and bootstrap/prelude adapter integration. Current native-compatible full-source build is a separate gate.",
+    "verified_execution": false
+  },
+  "sourceCensusContinuation": {
+    "status": "PASS_FINITE_SAME_FRONTEND_SOURCE_CENSUS",
+    "sourceCommit": "4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a",
+    "runnerCommit": "189be356819cec9d2d56f3592207ffbe98f3ea6f",
+    "run": 42515763246,
+    "jobs": {
+      "project": 128838311309,
+      "native": 128838311805,
+      "proofLinked": 128838303330,
+      "hostContract": 128838316475
+    },
+    "artifacts": [
+      {
+        "id": 13631910233,
+        "name": "ps0-external-4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a-42515763246",
+        "sha256": "31686112db3cd8b940f201c63c9100867f0d16a0a5fc18c1a798954f6ddc7ba0"
+      },
+      {
+        "id": 13631805505,
+        "name": "ps0-project-4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a-42515763246",
+        "sha256": "85f09423b3d2ea0deb845f3843bdbc5d3d6ff460cbfaaa8a94fa95838937a43a"
+      },
+      {
+        "id": 13631216761,
+        "name": "ps0-native-4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a-42515763246",
+        "sha256": "f8f20668e1ed032a1308189fc7dd97a1ea9fb35e0eb404d528a454bd8f836d16"
+      }
+    ],
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "fixtures": [
+      "tests/run-source-census.py",
+      "tests/run-compiler-census.py --fixture-subset",
+      "tests/run-project.py",
+      "tests/run-binders.py"
+    ],
+    "oracles": [
+      "PS0_NATIVE_SOURCE_CENSUS: PASS",
+      "PS0_PROJECT_SAME_FRONTEND_CENSUS: PASS",
+      "PS0_NATIVE_SOURCE_CENSUS_JOIN: PASS"
+    ],
+    "scope": "Lean addModuleLinter captures original command stream from the actual code-generating frontend. Retains normalized input, command kinds/head kinds/ranges/imports and local environment names. The join verifies original byte recovery and identical frontend input, exercises one real project module and rejects mismatched provenance. Alias priority now routes function/const type/default gap negatives through PS operands. Full 2546-module census has NOT run; prelude remains native-compatible without PS grammar. Native compiler infrastructure and pins unchanged.",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "compilerBinderRegression": {
+    "source": "9826bdd9dc422fe021de953a570972d7b85df2f4",
+    "runner": "332ed8372583f2c1a2b08ed3aacd182aa3aa95d2",
+    "run": 42511359592,
+    "status": "STAGE_ONE_PASS_STAGE_TWO_FAIL_NATIVE_EXIT_139",
+    "stageOne": {
+      "job": 128825446119,
+      "modules": 2565,
+      "lakeJobs": 5134,
+      "artifact": 13630277856,
+      "sha256": "9cd6ca6db18c631390bcd4f6b762c38c8227f60a21a84d3eee52fac2a2f0ccf2"
+    },
+    "stageTwo": {
+      "job": 128831905726,
+      "failedModule": "PS0.Binders",
+      "exitCode": 139,
+      "artifact": 13631615771,
+      "sha256": "6261b2be9f790dd8fdf07f17bc070fb934119281bf18a0e7ad78d3d5aa33cbb9"
+    },
+    "fixedPointReached": false,
+    "grammarMigrationComplete": false,
+    "pr": 223
+  },
+  "compilerBinderDiagnosis": {
+    "source": "9826bdd9dc422fe021de953a570972d7b85df2f4",
+    "runner": "e8b085b551a5de8c6c0a2e42b895627bd8be4832",
+    "run": 42516632944,
+    "job": 128840967358,
+    "artifact": 13631362254,
+    "sha256": "7afffc436a768af054d2a32b3710307148a4a4d9a46b1db669ce7b4c7f5ca0ae",
+    "observed": "Focused migrated native rebuild crashes in lean::ir::interpreter::call_boxed via Lean.Parser.mkParserOfConstantUnsafe. With interpreter.prefer_native=false the same module succeeds and generated C/public olean match SDK build exactly. Diagnostic scope only; compiler-wide options remain unchanged.",
+    "candidate": {
+      "source": "a21ecd55fa1b40d66ae5e8ccce64cc04ab5a0c30",
+      "runner": "b88296fa6219a92fcc4aa8fc0ac7be9fa8c283a5",
+      "pr": 225,
+      "status": "PENDING_LINUX_INLINE_DESCRIPTOR_REBUILD"
+    },
     "verified_execution": false
   }
 }
