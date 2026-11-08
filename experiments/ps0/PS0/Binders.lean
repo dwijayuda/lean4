@@ -99,7 +99,7 @@ private partial def aliasKind (source : Syntax) : Nat :=
       source.isOfKind ``psAsciiStrictBinder || source.isOfKind ``psInstanceBinder then 1
   else 0
 
-def lowerTelescope (parts : Array (TSyntax ``psDeclBinder)) (alias := false) :
+def lowerTelescope (parts : Array (TSyntax `psDeclBinder)) (alias := false) :
     MacroM (Array (TSyntax ``Lean.Parser.Term.bracketedBinder)) := do
   let mut result : Array Syntax := #[]
   let mut previousExplicit := false
