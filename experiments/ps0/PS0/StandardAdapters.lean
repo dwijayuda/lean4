@@ -12,6 +12,9 @@ public meta section
 open Lean Lean.Parser.Command Lean.Parser.Term
 namespace PS0
 
+private def nativeTerm (body : TSyntax `psTerm) : MacroM (TSyntax `term) := do
+  return ⟨← PS0.Syntax.lower `psTerm body.raw⟩
+
 syntax (name := ps0StandardDef) (priority := high)
   declModifiers "def " ident bracketedBinder* (":" psTerm)? ":=" psTerm : command
 syntax (name := ps0StandardAbbrev) (priority := high)
@@ -20,9 +23,6 @@ syntax (name := ps0StandardTheorem) (priority := high)
   declModifiers "theorem " ident bracketedBinder* ":" psTerm ":=" psTerm : command
 syntax (name := ps0StandardExample) (priority := high)
   declModifiers "example " bracketedBinder* ":" psTerm ":=" psTerm : command
-
-private def nativeTerm (body : TSyntax `psTerm) : MacroM (TSyntax `term) := do
-  return ⟨← PS0.Syntax.lower `psTerm body.raw⟩
 
 macro_rules (kind := ps0StandardDef)
   | `($mods:declModifiers def $name:ident $bs:bracketedBinder* $[: $ty:psTerm]? := $body:psTerm) => do

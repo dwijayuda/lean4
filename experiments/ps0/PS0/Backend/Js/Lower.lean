@@ -91,25 +91,25 @@ private partial def lowerExpr (locals : Array String)
 private partial def lowerHostExpr (locals : Array String)
     (previous : Array Decl) (e : TSyntax `psTerm) :
     Except String NatExpr := do
+  if e.raw.isOfKind ``ps0NativeTermBridge then
+    return ← lowerExpr locals previous ⟨e.raw[0]⟩
   match e with
   | `(psTerm| { $body:psTerm }) => lowerHostExpr locals previous body
   | `(psTerm| ($body:psTerm)) => lowerHostExpr locals previous body
   | `(psTerm| $head:psHead) =>
-      match head with
-      | `(psHead| $fn:psHead()) =>
-          match fn with
-          | `(psHead| $id:ident) =>
-              let name := id.getId.toString
-              let some decl := findPrevious previous name
-                | throw s!"PS0-JS-CALL: unresolved function {name}"
-              if decl.isConst || !decl.params.isEmpty then
-                throw "PS0-JS-CALL: unsupported nullary call"
-              return .call name #[]
-          | _ => throw "PS0-JS-CALL: unsupported callable head"
-      | `(psHead| $native:term) => lowerExpr locals previous native
-      | _ => throw "PS0-JS-CALL: higher-order calls are outside the Nat MVP"
-  | `(psTerm| $native:term) =>
-      lowerExpr locals previous native
+      if head.raw.isOfKind ``ps0NativeHeadBridge then
+        return ← lowerExpr locals previous ⟨head.raw[0]⟩
+      if head.raw.isOfKind ``ps0HeadEmptyCall then
+        let fn := head.raw[0]
+        unless fn.isOfKind ``ps0NativeHeadBridge && fn[0].isIdent do
+          throw "PS0-JS-CALL: unsupported callable head"
+        let name := fn[0].getId.toString
+        let some decl := findPrevious previous name
+          | throw s!"PS0-JS-CALL: unresolved function {name}"
+        if decl.isConst || !decl.params.isEmpty then
+          throw "PS0-JS-CALL: unsupported nullary call"
+        return .call name #[]
+      throw "PS0-JS-CALL: higher-order calls are outside the Nat MVP"
   | `(psTerm| $head:ident($[$args:psCallArg],*)) =>
       let name := head.getId.toString
       let some decl := findPrevious previous name
