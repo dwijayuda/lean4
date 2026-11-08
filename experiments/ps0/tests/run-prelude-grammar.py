@@ -57,8 +57,9 @@ args = ['lake', '-R', '-f', 'lakefile.project.lean',
         '-KsourceRoot=' + str(source.parent), '-Kroots=PreludePS',
         '-KmoduleNames=PreludePS.Core,PreludePS.Main,PreludePS.Quoted',
         '-KrootModule=PreludePS.Main', '-Kdriver=' + str(driver)]
-run([*args, '-KprojectBuildDir=' + str(work / 'native-control'), 'build',
+control = run([*args, '-KprojectBuildDir=' + str(work / 'native-control'), 'build',
      'PreludePS.Core'], 'native-control', ok=False)
+assert 'unexpected identifier; expected command' in control
 build = work / 'grammar'
 run([*args, '-KsourceGrammar=true', '-KprojectBuildDir=' + str(build),
      'build', 'PS0Project:static', 'ps0project'], 'grammar-build')

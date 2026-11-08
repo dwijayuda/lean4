@@ -57,7 +57,16 @@ private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun c
     else native category ctx state
 
 private unsafe def installImpl : IO Unit := do
-  let host ← importModules #[{module := `PS0.StandardAdapters, isMeta := true}] {}
+  -- Native toolchains ship compiler metadata beside their executable. Load that
+  -- host metadata in a separate environment, then restore target module lookup.
+  let targetPath ← searchPathRef.get
+  let binDir := (← IO.appPath).parent.getD "."
+  let hostPath := binDir / ".." / "lib" / "lean"
+  searchPathRef.set (hostPath :: targetPath)
+  let host ← try
+    importModules #[{module := `PS0.StandardAdapters, isMeta := true}] {}
+  finally
+    searchPathRef.set targetPath
   let state := parserExtension.getState host
   for name in categoryNames do
     let some cat := state.categories.find? name
@@ -79,6 +88,7 @@ private unsafe def installImpl : IO Unit := do
   for entry in Elab.Term.termElabAttribute.getEntries host `PS0.pscvEmptyCall do
     Elab.Term.termElabAttribute.addBuiltin `PS0.pscvEmptyCall entry.declName entry.value
   registerBuiltinNodeKind `PS0.pscvEmptyCall
+  registerBuiltinNodeKind `PS0.Binders.binderDefault
   let native ← categoryParserFnRef.get
   categoryParserFnRef.set (rootDispatch native)
 
