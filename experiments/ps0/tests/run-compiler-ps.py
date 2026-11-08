@@ -144,6 +144,7 @@ result = {
     'bootstrap_package_identity': None,
     'stage_lean_options': {'interpreter.prefer_native': False},
     'runtime_smoke': 'PENDING',
+    'runtime_grammar_host': {'status': 'PENDING'},
     'lean_header_sha256': digest(build / 'include/lean/lean.h'),
     'scope': 'All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers',
 }
@@ -154,6 +155,24 @@ run([migrated, 'environment'], 'migrated-environment', env=migrated_env)
 assert LEAN in (evidence / 'migrated-environment.log').read_text()
 run([migrated, 'check', ROOT / 'tests/project/Demo/Words.ps'], 'migrated-source-check', env=migrated_env)
 result['runtime_smoke'] = 'PASS'
+(evidence / 'migration.json').write_text(json.dumps(result, indent=2) + '\n')
+host_tag = '-compiler-built'
+run(['python3', 'tests/run-relocated-grammar.py'], 'migrated-grammar-host', env={
+    **migrated_env, 'PS0_PACKAGE_DRIVER': str(migrated),
+    'PS0_PACKAGE_METADATA': str(build / 'lib/lean'), 'PS0_PACKAGE_TAG': host_tag,
+})
+host_file = ROOT / 'build' / ('relocated-grammar-' + os.environ['GITHUB_RUN_ID'] + host_tag) / 'evidence.json'
+host = json.loads(host_file.read_text())
+assert host['source'] == result['source_commit']
+assert host['driver_sha256'] == result['driver_sha256']
+assert all(v['source_sha256'] == v['published_sha256'] for v in host['host_metadata'].values())
+shutil.copy2(host_file, evidence / 'native-grammar-host.json')
+result['runtime_grammar_host'] = {
+    'status': 'PASS', 'driver_sha256': host['driver_sha256'],
+    'evidence_sha256': digest(host_file), 'metadata_files': len(host['host_metadata']),
+    'provenance': 'fresh all-.ps compiler output metadata; explicit pinned Lean SDK dependencies',
+}
+print('PS0_PS_BUILT_COMPILER_GRAMMAR_HOST: PASS; metadata_files=' + str(len(host['host_metadata'])), flush=True)
 if baseline:
     changed_c = [m for m in outputs if outputs[m]['c_sha256'] != baseline['outputs'][m]['c_sha256']]
     changed_olean = [m for m in outputs if outputs[m]['olean_sha256'] != baseline['outputs'][m]['olean_sha256']]

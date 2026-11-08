@@ -8,7 +8,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
-work = ROOT / 'build' / ('prelude-grammar-' + os.environ['GITHUB_RUN_ID'])
+work = ROOT / 'build' / ('prelude-grammar-' + os.environ['GITHUB_RUN_ID'] + os.environ.get('PS0_TEST_TAG', ''))
 source = work / 'src/PreludePS'
 source.mkdir(parents=True, exist_ok=False)
 (source / 'Core.ps').write_text('''module
@@ -45,7 +45,7 @@ run_cmd do
   unless term.raw.isOfKind ``Lean.Parser.Term.app do
     Lean.throwError "PS term routing escaped into native term quotation"
 ''')
-driver = ROOT / '.lake/build/bin/ps0'
+driver = Path(os.environ.get('PS0_TEST_DRIVER', str(ROOT / '.lake/build/bin/ps0'))).resolve()
 
 def run(args, label, ok=True):
     r = subprocess.run([str(x) for x in args], text=True, stdout=subprocess.PIPE,

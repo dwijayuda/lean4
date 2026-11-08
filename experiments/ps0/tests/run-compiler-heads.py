@@ -87,11 +87,20 @@ def source_declarations(commands):
             yield command['declaration']
         yield from source_declarations(command.get('nestedCommands', []))
 declarations = list(source_declarations(observed['commands']))
-assert {d['sourceName'] for d in declarations if d['mode'] == 'mapped-ps'} == set(plan['declarations'])
+original_declarations = list(source_declarations(json.loads(census.read_text())['commands']))
+unchanged_abbrevs = {d['sourceName'] for d in original_declarations
+                     if d['production'] == 'Lean.Parser.Command.abbrev'}
+mapped = {d['sourceName'] for d in declarations if d['mode'] == 'mapped-ps'}
+expected_mapped = set(plan['declarations']) | unchanged_abbrevs
+assert mapped == expected_mapped, (sorted(mapped), sorted(expected_mapped))
+assert {d['sourceName'] for d in declarations if d['production'] in [
+    'PS0.StandardAdapters.ps0StandardFunction', 'PS0.StandardAdapters.ps0StandardConst',
+]} == set(plan['declarations']), 'every planned alias must reach its actual PS source production'
 assert observed['imports'] == json.loads(census.read_text())['imports']
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
+    'converted_declarations': plan['declarations'], 'unchanged_abbrev_adapters': sorted(unchanged_abbrevs),
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',
     'scope': 'real typed compiler declaration heads, including explicit nested commands; native bodies retained; not whole grammar migration',
     'grammar_migration_complete': False, 'verified_execution': False,
