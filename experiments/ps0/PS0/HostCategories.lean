@@ -30,13 +30,11 @@ declare_syntax_cat psCallArg
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
 
--- The third descriptor argument is the separator's formatting parser;
--- allowTrailingSep occupies the fourth slot in pinned Lean 4.35.0.
--- sepBy1 retains nonemptiness: a comma alone is not an empty invocation,
--- and a repeated comma cannot manufacture a missing operand.
+-- The separator parser must consume the comma; ppSpace alone is zero-width.
+-- sepBy1 rejects empty entries and repeated separators.
 -- Identifier heads only; other high-postfix heads remain a separate task.
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
-  ident noWs "(" sepBy1(psCallArg, ",", ppSpace, allowTrailingSep) ")" : psTerm
+  ident noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
 
 namespace PS0.Syntax
 
@@ -104,3 +102,4 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
 
 end PS0.Syntax
+

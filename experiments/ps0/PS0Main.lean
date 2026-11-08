@@ -73,7 +73,7 @@ private def preparedPsModule (raw filename : String) :
     | .ok answer => pure answer
     | .error err => return .error err
   let prelude ← match header with
-    | `(Parser.Module.header| $[module%$_]? $[prelude%$p]? $imports*) =>
+    | `(Parser.Module.header| $[module%$_]? $[prelude%$p]? $_imports*) =>
         pure p.isSome
     | _ => return .error "PS0V1-MODULE: invalid pinned Lean header syntax"
   if prelude then

@@ -80,6 +80,10 @@ invalid_call.write_text('function f(x: Nat, y: Nat): Nat := x + y\nconst value: 
 out = run(['lake', 'exe', 'ps0', 'build-native', invalid_call, 'NativeCall', WORK / 'bad-call'], ok=False)
 assert 'PS0V1-CALL-ORDER' in out
 assert not (WORK / 'bad-call').exists()
+bad_alias = WORK / 'BadAlias.ps'
+bad_alias.write_text('function f(x: Nat)(y: Nat): Nat := x + y\n')
+out = run(['lake', 'exe', 'ps0', 'check', bad_alias], ok=False)
+assert 'PS0V1-BIND-02' in out
 print('PS0_NATIVE_ELAB_LINK_AND_PUBLICATION_NEGATIVES: PASS', flush=True)
 
 print('PS0_LAKE_NATIVE: PASS', flush=True)
