@@ -48,6 +48,8 @@ private def declaration (source : Syntax) : Json := Id.run do
 private def command (source : Syntax) : Json :=
   Json.mkObj [
     ("kind", toJson source.getKind.toString), ("range", sourceRange source),
+    ("headKind", toJson (if source.isOfKind ``Lean.Parser.Command.declaration then
+      source[1].getKind.toString else source.getKind.toString)),
     ("declaration", declaration source)]
 
 def collect (commands : Array Syntax) : CommandElabM Unit := do

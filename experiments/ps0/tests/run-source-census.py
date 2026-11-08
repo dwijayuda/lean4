@@ -64,3 +64,30 @@ assert not (work / 'invalid.json').exists(), 'failed elaboration cannot publish 
     'grammar_migration_complete': False,
 }, indent=2) + '\n')
 print('PS0_NATIVE_SOURCE_CENSUS: PASS', flush=True)
+project = ROOT / '.lake/project'
+module = 'Demo.Words'
+module_input = json.loads((project / 'ps0-inputs' / (module + '.json')).read_text())
+mini = work / 'mini-migration.json'
+mini.write_text(json.dumps({
+    'source_commit': os.environ.get('PS0_SOURCE_SHA'),
+    'lean_commit': census['leanCommit'], 'module_count': 1,
+    'inputs': {module: {'ps': module_input['source']}},
+}))
+run(['python3', 'tests/run-compiler-census.py', '--migration', mini, '--build-dir', project,
+     '--output', work / 'summary', '--fixture-subset'])
+summary = json.loads((work / 'summary/summary.json').read_text())
+assert summary['module_count'] == 1 and summary['scope'] == 'fixture subset'
+assert summary['declaration_modes']['mapped-ps'] >= 1
+bad = work / 'corrupt/lib/lean/Demo'
+bad.mkdir(parents=True)
+for suffix in ['ps0-source-census', 'ps0-source-map']:
+    path = project / ('lib/lean/Demo/Words.ilean.' + suffix + '.json')
+    target = bad / path.name
+    target.write_bytes(path.read_bytes())
+tampered = bad / 'Words.ilean.ps0-source-census.json'
+value = json.loads(tampered.read_text())
+value['nativeSource'] += '\n-- unmatched source\n'
+tampered.write_text(json.dumps(value))
+run(['python3', 'tests/run-compiler-census.py', '--migration', mini, '--build-dir', work / 'corrupt',
+     '--output', work / 'refused', '--fixture-subset'], ok=False)
+print('PS0_NATIVE_SOURCE_CENSUS_JOIN: PASS', flush=True)
