@@ -82,15 +82,18 @@ def prepareWithOrigins (raw filename : String) : IO (Except String PreparedSourc
 def prepare (raw filename : String) : IO (Except String String) := do
   return (← prepareWithOrigins raw filename).map (·.source)
 
+def sourceMapJson (p : PreparedSource) (raw path : String) : Json :=
+  Json.mkObj [
+    ("schema", toJson ("ps0-source-map/1" : String)), ("file", toJson path),
+    ("originalByteSize", toJson raw.utf8ByteSize), ("source", toJson p.source),
+    ("segments", toJson p.segments)]
+
 def printSourceMap (path : String) : IO UInt32 := do
   let raw ← IO.FS.readFile path
   let p ← match ← prepareWithOrigins raw path with
     | .ok p => pure p
     | .error e => IO.eprintln e; return 1
-  IO.println (Json.mkObj [
-    ("schema", toJson ("ps0-source-map/1" : String)), ("file", toJson path),
-    ("originalByteSize", toJson raw.utf8ByteSize), ("source", toJson p.source),
-    ("segments", toJson p.segments)]).compress
+  IO.println (sourceMapJson p raw path).compress
   return 0
 
 def printHeader (path : String) : IO UInt32 := do
@@ -130,9 +133,10 @@ def compile (args : List String) : IO UInt32 := do
   let some setupFile := setup? | IO.eprintln "PS0-LAKE-SETUP: missing native module setup"; return 2
   let setup ← ModuleSetup.load setupFile
   let raw ← IO.FS.readFile path
-  let source ← match ← prepare raw path with
+  let prepared ← match ← prepareWithOrigins raw path with
     | .ok x => pure x
     | .error e => IO.eprintln e; return 1
+  let source := prepared.source
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
   let nativePrelude := source == raw
@@ -142,6 +146,9 @@ def compile (args : List String) : IO UInt32 := do
       (trustLevel := 0) (oleanFileName? := olean?) (ileanFileName? := ilean?)
       (jsonOutput := json) (setup? := some setup)
     | return 1
+  if let some ilean := ilean? then
+    IO.FS.writeFile (ilean.addExtension "ps0-source-map.json")
+      (sourceMapJson prepared raw path).compress
   if let some c := c? then
     if requireMain then
       let localCode ← Compiler.LCNF.getLocalImpureDecls

@@ -37,6 +37,16 @@ assert 'PS0_PROJECT:42:7:2' in run([exe, 'a', 'b'])
 records = list((ROOT / '.lake/project/ps0-inputs').rglob('*.json'))
 selected = [json.loads(p.read_text()) for p in records]
 assert any(x['module'] == 'Demo.Notation' and x['source'].endswith('.ps') for x in selected)
+maps = list((ROOT / '.lake/project/lib/lean').rglob('*.ilean.ps0-source-map.json'))
+assert maps, 'native Lake compilation must retain source origin sidecars'
+for path in maps:
+    mapping = json.loads(path.read_text())
+    original = Path(mapping['file']).read_bytes()
+    prepared = mapping['source'].encode()
+    recovered = b''.join(prepared[s['preparedStart']:s['preparedEnd']]
+                         for s in mapping['segments'] if s['kind'] == 'original')
+    assert recovered == original
+print('PS0_PROJECT_SOURCE_ORIGINS: PASS', flush=True)
 before = (sha(exe), exe.stat().st_mtime_ns)
 build()
 assert before == (sha(exe), exe.stat().st_mtime_ns)
