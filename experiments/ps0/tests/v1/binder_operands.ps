@@ -1,0 +1,34 @@
+/-! Mixed signatures preserve native binder order, defaults and automatic parameters. -/
+function add(x: Nat, y: Nat): Nat := x + y
+abbrev sized (n : Nat) : Type := Fin n
+abbrev agree (x y : Nat) : Prop := x = y
+
+def mixed (x y : Nat) {α : Type} [Inhabited α]
+    (z: Nat := add(x, y), w: sized(add(z, 1)) := ⟨0, by omega⟩) : Nat := z + w.val
+example : mixed(1, 2, α := Unit) = 3 := by rfl
+
+def nativeDefault (x : Nat := add(1, 2)) : Nat := x
+def dependentType (x: sized(add(1, 2)), y: Nat := add(x.val, 1)) : Nat := y
+def nativeShared (x y : sized(add(1, 2))) : Nat := x.val + y.val
+def nativeInferred (x y) : Nat := x + y
+def nativeAnonymous (_ : Nat) (y: Nat, z: Nat) : Nat := y + z
+
+function interleaved {α: Type}(x: α)[Inhabited α](n: Nat := add(1, 2)): Nat := n
+function tick {α: Type}(): Nat := add(1, 2)
+
+def autoProof (n: Nat, h: agree(n, n) := by rfl) : Nat := n
+def ordinaryProof (n: Nat, h: agree(n, n) := (by rfl)) : Nat := n
+example : autoProof(3) = 3 := by rfl
+example : ordinaryProof(3) = 3 := by rfl
+
+theorem mixedProof (x y : Nat) (z: Nat := add(x, y), w: Nat := z) : agree(w, w) := by rfl
+abbrev mixedAbbrev (x y : Nat) (z: Nat := add(x, y), w: Nat := z) : Nat := w
+
+macro "nativeBinder " b:bracketedBinder : term => do
+  unless b.raw.isOfKind ``Lean.Parser.Term.explicitBinder do
+    Lean.Macro.throwError "PS0_NATIVE_BINDER_KIND"
+  `(True)
+example : nativeBinder (x : Fin (1 + 2)) := by trivial
+
+def main : IO Unit := do
+  IO.println s!"PS0_BINDERS:{mixed(1, 2, α := Unit)}:{nativeDefault()}:{dependentType(⟨1, by omega⟩)}:{interleaved((), α := Unit)}:{tick(α := Unit)}:{mixedAbbrev(1, 2)}"
