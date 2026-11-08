@@ -29,7 +29,7 @@ def sourceImportsAndBody (raw filename : String) : IO (Except String (Array Impo
   if state.pos.byteIdx < prefixBytes then return .error "PS0-MODULE-HEADER: invalid source offset"
   let some body := (raw.toByteArray.extract (state.pos.byteIdx - prefixBytes) raw.utf8ByteSize).utf8Decode?
     | return .error "PS0-MODULE-HEADER: invalid UTF-8 boundary"
-  return .ok (Elab.HeaderSyntax.imports header (includeInit := false), body)
+  return .ok (Elab.HeaderSyntax.imports header (includeInit := false), String.ofList body.toList)
 
 def isPrelude (header : Elab.HeaderSyntax) : Bool :=
   match header with
@@ -112,10 +112,12 @@ def convertNative (source target : FilePath) : IO Unit := do
     let first := header.raw.getPos?.getD ⟨0⟩
     let leading := String.fromUTF8! (raw.toByteArray.extract 0 first.byteIdx)
     let imports := Elab.HeaderSyntax.imports header (includeInit := true)
-    if imports.any (fun i => i.importAll && i.isExported) then
-      throw <| IO.userError "PS0-CONVERT-IMPORT: split legacy public/all imports explicitly"
-    pure (leading ++ "module\nprelude\n" ++ String.join (imports.toList.map importSource) ++
-      (if Elab.HeaderSyntax.isModule header then "" else "public section\n") ++ body)
+    let rendered := imports.toList.map fun im =>
+      if im.importAll && im.isExported then
+        importSource {im with importAll := false} ++ importSource {im with isExported := false}
+      else importSource im
+    pure (leading ++ "module\nprelude\n" ++ String.join rendered ++
+      (if Elab.HeaderSyntax.isModule header then "" else "public section\n") ++ String.ofList body.toList)
   IO.FS.createDirAll (target.parent.getD ".")
   IO.FS.writeFile target converted
 
