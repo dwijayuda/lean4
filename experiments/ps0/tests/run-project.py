@@ -59,6 +59,10 @@ maps[0].unlink()
 build()
 assert all(p.is_file() and sha(p) == h for p, h in origin_hashes.items())
 assert before == (sha(exe), exe.stat().st_mtime_ns)
+maps[0].write_text('{"corrupted": true}')
+build()
+assert all(p.is_file() and sha(p) == h for p, h in origin_hashes.items())
+assert before == (sha(exe), exe.stat().st_mtime_ns)
 print('PS0_PROJECT_SOURCE_ORIGIN_CACHE_RECOVERY: PASS', flush=True)
 
 old_inputs = {x['module']: x['input_hash'] for x in selected}

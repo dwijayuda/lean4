@@ -86,6 +86,27 @@ def ps0CompilerContext (ctx : BuildContext) : BuildContext :=
 def ps0ElabFacet : ModuleFacetDecl :=
   .mk Lake.Module.leanArtsFacet (mkFacetJobConfig fun (mod : Lake.Module) => do
     if ← (mod.leanFile.withExtension "ps").pathExists then
-      withTheReader BuildContext ps0CompilerContext (Lake.Module.leanArtsFacetConfig.run mod)
+      let native ← withTheReader BuildContext ps0CompilerContext (Lake.Module.leanArtsFacetConfig.run mod)
+      native.mapM fun arts => do
+        let source := mod.leanFile.withExtension "ps"
+        let sidecar := mod.ileanFile.addExtension "ps0-source-map.json"
+        let result ← IO.Process.output {
+          cmd := projectDriver.toString
+          args := #["source-map", source.toString]
+          env := (← getWorkspace).augmentedEnvVars
+        }
+        unless result.exitCode == 0 do
+          error s!"PS0-PROJECT-SOURCE-MAP: {result.stderr}"
+        let expected := result.stdout.trimAscii.toString
+        match Json.parse expected with
+        | .error e => error s!"PS0-PROJECT-SOURCE-MAP: {e}"
+        | .ok _ => pure ()
+        let valid ← if ← sidecar.pathExists then do
+          return (← IO.FS.readFile sidecar) == expected
+        else pure false
+        unless valid do
+          IO.FS.writeFile sidecar expected
+        addTrace (← computeTrace (TextFilePath.mk sidecar))
+        return arts
     else
       Lake.Module.leanArtsFacetConfig.run mod)
