@@ -21,11 +21,13 @@ run(['lake', 'exe', 'ps0', 'build-native', 'tests/v1/standard_category_slots.ps'
 assert 'PS0_CATEGORY_SLOTS:3:3:3:3:3' in run([work / 'native/CategorySlots'])
 run(['lake', 'exe', 'ps0', 'check', 'tests/v1/category_do_operands.ps'])
 run(['lake', 'exe', 'ps0', 'build-native', 'tests/v1/category_do_operands.ps', 'DoOperands', work / 'do-native'])
-assert 'PS0_DO_OPERANDS:8:3' in run([work / 'do-native/DoOperands'])
+assert 'PS0_DO_OPERANDS:12:3' in run([work / 'do-native/DoOperands'])
 for name, call, reason in [
     ('order', 'add(x := 1, 2)', 'PS0V1-CALL-ORDER'),
     ('duplicate', 'add(x := 1, x := 2)', 'PS0V1-CALL-NAMED'),
     ('gap', 'add (1, 2)', 'PS0V1-CALL-GAP'),
+    ('do-gap', 'do { return add (1, 2) }', 'PS0V1-CALL-GAP'),
+    ('do-order', 'do { let n := add(x := 1, 2); return n }', 'PS0V1-CALL-ORDER'),
 ]:
     path = work / (name + '.ps')
     path.write_text('function add(x: Nat, y: Nat): Nat := x + y\ndef bad : Nat := ' + call + '\n')

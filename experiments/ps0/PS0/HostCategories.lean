@@ -43,8 +43,11 @@ syntax (name := ps0HostBy) (priority := high)
   "by " "{" sepBy1(psTactic, ";", ";" ppSpace, allowTrailingSep) "}" : psTerm
 syntax (name := ps0HostDoLet) (priority := high)
   "let " ident (":" psTerm)? ":=" psTerm : psDoElem
+syntax (name := ps0HostDoLetMut) (priority := high)
+  "let " "mut " ident (":" psTerm)? ":=" psTerm : psDoElem
 syntax (name := ps0HostDoBind) (priority := high)
   "let " ident "←" psTerm : psDoElem
+syntax (name := ps0HostDoReassign) (priority := high) ident ":=" psTerm : psDoElem
 syntax (name := ps0HostDoReturn) (priority := high) "return " psTerm : psDoElem
 syntax (name := ps0HostDoExpr) (priority := high) psTerm : psDoElem
 syntax (name := ps0HostDoItem) ppLine psDoElem ";"? : psDoItem
@@ -133,6 +136,10 @@ partial def lower (category : Name) (source : Lean.Syntax) :
 
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   match source with
+  | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
+      let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
+      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+      return (← `(doElem| let mut $name:ident $[: $ty:term]? := $value)).raw
   | `(psDoElem| let $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
       let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
@@ -142,6 +149,9 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
       let action : TSyntax `doElem := ⟨.node (loweringInfo source)
         ``Lean.Parser.Term.doExpr #[value.raw]⟩
       return (← `(doElem| let $name:ident ← $action:doElem)).raw
+  | `(psDoElem| $name:ident := $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+      return (← `(doElem| $name:ident := $value:term)).raw
   | `(psDoElem| return $value:psTerm) => do
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
       return (← `(doElem| return $value)).raw

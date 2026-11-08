@@ -6,9 +6,11 @@ def witness (x : Nat) : same x x := rfl
 
 def multi : IO Nat := do {
   let first : Nat := add(1, 2);
+  let mut tally : Nat := add(first, 1);
+  tally := add(tally, 1);
   let second ← pureNat(add(first, 4));
   pureNat(second);
-  return add(second, 1)
+  return add(second, tally)
 }
 
 theorem applyOperand : same(3, 3) := by { apply witness(3) }
