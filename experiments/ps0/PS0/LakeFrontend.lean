@@ -139,6 +139,9 @@ def printHeader (path : String) : IO UInt32 := do
   return 0
 
 def censusSource (path moduleName output : String) : IO UInt32 := do
+  unless path.endsWith ".ps" && (FilePath.mk output).extension == some "json" do
+    IO.eprintln "PS0-CENSUS-INPUT: expected a .ps source and a .json output"
+    return 2
   let raw ← IO.FS.readFile path
   let source ← match ← prepare raw path with
     | .ok source => pure source
@@ -200,10 +203,28 @@ def compile (args : List String) : IO UInt32 := do
   let nativePrelude := source == raw
   let opts := if nativePrelude then ({} : Options) else
     ({} : Options) |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
+  let census? : Option (FilePath × FilePath) ← ilean?.mapM fun ilean => do
+    let target := ilean.addExtension "ps0-source-census.json"
+    let stage := target.addExtension "pending"
+    IO.FS.createDirAll (target.parent.getD ".")
+    if ← target.pathExists then IO.FS.removeFile target
+    if ← stage.pathExists then IO.FS.removeFile stage
+    return (target, stage)
+  let opts := match census? with
+    | some (_, stage) => opts.set `ps0.sourceCensusPath stage.toString
+    | none => opts
   let some env ← Elab.runFrontend source opts path setup.name
       (trustLevel := 0) (oleanFileName? := olean?) (ileanFileName? := ilean?)
       (jsonOutput := json) (setup? := some setup)
-    | return 1
+    | do
+      if let some (_, stage) := census? then
+        if ← stage.pathExists then IO.FS.removeFile stage
+      return 1
+  if let some (target, stage) := census? then
+    unless ← stage.pathExists do
+      IO.eprintln "PS0-CENSUS-MISSING: native module compilation did not produce evidence"
+      return 1
+    IO.FS.rename stage target
   if let some ilean := ilean? then
     IO.FS.writeFile (ilean.addExtension "ps0-source-map.json")
       (sourceMapJson prepared raw path).compress
