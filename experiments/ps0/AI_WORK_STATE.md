@@ -1,5 +1,24 @@
 # PS0 — AI Work State (9 November 2026)
 
+## Scoped/mutual PS source-command operands — finite Linux checkpoint
+
+Qualified source **`27e58f278b2ceb74bab4535245b15dd4668ad331`**, runner **`7ebf8265bb5ec8296c8ace5031b039b043452a28`**, [run 42525540427](https://github.com/dwijayuda/pskernel/actions/runs/42525540427): **all four jobs PASS** — project **128868235000**, native **128868234727**, proof-linked **128868234968**, host **128868234969**.
+
+**PS0_COMMAND_OPERANDS:3:3:3:3** and **PS0_SCOPED_MUTUAL_COMMAND_OPERANDS: PASS**: PS function signatures work under native `set_option ... in`, `open ... in`, nested `in` wrappers and native mutual blocks. Native option/namespace handling and command/mutual elaboration remain Lean's. Borrowed native fallback declines these explicit owned prefix words so it cannot consume a whole wrapper before PS child parsing; selected PS declarations use native `withPosition` to bound contextual alias words by declaration indentation. Native quotations retain native `Command.in` / `declaration` / `mutual` AST identity.
+
+The new actual-source census traverses only the explicitly owned native `in` RHS and mutual command arrays. It records original nested declaration names and keyword ranges, preserves raw bytes/direct imports and retains nested counters separately from the original top-level counters. It does not descend into quoted/DSL/generated data. Nested invalid defaults reach **PS0V1-CALL-GAP** and **PS0V1-CALL-ORDER**.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| native | [13635446365](https://github.com/dwijayuda/pskernel/actions/runs/42525540427/artifacts/13635446365) | `a969cb29fc355700f891d6a4729ae4344be2ff5e7cc172fbc723a9aa6a400f8b` |
+| project | [13635222711](https://github.com/dwijayuda/pskernel/actions/runs/42525540427/artifacts/13635222711) | `fe417f0c46ca8b9bb3de4dca131fd1bf21ddb55b0568f93184234c9f3ea63ccf` |
+| external | [13634728251](https://github.com/dwijayuda/pskernel/actions/runs/42525540427/artifacts/13634728251) | `85284d25cd7ae70c388334912df7fcfad8b03d41ee5a0984e05ab8a25a378723` |
+
+Failed parser-field/layout, fallback/indentation and host-lexer candidates are retained with source/runner/run/job/artifact digests in both JSON ledgers. Temporary traces are removed. The legacy `pscvNonExplicitBinder` still reserves double-brace tokens in host imports; cleaning up that lexical fidelity gap remains open. Native `attribute`/`variable`/`omit` prefix parsers are reused, but their other PS operand roles are not separately qualified by this checkpoint.
+
+The independent full compiler/census [run 42522976977](https://github.com/dwijayuda/pskernel/actions/runs/42522976977) remains pinned to earlier runtime-qualified source **28904e5a7ccb19a15e311ecc654541dc0ee639ec**, runner **484868307c6611fedf1a464e2e102c02b8ad5855**; stage-one job **128861032581** is still running as last observed. It does not qualify this newer grammar increment. Goal remains **ACTIVE / NOT COMPLETE**; broad obligations and execution-certificate claims are not promoted.
+
+
 ## Current modern metacompiler startup checkpoint — 9 November 2026
 
 Qualified source **`28904e5a7ccb19a15e311ecc654541dc0ee639ec`**, runner **`4b3c4a60d9c6da28f581bba657f1e041c559b7c6`**, Linux [run 42522802697](https://github.com/dwijayuda/pskernel/actions/runs/42522802697): **all four jobs PASS** — project **128859792609**, native **128859792529**, proof-linked **128859792415**, host **128859792642**. Prelude/source/binder/recursive/native regressions, the three real compiler-head C/public-olean parity checks and the new modern-root startup regression all pass together.
