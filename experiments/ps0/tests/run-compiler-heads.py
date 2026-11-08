@@ -16,6 +16,7 @@ blob = hashlib.sha1(b'blob ' + str(len(fixture.read_bytes())).encode() + b'\0' +
 assert blob == '20b7acf5d684789ab52b81dda7def4b19568213c'
 module = 'Lean.Compiler.ClosedTermCache'
 driver = ROOT / '.lake/build/bin/ps0'
+sysroot = Path(subprocess.check_output(['lean', '--print-prefix'], text=True).strip())
 
 def run(args, label, ok=True):
     result = subprocess.run([str(x) for x in args], text=True, stdout=subprocess.PIPE,
@@ -38,9 +39,21 @@ plan = json.loads(plan_file.read_text())
 assert set(plan['declarations']) == {'cacheClosedTermName', 'getClosedTermName?', 'isClosedTermName'}
 
 def build(source, directory, grammar=False, ok=True):
+    # Native module lookup resolves a namespace prefix in one library root. The
+    # finite SDK-backed probe supplies sibling metadata without shadowing it.
+    sdk_lib = sysroot / 'lib/lean'
+    for item in sdk_lib.rglob('*'):
+        if not item.is_file() or not any(x in item.name for x in ['.olean', '.ir']):
+            continue
+        relative = item.relative_to(sdk_lib)
+        if relative.parent == Path('Lean/Compiler') and item.name.startswith('ClosedTermCache.'):
+            continue
+        target = directory / 'lib/lean' / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.symlink_to(item)
     args = ['lake', '-R', '-f', 'lakefile.project.lean',
             '-KsourceRoot=' + str(source.parents[2]), '-Kroots=Lean.Compiler',
-            '-KmoduleNames=' + module, '-KrootModule=' + module,
+            '-KmoduleNames=' + module, '-KrootModule=CompilerHeadProbeMain',
             '-Kdriver=' + str(driver), '-KprojectBuildDir=' + str(directory)]
     if grammar:
         args += ['-KsourceGrammar=true']
@@ -62,6 +75,7 @@ assert observed['imports'] == ['Lean.Environment']
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
+    'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',
     'scope': 'three real typed compiler declaration heads; native bodies retained; not whole grammar migration',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
