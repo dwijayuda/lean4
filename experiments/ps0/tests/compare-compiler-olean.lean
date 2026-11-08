@@ -19,16 +19,17 @@ unsafe def main (args : List String) : IO Unit := do
   let mut changes := #[]
   for a in native.constants do
     let some b := ps.constants.find? (fun c => c.name == a.name) | continue
-    unless a == b do
+    unless a == b && reprStr a.type == reprStr b.type &&
+        reprStr (a.value? true) == reprStr (b.value? true) do
       let mut fields := [
         ("name", toJson a.name.toString),
         ("typeEqual", toJson (a.type == b.type)),
         ("valueEqual", toJson (a.value? true == b.value? true)),
         ("nativeLevels", toJson (a.levelParams.map Name.toString)),
         ("psLevels", toJson (b.levelParams.map Name.toString))]
-      if a.type != b.type then
+      if reprStr a.type != reprStr b.type then
         fields := fields ++ [("nativeType", toJson (reprStr a.type)), ("psType", toJson (reprStr b.type))]
-      if a.value? true != b.value? true then
+      if reprStr (a.value? true) != reprStr (b.value? true) then
         fields := fields ++ [("nativeValue", toJson (reprStr (a.value? true))), ("psValue", toJson (reprStr (b.value? true)))]
       if let .defnInfo x := a then
         if let .defnInfo y := b then
