@@ -6,7 +6,7 @@ abbrev agree (x y : Nat) : Prop := x = y
 structure PSBinderBox where { value : Nat } deriving Inhabited, Repr
 
 def mixed (x y : Nat) {α : Type} [Inhabited α]
-    (z: Nat := add(x, y), w: sized(add(z, 1)) := ⟨0, by omega⟩) : Nat := z + w.val
+    (z: Nat := add(x, y), w: sized(add(z, 1)) := ⟨0, by unfold add; omega⟩) : Nat := z + w.val
 def evaluatedMixed : Nat := mixed(1, 2, α := Unit)
 example : evaluatedMixed = 3 := by rfl
 

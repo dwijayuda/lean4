@@ -109,11 +109,11 @@ macro_rules (kind := ps0StandardConst)
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardInstance)
-  | `($mods:declModifiers $kind:attrKind instance $prio:optNamedPrio $[$name:declId]? $bs:psDeclBinder* : $ty:psTerm := $body:psTerm) => do
+  | `($mods:declModifiers $kind:attrKind instance $[$prio:namedPrio]? $[$name:declId]? $bs:psDeclBinder* : $ty:psTerm := $body:psTerm) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← nativeTerm ty
       let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.instance| $kind:attrKind instance $prio:optNamedPrio $[$name:declId]? $bs:bracketedBinder* : $ty:term := $body:term)
+      let decl ← `(Lean.Parser.Command.instance| $kind:attrKind instance $[$prio:namedPrio]? $[$name:declId]? $bs:bracketedBinder* : $ty:term := $body:term)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 end PS0.StandardAdapters
