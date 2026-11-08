@@ -35,13 +35,13 @@ public section
 meta def quotedCommand : Lean.MacroM(Lean.TSyntax `command) :=
   `(command| def function (x : Nat) : Nat := x)
 meta def quotedTerm : Lean.MacroM(Lean.TSyntax `term) := `(term| fn (1, 2))
-meta def quotedBinder : Lean.MacroM(Lean.TSyntax `bracketedBinder) :=
+meta def quotedBinder : Lean.MacroM(Lean.TSyntax ``Lean.Parser.Term.bracketedBinder) :=
   `(bracketedBinder| {{x : Nat}})
 run_cmd do
-  let cmd ← quotedCommand
+  let cmd ← Lean.Elab.liftMacroM quotedCommand
   unless cmd.raw.isOfKind ``Lean.Parser.Command.declaration do
     Lean.throwError "PS command routing escaped into native command quotation"
-  let term ← quotedTerm
+  let term ← Lean.Elab.liftMacroM quotedTerm
   unless term.raw.isOfKind ``Lean.Parser.Term.app do
     Lean.throwError "PS term routing escaped into native term quotation"
 ''')

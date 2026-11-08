@@ -41,6 +41,8 @@ for command in census['commands']:
         keyword = native[span['start']:span['end']].decode()
         assert keyword in ['function', 'const', 'def'], (declaration, keyword)
         assert declaration['mode'] == 'mapped-ps'
+        assert isinstance(declaration['signatureSyntax']['args'], list)
+        assert declaration['nameRange'] is not None
 
 prelude = work / 'bootstrap.ps'
 prelude.write_text('module\nprelude\npublic import Init\ndef bootstrapValue : Nat := 7\n')
@@ -50,6 +52,7 @@ assert bootstrap['nativeSource'] == prelude.read_text()
 decls = [x['declaration'] for x in bootstrap['commands'] if x['declaration'] is not None]
 assert len(decls) == 1 and decls[0]['sourceName'] == 'bootstrapValue'
 assert decls[0]['mode'] == 'native-compatible'
+assert decls[0]['signatureSyntax']['kind'] == 'Lean.Parser.Command.optDeclSig'
 assert 'PS0.Policy' not in bootstrap['imports']
 
 invalid = work / 'invalid.ps'

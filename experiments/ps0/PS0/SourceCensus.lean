@@ -21,6 +21,13 @@ private def sourceRange (source : Syntax) : Json :=
   | none => .null
   | some r => Json.mkObj [("start", toJson r.start.byteIdx), ("end", toJson r.stop.byteIdx)]
 
+private partial def signatureSyntax (source : Syntax) : Json :=
+  Json.mkObj [
+    ("kind", toJson source.getKind.toString), ("range", sourceRange source),
+    ("ident", if source.isIdent then toJson source.getId.toString else .null),
+    ("atom", if source.isAtom then toJson source.getAtomVal else .null),
+    ("args", toJson (source.getArgs.map signatureSyntax))]
+
 private def declaration (source : Syntax) : Json := Id.run do
   let kind := source.getKind
   let mapped := #[
@@ -32,7 +39,8 @@ private def declaration (source : Syntax) : Json := Id.run do
     return Json.mkObj [
       ("mode", toJson ("mapped-ps" : String)), ("production", toJson kind.toString),
       ("sourceName", toJson source[2][0].getId.toString),
-      ("keywordRange", sourceRange source[1]), ("signatureRange", sourceRange source[3])]
+      ("keywordRange", sourceRange source[1]), ("nameRange", sourceRange source[2]),
+      ("signatureRange", sourceRange source[3]), ("signatureSyntax", signatureSyntax source[3])]
   if source.isOfKind ``Lean.Parser.Command.declaration then
     let native := source[1]
     let supported := #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,
@@ -42,7 +50,8 @@ private def declaration (source : Syntax) : Json := Id.run do
         ("mode", toJson ("native-compatible" : String)),
         ("production", toJson native.getKind.toString),
         ("sourceName", toJson native[1][0].getId.toString),
-        ("keywordRange", sourceRange native[0]), ("signatureRange", sourceRange native[2])]
+        ("keywordRange", sourceRange native[0]), ("nameRange", sourceRange native[1]),
+        ("signatureRange", sourceRange native[2]), ("signatureSyntax", signatureSyntax native[2])]
   return .null
 
 private def command (source : Syntax) : Json :=
