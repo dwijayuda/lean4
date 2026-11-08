@@ -2584,13 +2584,29 @@
           "sha256": "9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900"
         }
       },
-      "status": "ALL_FOUR_PREREQUISITES_PASS_COMPILER_STAGE1_RUNNING",
+      "status": "STAGE1_BUILD_LINK_RUNTIME_SMOKE_PASS_STAGE2_RUNNING",
       "compilerStage1Job": 128754834515,
       "changes": [
         "native library search path for migrated smoke",
         "retain executable and per-module hashes before smoke",
         "native Lake shared compiler input job with executed driver-invalidation test"
-      ]
+      ],
+      "compilerStage1": {
+        "jobId": 128754834515,
+        "status": "PASS",
+        "moduleCount": 2564,
+        "pinnedSourceCount": 2546,
+        "nativeLakeJobs": 5132,
+        "artifactId": 13622010384,
+        "artifactSha256": "de68e47310d1a58631c98072d4c786eede503f282c18830c3d0f13c2f422b23b",
+        "binaryAndPerModuleHashesRetained": true,
+        "runtimeSmoke": "PASS"
+      },
+      "compilerStage2": {
+        "jobId": 128763580779,
+        "status": "IN_PROGRESS_NOT_QUALIFIED",
+        "required": "Fresh Linux rebuild with exact migrated stage-one executable; all generated C and olean hashes must match"
+      }
     }
   }
 }
