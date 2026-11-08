@@ -91,7 +91,7 @@ private def preparedPsModule (raw filename : String) :
   let visibility := if prefixBytes == 0 then "" else "public section\n"
   return .ok (
     "module\n" ++
-    "import PS0.Policy\n" ++
+    "public import PS0.Policy\n" ++
     headerSource ++
     visibility ++
     body ++ "\n\n#ps0_evidence\n"
