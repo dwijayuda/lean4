@@ -51,9 +51,14 @@ private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun c
     if ctx.options.getBool `ps0.sourceGrammar false then
       -- Consume the route only in this parser context. Native command operands,
       -- quotations and independently owned DSL categories keep native parsing.
-      adaptUncacheableContextFn
+      let parsed := adaptUncacheableContextFn
         (fun c => {c with options := c.options.setBool `ps0.sourceGrammar false})
         (native `psCommand) ctx state
+      if parsed.hasError then parsed else
+        let root := parsed.stxStack.back
+        if root.isOfKind `ps0NativeCommandBridge then
+          parsed.popSyntax.pushSyntax root[0]
+        else parsed
     else native category ctx state
 
 private unsafe def installImpl (options : Options) : IO Unit := do
