@@ -85,4 +85,14 @@ assert 'cycle' in r.lower()
 run(['lake', 'exe', 'ps0', 'build-project', src, 'Leak.Main', WORK / 'private-refused'], ok=False)
 assert not (WORK / 'private-refused').exists()
 print('PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY: PASS', flush=True)
+(WORK / 'project-evidence.json').write_text(json.dumps({
+    'schema': 'ps0-recursive-project-test/1',
+    'source_commit': os.environ.get('PS0_SOURCE_SHA'),
+    'driver_sha256': sha(driver), 'published_sha256': saved,
+    'module_inputs': selected,
+    'checks': ['recursive-public-and-meta-imports', 'mixed-native-source', 'warm-reuse',
+               'transitive-ps-and-native-invalidation', 'publication-no-replacement',
+               'prelude-no-hidden-imports', 'source-collision', 'cycle', 'private-visibility'],
+    'verified_execution': False,
+}, indent=2) + '\n')
 print('PS0_RECURSIVE_PROJECT: PASS', flush=True)

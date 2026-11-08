@@ -68,7 +68,7 @@ def ps0Input (mod : Lake.Module) : FetchM (Job ModuleInput) := do
 
 @[«module_facet»]
 def ps0InputFacet : ModuleFacetDecl :=
-  .mk inputFacet (mkFacetJobConfig ps0Input (buildable := false))
+  .mk Lake.Module.inputFacet (mkFacetJobConfig ps0Input (buildable := false))
 
 def ps0CompilerContext (ctx : BuildContext) : BuildContext :=
   let ws := ctx.toContext.workspace
@@ -78,8 +78,8 @@ def ps0CompilerContext (ctx : BuildContext) : BuildContext :=
 
 @[«module_facet»]
 def ps0ElabFacet : ModuleFacetDecl :=
-  .mk elabArtsFacet (mkFacetJobConfig fun (mod : Lake.Module) => do
+  .mk Lake.Module.leanArtsFacet (mkFacetJobConfig fun (mod : Lake.Module) => do
     if ← (mod.leanFile.withExtension "ps").pathExists then
-      withTheReader BuildContext ps0CompilerContext (Lake.Module.elabArtsFacetConfig.run mod)
+      withTheReader BuildContext ps0CompilerContext (Lake.Module.leanArtsFacetConfig.run mod)
     else
-      Lake.Module.elabArtsFacetConfig.run mod)
+      Lake.Module.leanArtsFacetConfig.run mod)
