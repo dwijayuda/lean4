@@ -30,6 +30,9 @@ for name, decl, reason in [
     ('empty-def', 'def bad(): Nat := 0', None),
     ('untyped-comma', 'def bad(x, y: Nat): Nat := y', None),
     ('default-type', 'def bad (x: Nat := true, y: Nat := 0) : Nat := x', 'Bool'),
+    ('empty-two-unit', 'function two(x: Unit, y: Unit): Nat := 0\ndef bad : Nat := two()', 'PS0V1-CALL-EMPTY'),
+    ('empty-returned-function', 'function higher(): Unit → Nat := fun _ => 0\ndef bad : Unit → Nat := higher()', 'PS0V1-CALL-EMPTY'),
+    ('empty-explicit', 'def bad := @id()', 'PS0V1-CALL-EMPTY'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + decl + '\n')

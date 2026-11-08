@@ -415,31 +415,37 @@ scoped syntax:max (name := pscvEmptyCall) term:max noWs "(" ")" : term
 @[term_elab pscvEmptyCall]
 def elabPscvEmptyCall : TermElab := fun stx expectedType? => do
   let f : Term := ⟨stx[0]⟩
-  let fn ← elabTerm f none
+  let head := Lean.Parser.Term.dropParens f.raw
+  let explicit := head.isOfKind ``Lean.Parser.Term.explicit
+  let atomic := head.isIdent || head.isOfKind ``Lean.Parser.Term.explicitUniv ||
+    head.isOfKind ``Lean.Parser.Term.proj
+  let callee : Term := if atomic then
+    ⟨mkNode ``Lean.Parser.Term.explicit #[mkAtom "@", head]⟩ else ⟨head⟩
+  let mut fn ← elabTerm callee none
   -- Explicit empty-call punctuation is not a no-op on a non-callable value.
   -- Lean elaborates the head and determines whether it has a Pi telescope.
-  let fnType ← whnf (← inferType fn)
+  let mut fnType ← whnf (← inferType fn)
+  unless fnType.isForall do
+    if let some coerced ← coerceToFunction? fn then
+      fn := coerced
+      fnType ← whnf (← inferType fn)
   match fnType with
   | .forallE .. => pure ()
   | _ => throwError "PS0V1-CALL-EMPTY: head is not callable"
-  let applied ← elabAppArgs fn #[] #[] expectedType? false false
+  let applied ← elabAppArgs fn #[] #[] expectedType? explicit false
   let restType ← whnf (← inferType applied)
   match restType with
-  | .forallE binderName domain _ binderInfo =>
-    unless binderInfo.isExplicit do
+  | .forallE _ domain _ binderInfo =>
+    unless explicit || binderInfo.isExplicit do
       throwError "PS0V1-CALL-EMPTY: unresolved implicit argument"
     let domain ← instantiateMVars domain
     if domain.hasMVar || !(← isDefEq domain (mkConst `Unit)) then
       throwError "PS0V1-CALL-EMPTY: unresolved required non-Unit argument"
     let unitValue ← elabTerm (← `(term| ())) (some domain)
-    let completed := mkApp applied unitValue
+    let completed ← elabAppArgs (mkApp applied unitValue) #[] #[] expectedType? explicit false
     let remaining ← whnf (← inferType completed)
-    if binderName != `_unit then
-      match remaining with
-      | .forallE nextName _ _ nextInfo =>
-        if nextInfo.isExplicit && !nextName.isAnonymous then
-          throwError "PS0V1-CALL-EMPTY: more than one required argument"
-      | _ => pure ()
+    if remaining.isForall then
+      throwError "PS0V1-CALL-EMPTY: more than one required argument"
     return completed
   | _ =>
     return applied
