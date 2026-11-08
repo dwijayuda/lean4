@@ -3,22 +3,39 @@
 **Sole normative reference:** [PS0_V1_LANGUAGE_REFERENCE.md](PS0_V1_LANGUAGE_REFERENCE.md), edition R2, 2026-10-16. Uploaded Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
 **Lean:** official 4.35.0, `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
 
-**Status:** source `b842b26fa2dffaee6a73f03fb70ca77683ccaf31`, runner
-`a2ff849cd861a32e52dbfee94f0283c749f37040`, Linux
-[run 42483607627](https://github.com/dwijayuda/pskernel/actions/runs/42483607627):
-recursive/category job `128740672990`, native job `128740672968`, proof-linked
-job `128740672770` and host-contract job `128740672920` have passed.
-Compiler-source stage one failed on native bootstrap symbol identity; stage two and full compiler-source
-replacement are unqualified. Full v1 language closure remains open. The old
-v7 completion estimates remain retired.
+**Status:** exact source `fb86cc425f0688bf3c6e98ff6c7adb8e899fe883`, runner
+`0bca62aefdb00992d891f57c1a608dc0dacd60a3`, Linux
+[run 42488162021](https://github.com/dwijayuda/pskernel/actions/runs/42488162021):
+recursive/category `128754567397`, native `128754567736`, proof-linked
+`128754567672`, host `128754567546` and compiler stage one `128754834515` PASS.
+Stage two `128763580779` is running; C/olean fixed-point qualification remains open.
+Full v1 grammar closure remains open.
 
-The project artifact `13618347877` has ZIP SHA-256
-`1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980`.
-It retains executed recursive/meta import, native link/runtime, warm reuse,
-transitive PS/native invalidation, publication, prelude isolation, local entry,
-source collision, cycle and private-visibility oracles. Mapped category tests
-retain native tuple DSL/quotation ownership and reject order/duplicate/gap
-errors. These are finite executed cases, not all-role adapter closure.
+Stage one compiled **all 2,546 pinned compiler-source Git blobs plus 18 PS0 modules**
+from actual PS program inputs, completed **5,132 native Lake jobs**, audited every
+generated C/olean and linked/ran a migrated compiler including an actual PS source check.
+Its [artifact 13622010384](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13622010384)
+has ZIP SHA-256 `de68e47310d1a58631c98072d4c786eede503f282c18830c3d0f13c2f422b23b`;
+it retains the binary, all per-module input/output hashes and native link map.
+This tests a generated source forest, not an upstream/main source cutover.
+
+Independent Linux [link/ELF audit 42491501152](https://github.com/dwijayuda/pskernel/actions/runs/42491501152),
+runner `54a3d0356609a24ec94090adedcc0a1645134f6b`, job `128764669538` PASS:
+rebuilt frontend, LCNF emitter and PS0 objects/native symbols; zero SDK Lean/Init/Std
+source-archive entries; zero SDK Lean shared-library dependencies. Migrated executable
+SHA-256 `3c7371ca39e9689dd55c1b6fa1fbd3821f10c584a96c81f605e8350380bd339a`.
+The pinned C++ runtime remains reused infrastructure.
+Audit artifact `13621487247` has ZIP SHA-256
+`8c9159eefd30f5204d277c888ea64eb40b5618beacca8a6825515f202637f6b6`.
+
+Project artifact `13619929692` has ZIP SHA-256
+`d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d`.
+Executed fixtures cover recursive/meta imports, native dependencies/runtime, warm reuse,
+source/native/driver invalidation, publication, prelude isolation, local entry,
+source collisions, cycles and private visibility. Mapped category cases retain
+native tuple DSL/quotation ownership and reject order/duplicate/gap errors.
+These finite cases do not qualify all host operand roles. Older failures and
+their exact evidence remain in AI_WORK_STATE.md and v1-coverage.json.
 
 ## Current exact-evidence policy
 

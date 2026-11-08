@@ -2606,6 +2606,32 @@
         "jobId": 128763580779,
         "status": "IN_PROGRESS_NOT_QUALIFIED",
         "required": "Fresh Linux rebuild with exact migrated stage-one executable; all generated C and olean hashes must match"
+      },
+      "nativeLinkAndElfAudit": {
+        "source": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
+        "runner": "54a3d0356609a24ec94090adedcc0a1645134f6b",
+        "run": 42491501152,
+        "job": 128764669538,
+        "status": "PASS_LINK_MAP_AND_ELF",
+        "driverSha256": "3c7371ca39e9689dd55c1b6fa1fbd3821f10c584a96c81f605e8350380bd339a",
+        "sourceArchiveFallback": 0,
+        "sourceSharedFallback": 0,
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2",
+          "libpthread.so.0",
+          "libdl.so.2",
+          "librt.so.1",
+          "libm.so.6"
+        ],
+        "nativeSymbols": [
+          "l_Lean_Elab_runFrontend",
+          "l_Lean_Compiler_LCNF_emitC",
+          "l_PS0_LakeFrontend_compile"
+        ],
+        "runtimeSmoke": "PASS",
+        "artifactId": 13621487247,
+        "artifactSha256": "8c9159eefd30f5204d277c888ea64eb40b5618beacca8a6825515f202637f6b6"
       }
     }
   }
