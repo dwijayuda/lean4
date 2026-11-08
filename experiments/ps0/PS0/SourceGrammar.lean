@@ -64,7 +64,7 @@ private unsafe def installImpl : IO Unit := do
       | throw <| IO.userError s!"PS0-SOURCE-GRAMMAR: missing host category {name}"
     builtinParserCategoriesRef.modify fun cats => cats.insert name cat
     builtinSyntaxNodeKindSetRef.modify fun kinds =>
-      cat.kinds.fold (init := kinds) fun kinds kind _ => kinds.insert kind
+      cat.kinds.foldl (fun kinds kind _ => kinds.insert kind) kinds
   for name in commandNames do
     let descr ← IO.ofExcept <| host.evalConst ParserDescr {} name
     let parser ← (compileParserDescr state.categories (contextualAliases descr)).run
