@@ -85,7 +85,7 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | `(psTerm| do $seq:psDoSeq) => do
         let seq : TSyntax ``Lean.Parser.Term.doSeq := ⟨← lower `psDoSeq seq.raw⟩
         return (← `(do $seq:doSeq)).raw
-    | `(psTerm| $native:term) =>
+    | `(psTerm| $native:term) => do
         rejectHostGap native.raw
         return native.raw
     | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTerm"
