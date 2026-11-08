@@ -97,7 +97,7 @@ private def installCommandOperands : IO Unit := do
       (``Lean.Parser.Command.«attribute», Lean.Parser.Command.«attribute»),
       (``Lean.Parser.Command.«variable», Lean.Parser.Command.«variable»),
       (``Lean.Parser.Command.«omit», Lean.Parser.Command.«omit»)] do
-    addBuiltinLeadingParser `psCommand name (withPosition parser) 20000
+    addBuiltinLeadingParser `psCommand name parser 20000
   addBuiltinTrailingParser `psCommand ``Lean.Parser.Command.«in»
     (commandOperands Lean.Parser.Command.«in») 20000
   addBuiltinLeadingParser `psCommand ``Lean.Parser.Command.«mutual»
@@ -128,7 +128,7 @@ private unsafe def installImpl (options : Options) : IO Unit := do
     let descr ← IO.ofExcept <| host.evalConst ParserDescr options name
     let parser ← (compileParserDescr state.categories (contextualAliases descr)).run
       {env := host, opts := options}
-    addBuiltinLeadingParser `psCommand name parser 20000
+    addBuiltinLeadingParser `psCommand name (withPosition parser) 20000
     copyMacros host name
   installCommandOperands
   -- This bridge is an identity macro; target logic never imports its declaration.
