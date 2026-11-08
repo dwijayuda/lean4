@@ -83,7 +83,7 @@ target nativeC pkg : FilePath := do
     try
       proc {
         cmd := compiler.toString
-        args := #["build", psSource.toString, psModule, stage.toString]
+        args := #["build-executable-module", psSource.toString, psModule, stage.toString]
         env := env
       }
       for entry in ← stage.readDir do

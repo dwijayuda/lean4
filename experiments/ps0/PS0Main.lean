@@ -2,6 +2,7 @@ import Lean
 import Lean.Elab.Frontend
 import Lean.Elab.Import
 import Lean.Compiler.LCNF.EmitC
+import Lean.Compiler.LCNF.PhaseExt
 import PS0.Grammar
 import PS0.Policy
 import PS0.StandardEnv
@@ -184,7 +185,7 @@ private def validModuleName (s : String) : Bool :=
 /-- Native build consumes exactly the same .ps bytes that passed preflight.
 It uses Lean's official runFrontend and LCNF emitC without an intermediate
 textual .lean file. Native codegen does not confer verified-executable status. -/
-private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
+private def buildFile (path moduleName outputDir : String) (requireMain : Bool := false) : IO UInt32 := do
   unless validModuleName moduleName do
     IO.eprintln "PS0V1 native module name must be a simple identifier"
     return 2
@@ -230,6 +231,12 @@ private def buildFile (path moduleName outputDir : String) : IO UInt32 := do
       (trustLevel := 0) (oleanFileName? := some stagedOlean)
     let some env := env?
       | IO.eprintln "PS0-NATIVE-ELAB: Lean frontend or source policy refused emission"
+        return 1
+    if requireMain then
+      let localCode ← Compiler.LCNF.getLocalImpureDecls
+        |>.toIO' {fileName := path, fileMap := default} {env}
+      unless localCode.contains `main do
+        IO.eprintln "PS0-NATIVE-MAIN: executable entry module must compile its own main"
         return 1
     let cText ← Compiler.LCNF.emitC moduleId
       |>.toIO' { fileName := path, fileMap := default } { env }
@@ -439,6 +446,8 @@ def cli (args : List String) : IO UInt32 := do
         buildJs path moduleName outputDir
     | ["build-native", path, moduleName, outputDir] =>
         buildNative path moduleName outputDir
+    | ["build-executable-module", path, moduleName, outputDir] =>
+        buildFile path moduleName outputDir true
     | ["syntax-kinds", path] => syntaxKinds path
     | _ =>
         IO.eprintln "usage: ps0 {environment|module-header FILE.ps|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|build-native FILE.ps ModuleName OUT_DIR|build-js FILE.ps ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"

@@ -72,8 +72,17 @@ assert not refused.exists()
 no_main = WORK / 'NoMain.ps'
 no_main.write_text('const value: Nat := 42\n')
 no_main_out = WORK / 'no-main'
-run(['lake', 'exe', 'ps0', 'build-native', no_main, 'NativeNoMain', no_main_out], ok=False)
+out = run(['lake', 'exe', 'ps0', 'build-native', no_main, 'NativeNoMain', no_main_out], ok=False)
+assert 'PS0-NATIVE-MAIN' in out
 assert not no_main_out.exists()
+
+missing_extern = WORK / 'MissingExtern.ps'
+missing_extern.write_text('@[extern "ps0_missing_external_71ad"] opaque missingExternal : UInt32 → UInt32\n'
+                          'def main : IO UInt32 := pure (missingExternal 0)\n')
+extern_out = WORK / 'missing-extern'
+out = run(['lake', 'exe', 'ps0', 'build-native', missing_extern, 'NativeExtern', extern_out], ok=False)
+assert 'ps0_missing_external_71ad' in out
+assert not extern_out.exists()
 
 invalid_call = WORK / 'InvalidCall.ps'
 invalid_call.write_text('function f(x: Nat, y: Nat): Nat := x + y\nconst value: Nat := f(x := 1, 2)\n')
