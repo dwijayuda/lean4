@@ -7,7 +7,7 @@ import PS0.StandardAdapters
 
 /-! Syntax-only host registrations for a target prelude with no logical PS0 import. -/
 
-open Lean Lean.Parser
+open Lean Lean.Parser Lean.Elab
 namespace PS0.SourceGrammar
 
 register_builtin_option ps0.sourceGrammar : Bool := {
@@ -67,7 +67,8 @@ private unsafe def installImpl : IO Unit := do
       cat.kinds.fold (init := kinds) fun kinds kind _ => kinds.insert kind
   for name in commandNames do
     let descr ← IO.ofExcept <| host.evalConst ParserDescr {} name
-    let parser ← (compileParserDescr state.categories (contextualAliases descr)).run {env := host, opts := {}}
+    let parser ← (compileParserDescr state.categories (contextualAliases descr)).run
+      {env := host, opts := ({} : Options)}
     addBuiltinLeadingParser `psCommand name parser 20000
     copyMacros host name
   -- This bridge is an identity macro; target logic never imports its declaration.
