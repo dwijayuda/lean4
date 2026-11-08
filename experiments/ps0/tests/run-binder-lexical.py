@@ -10,7 +10,9 @@ os.chdir(ROOT)
 work = ROOT / 'build' / ('binder-lexical-' + os.environ['GITHUB_RUN_ID'])
 work.mkdir(parents=True, exist_ok=False)
 fixture = work / 'NativeBraces.lean'
-fixture.write_text('''import PS0.Policy
+fixture.write_text('''module
+import PS0.Policy
+import all PS0.Syntax
 /-! Importing the adapters must preserve adjacent native record braces and strict binders. -/
 structure Inner where
   n : Nat
@@ -28,19 +30,14 @@ meta def strictQuote : Lean.MacroM (Lean.TSyntax `term) :=
 macro "assertLegacyStrict " b:pscvNonExplicitBinder : term => do
   unless b.raw.getArgs.size == 5 && b.raw[1].isIdent && b.raw[3].isOfKind ``Lean.Parser.Term.type do
     Lean.Macro.throwError "PS0_LEGACY_STRICT_BINDER_SHAPE"
+  let native ← PS0.nonExplicitLeanBinders #[b]
+  unless native.size == 1 && native[0]!.raw.isOfKind ``Lean.Parser.Term.strictImplicitBinder do
+    Lean.Macro.throwError "PS0_LEGACY_STRICT_BINDER_LOWER"
+  unless native[0]!.raw[1][0].eqWithInfo b.raw[1] && native[0]!.raw[2][1].eqWithInfo b.raw[3] do
+    Lean.Macro.throwError "PS0_LEGACY_STRICT_BINDER_ORIGIN"
   `(True)
 example : assertLegacyStrict {{α : Type}} := by trivial
 example : assertLegacyStrict ⦃α : Type⦄ := by trivial
-macro "forceLegacyStrict " name:ident b:pscvNonExplicitBinder : command => do
-  let param ← `(pscvBinder| x: Nat)
-  let ty ← `(Nat)
-  let value ← `(3)
-  return Lean.mkNode ``PS0.pscvImplicitFunction #[Lean.mkAtom "function", name.raw,
-    Lean.mkNullNode #[b.raw], Lean.mkAtom "(", Lean.mkNullNode #[param.raw], Lean.mkAtom ")",
-    Lean.mkAtom ":", ty.raw, Lean.mkAtom ":=", value.raw]
-forceLegacyStrict legacyAscii {{α : Type}}
-forceLegacyStrict legacyUnicode ⦃α : Type⦄
-example : @legacyAscii Nat 3 = @legacyUnicode Nat 3 := by rfl
 run_cmd do
   let record ← Lean.Elab.liftMacroM nativeQuote
   let strict ← Lean.Elab.liftMacroM strictQuote
