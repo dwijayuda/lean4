@@ -51,7 +51,9 @@ def single_type_call(operand):
     if start == end:
         return
     assert raw[end:start].isspace(), 'type-call trivia contains comments; no edit is permitted'
-    edit(end, start, '', 'owned binder type single parenthesized-call adjacency')
+    edit(end, start, '(', 'owned binder type call opening delimiter; preserve original argument parentheses')
+    _, argument_end = span(argument)
+    edit(argument_end, argument_end, ')', 'owned binder type call closing delimiter; preserve original argument parentheses')
 
 for command in original_commands(snapshot['commands']):
     decl = command['declaration']
