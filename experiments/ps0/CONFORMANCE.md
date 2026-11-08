@@ -3,7 +3,51 @@
 **Sole normative reference:** [PS0_V1_LANGUAGE_REFERENCE.md](PS0_V1_LANGUAGE_REFERENCE.md), edition R2, 2026-10-16. Uploaded Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
 **Lean:** official 4.35.0, `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
 
-## Current grammar and source-origin increment — 9 November 2026
+## Current origin-artifact recovery checkpoint — 9 November 2026
+
+Source **`863da731fc5957000d4633d13a9711d8d14ae126`**, runner **`710e9d296ddd344e6f559717c4aee0b0568e3e6c`**, Linux [run 42512184970](https://github.com/dwijayuda/pskernel/actions/runs/42512184970): **completed SUCCESS; all four jobs PASS**. Exact jobs: project **128827500492**, native **128827500249**, proof-linked **128827500080**, host **128827500317**. This newer source retains the binder/signature probes below and adds **PS0_PROJECT_SOURCE_ORIGIN_CACHE_RECOVERY: PASS**.
+
+The adapter composes a native `Job.mapM` continuation after successful `leanArts`, verifies/recreates the exact source-origin JSON and records its content in the native Lake trace. Deleting or corrupting an ilean origin sidecar is repaired to identical bytes on the next warm build, while the executable's SHA-256 and mtime remain unchanged. Native compilation/elaboration, artifact reuse, object code and linking remain Lean/Lake responsibilities.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| Native regression | [13629788351](https://github.com/dwijayuda/pskernel/actions/runs/42512184970/artifacts/13629788351) | `403bca4db145582fa92f08f91f5ea8feb9f82efabe021d2983fc2454e409c107` |
+| Project/binder/origin recovery | [13629683793](https://github.com/dwijayuda/pskernel/actions/runs/42512184970/artifacts/13629683793) | `1c60c6b9b98a6cceed3b99e2b3377a6fe36e4799e86f77c460e6c75e9637875d` |
+| Proof-linked regression | [13629454560](https://github.com/dwijayuda/pskernel/actions/runs/42512184970/artifacts/13629454560) | `49c8bddc8739c988a0ab4ffa4fd407fcc50c280da9abd4a8daea8fb7fea877b5` |
+
+Test-first source **89af6cc1d3aecf6cfa81f0a8adf59afb430a0e73**, run **42511729740**, job **128826050067**, failed because warm builds did not restore missing maps. Candidate **6d0c3f5c546e2ca15c2b52187d7ad353ad725781**, run **42511971440**, job **128826860303**, exposed a Bool return escaping the native artifact continuation; the passing source preserves the native artifact result.
+
+The full compiler regression [run 42511359592](https://github.com/dwijayuda/pskernel/actions/runs/42511359592) is **still running stage one, job 128825446119**, at the earlier binder source **9826bdd9dc422fe021de953a570972d7b85df2f4** and independent runner **332ed8372583f2c1a2b08ed3aacd182aa3aa95d2**. It does not qualify this later Lake-wrapper change or complete ProofScript grammar migration.
+
+**The project goal remains ACTIVE.** Next: collect actual compiler command syntax through Lean's native module-linter API, distinguish original/quoted/DSL/generated forms, implement checked source migration and bootstrap/prelude grammar support without hidden logical imports or cycles, then qualify the entire transformed corpus through native Lake builds, migrated source checks and fixed-point evidence. Diagnostic/IDE remapping and full provenance also remain open. No broad v1 family is promoted; no verified-execution certificate is issued.
+
+## Active goal and qualified binder/default checkpoint — 9 November 2026
+
+**Goal remains ACTIVE:** compile the entire pinned Lean4 compiler corpus as `.ps` using ProofScript syntax and grammars. Renaming native sources, or building only native-compatible bodies, is insufficient. The earlier full native-compatible source-forest milestone is historical evidence, not completion of this stronger requirement.
+
+Qualified source **`9826bdd9dc422fe021de953a570972d7b85df2f4`**, runner **`523c9e600ade3fdd6bba4a6bc203383477389837`**, [source PR #10](https://github.com/dwijayuda/lean4/pull/10), [runner PR #222](https://github.com/dwijayuda/pskernel/pull/222). Linux [run 42511067847](https://github.com/dwijayuda/pskernel/actions/runs/42511067847) is **completed SUCCESS; all four jobs PASS**: binder/project **128824034975**, native **128824034894**, proof-linked **128824034872**, host-contract **128824034957**. The official Lean **eb6cafb7290e8bd5f2937522d8d804f58f02bafc** and normative R2 **c50203f8e4cb79b3e6680088a07c1d1e145b8f0b** pins are unchanged.
+
+`PS0/Binders.lean` lowers ordered mixed telescopes to genuine native binder nodes. It preserves native shared, anonymous and inferred binders, PS comma groups, dependency order, type/default operands, strict/implicit/instance/universe parameters and trailing commas. Equivalent native/single-comma parses coalesce by binder syntax structure; different structures fail before typing. The `function` alias retains its typed-group/adjacency/nullary restrictions. Native `binderTactic` is tried before ordinary PS defaults, preserving **autoParam versus optParam**, inspected in the actual Lean environment.
+
+Mapped signatures now include simple def/abbrev/theorem/example, opaque, axiom and instance forms, native optional instance name/priority and omitted example result types. Function/const aliases retain native modifiers and source operands. Equation, contract, termination, constructor/field/local and remaining signature contexts are still required. The binder fixture checks exact identifier source information and type/default ranges; native `bracketedBinder` DSL operands retain native syntax.
+
+Empty calls preserve the callable head before native optional completion, allow native CoeFun, and reject a remaining required telescope after Unit insertion, including returned functions and explicit `@id()`. The deriving adapter now forwards native identifiers to registered handlers instead of reserving class names globally. The executed oracles are **PS0_BINDERS:3:3:2:3:3:3**, **PS0_SIGNATURE_HEADS:3:3:3**, **PS0_BINDER_OPERANDS: PASS**, plus the existing recursive/category/origin/native/proof-linked regressions.
+
+`mixed_signature_heads.ps` deliberately includes **one unused axiom** to exercise that declaration grammar; it is reported, not approved as a proof assumption. These are finite syntax/native-execution tests, not formal source or execution certificates. All broad v1 families remain PENDING and receipts retain `verified_execution: false`.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| Proof-linked regression | [13629691688](https://github.com/dwijayuda/pskernel/actions/runs/42511067847/artifacts/13629691688) | `28f5a6346c3265732e378d6f2a0a4ebca210d8e4d63ad2e4cadfb398c3f08aad` |
+| Native regression | [13629307964](https://github.com/dwijayuda/pskernel/actions/runs/42511067847/artifacts/13629307964) | `79a047113f70d353403457d308c70228b484c908d10bcae5cfc06f5cf756bf54` |
+| Binder/project/source origins | [13629118835](https://github.com/dwijayuda/pskernel/actions/runs/42511067847/artifacts/13629118835) | `37843bed9b6446cf4243287990fced81b3997e7acf4d42fbb85ebb070571e191` |
+
+A separate full native-compatible compiler/fixed-point regression is **PENDING**, [runner PR #223](https://github.com/dwijayuda/pskernel/pull/223), runner **`332ed8372583f2c1a2b08ed3aacd182aa3aa95d2`**, pinned to the qualified binder source. This independent lane does not stand in for canonical ProofScript syntax migration.
+
+Next required work: source-origin sidecar cache recovery/diagnostic integration; a native-parser-driven syntax census and source migration; bootstrap/prelude PS adapters without hidden logical imports or dependency cycles; remaining PS operand/signature roles; then full transformed-corpus Lake build/link, migrated-compiler source checks and fixed-point evidence. No main merge, force push, package publication, pin change or trust relaxation occurred.
+
+Resolved candidate failures and exact identities remain in `v1-coverage.json`. In particular, run **42509432717** job **128819138702** found parser-name ambiguity, run **42509906650** job **128820493639** found legacy deriving token pollution/default-head completion, and run **42510946874** job **128823659857** found the native optional-priority quotation shape. The passing checkpoint retains the intended native diagnostics.
+
+## Previous grammar and source-origin increment — 9 November 2026
 
 Qualified source **`1d76c795edbbaa79fe4d938f073114e5bd76a3ae`**, runner **`cd3d6862abc86d3d4371147cd516f2a1dfd1c9a5`**, draft [source PR #9](https://github.com/dwijayuda/lean4/pull/9) and [runner PR #221](https://github.com/dwijayuda/pskernel/pull/221). Linux [run 42507413045](https://github.com/dwijayuda/pskernel/actions/runs/42507413045) is **completed SUCCESS; all four jobs PASS**: project/grammar/origins **128812930802**, native **128812930996**, proof-linked **128812930942**, host-contract **128812930963**. The official Lean and normative R2 pins below are unchanged. Later documentation-only commits do not change the qualified implementation/test bytes.
 

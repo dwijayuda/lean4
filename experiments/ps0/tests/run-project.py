@@ -54,6 +54,16 @@ before = (sha(exe), exe.stat().st_mtime_ns)
 build()
 assert before == (sha(exe), exe.stat().st_mtime_ns)
 print('PS0_PROJECT_RECURSIVE_META_AND_WARM: PASS', flush=True)
+origin_hashes = {p: sha(p) for p in maps}
+maps[0].unlink()
+build()
+assert all(p.is_file() and sha(p) == h for p, h in origin_hashes.items())
+assert before == (sha(exe), exe.stat().st_mtime_ns)
+maps[0].write_text('{"corrupted": true}')
+build()
+assert all(p.is_file() and sha(p) == h for p, h in origin_hashes.items())
+assert before == (sha(exe), exe.stat().st_mtime_ns)
+print('PS0_PROJECT_SOURCE_ORIGIN_CACHE_RECOVERY: PASS', flush=True)
 
 old_inputs = {x['module']: x['input_hash'] for x in selected}
 with driver.open('ab') as binary:
@@ -124,7 +134,7 @@ print('PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY: PASS', flush=True)
     'checks': ['recursive-public-and-meta-imports', 'mixed-native-source', 'warm-reuse', 'driver-invalidation',
                'transitive-ps-and-native-invalidation', 'publication-no-replacement',
                'prelude-no-hidden-imports', 'local-entry', 'source-collision', 'cycle', 'private-visibility',
-               'source-origin-sidecars'],
+               'source-origin-sidecars', 'source-origin-cache-recovery'],
     'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_RECURSIVE_PROJECT: PASS', flush=True)
