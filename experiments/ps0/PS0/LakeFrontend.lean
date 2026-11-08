@@ -150,7 +150,7 @@ def censusSource (path moduleName output : String) : IO UInt32 := do
   if ← stage.pathExists then IO.FS.removeFile stage
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  let opts := ({} : Options) |>.setString `ps0.sourceCensusPath stage.toString
+  let opts := ({} : Options) |>.set `ps0.sourceCensusPath stage.toString
     |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
   let env ← Elab.runFrontend source opts path moduleName.toName (trustLevel := 0)
   if env.isNone then

@@ -51,18 +51,21 @@ private def command (source : Syntax) : Json :=
     ("declaration", declaration source)]
 
 def collect (commands : Array Syntax) : CommandElabM Unit := do
-  let output := (← getOptions).getString `ps0.sourceCensusPath ""
+  let output := (← getOptions).get `ps0.sourceCensusPath ("" : String)
   unless output.isEmpty do
     let context ← read
     let env ← getEnv
     let locals ← env.getLocalConstantInfos
+    let imports := env.header.imports.map (fun (i : Import) => i.module.toString)
+    let names := locals.map (fun (c : AsyncConstantInfo) => c.toConstantInfo.name.toString)
+      |>.qsort (· < ·)
     let data := Json.mkObj [
       ("schema", toJson ("ps0-native-source-census/1" : String)),
       ("leanCommit", toJson Lean.githash), ("module", toJson (← getMainModule).toString),
       ("file", toJson context.fileName), ("nativeSource", toJson context.fileMap.source),
       ("commands", toJson (commands.map command)),
-      ("imports", toJson (env.header.imports.map (fun i => i.module.toString))),
-      ("environmentDeclNames", toJson (locals.map (fun c => c.toConstantInfo.name.toString))),
+      ("imports", toJson imports),
+      ("environmentDeclNames", toJson names),
       ("grammarMigrationComplete", toJson false)]
     IO.FS.writeFile output data.compress
 
