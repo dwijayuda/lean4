@@ -10,6 +10,7 @@ public meta section
 /-! Pinned declaration operand adapters; Lean keeps modifier, binder and declaration semantics. -/
 
 open Lean Lean.Parser.Command Lean.Parser.Term
+open PS0.Binders
 namespace PS0.StandardAdapters
 
 private def nativeTerm (body : TSyntax `psTerm) : MacroM (TSyntax `term) := do

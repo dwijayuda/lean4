@@ -5,7 +5,8 @@ abbrev agree (x y : Nat) : Prop := x = y
 
 def mixed (x y : Nat) {α : Type} [Inhabited α]
     (z: Nat := add(x, y), w: sized(add(z, 1)) := ⟨0, by omega⟩) : Nat := z + w.val
-example : mixed(1, 2, α := Unit) = 3 := by rfl
+def evaluatedMixed : Nat := mixed(1, 2, α := Unit)
+example : evaluatedMixed = 3 := by rfl
 
 def nativeDefault (x : Nat := add(1, 2)) : Nat := x
 def dependentType (x: sized(add(1, 2)), y: Nat := add(x.val, 1)) : Nat := y
@@ -21,6 +22,16 @@ def ordinaryProof (n: Nat, h: agree(n, n) := (by rfl)) : Nat := n
 example : autoProof(3) = 3 := by rfl
 example : ordinaryProof(3) = 3 := by rfl
 
+run_meta do
+  let auto ← Lean.getConstInfo `autoProof
+  let ordinary ← Lean.getConstInfo `ordinaryProof
+  let .forallE _ _ (.forallE _ autoDomain _ _) _ := auto.type
+    | Lean.throwError "PS0_AUTO_PARAM_SHAPE"
+  let .forallE _ _ (.forallE _ ordinaryDomain _ _) _ := ordinary.type
+    | Lean.throwError "PS0_DEFAULT_PARAM_SHAPE"
+  unless autoDomain.isAppOf ``autoParam && ordinaryDomain.isAppOf ``optParam do
+    Lean.throwError "PS0_DEFAULT_AUTO_DISTINCTION"
+
 theorem mixedProof (x y : Nat) (z: Nat := add(x, y), w: Nat := z) : agree(w, w) := by rfl
 abbrev mixedAbbrev (x y : Nat) (z: Nat := add(x, y), w: Nat := z) : Nat := w
 
@@ -30,5 +41,11 @@ macro "nativeBinder " b:bracketedBinder : term => do
   `(True)
 example : nativeBinder (x : Fin (1 + 2)) := by trivial
 
+def evaluatedDefault : Nat := nativeDefault()
+def evaluatedDependent : Nat := dependentType(⟨1, by omega⟩)
+def evaluatedInterleaved : Nat := interleaved((), α := Unit)
+def evaluatedTick : Nat := tick(α := Unit)()
+def evaluatedAbbrev : Nat := mixedAbbrev(1, 2)
+
 def main : IO Unit := do
-  IO.println s!"PS0_BINDERS:{mixed(1, 2, α := Unit)}:{nativeDefault()}:{dependentType(⟨1, by omega⟩)}:{interleaved((), α := Unit)}:{tick(α := Unit)}:{mixedAbbrev(1, 2)}"
+  IO.println s!"PS0_BINDERS:{evaluatedMixed}:{evaluatedDefault}:{evaluatedDependent}:{evaluatedInterleaved}:{evaluatedTick}:{evaluatedAbbrev}"

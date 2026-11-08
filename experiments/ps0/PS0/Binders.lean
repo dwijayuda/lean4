@@ -9,13 +9,13 @@ public meta section
 
 /-! Owned telescope operands lower to pinned native binder nodes, in source order. -/
 
-open Lean Lean.Parser Lean.Parser.Term
+open Lean Lean.Parser.Term
 namespace PS0.Binders
 
 declare_syntax_cat psBinderParam
 declare_syntax_cat psDeclBinder
 
-def binderDefault := leading_parser " := " >> categoryParser `psTerm 0
+def binderDefault := leading_parser " := " >> Lean.Parser.categoryParser `psTerm 0
 def binderSuffix := Lean.Parser.Term.binderTactic <|> binderDefault
 
 syntax ident ":" psTerm binderSuffix? : psBinderParam
@@ -103,6 +103,7 @@ def lowerTelescope (parts : Array (TSyntax `psDeclBinder)) (alias := false) :
     MacroM (Array (TSyntax ``Lean.Parser.Term.bracketedBinder)) := do
   let mut result : Array Syntax := #[]
   let mut previousExplicit := false
+  let mut seenExplicit := false
   for i in [:parts.size] do
     let part := parts[i]!.raw
     let kind := aliasKind part
@@ -110,7 +111,7 @@ def lowerTelescope (parts : Array (TSyntax `psDeclBinder)) (alias := false) :
       if kind == 0 then
         withRef part do Macro.throwError "PS0V1-BIND-ALIAS: function parameters require named typed comma groups"
       if kind == 3 then
-        unless i + 1 == parts.size && !previousExplicit do
+        unless i + 1 == parts.size && !seenExplicit do
           withRef part do Macro.throwError "PS0V1-BIND-EMPTY: nullary group must be final and have no explicit predecessor"
         let unit ← `(bracketedBinder| (_unit : Unit))
         result := result.push unit.raw
@@ -119,6 +120,7 @@ def lowerTelescope (parts : Array (TSyntax `psDeclBinder)) (alias := false) :
           withRef part do Macro.throwError "PS0V1-BIND-02: adjacent explicit groups must be joined by commas"
         result := result ++ (← lowerOne part)
       previousExplicit := kind == 2
+      seenExplicit := seenExplicit || previousExplicit
     else result := result ++ (← lowerOne part)
   return result.map (⟨·⟩)
 
