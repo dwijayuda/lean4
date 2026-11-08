@@ -4672,6 +4672,131 @@
       "job": 128889408555
     }
   },
+  "ownedTermMacroQualifiedEvidence": {
+    "source": "b6e9671252219e63a4bda7b8df70017b90145ff1",
+    "runner": "167f9607a5507f86dc69197db10598739066e6bb",
+    "run": 42534811062,
+    "status": "PASS",
+    "jobs": [
+      {
+        "id": 128896644297,
+        "name": "proof-linked",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128896644458,
+        "name": "project-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128896644480,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128896644569,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13638484712,
+        "name": "ps0-native-b6e9671252219e63a4bda7b8df70017b90145ff1-42534811062",
+        "digest": "sha256:ea94ecc8fe9bdb8cb6c97c84ba0fad80cb28988ba11fa361ef798896a1e4b03b"
+      },
+      {
+        "id": 13638163978,
+        "name": "ps0-external-b6e9671252219e63a4bda7b8df70017b90145ff1-42534811062",
+        "digest": "sha256:d39aeafcf1c105e256d93fe89a5d03028b3c70eb3caae2139fd89cc1c96b4d16"
+      },
+      {
+        "id": 13638129268,
+        "name": "ps0-project-b6e9671252219e63a4bda7b8df70017b90145ff1-42534811062",
+        "digest": "sha256:f317a1cdadf2f87441285e6a95520c910dc354acaa900a644c59205d71bae75c"
+      }
+    ],
+    "oracle": "PS0_OWNED_MACROS:8:6",
+    "nativeApi": [
+      "Lean.Macro.expandMacro?",
+      "Lean.Macro.withIncRecDepth"
+    ],
+    "coverage": [
+      "nested registered psTerm macros",
+      "native scope hygiene against a same-named local binder",
+      "original macro argument call-gap diagnostic",
+      "expanded argument ordering diagnostic",
+      "native recursion bound",
+      "unknown/unowned expanded node rejection"
+    ],
+    "retainedCompilerHeads": 15,
+    "retainedCompilerModules": 4,
+    "failedCandidates": [
+      {
+        "source": "a30e5ab3dd25f84c30417e274ca99a8963189d52",
+        "runner": "43440711689be20d7bd54a14032d675fe9fb493c",
+        "run": 42533778399,
+        "job": 128893486047,
+        "status": "FAIL",
+        "diagnostic": "PS0V1-HOST-LOWER: unsupported psTerm; fixture antiquotation category and unrelated embedded-call forms also corrected",
+        "scope": "test-first registered psTerm macro dispatch; previous compiler/native-host probes remain intact",
+        "artifacts": [
+          {
+            "id": 13638771142,
+            "name": "ps0-native-a30e5ab3dd25f84c30417e274ca99a8963189d52-42533778399",
+            "digest": "sha256:243dd1fcd461b504659342b15d297219f59fcc201b1d0a68fa1e4c1ff53f9d63"
+          },
+          {
+            "id": 13638661036,
+            "name": "ps0-external-a30e5ab3dd25f84c30417e274ca99a8963189d52-42533778399",
+            "digest": "sha256:6f369209b7f623de64c401fe4d6b68f1c5b24d25ebdd9b1a7cbba2944f7b709b"
+          },
+          {
+            "id": 13637828726,
+            "name": "ps0-project-a30e5ab3dd25f84c30417e274ca99a8963189d52-42533778399",
+            "digest": "sha256:37470938af563bac46b5059c11c0e7ee6a695044509aca21f3dd3ccab8fa7ea5"
+          }
+        ]
+      },
+      {
+        "source": "a729f9c02a4ae1ffb0805bbb00581be77cbf81fb",
+        "runner": "c86c4cb7204b05556dd0d4f3cdc70bd421e7f0a7",
+        "run": 42534400476,
+        "job": 128895393134,
+        "status": "FAIL",
+        "positiveRuntime": "PS0_OWNED_MACROS:8:6",
+        "diagnosticsPassed": [
+          "PS0V1-CALL-GAP original macro argument",
+          "PS0V1-CALL-ORDER expanded argument list"
+        ],
+        "failure": "cycle fixture references its newly reserved syntax kind without native escaped-identifier spelling; unknown-result case not reached",
+        "scope": "native check/build/link/runtime and original argument/hygiene cases pass; full macro suite not yet qualified",
+        "artifacts": [
+          {
+            "id": 13639076191,
+            "name": "ps0-external-a729f9c02a4ae1ffb0805bbb00581be77cbf81fb-42534400476",
+            "digest": "sha256:3465bf593a68d23493d94a6d857f6fdcde8d8827799a72f6b23e288e29bdcf62"
+          },
+          {
+            "id": 13638658208,
+            "name": "ps0-project-a729f9c02a4ae1ffb0805bbb00581be77cbf81fb-42534400476",
+            "digest": "sha256:1d45467f49dabb45c4869d32f5d78c22d836d406f986f275f734b593fa583791"
+          },
+          {
+            "id": 13638518733,
+            "name": "ps0-native-a729f9c02a4ae1ffb0805bbb00581be77cbf81fb-42534400476",
+            "digest": "sha256:0f331e0da71dd31bc4d4d14f1488b657fa9134d880b3dcebf7f818d71594d4c3"
+          }
+        ]
+      }
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
   "psBuiltGrammarHostCandidateEvidence": {
     "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
     "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
@@ -4680,6 +4805,11 @@
     "status": "IN_PROGRESS",
     "scope": "full native-compatible compiler stages plus relocated grammar hosting with metadata freshly produced from all-.ps compiler outputs; SDK dependencies explicit; not whole canonical PS grammar conversion",
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "prerequisites": "ALL_FOUR_PASS",
+    "stageOne": {
+      "status": "IN_PROGRESS",
+      "job": 128891725901
+    }
   }
 }
