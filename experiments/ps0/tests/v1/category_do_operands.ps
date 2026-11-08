@@ -15,7 +15,7 @@ theorem applyOperand : same(3, 3) := by { apply witness(3) }
 theorem refineOperand : same(3, 3) := by { refine witness(3) }
 
 macro "nativeSequence " s:doSeq : term => `(do $s)
-def tupleOnly (p : Nat × Nat) : IO Nat := pure (p.1 + p.2)
+def tupleOnly (p : Nat × Nat) : IO Nat := pure(p.1 + p.2)
 def nativeSequenceValue : IO Nat := nativeSequence { return ← tupleOnly (1, 2) }
 
 def main : IO Unit := do

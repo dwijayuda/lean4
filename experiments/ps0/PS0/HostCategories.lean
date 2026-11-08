@@ -139,7 +139,9 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
       return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
   | `(psDoElem| let $name:ident ← $value:psTerm) => do
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
-      return (← `(doElem| let $name:ident ← $value)).raw
+      let action : TSyntax `doElem := ⟨.node (loweringInfo source)
+        ``Lean.Parser.Term.doExpr #[value.raw]⟩
+      return (← `(doElem| let $name:ident ← $action:doElem)).raw
   | `(psDoElem| return $value:psTerm) => do
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
       return (← `(doElem| return $value)).raw
