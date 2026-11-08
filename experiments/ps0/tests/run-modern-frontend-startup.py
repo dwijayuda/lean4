@@ -26,7 +26,7 @@ public import Lean
 public import PS0.SourceCensus
 public section
 def main (arguments : List String) : IO Unit := do
-  let some output := arguments[0]? | throw (IO.userError "missing output path")
+  let some output := (arguments[0]? : Option String) | throw (IO.userError "missing output path")
   Lean.initSearchPath (← Lean.findSysroot)
   unsafe Lean.enableInitializersExecution
   let options := ({} : Lean.Options).set `ps0.sourceCensusPath output
@@ -34,7 +34,7 @@ def main (arguments : List String) : IO Unit := do
     "module\\nprelude\\npublic import Init\\ndef observedValue : Nat := 7\\n"
     options "StartupInput.ps" `StartupInput (trustLevel := 0)
   unless env.isSome do throw (IO.userError "modern metacompiler rejected source")
-  let data ← IO.FS.readFile output
+  let data ← IO.FS.readFile (System.FilePath.mk output)
   let _ ← IO.ofExcept (Lean.Json.parse data)
   IO.println "PS0_MODERN_FRONTEND_HOOKS: PASS"
 ''')
