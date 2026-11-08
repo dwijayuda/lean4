@@ -1461,5 +1461,46 @@
     },
     "scope": "complete native-compatible source forest and source census baseline; not canonical PS grammar migration",
     "verified_execution": false
+  },
+  "recursiveCompilerPublicOleanDiagnosis": {
+    "status": "PS_COMPILE_AND_NATIVE_C_PARITY_PASS_PUBLIC_OLEAN_BYTES_DIFFER",
+    "source": "02c26c545f444a339698af0ae4b069ffd6f731b3",
+    "runner": "372e37f4822cc962467d2acae4daa3df552d0322",
+    "run": 42527694180,
+    "job": 128874919801,
+    "artifacts": [
+      {
+        "id": 13636082489,
+        "name": "ps0-native-02c26c545f444a339698af0ae4b069ffd6f731b3-42527694180",
+        "sha256": "ed257a7c0f4228dab118b2438e9d9fc81f7d08cbc83b69b4265849c634827636"
+      },
+      {
+        "id": 13636076642,
+        "name": "ps0-project-02c26c545f444a339698af0ae4b069ffd6f731b3-42527694180",
+        "sha256": "d71ebe7d6e11eb694b434a375feacd1642f73955ae95c66cdbff9efa6b71fb56"
+      },
+      {
+        "id": 13635764061,
+        "name": "ps0-external-02c26c545f444a339698af0ae4b069ffd6f731b3-42527694180",
+        "sha256": "732af621b545c5d04b8a4d70003bf0665267d237b14e3eeea394a1d5c27bce06"
+      }
+    ],
+    "module": "Lean.Compiler.LCNF.DeclHash",
+    "nativePublicOleanSha256": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb",
+    "psPublicOleanSha256": "7eb63649b6979438e70cf4d00fcb5a8077d082fad8a5ad05dbff366405cae7d6",
+    "observed": "Four real heads and root foldl value application compile under PS grammar; native-only mode rejects. Generated C hash equality passes. Native readModuleData inspection finds identical ordered constant names (15), types/levels, mutual membership and alpha-equivalent values. Two unsafe recursive implementation values differ in printed hygienic binder-name counters. Extension name/count summaries match; payload equality has not been audited. Strict public-olean byte gate still FAILS.",
+    "changedConstants": [
+      "Lean.Compiler.LCNF.hashCode._unsafe_rec",
+      "Lean.Compiler.LCNF.hashAlt._unsafe_rec"
+    ],
+    "candidate": {
+      "source": "3c47198c4ed8f43a4967deef199ea61fa5e8d592",
+      "runner": "d27b55627f50bbc4184839766994e286ae18af80",
+      "run": 42528176757,
+      "status": "IN_PROGRESS",
+      "change": "Preserve original parenthesized type argument nodes within added PS call delimiters; no counter padding or output normalization."
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }

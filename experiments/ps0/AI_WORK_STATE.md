@@ -1,5 +1,16 @@
 # PS0 — AI Work State (9 November 2026)
 
+## Real mutual compiler-module parity diagnosis — still unqualified
+
+Source **`02c26c545f444a339698af0ae4b069ffd6f731b3`**, runner **`372e37f4822cc962467d2acae4daa3df552d0322`**, [run 42527694180](https://github.com/dwijayuda/pskernel/actions/runs/42527694180), project job **128874919801**: converted **Lean.Compiler.LCNF.DeclHash** now **compiles through PS grammar and produces byte-identical native C**. Native-only compilation rejects the converted source. The strict public-olean gate **FAILS**: native `103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb`, PS `7eb63649b6979438e70cf4d00fcb5a8077d082fad8a5ad05dbff366405cae7d6`.
+
+A Linux diagnostic uses pinned Lean's native `readModuleData`, ConstantInfo/Expr comparison and expression representation. Ordered public constant names (**15**), types, levels, mutual groups and alpha-equivalent values match. Two values (`hashCode._unsafe_rec` and `hashAlt._unsafe_rec`) have different printed generated hygienic binder counters. Extension names/counts match; extension payload equality is **not** established. **This is diagnosis, not a public-olean parity PASS or whole-module source certificate.** The previous ClosedTermCache exact parity remains separately qualified.
+
+[Diagnostic artifact 13636076642](https://github.com/dwijayuda/pskernel/actions/runs/42527694180/artifacts/13636076642), ZIP SHA-256 `d71ebe7d6e11eb694b434a375feacd1642f73955ae95c66cdbff9efa6b71fb56`.
+
+Candidate source **`3c47198c4ed8f43a4967deef199ea61fa5e8d592`**, runner **`d27b55627f50bbc4184839766994e286ae18af80`**, [run 42528176757](https://github.com/dwijayuda/pskernel/actions/runs/42528176757) is **IN PROGRESS**. It preserves original parenthesized type-argument syntax within the added call delimiters. No hygiene-counter padding, output normalization or weakened byte gate is used. Goal remains **ACTIVE / NOT COMPLETE**.
+
+
 ## Recursive compiler-head and root-value migration candidate
 
 [Source PR #14](https://github.com/dwijayuda/lean4/pull/14), source **`a0e24b19e6dc7fc87dba1d06f8cf17938e4f4f31`**; [runner PR #231](https://github.com/dwijayuda/pskernel/pull/231), runner **`4ba47bcd4451874addc1b4df9c49b32d274e7cd1`**; [run 42527051005](https://github.com/dwijayuda/pskernel/actions/runs/42527051005): **IN PROGRESS**.
