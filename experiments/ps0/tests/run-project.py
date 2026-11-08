@@ -117,9 +117,11 @@ print('PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY: PASS', flush=True)
     'source_commit': os.environ.get('PS0_SOURCE_SHA'),
     'driver_sha256': sha(driver), 'published_sha256': saved,
     'module_inputs': selected,
+    'source_origin_sidecars': [str(p.relative_to(ROOT)) for p in maps],
     'checks': ['recursive-public-and-meta-imports', 'mixed-native-source', 'warm-reuse', 'driver-invalidation',
                'transitive-ps-and-native-invalidation', 'publication-no-replacement',
-               'prelude-no-hidden-imports', 'local-entry', 'source-collision', 'cycle', 'private-visibility'],
+               'prelude-no-hidden-imports', 'local-entry', 'source-collision', 'cycle', 'private-visibility',
+               'source-origin-sidecars'],
     'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_RECURSIVE_PROJECT: PASS', flush=True)

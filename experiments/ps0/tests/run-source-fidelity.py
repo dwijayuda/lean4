@@ -13,6 +13,8 @@ cases = {
     'implicit': '/- α /- nested -/ β -/\r\npublic import Init\r\n-- header λ\r\ndef café : Nat := 1\r\n',
     'explicit': 'module\n/- between header tokens λ -/\npublic import Init -- retained\n/-! module docs -/\ndef café : Nat := 1\n',
     'prelude': 'module\nprelude\n/- exact native substrate -/\npublic import Init\ndef café : Nat := 1\n',
+    'empty': '',
+    'eof-comment': 'public import Init -- final header comment λ',
 }
 for name, raw in cases.items():
     path = work / (name + '.ps')
@@ -43,6 +45,9 @@ for name, raw in cases.items():
     assert recovered == original
     if name == 'prelude':
         assert prepared == original and len(result['segments']) == 1
+    checked = subprocess.run(['lake', 'exe', 'ps0', 'check', str(path)], text=True,
+                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=300)
+    assert checked.returncode == 0, (name, checked.stdout)
     (work / (name + '.json')).write_text(json.dumps(result, ensure_ascii=False, indent=2))
     print('PS0_SOURCE_ORIGIN:' + name + ':PASS', flush=True)
 print('PS0_SOURCE_FIDELITY_MAP: PASS', flush=True)
