@@ -64,7 +64,7 @@ private unsafe def installImpl : IO Unit := do
   let hostPath := binDir / ".." / "lib" / "lean"
   searchPathRef.set (hostPath :: targetPath)
   let host ← try
-    importModules #[{module := `PS0.StandardAdapters, isMeta := true}] {}
+    importModules #[{module := `PS0.StandardAdapters, isMeta := true}] {} (loadExts := true)
   finally
     searchPathRef.set targetPath
   let state := parserExtension.getState host
