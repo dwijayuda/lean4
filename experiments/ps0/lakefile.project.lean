@@ -9,6 +9,7 @@ open Lake DSL System Lean
 
 package ps0 where
   version := v!"0.2.0"
+  bootstrap := (get_config? bootstrap).isSome
   buildDir := FilePath.mk ((get_config? projectBuildDir).getD ".lake/project")
 
 def projectSource : FilePath := FilePath.mk ((get_config? sourceRoot).getD "tests/project")

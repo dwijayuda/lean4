@@ -8,7 +8,7 @@
 [run 42483607627](https://github.com/dwijayuda/pskernel/actions/runs/42483607627):
 recursive/category job `128740672990`, native job `128740672968`, proof-linked
 job `128740672770` and host-contract job `128740672920` have passed.
-Compiler-source stage one is in progress; stage two and full compiler-source
+Compiler-source stage one failed on native bootstrap symbol identity; stage two and full compiler-source
 replacement are unqualified. Full v1 language closure remains open. The old
 v7 completion estimates remain retired.
 

@@ -2496,12 +2496,18 @@
       }
     ],
     "compilerMigration": {
-      "status": "IN_PROGRESS_NOT_QUALIFIED",
+      "status": "FAIL_NATIVE_BOOTSTRAP_SYMBOL_IDENTITY",
       "jobId": 128741050411,
       "expectedPinnedSourceFiles": 2546,
       "manifest": "compiler-source-inventory.json",
       "test": "tests/run-compiler-ps.py",
-      "required": "all source Git blobs, actual .ps input selection, generated olean/C artifacts, native migrated executable, and second clean-stage output comparison"
+      "required": "all source Git blobs, actual .ps input selection, generated olean/C artifacts, native migrated executable, and second clean-stage output comparison",
+      "observedModules": 2564,
+      "observedByteIdentical": 2541,
+      "diagnostic": "Init/Coe.ps: native extern String.hash sought lp_ps0_String_hash under ordinary ps0 package identity",
+      "artifactId": 13618597372,
+      "artifactSha256": "c52865ecad9ffe006e8c34c06128dc2e0672cb6b10f67594c99bd2cfcda14c57",
+      "nextCandidate": "Native Lake bootstrap mode with pinned SDK include headers; no source/kernel/compiler semantic relaxation"
     }
   }
 }

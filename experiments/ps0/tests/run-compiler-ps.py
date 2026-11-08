@@ -116,7 +116,9 @@ if baseline:
         k: v['ps_sha256'] for k, v in baseline['inputs'].items()}, 'stage inputs changed'
 
 build = work / 'artifacts'
+shutil.copytree(sysroot / 'include', build / 'include')
 run(['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
+     '-Kbootstrap=true',
      '-Kroots=Init,Std,Lean,Lake,LeanChecker,LeanExport,LeanIR,Leanc,LakeMain,PS0,PS0Main', '-KrootModule=PS0Main',
      '-Kdriver=' + str(driver), '-KmoduleNames=' + ','.join(sorted(inputs)),
      '-KlinkMap=' + str(evidence / 'compiler-link.map'),
@@ -140,6 +142,8 @@ result = {
     'schema': 'ps0-compiler-source-migration/1', 'source_commit': os.environ['PS0_SOURCE_SHA'],
     'lean_commit': LEAN, 'module_count': len(inputs), 'inputs': inputs, 'outputs': outputs,
     'driver_sha256': digest(migrated), 'verified_execution': False,
+    'bootstrap_package_identity': None,
+    'lean_header_sha256': digest(build / 'include/lean/lean.h'),
     'scope': 'All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers',
 }
 if baseline:
