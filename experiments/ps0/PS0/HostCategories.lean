@@ -49,7 +49,8 @@ syntax (name := ps0HostDoBind) (priority := high)
   "let " ident "←" psTerm : psDoElem
 syntax (name := ps0HostDoReassign) (priority := high) ident ":=" psTerm : psDoElem
 syntax (name := ps0HostDoReturn) (priority := high) "return " psTerm : psDoElem
-syntax (name := ps0HostDoExpr) (priority := high) psTerm : psDoElem
+syntax (name := ps0HostDoExpr) (priority := high)
+  Lean.Parser.Term.notFollowedByRedefinedTermToken psTerm : psDoElem
 syntax (name := ps0HostDoItem) ppLine psDoElem ";"? : psDoItem
 syntax (name := ps0HostDoSeq) (priority := high) "{" psDoItem+ ppLine "}" : psDoSeq
 syntax (name := ps0HostDo) (priority := high) "do " psDoSeq : psTerm
@@ -159,7 +160,7 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
       return (← `(doElem| $value:term)).raw
   | `(psDoElem| $native:doElem) => return native.raw
-  | _ => Macro.throwError s!"PS0V1-HOST-LOWER: unsupported psDoElem {source.getKind}: {source}"
+  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
 
 partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   match source with

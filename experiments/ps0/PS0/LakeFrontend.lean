@@ -14,12 +14,14 @@ namespace PS0.LakeFrontend
 
 def parseHeader (raw filename : String) :
     IO (Except String (Elab.HeaderSyntax × Parser.ModuleParserState × Nat)) := do
-  let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext raw filename)
+  let (header, state, messages) ← Parser.parseHeader
+    (Parser.mkInputContext raw filename (normalizeLineEndings := false))
   if Elab.HeaderSyntax.isModule header then
     if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid import header"
     return .ok (header, state, 0)
   let modulePrefix := "module\n"
-  let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext (modulePrefix ++ raw) filename)
+  let (header, state, messages) ← Parser.parseHeader
+    (Parser.mkInputContext (modulePrefix ++ raw) filename (normalizeLineEndings := false))
   if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid implicit module header"
   return .ok (header, state, modulePrefix.utf8ByteSize)
 
@@ -68,15 +70,17 @@ def prepareWithOrigins (raw filename : String) : IO (Except String PreparedSourc
   if isPrelude header then return .ok (appendOriginal {} raw 0)
   if state.pos.byteIdx < prefixBytes then return .error "PS0-MODULE-HEADER: invalid source offset"
   let bodyStart := state.pos.byteIdx - prefixBytes
-  let leading := String.fromUTF8! (raw.toByteArray.extract 0 bodyStart)
-  let body := String.fromUTF8! (raw.toByteArray.extract bodyStart raw.utf8ByteSize)
+  let some leading := (raw.toByteArray.extract 0 bodyStart).utf8Decode?
+    | return .error "PS0-MODULE-HEADER: invalid UTF-8 boundary"
+  let some body := (raw.toByteArray.extract bodyStart raw.utf8ByteSize).utf8Decode?
+    | return .error "PS0-MODULE-HEADER: invalid UTF-8 boundary"
   let p := if prefixBytes == 0 then ({} : PreparedSource) else
     appendGenerated {} "module\n" "implicit modern module"
-  let p := appendOriginal p leading 0
+  let p := appendOriginal p (String.ofList leading.toList) 0
   let p := appendGenerated p "\npublic import PS0.Policy\n" "policy import"
   let p := if prefixBytes == 0 then p else appendGenerated p "public section\n" "implicit public declarations"
   let p := appendGenerated p "open scoped PS0.StandardAdapters\n" "PS operand adapters"
-  let p := appendOriginal p body bodyStart
+  let p := appendOriginal p (String.ofList body.toList) bodyStart
   return .ok (appendGenerated p "\n#ps0_evidence\n" "source policy evidence")
 
 def prepare (raw filename : String) : IO (Except String String) := do
@@ -86,7 +90,29 @@ def sourceMapJson (p : PreparedSource) (raw path : String) : Json :=
   Json.mkObj [
     ("schema", toJson ("ps0-source-map/1" : String)), ("file", toJson path),
     ("originalByteSize", toJson raw.utf8ByteSize), ("source", toJson p.source),
+    ("nativeSource", toJson p.source.crlfToLf),
     ("segments", toJson p.segments)]
+
+/-- Translate native normalized parser offsets using Lean's own logical position maps. -/
+def originalPos? (p : PreparedSource) (pos : String.Pos.Raw) : Option Nat := do
+  let nativeMap := FileMap.ofString p.source.crlfToLf
+  if pos > nativeMap.source.rawEndPos then none else do
+    let preparedPos := (FileMap.ofString p.source).ofPosition (nativeMap.toPosition pos)
+    p.segments.findSome? fun s => do
+      let start ← (s.getObjValAs? Nat "preparedStart").toOption
+      let stop ← (s.getObjValAs? Nat "preparedEnd").toOption
+      let original ← (s.getObjValAs? Nat "originalStart").toOption
+      if start ≤ preparedPos.byteIdx && preparedPos.byteIdx < stop then
+        some (original + preparedPos.byteIdx - start)
+      else none
+
+def printSourceOrigin (path : String) (pos : Nat) : IO UInt32 := do
+  let raw ← IO.FS.readFile path
+  let p ← match ← prepareWithOrigins raw path with
+    | .ok p => pure p
+    | .error e => IO.eprintln e; return 1
+  IO.println (toJson (originalPos? p ⟨pos⟩)).compress
+  return 0
 
 def printSourceMap (path : String) : IO UInt32 := do
   let raw ← IO.FS.readFile path
@@ -163,7 +189,8 @@ def compile (args : List String) : IO UInt32 := do
 /-- Preserve native bodies while making a legacy header explicit in PS0's modern module model. -/
 def convertNative (source target : FilePath) : IO Unit := do
   let raw ← IO.FS.readFile source
-  let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext raw source.toString)
+  let (header, state, messages) ← Parser.parseHeader
+    (Parser.mkInputContext raw source.toString (normalizeLineEndings := false))
   if messages.hasErrors then throw <| IO.userError s!"PS0-CONVERT-HEADER: {source}"
   let converted ← if isPrelude header then pure raw else do
     let some body := (raw.toByteArray.extract state.pos.byteIdx raw.utf8ByteSize).utf8Decode?

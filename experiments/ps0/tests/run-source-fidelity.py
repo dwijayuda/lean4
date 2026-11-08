@@ -23,7 +23,6 @@ for name, raw in cases.items():
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=300)
     assert r.returncode == 0, (name, r.stdout, r.stderr)
     result = json.loads(r.stdout)
-    print(name, result['originalByteSize'], result['segments'], flush=True)
     assert result['schema'] == 'ps0-source-map/1'
     prepared = result['source'].encode()
     original = raw.encode()
@@ -44,6 +43,17 @@ for name, raw in cases.items():
             assert 'originalStart' not in span and span['reason']
     assert cursor == len(prepared) and origin == len(original)
     assert recovered == original
+    native = result['nativeSource'].encode()
+    assert native == prepared.replace(b'\r\n', b'\n')
+    for token in [b'caf\xc3\xa9', b'PS0.Policy']:
+        offset = native.find(token)
+        if offset < 0:
+            continue
+        query = subprocess.run(['lake', 'exe', 'ps0', 'source-origin', str(path), str(offset)],
+                               text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=300)
+        assert query.returncode == 0, query.stderr
+        expected = original.find(token)
+        assert json.loads(query.stdout) == (expected if expected >= 0 else None)
     if name == 'prelude':
         assert prepared == original and len(result['segments']) == 1
     checked = subprocess.run(['lake', 'exe', 'ps0', 'check', str(path)], text=True,
