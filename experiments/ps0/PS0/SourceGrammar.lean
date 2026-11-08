@@ -88,7 +88,7 @@ private def installCommandOperands : IO Unit := do
   let leading := category.tables.leadingParsers.map fun (parser, priority) =>
     (if isBridge parser then unownedCommand parser else parser, priority)
   builtinParserCategoriesRef.set <| categories.insert `psCommand
-    {category with tables := {category.tables with leadingParsers := leading}}
+    {category with tables := {category.tables with leadingParsers := leading} }
   -- These are prefix commands for native `in`; the native trailing parser keeps
   -- withOpen/withSetOption behavior while its command operand uses PS grammar.
   for (name, parser) in #[
