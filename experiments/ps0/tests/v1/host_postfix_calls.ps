@@ -42,5 +42,5 @@ example : psHostArity 1 pairSum((20, 22),) := by trivial
 example : psHostArity 1 addNat(20,) := by trivial
 
 -- Native quotations remain independently owned syntax data.
-def nativeQuotation : Lean.MacroM (Lean.TSyntax `term) :=
+def nativeQuotation : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| addNat 20 22)

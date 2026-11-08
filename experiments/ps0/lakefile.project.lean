@@ -16,9 +16,8 @@ def projectRoots : Array Name := (((get_config? roots).getD "Demo,NativeSupport"
 def projectMain : Name := ((get_config? rootModule).getD "Demo.Main").toName
 def projectDriver : FilePath := FilePath.mk ((get_config? driver).getD ".lake/build/bin/ps0")
 
-initialize projectModules : Array Name ← do
-  let some path := (get_config? moduleManifest) | return #[]
-  return ((← IO.FS.readFile path).splitOn "\n").toArray.filterMap fun line =>
+def projectModules : Array Name :=
+  (((get_config? moduleNames).getD "").splitOn ",").toArray.filterMap fun line =>
     if line.isEmpty then none else some line.toName
 
 lean_lib PS0 where

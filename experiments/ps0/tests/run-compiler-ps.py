@@ -64,6 +64,25 @@ for p in (lake_src / 'Lake').rglob('*.lean'):
     originals['Lake/' + str(p.relative_to(lake_src / 'Lake')).replace(os.sep, '/')] = p
 originals['Lake.lean'] = lake_src / 'Lake.lean'
 
+run([driver, 'convert-native-tree', sdk / 'LeanExport', source / 'LeanExport'], 'convert-LeanExport')
+for p in (sdk / 'LeanExport').rglob('*.lean'):
+    originals['LeanExport/' + str(p.relative_to(sdk / 'LeanExport')).replace(os.sep, '/')] = p
+for name in ['LeanChecker', 'LeanExport', 'LeanIR', 'Leanc', 'LakeMain']:
+    original = (lake_src if name == 'LakeMain' else sdk) / (name + '.lean')
+    run([driver, 'convert-native', original, source / (name + '.ps')], 'convert-root-' + name)
+    originals[name + '.lean'] = original
+
+manifest = json.loads((ROOT / 'compiler-source-inventory.json').read_text())
+assert manifest['leanCommit'] == LEAN
+assert len(originals) == manifest['count']
+for entry in manifest['entries']:
+    relative = entry['module'].replace('.', '/') + '.lean'
+    original = sdk / entry['sdkPath']
+    assert originals[relative] == original, entry
+    data = original.read_bytes()
+    blob = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+    assert blob == entry['blob'], ('SDK source differs from exact Git blob', entry, blob)
+
 run([driver, 'convert-native-tree', ROOT / 'PS0', source / 'PS0'], 'convert-PS0')
 for p in (ROOT / 'PS0').rglob('*.lean'):
     originals['PS0/' + str(p.relative_to(ROOT / 'PS0')).replace(os.sep, '/')] = p
@@ -98,8 +117,8 @@ if baseline:
 
 build = work / 'artifacts'
 run(['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
-     '-Kroots=Init,Std,Lean,Lake,PS0,PS0Main', '-KrootModule=PS0Main',
-     '-Kdriver=' + str(driver), '-KmoduleManifest=' + str(modules),
+     '-Kroots=Init,Std,Lean,Lake,LeanChecker,LeanExport,LeanIR,Leanc,LakeMain,PS0,PS0Main', '-KrootModule=PS0Main',
+     '-Kdriver=' + str(driver), '-KmoduleNames=' + ','.join(sorted(inputs)),
      '-KprojectBuildDir=' + str(build), 'build', 'PS0Project:static', 'ps0project'], 'compiler-build')
 
 outputs = {}
@@ -120,7 +139,7 @@ result = {
     'schema': 'ps0-compiler-source-migration/1', 'source_commit': os.environ['PS0_SOURCE_SHA'],
     'lean_commit': LEAN, 'module_count': len(inputs), 'inputs': inputs, 'outputs': outputs,
     'driver_sha256': digest(migrated), 'verified_execution': False,
-    'scope': 'SDK Init/Std/Lean/Lake and repository PS0 source modules compiled from .ps with native headers',
+    'scope': 'All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers',
 }
 if baseline:
     changed_c = [m for m in outputs if outputs[m]['c_sha256'] != baseline['outputs'][m]['c_sha256']]
