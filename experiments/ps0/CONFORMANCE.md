@@ -1,5 +1,18 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## Native strict-binder lexical fidelity — Linux PASS
+
+Exact source **dce75d401549cad585c5a4481f52435d34a7e373**, runner **88e102880840f20c1f4f56b274ab5e0aa49ad443**, [run 42529792319](https://github.com/dwijayuda/pskernel/actions/runs/42529792319): **all four jobs PASS** — project **128881238870**, native **128881239010**, proof-linked **128881238753**, host **128881238995**. Native host imports now retain adjacent nested-record closing braces, ASCII/Unicode strict binders and native quotations. Legacy strict binder parsing reuses pinned **strictImplicitLeftBracket / strictImplicitRightBracket**, so no global double-brace tokens are added. **PS0_BINDER_LEXICAL_FIDELITY: PASS**; the two actual compiler module probes retain strict C/public-olean parity.
+
+The test-first source **cce3ee56a28d4eeb178880f280d1d10f15b2e64a**, runner **9a29e03ff72dcf480987b24c36bb5b81cd72e543**, [run 42529389473](https://github.com/dwijayuda/pskernel/actions/runs/42529389473), project **128879992043**, reports native record/quotation errors at global tokens **`}}`** and **`{{`**. The test also corrects its native Type syntax-kind assertion to the pinned **Lean.Parser.Term.type**.
+
+[Project artifact 13637016958](https://github.com/dwijayuda/pskernel/actions/runs/42529792319/artifacts/13637016958), ZIP SHA-256 **a98bc40efc7225f40cf0fa83040703aeaa8daab42ca40b2ad572551b04481907**. Native artifact **13636129219** SHA-256 **e116c4293e0a4d8829877402a49eeb00bac6c73560990ec5051783072b593801**; proof-linked artifact **13636991243** SHA-256 **525f3026398741dcd61e3436ef3095a30e5e8e1ff62ba3963b91b72b36b92988**.
+
+The full earlier native-compatible compiler fixed point is independently inspected in [run 42529625243](https://github.com/dwijayuda/pskernel/actions/runs/42529625243), runner **e0dfe5129dcb0fd1c591cca8f687a7dc05ba5f42**, job **128880736870 PASS**. Stage-two migrated executable SHA-256 **f859aba1628208d75527c51d5012b7135cb3d01a321716633d1905f5ee450e7a**; changed C/public-olean arrays are both empty. This remains a native-compatible source forest, not full canonical grammar migration.
+
+Next finite mixed-instance/value source probe: [source PR15](https://github.com/dwijayuda/lean4/pull/15), [runner PR232](https://github.com/dwijayuda/pskernel/pull/232), exact pinned **Lean.Compiler.LCNF.ScopeM** blob **5bc78059af7e9f16d980688c88c3eaeecae3ab1a**. Its seven source heads include instance telescopes and two named values. Qualification is **PENDING**; no ScopeM parity claim yet. The direct legacy-lowering test is also being extended. Goal **ACTIVE / NOT COMPLETE**.
+
+
 ## Full native-compatible compiler fixed point — Linux PASS
 
 Exact source **28904e5a7ccb19a15e311ecc654541dc0ee639ec**, runner **484868307c6611fedf1a464e2e102c02b8ad5855**, [run 42522976977](https://github.com/dwijayuda/pskernel/actions/runs/42522976977): **all six jobs PASS**, including compiler stage one **128861032581** and stage two **128870983007**. Each stage builds **2,567 modules / 5,138 native Lake jobs** through native C/object/static-library/executable compilation and linking. The stage-one migrated executable rebuilds the same .ps source forest; **zero generated C differences and zero public olean differences** across all modules. Migrated executable environment/source-check smoke and all-module source-census/origin joins pass in both stages.

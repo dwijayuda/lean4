@@ -31,6 +31,11 @@ macro "assertLegacyStrict " b:pscvNonExplicitBinder : term => do
   `(True)
 example : assertLegacyStrict {{α : Type}} := by trivial
 example : assertLegacyStrict ⦃α : Type⦄ := by trivial
+macro "forceLegacyStrict " name:ident b:pscvNonExplicitBinder : command =>
+  `(pscvImplicitFunction| function $name:ident $b:pscvNonExplicitBinder (x: Nat): Nat := x)
+forceLegacyStrict legacyAscii {{α : Type}}
+forceLegacyStrict legacyUnicode ⦃α : Type⦄
+example : @legacyAscii Nat 3 = @legacyUnicode Nat 3 := by rfl
 run_cmd do
   let record ← Lean.Elab.liftMacroM nativeQuote
   let strict ← Lean.Elab.liftMacroM strictQuote

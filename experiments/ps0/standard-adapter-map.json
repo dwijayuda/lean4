@@ -1721,6 +1721,90 @@
       }
     ],
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "migrationSummary": {
+      "schema": "ps0-compiler-source-migration/1",
+      "source_commit": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+      "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "module_count": 2567,
+      "driver_sha256": "f859aba1628208d75527c51d5012b7135cb3d01a321716633d1905f5ee450e7a",
+      "verified_execution": false,
+      "bootstrap_package_identity": null,
+      "stage_lean_options": {
+        "interpreter.prefer_native": false
+      },
+      "runtime_smoke": "PASS",
+      "lean_header_sha256": "eb951e1171d39b828e7ad60aed0b90759598b678bfe58cf85c65a1559c021bf9",
+      "scope": "All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers",
+      "fixed_point": {
+        "changed_c": [],
+        "changed_olean": []
+      }
+    },
+    "inspection": {
+      "runner": "e0dfe5129dcb0fd1c591cca8f687a7dc05ba5f42",
+      "run": 42529625243,
+      "job": 128880736870
+    }
+  },
+  "nativeBinderLexicalQualifiedEvidence": {
+    "sourceBranch": "feat/ps0-mutual-compiler-heads-20261109",
+    "runnerBranch": "ci/ps0-mutual-compiler-heads-20261109",
+    "source": "dce75d401549cad585c5a4481f52435d34a7e373",
+    "runner": "88e102880840f20c1f4f56b274ab5e0aa49ad443",
+    "run": 42529792319,
+    "status": "PASS",
+    "jobs": [
+      {
+        "id": 128881238753,
+        "name": "proof-linked",
+        "conclusion": "success"
+      },
+      {
+        "id": 128881238870,
+        "name": "project-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 128881238995,
+        "name": "host-contract",
+        "conclusion": "success"
+      },
+      {
+        "id": 128881239010,
+        "name": "native-build",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13637016958,
+        "name": "ps0-project-dce75d401549cad585c5a4481f52435d34a7e373-42529792319",
+        "digest": "sha256:a98bc40efc7225f40cf0fa83040703aeaa8daab42ca40b2ad572551b04481907"
+      },
+      {
+        "id": 13636991243,
+        "name": "ps0-external-dce75d401549cad585c5a4481f52435d34a7e373-42529792319",
+        "digest": "sha256:525f3026398741dcd61e3436ef3095a30e5e8e1ff62ba3963b91b72b36b92988"
+      },
+      {
+        "id": 13636129219,
+        "name": "ps0-native-dce75d401549cad585c5a4481f52435d34a7e373-42529792319",
+        "digest": "sha256:e116c4293e0a4d8829877402a49eeb00bac6c73560990ec5051783072b593801"
+      }
+    ],
+    "red": {
+      "source": "cce3ee56a28d4eeb178880f280d1d10f15b2e64a",
+      "runner": "9a29e03ff72dcf480987b24c36bb5b81cd72e543",
+      "run": 42529389473,
+      "projectJob": 128879992043,
+      "diagnostics": [
+        "unexpected token '}}'; expected '}'",
+        "unexpected token '{{'"
+      ]
+    },
+    "scope": "native host nested records, ASCII/Unicode strict binder parsing and native quotations; legacy binders reuse pinned strictImplicitLeftBracket/right without global double-brace tokens",
+    "verified_execution": false,
+    "grammarMigrationComplete": false
   }
 }

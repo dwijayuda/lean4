@@ -64,13 +64,15 @@ for command in original_commands(snapshot['commands']):
     signature = decl['signatureSyntax']
     assert signature['kind'] == 'Lean.Parser.Command.optDeclSig'
     binders = signature['args'][0]['args']
-    if not binders:
-        continue
-    # This first planner supports exactly one typed identifier in each explicit
-    # group. Shared/inferred/default/implicit forms await their own source rules.
+    # Preserve non-explicit groups in place. Only consecutive single-identifier
+    # explicit groups are merged; no binder is reordered or inferred here.
     for binder in binders:
-        assert binder['kind'] == 'Lean.Parser.Term.explicitBinder', decl['sourceName']
         parts = binder['args']
+        if binder['kind'] == 'Lean.Parser.Term.instBinder':
+            assert len(parts) == 4
+            single_type_call(parts[2])
+            continue
+        assert binder['kind'] == 'Lean.Parser.Term.explicitBinder', decl['sourceName']
         assert len(parts) == 5 and len(parts[1]['args']) == 1
         assert parts[1]['args'][0]['ident'] is not None
         assert len(parts[2]['args']) == 2 and not parts[3]['args']
@@ -79,12 +81,15 @@ for command in original_commands(snapshot['commands']):
         assert raw[start:start + 1] == b'(' and raw[end - 1:end] == b')'
     kw = decl['keywordRange']
     assert raw[kw['start']:kw['end']] == b'def'
-    edit(kw['start'], kw['end'], 'function', 'owned PS declaration keyword')
-    name_end = decl['nameRange']['end']
-    first, _ = span(binders[0])
-    assert raw[name_end:first].isspace(), 'head trivia must be whitespace; comments are never discarded'
-    edit(name_end, first, '', 'PS head adjacency')
+    edit(kw['start'], kw['end'], 'function' if binders else 'const', 'owned PS declaration keyword')
+    if binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
+        name_end = decl['nameRange']['end']
+        first, _ = span(binders[0])
+        assert raw[name_end:first].isspace(), 'head trivia must be whitespace; comments are never discarded'
+        edit(name_end, first, '', 'PS head adjacency')
     for previous, following in zip(binders, binders[1:]):
+        if previous['kind'] != 'Lean.Parser.Term.explicitBinder' or following['kind'] != 'Lean.Parser.Term.explicitBinder':
+            continue
         _, end = span(previous)
         start, _ = span(following)
         assert raw[end:start].isspace(), 'group trivia must be whitespace; comments are never discarded'
@@ -120,7 +125,7 @@ args.output.write_bytes(converted)
 args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
-    'scope': 'typed top-level/explicit owned nested declaration heads, single type-call adjacency, and owned root value applications with parenthesized arguments only; argument bodies, quotations and other native commands preserved byte for byte',
+    'scope': 'typed explicit/instance telescopes and named values in top-level/explicit owned nested declaration heads, single type-call adjacency, and owned root value applications with parenthesized arguments only; argument bodies, quotations and other native commands preserved byte for byte',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_COMPILER_HEAD_MIGRATION: planned ' + str(len(declarations)), flush=True)
