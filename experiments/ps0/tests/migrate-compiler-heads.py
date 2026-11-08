@@ -64,7 +64,7 @@ for command in original_commands(snapshot['commands']):
     signature = decl['signatureSyntax']
     assert signature['kind'] == 'Lean.Parser.Command.optDeclSig'
     binders = signature['args'][0]['args']
-    # Preserve non-explicit groups in place. Only consecutive single-identifier
+    # Preserve instance groups in place. Only consecutive single-identifier
     # explicit groups are merged; no binder is reordered or inferred here.
     for binder in binders:
         parts = binder['args']

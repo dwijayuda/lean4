@@ -32,7 +32,7 @@ macro "assertLegacyStrict " b:pscvNonExplicitBinder : term => do
 example : assertLegacyStrict {{α : Type}} := by trivial
 example : assertLegacyStrict ⦃α : Type⦄ := by trivial
 macro "forceLegacyStrict " name:ident b:pscvNonExplicitBinder : command =>
-  `(pscvImplicitFunction| function $name:ident $b:pscvNonExplicitBinder (x: Nat): Nat := x)
+  `(PS0.pscvImplicitFunction| function $name:ident $b:pscvNonExplicitBinder (x: Nat): Nat := x)
 forceLegacyStrict legacyAscii {{α : Type}}
 forceLegacyStrict legacyUnicode ⦃α : Type⦄
 example : @legacyAscii Nat 3 = @legacyUnicode Nat 3 := by rfl
