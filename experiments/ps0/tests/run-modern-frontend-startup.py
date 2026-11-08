@@ -25,8 +25,7 @@ prelude
 public import Lean
 public import PS0.SourceCensus
 public section
-def main : IO Unit := do
-  let arguments ← IO.getArgs
+def main (arguments : List String) : IO Unit := do
   let some output := arguments[0]? | throw (IO.userError "missing output path")
   Lean.initSearchPath (← Lean.findSysroot)
   unsafe Lean.enableInitializersExecution
