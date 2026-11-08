@@ -62,8 +62,8 @@ private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun c
     else native category ctx state
 
 private def commandOperands (parser : Parser) : Parser :=
-  { parser with fn := adaptUncacheableContextFn
-      (fun ctx => {ctx with options := ctx.options.setBool `ps0.sourceGrammar true}) parser.fn }
+  withFn (adaptUncacheableContextFn
+    (fun ctx => {ctx with options := ctx.options.setBool `ps0.sourceGrammar true})) parser
 
 private def installCommandOperands : IO Unit := do
   -- These are prefix commands for native `in`; the native trailing parser keeps
