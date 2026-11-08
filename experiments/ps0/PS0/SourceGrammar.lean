@@ -61,6 +61,48 @@ private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun c
         else parsed
     else native category ctx state
 
+private def commandOperands (parser : Parser) : Parser :=
+  withFn (adaptUncacheableContextFn
+    (fun ctx => {ctx with options := ctx.options.setBool `ps0.sourceGrammar true})) parser
+
+private def ownedCommandWords : Array String :=
+  #["set_option", "open", "attribute", "variable", "omit", "mutual"]
+
+private def unownedCommand (parser : Parser) : Parser :=
+  withFn (fun parse ctx state =>
+    let (state, token) := peekToken ctx state
+    match token with
+    | .ok (.atom _ word) =>
+        if ownedCommandWords.contains word then
+          state.mkError "PS0-SOURCE-COMMAND: scoped/mutual command uses its owned parser"
+        else parse ctx state
+    | _ => parse ctx state) parser
+
+private def installCommandOperands : IO Unit := do
+  let categories ← builtinParserCategoriesRef.get
+  let some category := categories.find? `psCommand
+    | throw <| IO.userError "PS0-SOURCE-COMMAND: missing psCommand category"
+  let isBridge := fun (parser : Parser) => (parser.info.collectKinds {}).contains `ps0NativeCommandBridge
+  unless category.tables.leadingParsers.any (fun p => isBridge p.1) do
+    throw <| IO.userError "PS0-SOURCE-COMMAND: native bridge registration is not unindexed"
+  let leading := category.tables.leadingParsers.map fun (parser, priority) =>
+    (if isBridge parser then unownedCommand parser else parser, priority)
+  builtinParserCategoriesRef.set <| categories.insert `psCommand
+    {category with tables := {category.tables with leadingParsers := leading} }
+  -- These are prefix commands for native `in`; the native trailing parser keeps
+  -- withOpen/withSetOption behavior while its command operand uses PS grammar.
+  for (name, parser) in #[
+      (``Lean.Parser.Command.«set_option», Lean.Parser.Command.«set_option»),
+      (``Lean.Parser.Command.«open», Lean.Parser.Command.«open»),
+      (``Lean.Parser.Command.«attribute», Lean.Parser.Command.«attribute»),
+      (``Lean.Parser.Command.«variable», Lean.Parser.Command.«variable»),
+      (``Lean.Parser.Command.«omit», Lean.Parser.Command.«omit»)] do
+    addBuiltinLeadingParser `psCommand name parser 20000
+  addBuiltinTrailingParser `psCommand ``Lean.Parser.Command.«in»
+    (commandOperands Lean.Parser.Command.«in») 20000
+  addBuiltinLeadingParser `psCommand ``Lean.Parser.Command.«mutual»
+    (commandOperands Lean.Parser.Command.«mutual») 20000
+
 private unsafe def installImpl (options : Options) : IO Unit := do
   -- Native toolchains ship compiler metadata beside their executable. Load that
   -- host metadata in a separate environment, then restore target module lookup.
@@ -86,8 +128,9 @@ private unsafe def installImpl (options : Options) : IO Unit := do
     let descr ← IO.ofExcept <| host.evalConst ParserDescr options name
     let parser ← (compileParserDescr state.categories (contextualAliases descr)).run
       {env := host, opts := options}
-    addBuiltinLeadingParser `psCommand name parser 20000
+    addBuiltinLeadingParser `psCommand name (withPosition parser) 20000
     copyMacros host name
+  installCommandOperands
   -- This bridge is an identity macro; target logic never imports its declaration.
   macroAttribute.addBuiltin `ps0NativeCommandBridge `PS0.SourceGrammar.nativeCommand
     (fun source => pure source[0])

@@ -1254,5 +1254,141 @@
     },
     "verified_execution": false,
     "grammarMigrationComplete": false
+  },
+  "scopedMutualCommandOperands": {
+    "status": "PASS_FINITE_SCOPED_MUTUAL_SOURCE_COMMAND_OPERANDS",
+    "source": "27e58f278b2ceb74bab4535245b15dd4668ad331",
+    "runner": "7ebf8265bb5ec8296c8ace5031b039b043452a28",
+    "run": 42525540427,
+    "jobs": {
+      "project": 128868235000,
+      "native": 128868234727,
+      "proofLinked": 128868234968,
+      "hostContract": 128868234969
+    },
+    "artifacts": [
+      {
+        "id": 13635446365,
+        "name": "ps0-native-27e58f278b2ceb74bab4535245b15dd4668ad331-42525540427",
+        "sha256": "a969cb29fc355700f891d6a4729ae4344be2ff5e7cc172fbc723a9aa6a400f8b"
+      },
+      {
+        "id": 13635222711,
+        "name": "ps0-project-27e58f278b2ceb74bab4535245b15dd4668ad331-42525540427",
+        "sha256": "fe417f0c46ca8b9bb3de4dca131fd1bf21ddb55b0568f93184234c9f3ea63ccf"
+      },
+      {
+        "id": 13634728251,
+        "name": "ps0-external-27e58f278b2ceb74bab4535245b15dd4668ad331-42525540427",
+        "sha256": "85284d25cd7ae70c388334912df7fcfad8b03d41ee5a0984e05ab8a25a378723"
+      }
+    ],
+    "fixtures": [
+      "tests/run-command-operands.py"
+    ],
+    "oracle": "PS0_COMMAND_OPERANDS:3:3:3:3",
+    "scope": "Native set_option/open in operands, nested in wrappers and native mutual definition operands route through owned PS command grammar. Native withOpen/withSetOption/elaboration remains reused, quotations native/opaque, exact source/keyword byte ranges retained. PS call-gap/order negatives reach intended diagnostics. Prefix attribute/variable/omit parsers are preserved native code; their remaining PS binder/attribute roles are not separately qualified.",
+    "implementation": "Native fallback declines only the explicit owned scoped/mutual prefix words; native longest-match selection cannot consume those wrappers before PS trailing/child parsing. Each selected PS declaration uses native withPosition to keep contextual function/const words from consuming the next equal-indentation declaration.",
+    "nestedCensus": "Explicit native Command.in RHS and mutual command arrays only. Top-level counts remain unchanged; nested command/declaration counts are retained separately. Quoted/DSL/generated syntax is not traversed.",
+    "failedCandidates": [
+      {
+        "source": "eb8fe8eb3a8f16a16268d66d38466014b55dce3a",
+        "runner": "33a4bec319a8fc33decdebff6b170b6f1daab311",
+        "run": 42523878661,
+        "job": 128863036859,
+        "observed": "native source build rejected multiline parser record field continuation; switched to pinned Parser.withFn combinator",
+        "artifacts": [
+          {
+            "id": 13634805803,
+            "name": "ps0-native-eb8fe8eb3a8f16a16268d66d38466014b55dce3a-42523878661",
+            "sha256": "0712f62b0725f5ba1917d455e10e941840f6edb4ee74294ad52534133d325ecd"
+          },
+          {
+            "id": 13634631868,
+            "name": "ps0-external-eb8fe8eb3a8f16a16268d66d38466014b55dce3a-42523878661",
+            "sha256": "eda0d52bbbad6f49ff662e0fccdafbd965bef9ea07b556e94ec5595173349bd5"
+          },
+          {
+            "id": 13634129492,
+            "name": "ps0-project-eb8fe8eb3a8f16a16268d66d38466014b55dce3a-42523878661",
+            "sha256": "ca28173b815a105ee59b950dfe9e2f632b4897c16fde04735c72b23d6c3ae7a2"
+          }
+        ]
+      },
+      {
+        "source": "f892e5bee6a6cb8d11ea829019359c2b98e02eb8",
+        "runner": "b8c38fc26cc69575cb90d3fee0356f58aef5bdf6",
+        "run": 42524070179,
+        "job": 128863610794,
+        "observed": "new quotation checks passed; native bridge consumed scoped forms and nested mutual bodies consumed next contextual function",
+        "artifacts": [
+          {
+            "id": 13634481984,
+            "name": "ps0-native-f892e5bee6a6cb8d11ea829019359c2b98e02eb8-42524070179",
+            "sha256": "6e229f974a8bf1ddf0ee201cc18cac0dc9dfb6f103b79041bc441d23d2510082"
+          },
+          {
+            "id": 13634332836,
+            "name": "ps0-external-f892e5bee6a6cb8d11ea829019359c2b98e02eb8-42524070179",
+            "sha256": "61981e6e72fe6bbf4eaa87977b27b435d0b0adbcf7c4d815a97970ed905d7880"
+          },
+          {
+            "id": 13634234605,
+            "name": "ps0-project-f892e5bee6a6cb8d11ea829019359c2b98e02eb8-42524070179",
+            "sha256": "b36cca7b044de6e64b1174ef98652d29e9eb02a527404f070766583a5c3de16e"
+          }
+        ]
+      },
+      {
+        "source": "42c384883f4557b4e898d30e55e3ce76051a218c",
+        "runner": "92e05edcee9e79d3d60dbc0b9108a31b3545a627",
+        "run": 42524632866,
+        "job": 128865408541,
+        "observed": "temporary native parser traces isolated fallback ownership and declaration-position contexts; traces removed from passing implementation",
+        "artifacts": [
+          {
+            "id": 13634766605,
+            "name": "ps0-project-42c384883f4557b4e898d30e55e3ce76051a218c-42524632866",
+            "sha256": "ece83148ef36e1d8d55006b38cb2085408416b4b9044c90cb1c755dd46de8b41"
+          },
+          {
+            "id": 13634691902,
+            "name": "ps0-native-42c384883f4557b4e898d30e55e3ce76051a218c-42524632866",
+            "sha256": "1fb34e84c27580ba3c01cec5f3cfd99e0c56107ca8e95745e66d2f35d2442ac2"
+          },
+          {
+            "id": 13634638485,
+            "name": "ps0-external-42c384883f4557b4e898d30e55e3ce76051a218c-42524632866",
+            "sha256": "9b4aee768b2ad3b75b8063bd1ff972d9878e5553ecfcd1f3bf35378b73dddea7"
+          }
+        ]
+      },
+      {
+        "source": "30f4355f3cd6d4920249275ab069437b85d29e62",
+        "runner": "47de8003f12dca19fddcfdd4f08ba8672f3dc7e7",
+        "run": 42525343351,
+        "job": 128867692311,
+        "observed": "legacy PS Syntax binder token globally reserved }}; native host implementation needed distinct nested-record delimiters. Lexer cleanup remains separate work.",
+        "artifacts": [
+          {
+            "id": 13635470320,
+            "name": "ps0-project-30f4355f3cd6d4920249275ab069437b85d29e62-42525343351",
+            "sha256": "d9521ed4b8d5a49ff93c535011710b0a432be77178056efd32c92534c728fe54"
+          },
+          {
+            "id": 13635445940,
+            "name": "ps0-native-30f4355f3cd6d4920249275ab069437b85d29e62-42525343351",
+            "sha256": "33dacee076e3044038ea6d7ac51a71eead987a81a39bfea71baa650a66093138"
+          },
+          {
+            "id": 13634808652,
+            "name": "ps0-external-30f4355f3cd6d4920249275ab069437b85d29e62-42525343351",
+            "sha256": "c5237601c65d6d92032f1156f4be136af90e25bc867b56f55252a62784a54b4d"
+          }
+        ]
+      }
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }

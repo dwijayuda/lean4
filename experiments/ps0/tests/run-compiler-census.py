@@ -28,7 +28,17 @@ if not args.fixture_subset:
 build = args.build_dir or ROOT / 'build' / ('compiler-ps-' + os.environ['GITHUB_RUN_ID']) / 'artifacts'
 args.output.mkdir(parents=True, exist_ok=True)
 modes, heads = Counter(), Counter()
+nested_modes, nested_heads = Counter(), Counter()
 modules = {}
+
+def collect_nested(commands):
+    for command in commands:
+        nested_heads[command['headKind']] += 1
+        declaration = command['declaration']
+        if declaration is not None:
+            nested_modes[declaration['mode']] += 1
+        collect_nested(command.get('nestedCommands', []))
+
 for module, item in sorted(inputs.items()):
     rel = Path(*module.split('.'))
     census_file = build / 'lib/lean' / rel.with_suffix('.ilean.ps0-source-census.json')
@@ -49,6 +59,7 @@ for module, item in sorted(inputs.items()):
         declaration = command['declaration']
         if declaration is not None:
             modes[declaration['mode']] += 1
+        collect_nested(command.get('nestedCommands', []))
     retained = args.output / rel.with_suffix('.json')
     retained.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(census_file, retained)
@@ -65,6 +76,9 @@ summary = {
     'module_count': len(modules), 'modules': modules,
     'declaration_modes': dict(sorted(modes.items())),
     'source_command_heads': dict(sorted(heads.items())),
+    'nested_source_command_heads': dict(sorted(nested_heads.items())),
+    'nested_declaration_modes': dict(sorted(nested_modes.items())),
+    'nested_scope': 'explicit native in RHS and mutual command arrays only; quotations/DSL/generated data are opaque',
     'grammar_migration_complete': False,
     'verified_execution': False,
 }
