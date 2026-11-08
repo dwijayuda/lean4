@@ -1,5 +1,16 @@
 # PS0 — AI Work State (9 November 2026)
 
+## Prelude source grammar candidate — Linux qualification pending
+
+[Source PR #12](https://github.com/dwijayuda/lean4/pull/12), source **`0c89b9ae26807ad878d6e397508c6dbb5ae570e2`**; [runner PR #227](https://github.com/dwijayuda/pskernel/pull/227), runner **`3ec306c44a8bd0d56fa3670f43c7b530ccf09d1e`**; Linux [run 42518907520](https://github.com/dwijayuda/pskernel/actions/runs/42518907520) is **IN PROGRESS**.
+
+The candidate uses Lean's native parser categories, parser descriptors, builtin macro/term-elaborator registrations and root category dispatch. `-KsourceGrammar=true` reaches the frontend through native Lake setup options. A separate compiler-host environment loads syntax metadata beside the compiler executable and restores target module lookup before compilation. No target prelude source or logical import is inserted. Only the selected PS productions are registered; the root dispatch consumes its flag in a fresh native parser context/cache so native command/term/binder quotations retain their category ownership.
+
+The finite test requires PS function/default/const declarations, a contextual `function` identifier, native strict binders, native quotation AST identity, exact source bytes/direct imports and **PS0_PRELUDE_GRAMMAR:42** from a Lake-linked executable. It first requires native-only prelude compilation to reject the PS command. The test-first run **42518050363** was superseded/cancelled and is **not red test evidence**. Actual failed candidates are retained in both JSON ledgers: namespace/token API errors, native persistent-map API mismatch, then missing compiler-host metadata under target-only module lookup.
+
+**Not yet qualified.** Full canonical source conversion, remaining nested PS operands/signatures, host metadata packaging for relocated migrated compilers and full fresh compiler closure remain open. Independent full compiler/census run **42517718338** continues at the earlier stage-option checkpoint. Goal remains **ACTIVE / NOT COMPLETE**.
+
+
 ## Native Lake compiler-stage evaluation recovery — 9 November 2026
 
 Source **`abf3585d99c921fe02697b679867a0a55e433168`**, runner **`f5eea9af18a6c6a04ee92ef47ce36311f2d95e15`**, Linux [run 42517518674](https://github.com/dwijayuda/pskernel/actions/runs/42517518674): **all four jobs PASS** — project/binder/census **128843676094**, native **128843675964**, proof-linked **128843675694**, host **128843675945**.

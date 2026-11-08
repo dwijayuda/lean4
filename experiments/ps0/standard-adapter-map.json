@@ -658,5 +658,55 @@
     },
     "verified_execution": false,
     "grammarMigrationComplete": false
+  },
+  "preludeSourceGrammarContinuation": {
+    "status": "IN_PROGRESS_FINITE_PRELUDE_GRAMMAR",
+    "source": "0c89b9ae26807ad878d6e397508c6dbb5ae570e2",
+    "runner": "3ec306c44a8bd0d56fa3670f43c7b530ccf09d1e",
+    "run": 42518907520,
+    "sourcePR": 12,
+    "runnerPR": 227,
+    "fixture": "tests/run-prelude-grammar.py",
+    "hostImplementation": "PS0/SourceGrammar.lean",
+    "activation": "native Lake -KsourceGrammar=true passes ps0.sourceGrammar through ModuleSetup.options",
+    "scope": "Syntax-only host environment uses native compiler metadata beside the executable, then restores target module lookup. Explicit PS categories and simple declaration parsers/macros are native builtins. Root command routing consumes its option in a fresh native parser cache/context, preserving nested native quotation/DSL ownership. Target prelude bytes and direct imports remain unchanged. Finite candidate, not full canonical compiler grammar migration.",
+    "failedCandidates": [
+      {
+        "source": "20b6b7d71a50223e2a827d53938003ea55156854",
+        "runner": "dca657125a7253ac8ae7abc98b3fff66cc4ca82c",
+        "run": 42518234578,
+        "job": 128845924881,
+        "observed": "native bootstrap build found macro attribute namespace and adjacent-brace token ambiguity"
+      },
+      {
+        "source": "13afc9fa98264ce73fed85060e542672d584eb8d",
+        "runner": "66842b713e5ab1bdda955dae5f76ce5d5b8af710",
+        "run": 42518441800,
+        "job": 128846471001,
+        "observed": "native API uses PersistentHashMap.foldl, not fold"
+      },
+      {
+        "source": "070d7dc66fcb6d324465961f42c68409ec4a8642",
+        "runner": "9a75cd071aeb1fa97ea37cf6b7e1f05c69b8d9ad",
+        "run": 42518605472,
+        "job": 128846963001,
+        "observed": "native prelude control rejected function as intended; grammar host needed its own metadata search path outside the target module path"
+      }
+    ],
+    "testFirst": {
+      "source": "2e5f16236ad546d32970bf1a497dec49f449840e",
+      "runner": "c43f52ddd90dea71163b85b1820efc12fcaaa608",
+      "run": 42518050363,
+      "status": "CANCELLED_SUPERSEDED_NOT_RED_EVIDENCE"
+    },
+    "remaining": [
+      "Full corpus PS grammar and checked canonical source conversion",
+      "Native PS term operators and remaining nested operand/signature contexts",
+      "Bootstrap host metadata packaging for relocated migrated compilers",
+      "Prelude closure without hidden logical imports and fresh migrated full-corpus fixed point",
+      "Native diagnostic/IDE presentation and complete source provenance"
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }
