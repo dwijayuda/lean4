@@ -35,7 +35,7 @@ def original_commands(commands):
         yield command
         yield from original_commands(command.get('nestedCommands', []))
 
-def single_type_call(operand):
+def single_type_call(operand, role='owned binder type'):
     # Only this explicitly owned type operand is adapted. Quotation, DSL and
     # arbitrary application descendants are never traversed by the planner.
     if operand['kind'] != 'Lean.Parser.Term.app':
@@ -51,9 +51,9 @@ def single_type_call(operand):
     if start == end:
         return
     assert raw[end:start].isspace(), 'type-call trivia contains comments; no edit is permitted'
-    edit(end, start, '(', 'owned binder type call opening delimiter; preserve original argument parentheses')
+    edit(end, start, '(', role + ' call opening delimiter; preserve original argument parentheses')
     _, argument_end = span(argument)
-    edit(argument_end, argument_end, ')', 'owned binder type call closing delimiter; preserve original argument parentheses')
+    edit(argument_end, argument_end, ')', role + ' call closing delimiter; preserve original argument parentheses')
 
 for command in original_commands(snapshot['commands']):
     decl = command['declaration']
@@ -75,8 +75,13 @@ for command in original_commands(snapshot['commands']):
         assert binder['kind'] == 'Lean.Parser.Term.explicitBinder', decl['sourceName']
         assert len(parts) == 5 and len(parts[1]['args']) == 1
         assert parts[1]['args'][0]['ident'] is not None
-        assert len(parts[2]['args']) == 2 and not parts[3]['args']
+        assert len(parts[2]['args']) == 2
         single_type_call(parts[2]['args'][1])
+        suffix = parts[3]['args']
+        if suffix:
+            assert len(suffix) == 1 and suffix[0]['kind'] == 'Lean.Parser.Term.binderDefault'
+            assert len(suffix[0]['args']) == 2
+            single_type_call(suffix[0]['args'][1], 'owned binder default')
         start, end = span(binder)
         assert raw[start:start + 1] == b'(' and raw[end - 1:end] == b')'
     kw = decl['keywordRange']
@@ -125,7 +130,7 @@ args.output.write_bytes(converted)
 args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
-    'scope': 'typed explicit/instance telescopes and named values in top-level/explicit owned nested declaration heads, single type-call adjacency, and owned root value applications with parenthesized arguments only; argument bodies, quotations and other native commands preserved byte for byte',
+    'scope': 'typed explicit/default/instance telescopes and named values in top-level/explicit owned nested declaration heads, single type/default-call adjacency, and owned root value applications with parenthesized arguments only; argument bodies, quotations and other native commands preserved byte for byte',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_COMPILER_HEAD_MIGRATION: planned ' + str(len(declarations)), flush=True)
