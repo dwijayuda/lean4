@@ -64,6 +64,10 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind ``ps0NativeTermBridge then
+      let native := source[0]
+      rejectHostGap native
+      return native
     match source with
     | `(psTerm| $head:ident($[$args:psCallArg],*)) => lowerCall head.raw args source
     | `(psTerm| $head:psHead) => lowerHead head.raw
@@ -85,9 +89,6 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | `(psTerm| do $seq:psDoSeq) => do
         let seq : TSyntax ``Lean.Parser.Term.doSeq := ⟨← lower `psDoSeq seq.raw⟩
         return (← `(do $seq:doSeq)).raw
-    | `(psTerm| $native:term) => do
-        rejectHostGap native.raw
-        return native.raw
     | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTerm"
   else if category == `psCommand then
     match source with
