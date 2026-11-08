@@ -27,7 +27,7 @@ assert census['schema'] == 'ps0-native-source-census/1'
 assert census['leanCommit'] == 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc'
 assert census['nativeSource'] == mapping['nativeSource']
 names = [x['declaration']['sourceName'] for x in census['commands'] if x['declaration'] is not None]
-assert set(names) == {'add', 'counted', 'quotedDeclaration', 'main'}, names
+assert set(names) == {'add', 'counted', 'quotedDeclaration', 'main'}, (names, [c['kind'] for c in census['commands']])
 assert 'censusGenerated' in census['environmentDeclNames']
 assert 'censusGenerated' not in names and 'onlyQuoted' not in names
 native = census['nativeSource'].encode()
