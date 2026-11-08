@@ -68,21 +68,174 @@
     {
       "nativeKind": "Lean.Parser.Term.do",
       "slots": [
-        "single return sequence"
+        "mapped braced multi-statement sequence"
       ],
       "adapter": "ps0HostDo"
+    },
+    {
+      "nativeKind": "Lean.Parser.Term.doSeqBracketed",
+      "slots": [
+        "nonempty native doSeqItem sequence"
+      ],
+      "adapter": "ps0HostDoSeq"
+    },
+    {
+      "nativeKind": "Lean.Parser.Term.doLet",
+      "slots": [
+        "identifier binder type/value",
+        "mutable identifier binder type/value"
+      ],
+      "adapter": "ps0HostDoLet / ps0HostDoLetMut"
+    },
+    {
+      "nativeKind": "Lean.Parser.Term.doLetArrow",
+      "slots": [
+        "identifier action expression"
+      ],
+      "adapter": "ps0HostDoBind"
+    },
+    {
+      "nativeKind": "Lean.Parser.Term.doReassign",
+      "slots": [
+        "identifier value"
+      ],
+      "adapter": "ps0HostDoReassign"
+    },
+    {
+      "nativeKind": "Lean.Parser.Term.doReturn",
+      "slots": [
+        "expression"
+      ],
+      "adapter": "ps0HostDoReturn"
+    },
+    {
+      "nativeKind": "Lean.Parser.Term.doExpr",
+      "slots": [
+        "statement expression; native token exclusion gate"
+      ],
+      "adapter": "ps0HostDoExpr"
     }
   ],
   "remaining": [
-    "binder types/defaults",
-    "all mixed declaration signatures",
-    "multi-statement do",
-    "remaining tactic arguments",
+    "binder types/defaults and mixed signatures",
+    "remaining do control/pattern/configuration operands and native layout adapters",
+    "remaining tactic operands",
     "match motives/pattern roles",
-    "collections/interpolation",
-    "configuration/attribute operands"
+    "collections/interpolation/configuration/attribute values",
+    "extension competition and complete provenance/IDE fidelity"
   ],
   "evidence": {
+    "status": "PASS_FINITE_GRAMMAR_AND_SOURCE_ORIGIN_CASES",
+    "sourceCommit": "1d76c795edbbaa79fe4d938f073114e5bd76a3ae",
+    "runnerCommit": "cd3d6862abc86d3d4371147cd516f2a1dfd1c9a5",
+    "run": "https://github.com/dwijayuda/pskernel/actions/runs/42507413045",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "jobs": {
+      "project": 128812930802,
+      "native": 128812930996,
+      "proofLinked": 128812930942,
+      "hostContract": 128812930963
+    },
+    "artifacts": [
+      {
+        "id": 13628415674,
+        "sha256": "990006cc3ad062fb57d930af70cb9bf703c815246c7a1b3c367c443b73e953ba",
+        "name": "ps0-project-1d76c795edbbaa79fe4d938f073114e5bd76a3ae-42507413045"
+      },
+      {
+        "id": 13627967800,
+        "sha256": "6aea337c3e5c7f7b526be7fe7a431e7e2a854d72deb8f3ea10468ef40d94619b",
+        "name": "ps0-external-1d76c795edbbaa79fe4d938f073114e5bd76a3ae-42507413045"
+      },
+      {
+        "id": 13627079788,
+        "sha256": "958adce04a4da8527811de3c7f91b55c9bbbc0d69798d4a44705e2184086abc9",
+        "name": "ps0-native-1d76c795edbbaa79fe4d938f073114e5bd76a3ae-42507413045"
+      }
+    ],
+    "cases": [
+      {
+        "fixture": "tests/v1/category_do_operands.ps + tests/run-categories.py",
+        "oracle": "PS0_DO_OPERANDS:12:3; PS0_STANDARD_CATEGORY_SLOTS: PASS",
+        "scope": "native doSeqItem sequence; identifier let/type/value, let mut, reassignment, identifier monadic bind, expression statement and return; dedicated apply/refine proofs; opaque native doSeq DSL"
+      },
+      {
+        "fixture": "tests/run-categories.py generated do-gap/do-order/native-do-statement-type.ps",
+        "oracle": "PS0V1-CALL-GAP; PS0V1-CALL-ORDER; native IO Nat versus IO Unit diagnostic",
+        "scope": "intended category/semantic failures before successful qualification"
+      },
+      {
+        "fixture": "tests/run-source-fidelity.py",
+        "oracle": "PS0_SOURCE_ORIGIN:{implicit,explicit,prelude,empty,eof-comment}:PASS; PS0_SOURCE_FIDELITY_MAP: PASS",
+        "scope": "all original UTF-8 bytes recovered in order from half-open prepared-source segments; generated spans distinguished; CRLF, Unicode, nested comments, module documentation, header trivia and EOF preserved"
+      },
+      {
+        "fixture": "tests/run-source-fidelity.py native-crlf.lean / converted-crlf.ps",
+        "oracle": "PS0_SOURCE_NATIVE_CONVERSION_CRLF: PASS",
+        "scope": "native conversion retains exact CRLF/Unicode body and checks converted PS"
+      },
+      {
+        "fixture": "tests/run-source-fidelity.py native-position.ps",
+        "oracle": "PS0_SOURCE_NATIVE_SYNTAX_POSITION: PASS",
+        "scope": "actual native Syntax.getPos? byte offset maps to original Unicode token after CRLF normalization through native FileMap"
+      },
+      {
+        "fixture": "tests/run-project.py",
+        "oracle": "PS0_PROJECT_SOURCE_ORIGINS: PASS; PS0_RECURSIVE_PROJECT: PASS",
+        "scope": "native Lake ilean origin sidecars recover captured PS bytes; recursive imports, native dependencies, warm reuse, driver/source/native invalidation, entry/publication/collision/cycle/visibility regression"
+      },
+      {
+        "fixture": "tests/run-native.py",
+        "oracle": "PS0_LAKE_NATIVE: PASS",
+        "scope": "native build/link/runtime and negative regression"
+      },
+      {
+        "fixture": "existing proof-linked/host-contract runners",
+        "oracle": "all four Linux jobs completed SUCCESS",
+        "scope": "bounded existing regressions, not a new assurance certificate"
+      }
+    ],
+    "sourceOrigin": {
+      "schema": "ps0-source-map/1",
+      "segments": "half-open UTF-8 byte offsets in source before native CRLF normalization; original spans concatenate to the captured raw file",
+      "nativeSource": "exact Lean default CRLF-normalized input",
+      "lookup": "PS0.LakeFrontend.originalPos? / source-origin FILE.ps NATIVE_BYTE_OFFSET uses native FileMap logical-position conversion; generated/no-origin positions return null",
+      "sidecar": "<module>.ilean.ps0-source-map.json from actual native Lake module invocation",
+      "limits": "diagnostic/ilean positions remain native prepared-source positions; automatic presentation/IDE remapping, sidecar cache recovery/facet tracking, arbitrary generated syntax provenance and complete source fidelity remain open"
+    },
+    "notRun": "Full compiler stage-one/stage-two rebuilds are not rerun for this increment. The prior six-job compiler-source/fixed-point qualification remains tied to fb86cc425f0688bf3c6e98ff6c7adb8e899fe883.",
+    "remaining": [
+      "binder types/defaults and mixed signatures",
+      "remaining do control/pattern/configuration operands and native layout adapters",
+      "remaining tactic operands",
+      "match motives/pattern roles",
+      "collections/interpolation/configuration/attribute values",
+      "extension competition and complete provenance/IDE fidelity"
+    ],
+    "failedCandidates": [
+      {
+        "source": "74be717b036c8c01f971b5ba09a4553ba344a8a3",
+        "run": 42506026417,
+        "job": 128808825962,
+        "observed": "native let-arrow expects doElem, not a direct term splice; fixed by genuine native doExpr"
+      },
+      {
+        "source": "1061a612067c1a9c88dee56eab30891ec68a0be2",
+        "run": 42506852635,
+        "job": 128811284072,
+        "observed": "return also parsed as generic term-return; CRLF-normalized header byte offsets sliced raw Unicode incorrectly; both assertions fail"
+      },
+      {
+        "source": "133fcf9a0196597cd6ef62990bbef6483357cd61",
+        "run": 42507173849,
+        "job": 128812202395,
+        "observed": "do cases PASS; disabling native CRLF normalization rejects CRLF header; replaced by native FileMap offset translation"
+      }
+    ],
+    "verified_execution": false
+  },
+  "previousEvidence": {
     "sourceCommit": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
     "runnerCommit": "0bca62aefdb00992d891f57c1a608dc0dacd60a3",
     "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488162021",
