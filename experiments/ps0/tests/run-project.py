@@ -69,6 +69,12 @@ r = run([driver, 'check', bootstrap], ok=False)
 assert 'Nat.zero' in r
 print('PS0_PROJECT_PRELUDE_NO_HIDDEN_IMPORTS: PASS', flush=True)
 
+(src / 'NoMain.ps').write_text('const value: Nat := 42\n')
+missing_main = WORK / 'no-main'
+r = run(['lake', 'exe', 'ps0', 'build-project', src, 'NoMain', missing_main], ok=False)
+assert 'PS0-NATIVE-MAIN' in r and not missing_main.exists()
+print('PS0_PROJECT_LOCAL_ENTRY: PASS', flush=True)
+
 collision = src / 'Demo/Words.lean'
 collision.write_text('def wrongSource : Nat := 100\n')
 r = build(ok=False)
@@ -92,7 +98,7 @@ print('PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY: PASS', flush=True)
     'module_inputs': selected,
     'checks': ['recursive-public-and-meta-imports', 'mixed-native-source', 'warm-reuse',
                'transitive-ps-and-native-invalidation', 'publication-no-replacement',
-               'prelude-no-hidden-imports', 'source-collision', 'cycle', 'private-visibility'],
+               'prelude-no-hidden-imports', 'local-entry', 'source-collision', 'cycle', 'private-visibility'],
     'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_RECURSIVE_PROJECT: PASS', flush=True)

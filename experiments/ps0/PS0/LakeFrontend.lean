@@ -71,6 +71,7 @@ def compile (args : List String) : IO UInt32 := do
   let mut ilean? : Option FilePath := none
   let mut c? : Option FilePath := none
   let mut json := false
+  let mut requireMain := false
   let mut rest := args
   while !rest.isEmpty do
     match rest with
@@ -79,6 +80,7 @@ def compile (args : List String) : IO UInt32 := do
     | "-i" :: p :: tail => ilean? := some p; rest := tail
     | "-c" :: p :: tail => c? := some p; rest := tail
     | "--json" :: tail => json := true; rest := tail
+    | "--ps0-entry" :: tail => requireMain := true; rest := tail
     | p :: tail =>
         unless p.endsWith ".ps" && source?.isNone do
           IO.eprintln s!"PS0-LAKE-ARG: unsupported module invocation argument {p}"
@@ -103,6 +105,12 @@ def compile (args : List String) : IO UInt32 := do
       (jsonOutput := json) (setup? := some setup)
     | return 1
   if let some c := c? then
+    if requireMain then
+      let localCode ← Compiler.LCNF.getLocalImpureDecls
+        |>.toIO' {fileName := path, fileMap := default} {env}
+      unless localCode.contains `main do
+        IO.eprintln "PS0-NATIVE-MAIN: executable entry module must compile its own main"
+        return 1
     let code ← Compiler.LCNF.emitC setup.name |>.toIO' {fileName := path, fileMap := default} {env}
     IO.FS.writeFile c code
   return 0

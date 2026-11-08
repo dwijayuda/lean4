@@ -34,6 +34,7 @@ lean_exe ps0project where
   root := projectMain
   srcDir := projectSource
   supportInterpreter := true
+  moreLeanArgs := #["--ps0-entry"]
   moreLinkArgs := match get_config? linkMap with
     | some path => #["-Wl,-Map," ++ path]
     | none => #[]
