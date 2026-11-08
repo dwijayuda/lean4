@@ -8,16 +8,20 @@
 [run 42488162021](https://github.com/dwijayuda/pskernel/actions/runs/42488162021):
 recursive/category `128754567397`, native `128754567736`, proof-linked
 `128754567672`, host `128754567546` and compiler stage one `128754834515` PASS.
-Stage two `128763580779` is running; C/olean fixed-point qualification remains open.
+Stage two `128763580779` PASS: a fresh migrated-compiler build matches every C/public-olean hash across all 2,564 modules. All six workflow jobs passed.
 Full v1 grammar closure remains open.
 
-Stage one compiled **all 2,546 pinned compiler-source Git blobs plus 18 PS0 modules**
+Both compiler stages compiled **all 2,546 pinned compiler-source Git blobs plus 18 PS0 modules**
 from actual PS program inputs, completed **5,132 native Lake jobs**, audited every
 generated C/olean and linked/ran a migrated compiler including an actual PS source check.
 Its [artifact 13622010384](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13622010384)
 has ZIP SHA-256 `de68e47310d1a58631c98072d4c786eede503f282c18830c3d0f13c2f422b23b`;
 it retains the binary, all per-module input/output hashes and native link map.
-This tests a generated source forest, not an upstream/main source cutover.
+Stage-two artifact `13621859608` has ZIP SHA-256
+`dae31cf63a2098b2cfa67940936424fa16fd361c700d202b54c934ad24eb3827`.
+Its result records zero C differences and zero public olean differences. Both stages
+pass the migrated environment/source smoke checks. This tests a generated source
+forest, not an upstream/main source cutover.
 
 Independent Linux [link/ELF audit 42491501152](https://github.com/dwijayuda/pskernel/actions/runs/42491501152),
 runner `54a3d0356609a24ec94090adedcc0a1645134f6b`, job `128764669538` PASS:
@@ -56,8 +60,7 @@ all 2,546 pinned `src/**/*.lean` Git blobs plus PS0 modules, compiles a program 
 lean files, builds a migrated compiler executable and, in a second clean
 job, requests full C/olean fixed-point comparison. Conversion, native source
 admission, C/object compilation, executable behavior and a full compiler
-fixed point are distinct outcomes. Until those jobs pass, their status is
-PENDING. Native-prelude coverage does not qualify all PS-owned bootstrap sugar.
+fixed point are distinct outcomes. The two stages now PASS only at the recorded source/scope. Native-prelude coverage does not qualify all PS-owned bootstrap sugar.
 
 ## Implemented migration changes
 
@@ -139,7 +142,13 @@ for remaining architecture gates and [AI_WORK_STATE.md](AI_WORK_STATE.md)
 for the latest development handoff.
 
 
-## PS0 v1 host psTerm postfix-call extension — 16 October 2026
+## Historical adapter milestones
+
+The dated entries below preserve the earlier candidate scope. Their pending
+wording is historical; current qualification, generalized mapped operands and
+compiler-source fixed-point results are recorded above and in the exact JSON ledgers.
+
+### PS0 v1 host psTerm postfix-call extension — 16 October 2026
 
 Implemented a first PS-owned, **nonempty identifier-head** adjacent-call
 source production in `PS0/HostCategories.lean`. It uses Lean's
@@ -175,7 +184,7 @@ all remain `PENDING` until actually qualified by pinned Lean CI.
 The canonical normative PS0 v1 R2 document remains unchanged.
 
 
-## Standard declaration-body psTerm integration — 16 October 2026
+### Standard declaration-body psTerm integration — 16 October 2026
 
 PS0 now provides owned source-command forms for **typed** `function` and
 `const` bodies whose RHS category is `psTerm` rather than silently taking a

@@ -1,7 +1,7 @@
 {
   "schema": "ps0-standard-operand-map/1",
   "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
-  "status": "partial; finite mapped tests passed at recorded checkpoint; remaining roles unqualified",
+  "status": "partial map; finite mapped cases qualified at the recorded exact Linux source",
   "entries": [
     {
       "nativeKind": "Lean.Parser.Command.definition",
@@ -83,24 +83,29 @@
     "configuration/attribute operands"
   ],
   "evidence": {
-    "sourceCommit": "b842b26fa2dffaee6a73f03fb70ca77683ccaf31",
-    "runnerCommit": "a2ff849cd861a32e52dbfee94f0283c749f37040",
-    "run": "https://github.com/dwijayuda/pskernel/actions/runs/42483607627",
+    "sourceCommit": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
+    "runnerCommit": "0bca62aefdb00992d891f57c1a608dc0dacd60a3",
+    "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488162021",
     "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
     "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
-    "projectJob": 128740672990,
-    "nativeJob": 128740672968,
-    "hostJob": 128740672920,
+    "projectJob": 128754567397,
+    "nativeJob": 128754567736,
+    "hostJob": 128754567546,
     "projectArtifact": {
-      "id": 13618347877,
-      "sha256": "1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980"
+      "id": 13619929692,
+      "sha256": "d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d"
     },
     "nativeArtifact": {
-      "id": 13618945967,
-      "sha256": "af1386f8c90e7a630cb85b12e101b76fda5b30bf4b120aefac76a44425c721af"
+      "id": 13620303005,
+      "sha256": "b7e489f9fa186b0fe31a64830a02fdb9ad07dab8eb5b430529001ea1d4c03a99"
+    },
+    "proofJob": 128754567672,
+    "proofArtifact": {
+      "id": 13620970053,
+      "sha256": "9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900"
     },
     "fixture": "tests/run-categories.py",
     "oracle": "PS0_STANDARD_CATEGORY_SLOTS: PASS",
-    "limits": "exact finite test operands only; apply/refine registrations have no dedicated executed fixture yet"
+    "limits": "finite mapped test operands only; apply/refine registration has no dedicated executed probe; unmapped roles remain open"
   }
 }

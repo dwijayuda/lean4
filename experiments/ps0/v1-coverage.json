@@ -2441,7 +2441,7 @@
   ],
   "currentContinuation": {
     "branch": "feat/ps0-recursive-projects-20261108",
-    "status": "RECURSIVE_NATIVE_AND_MAPPED_CATEGORY_JOBS_PASS_COMPILER_GATES_OPEN",
+    "status": "QUALIFIED_PINNED_COMPILER_SOURCE_REPLACEMENT_AND_C_OLEAN_FIXED_POINT",
     "goal": "Replace Lean compiler .lean program sources with .ps using native Lean and Lake infrastructure",
     "fixtures": [
       "tests/run-project.py",
@@ -2584,7 +2584,7 @@
           "sha256": "9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900"
         }
       },
-      "status": "STAGE1_BUILD_LINK_RUNTIME_SMOKE_PASS_STAGE2_RUNNING",
+      "status": "PASS_ALL_SIX_LINUX_JOBS",
       "compilerStage1Job": 128754834515,
       "changes": [
         "native library search path for migrated smoke",
@@ -2604,8 +2604,15 @@
       },
       "compilerStage2": {
         "jobId": 128763580779,
-        "status": "IN_PROGRESS_NOT_QUALIFIED",
-        "required": "Fresh Linux rebuild with exact migrated stage-one executable; all generated C and olean hashes must match"
+        "status": "PASS",
+        "moduleCount": 2564,
+        "nativeLakeJobs": 5132,
+        "changedC": 0,
+        "changedOlean": 0,
+        "artifactId": 13621859608,
+        "artifactSha256": "dae31cf63a2098b2cfa67940936424fa16fd361c700d202b54c934ad24eb3827",
+        "oracle": "PS0_COMPILER_PS_FIXED_POINT: PASS; PS0_COMPILER_PS_SOURCE: PASS; modules=2564",
+        "scope": "fresh Linux job; exact stage-one migrated executable; all pinned inputs and all generated C/public olean hashes match; runtime source smoke PASS"
       },
       "nativeLinkAndElfAudit": {
         "source": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
@@ -2632,7 +2639,9 @@
         "runtimeSmoke": "PASS",
         "artifactId": 13621487247,
         "artifactSha256": "8c9159eefd30f5204d277c888ea64eb40b5618beacca8a6825515f202637f6b6"
-      }
+      },
+      "scope": "All 2546 pinned compiler .lean Git blobs and 18 PS0 modules built from .ps; native C backend and reused pinned C++ runtime; generated capability forest, no upstream/main source cutover; no complete PS-specific grammar or formal execution-correspondence claim.",
+      "note": "Final documentation-only heads may follow the exact qualified implementation/test source; the immutable runner selector remains pinned to that source."
     }
   }
 }
