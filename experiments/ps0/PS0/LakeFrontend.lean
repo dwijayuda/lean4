@@ -12,16 +12,22 @@ import Lean.Compiler.LCNF.EmitC
 open Lean System
 namespace PS0.LakeFrontend
 
+private def rawPosition (raw : String) (normalized : String.Pos.Raw) : String.Pos.Raw :=
+  (FileMap.ofString raw).ofPosition ((FileMap.ofString raw.crlfToLf).toPosition normalized)
+
+private def parseRawHeader (raw filename : String) := do
+  let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext raw filename)
+  -- This state is used only for slicing the original text, never to resume parsing.
+  return (header, {state with pos := rawPosition raw state.pos}, messages)
+
 def parseHeader (raw filename : String) :
     IO (Except String (Elab.HeaderSyntax × Parser.ModuleParserState × Nat)) := do
-  let (header, state, messages) ← Parser.parseHeader
-    (Parser.mkInputContext raw filename (normalizeLineEndings := false))
+  let (header, state, messages) ← parseRawHeader raw filename
   if Elab.HeaderSyntax.isModule header then
     if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid import header"
     return .ok (header, state, 0)
   let modulePrefix := "module\n"
-  let (header, state, messages) ← Parser.parseHeader
-    (Parser.mkInputContext (modulePrefix ++ raw) filename (normalizeLineEndings := false))
+  let (header, state, messages) ← parseRawHeader (modulePrefix ++ raw) filename
   if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid implicit module header"
   return .ok (header, state, modulePrefix.utf8ByteSize)
 
@@ -189,13 +195,12 @@ def compile (args : List String) : IO UInt32 := do
 /-- Preserve native bodies while making a legacy header explicit in PS0's modern module model. -/
 def convertNative (source target : FilePath) : IO Unit := do
   let raw ← IO.FS.readFile source
-  let (header, state, messages) ← Parser.parseHeader
-    (Parser.mkInputContext raw source.toString (normalizeLineEndings := false))
+  let (header, state, messages) ← parseRawHeader raw source.toString
   if messages.hasErrors then throw <| IO.userError s!"PS0-CONVERT-HEADER: {source}"
   let converted ← if isPrelude header then pure raw else do
     let some body := (raw.toByteArray.extract state.pos.byteIdx raw.utf8ByteSize).utf8Decode?
       | throw <| IO.userError "PS0-CONVERT-UTF8"
-    let first := header.raw.getPos?.getD ⟨0⟩
+    let first := rawPosition raw (header.raw.getPos?.getD ⟨0⟩)
     let leading := String.fromUTF8! (raw.toByteArray.extract 0 first.byteIdx)
     let imports := Elab.HeaderSyntax.imports header (includeInit := true)
     let rendered := imports.toList.map fun im =>
