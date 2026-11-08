@@ -1,0 +1,24 @@
+/-! PS do operands lower to native do elements; native DSL operands stay native. -/
+function add(x: Nat, y: Nat): Nat := x + y
+function pureNat(x: Nat): IO Nat := pure x
+abbrev same (x y : Nat) : Prop := x = y
+def witness (x : Nat) : same x x := rfl
+
+def multi : IO Nat := do {
+  let first : Nat := add(1, 2);
+  let second ← pureNat(add(first, 4));
+  pureNat(second);
+  return add(second, 1)
+}
+
+theorem applyOperand : same(3, 3) := by { apply witness(3) }
+theorem refineOperand : same(3, 3) := by { refine witness(3) }
+
+macro "nativeSequence " s:doSeq : term => `(do $s)
+def tupleOnly (p : Nat × Nat) : IO Nat := pure (p.1 + p.2)
+def nativeSequenceValue : IO Nat := nativeSequence { return ← tupleOnly (1, 2) }
+
+def main : IO Unit := do
+  let n ← multi
+  let native ← nativeSequenceValue
+  IO.println s!"PS0_DO_OPERANDS:{n}:{native}"

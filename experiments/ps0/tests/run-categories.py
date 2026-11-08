@@ -19,6 +19,9 @@ def run(args, ok=True):
 run(['lake', 'exe', 'ps0', 'check', 'tests/v1/standard_category_slots.ps'])
 run(['lake', 'exe', 'ps0', 'build-native', 'tests/v1/standard_category_slots.ps', 'CategorySlots', work / 'native'])
 assert 'PS0_CATEGORY_SLOTS:3:3:3:3:3' in run([work / 'native/CategorySlots'])
+run(['lake', 'exe', 'ps0', 'check', 'tests/v1/category_do_operands.ps'])
+run(['lake', 'exe', 'ps0', 'build-native', 'tests/v1/category_do_operands.ps', 'DoOperands', work / 'do-native'])
+assert 'PS0_DO_OPERANDS:8:3' in run([work / 'do-native/DoOperands'])
 for name, call, reason in [
     ('order', 'add(x := 1, 2)', 'PS0V1-CALL-ORDER'),
     ('duplicate', 'add(x := 1, x := 2)', 'PS0V1-CALL-NAMED'),
