@@ -87,6 +87,21 @@ for command in original_commands(snapshot['commands']):
         start, _ = span(following)
         assert raw[end:start].isspace(), 'group trivia must be whitespace; comments are never discarded'
         edit(end - 1, start + 1, ', ', 'merge consecutive typed groups in source order')
+    application = decl.get('valueApplication')
+    if application is not None and any(a['kind'] == 'Lean.Parser.Term.paren' for a in application['arguments']):
+        arguments = application['arguments']
+        assert all(a['kind'] != 'Lean.Parser.Term.namedArgument' for a in arguments), 'named body arguments need their own source role'
+        function_end = application['functionRange']['end']
+        first_start, _ = span(arguments[0])
+        assert raw[function_end:first_start].isspace(), 'body call trivia contains comments; no edit is permitted'
+        edit(function_end, first_start, '(', 'owned value root application opening delimiter')
+        for previous, following in zip(arguments, arguments[1:]):
+            _, end = span(previous)
+            start, _ = span(following)
+            assert raw[end:start].isspace(), 'body argument trivia contains comments; no edit is permitted'
+            edit(end, start, ', ', 'owned value root application argument separator')
+        _, last_end = span(arguments[-1])
+        edit(last_end, last_end, ')', 'owned value root application closing delimiter')
     declarations.append(decl['sourceName'])
 
 assert declarations, 'no supported native declaration heads'
@@ -103,7 +118,7 @@ args.output.write_bytes(converted)
 args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
-    'scope': 'typed top-level/explicit owned nested declaration heads and single parenthesized type-call adjacency only; native bodies and other commands preserved byte for byte',
+    'scope': 'typed top-level/explicit owned nested declaration heads, single type-call adjacency, and owned root value applications with parenthesized arguments only; argument bodies, quotations and other native commands preserved byte for byte',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_COMPILER_HEAD_MIGRATION: planned ' + str(len(declarations)), flush=True)
