@@ -2508,6 +2508,35 @@
       "artifactId": 13618597372,
       "artifactSha256": "c52865ecad9ffe006e8c34c06128dc2e0672cb6b10f67594c99bd2cfcda14c57",
       "nextCandidate": "Native Lake bootstrap mode with pinned SDK include headers; no source/kernel/compiler semantic relaxation"
+    },
+    "bootstrapCandidate": {
+      "checkpoint": {
+        "sourceCommit": "46541521a95ac7829279faf441f922a977061f6f",
+        "runnerCommit": "8f31edbc9012876b9b0024f97f5db6e972e938d1",
+        "run": "https://github.com/dwijayuda/pskernel/actions/runs/42484334810",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "projectJob": 128742816345,
+        "nativeJob": 128742815964,
+        "hostJob": 128742816215,
+        "projectArtifact": {
+          "id": 13618417596,
+          "sha256": "3afec24187928ff6612d82a83e9d1a649f0e3bb5e48ffe3cf139db6f692045e8"
+        },
+        "nativeArtifact": {
+          "id": 13619106570,
+          "sha256": "b2606413204ed50d1baba66b0e3f7f85b84db5ca7db858e457e81140bf96d5d0"
+        },
+        "proofJob": 128742816265,
+        "proofArtifact": {
+          "id": 13618907619,
+          "sha256": "8d01f936943a3d4026802436cec9cba03234ff63adf6f448c0ab198702cceb01"
+        }
+      },
+      "status": "PREREQUISITE_JOBS_PASS_COMPILER_STAGE1_RUNNING",
+      "compilerStage1Job": 128743130971,
+      "bootstrapMode": "native Lake bootstrap=true; package identity none; pinned SDK include headers",
+      "note": "Compiler-source and fixed-point qualification remain open; prior failure is retained separately."
     }
   }
 }
