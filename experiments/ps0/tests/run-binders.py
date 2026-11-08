@@ -21,6 +21,10 @@ fixture = 'tests/v1/binder_operands.ps'
 run(['lake', 'exe', 'ps0', 'check', fixture])
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'BinderOperands', work / 'native'])
 assert 'PS0_BINDERS:3:3:2:3:3:3' in run([work / 'native/BinderOperands'])
+heads = 'tests/v1/mixed_signature_heads.ps'
+run(['lake', 'exe', 'ps0', 'check', heads])
+run(['lake', 'exe', 'ps0', 'build-native', heads, 'SignatureHeads', work / 'heads-native'])
+assert 'PS0_SIGNATURE_HEADS:3:3:3' in run([work / 'heads-native/SignatureHeads'])
 prefix = 'function add(x: Nat, y: Nat): Nat := x + y\n'
 for name, decl, reason in [
     ('default-gap', 'def bad (x : Nat := add (1, 2)) : Nat := x', 'PS0V1-CALL-GAP'),

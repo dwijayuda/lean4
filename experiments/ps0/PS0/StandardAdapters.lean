@@ -23,7 +23,7 @@ scoped syntax (name := ps0StandardAbbrev) (priority := 2000)
 scoped syntax (name := ps0StandardTheorem) (priority := 2000)
   declModifiers "theorem " declId psDeclBinder* ":" psTerm ":=" psTerm : command
 scoped syntax (name := ps0StandardExample) (priority := 2000)
-  declModifiers "example " psDeclBinder* ":" psTerm ":=" psTerm : command
+  declModifiers "example " psDeclBinder* (":" psTerm)? ":=" psTerm : command
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardDef)
@@ -54,11 +54,11 @@ macro_rules (kind := ps0StandardTheorem)
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardExample)
-  | `($mods:declModifiers example $bs:psDeclBinder* : $ty:psTerm := $body:psTerm) => do
+  | `($mods:declModifiers example $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm) => do
       let bs ← PS0.Binders.lowerTelescope bs
-      let ty ← nativeTerm ty
+      let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.example| example $bs:bracketedBinder* : $ty:term := $body:term)
+      let decl ← `(Lean.Parser.Command.example| example $bs:bracketedBinder* $[: $ty:term]? := $body:term)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 scoped syntax (name := ps0StandardFunction) (priority := 2000)
@@ -71,6 +71,49 @@ macro_rules (kind := ps0StandardFunction)
       let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? := $body:term)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
+
+scoped syntax (name := ps0StandardOpaque) (priority := 2000)
+  declModifiers "opaque " declId psDeclBinder* ":" psTerm (":=" psTerm)? : command
+scoped syntax (name := ps0StandardAxiom) (priority := 2000)
+  declModifiers "axiom " declId psDeclBinder* ":" psTerm : command
+scoped syntax (name := ps0StandardConst) (priority := 2000)
+  declModifiers "const " declId (":" psTerm)? ":=" psTerm : command
+scoped syntax (name := ps0StandardInstance) (priority := 2000)
+  declModifiers attrKind "instance" optNamedPrio (declId)? psDeclBinder* ":" psTerm ":=" psTerm : command
+
+open scoped PS0.StandardAdapters in
+macro_rules (kind := ps0StandardOpaque)
+  | `($mods:declModifiers opaque $name:declId $bs:psDeclBinder* : $ty:psTerm $[:= $body:psTerm]?) => do
+      let bs ← PS0.Binders.lowerTelescope bs
+      let ty ← nativeTerm ty
+      let body ← body.mapM nativeTerm
+      let decl ← `(Lean.Parser.Command.opaque| opaque $name:declId $bs:bracketedBinder* : $ty:term $[:= $body:term]?)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
+
+open scoped PS0.StandardAdapters in
+macro_rules (kind := ps0StandardAxiom)
+  | `($mods:declModifiers axiom $name:declId $bs:psDeclBinder* : $ty:psTerm) => do
+      let bs ← PS0.Binders.lowerTelescope bs
+      let ty ← nativeTerm ty
+      let decl ← `(Lean.Parser.Command.axiom| axiom $name:declId $bs:bracketedBinder* : $ty:term)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
+
+open scoped PS0.StandardAdapters in
+macro_rules (kind := ps0StandardConst)
+  | `($mods:declModifiers const $name:declId $[: $ty:psTerm]? := $body:psTerm) => do
+      let ty ← ty.mapM nativeTerm
+      let body ← nativeTerm body
+      let decl ← `(Lean.Parser.Command.definition| def $name:declId $[: $ty:term]? := $body:term)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
+
+open scoped PS0.StandardAdapters in
+macro_rules (kind := ps0StandardInstance)
+  | `($mods:declModifiers $kind:attrKind instance $prio:optNamedPrio $[$name:declId]? $bs:psDeclBinder* : $ty:psTerm := $body:psTerm) => do
+      let bs ← PS0.Binders.lowerTelescope bs
+      let ty ← nativeTerm ty
+      let body ← nativeTerm body
+      let decl ← `(Lean.Parser.Command.instance| $kind:attrKind instance $prio:optNamedPrio $[$name:declId]? $bs:bracketedBinder* : $ty:term := $body:term)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 end PS0.StandardAdapters
