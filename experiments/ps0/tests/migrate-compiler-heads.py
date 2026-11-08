@@ -99,8 +99,13 @@ for command in original_commands(snapshot['commands']):
         start, _ = span(following)
         assert raw[end:start].isspace(), 'group trivia must be whitespace; comments are never discarded'
         edit(end - 1, start + 1, ', ', 'merge consecutive typed groups in source order')
-    application = decl.get('valueApplication')
-    if application is not None and any(a['kind'] == 'Lean.Parser.Term.paren' for a in application['arguments']):
+    root = decl.get('valueApplication')
+    applications = []
+    if root is not None and any(a['kind'] == 'Lean.Parser.Term.paren' for a in root['arguments']):
+        applications = [root, *decl.get('lambdaBodyApplications', [])]
+    for application in applications:
+        if application is None or not any(a['kind'] == 'Lean.Parser.Term.paren' for a in application['arguments']):
+            continue
         arguments = application['arguments']
         assert all(a['kind'] != 'Lean.Parser.Term.namedArgument' for a in arguments), 'named body arguments need their own source role'
         function_end = application['functionRange']['end']
@@ -130,7 +135,7 @@ args.output.write_bytes(converted)
 args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
-    'scope': 'typed explicit/default/instance telescopes and named values in top-level/explicit owned nested declaration heads, single type/default-call adjacency, and owned root value applications with parenthesized arguments only; argument bodies, quotations and other native commands preserved byte for byte',
+    'scope': 'typed explicit/default/instance telescopes and named values in explicit source declaration slots, single type/default-call adjacency, and owned root value calls plus direct lambda-body call roots within their arguments; original argument nodes, quotations and unrelated native commands preserved',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_COMPILER_HEAD_MIGRATION: planned ' + str(len(declarations)), flush=True)

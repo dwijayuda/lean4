@@ -13,6 +13,7 @@ declare_syntax_cat psTactic
 declare_syntax_cat psDoSeq
 declare_syntax_cat psCallArg
 declare_syntax_cat psHead
+declare_syntax_cat psFunBinder
 declare_syntax_cat psDoElem
 declare_syntax_cat psDoItem
 
@@ -23,6 +24,20 @@ syntax (name := ps0NativeDoBridge) (priority := low) doSeq : psDoSeq
 syntax (name := ps0NativeDoElemBridge) (priority := low) doElem : psDoElem
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
+
+syntax (name := ps0NativeFunBinderBridge) (priority := low) Lean.Parser.Term.funBinder : psFunBinder
+syntax (name := ps0FunExplicit) (priority := high)
+  "(" Lean.Parser.Term.binderIdent+ ":" psTerm ")" : psFunBinder
+syntax (name := ps0FunImplicit) (priority := high)
+  "{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}" : psFunBinder
+syntax (name := ps0FunStrict) (priority := high)
+  Lean.Parser.Term.strictImplicitLeftBracket Lean.Parser.Term.binderIdent+
+  (":" psTerm)? Lean.Parser.Term.strictImplicitRightBracket : psFunBinder
+syntax (name := ps0FunInstance) (priority := high)
+  "[" Lean.Parser.Term.optIdent psTerm "]" : psFunBinder
+def ps0LambdaToken := Lean.Parser.unicodeSymbol "λ" "fun" (preserveForPP := true)
+syntax:max (name := ps0HostLambda) (priority := high)
+  ps0LambdaToken psFunBinder+ (":" psTerm)? "=>" psTerm : psTerm
 
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
   ident noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
@@ -96,6 +111,11 @@ partial def lower (category : Name) (source : Lean.Syntax) :
         let yes : TSyntax `term := ⟨← lower `psTerm yes.raw⟩
         let no : TSyntax `term := ⟨← lower `psTerm no.raw⟩
         return (← `(if $cond then $yes else $no)).raw
+    | `(psTerm| fun $binders:psFunBinder* $[: $ty:psTerm]? => $body:psTerm) => do
+        let binders ← binders.mapM fun binder => lowerFunBinder binder.raw
+        let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        return (← `(fun $binders:funBinder* $[: $ty:term]? => $body:term)).raw
     | `(psTerm| by { $[$items:psTactic];* }) => do
         let items ← items.mapM fun item => do
           return (⟨← lower `psTactic item.raw⟩ : TSyntax `tactic)
@@ -164,6 +184,30 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
       return (← `(doElem| $value:term)).raw
   | `(psDoElem| $native:doElem) => return native.raw
   | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
+
+partial def lowerFunType (optionalType : Lean.Syntax) : MacroM Lean.Syntax := do
+  if optionalType.getArgs.isEmpty then return optionalType
+  return optionalType.setArg 1 (← lower `psTerm optionalType[1])
+
+partial def lowerFunBinder (source : Lean.Syntax) :
+    MacroM (TSyntax ``Lean.Parser.Term.funBinder) := withRef source do
+  if source.isOfKind ``ps0NativeFunBinderBridge then return ⟨source[0]⟩
+  if source.isOfKind ``ps0FunExplicit then
+    let names := source[1].getArgs
+    let head := if names.size == 1 then names[0]! else
+      .node (loweringInfo source) ``Lean.Parser.Term.app #[names[0]!, mkNullNode (names.extract 1 names.size)]
+    let head : TSyntax `term := ⟨head⟩
+    let ty : TSyntax `term := ⟨← lower `psTerm source[3]⟩
+    return ⟨(← `(($head:term : $ty:term))).raw⟩
+  if source.isOfKind ``ps0FunImplicit || source.isOfKind ``ps0FunStrict then
+    let kind := if source.isOfKind ``ps0FunImplicit then
+      ``Lean.Parser.Term.implicitBinder else ``Lean.Parser.Term.strictImplicitBinder
+    return ⟨.node (loweringInfo source) kind
+      #[source[0], source[1], ← lowerFunType source[2], source[3]]⟩
+  if source.isOfKind ``ps0FunInstance then
+    return ⟨.node (loweringInfo source) ``Lean.Parser.Term.instBinder
+      #[source[0], source[1], ← lower `psTerm source[2], source[3]]⟩
+  Macro.throwError "PS0V1-LAMBDA-BINDER: unsupported owned lambda binder"
 
 partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   match source with

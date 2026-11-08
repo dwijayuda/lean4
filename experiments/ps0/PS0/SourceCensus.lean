@@ -28,15 +28,31 @@ private partial def signatureSyntax (source : Syntax) : Json :=
     ("atom", if source.isAtom then toJson source.getAtomVal else .null),
     ("args", toJson (source.getArgs.map signatureSyntax))]
 
-private def valueApplication (native : Syntax) : Json := Id.run do
-  unless native.isOfKind ``Lean.Parser.Command.definition &&
-      native[3].isOfKind ``Lean.Parser.Command.declValSimple do return .null
-  let value := native[3][1]
+private def application (value : Syntax) : Json := Id.run do
   unless value.isOfKind ``Lean.Parser.Term.app do return .null
   return Json.mkObj [
     ("range", sourceRange value), ("functionRange", sourceRange value[0]),
     ("arguments", toJson (value[1].getArgs.map fun arg => Json.mkObj [
       ("kind", toJson arg.getKind.toString), ("range", sourceRange arg)]))]
+
+private def valueApplication (native : Syntax) : Json := Id.run do
+  unless native.isOfKind ``Lean.Parser.Command.definition &&
+      native[3].isOfKind ``Lean.Parser.Command.declValSimple do return .null
+  return application native[3][1]
+
+private def lambdaBodyApplications (native : Syntax) : Array Json := Id.run do
+  unless native.isOfKind ``Lean.Parser.Command.definition &&
+      native[3].isOfKind ``Lean.Parser.Command.declValSimple do return #[]
+  let value := native[3][1]
+  unless value.isOfKind ``Lean.Parser.Term.app do return #[]
+  let mut result := #[]
+  for arg in value[1].getArgs do
+    let body := if arg.isOfKind ``Lean.Parser.Term.paren then arg[1] else arg
+    if body.isOfKind ``Lean.Parser.Term.fun && body[1].isOfKind ``Lean.Parser.Term.basicFun then
+      match application body[1][3] with
+      | .null => pure ()
+      | call => result := result.push call
+  return result
 
 private def declaration (source : Syntax) : Json := Id.run do
   let kind := source.getKind
@@ -62,7 +78,8 @@ private def declaration (source : Syntax) : Json := Id.run do
         ("sourceName", toJson native[1][0].getId.toString),
         ("keywordRange", sourceRange native[0]), ("nameRange", sourceRange native[1]),
         ("signatureRange", sourceRange native[2]), ("signatureSyntax", signatureSyntax native[2]),
-        ("valueApplication", valueApplication native)]
+        ("valueApplication", valueApplication native),
+        ("lambdaBodyApplications", toJson (lambdaBodyApplications native))]
   return .null
 
 private partial def command (source : Syntax) : Json :=
