@@ -17,7 +17,7 @@ def projectRoots : Array Name := (((get_config? roots).getD "Demo,NativeSupport"
 def projectMain : Name := ((get_config? rootModule).getD "Demo.Main").toName
 def projectDriver : FilePath := FilePath.mk ((get_config? driver).getD ".lake/build/bin/ps0")
 
-target ps0DriverInput _ : FilePath := inputBinFile projectDriver
+target ps0DriverInput : FilePath := inputBinFile projectDriver
 
 def projectModules : Array Name :=
   (((get_config? moduleNames).getD "").splitOn ",").toArray.filterMap fun (line : String) =>
