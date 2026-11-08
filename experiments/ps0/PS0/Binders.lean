@@ -15,12 +15,12 @@ namespace PS0.Binders
 declare_syntax_cat psBinderParam
 declare_syntax_cat psDeclBinder
 
-def binderDefault := leading_parser " := " >> Lean.Parser.categoryParser `psTerm 0
-def binderSuffix := Lean.Parser.Term.binderTactic <|> binderDefault
-
-syntax ident ":" psTerm (binderSuffix)? : psBinderParam
+-- Keep default operands in parser descriptors. A closed Parser constant compiled
+-- into the running compiler can alias a declaration being rebuilt in that same
+-- module; inline descriptors need no such native constant lookup.
+syntax ident ":" psTerm (Lean.Parser.Term.binderTactic <|> (" := " psTerm))? : psBinderParam
 syntax (name := psCommaBinder) "(" sepBy1(psBinderParam, ",", "," ppSpace, allowTrailingSep) ")" : psDeclBinder
-syntax (name := psExplicitBinder) "(" Lean.Parser.Term.binderIdent+ (":" psTerm)? (binderSuffix)? ")" : psDeclBinder
+syntax (name := psExplicitBinder) "(" Lean.Parser.Term.binderIdent+ (":" psTerm)? (Lean.Parser.Term.binderTactic <|> (" := " psTerm))? ")" : psDeclBinder
 syntax (name := psImplicitBinder) "{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}" : psDeclBinder
 syntax (name := psStrictBinder) "⦃" Lean.Parser.Term.binderIdent+ (":" psTerm)? "⦄" : psDeclBinder
 syntax (name := psAsciiStrictBinder) "{{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}}" : psDeclBinder
@@ -41,7 +41,9 @@ private def lowerSuffix (optionalSuffix : Syntax) : MacroM Syntax := do
   if optionalSuffix.getArgs.isEmpty then return optionalSuffix
   let suffix := optionalSuffix[0]
   if suffix.isOfKind ``Lean.Parser.Term.binderTactic then return optionalSuffix
-  unless suffix.isOfKind ``binderDefault do Macro.throwError "PS0V1-BINDER-SUFFIX: unsupported default"
+  unless suffix.isOfKind nullKind && suffix.getArgs.size == 2 && suffix[0].isAtom &&
+      suffix[0].getAtomVal == ":=" do
+    Macro.throwError "PS0V1-BINDER-SUFFIX: unsupported default"
   return mkNullNode #[.node (origin suffix) ``Lean.Parser.Term.binderDefault
     #[suffix[0], ← PS0.Syntax.lower `psTerm suffix[1]]]
 
