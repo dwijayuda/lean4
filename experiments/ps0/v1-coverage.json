@@ -3093,9 +3093,16 @@
       "source": "abf3585d99c921fe02697b679867a0a55e433168",
       "pr": 226,
       "run": 42517718338,
-      "status": "IN_PROGRESS",
+      "status": "STAGE_ONE_PASS_STAGE_TWO_FAIL_UNKNOWN_CENSUS_OPTION",
       "scope": "full native-compatible forest plus actual frontend census, not canonical PS grammar migration",
-      "stage1Job": 128844671227
+      "stage1Job": 128844671227,
+      "stageTwo": {
+        "job": 128852603767,
+        "status": "FAIL_UNKNOWN_CENSUS_OPTION_AT_MODERN_COMPILER_STARTUP",
+        "artifact": 13632814291,
+        "sha256": "c9fb98ee7a52d05bbfa93f137bd7fd8745459dddc9204b36233080e2bf7e6817",
+        "observed": "Init.Prelude and Init.Grind.ToInt reject unknown ps0.sourceCensusPath. Stage two does not reach complete rebuild/fixed-point comparison."
+      }
     },
     "failedInlineCandidate": {
       "source": "a21ecd55fa1b40d66ae5e8ccce64cc04ab5a0c30",
@@ -3110,10 +3117,10 @@
     "grammarMigrationComplete": false
   },
   "preludeSourceGrammarContinuation": {
-    "status": "PENDING_REAL_COMPILER_HEAD_PARITY_AFTER_FINITE_PRELUDE_STEP_PASS",
+    "status": "SUPERSEDED_BY_704C_QUALIFIED_FINITE_PRELUDE_AND_COMPILER_HEAD_CHECKPOINT",
     "source": "263eb3f8693e0b2f9f57ea0418e1babdfce192f7",
     "runner": "087035c38c30ad1a959d6279abdefe4bfe2536cc",
-    "run": 42520414613,
+    "run": 42520917053,
     "sourcePR": 12,
     "runnerPR": 227,
     "fixture": "tests/run-prelude-grammar.py",
@@ -3425,7 +3432,10 @@
     "sha256": "2395167f3782944cf4291efe55a10d1185f9eec6244493e0df985132e30e7308",
     "stageTwo": {
       "job": 128852603767,
-      "status": "IN_PROGRESS"
+      "status": "FAIL_UNKNOWN_CENSUS_OPTION_AT_MODERN_COMPILER_STARTUP",
+      "artifact": 13632814291,
+      "sha256": "c9fb98ee7a52d05bbfa93f137bd7fd8745459dddc9204b36233080e2bf7e6817",
+      "observed": "Init.Prelude and Init.Grind.ToInt reject unknown ps0.sourceCensusPath. Stage two does not reach complete rebuild/fixed-point comparison."
     },
     "scope": "Full native-compatible .ps forest and same-frontend/origin census join. Selected source declaration rows remain native-compatible; this does not qualify canonical PS grammar source migration.",
     "grammarMigrationComplete": false,
@@ -3452,6 +3462,191 @@
         "sha256": "36bbca3bb0888b3d216e42074a9e1743dd40c69b3a934cc7a4d659e02d90093c"
       }
     ]
+  },
+  "preludeQualifiedCompilerHeadEvidence": {
+    "status": "PASS_FINITE_PRELUDE_GRAMMAR_AND_REAL_COMPILER_HEAD_PARITY_ALL_FOUR_REGRESSIONS",
+    "source": "704c5614e15981145260f5aac1ea8a891875cf12",
+    "runner": "b5a45855bbee9413efa7720d6c7cad673a31c347",
+    "run": 42521766675,
+    "jobs": {
+      "project": 128856670616,
+      "native": 128856670515,
+      "proofLinked": 128856670295,
+      "hostContract": 128856670557
+    },
+    "artifacts": [
+      {
+        "id": 13633876770,
+        "name": "ps0-external-704c5614e15981145260f5aac1ea8a891875cf12-42521766675",
+        "sha256": "6e5897351d9214d9193e6c6ad2c3a586ca923e164d0ad1bbc7c9daffb3fb15ff"
+      },
+      {
+        "id": 13633751880,
+        "name": "ps0-native-704c5614e15981145260f5aac1ea8a891875cf12-42521766675",
+        "sha256": "785a657ca64f790eddaa7770e8aff62698a96d5881d6f4a75bdcc30181582fe7"
+      },
+      {
+        "id": 13633468541,
+        "name": "ps0-project-704c5614e15981145260f5aac1ea8a891875cf12-42521766675",
+        "sha256": "e24f2a84cd21fac865839f8a78b919737330f7b0fb55769f88863bc9ec0b2745"
+      }
+    ],
+    "focused": {
+      "runner": "aedb625518e1550409ebbddbe281a2ecefc8fbd9",
+      "run": 42521772271,
+      "job": 128856609143,
+      "artifact": 13633811615,
+      "sha256": "2f62aba5be400a8e1b2c2d1a2fd26edb4d796d8cc4e0f67bf174aeb3eeed7d7f"
+    },
+    "oracles": [
+      "PS0_PRELUDE_GRAMMAR:42:3",
+      "PS0_PRELUDE_GRAMMAR_NO_HIDDEN_IMPORTS: PASS",
+      "PS0_PINNED_COMPILER_HEADS_NATIVE_PARITY: PASS"
+    ],
+    "compilerHeadEvidence": {
+      "source": "704c5614e15981145260f5aac1ea8a891875cf12",
+      "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "pinned_blob": "20b7acf5d684789ab52b81dda7def4b19568213c",
+      "module": "Lean.Compiler.ClosedTermCache",
+      "comparisons": {
+        "ir/Lean/Compiler/ClosedTermCache.c": {
+          "native": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2",
+          "ps": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2"
+        },
+        "lib/lean/Lean/Compiler/ClosedTermCache.olean": {
+          "native": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e",
+          "ps": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e"
+        }
+      },
+      "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+      "scope": "three real typed compiler declaration heads; native bodies retained; not whole grammar migration",
+      "grammar_migration_complete": false,
+      "verified_execution": false
+    },
+    "headPlan": {
+      "schema": "ps0-compiler-head-migration/1",
+      "source_sha256": "e1184350de6ef6ade1dc0f34d7320a4fc7445c5f9a7132d9ed7fc1f5518c38b9",
+      "result_sha256": "7289f2d309b04c5b9935d4bf0c4252c117ca3e46b7edb97b94606fc9b6842548",
+      "declarations": [
+        "cacheClosedTermName",
+        "getClosedTermName?",
+        "isClosedTermName"
+      ],
+      "edits": [
+        {
+          "start": 935,
+          "end": 938,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 958,
+          "end": 959,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 977,
+          "end": 980,
+          "old": ") (",
+          "new": ", ",
+          "role": "merge consecutive typed groups in source order"
+        },
+        {
+          "start": 988,
+          "end": 991,
+          "old": ") (",
+          "new": ", ",
+          "role": "merge consecutive typed groups in source order"
+        },
+        {
+          "start": 1170,
+          "end": 1173,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 1192,
+          "end": 1193,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 1211,
+          "end": 1214,
+          "old": ") (",
+          "new": ", ",
+          "role": "merge consecutive typed groups in source order"
+        },
+        {
+          "start": 1290,
+          "end": 1293,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 1310,
+          "end": 1311,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 1329,
+          "end": 1332,
+          "old": ") (",
+          "new": ", ",
+          "role": "merge consecutive typed groups in source order"
+        }
+      ],
+      "scope": "typed declaration heads only; native bodies and non-declaration commands preserved byte for byte",
+      "grammar_migration_complete": false,
+      "verified_execution": false
+    },
+    "inspection": {
+      "runner": "55003f656e5e26eedfcaedc0649723367596d317",
+      "run": 42521989131,
+      "job": 128857280327
+    },
+    "scope": "Three prelude test modules pass native Lake normal build/link/runtime and bootstrap-stage compilation; native quotation AST ownership, contextual aliases, strict binders, direct imports and exact source bytes are checked. Three actual pinned compiler function heads are converted using native signature syntax/ranges; native-only mode rejects them, PS grammar builds the original logical module with pinned SDK sibling metadata, and C/public-olean are byte-identical. Native bodies are retained; no full source grammar migration claim.",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "modernFrontendStartupCandidate": {
+    "status": "PENDING_LINUX_MODERN_NATIVE_FRONTEND_STARTUP",
+    "source": "9a5c59fb60407272cf2e5d5fc53ca18bf503c0c9",
+    "runner": "235624d914b939184ed067e5a52f3694d564389e",
+    "focusedRunner": "ecdf2f3921764bdcf21b14f6272baa88fc8f0762",
+    "focusedPR": 229,
+    "implementation": "PS0.SourceCensus compiler observation code and builtin initializers move from public meta section to ordinary public runtime section, matching native runtime/comptime phase separation.",
+    "fixture": "tests/run-modern-frontend-startup.py",
+    "scope": "Native Lake modern executable root must register census option and execute native module-linter callback on actual source. SDK-linked finite startup probe; no full compiler requalification yet.",
+    "verified_execution": false
+  },
+  "nativeCensusSummary": {
+    "status": "PASS_NATIVE_CENSUS_METADATA_INSPECTION",
+    "source": "abf3585d99c921fe02697b679867a0a55e433168",
+    "runner": "f956c7130102647015a834c8b433ec95236eb7eb",
+    "run": 42521444844,
+    "job": 128855617016,
+    "artifact": 13632644276,
+    "sha256": "f0c6a2043fc098f45affd1c5ab9dae0c4b64696d95295e09dbb2dcd120116c5d",
+    "headCounts": {
+      "definition": 25658,
+      "theorem": 44979,
+      "instance": 5584,
+      "structure": 2445,
+      "inductive": 597,
+      "in": 987,
+      "mutual": 111
+    },
+    "scope": "Actual original top-level command heads; not all nested declarations and not a completion percentage.",
+    "verified_execution": false
   }
 }
 

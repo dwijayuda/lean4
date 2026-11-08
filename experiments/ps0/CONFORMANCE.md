@@ -1,10 +1,38 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
-## Complete native compiler census: stage one PASS, stage two running
+## Qualified prelude grammar and real compiler heads; full bootstrap still open
+
+Source **`704c5614e15981145260f5aac1ea8a891875cf12`**, runner **`b5a45855bbee9413efa7720d6c7cad673a31c347`**, Linux [run 42521766675](https://github.com/dwijayuda/pskernel/actions/runs/42521766675): **all four jobs PASS** — project **128856670616**, native **128856670515**, proof-linked **128856670295**, host **128856670557**. The existing grammar, binder/default/mixed-signature, origin recovery and recursive native Lake regressions pass together.
+
+The finite prelude grammar checks now pass, including **PS0_PRELUDE_GRAMMAR:42:3**, no inserted logical PS0 imports or changed source bytes, native quotation AST ownership, contextual `function` identifiers, owned ASCII strict binders and native compiler-stage setup options. Compiler-host metadata lookup is isolated to the executable's sibling library and pinned SDK; it cannot select a target module currently being rebuilt.
+
+**PS0_PINNED_COMPILER_HEADS_NATIVE_PARITY: PASS**: native syntax/ranges convert exactly `cacheClosedTermName`, `getClosedTermName?` and `isClosedTermName` in the original logical module **Lean.Compiler.ClosedTermCache**, pinned Git blob **20b7acf5d684789ab52b81dda7def4b19568213c**. Native-only mode rejects the converted PS heads. Both native Lake compilations produce identical C and public olean:
+- C SHA-256: `7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2`.
+- Public olean SHA-256: `f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e`.
+- Original file SHA-256: `e1184350de6ef6ade1dc0f34d7320a4fc7445c5f9a7132d9ed7fc1f5518c38b9`; converted PS SHA-256: `7289f2d309b04c5b9935d4bf0c4252c117ca3e46b7edb97b94606fc9b6842548`.
+
+This is **three typed compiler declaration heads** with unchanged native bodies and pinned SDK dependency metadata; it is not whole-module grammar closure or the complete source migration. Focused [run 42521772271](https://github.com/dwijayuda/pskernel/actions/runs/42521772271), runner **`aedb625518e1550409ebbddbe281a2ecefc8fbd9`**, job **128856609143**, also PASS; [artifact 13633811615](https://github.com/dwijayuda/pskernel/actions/runs/42521772271/artifacts/13633811615) ZIP SHA-256 `2f62aba5be400a8e1b2c2d1a2fd26edb4d796d8cc4e0f67bf174aeb3eeed7d7f`. Independent hash inspection [run 42521989131](https://github.com/dwijayuda/pskernel/actions/runs/42521989131), job **128857280327**, confirms the retained exact comparisons and edit plan.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| external | [13633876770](https://github.com/dwijayuda/pskernel/actions/runs/42521766675/artifacts/13633876770) | `6e5897351d9214d9193e6c6ad2c3a586ca923e164d0ad1bbc7c9daffb3fb15ff` |
+| native | [13633751880](https://github.com/dwijayuda/pskernel/actions/runs/42521766675/artifacts/13633751880) | `785a657ca64f790eddaa7770e8aff62698a96d5881d6f4a75bdcc30181582fe7` |
+| project | [13633468541](https://github.com/dwijayuda/pskernel/actions/runs/42521766675/artifacts/13633468541) | `e24f2a84cd21fac865839f8a78b919737330f7b0fb55769f88863bc9ec0b2745` |
+
+The earlier full compiler/census [run 42517718338](https://github.com/dwijayuda/pskernel/actions/runs/42517718338) has finished: stage one **128844671227 PASS**, **2,566 modules / 5,136 native Lake jobs**, all-module census/origin join and **72,790 native-compatible selected declaration rows / zero mapped PS**; stage two **128852603767 FAIL**, unknown **ps0.sourceCensusPath** at modern compiler startup. [Failure artifact 13632814291](https://github.com/dwijayuda/pskernel/actions/runs/42517718338/artifacts/13632814291) ZIP SHA-256 `c9fb98ee7a52d05bbfa93f137bd7fd8745459dddc9204b36233080e2bf7e6817`. No fresh full fixed point was reached.
+
+Candidate source **`9a5c59fb60407272cf2e5d5fc53ca18bf503c0c9`**, runner **`235624d914b939184ed067e5a52f3694d564389e`**, moves the census compiler module's observation code and builtin initializers into the normal runtime phase. The native modern-root startup regression must verify option registration and an actual module-linter callback before another full rebuild. This candidate is **PENDING Linux qualification**, including focused [PR #229](https://github.com/dwijayuda/pskernel/pull/229). Official Lean/R2 pins and kernel trust remain unchanged.
+
+The actual full census inspection [run 42521444844](https://github.com/dwijayuda/pskernel/actions/runs/42521444844), job **128855617016**, verifies source/binary identity and reports original top-level head counts, including **25,658 definitions**, **44,979 theorems**, **5,584 instances**, **2,445 structures**, **597 inductives**, **987 in wrappers** and **111 mutual blocks**. [Summary artifact 13632644276](https://github.com/dwijayuda/pskernel/actions/runs/42521444844/artifacts/13632644276) SHA-256 `f0c6a2043fc098f45affd1c5ab9dae0c4b64696d95295e09dbb2dcd120116c5d`. These are an adapter worklist, not completion percentages.
+
+**Goal ACTIVE / NOT COMPLETE.** Next gates: modern metacompiler runtime initialization and full fresh compiler requalification; explicit scoped/mutual source-command operands, remaining PS term/signature contexts and safe canonical source conversion; then the entire pinned forest using ProofScript syntax through native build/link and migrated fixed-point checks. Relocated compiler-host metadata packaging and automatic diagnostic/IDE remapping remain open. All broad obligations remain PENDING; all `grammarMigrationComplete` / `verified_execution` claims remain false.
+
+
+## Earlier complete native compiler census checkpoint — superseded by the final stage-two result above
 
 Pinned source **`abf3585d99c921fe02697b679867a0a55e433168`**, runner **`e78cd4479ba5b1433e8879c14de79ba27427dfdc`**, [run 42517718338](https://github.com/dwijayuda/pskernel/actions/runs/42517718338): stage one **128844671227 PASS**. All **2,566 modules** (**2,546 pinned compiler + 20 PS0**) build/link through **5,136 native Lake jobs**. Source smoke passes. Every module passes the actual-frontend/original-byte census join. There are **72,790 selected source declaration rows, all native-compatible; zero mapped-PS rows** at this checkpoint. This establishes the native-compatible baseline and full census, **not** the required canonical PS source migration.
 
-[Stage-one artifact 13632838932](https://github.com/dwijayuda/pskernel/actions/runs/42517718338/artifacts/13632838932), ZIP SHA-256 **`2395167f3782944cf4291efe55a10d1185f9eec6244493e0df985132e30e7308`**, retains the exact migrated executable, full source-command snapshots and joined hash summary. Stage two **128852603767** is **IN PROGRESS** using that exact executable. A fresh fixed-point result is not yet available.
+[Stage-one artifact 13632838932](https://github.com/dwijayuda/pskernel/actions/runs/42517718338/artifacts/13632838932), ZIP SHA-256 **`2395167f3782944cf4291efe55a10d1185f9eec6244493e0df985132e30e7308`**, retains the exact migrated executable, full source-command snapshots and joined hash summary. Stage two **128852603767** subsequently FAILED with unknown ps0.sourceCensusPath; see final evidence above. A fresh fixed-point result is not yet available.
 
 
 ## Finite prelude PS grammar step PASS; real compiler head parity pending
