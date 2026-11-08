@@ -628,19 +628,11 @@ macro_rules (kind := pscvBracedInductive)
 
 /-- The PS0 alias derives through Lean's native registered handlers. -/
 declare_syntax_cat pscvDeriver
-syntax "Repr" : pscvDeriver
-syntax "BEq" : pscvDeriver
-syntax "DecidableEq" : pscvDeriver
-syntax "Inhabited" : pscvDeriver
-syntax "Hashable" : pscvDeriver
+syntax ident : pscvDeriver
 
 private def pscvDeriverIdent (d : TSyntax `pscvDeriver) : MacroM Ident := do
   match d with
-  | `(pscvDeriver| Repr) => pure <| mkIdent `Repr
-  | `(pscvDeriver| BEq) => pure <| mkIdent `BEq
-  | `(pscvDeriver| DecidableEq) => pure <| mkIdent `DecidableEq
-  | `(pscvDeriver| Inhabited) => pure <| mkIdent `Inhabited
-  | `(pscvDeriver| Hashable) => pure <| mkIdent `Hashable
+  | `(pscvDeriver| $name:ident) => pure name
   | _ => Macro.throwUnsupported
 
 syntax (name := pscvBracedStructureDeriving)

@@ -3,6 +3,8 @@ function add(x: Nat, y: Nat): Nat := x + y
 abbrev sized (n : Nat) : Type := Fin n
 abbrev agree (x y : Nat) : Prop := x = y
 
+structure PSBinderBox where { value : Nat } deriving Inhabited, Repr
+
 def mixed (x y : Nat) {α : Type} [Inhabited α]
     (z: Nat := add(x, y), w: sized(add(z, 1)) := ⟨0, by omega⟩) : Nat := z + w.val
 def evaluatedMixed : Nat := mixed(1, 2, α := Unit)
@@ -13,6 +15,18 @@ def dependentType (x: sized(add(1, 2)), y: Nat := add(x.val, 1)) : Nat := y
 def nativeShared (x y : sized(add(1, 2))) : Nat := x.val + y.val
 def nativeInferred (x y) := Nat.add x y
 def nativeAnonymous (_ : Nat) (y: Nat, z: Nat) : Nat := y + z
+def universeId.{u} {α : Sort u} (x: α): α := x
+def strictId ⦃α : Type⦄ (x: α, y: α): α := x
+def namedInstance {α : Type} [inst : Inhabited α] (x: α, n: Nat := add(1, 2)): Nat := n
+def trailingBinder(x: Nat, y: Nat,): Nat := x + y
+def checkedUniverse : Nat := universeId(3)
+def checkedStrict : Nat := strictId(3, 4)
+def checkedNamed : Nat := namedInstance(())
+def checkedTrailing : Nat := trailingBinder(1, 2)
+example : checkedUniverse = 3 := by rfl
+example : checkedStrict = 3 := by rfl
+example : checkedNamed = 3 := by rfl
+example : checkedTrailing = 3 := by rfl
 
 function interleaved {α: Type}(x: α)[Inhabited α](n: Nat := add(1, 2)): Nat := n
 function tick {α: Type}(): Nat := add(1, 2)
@@ -43,10 +57,26 @@ macro "nativeBinder " b:bracketedBinder : term => do
   `(True)
 example : nativeBinder (x : Fin (1 + 2)) := by trivial
 
+macro "binderOrigins " b:psDeclBinder : term => do
+  let native ← PS0.Binders.lowerTelescope #[b]
+  let original := b.raw[1].getSepArgs
+  unless native.size == original.size do
+    Lean.Macro.throwError "PS0_BINDER_PARTITION"
+  for i in [:native.size] do
+    unless native[i]!.raw[1][0].eqWithInfo original[i]![0] do
+      Lean.Macro.throwError "PS0_BINDER_IDENTIFIER_ORIGIN"
+    unless native[i]!.raw[2][1].getRange? == original[i]![2].getRange? do
+      Lean.Macro.throwError "PS0_BINDER_TYPE_ORIGIN"
+    unless original[i]![3].getArgs.isEmpty do
+      unless native[i]!.raw[3][0][1].getRange? == original[i]![3][0][1].getRange? do
+        Lean.Macro.throwError "PS0_BINDER_DEFAULT_ORIGIN"
+  `(True)
+example : binderOrigins (x: sized(add(1, 2)), y: Nat := add(1, 2)) := by trivial
+
 set_option pp.explicit true in
 #check @nativeDefault
 def evaluatedDefault : Nat := nativeDefault()
-def evaluatedDependent : Nat := dependentType(⟨1, by omega⟩)
+def evaluatedDependent : Nat := dependentType(⟨1, by decide⟩)
 def evaluatedInterleaved : Nat := interleaved((), α := Unit)
 def evaluatedTick : Nat := tick(α := Unit)()
 def evaluatedAbbrev : Nat := mixedAbbrev(1, 2)
