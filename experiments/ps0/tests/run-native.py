@@ -24,7 +24,7 @@ def run(args, ok=True):
     return result.stdout
 
 def lake_build():
-    return run(['lake', '-f', 'lakefile.native.lean', '-Ksource=' + str(source),
+    return run(['lake', '-R', '-f', 'lakefile.native.lean', '-Ksource=' + str(source),
                 '-Kps0Module=NativeMain', '-KsupportDir=' + str(WORK), 'build', 'app'])
 
 def digest(path):

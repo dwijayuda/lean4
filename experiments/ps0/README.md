@@ -38,11 +38,11 @@ lake exe ps0 build-native tests/native/Main.ps NativeMain build/native-main
 For incremental development, use the underlying Lake target directly:
 
 ```sh
-lake -f lakefile.native.lean -Ksource=tests/native/Main.ps -Kps0Module=NativeMain build app
+lake -R -f lakefile.native.lean -Ksource=tests/native/Main.ps -Kps0Module=NativeMain build app
 ./.lake/build/bin/NativeMain
 ```
 
-The target composes the existing `.ps` adapters and official Lean frontend/LCNF C emitter with Lake's imported-module link information, C-to-object build and executable linker. Lake tracks source bytes, the PS0 compiler, imported Lean modules, native options and the toolchain. The CLI publishes an executable and `native-build.json` only after successful linking and refuses an existing output directory. No intermediate textual `.lean` program is generated.
+The target composes the existing `.ps` adapters and official Lean frontend/LCNF C emitter with Lake's imported-module link information, C-to-object build and executable linker. Lake tracks source bytes, the PS0 compiler, imported Lean modules, native options and the toolchain. Use `-R` so the configuration's `get_config?` values reflect the supplied source/module; compiled artifacts still use Lake's incremental cache. The CLI supplies this flag and publishes an executable and `native-build.json` only after successful linking, refusing an existing output directory. No intermediate textual `.lean` program is generated.
 
 This is native build integration, not complete PS0 source conformance or verified runtime execution. It currently supports one `.ps` entry module with toolchain and Lake-managed `.lean` dependencies. Recursive `.ps` project dependency discovery, full host operand adaptation, bootstrap `prelude` and source-origin fidelity remain open. Dependencies must be declared in the Lake configuration; `PS0NativeSupport` is the integration fixture. Linux qualification is recorded in `AI_WORK_STATE.md`.
 

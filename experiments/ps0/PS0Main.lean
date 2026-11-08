@@ -355,7 +355,7 @@ private def buildNative (path moduleName outputDir : String) : IO UInt32 := do
   let lake := (← findSysroot) / "bin" / executable
   let result ← IO.Process.output {
     cmd := lake.toString
-    args := #["-f", "lakefile.native.lean", s!"-Ksource={source}",
+    args := #["-R", "-f", "lakefile.native.lean", s!"-Ksource={source}",
       s!"-Kps0Module={moduleName}", "build", "app"]
   }
   IO.print result.stdout
