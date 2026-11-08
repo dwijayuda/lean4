@@ -74,7 +74,7 @@ private def rejectHostGap (source : Lean.Syntax) : MacroM Unit := do
 
 mutual
 partial def lower (category : Name) (source : Lean.Syntax) :
-    MacroM Lean.Syntax := withRef source do
+    MacroM Lean.Syntax := withRef source <| Macro.withIncRecDepth source do
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
@@ -103,7 +103,10 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | `(psTerm| do $seq:psDoSeq) => do
         let seq : TSyntax ``Lean.Parser.Term.doSeq := ⟨← lower `psDoSeq seq.raw⟩
         return (← `(do $seq:doSeq)).raw
-    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTerm"
+    | _ => do
+        if let some expanded ← Macro.expandMacro? source then
+          lower category expanded
+        else Macro.throwError "PS0V1-HOST-LOWER: unsupported psTerm"
   else if category == `psCommand then
     match source with
     | `(psCommand| $native:command) => return native.raw

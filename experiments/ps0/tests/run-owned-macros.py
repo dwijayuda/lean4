@@ -26,7 +26,7 @@ run(['lake', 'exe', 'ps0', 'build-native', fixture, 'OwnedMacros', work / 'nativ
 assert 'PS0_OWNED_MACROS:8:6' in run([work / 'native/OwnedMacros'], 'runtime')
 prefix = 'function add(x: Nat, y: Nat): Nat := x + y\n'
 for name, source, reason in [
-    ('expanded-gap', 'macro "badGapPS" : psTerm => `(psTerm| add (1, 2))\nconst bad: Nat := badGapPS', 'PS0V1-CALL-GAP'),
+    ('argument-gap', 'macro "passOwnedPS " x:psTerm : psTerm => pure x\nconst bad: Nat := passOwnedPS (add (1, 2))', 'PS0V1-CALL-GAP'),
     ('expanded-order', 'macro "badOrderPS" : psTerm => `(psTerm| add(x := 1, 2))\nconst bad: Nat := badOrderPS', 'PS0V1-CALL-ORDER'),
     ('macro-cycle', 'set_option maxRecDepth 64\nsyntax (name := loopOwnedPS) "loopOwnedPS" : psTerm\nmacro_rules (kind := loopOwnedPS)\n  | `(psTerm| loopOwnedPS) => `(psTerm| loopOwnedPS)\nconst bad: Nat := loopOwnedPS', 'maximum recursion depth'),
     ('unowned-result', 'syntax (name := alienOwnedPS) "alienOwnedPS" : psTerm\n@[macro alienOwnedPS]\nmeta def expandAlienOwnedPS : Lean.Macro := fun _ => return .node .none `deliberatelyUnownedNativeTerm #[]\nconst bad: Nat := alienOwnedPS', 'PS0V1-HOST-LOWER'),
