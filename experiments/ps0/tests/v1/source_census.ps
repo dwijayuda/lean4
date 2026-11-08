@@ -1,0 +1,13 @@
+/-! Census source commands, quoted data and generated declarations separately. -/
+function add(x: Nat, y: Nat): Nat := x + y
+const counted: Nat := add(1, 2)
+
+macro "emitCensusDecl" : command => do
+  let name := Lean.mkIdent `censusGenerated
+  `(command| def $name:ident : Nat := 9)
+emitCensusDecl
+
+meta def quotedDeclaration : Lean.MacroM(Lean.TSyntax `command) :=
+  `(command| def onlyQuoted : Nat := 11)
+
+def main : IO Unit := IO.println counted
