@@ -18,14 +18,14 @@ declare_syntax_cat psDeclBinder
 def binderDefault := leading_parser " := " >> Lean.Parser.categoryParser `psTerm 0
 def binderSuffix := Lean.Parser.Term.binderTactic <|> binderDefault
 
-syntax ident ":" psTerm binderSuffix? : psBinderParam
+syntax ident ":" psTerm (binderSuffix)? : psBinderParam
 syntax (name := psCommaBinder) "(" sepBy1(psBinderParam, ",", "," ppSpace, allowTrailingSep) ")" : psDeclBinder
-syntax (name := psExplicitBinder) "(" binderIdent+ (":" psTerm)? binderSuffix? ")" : psDeclBinder
-syntax (name := psImplicitBinder) "{" binderIdent+ (":" psTerm)? "}" : psDeclBinder
-syntax (name := psStrictBinder) "⦃" binderIdent+ (":" psTerm)? "⦄" : psDeclBinder
-syntax (name := psAsciiStrictBinder) "{{" binderIdent+ (":" psTerm)? "}}" : psDeclBinder
+syntax (name := psExplicitBinder) "(" Lean.Parser.Term.binderIdent+ (":" psTerm)? (binderSuffix)? ")" : psDeclBinder
+syntax (name := psImplicitBinder) "{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}" : psDeclBinder
+syntax (name := psStrictBinder) "⦃" Lean.Parser.Term.binderIdent+ (":" psTerm)? "⦄" : psDeclBinder
+syntax (name := psAsciiStrictBinder) "{{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}}" : psDeclBinder
 syntax (name := psInstanceBinder) "[" (ident ":")? psTerm "]" : psDeclBinder
-syntax (name := psIdentifierBinder) binderIdent : psDeclBinder
+syntax (name := psIdentifierBinder) Lean.Parser.Term.binderIdent : psDeclBinder
 syntax (name := psNullaryBinder) "(" ")" : psDeclBinder
 
 private def origin (source : Syntax) : SourceInfo :=
@@ -99,7 +99,7 @@ private partial def aliasKind (source : Syntax) : Nat :=
       source.isOfKind ``psAsciiStrictBinder || source.isOfKind ``psInstanceBinder then 1
   else 0
 
-def lowerTelescope (parts : Array (TSyntax `psDeclBinder)) (alias := false) :
+def lowerTelescope (parts : Array (TSyntax ``psDeclBinder)) (alias := false) :
     MacroM (Array (TSyntax ``Lean.Parser.Term.bracketedBinder)) := do
   let mut result : Array Syntax := #[]
   let mut previousExplicit := false
