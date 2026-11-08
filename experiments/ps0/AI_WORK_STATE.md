@@ -1,5 +1,16 @@
 # PS0 — AI Work State (9 November 2026)
 
+## Recursive compiler-head and root-value migration candidate
+
+[Source PR #14](https://github.com/dwijayuda/lean4/pull/14), source **`a0e24b19e6dc7fc87dba1d06f8cf17938e4f4f31`**; [runner PR #231](https://github.com/dwijayuda/pskernel/pull/231), runner **`4ba47bcd4451874addc1b4df9c49b32d274e7cd1`**; [run 42527051005](https://github.com/dwijayuda/pskernel/actions/runs/42527051005): **IN PROGRESS**.
+
+The actual pinned **Lean.Compiler.LCNF.DeclHash** blob **5f818560cb8fcba0df6f64acb6bdc01c48425189** is the next real-module probe. Native census ranges plan four typed heads (`hashParams`, `hashAlt`, `hashAlts`, `hashCode`), including recursive mutual members. Owned binder-type single-call adjacency is normalized; root-value application metadata retains only function/argument ranges, so call delimiters can be converted without walking lambda, match, quotation or DSL bodies. Native-only rejection and identical C/public-olean output remain required.
+
+Test candidate **9afb5879612d5d6bf35e56f20eb0899512669727**, runner **885d87e714905047feaccd852cefe1856de1c2d6**, [run 42526462886](https://github.com/dwijayuda/pskernel/actions/runs/42526462886), project **128871135830**, planned four heads and passed the native baseline, then failed PS compilation at the original spaced-parenthesized `foldl` value operand. The newer candidate addresses that explicit owned root role. Exact failure artifact digests remain in both JSON ledgers. The older ClosedTermCache parity stays qualified separately. **No DeclHash parity or whole-body grammar closure is claimed yet.**
+
+The independent full compiler/census [run 42522976977](https://github.com/dwijayuda/pskernel/actions/runs/42522976977) at source **28904e5a7ccb19a15e311ecc654541dc0ee639ec**, runner **484868307c6611fedf1a464e2e102c02b8ad5855** now has **stage one 128861032581 PASS**: **2,567 modules** (2,546 pinned + 21 PS0), **5,138 native Lake jobs**, source smoke and all-module census/origin join PASS; **72,792 selected native-compatible rows / zero mapped PS rows**. [Artifact 13635566244](https://github.com/dwijayuda/pskernel/actions/runs/42522976977/artifacts/13635566244) ZIP SHA-256 `c4443462ef060abcbe8a4033f5f01325f7c9f91cc6ece84b5c8b3c14c4ad5be0`. **Stage two 128870983007 is IN PROGRESS**, using that exact migrated executable. This native-compatible baseline is separate from canonical ProofScript source migration. Goal ACTIVE / NOT COMPLETE.
+
+
 ## Scoped/mutual PS source-command operands — finite Linux checkpoint
 
 Qualified source **`27e58f278b2ceb74bab4535245b15dd4668ad331`**, runner **`7ebf8265bb5ec8296c8ace5031b039b043452a28`**, [run 42525540427](https://github.com/dwijayuda/pskernel/actions/runs/42525540427): **all four jobs PASS** — project **128868235000**, native **128868234727**, proof-linked **128868234968**, host **128868234969**.
@@ -16,7 +27,7 @@ The new actual-source census traverses only the explicitly owned native `in` RHS
 
 Failed parser-field/layout, fallback/indentation and host-lexer candidates are retained with source/runner/run/job/artifact digests in both JSON ledgers. Temporary traces are removed. The legacy `pscvNonExplicitBinder` still reserves double-brace tokens in host imports; cleaning up that lexical fidelity gap remains open. Native `attribute`/`variable`/`omit` prefix parsers are reused, but their other PS operand roles are not separately qualified by this checkpoint.
 
-The independent full compiler/census [run 42522976977](https://github.com/dwijayuda/pskernel/actions/runs/42522976977) remains pinned to earlier runtime-qualified source **28904e5a7ccb19a15e311ecc654541dc0ee639ec**, runner **484868307c6611fedf1a464e2e102c02b8ad5855**; stage-one job **128861032581** is still running as last observed. It does not qualify this newer grammar increment. Goal remains **ACTIVE / NOT COMPLETE**; broad obligations and execution-certificate claims are not promoted.
+The independent full compiler/census [run 42522976977](https://github.com/dwijayuda/pskernel/actions/runs/42522976977) remains pinned to earlier runtime-qualified source **28904e5a7ccb19a15e311ecc654541dc0ee639ec**, runner **484868307c6611fedf1a464e2e102c02b8ad5855**; stage-one job **128861032581** subsequently PASSED; see the updated complete-forest evidence above. It does not qualify this newer grammar increment. Goal remains **ACTIVE / NOT COMPLETE**; broad obligations and execution-certificate claims are not promoted.
 
 
 ## Current modern metacompiler startup checkpoint — 9 November 2026

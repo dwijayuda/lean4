@@ -3839,6 +3839,77 @@
     ],
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "recursiveCompilerHeadCandidate": {
+    "status": "PENDING_NATIVE_RECURSIVE_COMPILER_HEAD_AND_ROOT_VALUE_PARITY",
+    "source": "a0e24b19e6dc7fc87dba1d06f8cf17938e4f4f31",
+    "runner": "4ba47bcd4451874addc1b4df9c49b32d274e7cd1",
+    "run": 42527051005,
+    "sourcePR": 14,
+    "runnerPR": 231,
+    "module": "Lean.Compiler.LCNF.DeclHash",
+    "pinnedBlob": "5f818560cb8fcba0df6f64acb6bdc01c48425189",
+    "expectedDeclarations": [
+      "hashParams",
+      "hashAlt",
+      "hashAlts",
+      "hashCode"
+    ],
+    "roles": [
+      "typed original command heads, including explicit mutual members",
+      "owned single parenthesized binder type-call adjacency",
+      "owned root value application delimiters/argument separators, preserving argument bodies and quotations"
+    ],
+    "failedCandidate": {
+      "source": "9afb5879612d5d6bf35e56f20eb0899512669727",
+      "runner": "885d87e714905047feaccd852cefe1856de1c2d6",
+      "run": 42526462886,
+      "job": 128871135830,
+      "observed": "planner produced four real heads and native baseline compiled; PS compilation rejected spaced parenthesized foldl root value operand at converted DeclHash line 29. Previous ClosedTermCache parity and other regression steps pass.",
+      "artifacts": [
+        {
+          "id": 13635980858,
+          "name": "ps0-external-9afb5879612d5d6bf35e56f20eb0899512669727-42526462886",
+          "sha256": "85904ef251797964422ffdb0d8c9a954e55b3b31d747553b13ea487554b27807"
+        },
+        {
+          "id": 13635721182,
+          "name": "ps0-project-9afb5879612d5d6bf35e56f20eb0899512669727-42526462886",
+          "sha256": "08643c70ffb4782165aca2948b62fe71dcee51c27d9b076aa4b7abc748e8203b"
+        },
+        {
+          "id": 13635591354,
+          "name": "ps0-native-9afb5879612d5d6bf35e56f20eb0899512669727-42526462886",
+          "sha256": "8d1f9142e7530ce58b90eafe6540bfa6763bddc8e0ceb007da30091e25f553c0"
+        }
+      ]
+    },
+    "scope": "four real compiler declaration heads and finite owned expression operands; native match/lambda bodies remain native; no whole-corpus completion claim",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "runtimeQualifiedCompilerForestStageOne": {
+    "source": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+    "runner": "484868307c6611fedf1a464e2e102c02b8ad5855",
+    "run": 42522976977,
+    "stageOne": {
+      "status": "PASS",
+      "job": 128861032581,
+      "modules": 2567,
+      "pinnedModules": 2546,
+      "ps0Modules": 21,
+      "lakeJobs": 5138,
+      "selectedNativeCompatibleDeclarations": 72792,
+      "mappedPsSelectedDeclarations": 0,
+      "artifact": 13635566244,
+      "sha256": "c4443462ef060abcbe8a4033f5f01325f7c9f91cc6ece84b5c8b3c14c4ad5be0"
+    },
+    "stageTwo": {
+      "job": 128870983007,
+      "status": "IN_PROGRESS"
+    },
+    "scope": "complete native-compatible source forest and source census baseline; not canonical PS grammar migration",
+    "verified_execution": false
   }
 }
 
