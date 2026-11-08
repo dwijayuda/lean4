@@ -36,9 +36,9 @@ lean_exe ps0project where
   srcDir := projectSource
   supportInterpreter := true
 
-def ps0Input (mod : Module) : FetchM (Job ModuleInput) := do
+def ps0Input (mod : Lake.Module) : FetchM (Job ModuleInput) := do
   let path := mod.leanFile.withExtension "ps"
-  if !(← path.pathExists) then return ← Module.inputFacetConfig.run mod
+  if !(← path.pathExists) then return ← Lake.Module.inputFacetConfig.run mod
   if ← mod.leanFile.pathExists then error s!"PS0-SOURCE-COLLISION: {path} and {mod.leanFile}"
   if mod.name.toString.contains '/' || mod.name.toString.contains '\\' then
     error "PS0-MODULE-PATH: invalid source module component"
@@ -66,9 +66,9 @@ def ps0Input (mod : Module) : FetchM (Job ModuleInput) := do
       ("header", toJson header)]).pretty
     return {path, header, imports, trace}
 
-@[module_facet]
+@[«module_facet»]
 def ps0InputFacet : ModuleFacetDecl :=
-  .mk Module.inputFacet (mkFacetJobConfig ps0Input (buildable := false))
+  .mk inputFacet (mkFacetJobConfig ps0Input (buildable := false))
 
 def ps0CompilerContext (ctx : BuildContext) : BuildContext :=
   let ws := ctx.toContext.workspace
@@ -76,10 +76,10 @@ def ps0CompilerContext (ctx : BuildContext) : BuildContext :=
   let ws : Workspace := {ws with lakeEnv := {ws.lakeEnv with lean := lean}}
   {ctx with opaqueWs := ws}
 
-@[module_facet]
+@[«module_facet»]
 def ps0ElabFacet : ModuleFacetDecl :=
-  .mk Module.elabArtsFacet (mkFacetJobConfig fun mod => do
+  .mk elabArtsFacet (mkFacetJobConfig fun (mod : Lake.Module) => do
     if ← (mod.leanFile.withExtension "ps").pathExists then
-      withTheReader BuildContext ps0CompilerContext (Module.elabArtsFacetConfig.run mod)
+      withTheReader BuildContext ps0CompilerContext (Lake.Module.elabArtsFacetConfig.run mod)
     else
-      Module.elabArtsFacetConfig.run mod)
+      Lake.Module.elabArtsFacetConfig.run mod)
