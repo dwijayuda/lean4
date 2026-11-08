@@ -84,6 +84,12 @@ for relative, original in sorted(originals.items()):
     }
 modules = work / 'modules.txt'
 modules.write_text('\n'.join(sorted(inputs)) + '\n')
+(evidence / 'input-inventory.json').write_text(json.dumps({
+    'source_commit': os.environ['PS0_SOURCE_SHA'], 'lean_commit': LEAN,
+    'stage_driver_sha256': digest(driver), 'module_count': len(inputs), 'inputs': inputs,
+}, indent=2) + '\n')
+print('PS0_COMPILER_PS_INPUTS: ' + str(len(inputs)) + '; byte_identical=' +
+      str(sum(x['body_mode'] == 'byte-identical' for x in inputs.values())), flush=True)
 baseline = json.loads(args.compare.read_text()) if args.compare else None
 if baseline:
     assert digest(driver) == baseline['driver_sha256'], 'stage driver differs from the uploaded stage-one executable'

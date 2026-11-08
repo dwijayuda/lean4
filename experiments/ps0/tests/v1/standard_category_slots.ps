@@ -1,0 +1,33 @@
+function add(x: Nat, y: Nat): Nat := x + y
+function makeAdder(x: Nat): Nat → Nat := fun y => x + y
+def same (x y : Nat) : Prop := x = y
+def witness (x : Nat) : same x x := rfl
+
+def fromStandardDef : Nat := add(1, 2)
+abbrev fromStandardAbbrev : Nat := add(1, 2)
+def fromClosure : Nat := (fun (x y : Nat) => x + y)(1, 2)
+def fromReturnedFunction : Nat := makeAdder(1)(2)
+def fromConditional : Nat := if true then add(1, 2) else add(10, 20)
+def fromDo : IO Nat := do { return add(1, 2) }
+theorem fromStandardProof : same(3, 3) := by { exact witness(3) }
+example : fromStandardDef = 3 := by rfl
+example : fromStandardAbbrev = 3 := by rfl
+example : fromClosure = 3 := by rfl
+example : fromReturnedFunction = 3 := by rfl
+example : fromConditional = 3 := by rfl
+
+def tupleOnly (p : Nat × Nat) : Nat := p.1 + p.2
+macro "nativeOperand " e:term : term => pure e
+def nativeDslValue : Nat := nativeOperand tupleOnly(1, 2)
+example : nativeDslValue = 3 := by rfl
+
+macro "nativeTupleQuotation " : term => do
+  let data ← `(term| tupleOnly(1, 2))
+  unless data.raw.isOfKind ``Lean.Parser.Term.app && data.raw[1].getArgs.size == 1 do
+    Lean.Macro.throwError "PS0-TEST-NATIVE-QUOTATION: changed native tuple application"
+  `(True)
+example : nativeTupleQuotation := by trivial
+
+def main : IO Unit := do
+  let n ← fromDo
+  IO.println s!"PS0_CATEGORY_SLOTS:{fromStandardDef}:{fromClosure}:{fromReturnedFunction}:{n}:{nativeDslValue}"

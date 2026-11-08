@@ -9,9 +9,10 @@ macro "ps0Bridge " e:psTerm : term => do
   | _ => Lean.Macro.throwError "PS0V1-TEST-NATIVE-IDENTITY: expected native capture"
   return ⟨lowered⟩
 
-def bridgedValue : Nat := ps0Bridge (40 + 2)
+def bridgedValue : Nat := ps0Bridge 40 + 2
 example : bridgedValue = 42 := by rfl
 
 -- Native quotations are syntax data in their own category.
 def nativeQuoted : Lean.MacroM (Lean.TSyntax `term) :=
   `(term| (40 + 2))
+

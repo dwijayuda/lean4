@@ -40,7 +40,7 @@ private partial def lowerExpr (locals : Array String)
   | `(term| { $inner:term }) => lowerExpr locals previous inner
   | `(term| ($inner:term)) => lowerExpr locals previous inner
   | `(term| $n:num) => return .literal n.getNat
-  | `(term| $fn:term()) =>
+  | `(PS0.pscvEmptyCall| $fn:term()) =>
       unless fn.raw.isIdent do
         throw "PS0-JS-CALL: callable head must be a previous named function"
       let name := fn.raw.getId.toString
@@ -49,7 +49,7 @@ private partial def lowerExpr (locals : Array String)
       if decl.isConst || !decl.params.isEmpty then
         throw s!"PS0-JS-CALL: {name} is not a nullary Nat function"
       return .call name #[]
-  | `(term| $fn:term($[$args:pscvCallArg],*)) =>
+  | `(PS0.pscvCall| $fn:term($[$args:pscvCallArg],*)) =>
       unless fn.raw.isIdent do
         throw "PS0-JS-CALL: callable head must be a previous named function"
       let name := fn.raw.getId.toString
@@ -91,6 +91,22 @@ private partial def lowerHostExpr (locals : Array String)
     (previous : Array Decl) (e : TSyntax `psTerm) :
     Except String NatExpr := do
   match e with
+  | `(psTerm| { $body:psTerm }) => lowerHostExpr locals previous body
+  | `(psTerm| ($body:psTerm)) => lowerHostExpr locals previous body
+  | `(psTerm| $head:psHead) =>
+      match head with
+      | `(psHead| $fn:psHead()) =>
+          match fn with
+          | `(psHead| $id:ident) =>
+              let name := id.getId.toString
+              let some decl := findPrevious previous name
+                | throw s!"PS0-JS-CALL: unresolved function {name}"
+              if decl.isConst || !decl.params.isEmpty then
+                throw "PS0-JS-CALL: unsupported nullary call"
+              return .call name #[]
+          | _ => throw "PS0-JS-CALL: unsupported callable head"
+      | `(psHead| $native:term) => lowerExpr locals previous native
+      | _ => throw "PS0-JS-CALL: higher-order calls are outside the Nat MVP"
   | `(psTerm| $native:term) =>
       lowerExpr locals previous native
   | `(psTerm| $head:ident($[$args:psCallArg],*)) =>
@@ -243,3 +259,4 @@ def lower (sourceName source : String) (env : Environment)
   return .ok { sourceName, sourceText := source, declarations }
 
 end PS0.Backend.Js
+
