@@ -1,6 +1,28 @@
-# PS0 — AI Work State (8 November 2026)
+# PS0 — AI Work State (9 November 2026)
 
-## Qualified pinned compiler-source replacement capability
+## Current grammar and source-origin increment — 9 November 2026
+
+Qualified source **`1d76c795edbbaa79fe4d938f073114e5bd76a3ae`**, runner **`cd3d6862abc86d3d4371147cd516f2a1dfd1c9a5`**, draft [source PR #9](https://github.com/dwijayuda/lean4/pull/9) and [runner PR #221](https://github.com/dwijayuda/pskernel/pull/221). Linux [run 42507413045](https://github.com/dwijayuda/pskernel/actions/runs/42507413045) is **completed SUCCESS; all four jobs PASS**: project/grammar/origins **128812930802**, native **128812930996**, proof-linked **128812930942**, host-contract **128812930963**. The official Lean and normative R2 pins below are unchanged. Later documentation-only commits do not change the qualified implementation/test bytes.
+
+Thin PS do adapters now lower a nonempty braced sequence to native `doSeqBracketed`/`doSeqItem` nodes. Identifier let/type/value, mutable let, reassignment, identifier monadic bind, expression statement and return slots lower through `psTerm`; Lean retains state, monad and type semantics. The fixture executes **`PS0_DO_OPERANDS:12:3`** and checks dedicated `apply`/`refine` proof operands. A native `doSeq` DSL preserves tuple application. Do-gap/order negatives reach **PS0V1-CALL-GAP/ORDER**, and a non-Unit intermediate action reaches Lean's actual **IO Nat versus IO Unit** error. The adapter reuses Lean's expression-token exclusion parser to keep `return` out of the generic do-expression alternative.
+
+Header preparation now inserts generated policy/scope/evidence text around the original header and body, retaining every original UTF-8 byte in order. `source-map FILE.ps` exports **ps0-source-map/1**: half-open byte ranges distinguish original/generated spans, `source` retains original CRLF/trivia, and `nativeSource` is Lean's CRLF-normalized input. `source-origin FILE.ps NATIVE_BYTE_OFFSET` maps a native parser position back through Lean's own `FileMap` conversions and returns an original byte offset or JSON null for generated/no-origin positions. Use the same file bytes as the captured map. Native Lake compilation retains **`<module>.ilean.ps0-source-map.json`** sidecars.
+
+Executed evidence: `tests/run-source-fidelity.py` passes implicit/explicit/prelude/empty/EOF-comment byte recovery, Unicode/nested/header/module comments, CRLF normalization lookup, exact CRLF/Unicode native-conversion body preservation, and an **actual native Syntax.getPos?** probe. The five source cases also pass official checking. `tests/run-project.py` validates and retains actual ilean sidecars while recursive build/invalidation/publication/module-boundary regressions pass. `tests/run-categories.py` passes both category fixtures and intended negatives. All build/proof/runtime tests ran on Linux Actions.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| Project/grammar/origin maps | [13628415674](https://github.com/dwijayuda/pskernel/actions/runs/42507413045/artifacts/13628415674) | `990006cc3ad062fb57d930af70cb9bf703c815246c7a1b3c367c443b73e953ba` |
+| Proof-linked regression | [13627967800](https://github.com/dwijayuda/pskernel/actions/runs/42507413045/artifacts/13627967800) | `6aea337c3e5c7f7b526be7fe7a431e7e2a854d72deb8f3ea10468ef40d94619b` |
+| Native regression | [13627079788](https://github.com/dwijayuda/pskernel/actions/runs/42507413045/artifacts/13627079788) | `958adce04a4da8527811de3c7f91b55c9bbbc0d69798d4a44705e2184086abc9` |
+
+This is finite grammar/origin-map qualification. Diagnostics and ilean references still use native prepared-source positions; automatic diagnostic/IDE presentation, sidecar cache recovery/facet tracking, arbitrary generated-syntax provenance and full source fidelity remain open. Binder/default/mixed signatures, remaining do control/pattern/configuration/native-layout slots, remaining tactic operands, match, collections/interpolation and configuration/attribute roles remain open. The 242 broad obligations are not promoted by these finite tests. Receipts retain `verified_execution: false`.
+
+The complete compiler-source stage-one/stage-two test was **not rerun for this increment**. Its prior exact-source qualification remains recorded separately below. No main merge, force push, publication, pin change or trust relaxation occurred.
+
+Resolved failed candidates remain in `v1-coverage.json`: source `74be717b036c8c01f971b5ba09a4553ba344a8a3`, run **42506026417**, job **128808825962**, exposed the native doElem splice requirement; source `1061a612067c1a9c88dee56eab30891ec68a0be2`, run **42506852635**, job **128811284072**, exposed return competition and normalized/raw CRLF offsets; source `133fcf9a0196597cd6ef62990bbef6483357cd61`, run **42507173849**, job **128812202395**, passed do cases but rejected CRLF headers when normalization was disabled. The passing implementation keeps native normalization and translates positions with native FileMaps.
+
+## Previously qualified pinned compiler-source replacement capability
 
 The project goal is now qualified for the exact **Lean 4.35.0 source snapshot**: every one of its **2,546 src/**/*.lean Git blobs** plus **18 PS0 implementation modules** builds from actual `.ps` program inputs through the reused Lean frontend/kernel/LCNF/C backend and native Lake graph/artifact/object/link machinery. A migrated native compiler then rebuilds the same **2,564-module** forest in a fresh Linux job, with **zero generated C differences and zero public olean differences**. This is a generated source-forest capability test, not an upstream/main source cutover, complete PS-specific grammar closure, a C++ runtime rewrite or a formal execution-correspondence proof.
 
@@ -40,7 +62,7 @@ The mapped category fixture executes **PS0_CATEGORY_SLOTS:3:3:3:3:3**. Ordinary 
 
 ### Remaining scope
 
-Full PS-owned operand closure remains open: binder/default and mixed signatures, multi-statement do, remaining tactic operands, match/collection/interpolation and configuration/attribute roles, extension ownership competition and complete source-origin fidelity. Apply/refine registrations do not yet have dedicated executed probes. Broad v1 capability families remain PENDING; the compiler-source result does not promote all 242 obligations.
+At the compiler checkpoint, binder/default and mixed signatures, multi-statement do, remaining tactic operands, match/collection/interpolation and configuration/attribute roles, extension competition and full source fidelity were open. The current increment above qualifies selected multi-statement do and dedicated apply/refine cases; the remaining roles stay open. Broad v1 capability families remain PENDING; the compiler-source result does not promote all 242 obligations.
 
 The result is Linux x86-64/C-backend qualification against the pinned snapshot. It does not claim every tool's runtime behavior, all target backends/platforms, whole-kernel metatheory, complete language self-hosting or verified execution. Receipts retain `verified_execution: false`; no trust restrictions, proof assumptions or normative language rules were relaxed. No local compiler/proof/runtime tests, main merge, force push or package publication occurred.
 

@@ -37,6 +37,19 @@ assert 'PS0_PROJECT:42:7:2' in run([exe, 'a', 'b'])
 records = list((ROOT / '.lake/project/ps0-inputs').rglob('*.json'))
 selected = [json.loads(p.read_text()) for p in records]
 assert any(x['module'] == 'Demo.Notation' and x['source'].endswith('.ps') for x in selected)
+maps = list((ROOT / '.lake/project/lib/lean').rglob('*.ilean.ps0-source-map.json'))
+assert maps, 'native Lake compilation must retain source origin sidecars'
+for path in maps:
+    mapping = json.loads(path.read_text())
+    original = Path(mapping['file']).read_bytes()
+    prepared = mapping['source'].encode()
+    recovered = b''.join(prepared[s['preparedStart']:s['preparedEnd']]
+                         for s in mapping['segments'] if s['kind'] == 'original')
+    assert recovered == original
+    retained = WORK / 'source-origins' / path.relative_to(ROOT / '.lake/project/lib/lean')
+    retained.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(path, retained)
+print('PS0_PROJECT_SOURCE_ORIGINS: PASS', flush=True)
 before = (sha(exe), exe.stat().st_mtime_ns)
 build()
 assert before == (sha(exe), exe.stat().st_mtime_ns)
@@ -107,9 +120,11 @@ print('PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY: PASS', flush=True)
     'source_commit': os.environ.get('PS0_SOURCE_SHA'),
     'driver_sha256': sha(driver), 'published_sha256': saved,
     'module_inputs': selected,
+    'source_origin_sidecars': [str(p.relative_to(ROOT)) for p in maps],
     'checks': ['recursive-public-and-meta-imports', 'mixed-native-source', 'warm-reuse', 'driver-invalidation',
                'transitive-ps-and-native-invalidation', 'publication-no-replacement',
-               'prelude-no-hidden-imports', 'local-entry', 'source-collision', 'cycle', 'private-visibility'],
+               'prelude-no-hidden-imports', 'local-entry', 'source-collision', 'cycle', 'private-visibility',
+               'source-origin-sidecars'],
     'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_RECURSIVE_PROJECT: PASS', flush=True)

@@ -19,12 +19,22 @@ def run(args, ok=True):
 run(['lake', 'exe', 'ps0', 'check', 'tests/v1/standard_category_slots.ps'])
 run(['lake', 'exe', 'ps0', 'build-native', 'tests/v1/standard_category_slots.ps', 'CategorySlots', work / 'native'])
 assert 'PS0_CATEGORY_SLOTS:3:3:3:3:3' in run([work / 'native/CategorySlots'])
+run(['lake', 'exe', 'ps0', 'check', 'tests/v1/category_do_operands.ps'])
+run(['lake', 'exe', 'ps0', 'build-native', 'tests/v1/category_do_operands.ps', 'DoOperands', work / 'do-native'])
+assert 'PS0_DO_OPERANDS:12:3' in run([work / 'do-native/DoOperands'])
 for name, call, reason in [
     ('order', 'add(x := 1, 2)', 'PS0V1-CALL-ORDER'),
     ('duplicate', 'add(x := 1, x := 2)', 'PS0V1-CALL-NAMED'),
     ('gap', 'add (1, 2)', 'PS0V1-CALL-GAP'),
+    ('do-gap', 'do { return add (1, 2) }', 'PS0V1-CALL-GAP'),
+    ('do-order', 'do { let n := add(x := 1, 2); return n }', 'PS0V1-CALL-ORDER'),
 ]:
     path = work / (name + '.ps')
     path.write_text('function add(x: Nat, y: Nat): Nat := x + y\ndef bad : Nat := ' + call + '\n')
     assert reason in run(['lake', 'exe', 'ps0', 'check', path], ok=False)
+path = work / 'native-do-statement-type.ps'
+path.write_text('function pureNat(x: Nat): IO Nat := pure x\n'
+                'def bad : IO Nat := do { pureNat(1); return 2 }\n')
+diagnostic = run(['lake', 'exe', 'ps0', 'check', path], ok=False)
+assert 'IO Nat' in diagnostic and 'IO Unit' in diagnostic
 print('PS0_STANDARD_CATEGORY_SLOTS: PASS', flush=True)
