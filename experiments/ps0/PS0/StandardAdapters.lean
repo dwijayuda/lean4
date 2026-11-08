@@ -28,24 +28,28 @@ macro_rules (kind := ps0StandardDef)
   | `($mods:declModifiers def $name:ident $bs:bracketedBinder* $[: $ty:psTerm]? := $body:psTerm) => do
       let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
-      `($mods:declModifiers def $name:ident $bs:bracketedBinder* $[: $ty:term]? := $body:term)
+      let decl ← `(Lean.Parser.Command.definition| def $name:ident $bs:bracketedBinder* $[: $ty:term]? := $body:term)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 macro_rules (kind := ps0StandardAbbrev)
   | `($mods:declModifiers abbrev $name:ident $bs:bracketedBinder* $[: $ty:psTerm]? := $body:psTerm) => do
       let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
-      `($mods:declModifiers abbrev $name:ident $bs:bracketedBinder* $[: $ty:term]? := $body:term)
+      let decl ← `(Lean.Parser.Command.abbrev| abbrev $name:ident $bs:bracketedBinder* $[: $ty:term]? := $body:term)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 macro_rules (kind := ps0StandardTheorem)
   | `($mods:declModifiers theorem $name:ident $bs:bracketedBinder* : $ty:psTerm := $body:psTerm) => do
       let ty ← nativeTerm ty
       let body ← nativeTerm body
-      `($mods:declModifiers theorem $name:ident $bs:bracketedBinder* : $ty:term := $body:term)
+      let decl ← `(Lean.Parser.Command.theorem| theorem $name:ident $bs:bracketedBinder* : $ty:term := $body:term)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 macro_rules (kind := ps0StandardExample)
   | `($mods:declModifiers example $bs:bracketedBinder* : $ty:psTerm := $body:psTerm) => do
       let ty ← nativeTerm ty
       let body ← nativeTerm body
-      `($mods:declModifiers example $bs:bracketedBinder* : $ty:term := $body:term)
+      let decl ← `(Lean.Parser.Command.example| example $bs:bracketedBinder* : $ty:term := $body:term)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 end PS0

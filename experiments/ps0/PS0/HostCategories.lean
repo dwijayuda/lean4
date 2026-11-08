@@ -49,6 +49,7 @@ private def loweringInfo (source : Lean.Syntax) : SourceInfo :=
   | none => .none
 
 private def rejectHostGap (source : Lean.Syntax) : MacroM Unit := do
+  if let .node (.synthetic ..) _ _ := source then return ()
   if source.isOfKind ``Lean.Parser.Term.app then
     for arg in source[1].getArgs do
       if arg.isOfKind ``Lean.Parser.Term.paren || arg.isOfKind ``Lean.Parser.Term.tuple then
