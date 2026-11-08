@@ -1,5 +1,17 @@
 # PS0 — AI Work State (8 November 2026)
 
+## Active goal: compiler-source replacement with ps
+
+The project goal is to replace the Lean compiler's handwritten `.lean` program sources with `.ps`, retaining Lean's semantic/compiler infrastructure and proving actual source and bootstrap coverage. Work continues on `feat/ps0-recursive-projects-20261108`, draft Lean-fork PR #8; the immutable Linux selector is on `ci/ps0-recursive-projects-20261108`, draft pskernel PR #220. The previous native qualification below remains historical exact-source evidence.
+
+Current candidates adapt Lake's existing module input and compilation facets rather than implementing another dependency graph, artifact format or linker. The existing Lean frontend consumes the actual native `ModuleSetup`; native `.lean` dependencies retain the pinned Lean process. Native prelude modules receive no hidden Init or PS0 import. `build-project SOURCE_ROOT MODULE OUT_DIR` is the proposed recursive executable command, with explicit collision/cycle/import-stage/visibility and invalidation tests.
+
+Category work adds an explicit standard operand map, ordinary declaration type/value/proof slots, general postfix heads, selected braced proof arguments and a single-return do sequence. Legacy calls become scoped implementation syntax so literal native quotations and explicitly native DSL operands can retain their native argument partition. All remaining unmapped operand roles stay open; parser registrations alone are not conformance.
+
+The compiler-source gate converts the exact pinned SDK's Init, Std, Lean and Lake modules plus repository PS0 modules into a source forest containing `.ps` programs only, preserving native bodies and making legacy headers explicit. It requests every module's native artifacts and a real migrated compiler executable. A second clean Linux job will use that executable to build the same forest and compare all generated C and olean hashes. Module inventories, source/driver hashes and stage artifacts are required. These are candidate gates, not observed PASS claims yet.
+
+Initial Linux candidate failures are retained: `42478971366` caught a reserved identifier and header API typing errors; `42479244517` caught UTF-8 decode results requiring conversion from character arrays; `42480579867` caught the fully qualified native do-sequence syntax kind. Corrections remain subject to a fresh clean build and actual tests. The normative R2 blob and exact Lean semantic pin are unchanged. No local compiler/proof/runtime tests, main merge, force push or package publication are authorized by or claimed for this continuation.
+
 ## Qualified continuation: thin adapters and Lake native executables
 
 - Source branch: `feat/ps0-lake-native-20261108`; draft [Lean-fork PR #7](https://github.com/dwijayuda/lean4/pull/7), based on PR #6 source `39b8f4cecd8e60b2297c1d01f81d8840c3dc3715`.

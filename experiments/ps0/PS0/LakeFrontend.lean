@@ -87,12 +87,16 @@ def compile (args : List String) : IO UInt32 := do
   let some path := source? | IO.eprintln "PS0-LAKE-INPUT: missing .ps source"; return 2
   let some setupFile := setup? | IO.eprintln "PS0-LAKE-SETUP: missing native module setup"; return 2
   let setup ← ModuleSetup.load setupFile
-  let source ← match ← prepare (← IO.FS.readFile path) path with
+  let raw ← IO.FS.readFile path
+  let source ← match ← prepare raw path with
     | .ok x => pure x
     | .error e => IO.eprintln e; return 1
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  let some env ← Elab.runFrontend source {} path setup.name
+  let nativePrelude := source == raw
+  let opts := if nativePrelude then ({} : Options) else
+    ({} : Options) |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
+  let some env ← Elab.runFrontend source opts path setup.name
       (trustLevel := 0) (oleanFileName? := olean?) (ileanFileName? := ilean?)
       (jsonOutput := json) (setup? := some setup)
     | return 1

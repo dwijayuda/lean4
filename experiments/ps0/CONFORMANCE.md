@@ -3,10 +3,34 @@
 **Sole normative reference:** [PS0_V1_LANGUAGE_REFERENCE.md](PS0_V1_LANGUAGE_REFERENCE.md), edition R2, 2026-10-16. Uploaded Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
 **Lean:** official 4.35.0, `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
 
-**Status:** migration to v1 implemented at the specification/source-policy
-foundation; full v1 language closure NOT implemented; exact-commit
-Lean CI NOT observed passing. The old v7 41% estimate, fixed
-191/181-style progress measures and v7 test assertions are retired.
+**Status:** bounded native/compiler frontend qualification at source
+`07a1da68aacf2462e9723a79242c322a21ca3c83` passed Linux run
+[42474108191](https://github.com/dwijayuda/pskernel/actions/runs/42474108191).
+Recursive module and expanded category candidates are under qualification in
+PR #8. Full v1 language closure and full compiler-source replacement are not
+claimed from that earlier run. The old v7 completion estimates remain retired.
+
+## Current exact-evidence policy
+
+`v1-coverage.json` records the exact source, Lean/reference identity, fixture,
+diagnostic/semantic oracle and CI run for each qualified finite case. A PASS
+at an earlier source is historical evidence; changed implementations require
+fresh exact-source qualification. Broad capability families remain PENDING
+when only a subset has executable evidence.
+
+The current category adapter registry is `standard-adapter-map.json`. The
+recursive project fixtures are under `tests/project/`; `tests/run-project.py`
+checks imported ps syntax, mixed native imports, source-kind ambiguity,
+cycles, visibility and transitive invalidation. `tests/run-categories.py`
+checks the selected mapped operands and native quotation/DSL ownership.
+
+`tests/run-compiler-ps.py` is the compiler-source migration gate. It inventories
+every selected SDK/repository module, compiles a program source tree with no
+lean files, builds a migrated compiler executable and, in a second clean
+job, requests full C/olean fixed-point comparison. Conversion, native source
+admission, C/object compilation, executable behavior and a full compiler
+fixed point are distinct outcomes. Until those jobs pass, their status is
+PENDING. Native-prelude coverage does not qualify all PS-owned bootstrap sugar.
 
 ## Implemented migration changes
 

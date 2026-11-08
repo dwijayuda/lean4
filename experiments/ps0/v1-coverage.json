@@ -1872,10 +1872,17 @@
       "sourceOrClaim": "Leaking a private declaration in a prohibited public signature",
       "expectedCategory": "ELAB/ENV",
       "reason": "Native module visibility rule.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-native.py :: PrivateLeak.ps",
+      "qualifiedCommit": "07a1da68aacf2462e9723a79242c322a21ca3c83",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/42474108191",
+      "evidence": {
+        "jobId": 128711492870,
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "oracle": "Official modern-module elaboration rejects public use of a private declaration; diagnostic includes 'private declaration'.",
+        "scope": "finite native/private-visibility case at the recorded historical source"
+      }
     },
     {
       "id": "PS0-N-LEX-01",
@@ -2424,6 +2431,17 @@
       "qualifiedCommit": null,
       "ciRun": null
     }
-  ]
+  ],
+  "currentContinuation": {
+    "branch": "feat/ps0-recursive-projects-20261108",
+    "status": "PENDING_EXACT_SOURCE_LINUX",
+    "goal": "Replace Lean compiler .lean program sources with .ps using native Lean and Lake infrastructure",
+    "fixtures": [
+      "tests/run-project.py",
+      "tests/run-categories.py",
+      "tests/run-compiler-ps.py"
+    ],
+    "note": "Earlier qualified cases retain their exact historical identities; broad families and changed source require fresh evidence."
+  }
 }
 
