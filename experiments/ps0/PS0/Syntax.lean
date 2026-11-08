@@ -35,10 +35,10 @@ syntax ident ":" term ":=" term : pscvBinder
 
 declare_syntax_cat pscvNonExplicitBinder
 syntax "{" ident ":" term "}" : pscvNonExplicitBinder
-syntax "⦃" ident ":" term "⦄" : pscvNonExplicitBinder
+syntax (name := pscvStrictNonExplicitBinder) Lean.Parser.Term.strictImplicitLeftBracket
+  ident ":" term Lean.Parser.Term.strictImplicitRightBracket : pscvNonExplicitBinder
 syntax "[" ident ":" term "]" : pscvNonExplicitBinder
 syntax "[" term "]" : pscvNonExplicitBinder
-syntax "{{" ident ":" term "}}" : pscvNonExplicitBinder
 
 private def explicitLeanBinders (bs : Array (TSyntax `pscvBinder))
     (nullaryFunction : Bool := false) :
@@ -61,18 +61,19 @@ private def nonExplicitLeanBinders (bs : Array (TSyntax `pscvNonExplicitBinder))
     MacroM (Array (TSyntax ``Lean.Parser.Term.bracketedBinder)) := do
   let mut result := #[]
   for b in bs do
-    match b with
-    | `(pscvNonExplicitBinder| {$x:ident : $t:term}) =>
-        result := result.push (← `(bracketedBinder| {$x:ident : $t:term}))
-    | `(pscvNonExplicitBinder| ⦃$x:ident : $t:term⦄) =>
-        result := result.push (← `(bracketedBinder| ⦃$x:ident : $t:term⦄))
-    | `(pscvNonExplicitBinder| [$x:ident : $t:term]) =>
-        result := result.push (← `(bracketedBinder| [$x:ident : $t:term]))
-    | `(pscvNonExplicitBinder| [$t:term]) =>
-        result := result.push (← `(bracketedBinder| [$t:term]))
-    | `(pscvNonExplicitBinder| {{$x:ident : $t:term}}) =>
-        result := result.push (← `(bracketedBinder| ⦃$x:ident : $t:term⦄))
-    | _ => Macro.throwUnsupported
+    if b.raw.isOfKind ``pscvStrictNonExplicitBinder then
+      let x : TSyntax `ident := ⟨b.raw[1]⟩
+      let t : TSyntax `term := ⟨b.raw[3]⟩
+      result := result.push (← `(bracketedBinder| ⦃$x:ident : $t:term⦄))
+    else
+      match b with
+      | `(pscvNonExplicitBinder| {$x:ident : $t:term}) =>
+          result := result.push (← `(bracketedBinder| {$x:ident : $t:term}))
+      | `(pscvNonExplicitBinder| [$x:ident : $t:term]) =>
+          result := result.push (← `(bracketedBinder| [$x:ident : $t:term]))
+      | `(pscvNonExplicitBinder| [$t:term]) =>
+          result := result.push (← `(bracketedBinder| [$t:term]))
+      | _ => Macro.throwUnsupported
   return result
 
 

@@ -26,7 +26,7 @@ meta def nativeQuote : Lean.MacroM (Lean.TSyntax `term) :=
 meta def strictQuote : Lean.MacroM (Lean.TSyntax `term) :=
   `(term| fun {{α : Type}} (x : α) => x)
 macro "assertLegacyStrict " b:pscvNonExplicitBinder : term => do
-  unless b.raw.getArgs.size == 5 && b.raw[1].isIdent && b.raw[3].isOfKind ``Lean.Parser.Term.sort do
+  unless b.raw.getArgs.size == 5 && b.raw[1].isIdent && b.raw[3].isOfKind ``Lean.Parser.Term.type do
     Lean.Macro.throwError "PS0_LEGACY_STRICT_BINDER_SHAPE"
   `(True)
 example : assertLegacyStrict {{α : Type}} := by trivial

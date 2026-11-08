@@ -1,5 +1,18 @@
 # PS0 — AI Work State (9 November 2026)
 
+## Full native-compatible compiler fixed point — Linux PASS
+
+Exact source **28904e5a7ccb19a15e311ecc654541dc0ee639ec**, runner **484868307c6611fedf1a464e2e102c02b8ad5855**, [run 42522976977](https://github.com/dwijayuda/pskernel/actions/runs/42522976977): **all six jobs PASS**, including compiler stage one **128861032581** and stage two **128870983007**. Each stage builds **2,567 modules / 5,138 native Lake jobs** through native C/object/static-library/executable compilation and linking. The stage-one migrated executable rebuilds the same .ps source forest; **zero generated C differences and zero public olean differences** across all modules. Migrated executable environment/source-check smoke and all-module source-census/origin joins pass in both stages.
+
+The corpus is **2,546 exact pinned upstream source blobs plus 21 repository PS0 modules**. Its census contains **72,792 selected native-compatible rows / zero mapped PS rows** at this earlier source pin. This establishes the native-compatible rebuild foundation only; it does **not** establish entire-corpus ProofScript grammar conversion or qualify later commits automatically.
+
+- Stage one artifact **13635566244**, ZIP SHA-256 **c4443462ef060abcbe8a4033f5f01325f7c9f91cc6ece84b5c8b3c14c4ad5be0**.
+- [Stage two artifact 13636098822](https://github.com/dwijayuda/pskernel/actions/runs/42522976977/artifacts/13636098822), ZIP SHA-256 **6043382a9516a22672ff076c66d75f9ae6587cf4d0eb84d64fbc2f1a8ca0198d**.
+- Native Lean option **interpreter.prefer_native=false** matches the pinned upstream stage build policy. No compiler/interpreter fork, trust relaxation or changed reference pin is used.
+
+Goal **ACTIVE / NOT COMPLETE**. The separately qualified seven canonical PS heads in two actual compiler modules remain finite; remaining grammar roles, complete source conversion, relocated host metadata and source diagnostics/IDE fidelity remain open. Earlier “stage two IN PROGRESS” notes below are historical and superseded by this exact terminal result.
+
+
 ## Real recursive compiler PS conversion — strict native parity PASS
 
 Qualified source **`3c47198c4ed8f43a4967deef199ea61fa5e8d592`**, runner **`d27b55627f50bbc4184839766994e286ae18af80`**, Linux [run 42528176757](https://github.com/dwijayuda/pskernel/actions/runs/42528176757): **all four jobs PASS** — project **128876309105**, native **128876308880**, proof-linked **128876309176**, host **128876309075**.

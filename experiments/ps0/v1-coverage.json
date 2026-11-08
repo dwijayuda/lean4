@@ -4123,6 +4123,53 @@
     "scope": "Four real typed compiler heads in original Lean.Compiler.LCNF.DeclHash, including three mutually recursive partial definitions, two owned type applications and one root foldl application. Argument bodies, quotations, native match/lambda interiors and other commands remain byte-preserved. Prior three ClosedTermCache heads also pass. Seven heads/two modules is finite evidence, not full PS source closure.",
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "nativeCompilerFixedPointQualifiedEvidence": {
+    "source": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+    "runner": "484868307c6611fedf1a464e2e102c02b8ad5855",
+    "run": 42522976977,
+    "status": "PASS",
+    "stage1Job": 128861032581,
+    "stage2Job": 128870983007,
+    "moduleCount": 2567,
+    "nativeLakeJobsPerStage": 5138,
+    "fixedPoint": {
+      "changed_c": [],
+      "changed_olean": []
+    },
+    "sourceCensus": {
+      "selectedNativeCompatible": 72792,
+      "mappedPs": 0
+    },
+    "runtimeSmoke": "PASS",
+    "artifacts": [
+      {
+        "id": 13636098822,
+        "name": "ps0-compiler-stage2-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:6043382a9516a22672ff076c66d75f9ae6587cf4d0eb84d64fbc2f1a8ca0198d"
+      },
+      {
+        "id": 13635566244,
+        "name": "ps0-compiler-stage1-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:c4443462ef060abcbe8a4033f5f01325f7c9f91cc6ece84b5c8b3c14c4ad5be0"
+      },
+      {
+        "id": 13634480711,
+        "name": "ps0-project-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:c8fdfce09ae2e459b20bfe0e6adcbcdc3fcf789bdd81e56fe1fc566a1a288abe"
+      },
+      {
+        "id": 13634107051,
+        "name": "ps0-external-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:2febe157986b3f73754b9b840d9d43294036933d2c714198466062c12b9e873f"
+      },
+      {
+        "id": 13634062146,
+        "name": "ps0-native-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:080652e6ca5cd80fdfc901a36cde13e7e8720b1cc522c5543bab1043c591a73c"
+      }
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }
-
