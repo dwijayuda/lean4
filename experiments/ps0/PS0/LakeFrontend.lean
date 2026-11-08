@@ -17,19 +17,19 @@ def parseHeader (raw filename : String) :
   let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext raw filename)
   if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid import header"
   if Elab.HeaderSyntax.isModule header then return .ok (header, state, 0)
-  let prefix := "module\n"
-  let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext (prefix ++ raw) filename)
+  let modulePrefix := "module\n"
+  let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext (modulePrefix ++ raw) filename)
   if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid implicit module header"
-  return .ok (header, state, prefix.utf8ByteSize)
+  return .ok (header, state, modulePrefix.utf8ByteSize)
 
 def sourceImportsAndBody (raw filename : String) : IO (Except String (Array Import × String)) := do
-  let (header, state, prefix) ← match ← parseHeader raw filename with
+  let (header, state, prefixBytes) ← match ← parseHeader raw filename with
     | .ok x => pure x
     | .error e => return .error e
-  if state.pos.byteIdx < prefix then return .error "PS0-MODULE-HEADER: invalid source offset"
-  let some body := (raw.toByteArray.extract (state.pos.byteIdx - prefix) raw.utf8ByteSize).utf8Decode?
+  if state.pos.byteIdx < prefixBytes then return .error "PS0-MODULE-HEADER: invalid source offset"
+  let some body := (raw.toByteArray.extract (state.pos.byteIdx - prefixBytes) raw.utf8ByteSize).utf8Decode?
     | return .error "PS0-MODULE-HEADER: invalid UTF-8 boundary"
-  return .ok (header.imports (includeInit := false), body)
+  return .ok (Elab.HeaderSyntax.imports header (includeInit := false), body)
 
 def isPrelude (header : Elab.HeaderSyntax) : Bool :=
   match header with
@@ -41,7 +41,7 @@ def importSource (im : Import) : String :=
   "import " ++ (if im.importAll then "all " else "") ++ im.module.toString ++ "\n"
 
 def prepare (raw filename : String) : IO (Except String String) := do
-  let (header, _, prefix) ← match ← parseHeader raw filename with
+  let (header, _, prefixBytes) ← match ← parseHeader raw filename with
     | .ok x => pure x
     | .error e => return .error e
   -- Native bootstrap modules retain their own substrate; no hidden Init or PS0 import.
@@ -51,7 +51,7 @@ def prepare (raw filename : String) : IO (Except String String) := do
     | .error e => return .error e
   return .ok ("module\npublic import PS0.Policy\n" ++
     String.join (imports.toList.map importSource) ++
-    (if prefix == 0 then "" else "public section\n") ++ body ++ "\n#ps0_evidence\n")
+    (if prefixBytes == 0 then "" else "public section\n") ++ body ++ "\n#ps0_evidence\n")
 
 def printHeader (path : String) : IO UInt32 := do
   let raw ← IO.FS.readFile path
@@ -111,11 +111,11 @@ def convertNative (source target : FilePath) : IO Unit := do
       | throw <| IO.userError "PS0-CONVERT-UTF8"
     let first := header.raw.getPos?.getD ⟨0⟩
     let leading := String.fromUTF8! (raw.toByteArray.extract 0 first.byteIdx)
-    let imports := header.imports (includeInit := true)
+    let imports := Elab.HeaderSyntax.imports header (includeInit := true)
     if imports.any (fun i => i.importAll && i.isExported) then
       throw <| IO.userError "PS0-CONVERT-IMPORT: split legacy public/all imports explicitly"
     pure (leading ++ "module\nprelude\n" ++ String.join (imports.toList.map importSource) ++
-      (if header.isModule then "" else "public section\n") ++ body)
+      (if Elab.HeaderSyntax.isModule header then "" else "public section\n") ++ body)
   IO.FS.createDirAll (target.parent.getD ".")
   IO.FS.writeFile target converted
 
