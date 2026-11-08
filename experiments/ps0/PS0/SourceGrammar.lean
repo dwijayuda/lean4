@@ -64,7 +64,9 @@ private unsafe def installImpl (options : Options) : IO Unit := do
   let hostPath := binDir / ".." / "lib" / "lean"
   searchPathRef.set (hostPath :: targetPath)
   let host ← try
-    importModules #[{module := `PS0.StandardAdapters, isMeta := true}] options (loadExts := true)
+    -- Parser/handler closures are registered for this compiler process's lifetime.
+    importModules #[{module := `PS0.StandardAdapters, isMeta := true}] options
+      (leakEnv := true) (loadExts := true)
   finally
     searchPathRef.set targetPath
   let state := parserExtension.getState host

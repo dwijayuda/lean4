@@ -19,21 +19,23 @@ function plus(left: Nat, right: Nat := 1): Nat := left + right
 const answer: Nat := plus(41)
 def function : Nat := 3
 def nativeStrict {{a : Type}} (x : a) : a := x
+function psStrict {{a : Type}}(x: a): a := x
+const strictAnswer: Nat := psStrict(3)
 ''')
 (source / 'Main.ps').write_text('''module
 prelude
 public import PreludePS.Core
 public section
-def main : IO Unit := IO.println s!"PS0_PRELUDE_GRAMMAR:{answer}"
+def main : IO Unit := IO.println s!"PS0_PRELUDE_GRAMMAR:{answer}:{strictAnswer}"
 ''')
 (source / 'Quoted.ps').write_text('''module
 prelude
 public meta import Lean
 public section
-meta def quotedCommand : Lean.MacroM (Lean.TSyntax `command) :=
+meta def quotedCommand : Lean.MacroM(Lean.TSyntax `command) :=
   `(command| def function (x : Nat) : Nat := x)
-meta def quotedTerm : Lean.MacroM (Lean.TSyntax `term) := `(term| fn (1, 2))
-meta def quotedBinder : Lean.MacroM (Lean.TSyntax `bracketedBinder) :=
+meta def quotedTerm : Lean.MacroM(Lean.TSyntax `term) := `(term| fn (1, 2))
+meta def quotedBinder : Lean.MacroM(Lean.TSyntax `bracketedBinder) :=
   `(bracketedBinder| {{x : Nat}})
 run_cmd do
   let cmd ← quotedCommand
@@ -63,7 +65,15 @@ assert 'unexpected identifier; expected command' in control
 build = work / 'grammar'
 run([*args, '-KsourceGrammar=true', '-KprojectBuildDir=' + str(build),
      'build', 'PS0Project:static', 'ps0project'], 'grammar-build')
-assert 'PS0_PRELUDE_GRAMMAR:42' in run([build / 'bin/ps0project'], 'runtime')
+assert 'PS0_PRELUDE_GRAMMAR:42:3' in run([build / 'bin/ps0project'], 'runtime')
+stage = work / 'compiler-stage'
+run([*args, '-KsourceGrammar=true', '-Kbootstrap=true',
+     '-KprojectBuildDir=' + str(stage), 'build', 'PreludePS.Core', 'PreludePS.Quoted'],
+    'compiler-stage')
+for name in ['Core', 'Quoted']:
+    setup = json.loads((stage / 'ir/PreludePS' / (name + '.setup.json')).read_text())
+    assert setup['options']['interpreter.prefer_native'] is False
+    assert setup['options']['ps0.sourceGrammar'] is True
 evidence = {}
 for name, expected in [('Core', ['Init']), ('Main', ['PreludePS.Core']), ('Quoted', ['Lean'])]:
     rel = Path('PreludePS') / name
@@ -80,7 +90,8 @@ assert any(c['declaration'] and c['declaration']['mode'] == 'mapped-ps'
            for c in json.loads((build / 'lib/lean/PreludePS/Core.ilean.ps0-source-census.json').read_text())['commands'])
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'modules': evidence,
-    'oracle': 'PS0_PRELUDE_GRAMMAR:42', 'verified_execution': False,
+    'oracle': 'PS0_PRELUDE_GRAMMAR:42:3', 'verified_execution': False,
+    'compiler_stage_options': {'interpreter.prefer_native': False, 'ps0.sourceGrammar': True},
     'scope': 'finite prelude grammar and native quotation isolation; not full corpus migration',
 }, indent=2) + '\n')
 print('PS0_PRELUDE_GRAMMAR_NO_HIDDEN_IMPORTS: PASS', flush=True)
