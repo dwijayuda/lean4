@@ -101,9 +101,9 @@ def ps0ElabFacet : ModuleFacetDecl :=
         match Json.parse expected with
         | .error e => error s!"PS0-PROJECT-SOURCE-MAP: {e}"
         | .ok _ => pure ()
-        let valid ← if ← sidecar.pathExists then do
-          return (← IO.FS.readFile sidecar) == expected
-        else pure false
+        let mut valid := false
+        if ← sidecar.pathExists then
+          valid := (← IO.FS.readFile sidecar) == expected
         unless valid do
           IO.FS.writeFile sidecar expected
         addTrace (← computeTrace (TextFilePath.mk sidecar))
