@@ -11,8 +11,6 @@ package ps0 where
   version := v!"0.2.0"
   buildDir := FilePath.mk ((get_config? projectBuildDir).getD ".lake/project")
 
-lean_lib PS0
-
 def projectSource : FilePath := FilePath.mk ((get_config? sourceRoot).getD "tests/project")
 def projectRoots : Array Name := (((get_config? roots).getD "Demo,NativeSupport").splitOn ",").toArray.map String.toName
 def projectMain : Name := ((get_config? rootModule).getD "Demo.Main").toName
@@ -22,6 +20,10 @@ initialize projectModules : Array Name ← do
   let some path := (get_config? moduleManifest) | return #[]
   return ((← IO.FS.readFile path).splitOn "\n").toArray.filterMap fun line =>
     if line.isEmpty then none else some line.toName
+
+lean_lib PS0 where
+  roots := if projectModules.isEmpty then #[`PS0] else #[]
+  globs := if projectModules.isEmpty then #[Glob.one `PS0] else #[]
 
 lean_lib PS0Project where
   srcDir := projectSource

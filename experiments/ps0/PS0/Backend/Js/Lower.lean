@@ -12,6 +12,7 @@ No imports, namespaces, effects, implicit binders or runtime proofs yet.
 -/
 
 open Lean
+open scoped PS0
 
 namespace PS0.Backend.Js
 
@@ -40,7 +41,7 @@ private partial def lowerExpr (locals : Array String)
   | `(term| { $inner:term }) => lowerExpr locals previous inner
   | `(term| ($inner:term)) => lowerExpr locals previous inner
   | `(term| $n:num) => return .literal n.getNat
-  | `(PS0.pscvEmptyCall| $fn:term()) =>
+  | `(term| $fn:term()) =>
       unless fn.raw.isIdent do
         throw "PS0-JS-CALL: callable head must be a previous named function"
       let name := fn.raw.getId.toString
@@ -49,7 +50,7 @@ private partial def lowerExpr (locals : Array String)
       if decl.isConst || !decl.params.isEmpty then
         throw s!"PS0-JS-CALL: {name} is not a nullary Nat function"
       return .call name #[]
-  | `(PS0.pscvCall| $fn:term($[$args:pscvCallArg],*)) =>
+  | `(term| $fn:term($[$args:pscvCallArg],*)) =>
       unless fn.raw.isIdent do
         throw "PS0-JS-CALL: callable head must be a previous named function"
       let name := fn.raw.getId.toString

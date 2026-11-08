@@ -451,8 +451,9 @@ syntax ident " := " term : pscvCallArg
 syntax term : pscvCallArg
 scoped syntax:max (name := pscvCall) term:max noWs "(" pscvCallArg,+ ")" : term
 
+open scoped PS0 in
 macro_rules (kind := pscvCall)
-  | `(pscvCall| $f:term($[$args:pscvCallArg],*)) => do
+  | `(term| $f:term($[$args:pscvCallArg],*)) => do
     let mut parsedArgs : Array Syntax := #[]
     let mut seenNamed := false
     let mut used : Array Name := #[]
