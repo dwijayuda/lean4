@@ -13,11 +13,14 @@ declare_syntax_cat psTactic
 declare_syntax_cat psDoSeq
 declare_syntax_cat psCallArg
 declare_syntax_cat psHead
+declare_syntax_cat psDoElem
+declare_syntax_cat psDoItem
 
 syntax (name := ps0NativeTermBridge) (priority := low) term : psTerm
 syntax (name := ps0NativeCommandBridge) command : psCommand
 syntax (name := ps0NativeTacticBridge) (priority := low) tactic : psTactic
 syntax (name := ps0NativeDoBridge) (priority := low) doSeq : psDoSeq
+syntax (name := ps0NativeDoElemBridge) (priority := low) doElem : psDoElem
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
 
@@ -38,7 +41,14 @@ syntax (name := ps0HostApply) (priority := high) "apply " psTerm : psTactic
 syntax (name := ps0HostRefine) (priority := high) "refine " psTerm : psTactic
 syntax (name := ps0HostBy) (priority := high)
   "by " "{" sepBy1(psTactic, ";", ";" ppSpace, allowTrailingSep) "}" : psTerm
-syntax (name := ps0HostReturnSeq) (priority := high) "{" "return " psTerm "}" : psDoSeq
+syntax (name := ps0HostDoLet) (priority := high)
+  "let " ident (":" psTerm)? ":=" psTerm : psDoElem
+syntax (name := ps0HostDoBind) (priority := high)
+  "let " ident "←" psTerm : psDoElem
+syntax (name := ps0HostDoReturn) (priority := high) "return " psTerm : psDoElem
+syntax (name := ps0HostDoExpr) (priority := high) psTerm : psDoElem
+syntax (name := ps0HostDoItem) ppLine psDoElem ";"? : psDoItem
+syntax (name := ps0HostDoSeq) (priority := high) "{" psDoItem+ ppLine "}" : psDoSeq
 syntax (name := ps0HostDo) (priority := high) "do " psDoSeq : psTerm
 
 namespace PS0.Syntax
@@ -109,12 +119,35 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTactic"
   else if category == `psDoSeq then
     match source with
-    | `(psDoSeq| { return $body:psTerm }) => do
-        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
-        return (← `(doSeq| { return $body })).raw
+    | `(psDoSeq| { $items:psDoItem* }) => do
+        let mut nativeItems := #[]
+        for item in items do
+          let native ← lowerDoElem item.raw[0]
+          nativeItems := nativeItems.push <| .node (loweringInfo item.raw)
+            ``Lean.Parser.Term.doSeqItem #[native, item.raw[1]]
+        return .node (loweringInfo source) ``Lean.Parser.Term.doSeqBracketed
+          #[source[0], mkNullNode nativeItems, source[2]]
     | `(psDoSeq| $native:doSeq) => return native.raw
     | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoSeq"
   else Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
+
+partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  match source with
+  | `(psDoElem| let $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
+      let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
+      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+      return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
+  | `(psDoElem| let $name:ident ← $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+      return (← `(doElem| let $name:ident ← $value)).raw
+  | `(psDoElem| return $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+      return (← `(doElem| return $value)).raw
+  | `(psDoElem| $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+      return (← `(doElem| $value:term)).raw
+  | `(psDoElem| $native:doElem) => return native.raw
+  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
 
 partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   match source with

@@ -41,19 +41,57 @@ def importSource (im : Import) : String :=
   (if im.isExported then "public " else "") ++ (if im.isMeta then "meta " else "") ++
   "import " ++ (if im.importAll then "all " else "") ++ im.module.toString ++ "\n"
 
-def prepare (raw filename : String) : IO (Except String String) := do
-  let (header, _, prefixBytes) ← match ← parseHeader raw filename with
+structure PreparedSource where
+  source : String := ""
+  segments : Array Json := #[]
+
+private def appendOriginal (p : PreparedSource) (text : String) (start : Nat) : PreparedSource :=
+  { source := p.source ++ text
+    segments := p.segments.push <| Json.mkObj [
+      ("kind", toJson ("original" : String)),
+      ("preparedStart", toJson p.source.utf8ByteSize),
+      ("preparedEnd", toJson (p.source.utf8ByteSize + text.utf8ByteSize)),
+      ("originalStart", toJson start), ("originalEnd", toJson (start + text.utf8ByteSize))] }
+
+private def appendGenerated (p : PreparedSource) (text reason : String) : PreparedSource :=
+  { source := p.source ++ text
+    segments := p.segments.push <| Json.mkObj [
+      ("kind", toJson ("generated" : String)), ("reason", toJson reason),
+      ("preparedStart", toJson p.source.utf8ByteSize),
+      ("preparedEnd", toJson (p.source.utf8ByteSize + text.utf8ByteSize))] }
+
+def prepareWithOrigins (raw filename : String) : IO (Except String PreparedSource) := do
+  let (header, state, prefixBytes) ← match ← parseHeader raw filename with
     | .ok x => pure x
     | .error e => return .error e
   -- Native bootstrap modules retain their own substrate; no hidden Init or PS0 import.
-  if isPrelude header then return .ok raw
-  let (imports, body) ← match ← sourceImportsAndBody raw filename with
-    | .ok x => pure x
-    | .error e => return .error e
-  return .ok ("module\npublic import PS0.Policy\n" ++
-    String.join (imports.toList.map importSource) ++
-    (if prefixBytes == 0 then "" else "public section\n") ++
-    "open scoped PS0.StandardAdapters\n" ++ body ++ "\n#ps0_evidence\n")
+  if isPrelude header then return .ok (appendOriginal {} raw 0)
+  if state.pos.byteIdx < prefixBytes then return .error "PS0-MODULE-HEADER: invalid source offset"
+  let bodyStart := state.pos.byteIdx - prefixBytes
+  let leading := String.fromUTF8! (raw.toByteArray.extract 0 bodyStart)
+  let body := String.fromUTF8! (raw.toByteArray.extract bodyStart raw.utf8ByteSize)
+  let p := if prefixBytes == 0 then ({} : PreparedSource) else
+    appendGenerated {} "module\n" "implicit modern module"
+  let p := appendOriginal p leading 0
+  let p := appendGenerated p "\npublic import PS0.Policy\n" "policy import"
+  let p := if prefixBytes == 0 then p else appendGenerated p "public section\n" "implicit public declarations"
+  let p := appendGenerated p "open scoped PS0.StandardAdapters\n" "PS operand adapters"
+  let p := appendOriginal p body bodyStart
+  return .ok (appendGenerated p "\n#ps0_evidence\n" "source policy evidence")
+
+def prepare (raw filename : String) : IO (Except String String) := do
+  return (← prepareWithOrigins raw filename).map (·.source)
+
+def printSourceMap (path : String) : IO UInt32 := do
+  let raw ← IO.FS.readFile path
+  let p ← match ← prepareWithOrigins raw path with
+    | .ok p => pure p
+    | .error e => IO.eprintln e; return 1
+  IO.println (Json.mkObj [
+    ("schema", toJson ("ps0-source-map/1" : String)), ("file", toJson path),
+    ("originalByteSize", toJson raw.utf8ByteSize), ("source", toJson p.source),
+    ("segments", toJson p.segments)]).compress
+  return 0
 
 def printHeader (path : String) : IO UInt32 := do
   let raw ← IO.FS.readFile path
