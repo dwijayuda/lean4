@@ -34,6 +34,9 @@ lean_exe ps0project where
   root := projectMain
   srcDir := projectSource
   supportInterpreter := true
+  moreLinkArgs := match get_config? linkMap with
+    | some path => #["-Wl,-Map," ++ path]
+    | none => #[]
 
 def ps0Input (mod : Lake.Module) : FetchM (Job ModuleInput) := do
   let path := mod.leanFile.withExtension "ps"

@@ -1,6 +1,6 @@
 function add(x: Nat, y: Nat): Nat := x + y
 function makeAdder(x: Nat): Nat → Nat := fun y => x + y
-def same (x y : Nat) : Prop := x = y
+abbrev same (x y : Nat) : Prop := x = y
 def witness (x : Nat) : same x x := rfl
 
 def fromStandardDef : Nat := add(1, 2)
@@ -18,11 +18,11 @@ example : fromConditional = 3 := by rfl
 
 def tupleOnly (p : Nat × Nat) : Nat := p.1 + p.2
 macro "nativeOperand " e:term : term => pure e
-def nativeDslValue : Nat := nativeOperand tupleOnly(1, 2)
+def nativeDslValue : Nat := nativeOperand tupleOnly (1, 2)
 example : nativeDslValue = 3 := by rfl
 
 macro "nativeTupleQuotation " : term => do
-  let data ← `(term| tupleOnly(1, 2))
+  let data ← `(term| tupleOnly (1, 2))
   unless data.raw.isOfKind ``Lean.Parser.Term.app && data.raw[1].getArgs.size == 1 do
     Lean.Macro.throwError "PS0-TEST-NATIVE-QUOTATION: changed native tuple application"
   `(True)

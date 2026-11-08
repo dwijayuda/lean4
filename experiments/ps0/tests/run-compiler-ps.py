@@ -119,6 +119,7 @@ build = work / 'artifacts'
 run(['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
      '-Kroots=Init,Std,Lean,Lake,LeanChecker,LeanExport,LeanIR,Leanc,LakeMain,PS0,PS0Main', '-KrootModule=PS0Main',
      '-Kdriver=' + str(driver), '-KmoduleNames=' + ','.join(sorted(inputs)),
+     '-KlinkMap=' + str(evidence / 'compiler-link.map'),
      '-KprojectBuildDir=' + str(build), 'build', 'PS0Project:static', 'ps0project'], 'compiler-build')
 
 outputs = {}

@@ -1,6 +1,7 @@
 namespace Demo
 
 function add(x: Nat, y: Nat): Nat := x + y
+attribute [expose] add
 const count: Nat := 3
 
 theorem addOracle : add 1 2 = 3 := by rfl
