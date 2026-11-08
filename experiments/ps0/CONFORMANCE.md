@@ -1,6 +1,24 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
-## Prelude source grammar candidate — Linux qualification pending
+## Complete native compiler census: stage one PASS, stage two running
+
+Pinned source **`abf3585d99c921fe02697b679867a0a55e433168`**, runner **`e78cd4479ba5b1433e8879c14de79ba27427dfdc`**, [run 42517718338](https://github.com/dwijayuda/pskernel/actions/runs/42517718338): stage one **128844671227 PASS**. All **2,566 modules** (**2,546 pinned compiler + 20 PS0**) build/link through **5,136 native Lake jobs**. Source smoke passes. Every module passes the actual-frontend/original-byte census join. There are **72,790 selected source declaration rows, all native-compatible; zero mapped-PS rows** at this checkpoint. This establishes the native-compatible baseline and full census, **not** the required canonical PS source migration.
+
+[Stage-one artifact 13632838932](https://github.com/dwijayuda/pskernel/actions/runs/42517718338/artifacts/13632838932), ZIP SHA-256 **`2395167f3782944cf4291efe55a10d1185f9eec6244493e0df985132e30e7308`**, retains the exact migrated executable, full source-command snapshots and joined hash summary. Stage two **128852603767** is **IN PROGRESS** using that exact executable. A fresh fixed-point result is not yet available.
+
+
+## Finite prelude PS grammar step PASS; real compiler head parity pending
+
+Source **`eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1`**, runner **`dc03ae543bc2bc050a6c62034aee2cb4bc80a56b`**, [run 42520414613](https://github.com/dwijayuda/pskernel/actions/runs/42520414613), project job **128852573466**: **PS0_PRELUDE_GRAMMAR:42:3** and **PS0_PRELUDE_GRAMMAR_NO_HIDDEN_IMPORTS: PASS**. Native Lake builds/links/runs the actual PS prelude source, preserves exact raw bytes and direct imports, retains native quotation AST ownership and contextual identifiers, and accepts owned ASCII strict binders. It also compiles under native bootstrap/stage options. Exact project artifact digest is retained below and in the JSON ledgers.
+
+**The overall project job FAILS later in a separate real-compiler-head probe.** The three-head edit plan is produced from captured native signature AST/ranges, but its native baseline could not find SDK sibling modules because its target `Lean` prefix shadowed the SDK root; its root-module setting also selected that module as an executable entry. No C/public-olean comparison was reached. Native/proof-linked/host jobs PASS; this is **not an all-four-jobs PASS checkpoint**.
+
+[Project artifact 13633535255](https://github.com/dwijayuda/pskernel/actions/runs/42520414613/artifacts/13633535255), ZIP SHA-256 `8a10e7724b03e031fcb2063db4066814c34a0899e3f49cfedc48a323fffc3b7f`.
+
+Candidate source **`263eb3f8693e0b2f9f57ea0418e1babdfce192f7`**, runner **`087035c38c30ad1a959d6279abdefe4bfe2536cc`**, corrects only that finite probe's native SDK metadata layout and entry-module selection; Linux qualification is pending. Dependency metadata stays pinned SDK data, while target artifacts are built fresh by native Lake. Compiler-head conversion remains limited to three typed heads; native bodies are retained. Goal remains ACTIVE / NOT COMPLETE.
+
+
+## Earlier prelude source grammar candidate — superseded by the finite step evidence above
 
 [Source PR #12](https://github.com/dwijayuda/lean4/pull/12), source **`eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1`**; [runner PR #227](https://github.com/dwijayuda/pskernel/pull/227), runner **`dc03ae543bc2bc050a6c62034aee2cb4bc80a56b`**; Linux [run 42520414613](https://github.com/dwijayuda/pskernel/actions/runs/42520414613) is **IN PROGRESS**.
 

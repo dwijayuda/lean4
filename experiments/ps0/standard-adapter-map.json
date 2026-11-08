@@ -661,9 +661,9 @@
     "grammarMigrationComplete": false
   },
   "preludeSourceGrammarContinuation": {
-    "status": "IN_PROGRESS_FINITE_PRELUDE_GRAMMAR",
-    "source": "eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1",
-    "runner": "dc03ae543bc2bc050a6c62034aee2cb4bc80a56b",
+    "status": "PENDING_REAL_COMPILER_HEAD_PARITY_AFTER_FINITE_PRELUDE_STEP_PASS",
+    "source": "263eb3f8693e0b2f9f57ea0418e1babdfce192f7",
+    "runner": "087035c38c30ad1a959d6279abdefe4bfe2536cc",
     "run": 42520414613,
     "sourcePR": 12,
     "runnerPR": 227,
@@ -839,6 +839,30 @@
             "sha256": "85a4d32fd1497e2c6b9eda8b317d3826baa94c416a26ddeb2071c025b09d85ab"
           }
         ]
+      },
+      {
+        "source": "eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1",
+        "runner": "dc03ae543bc2bc050a6c62034aee2cb4bc80a56b",
+        "run": 42520414613,
+        "job": 128852573466,
+        "observed": "Finite prelude grammar step PASS; subsequent real-module baseline failed because target Lean namespace masked SDK sibling artifacts and selected compiler module as executable main. Candidate supplies pinned SDK sibling metadata links excluding freshly built target artifacts, and uses a separate nonbuilt executable root.",
+        "artifacts": [
+          {
+            "id": 13633535255,
+            "name": "ps0-project-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+            "sha256": "8a10e7724b03e031fcb2063db4066814c34a0899e3f49cfedc48a323fffc3b7f"
+          },
+          {
+            "id": 13633316642,
+            "name": "ps0-native-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+            "sha256": "1475507a36111b4a1a58431daefaa1d001f91b9e569268f3d6f5d0193b1de714"
+          },
+          {
+            "id": 13633226885,
+            "name": "ps0-external-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+            "sha256": "0187d0ed8c993784704671f76f9c4ae3f72b1dae2210d6eb439686e8b18bfe31"
+          }
+        ]
       }
     ],
     "testFirst": {
@@ -855,6 +879,129 @@
       "Native diagnostic/IDE presentation and complete source provenance"
     ],
     "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "previousFinitePrelude": {
+      "status": "PASS_FINITE_PRELUDE_GRAMMAR_STEP_OVERALL_PROJECT_JOB_FAILED_SEPARATE_HEAD_PROBE",
+      "source": "eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1",
+      "runner": "dc03ae543bc2bc050a6c62034aee2cb4bc80a56b",
+      "run": 42520414613,
+      "job": 128852573466,
+      "jobs": {
+        "project": "failure",
+        "native": 128852573451,
+        "proofLinked": 128852573261,
+        "host": 128852573588
+      },
+      "oracles": [
+        "PS0_PRELUDE_GRAMMAR:42:3",
+        "PS0_PRELUDE_GRAMMAR_NO_HIDDEN_IMPORTS: PASS",
+        "PS0_COMPILER_HEAD_MIGRATION: planned 3"
+      ],
+      "artifacts": [
+        {
+          "id": 13633535255,
+          "name": "ps0-project-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+          "sha256": "8a10e7724b03e031fcb2063db4066814c34a0899e3f49cfedc48a323fffc3b7f"
+        },
+        {
+          "id": 13633316642,
+          "name": "ps0-native-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+          "sha256": "1475507a36111b4a1a58431daefaa1d001f91b9e569268f3d6f5d0193b1de714"
+        },
+        {
+          "id": 13633226885,
+          "name": "ps0-external-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+          "sha256": "0187d0ed8c993784704671f76f9c4ae3f72b1dae2210d6eb439686e8b18bfe31"
+        }
+      ],
+      "scope": "Real native Lake normal build/link/runtime plus bootstrap=true compilation of three prelude test modules. Direct imports exactly Init / PreludePS.Core / Lean; raw source and maps identical; no local PS0 declarations; command/term/binder quotations native; contextual identifiers and owned ASCII strict binders pass. Stage setup options interpreter.prefer_native=false and ps0.sourceGrammar=true verified. Overall project job failed later in a separate compiler head probe before native baseline compiled because of SDK namespace shadowing and unintended main-module configuration. Not an all-four-jobs PASS checkpoint.",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    }
+  },
+  "preludeFiniteGrammarEvidence": {
+    "status": "PASS_FINITE_PRELUDE_GRAMMAR_STEP_OVERALL_PROJECT_JOB_FAILED_SEPARATE_HEAD_PROBE",
+    "source": "eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1",
+    "runner": "dc03ae543bc2bc050a6c62034aee2cb4bc80a56b",
+    "run": 42520414613,
+    "job": 128852573466,
+    "jobs": {
+      "project": "failure",
+      "native": 128852573451,
+      "proofLinked": 128852573261,
+      "host": 128852573588
+    },
+    "oracles": [
+      "PS0_PRELUDE_GRAMMAR:42:3",
+      "PS0_PRELUDE_GRAMMAR_NO_HIDDEN_IMPORTS: PASS",
+      "PS0_COMPILER_HEAD_MIGRATION: planned 3"
+    ],
+    "artifacts": [
+      {
+        "id": 13633535255,
+        "name": "ps0-project-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+        "sha256": "8a10e7724b03e031fcb2063db4066814c34a0899e3f49cfedc48a323fffc3b7f"
+      },
+      {
+        "id": 13633316642,
+        "name": "ps0-native-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+        "sha256": "1475507a36111b4a1a58431daefaa1d001f91b9e569268f3d6f5d0193b1de714"
+      },
+      {
+        "id": 13633226885,
+        "name": "ps0-external-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+        "sha256": "0187d0ed8c993784704671f76f9c4ae3f72b1dae2210d6eb439686e8b18bfe31"
+      }
+    ],
+    "scope": "Real native Lake normal build/link/runtime plus bootstrap=true compilation of three prelude test modules. Direct imports exactly Init / PreludePS.Core / Lean; raw source and maps identical; no local PS0 declarations; command/term/binder quotations native; contextual identifiers and owned ASCII strict binders pass. Stage setup options interpreter.prefer_native=false and ps0.sourceGrammar=true verified. Overall project job failed later in a separate compiler head probe before native baseline compiled because of SDK namespace shadowing and unintended main-module configuration. Not an all-four-jobs PASS checkpoint.",
+    "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "fullCompilerSourceCensusStageOne": {
+    "status": "PASS_COMPLETE_NATIVE_COMPATIBLE_FOREST_AND_CENSUS_STAGE_ONE",
+    "source": "abf3585d99c921fe02697b679867a0a55e433168",
+    "runner": "e78cd4479ba5b1433e8879c14de79ba27427dfdc",
+    "run": 42517718338,
+    "job": 128844671227,
+    "moduleCount": 2566,
+    "pinnedCompilerModuleCount": 2546,
+    "ps0ModuleCount": 20,
+    "lakeJobs": 5136,
+    "byteIdenticalInputs": 2541,
+    "selectedSourceDeclarationModes": {
+      "native-compatible": 72790,
+      "mapped-ps": 0
+    },
+    "artifact": 13632838932,
+    "sha256": "2395167f3782944cf4291efe55a10d1185f9eec6244493e0df985132e30e7308",
+    "stageTwo": {
+      "job": 128852603767,
+      "status": "IN_PROGRESS"
+    },
+    "scope": "Full native-compatible .ps forest and same-frontend/origin census join. Selected source declaration rows remain native-compatible; this does not qualify canonical PS grammar source migration.",
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "artifacts": [
+      {
+        "id": 13632838932,
+        "name": "ps0-compiler-stage1-abf3585d99c921fe02697b679867a0a55e433168-42517718338",
+        "sha256": "2395167f3782944cf4291efe55a10d1185f9eec6244493e0df985132e30e7308"
+      },
+      {
+        "id": 13632260875,
+        "name": "ps0-project-abf3585d99c921fe02697b679867a0a55e433168-42517718338",
+        "sha256": "7d716e98c3e99fd9c4c9307ea04e3e84a3185812fcfa59dc651b098e68c474ab"
+      },
+      {
+        "id": 13631962130,
+        "name": "ps0-native-abf3585d99c921fe02697b679867a0a55e433168-42517718338",
+        "sha256": "6dba335b01d079a02c35b53b842093fb5d4dc78c472b3ef2efec94df723598ae"
+      },
+      {
+        "id": 13631888867,
+        "name": "ps0-external-abf3585d99c921fe02697b679867a0a55e433168-42517718338",
+        "sha256": "36bbca3bb0888b3d216e42074a9e1743dd40c69b3a934cc7a4d659e02d90093c"
+      }
+    ]
   }
 }
