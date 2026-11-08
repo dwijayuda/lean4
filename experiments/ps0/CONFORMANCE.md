@@ -3,12 +3,22 @@
 **Sole normative reference:** [PS0_V1_LANGUAGE_REFERENCE.md](PS0_V1_LANGUAGE_REFERENCE.md), edition R2, 2026-10-16. Uploaded Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
 **Lean:** official 4.35.0, `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
 
-**Status:** bounded native/compiler frontend qualification at source
-`07a1da68aacf2462e9723a79242c322a21ca3c83` passed Linux run
-[42474108191](https://github.com/dwijayuda/pskernel/actions/runs/42474108191).
-Recursive module and expanded category candidates are under qualification in
-PR #8. Full v1 language closure and full compiler-source replacement are not
-claimed from that earlier run. The old v7 completion estimates remain retired.
+**Status:** source `b842b26fa2dffaee6a73f03fb70ca77683ccaf31`, runner
+`a2ff849cd861a32e52dbfee94f0283c749f37040`, Linux
+[run 42483607627](https://github.com/dwijayuda/pskernel/actions/runs/42483607627):
+recursive/category job `128740672990`, native job `128740672968`, proof-linked
+job `128740672770` and host-contract job `128740672920` have passed.
+Compiler-source stage one is in progress; stage two and full compiler-source
+replacement are unqualified. Full v1 language closure remains open. The old
+v7 completion estimates remain retired.
+
+The project artifact `13618347877` has ZIP SHA-256
+`1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980`.
+It retains executed recursive/meta import, native link/runtime, warm reuse,
+transitive PS/native invalidation, publication, prelude isolation, local entry,
+source collision, cycle and private-visibility oracles. Mapped category tests
+retain native tuple DSL/quotation ownership and reject order/duplicate/gap
+errors. These are finite executed cases, not all-role adapter closure.
 
 ## Current exact-evidence policy
 
@@ -25,7 +35,7 @@ cycles, visibility and transitive invalidation. `tests/run-categories.py`
 checks the selected mapped operands and native quotation/DSL ownership.
 
 `tests/run-compiler-ps.py` is the compiler-source migration gate. It inventories
-every selected SDK/repository module, compiles a program source tree with no
+all 2,546 pinned `src/**/*.lean` Git blobs plus PS0 modules, compiles a program source tree with no
 lean files, builds a migrated compiler executable and, in a second clean
 job, requests full C/olean fixed-point comparison. Conversion, native source
 admission, C/object compilation, executable behavior and a full compiler
@@ -41,7 +51,7 @@ PENDING. Native-prelude coverage does not qualify all PS-owned bootstrap sugar.
 | Grammar | Removed frozen command/attribute/tactic/loop/source-token denial list; diagnostic-only syntax-kind inventory | Full interleaved host grammar and category-aware adaptation |
 | Declaration policy | No mandatory v7 axioms/unsafe/partial/IO ban; `#ps0_evidence` is informational | Transitive claim-specific assumptions and evidence `12` |
 | Imports/Standard | Native registered/imported extensions determine availability; no v7 finite Standard allowlist | Complete effective module/stage/extension identity and `prelude` isolation |
-| Modules | Explicit native `module` parsed; implicit headerless PS module recognized | Full modern module compilation, public-name defaults, hidden bodies and project graph |
+| Modules | Native Lake recursive PS/public/meta module graph, mixed native imports, invalidation, collision/cycle/private/local-entry negatives passed at the checkpoint | Broader package/options/plugin/bootstrap qualification and full grammar/source fidelity |
 | `.lean` | Official Lean process unchanged and unrestricted | Routine exact-commit CI qualification |
 | JS backend | Lean typed Nat-only IR, ESM/`.d.ts`/Source Map v3 | Validated build, more types, modules, runtime semantics proof |
 

@@ -1,17 +1,106 @@
 {
   "schema": "ps0-standard-operand-map/1",
   "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
-  "status": "partial; entries require exact-source executed qualification",
+  "status": "partial; finite mapped tests passed at recorded checkpoint; remaining roles unqualified",
   "entries": [
-    {"nativeKind": "Lean.Parser.Command.definition", "slots": ["result type", "simple value"], "adapter": "PS0.StandardAdapters.ps0StandardDef"},
-    {"nativeKind": "Lean.Parser.Command.abbrev", "slots": ["result type", "simple value"], "adapter": "PS0.StandardAdapters.ps0StandardAbbrev"},
-    {"nativeKind": "Lean.Parser.Command.theorem", "slots": ["proposition", "proof"], "adapter": "PS0.StandardAdapters.ps0StandardTheorem"},
-    {"nativeKind": "Lean.Parser.Command.example", "slots": ["proposition", "proof"], "adapter": "PS0.StandardAdapters.ps0StandardExample"},
-    {"nativeKind": "Lean.Parser.Term.ifThenElse", "slots": ["condition", "then", "else"], "adapter": "ps0HostIf"},
-    {"nativeKind": "Lean.Parser.Tactic.exact", "slots": ["expression"], "adapter": "ps0HostExact"},
-    {"nativeKind": "Lean.Parser.Tactic.apply", "slots": ["expression"], "adapter": "ps0HostApply"},
-    {"nativeKind": "Lean.Parser.Tactic.refine", "slots": ["expression"], "adapter": "ps0HostRefine"},
-    {"nativeKind": "Lean.Parser.Term.do", "slots": ["single return sequence"], "adapter": "ps0HostDo"}
+    {
+      "nativeKind": "Lean.Parser.Command.definition",
+      "slots": [
+        "result type",
+        "simple value"
+      ],
+      "adapter": "PS0.StandardAdapters.ps0StandardDef"
+    },
+    {
+      "nativeKind": "Lean.Parser.Command.abbrev",
+      "slots": [
+        "result type",
+        "simple value"
+      ],
+      "adapter": "PS0.StandardAdapters.ps0StandardAbbrev"
+    },
+    {
+      "nativeKind": "Lean.Parser.Command.theorem",
+      "slots": [
+        "proposition",
+        "proof"
+      ],
+      "adapter": "PS0.StandardAdapters.ps0StandardTheorem"
+    },
+    {
+      "nativeKind": "Lean.Parser.Command.example",
+      "slots": [
+        "proposition",
+        "proof"
+      ],
+      "adapter": "PS0.StandardAdapters.ps0StandardExample"
+    },
+    {
+      "nativeKind": "Lean.Parser.Term.ifThenElse",
+      "slots": [
+        "condition",
+        "then",
+        "else"
+      ],
+      "adapter": "ps0HostIf"
+    },
+    {
+      "nativeKind": "Lean.Parser.Tactic.exact",
+      "slots": [
+        "expression"
+      ],
+      "adapter": "ps0HostExact"
+    },
+    {
+      "nativeKind": "Lean.Parser.Tactic.apply",
+      "slots": [
+        "expression"
+      ],
+      "adapter": "ps0HostApply"
+    },
+    {
+      "nativeKind": "Lean.Parser.Tactic.refine",
+      "slots": [
+        "expression"
+      ],
+      "adapter": "ps0HostRefine"
+    },
+    {
+      "nativeKind": "Lean.Parser.Term.do",
+      "slots": [
+        "single return sequence"
+      ],
+      "adapter": "ps0HostDo"
+    }
   ],
-  "remaining": ["binder types/defaults", "all mixed declaration signatures", "multi-statement do", "remaining tactic arguments", "match motives/pattern roles", "collections/interpolation", "configuration/attribute operands"]
+  "remaining": [
+    "binder types/defaults",
+    "all mixed declaration signatures",
+    "multi-statement do",
+    "remaining tactic arguments",
+    "match motives/pattern roles",
+    "collections/interpolation",
+    "configuration/attribute operands"
+  ],
+  "evidence": {
+    "sourceCommit": "b842b26fa2dffaee6a73f03fb70ca77683ccaf31",
+    "runnerCommit": "a2ff849cd861a32e52dbfee94f0283c749f37040",
+    "run": "https://github.com/dwijayuda/pskernel/actions/runs/42483607627",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "projectJob": 128740672990,
+    "nativeJob": 128740672968,
+    "hostJob": 128740672920,
+    "projectArtifact": {
+      "id": 13618347877,
+      "sha256": "1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980"
+    },
+    "nativeArtifact": {
+      "id": 13618945967,
+      "sha256": "af1386f8c90e7a630cb85b12e101b76fda5b30bf4b120aefac76a44425c721af"
+    },
+    "fixture": "tests/run-categories.py",
+    "oracle": "PS0_STANDARD_CATEGORY_SLOTS: PASS",
+    "limits": "exact finite test operands only; apply/refine registrations have no dedicated executed fixture yet"
+  }
 }

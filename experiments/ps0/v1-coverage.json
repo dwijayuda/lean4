@@ -1041,14 +1041,21 @@
       "sourceOrSetup": "`add(1, 2)` / `add 1 2`",
       "requiredInterpretation": "Two arguments, same intended curried application.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/v1/standard_category_slots.ps :: fromStandardDef/fromStandardAbbrev",
+      "qualifiedCommit": "b842b26fa2dffaee6a73f03fb70ca77683ccaf31",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/42483607627",
       "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
-      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
+      "candidateCoverage": "EXACT_SOURCE_EXECUTED_FINITE_CASES",
       "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
-      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
+      "standardHostOperandStatus": "PASS_FINITE_MAPPED_CASES",
+      "evidence": {
+        "jobId": 128740672990,
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "oracle": "add(1, 2) computes to 3 in actual native executable; rfl equality and existing two-argument AST probes pass",
+        "scope": "finite mapped ordinary declaration/extension cases; does not certify all host operand slots"
+      }
     },
     {
       "id": "PS0-P-CALL-02",
@@ -2434,14 +2441,68 @@
   ],
   "currentContinuation": {
     "branch": "feat/ps0-recursive-projects-20261108",
-    "status": "PENDING_EXACT_SOURCE_LINUX",
+    "status": "RECURSIVE_NATIVE_AND_MAPPED_CATEGORY_JOBS_PASS_COMPILER_GATES_OPEN",
     "goal": "Replace Lean compiler .lean program sources with .ps using native Lean and Lake infrastructure",
     "fixtures": [
       "tests/run-project.py",
       "tests/run-categories.py",
       "tests/run-compiler-ps.py"
     ],
-    "note": "Earlier qualified cases retain their exact historical identities; broad families and changed source require fresh evidence."
+    "note": "Job conclusions are recorded individually; the overall workflow and compiler-source/fixed-point gates are not yet PASS. Broad families remain pending.",
+    "checkpoint": {
+      "sourceCommit": "b842b26fa2dffaee6a73f03fb70ca77683ccaf31",
+      "runnerCommit": "a2ff849cd861a32e52dbfee94f0283c749f37040",
+      "run": "https://github.com/dwijayuda/pskernel/actions/runs/42483607627",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "projectJob": 128740672990,
+      "nativeJob": 128740672968,
+      "hostJob": 128740672920,
+      "projectArtifact": {
+        "id": 13618347877,
+        "sha256": "1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980"
+      },
+      "nativeArtifact": {
+        "id": 13618945967,
+        "sha256": "af1386f8c90e7a630cb85b12e101b76fda5b30bf4b120aefac76a44425c721af"
+      }
+    },
+    "boundedEvidence": [
+      {
+        "fixture": "tests/run-project.py",
+        "jobId": 128740672990,
+        "oracles": [
+          "PS0_RECURSIVE_PROJECT: PASS",
+          "PS0_PROJECT_LOCAL_ENTRY: PASS"
+        ],
+        "scope": "recursive .ps public/meta imports, native dependency, actual native execution 42:7 then 45:7 then 45:9, warm executable hash/mtime reuse, no-replacement publication, prelude/no hidden imports, local-main requirement, collisions, native cycles and private visibility"
+      },
+      {
+        "fixture": "tests/run-categories.py + tests/v1/standard_category_slots.ps",
+        "jobId": 128740672990,
+        "oracles": [
+          "PS0_CATEGORY_SLOTS:3:3:3:3:3",
+          "PS0_STANDARD_CATEGORY_SLOTS: PASS"
+        ],
+        "scope": "mapped declaration/type/proof operands, general/chained/closure calls, selected conditional/single-return do/braced exact, exact native tuple DSL/quotation ownership, order/duplicate/gap negatives"
+      },
+      {
+        "fixture": "tests/run-native.py",
+        "jobId": 128740672968,
+        "oracles": [
+          "PS0_LAKE_NATIVE: PASS"
+        ],
+        "scope": "single-module native execution, cache/source/import invalidation, atomic/no-replacement publication, invalid entry/call/visibility, actual unresolved-symbol linker failure"
+      }
+    ],
+    "compilerMigration": {
+      "status": "IN_PROGRESS_NOT_QUALIFIED",
+      "jobId": 128741050411,
+      "expectedPinnedSourceFiles": 2546,
+      "manifest": "compiler-source-inventory.json",
+      "test": "tests/run-compiler-ps.py",
+      "required": "all source Git blobs, actual .ps input selection, generated olean/C artifacts, native migrated executable, and second clean-stage output comparison"
+    }
   }
 }
 
