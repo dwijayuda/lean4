@@ -4671,5 +4671,15 @@
       "run": 42532451421,
       "job": 128889408555
     }
+  },
+  "psBuiltGrammarHostCandidateEvidence": {
+    "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
+    "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
+    "run": 42532849633,
+    "pr": 234,
+    "status": "IN_PROGRESS",
+    "scope": "full native-compatible compiler stages plus relocated grammar hosting with metadata freshly produced from all-.ps compiler outputs; SDK dependencies explicit; not whole canonical PS grammar conversion",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }

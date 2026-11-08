@@ -1,5 +1,12 @@
 # PS0 — AI Work State (9 November 2026)
 
+## Fresh .ps-built compiler grammar-host integration — IN PROGRESS
+
+Candidate source **2cba0bc26df49c52d653598fd9c791f23209199c**, runner **b83ebb191c21c0985c9dc6df3a4cca11ae31e121**, [run 42532849633](https://github.com/dwijayuda/pskernel/actions/runs/42532849633), [runner PR234](https://github.com/dwijayuda/pskernel/pull/234). Each full native-compatible compiler stage now additionally tests a relocated executable with **PS0 host metadata freshly compiled from its .ps source forest**, retaining the missing-host negative, native Lake PS prelude compile/link/runtime, no-hidden-import checks, compiler-stage options and host manifest. SDK metadata dependencies remain explicit. Stage two retains the all-module strict C/public-olean fixed-point gate. **This integration has not passed yet**; the source forest remains native-compatible, and the entire-corpus PS grammar goal remains ACTIVE / NOT COMPLETE.
+
+The previously qualified 15-head/mixed/default/source-fidelity and SDK-backed native-host checkpoints below remain exact source **7fea6986042ba76fd1f1a028474209dc5f3bc519**. The earlier full native-compatible fixed point remains source **28904e5a7ccb19a15e311ecc654541dc0ee639ec**. Neither result is promoted to this newer candidate.
+
+
 ## Mixed/default compiler heads and native grammar host — Linux PASS
 
 Qualified source **7fea6986042ba76fd1f1a028474209dc5f3bc519**. The mixed/default runner **af8cba4c485081ae3feaaf78607783d3586561d9**, [run 42531956835](https://github.com/dwijayuda/pskernel/actions/runs/42531956835), passes **all four jobs**: project **128887883496**, native **128887883501**, proof-linked **128887883492**, host **128887883581**. Expanded native-host runner **ed686af4624a721be79dc67be6f0c2e3e53389ce**, [run 42532092264](https://github.com/dwijayuda/pskernel/actions/runs/42532092264), also passes **all four jobs**: project **128888301265**, native **128888301253**, proof-linked **128888301071**, host **128888301397**.
