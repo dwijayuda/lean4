@@ -443,5 +443,66 @@
       }
     ],
     "verified_execution": false
+  },
+  "sourceOriginEvidence": {
+    "status": "PASS_SOURCE_ORIGIN_CACHE_RECOVERY",
+    "sourceCommit": "863da731fc5957000d4633d13a9711d8d14ae126",
+    "runnerCommit": "710e9d296ddd344e6f559717c4aee0b0568e3e6c",
+    "run": "https://github.com/dwijayuda/pskernel/actions/runs/42512184970",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "jobs": {
+      "project": 128827500492,
+      "native": 128827500249,
+      "proofLinked": 128827500080,
+      "hostContract": 128827500317
+    },
+    "artifacts": [
+      {
+        "id": 13629788351,
+        "name": "ps0-native-863da731fc5957000d4633d13a9711d8d14ae126-42512184970",
+        "sha256": "403bca4db145582fa92f08f91f5ea8feb9f82efabe021d2983fc2454e409c107"
+      },
+      {
+        "id": 13629683793,
+        "name": "ps0-project-863da731fc5957000d4633d13a9711d8d14ae126-42512184970",
+        "sha256": "1c60c6b9b98a6cceed3b99e2b3377a6fe36e4799e86f77c460e6c75e9637875d"
+      },
+      {
+        "id": 13629454560,
+        "name": "ps0-external-863da731fc5957000d4633d13a9711d8d14ae126-42512184970",
+        "sha256": "49c8bddc8739c988a0ab4ffa4fd407fcc50c280da9abd4a8daea8fb7fea877b5"
+      }
+    ],
+    "fixture": "tests/run-project.py",
+    "oracle": "PS0_PROJECT_SOURCE_ORIGIN_CACHE_RECOVERY: PASS",
+    "scope": "After native leanArts succeeds, a native Job.mapM continuation verifies/recreates the exact origin JSON and adds its native Lake content trace. Deleted and corrupted sidecars recover byte-identically while warm executable hash and mtime remain unchanged. Binder/category/native/proof/host/origin regressions all pass at this source.",
+    "failedCandidates": [
+      {
+        "source": "89af6cc1d3aecf6cfa81f0a8adf59afb430a0e73",
+        "runner": "2d7f06ab8d35cdc0c4065ee80c31449d32bc9a58",
+        "run": 42511729740,
+        "job": 128826050067,
+        "observed": "test-first failure: native warm build leaves deleted origin sidecar missing"
+      },
+      {
+        "source": "6d0c3f5c546e2ca15c2b52187d7ad353ad725781",
+        "runner": "2ea03f127b1affba54103e0233ef5d930649d1bd",
+        "run": 42511971440,
+        "job": 128826860303,
+        "observed": "native configuration rejected Bool return escaping the artifact continuation; fixed with explicit local Bool state"
+      }
+    ],
+    "compilerRebuild": {
+      "source": "9826bdd9dc422fe021de953a570972d7b85df2f4",
+      "runner": "332ed8372583f2c1a2b08ed3aacd182aa3aa95d2",
+      "run": 42511359592,
+      "status": "IN_PROGRESS_STAGE_ONE",
+      "job": 128825446119,
+      "pr": 223
+    },
+    "goalStatus": "ACTIVE_NOT_COMPLETE",
+    "next": "Native module-linter census of actual parsed compiler commands, then explicit PS source grammar migration and bootstrap/prelude adapter integration. Current native-compatible full-source build is a separate gate.",
+    "verified_execution": false
   }
 }

@@ -1,6 +1,24 @@
 # PS0 — AI Work State (9 November 2026)
 
-## Active goal and current binder/default checkpoint — 9 November 2026
+## Current origin-artifact recovery checkpoint — 9 November 2026
+
+Source **`863da731fc5957000d4633d13a9711d8d14ae126`**, runner **`710e9d296ddd344e6f559717c4aee0b0568e3e6c`**, Linux [run 42512184970](https://github.com/dwijayuda/pskernel/actions/runs/42512184970): **completed SUCCESS; all four jobs PASS**. Exact jobs: project **128827500492**, native **128827500249**, proof-linked **128827500080**, host **128827500317**. This newer source retains the binder/signature probes below and adds **PS0_PROJECT_SOURCE_ORIGIN_CACHE_RECOVERY: PASS**.
+
+The adapter composes a native `Job.mapM` continuation after successful `leanArts`, verifies/recreates the exact source-origin JSON and records its content in the native Lake trace. Deleting or corrupting an ilean origin sidecar is repaired to identical bytes on the next warm build, while the executable's SHA-256 and mtime remain unchanged. Native compilation/elaboration, artifact reuse, object code and linking remain Lean/Lake responsibilities.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| Native regression | [13629788351](https://github.com/dwijayuda/pskernel/actions/runs/42512184970/artifacts/13629788351) | `403bca4db145582fa92f08f91f5ea8feb9f82efabe021d2983fc2454e409c107` |
+| Project/binder/origin recovery | [13629683793](https://github.com/dwijayuda/pskernel/actions/runs/42512184970/artifacts/13629683793) | `1c60c6b9b98a6cceed3b99e2b3377a6fe36e4799e86f77c460e6c75e9637875d` |
+| Proof-linked regression | [13629454560](https://github.com/dwijayuda/pskernel/actions/runs/42512184970/artifacts/13629454560) | `49c8bddc8739c988a0ab4ffa4fd407fcc50c280da9abd4a8daea8fb7fea877b5` |
+
+Test-first source **89af6cc1d3aecf6cfa81f0a8adf59afb430a0e73**, run **42511729740**, job **128826050067**, failed because warm builds did not restore missing maps. Candidate **6d0c3f5c546e2ca15c2b52187d7ad353ad725781**, run **42511971440**, job **128826860303**, exposed a Bool return escaping the native artifact continuation; the passing source preserves the native artifact result.
+
+The full compiler regression [run 42511359592](https://github.com/dwijayuda/pskernel/actions/runs/42511359592) is **still running stage one, job 128825446119**, at the earlier binder source **9826bdd9dc422fe021de953a570972d7b85df2f4** and independent runner **332ed8372583f2c1a2b08ed3aacd182aa3aa95d2**. It does not qualify this later Lake-wrapper change or complete ProofScript grammar migration.
+
+**The project goal remains ACTIVE.** Next: collect actual compiler command syntax through Lean's native module-linter API, distinguish original/quoted/DSL/generated forms, implement checked source migration and bootstrap/prelude grammar support without hidden logical imports or cycles, then qualify the entire transformed corpus through native Lake builds, migrated source checks and fixed-point evidence. Diagnostic/IDE remapping and full provenance also remain open. No broad v1 family is promoted; no verified-execution certificate is issued.
+
+## Active goal and qualified binder/default checkpoint — 9 November 2026
 
 **Goal remains ACTIVE:** compile the entire pinned Lean4 compiler corpus as `.ps` using ProofScript syntax and grammars. Renaming native sources, or building only native-compatible bodies, is insufficient. The earlier full native-compatible source-forest milestone is historical evidence, not completion of this stronger requirement.
 
@@ -50,7 +68,7 @@ Resolved failed candidates remain in `v1-coverage.json`: source `74be717b036c8c0
 
 ## Previously qualified pinned compiler-source replacement capability
 
-The project goal is now qualified for the exact **Lean 4.35.0 source snapshot**: every one of its **2,546 src/**/*.lean Git blobs** plus **18 PS0 implementation modules** builds from actual `.ps` program inputs through the reused Lean frontend/kernel/LCNF/C backend and native Lake graph/artifact/object/link machinery. A migrated native compiler then rebuilds the same **2,564-module** forest in a fresh Linux job, with **zero generated C differences and zero public olean differences**. This is a generated source-forest capability test, not an upstream/main source cutover, complete PS-specific grammar closure, a C++ runtime rewrite or a formal execution-correspondence proof.
+The earlier extension-replacement milestone is qualified for the exact **Lean 4.35.0 source snapshot**: every one of its **2,546 src/**/*.lean Git blobs** plus **18 PS0 implementation modules** builds from actual `.ps` program inputs through the reused Lean frontend/kernel/LCNF/C backend and native Lake graph/artifact/object/link machinery. A migrated native compiler then rebuilds the same **2,564-module** forest in a fresh Linux job, with **zero generated C differences and zero public olean differences**. This is a generated source-forest capability test, not an upstream/main source cutover, complete PS-specific grammar closure, a C++ runtime rewrite or a formal execution-correspondence proof.
 
 ### Exact source, runner and Linux results
 
