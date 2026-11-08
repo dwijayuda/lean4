@@ -28,6 +28,16 @@ private partial def signatureSyntax (source : Syntax) : Json :=
     ("atom", if source.isAtom then toJson source.getAtomVal else .null),
     ("args", toJson (source.getArgs.map signatureSyntax))]
 
+private def valueApplication (native : Syntax) : Json := Id.run do
+  unless native.isOfKind ``Lean.Parser.Command.definition &&
+      native[3].isOfKind ``Lean.Parser.Command.declValSimple do return .null
+  let value := native[3][1]
+  unless value.isOfKind ``Lean.Parser.Term.app do return .null
+  return Json.mkObj [
+    ("range", sourceRange value), ("functionRange", sourceRange value[0]),
+    ("arguments", toJson (value[1].getArgs.map fun arg => Json.mkObj [
+      ("kind", toJson arg.getKind.toString), ("range", sourceRange arg)]))]
+
 private def declaration (source : Syntax) : Json := Id.run do
   let kind := source.getKind
   let mapped := #[
@@ -51,7 +61,8 @@ private def declaration (source : Syntax) : Json := Id.run do
         ("production", toJson native.getKind.toString),
         ("sourceName", toJson native[1][0].getId.toString),
         ("keywordRange", sourceRange native[0]), ("nameRange", sourceRange native[1]),
-        ("signatureRange", sourceRange native[2]), ("signatureSyntax", signatureSyntax native[2])]
+        ("signatureRange", sourceRange native[2]), ("signatureSyntax", signatureSyntax native[2]),
+        ("valueApplication", valueApplication native)]
   return .null
 
 private partial def command (source : Syntax) : Json :=

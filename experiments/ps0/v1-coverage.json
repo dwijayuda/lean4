@@ -3839,6 +3839,337 @@
     ],
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "recursiveCompilerHeadCandidate": {
+    "status": "SUPERSEDED_BY_3C471_QUALIFIED_RECURSIVE_HEAD_AND_VALUE_CHECKPOINT",
+    "source": "a0e24b19e6dc7fc87dba1d06f8cf17938e4f4f31",
+    "runner": "4ba47bcd4451874addc1b4df9c49b32d274e7cd1",
+    "run": 42527051005,
+    "sourcePR": 14,
+    "runnerPR": 231,
+    "module": "Lean.Compiler.LCNF.DeclHash",
+    "pinnedBlob": "5f818560cb8fcba0df6f64acb6bdc01c48425189",
+    "expectedDeclarations": [
+      "hashParams",
+      "hashAlt",
+      "hashAlts",
+      "hashCode"
+    ],
+    "roles": [
+      "typed original command heads, including explicit mutual members",
+      "owned single parenthesized binder type-call adjacency",
+      "owned root value application delimiters/argument separators, preserving argument bodies and quotations"
+    ],
+    "failedCandidate": {
+      "source": "9afb5879612d5d6bf35e56f20eb0899512669727",
+      "runner": "885d87e714905047feaccd852cefe1856de1c2d6",
+      "run": 42526462886,
+      "job": 128871135830,
+      "observed": "planner produced four real heads and native baseline compiled; PS compilation rejected spaced parenthesized foldl root value operand at converted DeclHash line 29. Previous ClosedTermCache parity and other regression steps pass.",
+      "artifacts": [
+        {
+          "id": 13635980858,
+          "name": "ps0-external-9afb5879612d5d6bf35e56f20eb0899512669727-42526462886",
+          "sha256": "85904ef251797964422ffdb0d8c9a954e55b3b31d747553b13ea487554b27807"
+        },
+        {
+          "id": 13635721182,
+          "name": "ps0-project-9afb5879612d5d6bf35e56f20eb0899512669727-42526462886",
+          "sha256": "08643c70ffb4782165aca2948b62fe71dcee51c27d9b076aa4b7abc748e8203b"
+        },
+        {
+          "id": 13635591354,
+          "name": "ps0-native-9afb5879612d5d6bf35e56f20eb0899512669727-42526462886",
+          "sha256": "8d1f9142e7530ce58b90eafe6540bfa6763bddc8e0ceb007da30091e25f553c0"
+        }
+      ]
+    },
+    "scope": "four real compiler declaration heads and finite owned expression operands; native match/lambda bodies remain native; no whole-corpus completion claim",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "runtimeQualifiedCompilerForestStageOne": {
+    "source": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+    "runner": "484868307c6611fedf1a464e2e102c02b8ad5855",
+    "run": 42522976977,
+    "stageOne": {
+      "status": "PASS",
+      "job": 128861032581,
+      "modules": 2567,
+      "pinnedModules": 2546,
+      "ps0Modules": 21,
+      "lakeJobs": 5138,
+      "selectedNativeCompatibleDeclarations": 72792,
+      "mappedPsSelectedDeclarations": 0,
+      "artifact": 13635566244,
+      "sha256": "c4443462ef060abcbe8a4033f5f01325f7c9f91cc6ece84b5c8b3c14c4ad5be0"
+    },
+    "stageTwo": {
+      "job": 128870983007,
+      "status": "IN_PROGRESS"
+    },
+    "scope": "complete native-compatible source forest and source census baseline; not canonical PS grammar migration",
+    "verified_execution": false
+  },
+  "recursiveCompilerPublicOleanDiagnosis": {
+    "status": "PS_COMPILE_AND_NATIVE_C_PARITY_PASS_PUBLIC_OLEAN_BYTES_DIFFER",
+    "source": "02c26c545f444a339698af0ae4b069ffd6f731b3",
+    "runner": "372e37f4822cc962467d2acae4daa3df552d0322",
+    "run": 42527694180,
+    "job": 128874919801,
+    "artifacts": [
+      {
+        "id": 13636082489,
+        "name": "ps0-native-02c26c545f444a339698af0ae4b069ffd6f731b3-42527694180",
+        "sha256": "ed257a7c0f4228dab118b2438e9d9fc81f7d08cbc83b69b4265849c634827636"
+      },
+      {
+        "id": 13636076642,
+        "name": "ps0-project-02c26c545f444a339698af0ae4b069ffd6f731b3-42527694180",
+        "sha256": "d71ebe7d6e11eb694b434a375feacd1642f73955ae95c66cdbff9efa6b71fb56"
+      },
+      {
+        "id": 13635764061,
+        "name": "ps0-external-02c26c545f444a339698af0ae4b069ffd6f731b3-42527694180",
+        "sha256": "732af621b545c5d04b8a4d70003bf0665267d237b14e3eeea394a1d5c27bce06"
+      }
+    ],
+    "module": "Lean.Compiler.LCNF.DeclHash",
+    "nativePublicOleanSha256": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb",
+    "psPublicOleanSha256": "7eb63649b6979438e70cf4d00fcb5a8077d082fad8a5ad05dbff366405cae7d6",
+    "observed": "Four real heads and root foldl value application compile under PS grammar; native-only mode rejects. Generated C hash equality passes. Native readModuleData inspection finds identical ordered constant names (15), types/levels, mutual membership and alpha-equivalent values. Two unsafe recursive implementation values differ in printed hygienic binder-name counters. Extension name/count summaries match; payload equality has not been audited. Strict public-olean byte gate still FAILS.",
+    "changedConstants": [
+      "Lean.Compiler.LCNF.hashCode._unsafe_rec",
+      "Lean.Compiler.LCNF.hashAlt._unsafe_rec"
+    ],
+    "candidate": {
+      "source": "3c47198c4ed8f43a4967deef199ea61fa5e8d592",
+      "runner": "d27b55627f50bbc4184839766994e286ae18af80",
+      "run": 42528176757,
+      "status": "SUPERSEDED_BY_3C471_STRICT_NATIVE_BYTE_PARITY_PASS",
+      "change": "Preserve original parenthesized type argument nodes within added PS call delimiters; no counter padding or output normalization."
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "recursiveCompilerQualifiedEvidence": {
+    "status": "PASS_REAL_RECURSIVE_COMPILER_PS_HEAD_AND_OWNED_VALUE_PARITY",
+    "source": "3c47198c4ed8f43a4967deef199ea61fa5e8d592",
+    "runner": "d27b55627f50bbc4184839766994e286ae18af80",
+    "run": 42528176757,
+    "jobs": {
+      "project": 128876309105,
+      "native": 128876308880,
+      "proofLinked": 128876309176,
+      "hostContract": 128876309075
+    },
+    "artifacts": [
+      {
+        "id": 13636555251,
+        "name": "ps0-native-3c47198c4ed8f43a4967deef199ea61fa5e8d592-42528176757",
+        "sha256": "8770926b1b8bc6a8d2d20ba2c86971ce9466e6871fe5e04d8b6eb9552f7defde"
+      },
+      {
+        "id": 13636505902,
+        "name": "ps0-external-3c47198c4ed8f43a4967deef199ea61fa5e8d592-42528176757",
+        "sha256": "227421fe6234c1e9ae73ee502ee5aa2a85dd9046a6d3770c9a1ec4f8606c8011"
+      },
+      {
+        "id": 13635874486,
+        "name": "ps0-project-3c47198c4ed8f43a4967deef199ea61fa5e8d592-42528176757",
+        "sha256": "faca612cbf2750609d67718d085459c1850d213dcab2ba78f10167851bee52c3"
+      }
+    ],
+    "module": "Lean.Compiler.LCNF.DeclHash",
+    "pinnedBlob": "5f818560cb8fcba0df6f64acb6bdc01c48425189",
+    "comparisons": {
+      "ir/Lean/Compiler/LCNF/DeclHash.c": {
+        "native": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c",
+        "ps": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c"
+      },
+      "lib/lean/Lean/Compiler/LCNF/DeclHash.olean": {
+        "native": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb",
+        "ps": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb"
+      }
+    },
+    "plan": {
+      "schema": "ps0-compiler-head-migration/1",
+      "source_sha256": "b91bd09cd5fbf9f0def82b12c7ef5d2c5c5465f55edfeec8ad59a640f0b5d1d0",
+      "result_sha256": "7c86fd067a0cee635c1f8e4309bb194a37e627ec9b835846b7d47f04142b7717",
+      "declarations": [
+        "hashParams",
+        "hashAlt",
+        "hashAlts",
+        "hashCode"
+      ],
+      "edits": [
+        {
+          "start": 354,
+          "end": 357,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 368,
+          "end": 369,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 380,
+          "end": 381,
+          "old": " ",
+          "new": "(",
+          "role": "owned binder type call opening delimiter; preserve original argument parentheses"
+        },
+        {
+          "start": 391,
+          "end": 391,
+          "old": "",
+          "new": ")",
+          "role": "owned binder type call closing delimiter; preserve original argument parentheses"
+        },
+        {
+          "start": 431,
+          "end": 434,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 442,
+          "end": 443,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 668,
+          "end": 671,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 680,
+          "end": 681,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 694,
+          "end": 695,
+          "old": " ",
+          "new": "(",
+          "role": "owned binder type call opening delimiter; preserve original argument parentheses"
+        },
+        {
+          "start": 703,
+          "end": 703,
+          "old": "",
+          "new": ")",
+          "role": "owned binder type call closing delimiter; preserve original argument parentheses"
+        },
+        {
+          "start": 729,
+          "end": 730,
+          "old": " ",
+          "new": "(",
+          "role": "owned value root application opening delimiter"
+        },
+        {
+          "start": 764,
+          "end": 765,
+          "old": " ",
+          "new": ", ",
+          "role": "owned value root application argument separator"
+        },
+        {
+          "start": 766,
+          "end": 766,
+          "old": "",
+          "new": ")",
+          "role": "owned value root application closing delimiter"
+        },
+        {
+          "start": 776,
+          "end": 779,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 788,
+          "end": 789,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        }
+      ],
+      "scope": "typed top-level/explicit owned nested declaration heads, single type-call adjacency, and owned root value applications with parenthesized arguments only; argument bodies, quotations and other native commands preserved byte for byte",
+      "grammar_migration_complete": false,
+      "verified_execution": false
+    },
+    "oracle": "PS0_PINNED_COMPILER_HEADS_NATIVE_PARITY: PASS",
+    "inspection": {
+      "runner": "8740fd27279b5e6e81f41de0c08fe22e28b7e0cd",
+      "run": 42528596494,
+      "job": 128877559131
+    },
+    "preservationFix": "Type call conversion adds call delimiters around the original parenthesized argument node rather than consuming that node as the delimiter. This preserves native macro hygiene and restores byte-identical public olean; no counter padding, output normalization, alpha-only substitute or weakened gate.",
+    "scope": "Four real typed compiler heads in original Lean.Compiler.LCNF.DeclHash, including three mutually recursive partial definitions, two owned type applications and one root foldl application. Argument bodies, quotations, native match/lambda interiors and other commands remain byte-preserved. Prior three ClosedTermCache heads also pass. Seven heads/two modules is finite evidence, not full PS source closure.",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "nativeCompilerFixedPointQualifiedEvidence": {
+    "source": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+    "runner": "484868307c6611fedf1a464e2e102c02b8ad5855",
+    "run": 42522976977,
+    "status": "PASS",
+    "stage1Job": 128861032581,
+    "stage2Job": 128870983007,
+    "moduleCount": 2567,
+    "nativeLakeJobsPerStage": 5138,
+    "fixedPoint": {
+      "changed_c": [],
+      "changed_olean": []
+    },
+    "sourceCensus": {
+      "selectedNativeCompatible": 72792,
+      "mappedPs": 0
+    },
+    "runtimeSmoke": "PASS",
+    "artifacts": [
+      {
+        "id": 13636098822,
+        "name": "ps0-compiler-stage2-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:6043382a9516a22672ff076c66d75f9ae6587cf4d0eb84d64fbc2f1a8ca0198d"
+      },
+      {
+        "id": 13635566244,
+        "name": "ps0-compiler-stage1-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:c4443462ef060abcbe8a4033f5f01325f7c9f91cc6ece84b5c8b3c14c4ad5be0"
+      },
+      {
+        "id": 13634480711,
+        "name": "ps0-project-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:c8fdfce09ae2e459b20bfe0e6adcbcdc3fcf789bdd81e56fe1fc566a1a288abe"
+      },
+      {
+        "id": 13634107051,
+        "name": "ps0-external-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:2febe157986b3f73754b9b840d9d43294036933d2c714198466062c12b9e873f"
+      },
+      {
+        "id": 13634062146,
+        "name": "ps0-native-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522976977",
+        "digest": "sha256:080652e6ca5cd80fdfc901a36cde13e7e8720b1cc522c5543bab1043c591a73c"
+      }
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }
-
