@@ -11,7 +11,7 @@ work = ROOT / 'build' / ('binder-lexical-' + os.environ['GITHUB_RUN_ID'])
 work.mkdir(parents=True, exist_ok=False)
 fixture = work / 'NativeBraces.lean'
 fixture.write_text('''module
-import PS0.Policy
+public import PS0.Policy
 import all PS0.Syntax
 /-! Importing the adapters must preserve adjacent native record braces and strict binders. -/
 structure Inner where
