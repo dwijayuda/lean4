@@ -15,8 +15,9 @@ namespace PS0.LakeFrontend
 def parseHeader (raw filename : String) :
     IO (Except String (Elab.HeaderSyntax × Parser.ModuleParserState × Nat)) := do
   let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext raw filename)
-  if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid import header"
-  if Elab.HeaderSyntax.isModule header then return .ok (header, state, 0)
+  if Elab.HeaderSyntax.isModule header then
+    if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid import header"
+    return .ok (header, state, 0)
   let modulePrefix := "module\n"
   let (header, state, messages) ← Parser.parseHeader (Parser.mkInputContext (modulePrefix ++ raw) filename)
   if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid implicit module header"
