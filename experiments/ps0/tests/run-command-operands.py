@@ -67,6 +67,10 @@ run([*base, 'build', 'PS0Project:static', 'ps0project'], 'build')
 assert 'PS0_COMMAND_OPERANDS:3:3:3:3' in run([build / 'bin/ps0project'], 'runtime')
 data = json.loads((build / 'lib/lean/ScopedPS/Main.ilean.ps0-source-census.json').read_text())
 assert data['imports'] == ['Init']
+raw = (source / 'Main.ps').read_bytes()
+origins = json.loads((build / 'lib/lean/ScopedPS/Main.ilean.ps0-source-map.json').read_text())
+assert data['nativeSource'].encode() == origins['nativeSource'].encode() == origins['source'].encode() == raw
+assert all(s['kind'] == 'original' for s in origins['segments'])
 rows = []
 
 def collect(commands):
@@ -77,6 +81,11 @@ def collect(commands):
 collect(data['commands'])
 mapped = {c['declaration']['sourceName'] for c in rows if c['declaration'] and c['declaration']['mode'] == 'mapped-ps'}
 assert {'scopedInc', 'opened', 'wrapperNested', 'evenSide', 'oddSide'} <= mapped, mapped
+for row in rows:
+    decl = row['declaration']
+    if decl and decl['mode'] == 'mapped-ps':
+        span = decl['keywordRange']
+        assert raw[span['start']:span['end']] in [b'function', b'const', b'def']
 for name, code, diagnostic in [
     ('scoped-gap', 'set_option pp.universes true in\nfunction bad(n: Nat := add (1, 2)): Nat := n', 'PS0V1-CALL-GAP'),
     ('open-gap', 'open Nat in\nfunction bad(n: Nat := add (1, 2)): Nat := n', 'PS0V1-CALL-GAP'),
