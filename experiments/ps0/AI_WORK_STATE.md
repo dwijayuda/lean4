@@ -1,4 +1,18 @@
-# PS0 — AI Work State (29 October 2026)
+# PS0 — AI Work State (8 November 2026)
+
+## Active continuation: Lake native executable integration
+
+- Source branch: `feat/ps0-lake-native-20261108`, based on PR #6 source `39b8f4cecd8e60b2297c1d01f81d8840c3dc3715`; history preserved.
+- Added `build-native FILE.ps ModuleName OUT_DIR` and `lakefile.native.lean` targets composing the existing `.ps` adapters, official Lean `runFrontend`/LCNF C emission, imported-module `linkInfoNoExport`, `buildLeanO`, and `buildLeanExeSync`.
+- No new typechecker, proof kernel, optimizer, runtime or native emitter. Official Lean 4.35.0 pin and normative R2 reference remain unchanged.
+- The development target traces source, compiler, imported native modules, build options and Lean/toolchain; publication occurs only after successful linking and refuses an existing output directory.
+- Tests authored before implementation cover real executable behavior (IO, source calls, collections/closures and imported Lean code), warm reuse, source and native import invalidation, malformed host calls, elaboration failure, missing entry point/link failure, and no-replacement publication.
+- Validation pending: execute the exact new source on Linux GitHub Actions via an immutable source selector in the Actions-enabled `dwijayuda/pskernel` runner. No local compiler/proof/runtime execution or passing native result is claimed at this checkpoint.
+- Existing baseline was independently read back: external Linux run https://github.com/dwijayuda/pskernel/actions/runs/40772012597 passed proof-linked and host-contract jobs for exact source `39b8f4cecd8e60b2297c1d01f81d8840c3dc3715`.
+- Scope: one `.ps` executable entry module, ordinary toolchain and Lake-declared `.lean` dependencies. General recursive `.ps` project dependency discovery, complete host operand adaptation, bootstrap `prelude`, source-origin fidelity and verified runtime execution remain open. The 242-item conformance ledger is not promoted by these tests.
+- No main merge, force push, npm publication, normative language change, or changes to independent PSC0/PSC1 source.
+
+The sections below retain the earlier proof-linked checkpoint and its observed failures as historical evidence; they are superseded only where the exact-source results above say so.
 
 ## Active work and identities
 
@@ -95,3 +109,4 @@ modules, richer types, effects and Python/PHP/Rust backends remain separate.
 
 All actual validation in this continuation is Linux GitHub Actions. No local
 compiler build, force push, main merge, registry publication or new proof kernel.
+

@@ -334,6 +334,64 @@ private def buildUnrestrictedLean (path moduleName outputDir : String) : IO UInt
     if ← stage.pathExists then
       IO.FS.removeDirAll stage
 
+/-- Build through Lake's native dependency, object and executable jobs. -/
+private def buildNative (path moduleName outputDir : String) : IO UInt32 := do
+  let letter (c : Char) := ('a' ≤ c && c ≤ 'z') || ('A' ≤ c && c ≤ 'Z') || c == '_'
+  let valid := match moduleName.toList with
+    | [] => false
+    | c :: cs => letter c && cs.all (fun c => letter c || ('0' ≤ c && c ≤ '9'))
+  unless valid && path.endsWith ".ps" do
+    IO.eprintln "PS0-NATIVE-INPUT: expected a .ps file and a simple ASCII module identifier"
+    return 2
+  let out := System.FilePath.mk outputDir
+  if ← out.pathExists then
+    IO.eprintln s!"PS0-OUTPUT-EXISTS: refusing to replace {out}"
+    return 2
+  unless ← (System.FilePath.mk "lakefile.native.lean").pathExists do
+    IO.eprintln "PS0-NATIVE-PROJECT: run build-native from the PS0 Lake package directory"
+    return 2
+  let source ← IO.FS.realPath path
+  let executable := if System.Platform.isWindows then "lake.exe" else "lake"
+  let lake := (← findSysroot) / "bin" / executable
+  let result ← IO.Process.output {
+    cmd := lake.toString
+    args := #["-f", "lakefile.native.lean", s!"-Ksource={source}",
+      s!"-Kps0Module={moduleName}", "build", "app"]
+  }
+  IO.print result.stdout
+  IO.eprint result.stderr
+  if result.exitCode != 0 then return result.exitCode
+  let fileName := if System.Platform.isWindows then moduleName ++ ".exe" else moduleName
+  let binary := System.FilePath.mk ".lake" / "build" / "bin" / fileName
+  let bytes ← IO.FS.readBinFile binary
+  let parent := out.parent.getD "."
+  IO.FS.createDirAll parent
+  let stage := parent / s!".ps0-native-stage-{moduleName}-{← IO.monoMsNow}"
+  IO.FS.createDir stage
+  try
+    let published := stage / fileName
+    IO.FS.writeBinFile published bytes
+    IO.setAccessRights published ⟨
+      {read := true, write := true, execution := true},
+      {read := true, write := false, execution := true},
+      {read := true, write := false, execution := true}⟩
+    let receipt := Json.mkObj [
+      ("schema", toJson ("ps0-lake-native/1" : String)),
+      ("module", toJson moduleName),
+      ("source", toJson source.toString),
+      ("lean_revision", toJson Lean.githash),
+      ("executable", toJson fileName),
+      ("verified_execution", toJson false)]
+    IO.FS.writeFile (stage / "native-build.json") receipt.pretty
+    if ← out.pathExists then
+      IO.eprintln s!"PS0-OUTPUT-EXISTS: refusing to replace {out}"
+      return 2
+    IO.FS.rename stage out
+    IO.println s!"PS0 Lake native executable (UNCERTIFIED): {out / fileName}"
+    return 0
+  finally
+    if ← stage.pathExists then IO.FS.removeDirAll stage
+
 private def syntaxKinds (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
     IO.eprintln "PS0 expects a .ps source file"
@@ -379,9 +437,11 @@ def cli (args : List String) : IO UInt32 := do
           buildFile path moduleName outputDir
     | ["build-js", path, moduleName, outputDir] =>
         buildJs path moduleName outputDir
+    | ["build-native", path, moduleName, outputDir] =>
+        buildNative path moduleName outputDir
     | ["syntax-kinds", path] => syntaxKinds path
     | _ =>
-        IO.eprintln "usage: ps0 {environment|module-header FILE.ps|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|build-js FILE.ps ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
+        IO.eprintln "usage: ps0 {environment|module-header FILE.ps|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|build-native FILE.ps ModuleName OUT_DIR|build-js FILE.ps ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
         return 2
   catch ex =>
     IO.eprintln s!"PS0V1 error: {ex}"
@@ -390,3 +450,4 @@ def cli (args : List String) : IO UInt32 := do
 end PS0
 
 def main (args : List String) : IO UInt32 := PS0.cli args
+

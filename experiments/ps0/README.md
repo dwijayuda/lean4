@@ -28,6 +28,24 @@ multibackend compiler and from the earlier PSCVL experiment.
 
 ## Build and development commands
 
+Native executable build (run from this package directory):
+
+```sh
+lake exe ps0 build-native tests/native/Main.ps NativeMain build/native-main
+./build/native-main/NativeMain one two
+```
+
+For incremental development, use the underlying Lake target directly:
+
+```sh
+lake -f lakefile.native.lean -Ksource=tests/native/Main.ps -Kps0Module=NativeMain build app
+./.lake/build/bin/NativeMain
+```
+
+The target composes the existing `.ps` adapters and official Lean frontend/LCNF C emitter with Lake's imported-module link information, C-to-object build and executable linker. Lake tracks source bytes, the PS0 compiler, imported Lean modules, native options and the toolchain. The CLI publishes an executable and `native-build.json` only after successful linking and refuses an existing output directory. No intermediate textual `.lean` program is generated.
+
+This is native build integration, not complete PS0 source conformance or verified runtime execution. It currently supports one `.ps` entry module with toolchain and Lake-managed `.lean` dependencies. Recursive `.ps` project dependency discovery, full host operand adaptation, bootstrap `prelude` and source-origin fidelity remain open. Dependencies must be declared in the Lake configuration; `PS0NativeSupport` is the integration fixture. Linux qualification is recorded in `AI_WORK_STATE.md`.
+
 `cd experiments/ps0`
 
 `lake build PS0 ps0`
@@ -92,7 +110,9 @@ are obsolete; **do not use either number for v1**.
 See [CONFORMANCE.md](CONFORMANCE.md) for implemented-vs-qualified
 status and [AI_WORK_STATE.md](AI_WORK_STATE.md) for development state.
 
-**CI qualification is not confirmed.** No successful exact-commit
-Lean 4.35.0 PS0 workflow was obtained through the connected GitHub
-checks in this conversation. The presence of code or tests is not
-evidence that they currently compile or pass.
+The prior bounded proof-linked and host-contract baseline at source
+`39b8f4cecd8e60b2297c1d01f81d8840c3dc3715` passed external Linux
+run [40772012597](https://github.com/dwijayuda/pskernel/actions/runs/40772012597).
+That result does not qualify all 242 language obligations or this new native
+build integration. See `AI_WORK_STATE.md` for exact-source native evidence.
+
