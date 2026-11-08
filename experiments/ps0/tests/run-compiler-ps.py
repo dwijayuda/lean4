@@ -26,11 +26,11 @@ LEAN = 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc'
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
-def run(cmd, name, timeout=14400):
+def run(cmd, name, timeout=14400, env=None):
     start = time.monotonic()
     with (evidence / (name + '.log')).open('w') as log:
         p = subprocess.Popen([str(x) for x in cmd], stdout=subprocess.PIPE,
-                             stderr=subprocess.STDOUT, text=True, bufsize=1)
+                             stderr=subprocess.STDOUT, text=True, bufsize=1, env=env)
         for line in p.stdout:
             print(line, end='', flush=True)
             log.write(line)
@@ -135,17 +135,22 @@ for module, data in inputs.items():
     outputs[module] = {'olean_sha256': digest(olean), 'c_sha256': digest(cfile)}
 
 migrated = build / 'bin/ps0project'
-run([migrated, 'environment'], 'migrated-environment')
-assert LEAN in (evidence / 'migrated-environment.log').read_text()
-run([migrated, 'check', ROOT / 'tests/project/Demo/Words.ps'], 'migrated-source-check')
 result = {
     'schema': 'ps0-compiler-source-migration/1', 'source_commit': os.environ['PS0_SOURCE_SHA'],
     'lean_commit': LEAN, 'module_count': len(inputs), 'inputs': inputs, 'outputs': outputs,
     'driver_sha256': digest(migrated), 'verified_execution': False,
     'bootstrap_package_identity': None,
+    'runtime_smoke': 'PENDING',
     'lean_header_sha256': digest(build / 'include/lean/lean.h'),
     'scope': 'All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers',
 }
+shutil.copy2(migrated, evidence / 'migrated-ps0')
+(evidence / 'migration.json').write_text(json.dumps(result, indent=2) + '\n')
+migrated_env = {**os.environ, 'LEAN_PATH': str(build / 'lib/lean')}
+run([migrated, 'environment'], 'migrated-environment', env=migrated_env)
+assert LEAN in (evidence / 'migrated-environment.log').read_text()
+run([migrated, 'check', ROOT / 'tests/project/Demo/Words.ps'], 'migrated-source-check', env=migrated_env)
+result['runtime_smoke'] = 'PASS'
 if baseline:
     changed_c = [m for m in outputs if outputs[m]['c_sha256'] != baseline['outputs'][m]['c_sha256']]
     changed_olean = [m for m in outputs if outputs[m]['olean_sha256'] != baseline['outputs'][m]['olean_sha256']]
@@ -155,5 +160,4 @@ if baseline:
     print('PS0_COMPILER_PS_FIXED_POINT: PASS', flush=True)
 else:
     (evidence / 'migration.json').write_text(json.dumps(result, indent=2) + '\n')
-shutil.copy2(migrated, evidence / 'migrated-ps0')
 print('PS0_COMPILER_PS_SOURCE: PASS; modules=' + str(len(inputs)), flush=True)

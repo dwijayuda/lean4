@@ -13,7 +13,8 @@ WORK = ROOT / 'build' / ('project-test-' + os.environ.get('GITHUB_RUN_ID', str(o
 WORK.mkdir(parents=True, exist_ok=False)
 src = WORK / 'src'
 shutil.copytree(ROOT / 'tests/project', src)
-driver = ROOT / '.lake/build/bin/ps0'
+driver = WORK / 'ps0-driver'
+shutil.copy2(ROOT / '.lake/build/bin/ps0', driver)
 
 def run(args, ok=True, timeout=600):
     r = subprocess.run([str(x) for x in args], text=True, stdout=subprocess.PIPE,
@@ -40,6 +41,16 @@ before = (sha(exe), exe.stat().st_mtime_ns)
 build()
 assert before == (sha(exe), exe.stat().st_mtime_ns)
 print('PS0_PROJECT_RECURSIVE_META_AND_WARM: PASS', flush=True)
+
+old_inputs = {x['module']: x['input_hash'] for x in selected}
+with driver.open('ab') as binary:
+    binary.write(b'PS0_DRIVER_TRACE_INVALIDATION')
+r = build()
+new_inputs = {json.loads(p.read_text())['module']: json.loads(p.read_text())['input_hash'] for p in records}
+assert all(new_inputs[m] != h for m, h in old_inputs.items())
+assert 'Built Demo.Words' in r
+assert 'PS0_PROJECT:42:7:0' in run([exe])
+print('PS0_PROJECT_DRIVER_INVALIDATION: PASS', flush=True)
 
 words = src / 'Demo/Words.ps'
 words.write_text(words.read_text().replace('x + y', 'x + y + 1').replace('= 3 := by rfl', '= 4 := by rfl', 1))
@@ -96,7 +107,7 @@ print('PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY: PASS', flush=True)
     'source_commit': os.environ.get('PS0_SOURCE_SHA'),
     'driver_sha256': sha(driver), 'published_sha256': saved,
     'module_inputs': selected,
-    'checks': ['recursive-public-and-meta-imports', 'mixed-native-source', 'warm-reuse',
+    'checks': ['recursive-public-and-meta-imports', 'mixed-native-source', 'warm-reuse', 'driver-invalidation',
                'transitive-ps-and-native-invalidation', 'publication-no-replacement',
                'prelude-no-hidden-imports', 'local-entry', 'source-collision', 'cycle', 'private-visibility'],
     'verified_execution': False,

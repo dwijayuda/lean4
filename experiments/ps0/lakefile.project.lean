@@ -17,6 +17,8 @@ def projectRoots : Array Name := (((get_config? roots).getD "Demo,NativeSupport"
 def projectMain : Name := ((get_config? rootModule).getD "Demo.Main").toName
 def projectDriver : FilePath := FilePath.mk ((get_config? driver).getD ".lake/build/bin/ps0")
 
+target ps0DriverInput _ : FilePath := inputBinFile projectDriver
+
 def projectModules : Array Name :=
   (((get_config? moduleNames).getD "").splitOn ",").toArray.filterMap fun (line : String) =>
     if line.isEmpty then none else some line.toName
@@ -46,11 +48,11 @@ def ps0Input (mod : Lake.Module) : FetchM (Job ModuleInput) := do
   if ← mod.leanFile.pathExists then error s!"PS0-SOURCE-COLLISION: {path} and {mod.leanFile}"
   if mod.name.toString.contains '/' || mod.name.toString.contains '\\' then
     error "PS0-MODULE-PATH: invalid source module component"
-  Job.async do
+  let driver ← ps0DriverInput.fetch
+  driver.mapM fun compiler => do
     addTrace (← computeTrace (TextFilePath.mk path))
-    addTrace (← computeTrace projectDriver)
     let result ← IO.Process.output {
-      cmd := projectDriver.toString
+      cmd := compiler.toString
       args := #["lake-header", path.toString]
       env := (← getWorkspace).augmentedEnvVars
     }
@@ -66,7 +68,7 @@ def ps0Input (mod : Lake.Module) : FetchM (Job ModuleInput) := do
     IO.FS.writeFile receipt (Json.mkObj [
       ("schema", toJson ("ps0-module-input/1" : String)),
       ("module", toJson mod.name.toString), ("source", toJson path.toString),
-      ("driver", toJson projectDriver.toString), ("input_hash", toJson trace.hash.toString),
+      ("driver", toJson compiler.toString), ("input_hash", toJson trace.hash.toString),
       ("header", toJson header)]).pretty
     return {path, header, imports, trace}
 
