@@ -23,6 +23,7 @@ for name, raw in cases.items():
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=300)
     assert r.returncode == 0, (name, r.stdout, r.stderr)
     result = json.loads(r.stdout)
+    print(name, result['originalByteSize'], result['segments'], flush=True)
     assert result['schema'] == 'ps0-source-map/1'
     prepared = result['source'].encode()
     original = raw.encode()

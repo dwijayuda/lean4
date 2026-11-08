@@ -32,4 +32,9 @@ for name, call, reason in [
     path = work / (name + '.ps')
     path.write_text('function add(x: Nat, y: Nat): Nat := x + y\ndef bad : Nat := ' + call + '\n')
     assert reason in run(['lake', 'exe', 'ps0', 'check', path], ok=False)
+path = work / 'native-do-statement-type.ps'
+path.write_text('function pureNat(x: Nat): IO Nat := pure x\n'
+                'def bad : IO Nat := do { pureNat(1); return 2 }\n')
+diagnostic = run(['lake', 'exe', 'ps0', 'check', path], ok=False)
+assert 'IO Nat' in diagnostic and 'IO Unit' in diagnostic
 print('PS0_STANDARD_CATEGORY_SLOTS: PASS', flush=True)

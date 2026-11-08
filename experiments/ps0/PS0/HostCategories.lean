@@ -159,7 +159,7 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
       return (← `(doElem| $value:term)).raw
   | `(psDoElem| $native:doElem) => return native.raw
-  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
+  | _ => Macro.throwError s!"PS0V1-HOST-LOWER: unsupported psDoElem {source.getKind}: {source}"
 
 partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   match source with

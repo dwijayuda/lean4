@@ -46,6 +46,9 @@ for path in maps:
     recovered = b''.join(prepared[s['preparedStart']:s['preparedEnd']]
                          for s in mapping['segments'] if s['kind'] == 'original')
     assert recovered == original
+    retained = WORK / 'source-origins' / path.relative_to(ROOT / '.lake/project/lib/lean')
+    retained.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(path, retained)
 print('PS0_PROJECT_SOURCE_ORIGINS: PASS', flush=True)
 before = (sha(exe), exe.stat().st_mtime_ns)
 build()
