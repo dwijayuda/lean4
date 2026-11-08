@@ -48,6 +48,7 @@ private def copyMacros (host : Environment) (kind : Name) : IO Unit := do
 
 private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun category =>
   if category != `command then native category else fun ctx state =>
+    dbg_trace s!"PS0_CMD_ROUTE:{state.pos.byteIdx}:{ctx.options.getBool `ps0.sourceGrammar false}"
     if ctx.options.getBool `ps0.sourceGrammar false then
       -- Consume the route only in this parser context. Native command operands,
       -- quotations and independently owned DSL categories keep native parsing.
@@ -62,8 +63,10 @@ private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun c
     else native category ctx state
 
 private def commandOperands (parser : Parser) : Parser :=
-  withFn (adaptUncacheableContextFn
-    (fun ctx => {ctx with options := ctx.options.setBool `ps0.sourceGrammar true})) parser
+  withFn (fun parse ctx state =>
+    dbg_trace s!"PS0_CMD_OPERAND:{state.pos.byteIdx}:{ctx.options.getBool `ps0.sourceGrammar false}"
+    adaptUncacheableContextFn
+      (fun ctx => {ctx with options := ctx.options.setBool `ps0.sourceGrammar true}) parse ctx state) parser
 
 private def installCommandOperands : IO Unit := do
   -- These are prefix commands for native `in`; the native trailing parser keeps
