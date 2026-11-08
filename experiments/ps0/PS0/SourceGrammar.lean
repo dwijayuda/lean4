@@ -67,7 +67,8 @@ private unsafe def installImpl (options : Options) : IO Unit := do
   let targetPath ← searchPathRef.get
   let binDir := (← IO.appPath).parent.getD "."
   let hostPath := binDir / ".." / "lib" / "lean"
-  searchPathRef.set (hostPath :: targetPath)
+  let sdkPath := (← findSysroot) / "lib" / "lean"
+  searchPathRef.set [hostPath, sdkPath]
   let host ← try
     -- Parser/handler closures are registered for this compiler process's lifetime.
     importModules #[{module := `PS0.StandardAdapters, isMeta := true}] options
