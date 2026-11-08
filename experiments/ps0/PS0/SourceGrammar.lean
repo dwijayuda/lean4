@@ -61,6 +61,25 @@ private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun c
         else parsed
     else native category ctx state
 
+private def commandOperands (parser : Parser) : Parser :=
+  { parser with fn := adaptUncacheableContextFn
+      (fun ctx => {ctx with options := ctx.options.setBool `ps0.sourceGrammar true}) parser.fn }
+
+private def installCommandOperands : IO Unit := do
+  -- These are prefix commands for native `in`; the native trailing parser keeps
+  -- withOpen/withSetOption behavior while its command operand uses PS grammar.
+  for (name, parser) in #[
+      (``Lean.Parser.Command.«set_option», Lean.Parser.Command.«set_option»),
+      (``Lean.Parser.Command.«open», Lean.Parser.Command.«open»),
+      (``Lean.Parser.Command.«attribute», Lean.Parser.Command.«attribute»),
+      (``Lean.Parser.Command.«variable», Lean.Parser.Command.«variable»),
+      (``Lean.Parser.Command.«omit», Lean.Parser.Command.«omit»)] do
+    addBuiltinLeadingParser `psCommand name parser 20000
+  addBuiltinTrailingParser `psCommand ``Lean.Parser.Command.«in»
+    (commandOperands Lean.Parser.Command.«in») 20000
+  addBuiltinLeadingParser `psCommand ``Lean.Parser.Command.«mutual»
+    (commandOperands Lean.Parser.Command.«mutual») 20000
+
 private unsafe def installImpl (options : Options) : IO Unit := do
   -- Native toolchains ship compiler metadata beside their executable. Load that
   -- host metadata in a separate environment, then restore target module lookup.
@@ -88,6 +107,7 @@ private unsafe def installImpl (options : Options) : IO Unit := do
       {env := host, opts := options}
     addBuiltinLeadingParser `psCommand name parser 20000
     copyMacros host name
+  installCommandOperands
   -- This bridge is an identity macro; target logic never imports its declaration.
   macroAttribute.addBuiltin `ps0NativeCommandBridge `PS0.SourceGrammar.nativeCommand
     (fun source => pure source[0])

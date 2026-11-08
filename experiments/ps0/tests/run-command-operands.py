@@ -15,19 +15,19 @@ prelude
 public import Init
 public section
 set_option pp.universes true in
-function scoped(n: Nat): Nat := n + 1
+function scopedInc(n: Nat): Nat := n + 1
 open Nat in
 function opened(n: Nat): Nat := succ(n)
 set_option pp.universes true in open Nat in
-function nested(n: Nat): Nat := succ(n)
+function wrapperNested(n: Nat): Nat := succ(n)
 mutual
-  function first(n: Nat): Nat := n
-  function second(n: Nat): Nat := first(n)
+  function evenSide(n: Nat): Nat := n
+  function oddSide(n: Nat): Nat := evenSide(n)
 end
-const scopedValue: Nat := scoped(2)
+const scopedValue: Nat := scopedInc(2)
 const openedValue: Nat := opened(2)
-const nestedValue: Nat := nested(2)
-const mutualValue: Nat := second(3)
+const nestedValue: Nat := wrapperNested(2)
+const mutualValue: Nat := oddSide(3)
 def main : IO Unit := IO.println s!"PS0_COMMAND_OPERANDS:{scopedValue}:{openedValue}:{nestedValue}:{mutualValue}"
 ''')
 (source / 'Quoted.ps').write_text('''module
@@ -39,13 +39,13 @@ meta def scopedQuote : Lean.MacroM(Lean.TSyntax `command) :=
 meta def mutualQuote : Lean.MacroM(Lean.TSyntax `command) :=
   `(command| mutual def function (x : Nat) : Nat := x end)
 run_cmd do
-  let scoped ← Lean.Elab.liftMacroM scopedQuote
-  unless scoped.raw.isOfKind ``Lean.Parser.Command.in &&
-      scoped.raw[2].isOfKind ``Lean.Parser.Command.declaration do
+  let scopedCommand ← Lean.Elab.liftMacroM scopedQuote
+  unless scopedCommand.raw.isOfKind ``Lean.Parser.Command.in &&
+      scopedCommand.raw[2].isOfKind ``Lean.Parser.Command.declaration do
     Lean.throwError "scoped native quotation was reinterpreted as PS"
-  let mutual ← Lean.Elab.liftMacroM mutualQuote
-  unless mutual.raw.isOfKind ``Lean.Parser.Command.mutual &&
-      mutual.raw[1].getArgs.all (fun c => c.isOfKind ``Lean.Parser.Command.declaration) do
+  let mutualCommand ← Lean.Elab.liftMacroM mutualQuote
+  unless mutualCommand.raw.isOfKind ``Lean.Parser.Command.mutual &&
+      mutualCommand.raw[1].getArgs.all (fun c => c.isOfKind ``Lean.Parser.Command.declaration) do
     Lean.throwError "mutual native quotation was reinterpreted as PS"
 ''')
 driver = ROOT / '.lake/build/bin/ps0'
@@ -76,7 +76,7 @@ def collect(commands):
 
 collect(data['commands'])
 mapped = {c['declaration']['sourceName'] for c in rows if c['declaration'] and c['declaration']['mode'] == 'mapped-ps'}
-assert {'scoped', 'opened', 'nested', 'first', 'second'} <= mapped, mapped
+assert {'scopedInc', 'opened', 'wrapperNested', 'evenSide', 'oddSide'} <= mapped, mapped
 for name, code, diagnostic in [
     ('scoped-gap', 'set_option pp.universes true in\nfunction bad(n: Nat := add (1, 2)): Nat := n', 'PS0V1-CALL-GAP'),
     ('open-gap', 'open Nat in\nfunction bad(n: Nat := add (1, 2)): Nat := n', 'PS0V1-CALL-GAP'),

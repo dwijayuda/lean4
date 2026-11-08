@@ -54,13 +54,16 @@ private def declaration (source : Syntax) : Json := Id.run do
         ("signatureRange", sourceRange native[2]), ("signatureSyntax", signatureSyntax native[2])]
   return .null
 
-private def command (source : Syntax) : Json :=
+private partial def command (source : Syntax) : Json :=
   let viewed := if source.isOfKind `ps0NativeCommandBridge then source[0] else source
+  let nested := if viewed.isOfKind ``Lean.Parser.Command.«in» then #[viewed[2]] else
+    if viewed.isOfKind ``Lean.Parser.Command.«mutual» then viewed[1].getArgs else #[]
   Json.mkObj [
     ("kind", toJson source.getKind.toString), ("range", sourceRange source),
     ("headKind", toJson (if viewed.isOfKind ``Lean.Parser.Command.declaration then
       viewed[1].getKind.toString else viewed.getKind.toString)),
-    ("declaration", declaration viewed)]
+    ("declaration", declaration viewed),
+    ("nestedCommands", toJson (nested.map command))]
 
 def collect (commands : Array Syntax) : CommandElabM Unit := do
   let output := (← getOptions).get `ps0.sourceCensusPath ("" : String)
