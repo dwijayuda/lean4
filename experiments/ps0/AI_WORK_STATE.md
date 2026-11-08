@@ -1,5 +1,20 @@
 # PS0 — AI Work State (9 November 2026)
 
+## Registered owned term macros — native Lean dispatch PASS
+
+Qualified source **b6e9671252219e63a4bda7b8df70017b90145ff1**, runner **167f9607a5507f86dc69197db10598739066e6bb**, [Linux run 42534811062](https://github.com/dwijayuda/pskernel/actions/runs/42534811062): **all four jobs PASS** — project **128896644458**, native **128896644569**, proof-linked **128896644297**, host **128896644480**.
+
+The owned **psTerm** boundary now calls pinned **Lean.Macro.expandMacro?** for registered unknown nodes, then recursively lowers the resulting owned syntax. **Lean.Macro.withIncRecDepth** supplies native recursion bounds. The native dispatcher retains fresh scopes and normal macro attributes; no separate macro evaluator, typechecker or kernel is introduced.
+
+**PS0_OWNED_MACROS:8:6** and **PS0_OWNED_TERM_MACRO_EXPANSION: PASS** cover nested registered macros, hygiene against a local binder named **add**, native checking/C/object/link/runtime, original macro-argument **PS0V1-CALL-GAP**, expanded argument-list **PS0V1-CALL-ORDER**, native **maximum recursion depth** and **PS0V1-HOST-LOWER** for an unowned expanded node. The suite uses native explicit antiquotation category annotations and escaped syntax-kind identifiers. It does not qualify every macro category or arbitrary generated syntax/text correspondence.
+
+[Project artifact 13638129268](https://github.com/dwijayuda/pskernel/actions/runs/42534811062/artifacts/13638129268), ZIP SHA-256 **f317a1cdadf2f87441285e6a95520c910dc354acaa900a644c59205d71bae75c**. Native artifact **13638484712**, SHA-256 **ea94ecc8fe9bdb8cb6c97c84ba0fad80cb28988ba11fa361ef798896a1e4b03b**; proof-linked artifact **13638163978**, SHA-256 **d39aeafcf1c105e256d93fe89a5d03028b3c70eb3caae2139fd89cc1c96b4d16**. Exact failed source/runner/job/artifact evidence is retained in both JSON ledgers: test-first **42533778399 / 128893486047**, then dispatch-positive but cycle-fixture failing **42534400476 / 128895393134**.
+
+The same passing run retains **all 15 converted compiler heads / four modules** with strict C/public-olean parity, mixed/default/nested-command/quoted-source tests and the SDK-backed relocated native grammar host. The separate full compiler integration **42532849633**, source **2cba0bc26df49c52d653598fd9c791f23209199c**, runner **b83ebb191c21c0985c9dc6df3a4cca11ae31e121**, has **all four prerequisite jobs PASS** and compiler stage one **128891725901 IN PROGRESS** as last checked. Its fresh .ps-built grammar host and stage-two fixed point are **not qualified yet**; this older pin does not qualify the newer macro implementation.
+
+Goal **ACTIVE / NOT COMPLETE**. Complete source conversion and remaining owned operand roles, including richer lambda/operator/layout/field/constructor contexts, plus full diagnostic/IDE fidelity, remain open. All 242 broad obligations remain PENDING; no verified-execution certificate is issued.
+
+
 ## Fresh .ps-built compiler grammar-host integration — IN PROGRESS
 
 Candidate source **2cba0bc26df49c52d653598fd9c791f23209199c**, runner **b83ebb191c21c0985c9dc6df3a4cca11ae31e121**, [run 42532849633](https://github.com/dwijayuda/pskernel/actions/runs/42532849633), [runner PR234](https://github.com/dwijayuda/pskernel/pull/234). Each full native-compatible compiler stage now additionally tests a relocated executable with **PS0 host metadata freshly compiled from its .ps source forest**, retaining the missing-host negative, native Lake PS prelude compile/link/runtime, no-hidden-import checks, compiler-stage options and host manifest. SDK metadata dependencies remain explicit. Stage two retains the all-module strict C/public-olean fixed-point gate. **This integration has not passed yet**; the source forest remains native-compatible, and the entire-corpus PS grammar goal remains ACTIVE / NOT COMPLETE.
