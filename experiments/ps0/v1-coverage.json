@@ -2533,10 +2533,64 @@
           "sha256": "8d01f936943a3d4026802436cec9cba03234ff63adf6f448c0ab198702cceb01"
         }
       },
-      "status": "PREREQUISITE_JOBS_PASS_COMPILER_STAGE1_RUNNING",
+      "status": "FULL_NATIVE_BUILD_PASS_SMOKE_HARNESS_FAIL",
       "compilerStage1Job": 128743130971,
       "bootstrapMode": "native Lake bootstrap=true; package identity none; pinned SDK include headers",
-      "note": "Compiler-source and fixed-point qualification remain open; prior failure is retained separately."
+      "note": "Compiler-source and fixed-point qualification remain open; prior failure is retained separately.",
+      "compilerSourceBuild": {
+        "moduleCount": 2564,
+        "nativeLakeJobs": 5131,
+        "status": "PASS_BUILD_LINK_AND_INPUT_ARTIFACT_ASSERTIONS",
+        "environmentCommand": "PASS",
+        "sourceSmoke": "FAIL_MISSING_REBUILT_PS0_LEAN_PATH",
+        "perModuleOutputHashesRetained": false,
+        "binaryRetained": false,
+        "artifactId": 13620495494,
+        "artifactSha256": "c0afd12a60321f83d1ff7bbf1810c77c2fd90d3cc5a988b2cfb28df228706749"
+      }
+    },
+    "linkProvenance": {
+      "sourceCommit": "46541521a95ac7829279faf441f922a977061f6f",
+      "runnerCommit": "3dddb837c8b29b7619c945bcc3d4304ef7d47ff3",
+      "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488039370",
+      "jobId": 128754113727,
+      "artifactId": 13620281682,
+      "artifactSha256": "95dbb7bc8665da8cf269c9fb7e7ae5bc60d7480c8a67b0b3e42ef0198f5c97bf",
+      "status": "PASS_LINK_MAP_ONLY",
+      "oracle": "Actual rebuilt Lean/Elab/Frontend, Lean/Compiler/LCNF/EmitC, PS0/LakeFrontend and PS0Main C objects; zero SDK libLean.a/libStd.a/libInit.a source-archive lines",
+      "limits": "ELF and runtime smoke not qualified at this failed build checkpoint"
+    },
+    "currentCandidate": {
+      "checkpoint": {
+        "sourceCommit": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
+        "runnerCommit": "0bca62aefdb00992d891f57c1a608dc0dacd60a3",
+        "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488162021",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "projectJob": 128754567397,
+        "nativeJob": 128754567736,
+        "hostJob": 128754567546,
+        "projectArtifact": {
+          "id": 13619929692,
+          "sha256": "d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d"
+        },
+        "nativeArtifact": {
+          "id": 13620303005,
+          "sha256": "b7e489f9fa186b0fe31a64830a02fdb9ad07dab8eb5b430529001ea1d4c03a99"
+        },
+        "proofJob": 128754567672,
+        "proofArtifact": {
+          "id": 13620970053,
+          "sha256": "9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900"
+        }
+      },
+      "status": "ALL_FOUR_PREREQUISITES_PASS_COMPILER_STAGE1_RUNNING",
+      "compilerStage1Job": 128754834515,
+      "changes": [
+        "native library search path for migrated smoke",
+        "retain executable and per-module hashes before smoke",
+        "native Lake shared compiler input job with executed driver-invalidation test"
+      ]
     }
   }
 }

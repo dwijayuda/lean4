@@ -4,7 +4,15 @@
 
 The goal remains replacing all handwritten Lean compiler program sources with `.ps` while reusing Lean's parser/elaborator/kernel/LCNF/C infrastructure and Lake's dependency, artifact, native object and link machinery. Source work is on draft [Lean-fork PR #8](https://github.com/dwijayuda/lean4/pull/8), branch `feat/ps0-recursive-projects-20261108`; Linux qualification is draft [pskernel PR #220](https://github.com/dwijayuda/pskernel/pull/220), branch `ci/ps0-recursive-projects-20261108`.
 
-### Exact recursive/category checkpoint
+### Current candidate
+
+Source **`fb86cc425f0688bf3c6e98ff6c7adb8e899fe883`**, runner **`0bca62aefdb00992d891f57c1a608dc0dacd60a3`**, Linux [run 42488162021](https://github.com/dwijayuda/pskernel/actions/runs/42488162021): project/category **128754567397**, native **128754567736**, proof-linked **128754567672**, host **128754567546** all PASS. The shared native driver-input target additionally passes **PS0_PROJECT_DRIVER_INVALIDATION** after changing actual compiler bytes; normal warm reuse and source/native dependency invalidation still pass. Compiler stage one **128754834515** is running with the corrected migrated library search path and early retention of its executable/output hashes. No stage-one/fixed-point PASS is claimed yet.
+
+Project [artifact 13619929692](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13619929692) ZIP SHA-256 `d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d`; native [13620303005](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13620303005) `b7e489f9fa186b0fe31a64830a02fdb9ad07dab8eb5b430529001ea1d4c03a99`; proof-linked [13620970053](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13620970053) `9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900`.
+
+The separate Linux [link-map audit 42488039370](https://github.com/dwijayuda/pskernel/actions/runs/42488039370), runner **`3dddb837c8b29b7619c945bcc3d4304ef7d47ff3`**, job **128754113727 PASS**, inspected prior source `46541521a95ac7829279faf441f922a977061f6f` artifact `13620495494`. It found rebuilt frontend/emitter/PS0 objects and **zero SDK Lean/Std/Init source-archive entries**. Audit [artifact 13620281682](https://github.com/dwijayuda/pskernel/actions/runs/42488039370/artifacts/13620281682) ZIP SHA-256 `95dbb7bc8665da8cf269c9fb7e7ae5bc60d7480c8a67b0b3e42ef0198f5c97bf`. This is link-map provenance only: the prior harness failure prevented retaining its binary, so ELF dependencies/runtime smoke remain unqualified at that checkpoint.
+
+### Historical initial recursive/category checkpoint
 
 - Implementation/test source: **`b842b26fa2dffaee6a73f03fb70ca77683ccaf31`**; runner head: **`a2ff849cd861a32e52dbfee94f0283c749f37040`**. The runner selector pins that exact source.
 - Linux [run 42483607627](https://github.com/dwijayuda/pskernel/actions/runs/42483607627): recursive/category job **128740672990 PASS**, native job **128740672968 PASS**, proof-linked job **128740672770 PASS**, host-contract **128740672920 PASS**. Compiler-source stage one failed; the overall workflow is not PASS.
