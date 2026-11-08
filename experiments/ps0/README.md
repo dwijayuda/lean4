@@ -3,6 +3,31 @@
 **Edition:** PS0 v1 R2 (2026-10-16). **Implementation:** in progress;
 not a completed v1 compiler or a verified executable compiler.
 
+
+## Finite compiler-source grammar mode
+
+Native Lake project builds may opt into the finite syntax-only compiler host with
+`-KsourceGrammar=true` in addition to their existing `lakefile.project.lean` source,
+root and module configurations. Selected PS function/const/signature operands then
+work in a `prelude` module without inserting logical PS0 imports or changing its
+source bytes. The host loads its own sibling compiler metadata and pinned SDK
+separately from target module lookup. Keep that metadata beside the native driver.
+
+This is partial grammar support. The qualified finite tests include native
+quotation ownership, contextual alias words, strict/default binders, modern
+runtime hook startup and three typed heads from the pinned real compiler module
+`Lean.Compiler.ClosedTermCache`, with matching native C/public olean.
+Its native bodies remain unchanged. See [AI_WORK_STATE.md](AI_WORK_STATE.md),
+[CONFORMANCE.md](CONFORMANCE.md) and both JSON ledgers for exact Linux source,
+runner, job and artifact digests, failed candidates and remaining gates.
+
+Compiler bootstrap builds use native Lake `leanOptions` with
+`interpreter.prefer_native=false`, as in the pinned upstream Lean CMake stage
+configuration. Native frontend/kernel/code generation, graph/artifact/cache,
+native object compilation and linking remain Lean/Lake responsibilities.
+The complete pinned forest has a native-compatible census baseline; canonical PS
+grammar conversion and a fresh full migrated fixed point remain open.
+
 ## Sole normative authority
 
 **[PS0_V1_LANGUAGE_REFERENCE.md](PS0_V1_LANGUAGE_REFERENCE.md)** is the

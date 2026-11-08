@@ -1,5 +1,24 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## Current modern metacompiler startup checkpoint — 9 November 2026
+
+Qualified source **`28904e5a7ccb19a15e311ecc654541dc0ee639ec`**, runner **`4b3c4a60d9c6da28f581bba657f1e041c559b7c6`**, Linux [run 42522802697](https://github.com/dwijayuda/pskernel/actions/runs/42522802697): **all four jobs PASS** — project **128859792609**, native **128859792529**, proof-linked **128859792415**, host **128859792642**. Prelude/source/binder/recursive/native regressions, the three real compiler-head C/public-olean parity checks and the new modern-root startup regression all pass together.
+
+**PS0_MODERN_FRONTEND_HOOKS: PASS** builds a native executable from an ordinary modern module root importing the census compiler module, then verifies runtime option registration and an actual native module-linter callback on source with only `Init` imported. Census observation code and builtin initializers now live in the ordinary runtime section, matching [pinned Lean runtime/comptime initialization](https://github.com/dwijayuda/lean4/blob/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/src/Lean/Compiler/LCNF/EmitC.lean). This corrects the startup boundary exposed by the previous full stage-two run; it is not a core compiler or trust-policy modification.
+
+Focused [run 42522806754](https://github.com/dwijayuda/pskernel/actions/runs/42522806754), runner **`8fa31701d19947918cba8d2bcdc280409546a24d`**, job **128859806058**, PASS; [artifact 13633657923](https://github.com/dwijayuda/pskernel/actions/runs/42522806754/artifacts/13633657923) ZIP SHA-256 `0551c5d81aca60f167e8f177dbf540428d53e2eb7b2650d2f9bdcc060a76f52f`. The source `9a5c59fb60407272cf2e5d5fc53ca18bf503c0c9` probe failed earlier because its String option was inferred as a FilePath (run **42522565402**, job **128859048140**); the passing probe uses explicit native argument/option/path types.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| external | [13634018132](https://github.com/dwijayuda/pskernel/actions/runs/42522802697/artifacts/13634018132) | `41a85f5e2b444222a0ec554bff1c8317d03e920b1576268a753b75f6fa87f275` |
+| project | [13633953401](https://github.com/dwijayuda/pskernel/actions/runs/42522802697/artifacts/13633953401) | `bd540f7aeeef3e9575f9c11f7825ebef89154da477fe00b3bf0887ed6f05d26f` |
+| native | [13633683974](https://github.com/dwijayuda/pskernel/actions/runs/42522802697/artifacts/13633683974) | `ab969baff1bf5f637166f5816a866eac52e5e995c6b2853de9a5ff39ae051b10` |
+
+The fresh complete compiler/census [run 42522976977](https://github.com/dwijayuda/pskernel/actions/runs/42522976977), runner **`484868307c6611fedf1a464e2e102c02b8ad5855`**, [PR #226](https://github.com/dwijayuda/pskernel/pull/226), is **IN PROGRESS**, pinned to this source. It first gates on the finite project/startup checks, then requires two complete native Lake stages and all C/public-olean fixed-point comparisons. No fresh full-compiler PASS is claimed.
+
+**Goal remains ACTIVE / NOT COMPLETE:** finite prelude grammar and three real compiler heads are qualified, while entire-corpus ProofScript grammar/source conversion, scoped/mutual command operands and remaining term/signature contexts remain open. Native-compatible full-source compilation is a distinct gate. All broad obligations remain PENDING and all execution-certificate claims remain false.
+
+
 ## Qualified prelude grammar and real compiler heads; full bootstrap still open
 
 Source **`704c5614e15981145260f5aac1ea8a891875cf12`**, runner **`b5a45855bbee9413efa7720d6c7cad673a31c347`**, Linux [run 42521766675](https://github.com/dwijayuda/pskernel/actions/runs/42521766675): **all four jobs PASS** — project **128856670616**, native **128856670515**, proof-linked **128856670295**, host **128856670557**. The existing grammar, binder/default/mixed-signature, origin recovery and recursive native Lake regressions pass together.
@@ -21,7 +40,7 @@ This is **three typed compiler declaration heads** with unchanged native bodies 
 
 The earlier full compiler/census [run 42517718338](https://github.com/dwijayuda/pskernel/actions/runs/42517718338) has finished: stage one **128844671227 PASS**, **2,566 modules / 5,136 native Lake jobs**, all-module census/origin join and **72,790 native-compatible selected declaration rows / zero mapped PS**; stage two **128852603767 FAIL**, unknown **ps0.sourceCensusPath** at modern compiler startup. [Failure artifact 13632814291](https://github.com/dwijayuda/pskernel/actions/runs/42517718338/artifacts/13632814291) ZIP SHA-256 `c9fb98ee7a52d05bbfa93f137bd7fd8745459dddc9204b36233080e2bf7e6817`. No fresh full fixed point was reached.
 
-Candidate source **`9a5c59fb60407272cf2e5d5fc53ca18bf503c0c9`**, runner **`235624d914b939184ed067e5a52f3694d564389e`**, moves the census compiler module's observation code and builtin initializers into the normal runtime phase. The native modern-root startup regression must verify option registration and an actual module-linter callback before another full rebuild. This candidate is **PENDING Linux qualification**, including focused [PR #229](https://github.com/dwijayuda/pskernel/pull/229). Official Lean/R2 pins and kernel trust remain unchanged.
+The runtime-initialization candidate was subsequently qualified at source **28904e5a7ccb19a15e311ecc654541dc0ee639ec**; see the current checkpoint above.
 
 The actual full census inspection [run 42521444844](https://github.com/dwijayuda/pskernel/actions/runs/42521444844), job **128855617016**, verifies source/binary identity and reports original top-level head counts, including **25,658 definitions**, **44,979 theorems**, **5,584 instances**, **2,445 structures**, **597 inductives**, **987 in wrappers** and **111 mutual blocks**. [Summary artifact 13632644276](https://github.com/dwijayuda/pskernel/actions/runs/42521444844/artifacts/13632644276) SHA-256 `f0c6a2043fc098f45affd1c5ab9dae0c4b64696d95295e09dbb2dcd120116c5d`. These are an adapter worklist, not completion percentages.
 

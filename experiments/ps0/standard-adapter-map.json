@@ -1169,7 +1169,7 @@
     "verified_execution": false
   },
   "modernFrontendStartupCandidate": {
-    "status": "PENDING_LINUX_MODERN_NATIVE_FRONTEND_STARTUP",
+    "status": "SUPERSEDED_BY_28904_QUALIFIED_STARTUP_CHECKPOINT",
     "source": "9a5c59fb60407272cf2e5d5fc53ca18bf503c0c9",
     "runner": "235624d914b939184ed067e5a52f3694d564389e",
     "focusedRunner": "ecdf2f3921764bdcf21b14f6272baa88fc8f0762",
@@ -1198,5 +1198,61 @@
     },
     "scope": "Actual original top-level command heads; not all nested declarations and not a completion percentage.",
     "verified_execution": false
+  },
+  "modernFrontendStartupQualified": {
+    "status": "PASS_MODERN_NATIVE_FRONTEND_RUNTIME_STARTUP_AND_FINITE_PS_REGRESSIONS",
+    "source": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+    "runner": "4b3c4a60d9c6da28f581bba657f1e041c559b7c6",
+    "run": 42522802697,
+    "jobs": {
+      "project": 128859792609,
+      "native": 128859792529,
+      "proofLinked": 128859792415,
+      "hostContract": 128859792642
+    },
+    "artifacts": [
+      {
+        "id": 13634018132,
+        "name": "ps0-external-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522802697",
+        "sha256": "41a85f5e2b444222a0ec554bff1c8317d03e920b1576268a753b75f6fa87f275"
+      },
+      {
+        "id": 13633953401,
+        "name": "ps0-project-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522802697",
+        "sha256": "bd540f7aeeef3e9575f9c11f7825ebef89154da477fe00b3bf0887ed6f05d26f"
+      },
+      {
+        "id": 13633683974,
+        "name": "ps0-native-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522802697",
+        "sha256": "ab969baff1bf5f637166f5816a866eac52e5e995c6b2853de9a5ff39ae051b10"
+      }
+    ],
+    "focused": {
+      "runner": "8fa31701d19947918cba8d2bcdc280409546a24d",
+      "run": 42522806754,
+      "job": 128859806058,
+      "artifact": 13633657923,
+      "sha256": "0551c5d81aca60f167e8f177dbf540428d53e2eb7b2650d2f9bdcc060a76f52f"
+    },
+    "oracle": "PS0_MODERN_FRONTEND_HOOKS: PASS",
+    "implementation": "SourceCensus is ordinary runtime compiler code; its builtin option/module-linter initializers execute under modern-root runtime phase. Pinned native compiler initialization and Lake build/link mechanisms remain authoritative.",
+    "upstreamBasis": "https://github.com/dwijayuda/lean4/blob/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/src/Lean/Compiler/LCNF/EmitC.lean",
+    "fullCompiler": {
+      "source": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+      "runner": "484868307c6611fedf1a464e2e102c02b8ad5855",
+      "run": 42522976977,
+      "pr": 226,
+      "status": "IN_PROGRESS",
+      "scope": "fresh complete native-compatible compiler/census stages; canonical ProofScript grammar migration remains open"
+    },
+    "failedProbe": {
+      "source": "9a5c59fb60407272cf2e5d5fc53ca18bf503c0c9",
+      "focusedRunner": "ecdf2f3921764bdcf21b14f6272baa88fc8f0762",
+      "run": 42522565402,
+      "job": 128859048140,
+      "observed": "Startup probe's output argument inferred as FilePath instead of String; fixed explicit string option and FilePath IO conversion. Census module compilation succeeded."
+    },
+    "verified_execution": false,
+    "grammarMigrationComplete": false
   }
 }
