@@ -10,6 +10,10 @@ open Lake DSL System Lean
 package ps0 where
   version := v!"0.2.0"
   bootstrap := (get_config? bootstrap).isSome
+  -- Match pinned src/CMakeLists.txt: stage builds must evaluate their current IR,
+  -- rather than resolve same-named constants in the running compiler executable.
+  leanOptions := if (get_config? bootstrap).isSome then
+    #[⟨`interpreter.prefer_native, false⟩] else #[]
   buildDir := FilePath.mk ((get_config? projectBuildDir).getD ".lake/project")
 
 def projectSource : FilePath := FilePath.mk ((get_config? sourceRoot).getD "tests/project")

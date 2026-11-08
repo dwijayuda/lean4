@@ -1,5 +1,47 @@
 # PS0 — AI Work State (9 November 2026)
 
+## Native Lake compiler-stage evaluation recovery — 9 November 2026
+
+Source **`abf3585d99c921fe02697b679867a0a55e433168`**, runner **`f5eea9af18a6c6a04ee92ef47ce36311f2d95e15`**, Linux [run 42517518674](https://github.com/dwijayuda/pskernel/actions/runs/42517518674): **all four jobs PASS** — project/binder/census **128843676094**, native **128843675964**, proof-linked **128843675694**, host **128843675945**.
+
+Native Lake bootstrap builds now receive **`interpreter.prefer_native=false` through `leanOptions`**, matching [pinned Lean CMake stage builds](https://github.com/dwijayuda/lean4/blob/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/src/CMakeLists.txt). This makes compile-time evaluation use the current IR while rebuilding declarations already linked in the running compiler. The original binder parsers are retained. Normal project options retain their existing defaults.
+
+Focused [run 42517552265](https://github.com/dwijayuda/pskernel/actions/runs/42517552265), runner **`f5fb141be25251c6b8d55f21ac342df7d02218c5`**, job **128843778154**, verifies the actual native Lake setup option and successfully rebuilds `PS0.Binders` with the exact prior stage-one migrated executable. C and public olean hashes match the SDK-driver build. Oracles **PS0_BINDER_STAGE_OPTIONS_AND_OUTPUTS: PASS** and **PS0_BINDER_SELF_REBUILD: PASS**. Focused [artifact 13632032709](https://github.com/dwijayuda/pskernel/actions/runs/42517552265/artifacts/13632032709) SHA-256 `b7bcc738cddc05afe2c2345e6e15a7bbaf992289ce881f881d02def1b25ab84a`.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| external | [13631689156](https://github.com/dwijayuda/pskernel/actions/runs/42517518674/artifacts/13631689156) | `2ae2a4b513c506da1f014740e31724bd4123d487948e2635f810fc7659d987a8` |
+| project | [13631639193](https://github.com/dwijayuda/pskernel/actions/runs/42517518674/artifacts/13631639193) | `1bdb60aa39e7acc3fee61e597493227acd43ac021553c583e153cc9b7b6de461` |
+| native | [13631368600](https://github.com/dwijayuda/pskernel/actions/runs/42517518674/artifacts/13631368600) | `58341095eb56d6ec63ab964d73ad1125098b5040ee3a30e009564e5cbc11dc59` |
+
+The inline-descriptor candidate `a21ecd55fa1b40d66ae5e8ccce64cc04ab5a0c30` was **reverted** after regular run **42517158082** / job **128842586950** rejected changed suffix AST shapes and focused run **42517187718** / job **128842672919** exposed old linked descriptors referencing removed `binderSuffix`. The final change reuses upstream infrastructure rather than changing binder syntax.
+
+Independent [full compiler/census run 42517718338](https://github.com/dwijayuda/pskernel/actions/runs/42517718338), [runner PR #226](https://github.com/dwijayuda/pskernel/pull/226), runner **`e78cd4479ba5b1433e8879c14de79ba27427dfdc`**, is **IN PROGRESS** at this source. It requires both fresh complete compiler stages, all generated C/public olean comparisons, and actual-source census joins. This is still a native-compatible forest regression; canonical ProofScript source grammar migration remains **ACTIVE / NOT COMPLETE**.
+
+
+## Current same-frontend census and compiler regression — 9 November 2026
+
+Qualified source **`4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a`**, runner **`189be356819cec9d2d56f3592207ffbe98f3ea6f`**, Linux [run 42515763246](https://github.com/dwijayuda/pskernel/actions/runs/42515763246): **all four jobs PASS**. Exact jobs: project/binder/census **128838311309**, native **128838311805**, proof-linked **128838303330**, host **128838316475**. Official Lean and normative R2 pins are unchanged.
+
+The native `addModuleLinter` callback captures commands from the same frontend execution used for code generation. Census sidecars retain normalized source, original top-level command kinds/head kinds/ranges, imports and local environment names. Fixtures distinguish original declarations, macro-generated declarations and quoted declaration data. Actual recursive Lake module compilations retain matching census and origin sidecars. The corpus join verifies input equality and recovery of every original byte; its **one-module fixture subset** passes and mismatched provenance is rejected. **The full 2,546-module census has not run.** Prelude inputs remain native-compatible, without hidden logical imports or PS grammar support.
+
+Scoped signature priority now exceeds the legacy alias priority. New `function` type/default and `const` type gap negatives reach the intended **PS0V1-CALL-GAP** adapter diagnostic. Executed oracles include **PS0_NATIVE_SOURCE_CENSUS: PASS**, **PS0_PROJECT_SAME_FRONTEND_CENSUS: PASS** and **PS0_NATIVE_SOURCE_CENSUS_JOIN: PASS**.
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| Proof-linked | [13631910233](https://github.com/dwijayuda/pskernel/actions/runs/42515763246/artifacts/13631910233) | `31686112db3cd8b940f201c63c9100867f0d16a0a5fc18c1a798954f6ddc7ba0` |
+| Project/binder/census | [13631805505](https://github.com/dwijayuda/pskernel/actions/runs/42515763246/artifacts/13631805505) | `85f09423b3d2ea0deb845f3843bdbc5d3d6ff460cbfaaa8a94fa95838937a43a` |
+| Native | [13631216761](https://github.com/dwijayuda/pskernel/actions/runs/42515763246/artifacts/13631216761) | `f8f20668e1ed032a1308189fc7dd97a1ea9fb35e0eb404d528a454bd8f836d16` |
+
+The independent full compiler [run 42511359592](https://github.com/dwijayuda/pskernel/actions/runs/42511359592), source **`9826bdd9dc422fe021de953a570972d7b85df2f4`**, runner **`332ed8372583f2c1a2b08ed3aacd182aa3aa95d2`**, finished: stage one **128825446119 PASS**, building/linking **2,565 modules / 5,134 native Lake jobs** and passing source smoke; stage two **128831905726 FAIL**, native exit **139** while recompiling **PS0.Binders.ps**. Fixed-point comparison was not reached. Stage-one [artifact 13630277856](https://github.com/dwijayuda/pskernel/actions/runs/42511359592/artifacts/13630277856) SHA-256 `9cd6ca6db18c631390bcd4f6b762c38c8227f60a21a84d3eee52fac2a2f0ccf2`; failure [artifact 13631615771](https://github.com/dwijayuda/pskernel/actions/runs/42511359592/artifacts/13631615771) SHA-256 `6261b2be9f790dd8fdf07f17bc070fb934119281bf18a0e7ad78d3d5aa33cbb9`.
+
+Focused diagnostic [run 42516632944](https://github.com/dwijayuda/pskernel/actions/runs/42516632944), runner **`e8b085b551a5de8c6c0a2e42b895627bd8be4832`**, job **128840967358**, reproduced the crash in Lean's native parser-constant evaluator. Setting the existing native option `interpreter.prefer_native=false` for that diagnostic alone succeeded, with identical generated C and public olean to the SDK build. Diagnostic [artifact 13631362254](https://github.com/dwijayuda/pskernel/actions/runs/42516632944/artifacts/13631362254) SHA-256 `7afffc436a768af054d2a32b3710307148a4a4d9a46b1db669ce7b4c7f5ca0ae`. This is diagnosis, not compiler qualification.
+
+The inline-descriptor candidate was subsequently reverted; see the stage-evaluation recovery evidence above.
+
+**Goal ACTIVE / NOT COMPLETE.** Required next: resolve/requalify the compiler self-rebuild, run the full actual-source census, provide bootstrap/prelude PS grammar without hidden logical imports/cycles, implement remaining owned operand/signature contexts and checked ProofScript source conversion, then build/link and compare the entire transformed corpus through a fresh migrated compiler. Diagnostic/IDE remapping and full provenance remain open. All broad obligations remain PENDING; `grammarMigrationComplete` and `verified_execution` remain false.
+
+
 ## Current origin-artifact recovery checkpoint — 9 November 2026
 
 Source **`863da731fc5957000d4633d13a9711d8d14ae126`**, runner **`710e9d296ddd344e6f559717c4aee0b0568e3e6c`**, Linux [run 42512184970](https://github.com/dwijayuda/pskernel/actions/runs/42512184970): **completed SUCCESS; all four jobs PASS**. Exact jobs: project **128827500492**, native **128827500249**, proof-linked **128827500080**, host **128827500317**. This newer source retains the binder/signature probes below and adds **PS0_PROJECT_SOURCE_ORIGIN_CACHE_RECOVERY: PASS**.
@@ -14,7 +56,7 @@ The adapter composes a native `Job.mapM` continuation after successful `leanArts
 
 Test-first source **89af6cc1d3aecf6cfa81f0a8adf59afb430a0e73**, run **42511729740**, job **128826050067**, failed because warm builds did not restore missing maps. Candidate **6d0c3f5c546e2ca15c2b52187d7ad353ad725781**, run **42511971440**, job **128826860303**, exposed a Bool return escaping the native artifact continuation; the passing source preserves the native artifact result.
 
-The full compiler regression [run 42511359592](https://github.com/dwijayuda/pskernel/actions/runs/42511359592) is **still running stage one, job 128825446119**, at the earlier binder source **9826bdd9dc422fe021de953a570972d7b85df2f4** and independent runner **332ed8372583f2c1a2b08ed3aacd182aa3aa95d2**. It does not qualify this later Lake-wrapper change or complete ProofScript grammar migration.
+The full compiler regression run **42511359592** has finished: stage one **128825446119 PASS**, stage two **128831905726 FAIL** with exit **139** in **PS0.Binders**. See the current evidence above; no fixed-point qualification was reached.
 
 **The project goal remains ACTIVE.** Next: collect actual compiler command syntax through Lean's native module-linter API, distinguish original/quoted/DSL/generated forms, implement checked source migration and bootstrap/prelude grammar support without hidden logical imports or cycles, then qualify the entire transformed corpus through native Lake builds, migrated source checks and fixed-point evidence. Diagnostic/IDE remapping and full provenance also remain open. No broad v1 family is promoted; no verified-execution certificate is issued.
 
@@ -38,7 +80,7 @@ Empty calls preserve the callable head before native optional completion, allow 
 | Native regression | [13629307964](https://github.com/dwijayuda/pskernel/actions/runs/42511067847/artifacts/13629307964) | `79a047113f70d353403457d308c70228b484c908d10bcae5cfc06f5cf756bf54` |
 | Binder/project/source origins | [13629118835](https://github.com/dwijayuda/pskernel/actions/runs/42511067847/artifacts/13629118835) | `37843bed9b6446cf4243287990fced81b3997e7acf4d42fbb85ebb070571e191` |
 
-A separate full native-compatible compiler/fixed-point regression is **PENDING**, [runner PR #223](https://github.com/dwijayuda/pskernel/pull/223), runner **`332ed8372583f2c1a2b08ed3aacd182aa3aa95d2`**, pinned to the qualified binder source. This independent lane does not stand in for canonical ProofScript syntax migration.
+The separate full native-compatible compiler regression run **42511359592** finished with stage one PASS and stage two FAIL in PS0.Binders. It does not establish canonical ProofScript source migration or a fixed point.
 
 Next required work: source-origin sidecar cache recovery/diagnostic integration; a native-parser-driven syntax census and source migration; bootstrap/prelude PS adapters without hidden logical imports or dependency cycles; remaining PS operand/signature roles; then full transformed-corpus Lake build/link, migrated-compiler source checks and fixed-point evidence. No main merge, force push, package publication, pin change or trust relaxation occurred.
 

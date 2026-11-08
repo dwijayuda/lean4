@@ -504,5 +504,159 @@
     "goalStatus": "ACTIVE_NOT_COMPLETE",
     "next": "Native module-linter census of actual parsed compiler commands, then explicit PS source grammar migration and bootstrap/prelude adapter integration. Current native-compatible full-source build is a separate gate.",
     "verified_execution": false
+  },
+  "sourceCensusContinuation": {
+    "status": "PASS_FINITE_SAME_FRONTEND_SOURCE_CENSUS",
+    "sourceCommit": "4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a",
+    "runnerCommit": "189be356819cec9d2d56f3592207ffbe98f3ea6f",
+    "run": 42515763246,
+    "jobs": {
+      "project": 128838311309,
+      "native": 128838311805,
+      "proofLinked": 128838303330,
+      "hostContract": 128838316475
+    },
+    "artifacts": [
+      {
+        "id": 13631910233,
+        "name": "ps0-external-4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a-42515763246",
+        "sha256": "31686112db3cd8b940f201c63c9100867f0d16a0a5fc18c1a798954f6ddc7ba0"
+      },
+      {
+        "id": 13631805505,
+        "name": "ps0-project-4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a-42515763246",
+        "sha256": "85f09423b3d2ea0deb845f3843bdbc5d3d6ff460cbfaaa8a94fa95838937a43a"
+      },
+      {
+        "id": 13631216761,
+        "name": "ps0-native-4d2b7204c0afab86e6f7dfc306b0d53fee6cd15a-42515763246",
+        "sha256": "f8f20668e1ed032a1308189fc7dd97a1ea9fb35e0eb404d528a454bd8f836d16"
+      }
+    ],
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "fixtures": [
+      "tests/run-source-census.py",
+      "tests/run-compiler-census.py --fixture-subset",
+      "tests/run-project.py",
+      "tests/run-binders.py"
+    ],
+    "oracles": [
+      "PS0_NATIVE_SOURCE_CENSUS: PASS",
+      "PS0_PROJECT_SAME_FRONTEND_CENSUS: PASS",
+      "PS0_NATIVE_SOURCE_CENSUS_JOIN: PASS"
+    ],
+    "scope": "Lean addModuleLinter captures original command stream from the actual code-generating frontend. Retains normalized input, command kinds/head kinds/ranges/imports and local environment names. The join verifies original byte recovery and identical frontend input, exercises one real project module and rejects mismatched provenance. Alias priority now routes function/const type/default gap negatives through PS operands. Full 2546-module census has NOT run; prelude remains native-compatible without PS grammar. Native compiler infrastructure and pins unchanged.",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "compilerBinderRegression": {
+    "source": "9826bdd9dc422fe021de953a570972d7b85df2f4",
+    "runner": "332ed8372583f2c1a2b08ed3aacd182aa3aa95d2",
+    "run": 42511359592,
+    "status": "STAGE_ONE_PASS_STAGE_TWO_FAIL_NATIVE_EXIT_139",
+    "stageOne": {
+      "job": 128825446119,
+      "modules": 2565,
+      "lakeJobs": 5134,
+      "artifact": 13630277856,
+      "sha256": "9cd6ca6db18c631390bcd4f6b762c38c8227f60a21a84d3eee52fac2a2f0ccf2"
+    },
+    "stageTwo": {
+      "job": 128831905726,
+      "failedModule": "PS0.Binders",
+      "exitCode": 139,
+      "artifact": 13631615771,
+      "sha256": "6261b2be9f790dd8fdf07f17bc070fb934119281bf18a0e7ad78d3d5aa33cbb9"
+    },
+    "fixedPointReached": false,
+    "grammarMigrationComplete": false,
+    "pr": 223
+  },
+  "compilerBinderDiagnosis": {
+    "source": "9826bdd9dc422fe021de953a570972d7b85df2f4",
+    "runner": "e8b085b551a5de8c6c0a2e42b895627bd8be4832",
+    "run": 42516632944,
+    "job": 128840967358,
+    "artifact": 13631362254,
+    "sha256": "7afffc436a768af054d2a32b3710307148a4a4d9a46b1db669ce7b4c7f5ca0ae",
+    "observed": "Focused migrated native rebuild crashes in lean::ir::interpreter::call_boxed via Lean.Parser.mkParserOfConstantUnsafe. With interpreter.prefer_native=false the same module succeeds and generated C/public olean match SDK build exactly. Diagnostic scope only; compiler-wide options remain unchanged.",
+    "candidate": {
+      "source": "a21ecd55fa1b40d66ae5e8ccce64cc04ab5a0c30",
+      "regularRun": 42517158082,
+      "regularJob": 128842586950,
+      "focusedRunner": "b88296fa6219a92fcc4aa8fc0ac7be9fa8c283a5",
+      "focusedRun": 42517187718,
+      "focusedJob": 128842672919,
+      "observed": "Inline descriptor AST shape rejected binder defaults; prior compiler also reused linked old descriptors referencing removed binderSuffix. Reverted this candidate. Reused pinned upstream stage option instead.",
+      "status": "REVERTED_FAILED_CANDIDATE"
+    },
+    "verified_execution": false
+  },
+  "compilerStageEvaluationRecovery": {
+    "source": "abf3585d99c921fe02697b679867a0a55e433168",
+    "runner": "f5eea9af18a6c6a04ee92ef47ce36311f2d95e15",
+    "run": 42517518674,
+    "jobs": {
+      "project": 128843676094,
+      "native": 128843675964,
+      "proofLinked": 128843675694,
+      "hostContract": 128843675945
+    },
+    "artifacts": [
+      {
+        "id": 13631689156,
+        "sha256": "2ae2a4b513c506da1f014740e31724bd4123d487948e2635f810fc7659d987a8",
+        "name": "ps0-external-abf3585d99c921fe02697b679867a0a55e433168-42517518674"
+      },
+      {
+        "id": 13631639193,
+        "sha256": "1bdb60aa39e7acc3fee61e597493227acd43ac021553c583e153cc9b7b6de461",
+        "name": "ps0-project-abf3585d99c921fe02697b679867a0a55e433168-42517518674"
+      },
+      {
+        "id": 13631368600,
+        "sha256": "58341095eb56d6ec63ab964d73ad1125098b5040ee3a30e009564e5cbc11dc59",
+        "name": "ps0-native-abf3585d99c921fe02697b679867a0a55e433168-42517518674"
+      }
+    ],
+    "status": "PASS_FINITE_REGRESSIONS_AND_FOCUSED_MIGRATED_BINDER_REBUILD",
+    "stageOption": {
+      "interpreter.prefer_native": false
+    },
+    "upstreamBasis": "https://github.com/dwijayuda/lean4/blob/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/src/CMakeLists.txt",
+    "focused": {
+      "runner": "f5fb141be25251c6b8d55f21ac342df7d02218c5",
+      "run": 42517552265,
+      "job": 128843778154,
+      "artifact": 13632032709,
+      "sha256": "b7bcc738cddc05afe2c2345e6e15a7bbaf992289ce881f881d02def1b25ab84a",
+      "oracles": [
+        "PS0_BINDER_STAGE_OPTIONS_AND_OUTPUTS: PASS",
+        "PS0_BINDER_SELF_REBUILD: PASS"
+      ],
+      "scope": "Exact prior stage-one migrated binary rebuilds original binder parser declarations under pinned native Lake stage options, with identical C/public olean to SDK compilation. Original closed Parser definitions retained."
+    },
+    "fullCompiler": {
+      "branch": "ci/ps0-census-compiler-20261109",
+      "head": "e78cd4479ba5b1433e8879c14de79ba27427dfdc",
+      "tree": "4a4e1a0a39a5389e3371dfc917cf1aa92ed7f2d7",
+      "source": "abf3585d99c921fe02697b679867a0a55e433168",
+      "pr": 226,
+      "run": 42517718338,
+      "status": "IN_PROGRESS",
+      "scope": "full native-compatible forest plus actual frontend census, not canonical PS grammar migration"
+    },
+    "failedInlineCandidate": {
+      "source": "a21ecd55fa1b40d66ae5e8ccce64cc04ab5a0c30",
+      "regularRun": 42517158082,
+      "regularJob": 128842586950,
+      "focusedRunner": "b88296fa6219a92fcc4aa8fc0ac7be9fa8c283a5",
+      "focusedRun": 42517187718,
+      "focusedJob": 128842672919,
+      "observed": "Inline descriptor AST shape rejected binder defaults; prior compiler also reused linked old descriptors referencing removed binderSuffix. Reverted this candidate. Reused pinned upstream stage option instead."
+    },
+    "verified_execution": false,
+    "grammarMigrationComplete": false
   }
 }

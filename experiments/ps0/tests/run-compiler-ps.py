@@ -129,6 +129,8 @@ for module, data in inputs.items():
     rel = Path(*module.split('.'))
     receipt = json.loads((build / 'ps0-inputs' / (module + '.json')).read_text())
     assert receipt['source'] == data['ps'], (module, receipt)
+    setup = json.loads((build / 'ir' / rel.with_suffix('.setup.json')).read_text())
+    assert setup['options']['interpreter.prefer_native'] is False, (module, setup['options'])
     olean = build / 'lib/lean' / rel.with_suffix('.olean')
     cfile = build / 'ir' / rel.with_suffix('.c')
     assert olean.is_file() and cfile.is_file(), module
@@ -140,6 +142,7 @@ result = {
     'lean_commit': LEAN, 'module_count': len(inputs), 'inputs': inputs, 'outputs': outputs,
     'driver_sha256': digest(migrated), 'verified_execution': False,
     'bootstrap_package_identity': None,
+    'stage_lean_options': {'interpreter.prefer_native': False},
     'runtime_smoke': 'PENDING',
     'lean_header_sha256': digest(build / 'include/lean/lean.h'),
     'scope': 'All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers',
