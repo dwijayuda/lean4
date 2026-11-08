@@ -1,25 +1,48 @@
 # PS0 — AI Work State (8 November 2026)
 
-## Active continuation: Lake native executable integration
+## Qualified continuation: thin adapters and Lake native executables
 
-- Source branch: `feat/ps0-lake-native-20261108`, based on PR #6 source `39b8f4cecd8e60b2297c1d01f81d8840c3dc3715`; history preserved.
-- Added `build-native FILE.ps ModuleName OUT_DIR` and `lakefile.native.lean` targets composing the existing `.ps` adapters, official Lean `runFrontend`/LCNF C emission, imported-module `linkInfoNoExport`, `buildLeanO`, and `buildLeanExeSync`.
-- No new typechecker, proof kernel, optimizer, runtime or native emitter. Official Lean 4.35.0 pin and normative R2 reference remain unchanged.
-- The development target traces source, compiler, imported native modules, build options and Lean/toolchain; publication occurs only after successful linking and refuses an existing output directory.
-- Tests authored before implementation cover real executable behavior (IO, source calls, collections/closures and imported Lean code), warm reuse, source and native import invalidation, malformed host calls, elaboration failure, missing entry point/link failure, and no-replacement publication.
-- Validation pending: execute the exact new source on Linux GitHub Actions via an immutable source selector in the Actions-enabled `dwijayuda/pskernel` runner. No local compiler/proof/runtime execution or passing native result is claimed at this checkpoint.
-- Initial Linux run `42472928133` built clean PS0 (28 jobs) but found the implicit PS0 import hid `psTerm` from source extension declarations. The injected import is now public, retaining native module staging while exposing the specified host category interface. Native tests had not yet executed in that failed run. Push run `42472924581` failed during Elan download with HTTP 503 before compilation.
-- Run `42473126320` then exposed two pre-existing adapter defects: the host separator used zero-width `ppSpace` instead of consuming a comma, and the function-only consecutive-group restriction incorrectly applied to native `def`/`theorem` telescopes. Both are corrected against R2; the function alias still rejects consecutive explicit groups. The run also caught a Lake record-field syntax error, now corrected. These failures remain failed evidence.
-- Subsequent Linux execution passed host-call AST/arity/source-span witnesses. The standard private-alias witnesses incorrectly used public theorems to refer to private declarations under modern Lean modules; those witnesses are now private, and a negative test retains the real prohibition on public leakage. The Lake process record now uses aligned multiline fields. Runner bootstrap retries actual HTTP 503 download failures without changing the Lean pin.
-- Source `5f70607323f0c6e9802cbfd75965543306d1a9f2`, runs `42473650349`/`42473644127`: clean PS0 and all seven adapter fixtures passed; actual Lake native executable returned `PS0_NATIVE:42:7:15:2`, warm artifacts were reused, source changes returned `44:7`, and imported Lean changes returned `44:9`. CLI publication then failed because cached Lake configuration retained the previous module selection. `build-native` and the development command now use `-R` to refresh configuration values while retaining compiled-artifact caching. Full native qualification is still pending.
-- Source `ddf5b2d16f95b42e4116399910cd704f30e298b0` then passed CLI executable publication/execution and no-replacement/elaboration negatives, but the missing-main negative revealed that linking could select a Lean library's main. Executable-module emission now requires local `main` in Lean's own LCNF compiled-declaration inventory. A separate unresolved-extern fixture checks genuine linker failure and publication refusal. Ordinary library `build` retains its existing no-main behavior.
-- Existing baseline was independently read back: external Linux run https://github.com/dwijayuda/pskernel/actions/runs/40772012597 passed proof-linked and host-contract jobs for exact source `39b8f4cecd8e60b2297c1d01f81d8840c3dc3715`.
-- Scope: one `.ps` executable entry module, ordinary toolchain and Lake-declared `.lean` dependencies. General recursive `.ps` project dependency discovery, complete host operand adaptation, bootstrap `prelude`, source-origin fidelity and verified runtime execution remain open. The 242-item conformance ledger is not promoted by these tests.
-- No main merge, force push, npm publication, normative language change, or changes to independent PSC0/PSC1 source.
+- Source branch: `feat/ps0-lake-native-20261108`; draft [Lean-fork PR #7](https://github.com/dwijayuda/lean4/pull/7), based on PR #6 source `39b8f4cecd8e60b2297c1d01f81d8840c3dc3715`.
+- Qualified implementation/test commit: **`07a1da68aacf2462e9723a79242c322a21ca3c83`**. The documentation follow-up records this result without changing compiler or test bytes.
+- Semantic pin: official Lean 4.35.0, `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. Normative R2 blob remains `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
+- Runner branch: `ci/ps0-lake-native-20261108`; draft [pskernel PR #219](https://github.com/dwijayuda/pskernel/pull/219).
+- Exact runner commit: **`b0742c8ed34125838155851a979fe80cbc36d369`**. Its immutable `ci/ps0-source.json` selects the qualified Lean-fork commit above.
+- **Linux run [42474108191](https://github.com/dwijayuda/pskernel/actions/runs/42474108191) completed successfully on 8 November 2026.** All three jobs passed: native-build `128711492870`, proof-linked `128711492711`, host-contract `128711492922`. Source and runner commit identities are distinct.
 
-The sections below retain the earlier proof-linked checkpoint and its observed failures as historical evidence; they are superseded only where the exact-source results above say so.
+### Implemented behavior
 
-## Active work and identities
+`lake exe ps0 build-native FILE.ps ModuleName OUT_DIR` now produces an actual executable through the existing PS0 syntax adapters and official Lean frontend/kernel/LCNF C emission, followed by Lake's imported-module `linkInfoNoExport`, `buildLeanO` and `buildLeanExeSync`. There is no intermediate textual `.lean` program and no new typechecker, proof kernel, optimizer, runtime or native emitter.
+
+`lakefile.native.lean` supplies incremental development targets. The CLI passes `-R` so Lake's configuration reflects each source/module selection while compiled artifacts retain their incremental traces. Source bytes, compiler, native dependencies, options and Lean/toolchain participate in the build. Executable emission requires a local compiled `main` in Lean's LCNF declaration inventory. The CLI publishes the linked executable plus `native-build.json` only after success and refuses an existing output directory; the receipt explicitly records `verified_execution: false`.
+
+Thin adapter corrections expose the specified PS host categories through the implicit public PS0 import, consume actual commas in the owned host-call parser, and retain native `def`/`theorem` binder groups while preserving the stricter `function` alias rule. Private-alias witnesses obey native modern-module visibility; a negative test retains the prohibition on public leakage.
+
+### Executed Linux evidence
+
+- Clean PS0 build: **28 jobs passed**; native target builds: **31 jobs passed** for the executable fixture.
+- All seven selected adapter/native-language fixtures passed, including extension registration, host-category identity, call AST/argument partition/source spans, declaration bodies, and implicit/explicit modern modules.
+- Actual executable behavior passed: IO and arguments, host calls, collection/closure code and a separately compiled Lean dependency returned `PS0_NATIVE:42:7:15:2`.
+- Warm build retained executable hash and executable/C mtimes. Editing `.ps` source changed runtime output to `44:7`; editing the imported native Lean module changed it to `44:9`. CLI source/module selection and publication returned `44:7` with the original support library.
+- No-replacement publication, unknown source identifier, absent local entry point, malformed host call, consecutive explicit groups on `function`, and public use of a private declaration all rejected as intended.
+- The unresolved extern reached the actual linker: `ld.lld: error: undefined symbol: ps0_missing_external_71ad`; no executable directory was published.
+- The existing sandboxed proof-linked JS/TS qualification and host-contract suite passed at the same exact source. Its result remains a bounded conditional target-model/runtime result, not whole-language verified execution.
+- Native [artifact 13613899151](https://github.com/dwijayuda/pskernel/actions/runs/42474108191/artifacts/13613899151), ZIP SHA-256 `536de5c71bb3031af5edc2722ff0a1b9574c99ccf889117ec475dab2e63b3a52`, retains build/adapter/native logs, source/runner identities and the publication receipt.
+- Proof-linked [artifact 13614103254](https://github.com/dwijayuda/pskernel/actions/runs/42474108191/artifacts/13614103254), ZIP SHA-256 `e7580d036e6a34f3a5c8ffdf1540c2ef5e3f57925e0899053b1a17c951a507d6`, retains the existing comparator/runtime evidence.
+- No compiler, proof or runtime tests were executed locally; the evidence above is actual Linux GitHub Actions execution.
+
+### Scope and remaining work
+
+This qualification covers one `.ps` executable entry module with toolchain and Lake-declared `.lean` dependencies. Recursive `.ps` project dependency discovery, complete host operand adaptation, bootstrap `prelude`, source-origin fidelity and verified runtime execution remain open. The 242-item conformance ledger is not promoted by these tests. No whole-compiler preservation or cross-platform native-release claim is made.
+
+History is preserved. No main merge, force push, npm publication, normative language change, or independent PSC0/PSC1 source change was made.
+
+### Earlier attempts and diagnostics
+
+Earlier failed/cancelled attempts remain recorded as such: `42472928133` exposed private host-category visibility; `42473126320` exposed binder/separator defects and a Lake record-layout error; `42473650349`/`42473644127` demonstrated native execution/invalidation before CLI configuration refresh failed; `42473838785` demonstrated publication before the missing-main negative exposed a library-main fallback. HTTP 503/504 installer failures were infrastructure failures before compilation; bounded installer/toolchain retries retain the exact Lean semantic pin. None of those partial results substitutes for the successful full run above.
+
+The following sections preserve the 29 October proof-linked checkpoint and its original evidence boundaries.
+
+## Prior proof-linked work and identities
 
 - Repository: `dwijayuda/lean4`; project: `experiments/ps0`.
 - Implementation branch: `feature/ps0-proof-linked-js-ts-20261029`; draft PR #6.

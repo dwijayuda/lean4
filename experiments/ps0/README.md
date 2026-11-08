@@ -113,6 +113,8 @@ status and [AI_WORK_STATE.md](AI_WORK_STATE.md) for development state.
 The prior bounded proof-linked and host-contract baseline at source
 `39b8f4cecd8e60b2297c1d01f81d8840c3dc3715` passed external Linux
 run [40772012597](https://github.com/dwijayuda/pskernel/actions/runs/40772012597).
-That result does not qualify all 242 language obligations or this new native
-build integration. See `AI_WORK_STATE.md` for exact-source native evidence.
+The native continuation at `07a1da68aacf2462e9723a79242c322a21ca3c83`
+passed all three jobs in Linux [run 42474108191](https://github.com/dwijayuda/pskernel/actions/runs/42474108191): native build/link/runtime, proof-linked regression and host-contract checks.
+This does not qualify all 242 language obligations or verified runtime execution.
+See `AI_WORK_STATE.md` for exact source/runner identities, artifacts and limits.
 
