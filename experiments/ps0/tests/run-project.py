@@ -50,6 +50,19 @@ for path in maps:
     retained.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(path, retained)
 print('PS0_PROJECT_SOURCE_ORIGINS: PASS', flush=True)
+census_paths = []
+for path in maps:
+    census_path = path.with_name(path.name.replace('ps0-source-map', 'ps0-source-census'))
+    assert census_path.is_file(), 'native module invocation must retain actual parsed-command evidence'
+    census = json.loads(census_path.read_text())
+    mapping = json.loads(path.read_text())
+    assert census['nativeSource'] == mapping['nativeSource']
+    assert census['file'] == mapping['file']
+    retained = WORK / 'source-census' / census_path.relative_to(ROOT / '.lake/project/lib/lean')
+    retained.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(census_path, retained)
+    census_paths.append(str(census_path.relative_to(ROOT)))
+print('PS0_PROJECT_SAME_FRONTEND_CENSUS: PASS', flush=True)
 before = (sha(exe), exe.stat().st_mtime_ns)
 build()
 assert before == (sha(exe), exe.stat().st_mtime_ns)
@@ -131,10 +144,11 @@ print('PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY: PASS', flush=True)
     'driver_sha256': sha(driver), 'published_sha256': saved,
     'module_inputs': selected,
     'source_origin_sidecars': [str(p.relative_to(ROOT)) for p in maps],
+    'source_census_sidecars': census_paths,
     'checks': ['recursive-public-and-meta-imports', 'mixed-native-source', 'warm-reuse', 'driver-invalidation',
                'transitive-ps-and-native-invalidation', 'publication-no-replacement',
                'prelude-no-hidden-imports', 'local-entry', 'source-collision', 'cycle', 'private-visibility',
-               'source-origin-sidecars', 'source-origin-cache-recovery'],
+               'source-origin-sidecars', 'source-origin-cache-recovery', 'same-frontend-census'],
     'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_RECURSIVE_PROJECT: PASS', flush=True)
