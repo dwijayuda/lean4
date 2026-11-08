@@ -2754,6 +2754,113 @@
       }
     ],
     "verified_execution": false
+  },
+  "binderDefaultContinuation": {
+    "status": "PASS_FINITE_BINDER_DEFAULT_AND_MIXED_SIGNATURE_CASES",
+    "sourceCommit": "9826bdd9dc422fe021de953a570972d7b85df2f4",
+    "runnerCommit": "523c9e600ade3fdd6bba4a6bc203383477389837",
+    "run": "https://github.com/dwijayuda/pskernel/actions/runs/42511067847",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "jobs": {
+      "project": 128824034975,
+      "native": 128824034894,
+      "proofLinked": 128824034872,
+      "hostContract": 128824034957
+    },
+    "artifacts": [
+      {
+        "id": 13629691688,
+        "name": "ps0-external-9826bdd9dc422fe021de953a570972d7b85df2f4-42511067847",
+        "sha256": "28f5a6346c3265732e378d6f2a0a4ebca210d8e4d63ad2e4cadfb398c3f08aad"
+      },
+      {
+        "id": 13629307964,
+        "name": "ps0-native-9826bdd9dc422fe021de953a570972d7b85df2f4-42511067847",
+        "sha256": "79a047113f70d353403457d308c70228b484c908d10bcae5cfc06f5cf756bf54"
+      },
+      {
+        "id": 13629118835,
+        "name": "ps0-project-9826bdd9dc422fe021de953a570972d7b85df2f4-42511067847",
+        "sha256": "37843bed9b6446cf4243287990fced81b3997e7acf4d42fbb85ebb070571e191"
+      }
+    ],
+    "fixtures": [
+      "tests/v1/binder_operands.ps",
+      "tests/v1/mixed_signature_heads.ps",
+      "tests/run-binders.py",
+      "tests/run-categories.py",
+      "tests/run-source-fidelity.py",
+      "tests/run-project.py",
+      "tests/run-native.py"
+    ],
+    "oracles": [
+      "PS0_BINDERS:3:3:2:3:3:3",
+      "PS0_SIGNATURE_HEADS:3:3:3",
+      "PS0_BINDER_OPERANDS: PASS",
+      "PS0_SOURCE_FIDELITY_MAP: PASS",
+      "PS0_RECURSIVE_PROJECT: PASS",
+      "PS0_LAKE_NATIVE: PASS"
+    ],
+    "scope": [
+      "native shared-type/anonymous/inferred binders mixed with typed PS comma groups in source order",
+      "binder type/default PS operands; lexical dependent defaults and named/strict/instance/universe parameters; trailing comma",
+      "native binderTactic ordered before ordinary binderDefault; actual environment autoParam versus optParam check",
+      "def/abbrev/theorem/example plus opaque/axiom/simple instance signatures; inferred example; typed/inferred/private function/const aliases",
+      "native bracketedBinder DSL ownership; identifier eqWithInfo and type/default range preservation",
+      "native optional/automatic completion, CoeFun empty call, strict whole remaining telescope and explicit-mode negatives",
+      "registered deriving handlers through native identifiers, without globally reserving Inhabited/BEq/Repr/Hashable/DecidableEq"
+    ],
+    "negativeOracles": [
+      "PS0V1-CALL-GAP in binder types/defaults",
+      "PS0V1-CALL-ORDER in defaults",
+      "PS0V1-BIND-02 alias adjacency",
+      "no Unit repair for empty def",
+      "reject untyped comma parameter",
+      "native Bool versus Nat default type error",
+      "PS0V1-CALL-EMPTY for two Units, a returned function telescope, and @id()"
+    ],
+    "assurance": "mixed_signature_heads.ps intentionally declares one unused axiom to test the axiom signature grammar; it is reported, not approved as a proof assumption. No formal source/execution certificate.",
+    "compilerRebuild": {
+      "status": "PENDING",
+      "runner": "332ed8372583f2c1a2b08ed3aacd182aa3aa95d2",
+      "branch": "ci/ps0-binder-compiler-20261109",
+      "pr": "https://github.com/dwijayuda/pskernel/pull/223",
+      "scope": "independent full native-compatible PS source forest and fixed-point regression; not ProofScript-specific grammar migration"
+    },
+    "projectCompletion": {
+      "status": "ACTIVE_NOT_COMPLETE",
+      "required": "Entire pinned compiler corpus using ProofScript syntax/grammar, with exact Linux native build/link and migrated-compiler evidence. Renaming native sources is insufficient.",
+      "remaining": [
+        "all signature contexts including constructors, fields, local declarations, equations/contracts/termination and recall",
+        "PS term operator/application operand closure, collections/interpolation, match, control/config/attribute/tactic roles",
+        "bootstrap prelude PS adapters without hidden logical imports or dependency cycles",
+        "native-parser-driven compiler source grammar census and canonical PS migration",
+        "full transformed corpus native Lake build/link and migrated-compiler/fixed-point checks",
+        "diagnostic/IDE remapping, origin-sidecar cache recovery and complete source provenance"
+      ]
+    },
+    "failedCandidates": [
+      {
+        "source": "bed972942e4845f36751f0f100eba18d43ea87d8",
+        "run": 42509432717,
+        "job": 128819138702,
+        "diagnostic": "ambiguous parser opens in new binder adapter; corrected with actual pinned parser names"
+      },
+      {
+        "source": "60a327192355796441df70fc2a9a5b9975b0276d",
+        "run": 42509906650,
+        "job": 128820493639,
+        "diagnostic": "legacy deriving literals reserved native class names; optional-head elaboration completed defaults before callable check; fixture inferred binders needed native omitted result type"
+      },
+      {
+        "source": "f1bd87b7e1fa7c0fdb9cb0cc9aba9bbf2d7cd02f",
+        "run": 42510946874,
+        "job": 128823659857,
+        "diagnostic": "instance priority splice used optional parser rather than actual namedPrio production; corrected"
+      }
+    ],
+    "verified_execution": false
   }
 }
 
