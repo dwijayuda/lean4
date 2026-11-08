@@ -56,7 +56,7 @@ private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun c
         (native `psCommand) ctx state
     else native category ctx state
 
-private unsafe def installImpl : IO Unit := do
+private unsafe def installImpl (options : Options) : IO Unit := do
   -- Native toolchains ship compiler metadata beside their executable. Load that
   -- host metadata in a separate environment, then restore target module lookup.
   let targetPath ← searchPathRef.get
@@ -64,7 +64,7 @@ private unsafe def installImpl : IO Unit := do
   let hostPath := binDir / ".." / "lib" / "lean"
   searchPathRef.set (hostPath :: targetPath)
   let host ← try
-    importModules #[{module := `PS0.StandardAdapters, isMeta := true}] {} (loadExts := true)
+    importModules #[{module := `PS0.StandardAdapters, isMeta := true}] options (loadExts := true)
   finally
     searchPathRef.set targetPath
   let state := parserExtension.getState host
@@ -75,9 +75,9 @@ private unsafe def installImpl : IO Unit := do
     builtinSyntaxNodeKindSetRef.modify fun kinds =>
       cat.kinds.foldl (fun kinds kind _ => kinds.insert kind) kinds
   for name in commandNames do
-    let descr ← IO.ofExcept <| host.evalConst ParserDescr {} name
+    let descr ← IO.ofExcept <| host.evalConst ParserDescr options name
     let parser ← (compileParserDescr state.categories (contextualAliases descr)).run
-      {env := host, opts := ({} : Options)}
+      {env := host, opts := options}
     addBuiltinLeadingParser `psCommand name parser 20000
     copyMacros host name
   -- This bridge is an identity macro; target logic never imports its declaration.
@@ -93,6 +93,6 @@ private unsafe def installImpl : IO Unit := do
   categoryParserFnRef.set (rootDispatch native)
 
 @[implemented_by installImpl]
-opaque install : IO Unit
+opaque install (options : Options) : IO Unit
 
 end PS0.SourceGrammar
