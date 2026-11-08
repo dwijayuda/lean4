@@ -301,21 +301,21 @@ macro_rules
 PS0 v1's ordered binder telescope can mix explicit comma-groups with implicit,
 strict-implicit and instance binders. The order is semantically significant:
 dependent binder types are resolved by the native Lean declaration elaborator.
-The source restriction forbids two adjacent explicit groups (BIND-02).
+The function alias forbids adjacent explicit groups; native declarations retain them.
 -/
 declare_syntax_cat pscvTelescopeSegment
 syntax "(" pscvBinder,+ ")" : pscvTelescopeSegment
 syntax pscvNonExplicitBinder : pscvTelescopeSegment
 
 private def orderedLeanBinders
-    (parts : Array (TSyntax `pscvTelescopeSegment)) :
+    (parts : Array (TSyntax `pscvTelescopeSegment)) (allowAdjacentExplicit : Bool := false) :
     MacroM (Array (TSyntax ``Lean.Parser.Term.bracketedBinder)) := do
   let mut result := #[]
   let mut precedingExplicit := false
   for part in parts do
     match part with
     | `(pscvTelescopeSegment| ($[$bs:pscvBinder],*)) =>
-        if precedingExplicit then
+        if precedingExplicit && !allowAdjacentExplicit then
           Macro.throwError "PS0V1-BIND-02: adjacent explicit groups must be joined by commas"
         let native ← explicitLeanBinders bs
         result := result ++ native
@@ -350,17 +350,17 @@ macro_rules (kind := pscvTelescopeFunctionInferred)
 
 macro_rules (kind := pscvTelescopeDefinition)
   | `(def $f:ident $parts:pscvTelescopeSegment* : $ty:term := $body:term) => do
-    let native ← orderedLeanBinders parts
+    let native ← orderedLeanBinders parts true
     `(def $f:ident $native:bracketedBinder* : $ty:term := $body:term)
 
 macro_rules (kind := pscvTelescopeDefinitionInferred)
   | `(def $f:ident $parts:pscvTelescopeSegment* := $body:term) => do
-    let native ← orderedLeanBinders parts
+    let native ← orderedLeanBinders parts true
     `(def $f:ident $native:bracketedBinder* := $body:term)
 
 macro_rules (kind := pscvTelescopeTheorem)
   | `(theorem $f:ident $parts:pscvTelescopeSegment* : $ty:term := $proof:term) => do
-    let native ← orderedLeanBinders parts
+    let native ← orderedLeanBinders parts true
     `(theorem $f:ident $native:bracketedBinder* : $ty:term := $proof:term)
 
 /-- Contracted functions use the proof-producing intrinsic Lean 4.35
@@ -803,3 +803,4 @@ macro_rules
 
 
 end PS0
+
