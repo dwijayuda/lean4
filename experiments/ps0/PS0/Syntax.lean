@@ -410,7 +410,7 @@ macro_rules (kind := pscvFunctionEffectContract)
 
 /-- Empty source calls use Lean's own optional-argument elaboration. A source
 nullary function is a required Unit binder, not a second function type. -/
-syntax:max (name := pscvEmptyCall) term:max noWs "(" ")" : term
+scoped syntax:max (name := pscvEmptyCall) term:max noWs "(" ")" : term
 
 @[term_elab pscvEmptyCall]
 def elabPscvEmptyCall : TermElab := fun stx expectedType? => do
@@ -449,10 +449,11 @@ native Lean binder names and must follow all source positional arguments. -/
 declare_syntax_cat pscvCallArg
 syntax ident " := " term : pscvCallArg
 syntax term : pscvCallArg
-syntax:max (name := pscvCall) term:max noWs "(" pscvCallArg,+ ")" : term
+scoped syntax:max (name := pscvCall) term:max noWs "(" pscvCallArg,+ ")" : term
 
+open scoped PS0 in
 macro_rules (kind := pscvCall)
-  | `($f:term($[$args:pscvCallArg],*)) => do
+  | `(term| $f:term($[$args:pscvCallArg],*)) => do
     let mut parsedArgs : Array Syntax := #[]
     let mut seenNamed := false
     let mut used : Array Name := #[]

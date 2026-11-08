@@ -3,10 +3,64 @@
 **Sole normative reference:** [PS0_V1_LANGUAGE_REFERENCE.md](PS0_V1_LANGUAGE_REFERENCE.md), edition R2, 2026-10-16. Uploaded Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`.
 **Lean:** official 4.35.0, `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`.
 
-**Status:** migration to v1 implemented at the specification/source-policy
-foundation; full v1 language closure NOT implemented; exact-commit
-Lean CI NOT observed passing. The old v7 41% estimate, fixed
-191/181-style progress measures and v7 test assertions are retired.
+**Status:** exact source `fb86cc425f0688bf3c6e98ff6c7adb8e899fe883`, runner
+`0bca62aefdb00992d891f57c1a608dc0dacd60a3`, Linux
+[run 42488162021](https://github.com/dwijayuda/pskernel/actions/runs/42488162021):
+recursive/category `128754567397`, native `128754567736`, proof-linked
+`128754567672`, host `128754567546` and compiler stage one `128754834515` PASS.
+Stage two `128763580779` PASS: a fresh migrated-compiler build matches every C/public-olean hash across all 2,564 modules. All six workflow jobs passed.
+Full v1 grammar closure remains open.
+
+Both compiler stages compiled **all 2,546 pinned compiler-source Git blobs plus 18 PS0 modules**
+from actual PS program inputs, completed **5,132 native Lake jobs**, audited every
+generated C/olean and linked/ran a migrated compiler including an actual PS source check.
+Its [artifact 13622010384](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13622010384)
+has ZIP SHA-256 `de68e47310d1a58631c98072d4c786eede503f282c18830c3d0f13c2f422b23b`;
+it retains the binary, all per-module input/output hashes and native link map.
+Stage-two artifact `13621859608` has ZIP SHA-256
+`dae31cf63a2098b2cfa67940936424fa16fd361c700d202b54c934ad24eb3827`.
+Its result records zero C differences and zero public olean differences. Both stages
+pass the migrated environment/source smoke checks. This tests a generated source
+forest, not an upstream/main source cutover.
+
+Independent Linux [link/ELF audit 42491501152](https://github.com/dwijayuda/pskernel/actions/runs/42491501152),
+runner `54a3d0356609a24ec94090adedcc0a1645134f6b`, job `128764669538` PASS:
+rebuilt frontend, LCNF emitter and PS0 objects/native symbols; zero SDK Lean/Init/Std
+source-archive entries; zero SDK Lean shared-library dependencies. Migrated executable
+SHA-256 `3c7371ca39e9689dd55c1b6fa1fbd3821f10c584a96c81f605e8350380bd339a`.
+The pinned C++ runtime remains reused infrastructure.
+Audit artifact `13621487247` has ZIP SHA-256
+`8c9159eefd30f5204d277c888ea64eb40b5618beacca8a6825515f202637f6b6`.
+
+Project artifact `13619929692` has ZIP SHA-256
+`d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d`.
+Executed fixtures cover recursive/meta imports, native dependencies/runtime, warm reuse,
+source/native/driver invalidation, publication, prelude isolation, local entry,
+source collisions, cycles and private visibility. Mapped category cases retain
+native tuple DSL/quotation ownership and reject order/duplicate/gap errors.
+These finite cases do not qualify all host operand roles. Older failures and
+their exact evidence remain in AI_WORK_STATE.md and v1-coverage.json.
+
+## Current exact-evidence policy
+
+`v1-coverage.json` records the exact source, Lean/reference identity, fixture,
+diagnostic/semantic oracle and CI run for each qualified finite case. A PASS
+at an earlier source is historical evidence; changed implementations require
+fresh exact-source qualification. Broad capability families remain PENDING
+when only a subset has executable evidence.
+
+The current category adapter registry is `standard-adapter-map.json`. The
+recursive project fixtures are under `tests/project/`; `tests/run-project.py`
+checks imported ps syntax, mixed native imports, source-kind ambiguity,
+cycles, visibility and transitive invalidation. `tests/run-categories.py`
+checks the selected mapped operands and native quotation/DSL ownership.
+
+`tests/run-compiler-ps.py` is the compiler-source migration gate. It inventories
+all 2,546 pinned `src/**/*.lean` Git blobs plus PS0 modules, compiles a program source tree with no
+lean files, builds a migrated compiler executable and, in a second clean
+job, requests full C/olean fixed-point comparison. Conversion, native source
+admission, C/object compilation, executable behavior and a full compiler
+fixed point are distinct outcomes. The two stages now PASS only at the recorded source/scope. Native-prelude coverage does not qualify all PS-owned bootstrap sugar.
 
 ## Implemented migration changes
 
@@ -17,7 +71,7 @@ Lean CI NOT observed passing. The old v7 41% estimate, fixed
 | Grammar | Removed frozen command/attribute/tactic/loop/source-token denial list; diagnostic-only syntax-kind inventory | Full interleaved host grammar and category-aware adaptation |
 | Declaration policy | No mandatory v7 axioms/unsafe/partial/IO ban; `#ps0_evidence` is informational | Transitive claim-specific assumptions and evidence `12` |
 | Imports/Standard | Native registered/imported extensions determine availability; no v7 finite Standard allowlist | Complete effective module/stage/extension identity and `prelude` isolation |
-| Modules | Explicit native `module` parsed; implicit headerless PS module recognized | Full modern module compilation, public-name defaults, hidden bodies and project graph |
+| Modules | Native Lake recursive PS/public/meta module graph, mixed native imports, invalidation, collision/cycle/private/local-entry negatives passed at the checkpoint | Broader package/options/plugin/bootstrap qualification and full grammar/source fidelity |
 | `.lean` | Official Lean process unchanged and unrestricted | Routine exact-commit CI qualification |
 | JS backend | Lean typed Nat-only IR, ESM/`.d.ts`/Source Map v3 | Validated build, more types, modules, runtime semantics proof |
 
@@ -88,7 +142,13 @@ for remaining architecture gates and [AI_WORK_STATE.md](AI_WORK_STATE.md)
 for the latest development handoff.
 
 
-## PS0 v1 host psTerm postfix-call extension — 16 October 2026
+## Historical adapter milestones
+
+The dated entries below preserve the earlier candidate scope. Their pending
+wording is historical; current qualification, generalized mapped operands and
+compiler-source fixed-point results are recorded above and in the exact JSON ledgers.
+
+### PS0 v1 host psTerm postfix-call extension — 16 October 2026
 
 Implemented a first PS-owned, **nonempty identifier-head** adjacent-call
 source production in `PS0/HostCategories.lean`. It uses Lean's
@@ -124,7 +184,7 @@ all remain `PENDING` until actually qualified by pinned Lean CI.
 The canonical normative PS0 v1 R2 document remains unchanged.
 
 
-## Standard declaration-body psTerm integration — 16 October 2026
+### Standard declaration-body psTerm integration — 16 October 2026
 
 PS0 now provides owned source-command forms for **typed** `function` and
 `const` bodies whose RHS category is `psTerm` rather than silently taking a
@@ -182,3 +242,4 @@ capability, not a PS0 v1 language restriction.
 **Implementation code and test fixtures are committed but still
 unqualified:** no actual Lean 4.35.0 build or test run has been observed
 for the branch. No v1 requirement was promoted to PASS.
+

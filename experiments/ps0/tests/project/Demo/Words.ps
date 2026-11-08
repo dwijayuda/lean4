@@ -1,0 +1,7 @@
+namespace Demo
+
+@[expose] def add (x y : Nat) : Nat := x + y
+const count: Nat := 3
+
+theorem addOracle : add 1 2 = 3 := by rfl
+theorem countOracle : count = 3 := by rfl

@@ -7,6 +7,7 @@ import PS0.Grammar
 import PS0.Policy
 import PS0.StandardEnv
 import PS0.Backend.Js
+import PS0.LakeFrontend
 
 /-!
 PS0 standalone Lean-native frontend. Lean performs all declaration elaboration, proof
@@ -24,79 +25,9 @@ private def options : Options :=
     |>.setBool `experimental.vcgen true
     |>.setBool `experimental.intrinsic true
 
-/-- Preserve the original header's meaning. Headerless .ps source is
-    parsed as a modern Lean module with public names by default; a
-    written 'module' header follows native modern-module defaults.
-    Source provenance tracks the synthetic prefix length, if any. -/
-private def parsePsModuleHeader (src filename : String) :
-    IO (Except String (Lean.Elab.HeaderSyntax × Parser.ModuleParserState × Nat)) := do
-  let original := Parser.mkInputContext src filename
-  let (sourceHeader, sourceState, sourceMessages) ← Parser.parseHeader original
-  if Lean.Elab.HeaderSyntax.isModule sourceHeader then
-    if sourceMessages.hasErrors then
-      return .error "PS0V1-MODULE: invalid explicit native module header"
-    return .ok (sourceHeader, sourceState, 0)
-  let headerPrefix := "module\n"
-  let injected := Parser.mkInputContext (headerPrefix ++ src) filename
-  let (header, state, diagnostics) ← Parser.parseHeader injected
-  if diagnostics.hasErrors then
-    return .error "PS0V1-MODULE: invalid implicit module import header"
-  return .ok (header, state, headerPrefix.utf8ByteSize)
-
-/-- Import-driven v1 native language, not a finite Standard allowlist.
-    Source imports remain subject to the official Lean 4.35.0 header
-    semantics, availability and stage/visibility checks. -/
-private def approvedSource (src filename : String) :
-    IO (Except String (Array Import × String)) := do
-  let (header, state, prefixBytes) ← match ← parsePsModuleHeader src filename with
-    | .ok answer => pure answer
-    | .error why => return .error why
-  let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
-  if state.pos.byteIdx < prefixBytes then
-    return .error "PS0V1-MODULE: invalid source offset after module header"
-  let start := state.pos.byteIdx - prefixBytes
-  let bytes := src.toByteArray.extract start src.utf8ByteSize
-  let some body := bytes.utf8Decode?
-    | return .error "PS0V1-MODULE: invalid UTF-8 source boundary"
-  return .ok (imports, String.ofList body.toList)
-
-/-- Prepare source for the real native modern module frontend.
-    Headerless .ps implicitly exports names, while a written module
-    follows its native visibility defaults. Preserve source import flags,
-    instead of accidentally using legacy transitive import semantics.
-
-    Bootstrap prelude needs a syntax-only PS0 substrate, while the present
-    PS0.Policy imports full Lean/Init. Refuse compiling it instead of
-    injecting a hidden Init dependency in violation of v1. -/
-private def preparedPsModule (raw filename : String) :
-    IO (Except String String) := do
-  let (header, _, prefixBytes) ← match ← parsePsModuleHeader raw filename with
-    | .ok answer => pure answer
-    | .error err => return .error err
-  let prelude ← match header with
-    | `(Parser.Module.header| $[module%$_]? $[prelude%$p]? $_imports*) =>
-        pure p.isSome
-    | _ => return .error "PS0V1-MODULE: invalid pinned Lean header syntax"
-  if prelude then
-    return .error "PS0V1-PRELUDE-PENDING: bootstrap compiler must not inject hidden Init"
-  let imports := Lean.Elab.HeaderSyntax.imports header (includeInit := false)
-  let (_, body) ← match ← approvedSource raw filename with
-    | .ok data => pure data
-    | .error err => return .error err
-  let flags (im : Import) : String :=
-    (if im.isExported then "public " else "") ++
-    (if im.isMeta then "meta " else "") ++
-    "import " ++ (if im.importAll then "all " else "") ++
-    im.module.toString ++ "\n"
-  let headerSource := String.join (imports.toList.map flags)
-  let visibility := if prefixBytes == 0 then "" else "public section\n"
-  return .ok (
-    "module\n" ++
-    "public import PS0.Policy\n" ++
-    headerSource ++
-    visibility ++
-    body ++ "\n\n#ps0_evidence\n"
-  )
+private def parsePsModuleHeader := LakeFrontend.parseHeader
+private def approvedSource := LakeFrontend.sourceImportsAndBody
+private def preparedPsModule := LakeFrontend.prepare
 
 /-- First PS0-03 primitive: inspect *Lean's actual parsed module header*
     without authorizing its use as a v1 checked source. This preserves
@@ -399,6 +330,61 @@ private def buildNative (path moduleName outputDir : String) : IO UInt32 := do
   finally
     if ← stage.pathExists then IO.FS.removeDirAll stage
 
+private def buildProject (sourceRoot moduleName outputDir : String) : IO UInt32 := do
+  let sourceRoot ← IO.FS.realPath sourceRoot
+  let out := System.FilePath.mk outputDir
+  if ← out.pathExists then
+    IO.eprintln s!"PS0-OUTPUT-EXISTS: refusing to replace {out}"
+    return 2
+  if moduleName.isEmpty || moduleName.contains '/' || moduleName.contains '\\' then
+    IO.eprintln "PS0-PROJECT-MODULE: expected a dotted module name"
+    return 2
+  let mut roots : Array String := #[]
+  for file in ← sourceRoot.walkDir do
+    if file.extension == some "ps" || file.extension == some "lean" then
+      let rel := file.toString.drop (sourceRoot.toString.length + 1) |>.toString
+      let parts := (System.FilePath.mk rel).components
+      if let some first := parts.head? then
+        let name := if parts.length == 1 then (System.FilePath.mk first).fileStem.getD first else first
+        unless name.startsWith "." || name == "build" || roots.contains name do roots := roots.push name
+  if roots.isEmpty then IO.eprintln "PS0-PROJECT-SOURCE: no source modules"; return 2
+  let executable := if System.Platform.isWindows then "lake.exe" else "lake"
+  let lake := (← findSysroot) / "bin" / executable
+  let driver ← IO.appPath
+  let result ← IO.Process.output {
+    cmd := lake.toString
+    args := #["-R", "-f", "lakefile.project.lean", s!"-KsourceRoot={sourceRoot}",
+      s!"-Kroots={String.intercalate "," roots.toList}", s!"-KrootModule={moduleName}",
+      s!"-Kdriver={driver}", "build", "ps0project"]
+  }
+  IO.print result.stdout
+  IO.eprint result.stderr
+  if result.exitCode != 0 then return result.exitCode
+  let name := if System.Platform.isWindows then "ps0project.exe" else "ps0project"
+  let binary := System.FilePath.mk ".lake" / "project" / "bin" / name
+  let bytes ← IO.FS.readBinFile binary
+  let parent := out.parent.getD "."
+  IO.FS.createDirAll parent
+  let stage := parent / s!".ps0-project-stage-{← IO.monoMsNow}"
+  IO.FS.createDir stage
+  try
+    let published := stage / name
+    IO.FS.writeBinFile published bytes
+    IO.setAccessRights published ⟨
+      {read := true, write := true, execution := true},
+      {read := true, write := false, execution := true},
+      {read := true, write := false, execution := true}⟩
+    IO.FS.writeFile (stage / "project-build.json") (Json.mkObj [
+      ("schema", toJson ("ps0-lake-project/1" : String)),
+      ("source_root", toJson sourceRoot.toString), ("module", toJson moduleName),
+      ("lean_revision", toJson Lean.githash), ("verified_execution", toJson false)]).pretty
+    if ← out.pathExists then IO.eprintln "PS0-OUTPUT-EXISTS"; return 2
+    IO.FS.rename stage out
+    IO.println s!"PS0 recursive project executable (UNCERTIFIED): {out / name}"
+    return 0
+  finally
+    if ← stage.pathExists then IO.FS.removeDirAll stage
+
 private def syntaxKinds (path : String) : IO UInt32 := do
   unless path.endsWith ".ps" do
     IO.eprintln "PS0 expects a .ps source file"
@@ -431,6 +417,11 @@ def cli (args : List String) : IO UInt32 := do
         IO.println StandardEnv.manifest.pretty
         return 0
     | ["module-header", path] => inspectModuleHeader path
+    | ["lake-header", path] => LakeFrontend.printHeader path
+    | ["convert-native", source, target] =>
+        LakeFrontend.convertNative source target
+        return 0
+    | ["convert-native-tree", source, target] => LakeFrontend.convertTree source target
     | "lean" :: nativeArgs => runUnrestrictedLean nativeArgs
     | ["check", path] =>
         if path.endsWith ".lean" then
@@ -446,10 +437,15 @@ def cli (args : List String) : IO UInt32 := do
         buildJs path moduleName outputDir
     | ["build-native", path, moduleName, outputDir] =>
         buildNative path moduleName outputDir
+    | ["build-project", sourceRoot, moduleName, outputDir] =>
+        buildProject sourceRoot moduleName outputDir
     | ["build-executable-module", path, moduleName, outputDir] =>
         buildFile path moduleName outputDir true
     | ["syntax-kinds", path] => syntaxKinds path
     | _ =>
+        if args.any (·.endsWith ".ps") then return ← LakeFrontend.compile args
+        if args.any (·.endsWith ".lean") || args.any (·.startsWith "-") then
+          return ← runUnrestrictedLean args
         IO.eprintln "usage: ps0 {environment|module-header FILE.ps|check FILE.ps/FILE.lean|build FILE.ps/FILE.lean ModuleName OUT_DIR|build-native FILE.ps ModuleName OUT_DIR|build-js FILE.ps ModuleName OUT_DIR|syntax-kinds FILE.ps|lean [native Lean arguments...]}"
         return 2
   catch ex =>

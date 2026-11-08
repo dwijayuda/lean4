@@ -3,13 +3,7 @@ public meta import Lean
 
 public meta section
 
-/-!
-PS0 v1 section 0B: explicit host-category interfaces.
-
-This is a bounded host-category adapter, not full standard operand-slot
-coverage. Independently owned native syntax, quotations and DSL operands
-must remain opaque to this lowerer. No source text is printed or reparsed.
--/
+/-! PS-owned category adapters; independently owned native and DSL syntax stays opaque. -/
 
 open Lean
 
@@ -17,89 +11,144 @@ declare_syntax_cat psTerm
 declare_syntax_cat psCommand
 declare_syntax_cat psTactic
 declare_syntax_cat psDoSeq
+declare_syntax_cat psCallArg
+declare_syntax_cat psHead
 
--- An owned host call must win over the native term bridge for the same
--- input span. Do not let a native application interpretation change the
--- host argument partition or hide the raw host node from an extension.
 syntax (name := ps0NativeTermBridge) (priority := low) term : psTerm
 syntax (name := ps0NativeCommandBridge) command : psCommand
-syntax (name := ps0NativeTacticBridge) tactic : psTactic
-syntax (name := ps0NativeDoBridge) doSeq : psDoSeq
-
-declare_syntax_cat psCallArg
+syntax (name := ps0NativeTacticBridge) (priority := low) tactic : psTactic
+syntax (name := ps0NativeDoBridge) (priority := low) doSeq : psDoSeq
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
 
--- The separator parser must consume the comma; ppSpace alone is zero-width.
--- sepBy1 rejects empty entries and repeated separators.
--- Identifier heads only; other high-postfix heads remain a separate task.
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
   ident noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
 
+syntax:max (name := ps0NativeHeadBridge) (priority := low) term:max : psHead
+syntax:max (name := ps0ParenthesizedHead) "(" psTerm ")" : psHead
+syntax:max (name := ps0HeadCall) psHead:max noWs
+  "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psHead
+syntax:max (name := ps0HeadEmptyCall) psHead:max noWs "(" ")" : psHead
+syntax (name := ps0HostHeadTerm) psHead : psTerm
+syntax:max (name := ps0HostParens) (priority := high) "(" psTerm ")" : psTerm
+syntax:max (name := ps0HostBraces) (priority := high) "{" psTerm "}" : psTerm
+syntax (name := ps0HostIf) (priority := high) "if " psTerm " then " psTerm " else " psTerm : psTerm
+syntax (name := ps0HostExact) (priority := high) "exact " psTerm : psTactic
+syntax (name := ps0HostApply) (priority := high) "apply " psTerm : psTactic
+syntax (name := ps0HostRefine) (priority := high) "refine " psTerm : psTactic
+syntax (name := ps0HostBy) (priority := high)
+  "by " "{" sepBy1(psTactic, ";", ";" ppSpace, allowTrailingSep) "}" : psTerm
+syntax (name := ps0HostReturnSeq) (priority := high) "{" "return " psTerm "}" : psDoSeq
+syntax (name := ps0HostDo) (priority := high) "do " psDoSeq : psTerm
+
 namespace PS0.Syntax
 
-/-- Generated native nodes retain the source extent for diagnostics, but
-    are marked synthetic rather than pretending to be original native
-    source. This is not an assertion of source-fidelity certification. -/
 private def loweringInfo (source : Lean.Syntax) : SourceInfo :=
   match source.getRange? with
   | some span => .synthetic span.start span.stop false
   | none => .none
 
-/-- Lower only explicitly owned PS nodes to native elaboration syntax.
-    Native captures are returned unchanged, including their syntax info,
-    scopes and pre-resolved identifiers. An unresolved parser choice is
-    not permission to choose a more convenient native interpretation.
-    Type inference, coercion and proof checking remain Lean's work. -/
+private def rejectHostGap (source : Lean.Syntax) : MacroM Unit := do
+  if let .node (.synthetic ..) _ _ := source then return ()
+  if source.isOfKind ``Lean.Parser.Term.app then
+    for arg in source[1].getArgs do
+      if arg.isOfKind ``Lean.Parser.Term.paren || arg.isOfKind ``Lean.Parser.Term.tuple then
+        if let some start := arg.getPos? then
+          if let some stop := source[0].getTailPos? then
+            if stop < start then
+              withRef arg do Macro.throwError "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
+
+mutual
 partial def lower (category : Name) (source : Lean.Syntax) :
-    Lean.MacroM Lean.Syntax := withRef source do
+    MacroM Lean.Syntax := withRef source do
   if source.isOfKind choiceKind then
-    Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve the host syntax alternative before lowering"
+    Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind ``ps0NativeTermBridge then
+      let native := source[0]
+      rejectHostGap native
+      return native
     match source with
-    | `(psTerm| $head:ident($[$args:psCallArg],*)) => do
-        let mut positional := true
-        let mut seen : Array Name := #[]
-        let mut nativeArgs : Array Lean.Syntax := #[]
-        for arg in args do
-          match arg with
-          | `(psCallArg| $name:ident := $value:psTerm) =>
-              let n := name.getId
-              if seen.contains n then
-                withRef name do
-                  Macro.throwError s!"PS0V1-CALL-NAMED: duplicate named argument {n}"
-              positional := false
-              seen := seen.push n
-              let lowered <- lower `psTerm value.raw
-              let nativeTerm : TSyntax `term := ⟨lowered⟩
-              let named <- withRef arg do
-                `(Lean.Parser.Term.namedArgument| ($name:ident := $nativeTerm:term))
-              nativeArgs := nativeArgs.push named.raw
-          | `(psCallArg| $value:psTerm) =>
-              unless positional do
-                withRef arg do
-                  Macro.throwError "PS0V1-CALL-ORDER: positional argument after named argument"
-              nativeArgs := nativeArgs.push (← lower `psTerm value.raw)
-          | _ =>
-              Macro.throwError "PS0V1-HOST-LOWER: malformed psCallArg"
-        return Lean.Syntax.node (loweringInfo source) ``Lean.Parser.Term.app
-          #[head.raw, mkNullNode nativeArgs]
-    | `(psTerm| $native:term) => return native.raw
-    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTerm source production"
+    | `(psTerm| $head:ident($[$args:psCallArg],*)) => lowerCall head.raw args source
+    | `(psTerm| $head:psHead) => lowerHead head.raw
+    | `(psTerm| ($body:psTerm)) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        return (← `(($body))).raw
+    | `(psTerm| { $body:psTerm }) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        return (← `(($body))).raw
+    | `(psTerm| if $cond:psTerm then $yes:psTerm else $no:psTerm) => do
+        let cond : TSyntax `term := ⟨← lower `psTerm cond.raw⟩
+        let yes : TSyntax `term := ⟨← lower `psTerm yes.raw⟩
+        let no : TSyntax `term := ⟨← lower `psTerm no.raw⟩
+        return (← `(if $cond then $yes else $no)).raw
+    | `(psTerm| by { $[$items:psTactic];* }) => do
+        let items ← items.mapM fun item => do
+          return (⟨← lower `psTactic item.raw⟩ : TSyntax `tactic)
+        return (← `(by { $[$items:tactic];* })).raw
+    | `(psTerm| do $seq:psDoSeq) => do
+        let seq : TSyntax ``Lean.Parser.Term.doSeq := ⟨← lower `psDoSeq seq.raw⟩
+        return (← `(do $seq:doSeq)).raw
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTerm"
   else if category == `psCommand then
     match source with
     | `(psCommand| $native:command) => return native.raw
-    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psCommand source production"
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psCommand"
   else if category == `psTactic then
     match source with
+    | `(psTactic| exact $body:psTerm) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        return (← `(tactic| exact $body)).raw
+    | `(psTactic| apply $body:psTerm) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        return (← `(tactic| apply $body)).raw
+    | `(psTactic| refine $body:psTerm) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        return (← `(tactic| refine $body)).raw
     | `(psTactic| $native:tactic) => return native.raw
-    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTactic source production"
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTactic"
   else if category == `psDoSeq then
     match source with
+    | `(psDoSeq| { return $body:psTerm }) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        return (← `(doSeq| { return $body })).raw
     | `(psDoSeq| $native:doSeq) => return native.raw
-    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoSeq source production"
-  else
-    Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoSeq"
+  else Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
 
+partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  match source with
+  | `(psHead| $head:psHead($[$args:psCallArg],*)) =>
+      lowerCall (← lowerHead head.raw) args source
+  | `(psHead| $head:psHead()) =>
+      return .node (loweringInfo source) `PS0.pscvEmptyCall
+        #[← lowerHead head.raw, mkAtom "(", mkAtom ")"]
+  | `(psHead| ($body:psTerm)) => do
+      let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+      return (← `(($body))).raw
+  | `(psHead| $native:term) => return native.raw
+  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported postfix head"
+
+partial def lowerCall (head : Lean.Syntax) (args : Array (TSyntax `psCallArg))
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  let mut positional := true
+  let mut seen : Array Name := #[]
+  let mut nativeArgs : Array Lean.Syntax := #[]
+  for arg in args do
+    match arg with
+    | `(psCallArg| $name:ident := $value:psTerm) =>
+        let n := name.getId
+        if seen.contains n then
+          withRef name do Macro.throwError s!"PS0V1-CALL-NAMED: duplicate named argument {n}"
+        positional := false
+        seen := seen.push n
+        let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+        nativeArgs := nativeArgs.push (← `(Lean.Parser.Term.namedArgument| ($name := $value))).raw
+    | `(psCallArg| $value:psTerm) =>
+        unless positional do
+          withRef arg do Macro.throwError "PS0V1-CALL-ORDER: positional argument after named argument"
+        nativeArgs := nativeArgs.push (← lower `psTerm value.raw)
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: malformed psCallArg"
+  return .node (loweringInfo source) ``Lean.Parser.Term.app #[head, mkNullNode nativeArgs]
+end
 end PS0.Syntax
-

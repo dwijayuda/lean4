@@ -1,0 +1,9 @@
+module
+public meta import Lean
+public meta import PS0.Syntax
+public meta section
+
+macro "triplePS " value:psTerm : term => do
+  let value ← PS0.Syntax.lower `psTerm value.raw
+  let value : Lean.TSyntax `term := ⟨value⟩
+  `(3 * $value)

@@ -1,5 +1,76 @@
 # PS0 — AI Work State (8 November 2026)
 
+## Qualified pinned compiler-source replacement capability
+
+The project goal is now qualified for the exact **Lean 4.35.0 source snapshot**: every one of its **2,546 src/**/*.lean Git blobs** plus **18 PS0 implementation modules** builds from actual `.ps` program inputs through the reused Lean frontend/kernel/LCNF/C backend and native Lake graph/artifact/object/link machinery. A migrated native compiler then rebuilds the same **2,564-module** forest in a fresh Linux job, with **zero generated C differences and zero public olean differences**. This is a generated source-forest capability test, not an upstream/main source cutover, complete PS-specific grammar closure, a C++ runtime rewrite or a formal execution-correspondence proof.
+
+### Exact source, runner and Linux results
+
+- Qualified implementation/test source: **`fb86cc425f0688bf3c6e98ff6c7adb8e899fe883`**, draft [Lean-fork PR #8](https://github.com/dwijayuda/lean4/pull/8), branch `feat/ps0-recursive-projects-20261108`. Later documentation-only commits record these results without changing compiler/test bytes.
+- Runner: **`0bca62aefdb00992d891f57c1a608dc0dacd60a3`**, draft [pskernel PR #220](https://github.com/dwijayuda/pskernel/pull/220), branch `ci/ps0-recursive-projects-20261108`. Its immutable selector remains pinned to the qualified source.
+- Official semantic pin: **`eb6cafb7290e8bd5f2937522d8d804f58f02bafc`**. Normative R2 reference blob: **`c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`**.
+- Linux [run 42488162021](https://github.com/dwijayuda/pskernel/actions/runs/42488162021) is **completed SUCCESS; all six jobs PASS**: project/category **128754567397**, native **128754567736**, proof-linked **128754567672**, host-contract **128754567546**, compiler stage one **128754834515**, compiler stage two **128763580779**.
+- Each compiler stage completes **5,132 native Lake jobs**. Stage one builds/links the migrated compiler and passes its pinned environment command and actual PS source check with rebuilt libraries. Stage two downloads that exact executable, verifies its binary identity and all input hashes, rebuilds from scratch, repeats the runtime smoke and asserts every C/public-olean hash matches.
+- The compiler input inventory verifies all 2,546 original Git blobs. Across the full 2,564-module forest, **2,541 inputs are byte-identical**; the others retain native bodies with native-parser header adaptation. The forest contains no `.lean` program inputs.
+- Migrated stage-one native compiler SHA-256: **`3c7371ca39e9689dd55c1b6fa1fbd3821f10c584a96c81f605e8350380bd339a`**.
+
+### Retained exact artifacts
+
+| Evidence | Artifact | ZIP SHA-256 |
+|---|---|---|
+| Native executable regression | [13620303005](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13620303005) | `b7e489f9fa186b0fe31a64830a02fdb9ad07dab8eb5b430529001ea1d4c03a99` |
+| Recursive/category/driver invalidation | [13619929692](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13619929692) | `d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d` |
+| Existing bounded proof-linked regression | [13620970053](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13620970053) | `9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900` |
+| Compiler stage one: binary, inventories, all output hashes, link map, passing smoke | [13622010384](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13622010384) | `de68e47310d1a58631c98072d4c786eede503f282c18830c3d0f13c2f422b23b` |
+| Compiler stage two: clean migrated-compiler rebuild and zero-difference result | [13621859608](https://github.com/dwijayuda/pskernel/actions/runs/42488162021/artifacts/13621859608) | `dae31cf63a2098b2cfa67940936424fa16fd361c700d202b54c934ad24eb3827` |
+
+### Native link provenance
+
+Independent Linux [audit 42491501152](https://github.com/dwijayuda/pskernel/actions/runs/42491501152), audit runner **`54a3d0356609a24ec94090adedcc0a1645134f6b`**, job **128764669538 PASS**, checks the exact stage-one artifact. It verifies the executable hash, rebuilt frontend/LCNF-emitter/PS0 objects and native symbols, **zero SDK Lean/Init/Std source-archive entries**, and **zero SDK Lean shared-library dependencies**. The linked archives are C++ runtime/native dependencies, including `libleancpp.a`, `libleanrt.a`, GMP and libuv. ELF dynamic dependencies are libc, the ELF loader, pthread, dl, rt and m. The pinned C++ runtime remains the reused infrastructure.
+
+Audit [artifact 13621487247](https://github.com/dwijayuda/pskernel/actions/runs/42491501152/artifacts/13621487247) ZIP SHA-256: `8c9159eefd30f5204d277c888ea64eb40b5618beacca8a6825515f202637f6b6`. The audit is isolated on `ci/ps0-compiler-audit-20261108`, so it does not repin or restart compiler qualification.
+
+### Implemented and executed behavior
+
+`build-project SOURCE_ROOT Dotted.Module OUT_DIR` composes native Lake input and `leanArts` facets with actual `ModuleSetup`. Native dependencies retain the official Lean process. It executes the recursive/meta-import fixture as **42:7**, then **45:7** after a transitive PS edit, then **45:9** after a native dependency edit. Warm executable hash/mtime reuse, actual compiler-byte invalidation and re-elaboration, no-replacement publication, native prelude/no hidden imports, local compiled main, source collisions, native dependency cycles and private import visibility all pass.
+
+Compiler identity is a shared native Lake input target, rather than a per-module full executable rehash. Changing actual driver bytes changes every PS input trace and re-elaborates real code. Bootstrap builds use native Lake bootstrap package identity and pinned include headers, preserving native extern symbol names. Migrated source checks use the newly built library search path. Binary and per-module hashes are retained before smoke checks, including on later failures.
+
+The mapped category fixture executes **PS0_CATEGORY_SLOTS:3:3:3:3:3**. Ordinary declaration result/value/proof slots, general/chained/closure calls, selected conditional/single-return do/braced exact operands, opaque native tuple DSL/quotation data and order/duplicate/gap negatives pass. `standard-adapter-map.json` records the exact finite map; `v1-coverage.json` retains case-level and compiler-gate evidence.
+
+### Remaining scope
+
+Full PS-owned operand closure remains open: binder/default and mixed signatures, multi-statement do, remaining tactic operands, match/collection/interpolation and configuration/attribute roles, extension ownership competition and complete source-origin fidelity. Apply/refine registrations do not yet have dedicated executed probes. Broad v1 capability families remain PENDING; the compiler-source result does not promote all 242 obligations.
+
+The result is Linux x86-64/C-backend qualification against the pinned snapshot. It does not claim every tool's runtime behavior, all target backends/platforms, whole-kernel metatheory, complete language self-hosting or verified execution. Receipts retain `verified_execution: false`; no trust restrictions, proof assumptions or normative language rules were relaxed. No local compiler/proof/runtime tests, main merge, force push or package publication occurred.
+
+## Historical qualification and failed candidates
+
+The following records preserve earlier finite evidence and failures. They are not the current completion status.
+
+### Historical initial recursive/category checkpoint
+
+- Implementation/test source: **`b842b26fa2dffaee6a73f03fb70ca77683ccaf31`**; runner head: **`a2ff849cd861a32e52dbfee94f0283c749f37040`**. The runner selector pins that exact source.
+- Linux [run 42483607627](https://github.com/dwijayuda/pskernel/actions/runs/42483607627): recursive/category job **128740672990 PASS**, native job **128740672968 PASS**, proof-linked job **128740672770 PASS**, host-contract **128740672920 PASS**. Compiler-source stage one failed; the overall workflow is not PASS.
+- Official Lean 4.35.0 commit **`eb6cafb7290e8bd5f2937522d8d804f58f02bafc`** and normative R2 blob **`c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`** are unchanged.
+- Project [artifact 13618347877](https://github.com/dwijayuda/pskernel/actions/runs/42483607627/artifacts/13618347877), ZIP SHA-256 `1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980`, retains build/category/project logs, exact identities, publication receipt and native source-input selection receipt.
+- Native [artifact 13618945967](https://github.com/dwijayuda/pskernel/actions/runs/42483607627/artifacts/13618945967), ZIP SHA-256 `af1386f8c90e7a630cb85b12e101b76fda5b30bf4b120aefac76a44425c721af`, retains the rerun of the single-module qualification.
+- Proof-linked [artifact 13619080687](https://github.com/dwijayuda/pskernel/actions/runs/42483607627/artifacts/13619080687), ZIP SHA-256 `9a8e13f6a9126b1739c8f4a71fb5f37ad8dd6953cb54d1404a7d9462e496ceb0`, retains the existing bounded sandbox/comparator/runtime qualification.
+
+Recursive `build-project SOURCE_ROOT Dotted.Module OUT_DIR` now uses native Lake module input and `leanArts` facet adapters. The frontend consumes Lake's actual `ModuleSetup`; native dependencies use the official Lean process. There is no separate dependency graph, artifact format, optimizer or linker. The fixture executes **42:7**, then **45:7** after a transitive PS edit, then **45:9** after a native dependency edit. Warm executable hash and mtime remain unchanged. Native meta imports, no-replacement publication, native prelude with no hidden imports, absent local compiled main, source-kind collision, dependency cycle and private import visibility all pass their explicit oracles. The native `expose` rule is used explicitly for the imported definition needed by a proof.
+
+The mapped category fixture executes **PS0_CATEGORY_SLOTS:3:3:3:3:3** and passes declaration result/value/proof slots, general/chained/closure calls, selected conditional/single-return do/braced exact operands, opaque native tuple DSL/quotation data and order/duplicate/gap negatives. `standard-adapter-map.json` records the pinned map and exact evidence. Remaining binder/default, mixed declaration, multi-statement do, tactic, match, collection/interpolation and configuration/attribute roles remain open. Registrations alone are not conformance; apply/refine do not yet have dedicated executed probes. Broad ledger families remain pending.
+
+### Earlier compiler-source gate failures
+
+The bootstrap checkpoint is source **`46541521a95ac7829279faf441f922a977061f6f`**, runner **`8f31edbc9012876b9b0024f97f5db6e972e938d1`**, Linux [run 42484334810](https://github.com/dwijayuda/pskernel/actions/runs/42484334810). Its project/category **128742816345**, native **128742815964**, proof-linked **128742816265** and host **128742816215** jobs all PASS. Compiler stage one **128743130971** completed **5,131 native Lake jobs**, built/linked the full 2,564-module forest, audited every PS input and generated C/olean, and ran the migrated environment command. Its final smoke check failed because the harness omitted the built PS0 library from `LEAN_PATH`; therefore this is **build/link evidence, not a full stage-one PASS**, and stage two was skipped. The project artifact **13618417596** has ZIP SHA-256 `3afec24187928ff6612d82a83e9d1a649f0e3bb5e48ffe3cf139db6f692045e8`; native artifact **13619106570** has `b2606413204ed50d1baba66b0e3f7f85b84db5ca7db858e457e81140bf96d5d0`; proof-linked artifact **13618907619** has `8d01f936943a3d4026802436cec9cba03234ff63adf6f448c0ab198702cceb01`. Compiler [artifact 13620495494](https://github.com/dwijayuda/pskernel/actions/runs/42484334810/artifacts/13620495494) has ZIP SHA-256 `c0afd12a60321f83d1ff7bbf1810c77c2fd90d3cc5a988b2cfb28df228706749` and retains exact input inventory, full build log, migrated environment output, failed smoke log and native link map.
+
+The next candidate supplies the rebuilt native library search path to the smoke process and retains the migrated executable and output hashes before smoke checks. Driver input hashing is shared through a native Lake target rather than repeated once per module; a Linux test must prove that changing driver bytes invalidates module inputs and re-elaborates actual code. Candidate run `42487933465` caught an invalid unused-binder spelling in that target declaration; the corrected candidate requires fresh execution. A separate read-only Linux artifact audit is on `ci/ps0-compiler-audit-20261108`, initially inspecting the retained link map without claiming unavailable ELF/runtime evidence.
+
+`compiler-source-inventory.json` enumerates **2,546 pinned src/**/*.lean Git blobs**, including Init/Std/Lean/Lake, LeanIR, Leanc, LeanChecker, LeanExport and LakeMain. The Linux test verified every source blob and converted **2,564 modules including PS0**, **2,541 byte-identical**. Stage one (**job 128741050411**) built into Init, then failed at `Init/Coe.ps` because ordinary package identity generated `lp_ps0_String_hash`; the native bootstrap runtime exports the unprefixed symbol. Failure [artifact 13618597372](https://github.com/dwijayuda/pskernel/actions/runs/42483607627/artifacts/13618597372), ZIP SHA-256 `c52865ecad9ffe006e8c34c06128dc2e0672cb6b10f67594c99bd2cfcda14c57`, retains the inventory and build log. The next candidate uses Lake's existing bootstrap package mode and pinned SDK headers; it remains unqualified. The test still requires every actual PS input, generated olean/C artifacts, a migrated native compiler/link map and a second clean C/olean comparison. No compiler-source replacement or fixed-point PASS is claimed.
+
+Earlier failed candidates remain failures, including incorrect use of newer fork APIs instead of the pinned SDK's `leanArts` API, malformed implicit import context, and missing native definition exposure in the fixture. The previous afda739 checkpoint's project/native jobs passed, but its workflow/compiler stages were cancelled for the local-entry safeguard; it is not a full compiler qualification. No local compiler/proof/runtime tests, main merge, force push, publication or trust relaxation occurred.
+
 ## Qualified continuation: thin adapters and Lake native executables
 
 - Source branch: `feat/ps0-lake-native-20261108`; draft [Lean-fork PR #7](https://github.com/dwijayuda/lean4/pull/7), based on PR #6 source `39b8f4cecd8e60b2297c1d01f81d8840c3dc3715`.

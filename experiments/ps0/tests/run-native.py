@@ -78,7 +78,7 @@ assert not no_main_out.exists()
 
 missing_extern = WORK / 'MissingExtern.ps'
 missing_extern.write_text('@[extern "ps0_missing_external_71ad"] opaque missingExternal : UInt32 → UInt32\n'
-                          'def main : IO UInt32 := pure (missingExternal 0)\n')
+                          'def main : IO UInt32 := pure(missingExternal(0))\n')
 extern_out = WORK / 'missing-extern'
 out = run(['lake', 'exe', 'ps0', 'build-native', missing_extern, 'NativeExtern', extern_out], ok=False)
 assert 'ps0_missing_external_71ad' in out

@@ -44,7 +44,18 @@ lake -R -f lakefile.native.lean -Ksource=tests/native/Main.ps -Kps0Module=Native
 
 The target composes the existing `.ps` adapters and official Lean frontend/LCNF C emitter with Lake's imported-module link information, C-to-object build and executable linker. Lake tracks source bytes, the PS0 compiler, imported Lean modules, native options and the toolchain. Use `-R` so the configuration's `get_config?` values reflect the supplied source/module; compiled artifacts still use Lake's incremental cache. The CLI supplies this flag and publishes an executable and `native-build.json` only after successful linking, refusing an existing output directory. No intermediate textual `.lean` program is generated.
 
-This is native build integration, not complete PS0 source conformance or verified runtime execution. It currently supports one `.ps` entry module with toolchain and Lake-managed `.lean` dependencies. Recursive `.ps` project dependency discovery, full host operand adaptation, bootstrap `prelude` and source-origin fidelity remain open. Dependencies must be declared in the Lake configuration; `PS0NativeSupport` is the integration fixture. Linux qualification is recorded in `AI_WORK_STATE.md`.
+Recursive projects use the native Lake module graph:
+
+```sh
+lake exe ps0 build-project tests/project Demo.Main build/project-demo
+./build/project-demo/ps0project one two
+```
+
+The source root supplies dotted-module paths such as `Demo/Library.ps`. Native `.lean` dependencies, public/meta imports, imported syntax, incremental traces, C/object generation and linking retain Lake's existing implementations. A sibling `.lean` and `.ps` for the same module is an error. Executable entries require their own compiled `main`; publication refuses an existing directory. The output contains `ps0project` and `project-build.json`, whose `verified_execution` remains false.
+
+`lakefile.project.lean` exposes the input/`leanArts` adapters for direct incremental use. The CLI supplies `-R` and source/root/driver configuration. Native `prelude` sources retain their explicit imports and receive no hidden Init or PS0 import. Compiler bootstrap qualification additionally uses Lake's native bootstrap package identity and pinned include headers.
+
+This is native build integration, not complete PS0 conformance or verified runtime execution. Recursive/meta imports, source/native invalidation, cache reuse, prelude isolation, collisions, cycles, visibility and local-entry negatives have finite Linux evidence in `AI_WORK_STATE.md`. Full host operand closure and source-origin fidelity remain open.
 
 `cd experiments/ps0`
 
@@ -60,11 +71,7 @@ This is native build integration, not complete PS0 source conformance or verifie
 
 `lake exe ps0 lean [native Lean args]`
 
-The `module-header` subcommand is an introspection aid, not a
-module-completion certificate. Native module-mode checking/building and imported Lean module flags
-are now wired. Complete PS project graph, body exposure,
-source-origin fidelity and bootstrap `prelude` isolation remain
-implementation milestones.
+The `module-header` subcommand is an introspection aid. `lake-header` emits the native module-header JSON used by Lake's input adapter. `convert-native SOURCE.lean TARGET.ps` and `convert-native-tree SOURCE_DIR TARGET_DIR` retain native bodies and adapt legacy headers with the native header parser. These conversion commands alone do not qualify source replacement. `tests/run-compiler-ps.py` and `compiler-source-inventory.json` require every pinned source blob, actual PS inputs and artifacts, a migrated executable and a second clean C/olean comparison. The pinned compiler-source gate now passes both stages: all 2,546 compiler source files plus 18 PS0 modules compile from PS inputs, and the migrated native compiler rebuilds every module with identical C/public-olean hashes. This remains distinct from complete PS-specific grammar conformance or formal execution verification.
 
 ### Small JS backend, entirely in Lean
 
@@ -82,8 +89,11 @@ See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md).
 
 | Lean implementation | Responsibility |
 |---|---|
-| `PS0/HostCategories.lean` | Four PS v1 host categories, a selected adjacent `psTerm` identifier-call parser, and `PS0.Syntax.lower` to native Lean application AST; full standard operand adaptation pending |
+| `PS0/HostCategories.lean` | Four PS host interfaces, selected owned calls/grouping/control/proof operands and AST lowering; native/DSL subtrees stay opaque |
 | `PS0/Syntax.lean` | Typed/inferred public/private `function` and `const` bodies now lower through PS-owned `psTerm`; full native declaration/proof/tactic/do operand adaptation pending |
+| `PS0/StandardAdapters.lean` | Scoped ordinary declaration result/value/proof operands; pinned partial map in `standard-adapter-map.json` |
+| `PS0/LakeFrontend.lean` | Native header parsing, ModuleSetup/frontend/C protocol, bootstrap source conversion |
+| `lakefile.project.lean` | Thin module input/compiler invocation adapters over native Lake graph/artifacts/objects/linking |
 | `PS0/Grammar.lean` | Non-normative static syntax-kind inspection; official interleaved Lean parser is authoritative |
 | `PS0/Policy.lean` | Local declaration **information only**, no implicit axiom approval or source-language bans |
 | `PS0/StandardEnv.lean` | Pinned edition/source metadata, not an import/tactic/attribute allowlist |
@@ -116,5 +126,4 @@ run [40772012597](https://github.com/dwijayuda/pskernel/actions/runs/40772012597
 The native continuation at `07a1da68aacf2462e9723a79242c322a21ca3c83`
 passed all three jobs in Linux [run 42474108191](https://github.com/dwijayuda/pskernel/actions/runs/42474108191): native build/link/runtime, proof-linked regression and host-contract checks.
 This does not qualify all 242 language obligations or verified runtime execution.
-See `AI_WORK_STATE.md` for exact source/runner identities, artifacts and limits.
-
+The recursive continuation at `b842b26fa2dffaee6a73f03fb70ca77683ccaf31` passed recursive/category, native, proof-linked and host-contract jobs in Linux [run 42483607627](https://github.com/dwijayuda/pskernel/actions/runs/42483607627). The exact continuation at `fb86cc425f0688bf3c6e98ff6c7adb8e899fe883` passed all six jobs in [run 42488162021](https://github.com/dwijayuda/pskernel/actions/runs/42488162021), including both complete compiler-source stages and zero C/public-olean differences. A separate native link/ELF audit passed at the same source. Earlier failures remain historical evidence. See `AI_WORK_STATE.md` for exact identities, artifacts and limits.

@@ -1041,14 +1041,21 @@
       "sourceOrSetup": "`add(1, 2)` / `add 1 2`",
       "requiredInterpretation": "Two arguments, same intended curried application.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/v1/standard_category_slots.ps :: fromStandardDef/fromStandardAbbrev",
+      "qualifiedCommit": "b842b26fa2dffaee6a73f03fb70ca77683ccaf31",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/42483607627",
       "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
-      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
+      "candidateCoverage": "EXACT_SOURCE_EXECUTED_FINITE_CASES",
       "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
-      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
+      "standardHostOperandStatus": "PASS_FINITE_MAPPED_CASES",
+      "evidence": {
+        "jobId": 128740672990,
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "oracle": "add(1, 2) computes to 3 in actual native executable; rfl equality and existing two-argument AST probes pass",
+        "scope": "finite mapped ordinary declaration/extension cases; does not certify all host operand slots"
+      }
     },
     {
       "id": "PS0-P-CALL-02",
@@ -1872,10 +1879,17 @@
       "sourceOrClaim": "Leaking a private declaration in a prohibited public signature",
       "expectedCategory": "ELAB/ENV",
       "reason": "Native module visibility rule.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-native.py :: PrivateLeak.ps",
+      "qualifiedCommit": "07a1da68aacf2462e9723a79242c322a21ca3c83",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/42474108191",
+      "evidence": {
+        "jobId": 128711492870,
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "oracle": "Official modern-module elaboration rejects public use of a private declaration; diagnostic includes 'private declaration'.",
+        "scope": "finite native/private-visibility case at the recorded historical source"
+      }
     },
     {
       "id": "PS0-N-LEX-01",
@@ -2424,5 +2438,211 @@
       "qualifiedCommit": null,
       "ciRun": null
     }
-  ]
+  ],
+  "currentContinuation": {
+    "branch": "feat/ps0-recursive-projects-20261108",
+    "status": "QUALIFIED_PINNED_COMPILER_SOURCE_REPLACEMENT_AND_C_OLEAN_FIXED_POINT",
+    "goal": "Replace Lean compiler .lean program sources with .ps using native Lean and Lake infrastructure",
+    "fixtures": [
+      "tests/run-project.py",
+      "tests/run-categories.py",
+      "tests/run-compiler-ps.py"
+    ],
+    "note": "Job conclusions are recorded individually; the overall workflow and compiler-source/fixed-point gates are not yet PASS. Broad families remain pending.",
+    "checkpoint": {
+      "sourceCommit": "b842b26fa2dffaee6a73f03fb70ca77683ccaf31",
+      "runnerCommit": "a2ff849cd861a32e52dbfee94f0283c749f37040",
+      "run": "https://github.com/dwijayuda/pskernel/actions/runs/42483607627",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "projectJob": 128740672990,
+      "nativeJob": 128740672968,
+      "hostJob": 128740672920,
+      "projectArtifact": {
+        "id": 13618347877,
+        "sha256": "1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980"
+      },
+      "nativeArtifact": {
+        "id": 13618945967,
+        "sha256": "af1386f8c90e7a630cb85b12e101b76fda5b30bf4b120aefac76a44425c721af"
+      }
+    },
+    "boundedEvidence": [
+      {
+        "fixture": "tests/run-project.py",
+        "jobId": 128740672990,
+        "oracles": [
+          "PS0_RECURSIVE_PROJECT: PASS",
+          "PS0_PROJECT_LOCAL_ENTRY: PASS"
+        ],
+        "scope": "recursive .ps public/meta imports, native dependency, actual native execution 42:7 then 45:7 then 45:9, warm executable hash/mtime reuse, no-replacement publication, prelude/no hidden imports, local-main requirement, collisions, native cycles and private visibility"
+      },
+      {
+        "fixture": "tests/run-categories.py + tests/v1/standard_category_slots.ps",
+        "jobId": 128740672990,
+        "oracles": [
+          "PS0_CATEGORY_SLOTS:3:3:3:3:3",
+          "PS0_STANDARD_CATEGORY_SLOTS: PASS"
+        ],
+        "scope": "mapped declaration/type/proof operands, general/chained/closure calls, selected conditional/single-return do/braced exact, exact native tuple DSL/quotation ownership, order/duplicate/gap negatives"
+      },
+      {
+        "fixture": "tests/run-native.py",
+        "jobId": 128740672968,
+        "oracles": [
+          "PS0_LAKE_NATIVE: PASS"
+        ],
+        "scope": "single-module native execution, cache/source/import invalidation, atomic/no-replacement publication, invalid entry/call/visibility, actual unresolved-symbol linker failure"
+      }
+    ],
+    "compilerMigration": {
+      "status": "FAIL_NATIVE_BOOTSTRAP_SYMBOL_IDENTITY",
+      "jobId": 128741050411,
+      "expectedPinnedSourceFiles": 2546,
+      "manifest": "compiler-source-inventory.json",
+      "test": "tests/run-compiler-ps.py",
+      "required": "all source Git blobs, actual .ps input selection, generated olean/C artifacts, native migrated executable, and second clean-stage output comparison",
+      "observedModules": 2564,
+      "observedByteIdentical": 2541,
+      "diagnostic": "Init/Coe.ps: native extern String.hash sought lp_ps0_String_hash under ordinary ps0 package identity",
+      "artifactId": 13618597372,
+      "artifactSha256": "c52865ecad9ffe006e8c34c06128dc2e0672cb6b10f67594c99bd2cfcda14c57",
+      "nextCandidate": "Native Lake bootstrap mode with pinned SDK include headers; no source/kernel/compiler semantic relaxation"
+    },
+    "bootstrapCandidate": {
+      "checkpoint": {
+        "sourceCommit": "46541521a95ac7829279faf441f922a977061f6f",
+        "runnerCommit": "8f31edbc9012876b9b0024f97f5db6e972e938d1",
+        "run": "https://github.com/dwijayuda/pskernel/actions/runs/42484334810",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "projectJob": 128742816345,
+        "nativeJob": 128742815964,
+        "hostJob": 128742816215,
+        "projectArtifact": {
+          "id": 13618417596,
+          "sha256": "3afec24187928ff6612d82a83e9d1a649f0e3bb5e48ffe3cf139db6f692045e8"
+        },
+        "nativeArtifact": {
+          "id": 13619106570,
+          "sha256": "b2606413204ed50d1baba66b0e3f7f85b84db5ca7db858e457e81140bf96d5d0"
+        },
+        "proofJob": 128742816265,
+        "proofArtifact": {
+          "id": 13618907619,
+          "sha256": "8d01f936943a3d4026802436cec9cba03234ff63adf6f448c0ab198702cceb01"
+        }
+      },
+      "status": "FULL_NATIVE_BUILD_PASS_SMOKE_HARNESS_FAIL",
+      "compilerStage1Job": 128743130971,
+      "bootstrapMode": "native Lake bootstrap=true; package identity none; pinned SDK include headers",
+      "note": "Compiler-source and fixed-point qualification remain open; prior failure is retained separately.",
+      "compilerSourceBuild": {
+        "moduleCount": 2564,
+        "nativeLakeJobs": 5131,
+        "status": "PASS_BUILD_LINK_AND_INPUT_ARTIFACT_ASSERTIONS",
+        "environmentCommand": "PASS",
+        "sourceSmoke": "FAIL_MISSING_REBUILT_PS0_LEAN_PATH",
+        "perModuleOutputHashesRetained": false,
+        "binaryRetained": false,
+        "artifactId": 13620495494,
+        "artifactSha256": "c0afd12a60321f83d1ff7bbf1810c77c2fd90d3cc5a988b2cfb28df228706749"
+      }
+    },
+    "linkProvenance": {
+      "sourceCommit": "46541521a95ac7829279faf441f922a977061f6f",
+      "runnerCommit": "3dddb837c8b29b7619c945bcc3d4304ef7d47ff3",
+      "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488039370",
+      "jobId": 128754113727,
+      "artifactId": 13620281682,
+      "artifactSha256": "95dbb7bc8665da8cf269c9fb7e7ae5bc60d7480c8a67b0b3e42ef0198f5c97bf",
+      "status": "PASS_LINK_MAP_ONLY",
+      "oracle": "Actual rebuilt Lean/Elab/Frontend, Lean/Compiler/LCNF/EmitC, PS0/LakeFrontend and PS0Main C objects; zero SDK libLean.a/libStd.a/libInit.a source-archive lines",
+      "limits": "ELF and runtime smoke not qualified at this failed build checkpoint"
+    },
+    "currentCandidate": {
+      "checkpoint": {
+        "sourceCommit": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
+        "runnerCommit": "0bca62aefdb00992d891f57c1a608dc0dacd60a3",
+        "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488162021",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "projectJob": 128754567397,
+        "nativeJob": 128754567736,
+        "hostJob": 128754567546,
+        "projectArtifact": {
+          "id": 13619929692,
+          "sha256": "d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d"
+        },
+        "nativeArtifact": {
+          "id": 13620303005,
+          "sha256": "b7e489f9fa186b0fe31a64830a02fdb9ad07dab8eb5b430529001ea1d4c03a99"
+        },
+        "proofJob": 128754567672,
+        "proofArtifact": {
+          "id": 13620970053,
+          "sha256": "9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900"
+        }
+      },
+      "status": "PASS_ALL_SIX_LINUX_JOBS",
+      "compilerStage1Job": 128754834515,
+      "changes": [
+        "native library search path for migrated smoke",
+        "retain executable and per-module hashes before smoke",
+        "native Lake shared compiler input job with executed driver-invalidation test"
+      ],
+      "compilerStage1": {
+        "jobId": 128754834515,
+        "status": "PASS",
+        "moduleCount": 2564,
+        "pinnedSourceCount": 2546,
+        "nativeLakeJobs": 5132,
+        "artifactId": 13622010384,
+        "artifactSha256": "de68e47310d1a58631c98072d4c786eede503f282c18830c3d0f13c2f422b23b",
+        "binaryAndPerModuleHashesRetained": true,
+        "runtimeSmoke": "PASS"
+      },
+      "compilerStage2": {
+        "jobId": 128763580779,
+        "status": "PASS",
+        "moduleCount": 2564,
+        "nativeLakeJobs": 5132,
+        "changedC": 0,
+        "changedOlean": 0,
+        "artifactId": 13621859608,
+        "artifactSha256": "dae31cf63a2098b2cfa67940936424fa16fd361c700d202b54c934ad24eb3827",
+        "oracle": "PS0_COMPILER_PS_FIXED_POINT: PASS; PS0_COMPILER_PS_SOURCE: PASS; modules=2564",
+        "scope": "fresh Linux job; exact stage-one migrated executable; all pinned inputs and all generated C/public olean hashes match; runtime source smoke PASS"
+      },
+      "nativeLinkAndElfAudit": {
+        "source": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
+        "runner": "54a3d0356609a24ec94090adedcc0a1645134f6b",
+        "run": 42491501152,
+        "job": 128764669538,
+        "status": "PASS_LINK_MAP_AND_ELF",
+        "driverSha256": "3c7371ca39e9689dd55c1b6fa1fbd3821f10c584a96c81f605e8350380bd339a",
+        "sourceArchiveFallback": 0,
+        "sourceSharedFallback": 0,
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2",
+          "libpthread.so.0",
+          "libdl.so.2",
+          "librt.so.1",
+          "libm.so.6"
+        ],
+        "nativeSymbols": [
+          "l_Lean_Elab_runFrontend",
+          "l_Lean_Compiler_LCNF_emitC",
+          "l_PS0_LakeFrontend_compile"
+        ],
+        "runtimeSmoke": "PASS",
+        "artifactId": 13621487247,
+        "artifactSha256": "8c9159eefd30f5204d277c888ea64eb40b5618beacca8a6825515f202637f6b6"
+      },
+      "scope": "All 2546 pinned compiler .lean Git blobs and 18 PS0 modules built from .ps; native C backend and reused pinned C++ runtime; generated capability forest, no upstream/main source cutover; no complete PS-specific grammar or formal execution-correspondence claim.",
+      "note": "Final documentation-only heads may follow the exact qualified implementation/test source; the immutable runner selector remains pinned to that source."
+    }
+  }
 }
+

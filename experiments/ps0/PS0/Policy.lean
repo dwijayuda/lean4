@@ -1,6 +1,7 @@
 module
 public meta import Lean
 public import PS0.Syntax
+public import PS0.StandardAdapters
 
 public meta section
 
@@ -42,3 +43,4 @@ def elabPs0Evidence : CommandElab := fun _ => do
   logInfo "PS0 v1: assumption policy NOT assessed; source specification NOT assessed; execution correspondence NOT established; no verified certificate issued"
 
 end PS0
+
