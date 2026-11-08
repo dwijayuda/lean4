@@ -13,7 +13,9 @@ package ps0 where
   -- Match pinned src/CMakeLists.txt: stage builds must evaluate their current IR,
   -- rather than resolve same-named constants in the running compiler executable.
   leanOptions := if (get_config? bootstrap).isSome then
-    #[⟨`interpreter.prefer_native, false⟩] else #[]
+    #[⟨`interpreter.prefer_native, false⟩] ++
+      (if (get_config? sourceGrammar).isSome then #[⟨`ps0.sourceGrammar, true⟩] else #[])
+    else if (get_config? sourceGrammar).isSome then #[⟨`ps0.sourceGrammar, true⟩] else #[]
   buildDir := FilePath.mk ((get_config? projectBuildDir).getD ".lake/project")
 
 def projectSource : FilePath := FilePath.mk ((get_config? sourceRoot).getD "tests/project")

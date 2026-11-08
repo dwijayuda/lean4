@@ -23,7 +23,8 @@ syntax (name := psCommaBinder) "(" sepBy1(psBinderParam, ",", "," ppSpace, allow
 syntax (name := psExplicitBinder) "(" Lean.Parser.Term.binderIdent+ (":" psTerm)? (binderSuffix)? ")" : psDeclBinder
 syntax (name := psImplicitBinder) "{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}" : psDeclBinder
 syntax (name := psStrictBinder) "⦃" Lean.Parser.Term.binderIdent+ (":" psTerm)? "⦄" : psDeclBinder
-syntax (name := psAsciiStrictBinder) "{{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}}" : psDeclBinder
+syntax (name := psAsciiStrictBinder) Lean.Parser.Term.strictImplicitLeftBracket
+  Lean.Parser.Term.binderIdent+ (":" psTerm)? Lean.Parser.Term.strictImplicitRightBracket : psDeclBinder
 syntax (name := psInstanceBinder) "[" Lean.Parser.Term.optIdent psTerm "]" : psDeclBinder
 syntax (name := psIdentifierBinder) Lean.Parser.Term.binderIdent : psDeclBinder
 syntax (name := psNullaryBinder) "(" ")" : psDeclBinder

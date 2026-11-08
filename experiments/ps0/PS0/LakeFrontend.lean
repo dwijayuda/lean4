@@ -7,6 +7,7 @@ import Lean.Elab.Frontend
 import Lean.Elab.Import
 import Lean.Compiler.LCNF.EmitC
 import PS0.SourceCensus
+import PS0.SourceGrammar
 
 /-! Source-kind adaptation for Lean's ordinary Lake module compilation protocol. -/
 
@@ -201,6 +202,11 @@ def compile (args : List String) : IO UInt32 := do
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
   let nativePrelude := source == raw
+  if setup.options.toOptions.getBool `ps0.sourceGrammar false then
+    SourceGrammar.install setup.options.toOptions
+    -- Native importModules closes its initializer-execution window; the target
+    -- frontend starts a fresh import phase after the separate host environment.
+    unsafe enableInitializersExecution
   let opts := if nativePrelude then ({} : Options) else
     ({} : Options) |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
   let census? : Option (FilePath × FilePath) ← ilean?.mapM fun ilean => do

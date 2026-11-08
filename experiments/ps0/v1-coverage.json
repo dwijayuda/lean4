@@ -3093,8 +3093,16 @@
       "source": "abf3585d99c921fe02697b679867a0a55e433168",
       "pr": 226,
       "run": 42517718338,
-      "status": "IN_PROGRESS",
-      "scope": "full native-compatible forest plus actual frontend census, not canonical PS grammar migration"
+      "status": "STAGE_ONE_PASS_STAGE_TWO_FAIL_UNKNOWN_CENSUS_OPTION",
+      "scope": "full native-compatible forest plus actual frontend census, not canonical PS grammar migration",
+      "stage1Job": 128844671227,
+      "stageTwo": {
+        "job": 128852603767,
+        "status": "FAIL_UNKNOWN_CENSUS_OPTION_AT_MODERN_COMPILER_STARTUP",
+        "artifact": 13632814291,
+        "sha256": "c9fb98ee7a52d05bbfa93f137bd7fd8745459dddc9204b36233080e2bf7e6817",
+        "observed": "Init.Prelude and Init.Grind.ToInt reject unknown ps0.sourceCensusPath. Stage two does not reach complete rebuild/fixed-point comparison."
+      }
     },
     "failedInlineCandidate": {
       "source": "a21ecd55fa1b40d66ae5e8ccce64cc04ab5a0c30",
@@ -3104,6 +3112,594 @@
       "focusedRun": 42517187718,
       "focusedJob": 128842672919,
       "observed": "Inline descriptor AST shape rejected binder defaults; prior compiler also reused linked old descriptors referencing removed binderSuffix. Reverted this candidate. Reused pinned upstream stage option instead."
+    },
+    "verified_execution": false,
+    "grammarMigrationComplete": false
+  },
+  "preludeSourceGrammarContinuation": {
+    "status": "SUPERSEDED_BY_704C_QUALIFIED_FINITE_PRELUDE_AND_COMPILER_HEAD_CHECKPOINT",
+    "source": "263eb3f8693e0b2f9f57ea0418e1babdfce192f7",
+    "runner": "087035c38c30ad1a959d6279abdefe4bfe2536cc",
+    "run": 42520917053,
+    "sourcePR": 12,
+    "runnerPR": 227,
+    "fixture": "tests/run-prelude-grammar.py",
+    "hostImplementation": "PS0/SourceGrammar.lean",
+    "activation": "native Lake -KsourceGrammar=true passes ps0.sourceGrammar through ModuleSetup.options",
+    "scope": "Syntax-only host environment uses native compiler metadata beside the executable, then restores target module lookup. Explicit PS categories and simple declaration parsers/macros are native builtins. Root command routing consumes its option in a fresh native parser cache/context, preserving nested native quotation/DSL ownership. Target prelude bytes and direct imports remain unchanged. Finite candidate, not full canonical compiler grammar migration. Native fallback command wrappers are removed in parser dispatch to preserve native AST/macro scopes. Tests also cover compiler-stage options and a real pinned compiler module's three declaration heads, with native C/public-olean equality required.",
+    "failedCandidates": [
+      {
+        "source": "20b6b7d71a50223e2a827d53938003ea55156854",
+        "runner": "dca657125a7253ac8ae7abc98b3fff66cc4ca82c",
+        "run": 42518234578,
+        "job": 128845924881,
+        "observed": "native bootstrap build found macro attribute namespace and adjacent-brace token ambiguity",
+        "artifacts": [
+          {
+            "id": 13632331269,
+            "name": "ps0-project-20b6b7d71a50223e2a827d53938003ea55156854-42518234578",
+            "sha256": "79d0fd7ee4e9acf412aca69b9cb8f78870f719963e59d80efe3cde37bb153d27"
+          },
+          {
+            "id": 13632087256,
+            "name": "ps0-external-20b6b7d71a50223e2a827d53938003ea55156854-42518234578",
+            "sha256": "90d47a474037e2f14a67b7be9308ad476964d5496c14a314747e756cabdb8a9c"
+          },
+          {
+            "id": 13631844628,
+            "name": "ps0-native-20b6b7d71a50223e2a827d53938003ea55156854-42518234578",
+            "sha256": "996603b99a1f95f3152e7cc88de80a6a793888da7b2b5d04a4d774585a5dec22"
+          }
+        ]
+      },
+      {
+        "source": "13afc9fa98264ce73fed85060e542672d584eb8d",
+        "runner": "66842b713e5ab1bdda955dae5f76ce5d5b8af710",
+        "run": 42518441800,
+        "job": 128846471001,
+        "observed": "native API uses PersistentHashMap.foldl, not fold",
+        "artifacts": [
+          {
+            "id": 13632835390,
+            "name": "ps0-external-13afc9fa98264ce73fed85060e542672d584eb8d-42518441800",
+            "sha256": "8175d2521b68a9433cb809917964108578e4e09ab51ce72e0641d965bb5233be"
+          },
+          {
+            "id": 13632700139,
+            "name": "ps0-project-13afc9fa98264ce73fed85060e542672d584eb8d-42518441800",
+            "sha256": "7144bd92e94f5cd66b74dcc2342cdfa3c1483e5f874a750237e08f7d86f46c40"
+          },
+          {
+            "id": 13632201975,
+            "name": "ps0-native-13afc9fa98264ce73fed85060e542672d584eb8d-42518441800",
+            "sha256": "b546bdabdf1e116c899349373d70d5079f792b8bef81add73257f5e36632fed8"
+          }
+        ]
+      },
+      {
+        "source": "070d7dc66fcb6d324465961f42c68409ec4a8642",
+        "runner": "9a75cd071aeb1fa97ea37cf6b7e1f05c69b8d9ad",
+        "run": 42518605472,
+        "job": 128846963001,
+        "observed": "native prelude control rejected function as intended; grammar host needed its own metadata search path outside the target module path",
+        "artifacts": [
+          {
+            "id": 13632381544,
+            "name": "ps0-native-070d7dc66fcb6d324465961f42c68409ec4a8642-42518605472",
+            "sha256": "396b30ae4818a1a84a4fdcda1eb84cf02a7614225f44754f4fd94a3568740bf2"
+          },
+          {
+            "id": 13632132911,
+            "name": "ps0-external-070d7dc66fcb6d324465961f42c68409ec4a8642-42518605472",
+            "sha256": "6a3dc64bf93a7fe6b98ad77407178c56b8dba808a9305b00300cd4c5b8f7947a"
+          },
+          {
+            "id": 13632013041,
+            "name": "ps0-project-070d7dc66fcb6d324465961f42c68409ec4a8642-42518605472",
+            "sha256": "6084806fac65e8c3a8daca0f20533b0e06da64508cab5d9ea4ed948d70391010"
+          }
+        ]
+      },
+      {
+        "source": "0c89b9ae26807ad878d6e397508c6dbb5ae570e2",
+        "runner": "3ec306c44a8bd0d56fa3670f43c7b530ccf09d1e",
+        "run": 42518907520,
+        "job": 128847928612,
+        "observed": "Host import needed native loadExts=true; ordinary regression steps pass, grammar category absent until extensions are loaded",
+        "artifacts": [
+          {
+            "id": 13633050232,
+            "name": "ps0-project-0c89b9ae26807ad878d6e397508c6dbb5ae570e2-42518907520",
+            "sha256": "2bdfb95055b0cacb2ccfca9ad2bbe06f8402674ce95f3b4269b51742c51d0281"
+          },
+          {
+            "id": 13632646665,
+            "name": "ps0-native-0c89b9ae26807ad878d6e397508c6dbb5ae570e2-42518907520",
+            "sha256": "8eec5bee23875dd8c92769c59bb9e0e1af54eb1e73b216d562a3c3306a9cc45b"
+          },
+          {
+            "id": 13632128266,
+            "name": "ps0-external-0c89b9ae26807ad878d6e397508c6dbb5ae570e2-42518907520",
+            "sha256": "fba40baecb00132378b74e765eec6a08c9c04abecacb7ee8f190fcb467d73f99"
+          }
+        ]
+      },
+      {
+        "source": "e8da621958f06600d58c693050853f5588fae69b",
+        "runner": "b17707a37eacd34b08aa7e390183a1a65e3a0e68",
+        "run": 42519315193,
+        "job": 128849112010,
+        "observed": "Native host import closes initializer execution phase; target frontend requires fresh enableInitializersExecution",
+        "artifacts": [
+          {
+            "id": 13633240574,
+            "name": "ps0-project-e8da621958f06600d58c693050853f5588fae69b-42519315193",
+            "sha256": "aaf78165f1d4bc19db8e35ce12c6e873052ba96cc32c52aadae5376da21d7891"
+          },
+          {
+            "id": 13632423309,
+            "name": "ps0-native-e8da621958f06600d58c693050853f5588fae69b-42519315193",
+            "sha256": "dc4067781337b01559c6533222cb0e6afc2c870d2a1a6a59f1b89ff5d76734dd"
+          },
+          {
+            "id": 13632254771,
+            "name": "ps0-external-e8da621958f06600d58c693050853f5588fae69b-42519315193",
+            "sha256": "c72968c65cc4195322264cbed17135032f8fd5ece4b3214c7be1b2ad22e68491"
+          }
+        ]
+      },
+      {
+        "source": "a7c1ed8e5aaeeecfce3e4e76de3e953216060928",
+        "runner": "7bf499cefa15331c578d051a5a498d5d972c900e",
+        "run": 42519606970,
+        "job": 128849998635,
+        "observed": "Prelude PS Core compiles; quotation fixture's result types had forbidden parenthesized-call gaps, fixed to adjacent PS type operands",
+        "artifacts": [
+          {
+            "id": 13632937337,
+            "name": "ps0-external-a7c1ed8e5aaeeecfce3e4e76de3e953216060928-42519606970",
+            "sha256": "6ff24d338641fbbca0b3ecd5f1bc6a835aa8045a742f843bbe6a6345ce0e8845"
+          },
+          {
+            "id": 13632827721,
+            "name": "ps0-project-a7c1ed8e5aaeeecfce3e4e76de3e953216060928-42519606970",
+            "sha256": "d376819ec9114d2efbcab1f074e61a52a75b1e5cba85c91e2efc8480478ffbb0"
+          },
+          {
+            "id": 13632522254,
+            "name": "ps0-native-a7c1ed8e5aaeeecfce3e4e76de3e953216060928-42519606970",
+            "sha256": "f9f41b1d9e2d1fa4d9336ccb03201eba7886facc5b4f0100a9c69326e7ea0961"
+          }
+        ]
+      },
+      {
+        "source": "bf7749eb5a92bbf7bbe6b193cf475099f5404f0b",
+        "runner": "02c74d8e39675c815f32a0c8fd00444ffd402c46",
+        "run": 42519929359,
+        "job": 128850982466,
+        "observed": "Prelude PS Core/Main compile including owned ASCII strict binder; quotation fixture needed qualified bracketedBinder syntax name and explicit native liftMacroM into CommandElabM",
+        "artifacts": [
+          {
+            "id": 13633062374,
+            "name": "ps0-native-bf7749eb5a92bbf7bbe6b193cf475099f5404f0b-42519929359",
+            "sha256": "dd80a7afa865688d9a1718984bc0920329d9825f537501728c99affc6f141412"
+          },
+          {
+            "id": 13632818434,
+            "name": "ps0-external-bf7749eb5a92bbf7bbe6b193cf475099f5404f0b-42519929359",
+            "sha256": "7bf81194885ec3ebc956a5c190a76cfd22d55f21df0c9d4e97c2ee7d4d71a376"
+          },
+          {
+            "id": 13632149480,
+            "name": "ps0-project-bf7749eb5a92bbf7bbe6b193cf475099f5404f0b-42519929359",
+            "sha256": "85a4d32fd1497e2c6b9eda8b317d3826baa94c416a26ddeb2071c025b09d85ab"
+          }
+        ]
+      },
+      {
+        "source": "eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1",
+        "runner": "dc03ae543bc2bc050a6c62034aee2cb4bc80a56b",
+        "run": 42520414613,
+        "job": 128852573466,
+        "observed": "Finite prelude grammar step PASS; subsequent real-module baseline failed because target Lean namespace masked SDK sibling artifacts and selected compiler module as executable main. Candidate supplies pinned SDK sibling metadata links excluding freshly built target artifacts, and uses a separate nonbuilt executable root.",
+        "artifacts": [
+          {
+            "id": 13633535255,
+            "name": "ps0-project-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+            "sha256": "8a10e7724b03e031fcb2063db4066814c34a0899e3f49cfedc48a323fffc3b7f"
+          },
+          {
+            "id": 13633316642,
+            "name": "ps0-native-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+            "sha256": "1475507a36111b4a1a58431daefaa1d001f91b9e569268f3d6f5d0193b1de714"
+          },
+          {
+            "id": 13633226885,
+            "name": "ps0-external-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+            "sha256": "0187d0ed8c993784704671f76f9c4ae3f72b1dae2210d6eb439686e8b18bfe31"
+          }
+        ]
+      }
+    ],
+    "testFirst": {
+      "source": "2e5f16236ad546d32970bf1a497dec49f449840e",
+      "runner": "c43f52ddd90dea71163b85b1820efc12fcaaa608",
+      "run": 42518050363,
+      "status": "CANCELLED_SUPERSEDED_NOT_RED_EVIDENCE"
+    },
+    "remaining": [
+      "Full corpus PS grammar and checked canonical source conversion",
+      "Native PS term operators and remaining nested operand/signature contexts",
+      "Bootstrap host metadata packaging for relocated migrated compilers",
+      "Prelude closure without hidden logical imports and fresh migrated full-corpus fixed point",
+      "Native diagnostic/IDE presentation and complete source provenance"
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "previousFinitePrelude": {
+      "status": "PASS_FINITE_PRELUDE_GRAMMAR_STEP_OVERALL_PROJECT_JOB_FAILED_SEPARATE_HEAD_PROBE",
+      "source": "eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1",
+      "runner": "dc03ae543bc2bc050a6c62034aee2cb4bc80a56b",
+      "run": 42520414613,
+      "job": 128852573466,
+      "jobs": {
+        "project": "failure",
+        "native": 128852573451,
+        "proofLinked": 128852573261,
+        "host": 128852573588
+      },
+      "oracles": [
+        "PS0_PRELUDE_GRAMMAR:42:3",
+        "PS0_PRELUDE_GRAMMAR_NO_HIDDEN_IMPORTS: PASS",
+        "PS0_COMPILER_HEAD_MIGRATION: planned 3"
+      ],
+      "artifacts": [
+        {
+          "id": 13633535255,
+          "name": "ps0-project-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+          "sha256": "8a10e7724b03e031fcb2063db4066814c34a0899e3f49cfedc48a323fffc3b7f"
+        },
+        {
+          "id": 13633316642,
+          "name": "ps0-native-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+          "sha256": "1475507a36111b4a1a58431daefaa1d001f91b9e569268f3d6f5d0193b1de714"
+        },
+        {
+          "id": 13633226885,
+          "name": "ps0-external-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+          "sha256": "0187d0ed8c993784704671f76f9c4ae3f72b1dae2210d6eb439686e8b18bfe31"
+        }
+      ],
+      "scope": "Real native Lake normal build/link/runtime plus bootstrap=true compilation of three prelude test modules. Direct imports exactly Init / PreludePS.Core / Lean; raw source and maps identical; no local PS0 declarations; command/term/binder quotations native; contextual identifiers and owned ASCII strict binders pass. Stage setup options interpreter.prefer_native=false and ps0.sourceGrammar=true verified. Overall project job failed later in a separate compiler head probe before native baseline compiled because of SDK namespace shadowing and unintended main-module configuration. Not an all-four-jobs PASS checkpoint.",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    }
+  },
+  "preludeFiniteGrammarEvidence": {
+    "status": "PASS_FINITE_PRELUDE_GRAMMAR_STEP_OVERALL_PROJECT_JOB_FAILED_SEPARATE_HEAD_PROBE",
+    "source": "eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1",
+    "runner": "dc03ae543bc2bc050a6c62034aee2cb4bc80a56b",
+    "run": 42520414613,
+    "job": 128852573466,
+    "jobs": {
+      "project": "failure",
+      "native": 128852573451,
+      "proofLinked": 128852573261,
+      "host": 128852573588
+    },
+    "oracles": [
+      "PS0_PRELUDE_GRAMMAR:42:3",
+      "PS0_PRELUDE_GRAMMAR_NO_HIDDEN_IMPORTS: PASS",
+      "PS0_COMPILER_HEAD_MIGRATION: planned 3"
+    ],
+    "artifacts": [
+      {
+        "id": 13633535255,
+        "name": "ps0-project-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+        "sha256": "8a10e7724b03e031fcb2063db4066814c34a0899e3f49cfedc48a323fffc3b7f"
+      },
+      {
+        "id": 13633316642,
+        "name": "ps0-native-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+        "sha256": "1475507a36111b4a1a58431daefaa1d001f91b9e569268f3d6f5d0193b1de714"
+      },
+      {
+        "id": 13633226885,
+        "name": "ps0-external-eb71f33b2fa0ff2e53bdd7dd9e73b96f63b593d1-42520414613",
+        "sha256": "0187d0ed8c993784704671f76f9c4ae3f72b1dae2210d6eb439686e8b18bfe31"
+      }
+    ],
+    "scope": "Real native Lake normal build/link/runtime plus bootstrap=true compilation of three prelude test modules. Direct imports exactly Init / PreludePS.Core / Lean; raw source and maps identical; no local PS0 declarations; command/term/binder quotations native; contextual identifiers and owned ASCII strict binders pass. Stage setup options interpreter.prefer_native=false and ps0.sourceGrammar=true verified. Overall project job failed later in a separate compiler head probe before native baseline compiled because of SDK namespace shadowing and unintended main-module configuration. Not an all-four-jobs PASS checkpoint.",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "fullCompilerSourceCensusStageOne": {
+    "status": "PASS_COMPLETE_NATIVE_COMPATIBLE_FOREST_AND_CENSUS_STAGE_ONE",
+    "source": "abf3585d99c921fe02697b679867a0a55e433168",
+    "runner": "e78cd4479ba5b1433e8879c14de79ba27427dfdc",
+    "run": 42517718338,
+    "job": 128844671227,
+    "moduleCount": 2566,
+    "pinnedCompilerModuleCount": 2546,
+    "ps0ModuleCount": 20,
+    "lakeJobs": 5136,
+    "byteIdenticalInputs": 2541,
+    "selectedSourceDeclarationModes": {
+      "native-compatible": 72790,
+      "mapped-ps": 0
+    },
+    "artifact": 13632838932,
+    "sha256": "2395167f3782944cf4291efe55a10d1185f9eec6244493e0df985132e30e7308",
+    "stageTwo": {
+      "job": 128852603767,
+      "status": "FAIL_UNKNOWN_CENSUS_OPTION_AT_MODERN_COMPILER_STARTUP",
+      "artifact": 13632814291,
+      "sha256": "c9fb98ee7a52d05bbfa93f137bd7fd8745459dddc9204b36233080e2bf7e6817",
+      "observed": "Init.Prelude and Init.Grind.ToInt reject unknown ps0.sourceCensusPath. Stage two does not reach complete rebuild/fixed-point comparison."
+    },
+    "scope": "Full native-compatible .ps forest and same-frontend/origin census join. Selected source declaration rows remain native-compatible; this does not qualify canonical PS grammar source migration.",
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "artifacts": [
+      {
+        "id": 13632838932,
+        "name": "ps0-compiler-stage1-abf3585d99c921fe02697b679867a0a55e433168-42517718338",
+        "sha256": "2395167f3782944cf4291efe55a10d1185f9eec6244493e0df985132e30e7308"
+      },
+      {
+        "id": 13632260875,
+        "name": "ps0-project-abf3585d99c921fe02697b679867a0a55e433168-42517718338",
+        "sha256": "7d716e98c3e99fd9c4c9307ea04e3e84a3185812fcfa59dc651b098e68c474ab"
+      },
+      {
+        "id": 13631962130,
+        "name": "ps0-native-abf3585d99c921fe02697b679867a0a55e433168-42517718338",
+        "sha256": "6dba335b01d079a02c35b53b842093fb5d4dc78c472b3ef2efec94df723598ae"
+      },
+      {
+        "id": 13631888867,
+        "name": "ps0-external-abf3585d99c921fe02697b679867a0a55e433168-42517718338",
+        "sha256": "36bbca3bb0888b3d216e42074a9e1743dd40c69b3a934cc7a4d659e02d90093c"
+      }
+    ]
+  },
+  "preludeQualifiedCompilerHeadEvidence": {
+    "status": "PASS_FINITE_PRELUDE_GRAMMAR_AND_REAL_COMPILER_HEAD_PARITY_ALL_FOUR_REGRESSIONS",
+    "source": "704c5614e15981145260f5aac1ea8a891875cf12",
+    "runner": "b5a45855bbee9413efa7720d6c7cad673a31c347",
+    "run": 42521766675,
+    "jobs": {
+      "project": 128856670616,
+      "native": 128856670515,
+      "proofLinked": 128856670295,
+      "hostContract": 128856670557
+    },
+    "artifacts": [
+      {
+        "id": 13633876770,
+        "name": "ps0-external-704c5614e15981145260f5aac1ea8a891875cf12-42521766675",
+        "sha256": "6e5897351d9214d9193e6c6ad2c3a586ca923e164d0ad1bbc7c9daffb3fb15ff"
+      },
+      {
+        "id": 13633751880,
+        "name": "ps0-native-704c5614e15981145260f5aac1ea8a891875cf12-42521766675",
+        "sha256": "785a657ca64f790eddaa7770e8aff62698a96d5881d6f4a75bdcc30181582fe7"
+      },
+      {
+        "id": 13633468541,
+        "name": "ps0-project-704c5614e15981145260f5aac1ea8a891875cf12-42521766675",
+        "sha256": "e24f2a84cd21fac865839f8a78b919737330f7b0fb55769f88863bc9ec0b2745"
+      }
+    ],
+    "focused": {
+      "runner": "aedb625518e1550409ebbddbe281a2ecefc8fbd9",
+      "run": 42521772271,
+      "job": 128856609143,
+      "artifact": 13633811615,
+      "sha256": "2f62aba5be400a8e1b2c2d1a2fd26edb4d796d8cc4e0f67bf174aeb3eeed7d7f"
+    },
+    "oracles": [
+      "PS0_PRELUDE_GRAMMAR:42:3",
+      "PS0_PRELUDE_GRAMMAR_NO_HIDDEN_IMPORTS: PASS",
+      "PS0_PINNED_COMPILER_HEADS_NATIVE_PARITY: PASS"
+    ],
+    "compilerHeadEvidence": {
+      "source": "704c5614e15981145260f5aac1ea8a891875cf12",
+      "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "pinned_blob": "20b7acf5d684789ab52b81dda7def4b19568213c",
+      "module": "Lean.Compiler.ClosedTermCache",
+      "comparisons": {
+        "ir/Lean/Compiler/ClosedTermCache.c": {
+          "native": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2",
+          "ps": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2"
+        },
+        "lib/lean/Lean/Compiler/ClosedTermCache.olean": {
+          "native": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e",
+          "ps": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e"
+        }
+      },
+      "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+      "scope": "three real typed compiler declaration heads; native bodies retained; not whole grammar migration",
+      "grammar_migration_complete": false,
+      "verified_execution": false
+    },
+    "headPlan": {
+      "schema": "ps0-compiler-head-migration/1",
+      "source_sha256": "e1184350de6ef6ade1dc0f34d7320a4fc7445c5f9a7132d9ed7fc1f5518c38b9",
+      "result_sha256": "7289f2d309b04c5b9935d4bf0c4252c117ca3e46b7edb97b94606fc9b6842548",
+      "declarations": [
+        "cacheClosedTermName",
+        "getClosedTermName?",
+        "isClosedTermName"
+      ],
+      "edits": [
+        {
+          "start": 935,
+          "end": 938,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 958,
+          "end": 959,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 977,
+          "end": 980,
+          "old": ") (",
+          "new": ", ",
+          "role": "merge consecutive typed groups in source order"
+        },
+        {
+          "start": 988,
+          "end": 991,
+          "old": ") (",
+          "new": ", ",
+          "role": "merge consecutive typed groups in source order"
+        },
+        {
+          "start": 1170,
+          "end": 1173,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 1192,
+          "end": 1193,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 1211,
+          "end": 1214,
+          "old": ") (",
+          "new": ", ",
+          "role": "merge consecutive typed groups in source order"
+        },
+        {
+          "start": 1290,
+          "end": 1293,
+          "old": "def",
+          "new": "function",
+          "role": "owned PS declaration keyword"
+        },
+        {
+          "start": 1310,
+          "end": 1311,
+          "old": " ",
+          "new": "",
+          "role": "PS head adjacency"
+        },
+        {
+          "start": 1329,
+          "end": 1332,
+          "old": ") (",
+          "new": ", ",
+          "role": "merge consecutive typed groups in source order"
+        }
+      ],
+      "scope": "typed declaration heads only; native bodies and non-declaration commands preserved byte for byte",
+      "grammar_migration_complete": false,
+      "verified_execution": false
+    },
+    "inspection": {
+      "runner": "55003f656e5e26eedfcaedc0649723367596d317",
+      "run": 42521989131,
+      "job": 128857280327
+    },
+    "scope": "Three prelude test modules pass native Lake normal build/link/runtime and bootstrap-stage compilation; native quotation AST ownership, contextual aliases, strict binders, direct imports and exact source bytes are checked. Three actual pinned compiler function heads are converted using native signature syntax/ranges; native-only mode rejects them, PS grammar builds the original logical module with pinned SDK sibling metadata, and C/public-olean are byte-identical. Native bodies are retained; no full source grammar migration claim.",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "modernFrontendStartupCandidate": {
+    "status": "SUPERSEDED_BY_28904_QUALIFIED_STARTUP_CHECKPOINT",
+    "source": "9a5c59fb60407272cf2e5d5fc53ca18bf503c0c9",
+    "runner": "235624d914b939184ed067e5a52f3694d564389e",
+    "focusedRunner": "ecdf2f3921764bdcf21b14f6272baa88fc8f0762",
+    "focusedPR": 229,
+    "implementation": "PS0.SourceCensus compiler observation code and builtin initializers move from public meta section to ordinary public runtime section, matching native runtime/comptime phase separation.",
+    "fixture": "tests/run-modern-frontend-startup.py",
+    "scope": "Native Lake modern executable root must register census option and execute native module-linter callback on actual source. SDK-linked finite startup probe; no full compiler requalification yet.",
+    "verified_execution": false
+  },
+  "nativeCensusSummary": {
+    "status": "PASS_NATIVE_CENSUS_METADATA_INSPECTION",
+    "source": "abf3585d99c921fe02697b679867a0a55e433168",
+    "runner": "f956c7130102647015a834c8b433ec95236eb7eb",
+    "run": 42521444844,
+    "job": 128855617016,
+    "artifact": 13632644276,
+    "sha256": "f0c6a2043fc098f45affd1c5ab9dae0c4b64696d95295e09dbb2dcd120116c5d",
+    "headCounts": {
+      "definition": 25658,
+      "theorem": 44979,
+      "instance": 5584,
+      "structure": 2445,
+      "inductive": 597,
+      "in": 987,
+      "mutual": 111
+    },
+    "scope": "Actual original top-level command heads; not all nested declarations and not a completion percentage.",
+    "verified_execution": false
+  },
+  "modernFrontendStartupQualified": {
+    "status": "PASS_MODERN_NATIVE_FRONTEND_RUNTIME_STARTUP_AND_FINITE_PS_REGRESSIONS",
+    "source": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+    "runner": "4b3c4a60d9c6da28f581bba657f1e041c559b7c6",
+    "run": 42522802697,
+    "jobs": {
+      "project": 128859792609,
+      "native": 128859792529,
+      "proofLinked": 128859792415,
+      "hostContract": 128859792642
+    },
+    "artifacts": [
+      {
+        "id": 13634018132,
+        "name": "ps0-external-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522802697",
+        "sha256": "41a85f5e2b444222a0ec554bff1c8317d03e920b1576268a753b75f6fa87f275"
+      },
+      {
+        "id": 13633953401,
+        "name": "ps0-project-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522802697",
+        "sha256": "bd540f7aeeef3e9575f9c11f7825ebef89154da477fe00b3bf0887ed6f05d26f"
+      },
+      {
+        "id": 13633683974,
+        "name": "ps0-native-28904e5a7ccb19a15e311ecc654541dc0ee639ec-42522802697",
+        "sha256": "ab969baff1bf5f637166f5816a866eac52e5e995c6b2853de9a5ff39ae051b10"
+      }
+    ],
+    "focused": {
+      "runner": "8fa31701d19947918cba8d2bcdc280409546a24d",
+      "run": 42522806754,
+      "job": 128859806058,
+      "artifact": 13633657923,
+      "sha256": "0551c5d81aca60f167e8f177dbf540428d53e2eb7b2650d2f9bdcc060a76f52f"
+    },
+    "oracle": "PS0_MODERN_FRONTEND_HOOKS: PASS",
+    "implementation": "SourceCensus is ordinary runtime compiler code; its builtin option/module-linter initializers execute under modern-root runtime phase. Pinned native compiler initialization and Lake build/link mechanisms remain authoritative.",
+    "upstreamBasis": "https://github.com/dwijayuda/lean4/blob/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/src/Lean/Compiler/LCNF/EmitC.lean",
+    "fullCompiler": {
+      "source": "28904e5a7ccb19a15e311ecc654541dc0ee639ec",
+      "runner": "484868307c6611fedf1a464e2e102c02b8ad5855",
+      "run": 42522976977,
+      "pr": 226,
+      "status": "IN_PROGRESS",
+      "scope": "fresh complete native-compatible compiler/census stages; canonical ProofScript grammar migration remains open"
+    },
+    "failedProbe": {
+      "source": "9a5c59fb60407272cf2e5d5fc53ca18bf503c0c9",
+      "focusedRunner": "ecdf2f3921764bdcf21b14f6272baa88fc8f0762",
+      "run": 42522565402,
+      "job": 128859048140,
+      "observed": "Startup probe's output argument inferred as FilePath instead of String; fixed explicit string option and FilePath IO conversion. Census module compilation succeeded."
     },
     "verified_execution": false,
     "grammarMigrationComplete": false
