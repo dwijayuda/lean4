@@ -51,7 +51,8 @@ def prepare (raw filename : String) : IO (Except String String) := do
     | .error e => return .error e
   return .ok ("module\npublic import PS0.Policy\n" ++
     String.join (imports.toList.map importSource) ++
-    (if prefixBytes == 0 then "" else "public section\n") ++ body ++ "\n#ps0_evidence\n")
+    (if prefixBytes == 0 then "" else "public section\n") ++
+    "open scoped PS0.StandardAdapters\n" ++ body ++ "\n#ps0_evidence\n")
 
 def printHeader (path : String) : IO UInt32 := do
   let raw ← IO.FS.readFile path
