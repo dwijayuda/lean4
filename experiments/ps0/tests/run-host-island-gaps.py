@@ -12,7 +12,8 @@ work.mkdir(parents=True, exist_ok=False)
 native_prefix = ('module\nprelude\npublic import Init\npublic section\n'
                  'def pairSum (p : Nat × Nat) : Nat := p.1 + p.2\n'
                  'structure IslandCell where\n  value : Nat\n')
-ps_prefix = ('function pairSum(p: Nat × Nat): Nat := p.1 + p.2\n'
+ps_prefix = ('module\nprelude\npublic import Init\npublic section\n'
+             'function pairSum(p: Nat × Nat): Nat := p.1 + p.2\n'
              'structure IslandCell where\n  value : Nat\n')
 cases = [
     ('match', 'def bad (n : Nat) : Nat := match n with | 0 => pairSum (1, 2) | k => k',
@@ -35,7 +36,7 @@ for name, native, ps in cases:
     assert native_result.returncode == 0, (name, native_result.stdout, native_result.stderr)
     source = work / (name + '-ps.ps')
     source.write_text(ps_prefix + ps + '\n')
-    result = subprocess.run([str(ROOT / '.lake/build/bin/ps0'), 'check', str(source)],
+    result = subprocess.run([str(ROOT / '.lake/build/bin/ps0'), '-Dps0.sourceGrammar=true', str(source)],
                             capture_output=True, text=True, timeout=300)
     diagnostic = result.stdout + result.stderr
     (work / (name + '-ps.log')).write_text(diagnostic)
