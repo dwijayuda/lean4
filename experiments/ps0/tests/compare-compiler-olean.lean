@@ -10,12 +10,28 @@ private def summary (data : ModuleData) : Json := Json.mkObj [
   ("extensions", toJson (data.entries.map fun (name, entries) =>
     Json.mkObj [("name", toJson name.toString), ("count", toJson entries.size)]))]
 
+private unsafe def loadParts (file : String) (allParts : Bool) : IO ModuleData := do
+  let parts ← if allParts then
+      readModuleDataParts #[file, OLeanLevel.server.adjustFileName file,
+        OLeanLevel.private.adjustFileName file]
+    else return #[← readModuleData file]
+  let mut result := parts[0]!.1
+  for (_, region) in parts do
+    let _ ← Runtime.markPersistent region
+  if allParts then
+    result := { result with
+      constants := parts.foldl (fun acc part => acc ++ part.1.constants) #[]
+      constNames := parts.foldl (fun acc part => acc ++ part.1.constNames) #[]
+      extraConstNames := parts.foldl (fun acc part => acc ++ part.1.extraConstNames) #[] }
+  return result
+
 unsafe def main (args : List String) : IO Unit := do
-  let [baseline, converted] := args | throw (IO.userError "expected two public olean files")
-  let (native, nativeRegion) ← readModuleData baseline
-  let (ps, psRegion) ← readModuleData converted
-  let _ ← Runtime.markPersistent nativeRegion
-  let _ ← Runtime.markPersistent psRegion
+  let (baseline, converted, allParts) ← match args with
+    | [a, b] => pure (a, b, false)
+    | [a, b, "--all-parts"] => pure (a, b, true)
+    | _ => throw (IO.userError "expected two public olean files and optional --all-parts")
+  let native ← loadParts baseline allParts
+  let ps ← loadParts converted allParts
   let mut changes := #[]
   for a in native.constants do
     let some b := ps.constants.find? (fun c => c.name == a.name) | continue

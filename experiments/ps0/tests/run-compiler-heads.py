@@ -126,15 +126,23 @@ for path in [Path('ir') / relative_module.with_suffix('.c'), Path('lib/lean') / 
         print(difference[:12000], flush=True)
         public_olean = Path('lib/lean') / relative_module.with_suffix('.olean')
         diagnostic = subprocess.run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
-                                     str(baseline / public_olean), str(migrated / public_olean)],
+                                     str(baseline / public_olean), str(migrated / public_olean), '--all-parts'],
                                     capture_output=True, text=True, timeout=600)
         (work / 'c-parity-olean-diagnostic.log').write_text(diagnostic.stdout + diagnostic.stderr)
         assert diagnostic.returncode == 0, diagnostic.stderr
         details = json.loads(diagnostic.stdout)
         print('PS0_C_PARITY_OLEAN_DIAGNOSTIC:' + json.dumps(dict(
             public_olean_sha256={'native': sha(baseline / public_olean), 'ps': sha(migrated / public_olean)},
+            parts_sha256={suffix: {'native': sha(Path(str(baseline / public_olean) + suffix)),
+                                   'ps': sha(Path(str(migrated / public_olean) + suffix))}
+                          for suffix in ['', '.server', '.private']},
             changed_constants=[{key: row.get(key) for key in ['name', 'typeEqual', 'valueEqual', 'hintsEqual']}
                                for row in details['changedConstants']])), flush=True)
+        build(original, work / 'native-repeat')
+        build(converted, work / 'ps-repeat', grammar=True)
+        print('PS0_C_PARITY_REPEAT_DIAGNOSTIC:' + json.dumps(dict(
+            native=[sha(baseline / path), sha(work / 'native-repeat' / path)],
+            ps=[sha(migrated / path), sha(work / 'ps-repeat' / path)])), flush=True)
     if comparisons[path]['native'] != comparisons[path]['ps'] and path.endswith('.olean'):
         run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
              baseline / path, migrated / path], 'olean-diagnostic')
