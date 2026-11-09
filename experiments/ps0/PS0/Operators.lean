@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 public meta import Lean
-public import PS0.OperatorDescriptors
+public meta import PS0.OperatorDescriptors
 public meta section
 
 /-! Borrow native binary operator parsers and route their single term operand to PS. -/
