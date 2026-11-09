@@ -66,13 +66,19 @@ private def letPrefix : Parser :=
 
 @[run_parser_attribute_hooks] def ascriptionTerm : Parser :=
   withCache `PS0.DoLayout.ascriptionTerm <|
-    operands #[(`term, `psTerm)] Lean.Parser.Term.typeAscription
+    leadingNode ``Lean.Parser.Term.typeAscription maxPrec <|
+      Lean.Parser.Term.hygienicLParen >>
+        withoutPosition (withoutForbidden (categoryParser `psTerm 0 >> " :" >>
+          optional (ppSpace >> categoryParser `psTerm 0))) >> ")"
 
 @[run_parser_attribute_hooks] def byTerm : Parser :=
   operands #[(`tactic, `psTactic)] Lean.Parser.Term.byTactic
 
 @[run_parser_attribute_hooks] def tupleTerm : Parser :=
-  operands #[(`term, `psTerm)] Lean.Parser.Term.tuple
+  leadingNode ``Lean.Parser.Term.tuple maxPrec <|
+    Lean.Parser.Term.hygienicLParen >> optional (withoutPosition (withoutForbidden
+      (categoryParser `psTerm 0 >> ", " >>
+        sepBy1 (categoryParser `psTerm 0) ", " (allowTrailingSep := true)))) >> ")"
 
 @[run_parser_attribute_hooks] def forallTerm : Parser :=
   operands #[(`term, `psTerm)] Lean.Parser.Term.«forall»
