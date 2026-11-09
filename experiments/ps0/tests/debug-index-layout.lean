@@ -21,7 +21,7 @@ run_cmd do
       "#[2, 3][0]'(bound(1))", "(makeStore(2) |>.entries)[chooseIndex(1)]!",
       "makeStore(2) |>.entries[chooseIndex(1)]?", "#[Nat.succ][chooseIndex(0)]!(2)",
       "#[2, 3][chooseIndex(0):chooseIndex(2)]", "#[2, 3][chooseIndex(1):]",
-      "#[2, 3][:chooseIndex(1)]"] do
+      "#[2, 3][:chooseIndex(1)]", "l.unattach[i] = (l[i]'(by simpa using h)).1"] do
     match Parser.runParserCategory env `psTerm input with
     | .ok stx => logInfo m!"PS0_INDEX_PARSE {input}: {kinds stx}"
     | .error error => logInfo m!"PS0_INDEX_PARSE_ERROR {input}: {error}"
