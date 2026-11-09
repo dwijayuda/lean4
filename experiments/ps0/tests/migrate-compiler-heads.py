@@ -147,6 +147,20 @@ def single_type_call(operand, role='owned binder type'):
         for index in [1, 3, 5]:
             single_type_call(parts[index], role + ' conditional operand')
         return
+    if operand['kind'] == 'Lean.Parser.Term.match':
+        parts = operand['args']
+        assert len(parts) == 6 and len(parts[2]['args']) <= 1
+        if parts[2]['args']:
+            motive = parts[2]['args'][0]
+            assert motive['kind'] == 'Lean.Parser.Term.motive' and len(motive['args']) == 5
+            single_type_call(motive['args'][3], role + ' match motive')
+        for discriminant in parts[3]['args']:
+            if discriminant['atom'] is not None:
+                continue
+            assert discriminant['kind'] == 'Lean.Parser.Term.matchDiscr' and len(discriminant['args']) == 2
+            single_type_call(discriminant['args'][1], role + ' match discriminant')
+        match_alternatives(parts[5], role + ' match alternative')
+        return
     if operand['kind'] == 'Lean.Parser.Term.fun':
         body = operand['args'][1]
         if body['kind'] == 'Lean.Parser.Term.basicFun':
@@ -161,6 +175,8 @@ def single_type_call(operand, role='owned binder type'):
                     telescope([binder])
             optional_local_type(body['args'][1], role + ' lambda result type')
             single_type_call(body['args'][3], role + ' lambda body')
+        elif body['kind'] == 'Lean.Parser.Term.matchAlts':
+            match_alternatives(body, role + ' pattern lambda alternative')
         return
     if binary_operand(operand):
         assert len(operand['args']) == 3 and operand['args'][1]['atom'] is not None
@@ -238,6 +254,13 @@ def single_type_call(operand, role='owned binder type'):
         edit(end, start, ',' + raw[end:start].decode(), role + ' call argument separator; preserve original trivia')
     _, argument_end = span(arguments[-1])
     edit(argument_end, argument_end, ')', role + ' call closing delimiter; preserve original argument parentheses')
+
+
+def match_alternatives(source, role):
+    assert source['kind'] == 'Lean.Parser.Term.matchAlts' and len(source['args']) == 1
+    for alternative in source['args'][0]['args']:
+        assert alternative['kind'] == 'Lean.Parser.Term.matchAlt' and len(alternative['args']) == 4
+        single_type_call(alternative['args'][3], role + ' body')
 
 
 def alias_binder(binder):

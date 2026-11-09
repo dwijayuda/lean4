@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Test-first rejection probes for ordinary host bodies beneath borrowed native syntax."""
 from pathlib import Path
+import argparse
 import json
 import os
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
+parser = argparse.ArgumentParser()
+parser.add_argument('--cases', default='match,pattern-lambda,record-field,do-if')
+selected = set(parser.parse_args().cases.split(','))
 work = ROOT / 'build' / ('host-island-gaps-' + os.environ['GITHUB_RUN_ID'])
 work.mkdir(parents=True, exist_ok=False)
 native_prefix = ('module\nprelude\npublic import Init\npublic section\n'
@@ -27,6 +31,8 @@ cases = [
 ]
 observations = []
 for name, native, ps in cases:
+    if name not in selected:
+        continue
     baseline = work / (name + '-native.ps')
     baseline.write_text(native_prefix + native + '\n')
     native_result = subprocess.run([str(ROOT / '.lake/build/bin/ps0'), 'census-source', str(baseline),
