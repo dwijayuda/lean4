@@ -1,0 +1,40 @@
+/-! Native do layout owns supported PS element operands and fences native syntax data. -/
+function add(x: Nat, y: Nat): Nat := x + y
+function pureNat(n: Nat): IO Nat := pure n
+function observe(n: Nat): IO Unit := if n == 99 then pure () else pure ()
+
+const layoutValue: IO Nat := do
+  let first : Nat := add(1, 1)
+  let mut total := add(first, 1)
+  total := add(total, 1)
+  let next ← pureNat(add(1, 2))
+  observe(next)
+  return add(next, total)
+
+const nestedValue: IO Nat := do
+  let value ← do
+    let first := add(1, 1)
+    return add(first, 1)
+  return value
+
+const unitReturn: IO Unit := do
+  return
+const afterLayout: Nat := 7
+
+macro "nativeLayout " seq:doSeq : term => `(do $seq)
+const nativeLayoutValue: IO Nat := nativeLayout
+  return ← pureNat (3)
+
+meta def nestedQuote : Lean.MacroM(Lean.TSyntax `term) := do
+  return `(term| do { pure (3) })
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nestedQuote
+  unless quoted.raw.isOfKind ``Lean.Parser.Term.do do
+    Lean.throwError "PS0_DO_LAYOUT_NATIVE_QUOTATION"
+
+def main : IO Unit := do
+  let value ← layoutValue
+  let nested ← nestedValue
+  let native ← nativeLayoutValue
+  unitReturn
+  IO.println s!"PS0_DO_LAYOUT:{value}:{nested}:{native}:{afterLayout}"
