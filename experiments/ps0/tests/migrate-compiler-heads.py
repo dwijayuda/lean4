@@ -101,12 +101,12 @@ def single_type_call(operand, role='owned binder type'):
     _, end = span(function)
     start, _ = span(arguments[0])
     assert start == end or raw[end:start].isspace(), 'type-call trivia contains comments; no edit is permitted'
-    edit(end, start, '(', role + ' call opening delimiter; preserve original argument parentheses')
+    edit(end, start, '(' + raw[end:start].decode(), role + ' call opening delimiter; preserve argument parentheses and trivia')
     for previous, following in zip(arguments, arguments[1:]):
         _, end = span(previous)
         start, _ = span(following)
         assert raw[end:start].isspace(), 'type-call argument trivia contains comments; no edit is permitted'
-        edit(end, start, ', ', role + ' call argument separator')
+        edit(end, start, ',' + raw[end:start].decode(), role + ' call argument separator; preserve original trivia')
     _, argument_end = span(arguments[-1])
     edit(argument_end, argument_end, ')', role + ' call closing delimiter; preserve original argument parentheses')
     for argument in arguments:
@@ -199,7 +199,8 @@ for command in original_commands(snapshot['commands']):
         _, end = span(previous)
         start, _ = span(following)
         assert start == end or raw[end:start].isspace(), 'group trivia must be whitespace; comments are never discarded'
-        edit(end - 1, start + 1, ', ', 'merge consecutive typed groups in source order')
+        edit(end - 1, start + 1, ',' + raw[end:start].decode(),
+             'merge consecutive typed groups; preserve original intervening whitespace and line breaks')
     value = decl.get('valueSyntax')
     if value is not None:
         if value['kind'] == 'Lean.Parser.Command.declValSimple':
@@ -215,6 +216,7 @@ for command in original_commands(snapshot['commands']):
 assert declarations or args.allow_empty, 'no supported native declaration heads'
 edits.sort(key=lambda e: e['start'])
 assert all(a['end'] <= b['start'] for a, b in zip(edits, edits[1:])), 'overlapping native source edits'
+assert all(change['old'].count('\n') == change['new'].count('\n') for change in edits), 'source edits must preserve original line breaks'
 chunks, cursor = [], 0
 for change in edits:
     chunks += [raw[cursor:change['start']], change['new'].encode()]
@@ -227,6 +229,7 @@ args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
     'strategies': strategies,
+    'line_count_preserved': raw.count(b'\n') == converted.count(b'\n'),
     'scope': 'R2 alias/native telescopes, standard family signatures, equation RHS and explicit owned type/default/result/call/conditional roles; native grouping/inference and independently owned syntax retained',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
