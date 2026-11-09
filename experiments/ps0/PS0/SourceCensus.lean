@@ -86,6 +86,10 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       `PS0.StandardAdapters.ps0StandardExample].contains kind
     let declValue := if hasTail then source.getArgs.back! else Syntax.missing
     let value := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclSimple then declValue[1] else Syntax.missing
+    let doSequence := if value.isOfKind `ps0HostDo && value[1].isOfKind `ps0NativeLayoutDoSeq then
+      value[1][0] else Syntax.missing
+    let doElements := if doSequence.isOfKind ``Lean.Parser.Term.doSeqIndent then doSequence[0].getArgs
+      else if doSequence.isOfKind ``Lean.Parser.Term.doSeqBracketed then doSequence[1].getArgs else #[]
     let tail := if hasTail then declValue.getArgs.back![0] else Syntax.missing
     let equationBodies := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclEqns then
       declValue[0][0].getArgs.map (fun alt => alt[3].getKind.toString) else #[]
@@ -95,6 +99,8 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("keywordRange", sourceRange (if isInstance then source[2] else source[1])), ("nameRange", sourceRange name),
       ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
       ("valueRootKind", toJson value.getKind.toString),
+      ("doSequenceKind", toJson doSequence.getKind.toString),
+      ("doElementKinds", toJson (doElements.map (fun item => item[0].getKind.toString))),
       ("ownedValueCall", toJson (value.isOfKind `ps0HostAdjacentCall ||
         (value.isOfKind `ps0HostHeadTerm && value[0].isOfKind `ps0HeadCall))),
       ("ownedOperatorKinds", toJson ((ownedOperators value).map Name.toString)),

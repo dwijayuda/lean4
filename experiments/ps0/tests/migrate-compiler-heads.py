@@ -46,6 +46,10 @@ def single_type_call(operand, role='owned binder type'):
         assert len(operand['args']) == 3
         single_type_call(operand['args'][0], role + ' projection subject')
         return
+    if operand['kind'] == 'Lean.Parser.Term.do':
+        assert len(operand['args']) == 2
+        do_sequence(operand['args'][1])
+        return
     if operand['kind'] == 'termIfThenElse':
         parts = operand['args']
         assert len(parts) == 6 and [parts[i]['atom'] for i in [0, 2, 4]] == ['if', 'then', 'else']
@@ -75,7 +79,8 @@ def single_type_call(operand, role='owned binder type'):
         else:
             single_type_call(argument, role)
     if len(edits) == pending and not any(argument['kind'] in [
-            'Lean.Parser.Term.paren', 'Lean.Parser.Term.tuple', 'Lean.Parser.Term.fun'] for argument in arguments):
+            'Lean.Parser.Term.paren', 'Lean.Parser.Term.tuple', 'Lean.Parser.Term.fun',
+            'Lean.Parser.Term.do'] for argument in arguments):
         return
     if any(a['kind'] == 'Lean.Parser.Term.namedArgument' for a in arguments):
         # PS calls put named arguments last. Native elaboration resolves names
@@ -127,6 +132,63 @@ def alias_binder(binder):
     return (kind == 'Lean.Parser.Term.explicitBinder' and len(parts) == 5
             and len(parts[1]['args']) == 1 and parts[1]['args'][0]['ident'] is not None
             and len(parts[2]['args']) == 2)
+
+
+def optional_local_type(node, role):
+    if node['args']:
+        assert len(node['args']) == 1
+        spec = node['args'][0]
+        assert spec['kind'] == 'Lean.Parser.Term.typeSpec' and len(spec['args']) == 2
+        single_type_call(spec['args'][1], role)
+
+
+def local_id_value(declaration):
+    parts = declaration['args']
+    assert len(parts) == 5
+    telescope(parts[1]['args'])
+    optional_local_type(parts[2], 'owned local result type')
+    single_type_call(parts[4], 'owned local value')
+
+
+def do_element(element):
+    kind, parts = element['kind'], element['args']
+    if kind == 'Lean.Parser.Term.doExpr':
+        assert len(parts) == 1
+        single_type_call(parts[0], 'owned do expression')
+    elif kind == 'Lean.Parser.Term.doReturn':
+        assert len(parts) == 2 and len(parts[1]['args']) <= 1
+        if parts[1]['args']:
+            single_type_call(parts[1]['args'][0], 'owned return value')
+    elif kind == 'Lean.Parser.Term.doNested':
+        assert len(parts) == 2
+        do_sequence(parts[1])
+    elif kind == 'Lean.Parser.Term.doLet':
+        assert len(parts) == 4
+        wrapper = parts[3]
+        assert wrapper['kind'] == 'Lean.Parser.Term.letDecl' and len(wrapper['args']) == 1
+        if wrapper['args'][0]['kind'] == 'Lean.Parser.Term.letIdDecl':
+            local_id_value(wrapper['args'][0])
+    elif kind == 'Lean.Parser.Term.doReassign':
+        assert len(parts) == 1
+        if parts[0]['kind'] == 'Lean.Parser.Term.letIdDeclNoBinders':
+            local_id_value(parts[0])
+    elif kind == 'Lean.Parser.Term.doLetArrow':
+        assert len(parts) == 4
+        declaration = parts[3]
+        if declaration['kind'] == 'Lean.Parser.Term.doIdDecl':
+            assert len(declaration['args']) == 4
+            optional_local_type(declaration['args'][1], 'owned binding type')
+            do_element(declaration['args'][3])
+    # Native patterns, registered DSL elements and unsupported control operands
+    # retain their independent parser ownership.
+
+
+def do_sequence(sequence):
+    assert sequence['kind'] in ['Lean.Parser.Term.doSeqIndent', 'Lean.Parser.Term.doSeqBracketed']
+    index = 0 if sequence['kind'] == 'Lean.Parser.Term.doSeqIndent' else 1
+    for item in sequence['args'][index]['args']:
+        assert item['kind'] == 'Lean.Parser.Term.doSeqItem' and len(item['args']) == 2
+        do_element(item['args'][0])
 
 
 def declaration_value(value):

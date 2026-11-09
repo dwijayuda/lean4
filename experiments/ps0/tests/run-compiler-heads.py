@@ -160,6 +160,16 @@ if args.fixture == 'DeclarationForms':
     assert next(d for d in declarations if d['sourceName'] == 'boolTransform')['whereFieldCount'] == 1
     assert next(d for d in declarations if d['sourceName'] == 'natTransform')['whereFieldCount'] == 1
     assert next(d for d in declarations if d['sourceName'] == 'boolRefl')['equationBodyKinds']
+if args.fixture == 'DoLayoutProbe':
+    for name in ['layoutValue', 'nestedValue', 'localDefault', 'localShared', 'unitReturn']:
+        declaration = next(d for d in declarations if d['sourceName'] == name)
+        assert declaration['valueRootKind'] == 'ps0HostDo', declaration
+        assert declaration['doSequenceKind'] == 'Lean.Parser.Term.doSeqIndent', declaration
+        assert declaration['doElementKinds'], declaration
+    layout = next(d for d in declarations if d['sourceName'] == 'layoutValue')
+    assert layout['doElementKinds'] == [
+        'Lean.Parser.Term.doLet', 'Lean.Parser.Term.doLet', 'Lean.Parser.Term.doReassign',
+        'Lean.Parser.Term.doLetArrow', 'Lean.Parser.Term.doExpr', 'Lean.Parser.Term.doReturn'], layout
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
@@ -169,7 +179,7 @@ if args.fixture == 'DeclarationForms':
     'owned_value_calls': owned_value_calls,
     'non_definition_source_roles': [{key: d.get(key) for key in ['sourceName', 'production', 'mode', 'declarationValueKind', 'equationBodyKinds', 'whereFieldCount']}
                                     for d in declarations if d['production'] in family_productions.values()],
-    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds']}
+    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds', 'doSequenceKind', 'doElementKinds']}
                             for d in declarations if d['sourceName'] in plan['declarations']],
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',
     'scope': 'real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration',
