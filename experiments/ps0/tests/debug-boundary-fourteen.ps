@@ -13,7 +13,6 @@ run_cmd do
   unsafe Lean.enableInitializersExecution
   install {}
   unsafe Lean.enableInitializersExecution
-  let target ← Lean.importModules #[{module := `Lean}] {}
   let cases := [
     ("unless", `doElem, `psDoElem,
       "unless getLinterValue linter.ambiguousOpen (← getLinterOptions) do return",
@@ -21,7 +20,7 @@ run_cmd do
     ("pattern", `doElem, `psDoElem,
       "let .ident info _ id preresolved := nsStx.raw | return",
       "let .ident info _ id preresolved := nsStx.raw | return"),
-    ("match-lambda", `term, `psTerm,
+    ("match-lambda", `doElem, `psDoElem,
       "if preresolved.any fun | .namespace _ => true | _ => false then return",
       "if preresolved.any fun | .namespace _ => true | _ => false then return"),
     ("lambda-body", `term, `psTerm,
@@ -36,14 +35,35 @@ run_cmd do
     ("pipeline-call", `doElem, `psDoElem,
       "return ext.toEnvExtension.getState (← getEnv) |>.2.find? a",
       "return ext.toEnvExtension.getState((← getEnv)) |>.2.find?(a)"),
+    ("grouped-pipeline-call", `doElem, `psDoElem,
+      "return ext.toEnvExtension.getState (← getEnv) |>.2.find? a",
+      "return (ext.toEnvExtension.getState((← getEnv)) |>.2.find?)(a)"),
+    ("pattern-continuation", `doSeq, `psDoSeq,
+      "\n  let .ident info _ id preresolved := nsStx.raw | return\n  let .original .. := info | return\n  if preresolved.any fun | .namespace _ => true | _ => false then return\n  return ()",
+      "\n  let .ident info _ id preresolved := nsStx.raw | return\n  let .original .. := info | return\n  if preresolved.any fun | .namespace _ => true | _ => false then return\n  return ()"),
+    ("unless-continuation", `doSeq, `psDoSeq,
+      "\n  unless linter.deprecated.options.get (← getOptions) do return\n  let some dep := decl.deprecation? | return\n  let extraMsg := match dep.text?, dep.newName? with\n    | some text, _ => m!\": {text}\"\n    | none, _ => m!\"\"\n  return ()",
+      "\n  unless linter.deprecated.options.get((← getOptions)) do return\n  let some dep := decl.deprecation? | return\n  let extraMsg := match dep.text?, dep.newName? with\n    | some text, _ => m!\": {text}\"\n    | none, _ => m!\"\"\n  return ()"),
+    ("lambda-bind", `doSeq, `psDoSeq,
+      "\n    let strict ← withEqLhsRhs info.type fun lhs rhs =>\n      withImplicit (isDefEq lhs rhs)\n    return strict",
+      "\n    let strict ← withEqLhsRhs(info.type, fun lhs rhs =>\n      withImplicit((isDefEq lhs rhs)))\n    return strict"),
     ("reserved-head", `command, `psCommand,
       "def sepBy (p : Nat) : Nat := p",
       "function sepBy(p : Nat) : Nat := p"),
     ("escaped-head", `command, `psCommand,
       "def «sepBy» (p : Nat) : Nat := p",
       "function «sepBy»(p : Nat) : Nat := p")]
-  for (label, nativeCategory, psCategory, native, ps) in cases do
-    for (mode, category, input) in [("native", nativeCategory, native), ("ps", psCategory, ps)] do
-      match Lean.Parser.runParserCategory target category input with
-      | .ok source => Lean.logInfo m!"PS0_BOUNDARY14_OK {label} {mode}: {repr source}"
-      | .error error => Lean.logInfo m!"PS0_BOUNDARY14_ERROR {label} {mode}: {error}"
+  for (context, modules) in [
+      ("Lean", #[`Lean]),
+      ("AmbiguousOpen", #[`Lean.ResolveName, `Lean.Linter.Init]),
+      ("SetOption", #[`Lean.Elab.InfoTree, `Init.Syntax]),
+      ("DefEqAttrib", #[`Lean.Meta.Basic, `Lean.Meta.Check, `Lean.Meta.WHNF]),
+      ("SynthInstance", #[`Init.Data.Array.InsertionSort, `Lean.Meta.Instances,
+        `Lean.Meta.AbstractMVars, `Lean.Meta.Check, `Init.While, `Lean.Util.CollectFVars])] do
+    unsafe Lean.enableInitializersExecution
+    let target ← Lean.importModules (modules.map fun moduleName => {module := moduleName}) {}
+    for (label, nativeCategory, psCategory, native, ps) in cases do
+      for (mode, category, input) in [("native", nativeCategory, native), ("ps", psCategory, ps)] do
+        match Lean.Parser.runParserCategory target category input with
+        | .ok source => Lean.logInfo m!"PS0_BOUNDARY14_OK {context} {label} {mode}: {repr source}"
+        | .error error => Lean.logInfo m!"PS0_BOUNDARY14_ERROR {context} {label} {mode}: {error}"
