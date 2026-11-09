@@ -1,0 +1,49 @@
+/-! Native indexed access owns PS subjects, indices and explicit proofs after calls/pipelines. -/
+function chooseIndex(n: Nat): Nat := n
+function add(x: Nat, y: Nat): Nat := x + y
+structure IndexStore where
+  entries : Array Nat
+function makeStore(n: Nat): IndexStore := ⟨#[n, n + 1]⟩
+function bound(n: Nat): 0 < 2 := by decide
+
+const optionalValue: Option(Nat) := makeStore(2) |>.entries[chooseIndex(1)]?
+const plainValue: Nat := #[2, 3][0]
+const panicValue: Nat := (makeStore(2) |>.entries)[chooseIndex(1)]!
+const proofValue: Nat := #[2, 3][0]'(bound(1))
+const callableValue: Nat := #[Nat.succ][chooseIndex(0)]!(2)
+
+macro "indexOrigin " e:psTerm : term => do
+  let rec originalIndex? (source : Lean.Syntax) : Option Lean.Syntax :=
+    if source.isOfKind `PS0.Operators.ownedPostfix &&
+        #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»].contains source[0].getKind then
+      some source[0]
+    else source.getArgs.findSome? originalIndex?
+  let some original := originalIndex? e.raw
+    | Lean.Macro.throwError "PS0_INDEX_OWNERSHIP"
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  let rec nativeIndex? (source : Lean.Syntax) : Option Lean.Syntax :=
+    if source.getKind == original.getKind then some source
+    else source.getArgs.findSome? nativeIndex?
+  let some native := nativeIndex? lowered
+    | Lean.Macro.throwError "PS0_INDEX_NATIVE_KIND"
+  unless original.getArgs.size == native.getArgs.size &&
+      original.getRange? == native.getRange? &&
+      (original.getArgs.zip native.getArgs).toList.zipIdx.all (fun ((before, after), index) =>
+        if index == 0 || index == 3 || (original.isOfKind `«term__[_]'_» && index == 5) then true
+        else before.eqWithInfo after) do
+    Lean.Macro.throwError "PS0_INDEX_TOKEN_ORIGIN"
+  `(True)
+example : indexOrigin #[2, 3][chooseIndex(0)] := by trivial
+example : indexOrigin (makeStore(2) |>.entries)[chooseIndex(1)]? := by trivial
+example : indexOrigin #[2, 3][chooseIndex(1)]! := by trivial
+example : indexOrigin #[2, 3][0]'(bound(1)) := by trivial
+
+meta def nativeIndexQuote : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| #[2, 3][1]?)
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeIndexQuote
+  unless quoted.raw.isOfKind `«term__[_]_?» do
+    Lean.throwError "PS0_NATIVE_INDEX_QUOTATION"
+
+def main : IO Unit :=
+  IO.println s!"PS0_INDEX:{optionalValue.getD(0)}:{plainValue}:{panicValue}:{proofValue}:{callableValue}"
