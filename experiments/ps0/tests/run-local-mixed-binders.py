@@ -26,6 +26,8 @@ fixture = Path('tests/v1/local_mixed_binders.ps')
 native_layouts = run(['lake', 'env', 'lean', 'tests/debug-local-layout.lean'], 'native-layouts')
 assert native_layouts.count('PS0_NATIVE_LOCAL_LAYOUT ') == 6
 assert 'PS0_LOCAL_ARRAY_UPDATE_BOUNDARY: PASS' in native_layouts
+interpolation_controls = run(['lake', 'env', 'lean', 'tests/debug-interpolation-layout.lean'], 'interpolation-layout')
+assert interpolation_controls.count('PS0_INTERPOLATION_CONTROL_') == 6
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'LocalMixed', work / 'native'], 'native')
 oracle = 'PS0_LOCAL_MIXED:7:7:7:8:7:5'
