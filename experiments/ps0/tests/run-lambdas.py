@@ -74,6 +74,7 @@ for name, source, reason in [
     'fixture_sha256': hashlib.sha256(Path(fixture).read_bytes()).hexdigest(),
     'original_lambda_and_arrow_token_checks': 2,
     'native_and_ps_invalid_multi_pun_rejection': 'not a field of structure',
+    'native_and_ps_coerced_invalid_multi_pun_rejection': 'not a field of structure',
     'projection': {
         'source_sha256': hashlib.sha256(Path(projection).read_bytes()).hexdigest(),
         'executable_sha256': hashlib.sha256((work / 'projection-native/SectionProjection').read_bytes()).hexdigest(),

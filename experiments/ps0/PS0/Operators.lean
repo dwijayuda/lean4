@@ -7,7 +7,7 @@ public meta import Lean
 public meta import PS0.OperatorDescriptors
 public meta section
 
-/-! Borrow native binary operator parsers and route their single term operand to PS. -/
+/-! Borrow native term parsers with explicit PS operand and legacy-surface boundaries. -/
 
 open Lean Lean.Parser
 namespace PS0.Operators
@@ -41,6 +41,14 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
     | return initial.mkUnexpectedError "PS0V1-OP-CATEGORY: missing native term category"
   let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
+  let keepLeading := fun (entry : Parser × Nat) =>
+    !(entry.1.info.collectKinds {}).contains `PS0.pscvBracedExpression
+  let mut leadingTable : TokenMap (Parser × Nat) := {}
+  for (token, parsers) in category.tables.leadingTable do
+    for entry in (parsers.filter keepLeading).reverse do
+      leadingTable := leadingTable.insert token entry
+  let leadingTables := {category.tables with
+    leadingTable, leadingParsers := category.tables.leadingParsers.filter keepLeading}
   let keep := fun (entry : Parser × Nat) =>
     let collected := entry.1.info.collectKinds {}
     !kinds.any collected.contains && !collected.contains ``Lean.Parser.Term.pipeProj &&
@@ -51,9 +59,9 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
       trailingTable := trailingTable.insert token entry
   let tables := {category.tables with
     trailingTable, trailingParsers := category.tables.trailingParsers.filter keep}
-  -- Only the outer trailing loop changes. Native leading operands retain their
-  -- original parser context, precedence, antiquotations and syntax data.
-  let parsed := leadingParser `term category.tables category.behavior
+  -- The unrestricted legacy wrapper is not an ordinary PS term production.
+  -- Native operands keep their context, precedence, antiquotations and syntax data.
+  let parsed := leadingParser `term leadingTables category.behavior
     (mkCategoryAntiquotParser `term).fn ctx initial
   if parsed.hasError then return parsed
   let parsed := trailingLoop tables ctx parsed
