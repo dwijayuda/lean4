@@ -11443,102 +11443,6 @@
     ],
     "qualification": "candidate only; no PASS or whole-graph promotion"
   },
-  "currentContinuation": {
-    "qualifiedSource": "ef7c98356ce7ecfd36359227a441c4cc2368327a",
-    "qualifiedRunner": "12387a10310e33787fb11f6c13cf3b3f3389b59a",
-    "run": 42606775753,
-    "linuxJobsPassed": 25,
-    "independentInspection": {
-      "status": "PENDING",
-      "previousSource": "c31599ff0685581b83e657c4e888dd79023c5407",
-      "previousRun": 42602223686,
-      "previousJob": 129109243439,
-      "previousActualFiles": 112
-    },
-    "latestIndependentlyQualifiedSource": "c31599ff0685581b83e657c4e888dd79023c5407",
-    "independentFilesRehashed": 112,
-    "finiteRealModules": 24,
-    "finiteRealDefinitionHeads": 748,
-    "finiteSyntheticModules": 4,
-    "finiteSyntheticDefinitionHeads": 37,
-    "fullTransformedGraph": {
-      "source": "c31599ff0685581b83e657c4e888dd79023c5407",
-      "runner": "a686edb97b602eb31f172bd8fa9fc6b464bb9b11",
-      "run": 42600962764,
-      "job": 129105018569,
-      "status": "FAILED",
-      "nativeCaptureCache": {
-        "producerSource": "742c5c180a8ee7314075d63792c220b710e96504",
-        "run": 42580512720
-      },
-      "freshNativeLakeTargetBuild": true,
-      "fullGraphBuild": false,
-      "canonicalFixedPoint": false,
-      "grammarMigrationComplete": false,
-      "verified_execution": false,
-      "preparedInputs": 2569,
-      "failedModules": [
-        {
-          "path": "Init/Data/Range/Polymorphic/Internal/SignedBitVec",
-          "line": 42,
-          "column": 0,
-          "message": "Unknown constant `function`"
-        },
-        {
-          "path": "Init/Data/Range/Polymorphic/Char",
-          "line": 22,
-          "column": 11,
-          "message": "unexpected token '@['; expected psStructFieldValue"
-        },
-        {
-          "path": "Std/Time/Zoned/Database/TzIf",
-          "line": 279,
-          "column": 6,
-          "message": "Function expected at"
-        },
-        {
-          "path": "Std/Data/ExtDTreeMap/Basic",
-          "line": 944,
-          "column": 115,
-          "message": "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
-        },
-        {
-          "path": "Lean/Data/Options",
-          "line": 132,
-          "column": 19,
-          "message": "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
-        }
-      ],
-      "formerSixBlockersBuiltWithObjectCode": [
-        "Init.Data.Stream",
-        "Init.Data.Int.Linear",
-        "Init.Data.Array.Perm",
-        "Lean.Data.PersistentHashMap",
-        "Std.Time.Time.Unit.Nanosecond",
-        "Std.Data.Internal.List.Associative"
-      ],
-      "artifacts": [
-        {
-          "id": 13667074994,
-          "name": "ps0-transformed-corpus-c31599ff0685581b83e657c4e888dd79023c5407-42600962764",
-          "digest": "sha256:3826e7863104c7bb56bed01b4579bf72b0e6a4368ee3b77573fa03d53a2cee15",
-          "size_in_bytes": 122360218
-        }
-      ],
-      "reportedByteIdenticalModeInputs": 0,
-      "inputModeScope": "all inputs are planned-ps-grammar; the reported mode count does not assert every prepared file changes bytes"
-    },
-    "nextActions": [
-      "Validate the five new whole-module boundaries and local recursive source roles on Linux; preserve exact failures",
-      "Independently rehash the next accepted finite outputs and retained source evidence at one exact source pin",
-      "Restart the full transformed dependency graph only after the five focused module checks pass",
-      "Keep remaining ordinary grammar and original-source fidelity roles open until qualified; then require full native parity/linking and canonical compiler fixed point"
-    ],
-    "goalStatus": "ACTIVE",
-    "obligationsPending": 240,
-    "grammarMigrationComplete": false,
-    "verified_execution": false
-  },
   "graphTwelveBoundaryTestFirst": {
     "source": "ef7c98356ce7ecfd36359227a441c4cc2368327a",
     "runner": "0d39eb16874047fea707532644e1faeb9f1437aa",
@@ -11572,5 +11476,1335 @@
       }
     ],
     "scope": "target failures reproduced before boundary fixes; entire run status tracked separately"
+  },
+  "recursiveAndRecordBoundaryEvidence": {
+    "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+    "runner": "3872789161031705dfb661752b402869dfeb804c",
+    "run": 42611238733,
+    "status": "PASS",
+    "linuxJobsPassed": 30,
+    "jobs": [
+      {
+        "id": 129140790298,
+        "name": "project-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790555,
+        "name": "compiler-fixtures",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790655,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790689,
+        "name": "proof-linked",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790730,
+        "name": "compiler-stream",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790872,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790896,
+        "name": "compiler-iteratorempty",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790901,
+        "name": "operator-baseline",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790918,
+        "name": "compiler-listattach",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790923,
+        "name": "compiler-options",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790977,
+        "name": "compiler-associative",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790981,
+        "name": "compiler-extdtreemapbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790989,
+        "name": "compiler-nanosecond",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140790996,
+        "name": "compiler-rangechar",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791019,
+        "name": "compiler-unless",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791021,
+        "name": "compiler-finbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791028,
+        "name": "compiler-persistenthashmap",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791048,
+        "name": "compiler-natbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791049,
+        "name": "compiler-arrayperm",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791056,
+        "name": "compiler-signedbitvec",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791069,
+        "name": "compiler-natlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791087,
+        "name": "compiler-spredlaws",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791098,
+        "name": "compiler-initwf",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791104,
+        "name": "compiler-tzif",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791129,
+        "name": "compiler-intlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791134,
+        "name": "compiler-grindac",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791135,
+        "name": "do-layout",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791155,
+        "name": "compiler-prelude",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791176,
+        "name": "compiler-natlemmas",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129140791287,
+        "name": "compiler-core",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13671240527,
+        "name": "ps0-compiler-natlinear-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:17e13534b8fec66eaa16a686a2d25094f6b784c80c768dd89c538621528e14fa",
+        "size_in_bytes": 444292
+      },
+      {
+        "id": 13671145385,
+        "name": "ps0-compiler-signedbitvec-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:176f249eccfd9ac26c24b6556262533f4c4afe07aed577bb9a6873313032d7b6",
+        "size_in_bytes": 93177
+      },
+      {
+        "id": 13671096050,
+        "name": "ps0-compiler-core-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:1d575b2457ba517ebc2c7a36026a41a9adb80970a206e5d70ab6a1761c667e3b",
+        "size_in_bytes": 1455379
+      },
+      {
+        "id": 13671050802,
+        "name": "ps0-compiler-listattach-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:22e0efd1a66b8aa8d3d9237b8bac6c40077f8ceb5101cd185b052ea269afbeda",
+        "size_in_bytes": 506765
+      },
+      {
+        "id": 13670976450,
+        "name": "ps0-compiler-unless-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:f1e97c990d97ddfe4ff509550f7d1045f7d6439230e65600af045bc95942c664",
+        "size_in_bytes": 136511
+      },
+      {
+        "id": 13670976342,
+        "name": "ps0-compiler-grindac-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:ee43ce76614d7e1454834ecb9fe848611ba63bd12faa8593172ab6a8a46b640c",
+        "size_in_bytes": 632612
+      },
+      {
+        "id": 13670870995,
+        "name": "ps0-compiler-persistenthashmap-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:01bb6ba68e85b4f564ac44488f980f1ed3d24e1aa32479102402977ca449c032",
+        "size_in_bytes": 509062
+      },
+      {
+        "id": 13670737200,
+        "name": "ps0-project-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:90c05483a2de36ea8d90a9c45184041d5a76de6d4afeafae537a0de7bd513ad9",
+        "size_in_bytes": 80882304
+      },
+      {
+        "id": 13670691764,
+        "name": "ps0-do-layout-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:b126765cae8766287f8a2c8c5006727586b148be833962bfc129343f1227c49a",
+        "size_in_bytes": 47894
+      },
+      {
+        "id": 13670676733,
+        "name": "ps0-compiler-rangechar-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:1c03878e3e5d811ab8e775d04e632e8dc17fe31407dc31a0f2af603e3a9abd09",
+        "size_in_bytes": 41043
+      },
+      {
+        "id": 13670616948,
+        "name": "ps0-compiler-arrayperm-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:4cac22b35374b5bf0a2efe436f0333dd06d79def3007010a7fa5f00586e3b073",
+        "size_in_bytes": 86614
+      },
+      {
+        "id": 13670572363,
+        "name": "ps0-compiler-associative-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:4e8c9c6e2274e1302b35b2bd5557e248b171f6eed4aca00aac5cc7caff8fa221",
+        "size_in_bytes": 4831671
+      },
+      {
+        "id": 13670392185,
+        "name": "ps0-compiler-intlinear-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:87b2f87be1eba8f95091bc701487d12cc1d8dd1ab6ef2303b213df43e5e7be6b",
+        "size_in_bytes": 1335042
+      },
+      {
+        "id": 13670353292,
+        "name": "ps0-compiler-stream-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:0e9162b32be680d5865ea3ff3f769e1d6fb46b2b771e7ea1283f34107b00173b",
+        "size_in_bytes": 119593
+      },
+      {
+        "id": 13670323680,
+        "name": "ps0-compiler-natlemmas-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:8a002cb875cc3a582c4a18c103c8d4257402e44b168b73defedba2ec4811195c",
+        "size_in_bytes": 849840
+      },
+      {
+        "id": 13670302948,
+        "name": "ps0-compiler-options-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:3dd2d367408ba0bd611fb78363d0be0c3e45ab4ecae0a44d182845c343e3c24d",
+        "size_in_bytes": 370635
+      },
+      {
+        "id": 13670223161,
+        "name": "ps0-compiler-extdtreemapbasic-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:acc836c4c00127d4ac1528bbfdaf3680c19901eb6bbf23ecd6fd20bcdac37194",
+        "size_in_bytes": 980793
+      },
+      {
+        "id": 13670182950,
+        "name": "ps0-compiler-finbasic-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:521fd008d6358ea8c25fdcf50cf138878ac9358f13dcca452bf51c2545d94073",
+        "size_in_bytes": 166282
+      },
+      {
+        "id": 13670168145,
+        "name": "ps0-compiler-initwf-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:3baaeb810e4c19b5feeb015bdad744acedc719b326cf7c8da19c5dacbd0f568b",
+        "size_in_bytes": 275020
+      },
+      {
+        "id": 13670087987,
+        "name": "ps0-compiler-natbasic-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:c6f1ad8a966589817597f0cf66cbf9d6996f8307d04252c8ad721d064b46da6a",
+        "size_in_bytes": 495653
+      },
+      {
+        "id": 13670053207,
+        "name": "ps0-compiler-prelude-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:79a6fba71a3bde85c8403483aa41448a19fdffa447981afabb6804d1c91f71b7",
+        "size_in_bytes": 2933535
+      },
+      {
+        "id": 13670028082,
+        "name": "ps0-compiler-nanosecond-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:9587d6f4b9442e919f8ae44d8b93a825dbeca4ff70c87bc518492f33076e399c",
+        "size_in_bytes": 106813
+      },
+      {
+        "id": 13670018301,
+        "name": "ps0-compiler-spredlaws-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:0b8b0c94fcf7218bf735896f96790e923e3359fc39b1cc3550376d8791952d85",
+        "size_in_bytes": 113845
+      },
+      {
+        "id": 13669804170,
+        "name": "ps0-compiler-tzif-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:2d2095763ccee919d069720ff3d281b31cb8d325461a0c93297b1a29679e016c",
+        "size_in_bytes": 225128
+      },
+      {
+        "id": 13669654390,
+        "name": "ps0-external-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:8b9d22c4a73ed1278dbfc0ec947653a3f4941301cebe5d84b1b243fe1ef7e7ae",
+        "size_in_bytes": 30131
+      },
+      {
+        "id": 13669619034,
+        "name": "ps0-native-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:bba81487bbf70cf4dace3fffe654ab80405956edfc57e1dadb160331cc562a5a",
+        "size_in_bytes": 4137
+      },
+      {
+        "id": 13669519253,
+        "name": "ps0-compiler-fixtures-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:5e2bac293b4536be2baea7067a6a7380c46eade7d99e19edf4c19effef2df6e1",
+        "size_in_bytes": 3926045
+      },
+      {
+        "id": 13669389668,
+        "name": "ps0-compiler-iteratorempty-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611238733",
+        "digest": "sha256:b8db7493832948497d5993d25871e7a20c5d859e7ab1f96d65ba052f8a6f9861",
+        "size_in_bytes": 63899
+      },
+      {
+        "id": 13669389621,
+        "name": "ps0-operator-baseline-42611238733",
+        "digest": "sha256:ae9fe3967dfc50d05a4c97ecfc84c8366a40641db8d6d03de327ff252bb3c4a1",
+        "size_in_bytes": 2298
+      }
+    ],
+    "independentInspection": {
+      "status": "PASS",
+      "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+      "checkerSource": "459d420d9676dcb4cc77a2ffbdca6e8941a78f62",
+      "runner": "4b134185144d18e2a34b137d22a557a2ad20b812",
+      "run": 42612639415,
+      "job": 129144667008,
+      "modules": 33,
+      "actualFilesRehashed": 132,
+      "artifacts": [
+        {
+          "id": 13669929878,
+          "name": "ps0-recursive-boundaries-rehash-42612639415",
+          "digest": "sha256:d9ffcb4c77c85122da127d0d3744a50e76cabc68f56d6187e0e14f41396719ea",
+          "size_in_bytes": 55694
+        }
+      ],
+      "scope": "finite SDK-assisted target C/public olean equality and independent actual byte rehash, complete source reconstruction/line/import identity, ordinal definition correspondence and family multiplicities, explicit recursive/lambda/deriving/field source roles; not a transformed dependency graph qualification"
+    },
+    "finiteRealModules": 29,
+    "finiteRealDefinitionHeads": 959,
+    "finiteSyntheticModules": 4,
+    "finiteSyntheticDefinitionHeads": 37,
+    "modules": [
+      {
+        "converted_sha256": "b7fa9dbf19f415c46e0e1d6652b3ae4c22f43db9acf897698d298138258a8311",
+        "definitions": 0,
+        "edits": 4,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Array/Perm.c": "6a0303950dda09f4c838ada00d0232cd2fd5ef859e7a2ff75da9619c694444be",
+          "lib/lean/Init/Data/Array/Perm.olean": "9859e01697722586f061953d635cc5224fbed42cb1e04980470db0a41636cf38"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "7b107b7a969cc03ebebb795d694feac3399c23208c27a1e71e712b9088c9685d",
+        "module": "Init.Data.Array.Perm",
+        "pinned_blob": "b08ecedda868a775aff18bb58b105974ff2d7899",
+        "source_lines": 153,
+        "source_sha256": "d6904d4d764cef21ee13fba6aa3d439dd98289344057337e47944c322db34142",
+        "strategies": {}
+      },
+      {
+        "converted_sha256": "8c9813e8e5a5ef573255270f58f58137f6d19eae237c4a7b99708c6afd1aa80c",
+        "definitions": 43,
+        "edits": 6663,
+        "equation_definitions": [
+          "Option.dmap",
+          "containsKey",
+          "eraseKey",
+          "getEntry!",
+          "getEntry?",
+          "getEntryD",
+          "getKey?",
+          "getValue?",
+          "getValueCast?",
+          "replaceEntry"
+        ],
+        "hashes": {
+          "ir/Std/Data/Internal/List/Associative.c": "68003a189804790eb852b0387422e4aa14c167636db99efaa59ba35d19a5d192",
+          "lib/lean/Std/Data/Internal/List/Associative.olean": "a7b7a2370bc045d28d0eb5d734ed055e16c91158b87b99ee2a876e6c81d56444"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "123bc74c2b99183ae932edac51cf149fa3d0ec8625f40ff06b18d4ff0af7a5f9",
+        "module": "Std.Data.Internal.List.Associative",
+        "pinned_blob": "a662911b51429329607eaea56ab8d04990df2901",
+        "source_lines": 10382,
+        "source_sha256": "5320117e23a5c29e583c0fe3f0bc857e2e8378c9d466ae91d6daed1d12be5fe6",
+        "strategies": {
+          "const": 1,
+          "def": 6,
+          "function": 36
+        }
+      },
+      {
+        "converted_sha256": "d93567379270671804719482c238ff14661e6fd3d0e00cb07d84f9677307fd5b",
+        "definitions": 3,
+        "edits": 13,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/ClosedTermCache.c": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2",
+          "lib/lean/Lean/Compiler/ClosedTermCache.olean": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "fd9b852f61e0d1ea0f51e70bf6bc5ed4f768001cc082e88e4b52e92b1ef2cc66",
+        "module": "Lean.Compiler.ClosedTermCache",
+        "pinned_blob": "20b7acf5d684789ab52b81dda7def4b19568213c",
+        "source_lines": 40,
+        "source_sha256": "e1184350de6ef6ade1dc0f34d7320a4fc7445c5f9a7132d9ed7fc1f5518c38b9",
+        "strategies": {
+          "function": 3
+        }
+      },
+      {
+        "converted_sha256": "e34092b6c851a5e47e63bf8a7dbf7edae0983d18416933dfa53110adae293b6e",
+        "definitions": 4,
+        "edits": 25,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/DeclHash.c": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c",
+          "lib/lean/Lean/Compiler/LCNF/DeclHash.olean": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c1dde5607f3a2c59cb176381f0b5f46fa48a8863b2ab131fb5a9a2d1abfadabf",
+        "module": "Lean.Compiler.LCNF.DeclHash",
+        "pinned_blob": "5f818560cb8fcba0df6f64acb6bdc01c48425189",
+        "source_lines": 64,
+        "source_sha256": "b91bd09cd5fbf9f0def82b12c7ef5d2c5c5465f55edfeec8ad59a640f0b5d1d0",
+        "strategies": {
+          "function": 4
+        }
+      },
+      {
+        "converted_sha256": "dc659cf8a5aebed91588f6b637c388856094403a8c23f730871b13bfa687b49a",
+        "definitions": 4,
+        "edits": 40,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DeclarationForms.c": "5d7e11adf7656b2daa64d191f23782a4ce5d06f5eb01cba6ec5c6ad2f0f1e159",
+          "lib/lean/Lean/Compiler/DeclarationForms.olean": "2a1f9d698857303ec6d63f36a7ccaa1332ae80d5634cfaa2649db6a41361baf7"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "232fba0813f2a35df2f14868a827a5ef077683a34533226633bf66f1791dc95e",
+        "module": "Lean.Compiler.DeclarationForms",
+        "pinned_blob": "3761abd09f5c184ed9effb4f4749669bb1ac3039",
+        "source_lines": 59,
+        "source_sha256": "a79bce6dfbc24697a420d694507b1f43681db2ebeace76bbf12ab5b1877ebe54",
+        "strategies": {
+          "const": 1,
+          "def": 2,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "ee2266490c79e1347eb72566b39b9587e3843cba03c7508a810420bda872ca8a",
+        "definitions": 8,
+        "edits": 50,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DoLayoutProbe.c": "d391d37b19052ef8df2399c29ea235b1d61faa78f59f54d3d2ad42afe9ca06ca",
+          "lib/lean/Lean/Compiler/DoLayoutProbe.olean": "33fc5547e1c25f121c708c6131070bcdad029a68816b3ce6be411a2df3553a46"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "d01812ea033a14f88f515eaeac93ddbe37410b62dbabebc5e1b6bd2959a8fed5",
+        "module": "Lean.Compiler.DoLayoutProbe",
+        "pinned_blob": "09c87f1ea65f4907f3b5fbca7c854faabe533933",
+        "source_lines": 37,
+        "source_sha256": "644afda53861fd8b61c38d32168a852933594b3b0196c0e6f383ff593fbbedc4",
+        "strategies": {
+          "const": 5,
+          "def": 1,
+          "function": 2
+        }
+      },
+      {
+        "converted_sha256": "96c8466d93c4b2825f82ce044d3c4286c78ddd8816f247637591eb10c79e5fe1",
+        "definitions": 2,
+        "edits": 11,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/EmitUtil.c": "ab93c952e9ed62b7c7ca780f12a0f671db8c3308b5a601926fcf36d7d0408d16",
+          "lib/lean/Lean/Compiler/LCNF/EmitUtil.olean": "5be3a7804a7288819fb630226673d7a1454043658fe2a4ddb25a3b6a45280553"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a9558e51ef5e30eda0fe0bae6a3382a4ca5f25b5bde9d5eb1a47b1f7a18ff3e4",
+        "module": "Lean.Compiler.LCNF.EmitUtil",
+        "pinned_blob": "a1283439481c82fe7835b7b2d743e5e57bfd1111",
+        "source_lines": 56,
+        "source_sha256": "a940bfa697130609453846c9af49f426cb644a03f3fa4974f3ca947c3798436e",
+        "strategies": {
+          "def": 1,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "cdf3d3196d7403ba8206010843e2b3ca521486efcfd9539f42a8d2596aa082ea",
+        "definitions": 150,
+        "edits": 1029,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Data/ExtDTreeMap/Basic.c": "4c29cf7ac07cc684806d8b461ac5861b72bd7e995e9002e1a320f9c182baf408",
+          "lib/lean/Std/Data/ExtDTreeMap/Basic.olean": "44a1a59bf0031115e910a1354a20e13b303f0eca8a4c39173fbfbc2837ce2104"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a1a8feca5f6049c0ae4d6df169ca5b5565f09bfdd806c4a5c8377b8c71248410",
+        "module": "Std.Data.ExtDTreeMap.Basic",
+        "pinned_blob": "61b9f6c98cfab57ece20d2fab1d02b364a2fffa0",
+        "source_lines": 970,
+        "source_sha256": "2dbcdf4ae566bbfbf26ab5ae2bfa7ed78d40056afb6334e84729d4655d8cfcf1",
+        "strategies": {
+          "const": 1,
+          "def": 7,
+          "function": 142
+        }
+      },
+      {
+        "converted_sha256": "703212ed3421815962922308536832cc2fe1f16b199c62abda1e024667a18a8e",
+        "definitions": 26,
+        "edits": 100,
+        "equation_definitions": [
+          "add",
+          "div",
+          "elim0",
+          "land",
+          "lor",
+          "mod",
+          "modn",
+          "mul",
+          "shiftLeft",
+          "shiftRight",
+          "sub",
+          "succ",
+          "xor"
+        ],
+        "hashes": {
+          "ir/Init/Data/Fin/Basic.c": "54d27ad85376bf29c77c6fadd29cf2f2a74491c670afe9215d26fdd575ac5cdc",
+          "lib/lean/Init/Data/Fin/Basic.olean": "8f599a56bbf94a1e62b8403e65742ac650ae7f0555bafd8e9e5ab41f0b124850"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "f4fcdfe255d8f4cf85a8fc835ed2b78f00a3e812e91209c385d6ec83d9387fe4",
+        "module": "Init.Data.Fin.Basic",
+        "pinned_blob": "6fee3ab2eaacf1b76de02ea7f7880f29fbac8294",
+        "source_lines": 423,
+        "source_sha256": "bb3d4e46cb40a24f5a09e6e003c76f2b84140a598df81233f0bffe3afe08cbf4",
+        "strategies": {
+          "const": 13,
+          "def": 4,
+          "function": 9
+        }
+      },
+      {
+        "converted_sha256": "dfbc8d1d5ad2823981dd09cfbd4ed6418968ea80ff9c01185d9a169021bf389a",
+        "definitions": 41,
+        "edits": 356,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Grind/AC.c": "a578c7babb9c24a9a306383e07e903510c8032304f4159037b81c9329a9a9f63",
+          "lib/lean/Init/Grind/AC.olean": "6a08956e021397d08df8c20c85f81d29c6293dfd7a6be0e0a7c7e02ed370826e"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "383e3703c7c9c834b98dca4fb22c1e101055530bda48586c937ff8e3caa62bc9",
+        "module": "Init.Grind.AC",
+        "pinned_blob": "ed2fd91db65a2b928158478308a22c300d14ab85",
+        "source_lines": 713,
+        "source_sha256": "11f082933c55a50ee11e1c5833f76b40a9336827343b602b6cc60d7e42cdd44a",
+        "strategies": {
+          "def": 28,
+          "function": 13
+        }
+      },
+      {
+        "converted_sha256": "b90100fad1c19dc06321ca66f8c852eaac08a62222146a73470f24a47144721a",
+        "definitions": 52,
+        "edits": 411,
+        "equation_definitions": [
+          "Prod.map"
+        ],
+        "hashes": {
+          "ir/Init/Core.c": "e62dac2531da1648a0a3c82613e32077f3f815a76eebbcd5fce91287c479cb97",
+          "lib/lean/Init/Core.olean": "701ec5ec5217eaabed28ddd717710d605d516aab274be20c96572600463d7814"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "8d06ac80cac0f6d48dfea27827274cef8f5ec5065222ae1a11e1ef67cf01a4b3",
+        "module": "Init.Core",
+        "pinned_blob": "23e784c3806badcabd1e8f19c50946d66bc3c87a",
+        "source_lines": 2488,
+        "source_sha256": "264a0b48fedc91fadf55fc5caac8d91003e3908a6e5e42736e2ac8bf1f7cdf99",
+        "strategies": {
+          "const": 3,
+          "def": 14,
+          "function": 35
+        }
+      },
+      {
+        "converted_sha256": "6c07b50df35a30e6c194c32164291a4c9d33603ddde863ffc5e0e0cfd5bffda4",
+        "definitions": 236,
+        "edits": 1147,
+        "equation_definitions": [
+          "Bool.Internal.not",
+          "ByteArray.push",
+          "ByteArray.size",
+          "List.append",
+          "List.beq",
+          "List.concat",
+          "List.flatten",
+          "List.foldl",
+          "List.get",
+          "List.length",
+          "List.lengthTRAux",
+          "List.map",
+          "List.set",
+          "MonadExcept.ofExcept",
+          "Name.hasMacroScopes",
+          "Nat.add",
+          "Nat.beq",
+          "Nat.ble",
+          "Nat.mod",
+          "Nat.mul",
+          "Nat.pow",
+          "Nat.pred",
+          "Nat.sub",
+          "Option.map",
+          "Substring.Raw.bsize",
+          "appendCore",
+          "assembleParts",
+          "beq",
+          "eraseMacroScopesAux",
+          "extractImported",
+          "extractMacroScopesAux",
+          "extractMainModule",
+          "getHeadInfo?",
+          "getId",
+          "getInfo?",
+          "isIdent",
+          "isMissing",
+          "simpMacroScopesAux"
+        ],
+        "hashes": {
+          "ir/Init/Prelude.c": "c2dd15475af819d54fe5522abcfe5a8b910df2db100e35627ec0c88ec370df72",
+          "lib/lean/Init/Prelude.olean": "4adc149394f7833f84b2c7f3c96fc9ed4d60f83db84328d68f78a6a037865ffd"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "f177e6651bbf044fbbe0cb1d36a9835ae3c9a9e6eec05e547f1a99eb2f165e71",
+        "module": "Init.Prelude",
+        "pinned_blob": "58a4c37053f30d37b824190b934e759c16e53d7a",
+        "source_lines": 6160,
+        "source_sha256": "390e6b57ead28cb821a65533b21357f2f02d0a1525602f5a1ce9ee3eeb81fd12",
+        "strategies": {
+          "const": 44,
+          "def": 72,
+          "function": 120
+        }
+      },
+      {
+        "converted_sha256": "7b039cdfceae87e753c9aff067c9350ce37f88745cc6d65886b52b0767b298d0",
+        "definitions": 18,
+        "edits": 186,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/WF.c": "0332dc7f1d48ff60f3a5259bb415b6dde80984829e32748adddf429117bac9e4",
+          "lib/lean/Init/WF.olean": "6c0665dec4c392781f9f872f379d24e90bae7a99edb33e91014a152a7feabbd6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "1b911027623249671af016902e096ced0f004e10d3a0072a19e058f0f53fd998",
+        "module": "Init.WF",
+        "pinned_blob": "1d0216ed49d1250db35bc6b551fb03c0c7777293",
+        "source_lines": 533,
+        "source_sha256": "fe7c0a49de4a9c4b4fac24493f40598a1374837b17a6c334fc1ed03e23646e01",
+        "strategies": {
+          "const": 2,
+          "function": 16
+        }
+      },
+      {
+        "converted_sha256": "c2ffaf4c97f1172c5a3d1a5cc8a6b99c8b310c14d5fbe4d11149763a1f70cc81",
+        "definitions": 10,
+        "edits": 28,
+        "equation_definitions": [
+          "InlineAttributeKind.toAttrString"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/InlineAttrs.c": "20b77c4be84aa67c3159150a1d6b61e0ab20daad861078ed1de1f16abfd5b4e9",
+          "lib/lean/Lean/Compiler/InlineAttrs.olean": "87b9576a3e80d49208825ff3053ad2f37131d17c82484ce4eaf4c7311708d849"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "1c4d5f4abb2118499ac51c8573faed6df1b893ed0ffa369037a4641eb5a8c013",
+        "module": "Lean.Compiler.InlineAttrs",
+        "pinned_blob": "97135e8faf9478a4e4422feb66cdb97fc3209674",
+        "source_lines": 106,
+        "source_sha256": "a3599016d38e2128d6c1f3cc384a544540b33db1288221754700da42c7e7d01c",
+        "strategies": {
+          "def": 1,
+          "function": 9
+        }
+      },
+      {
+        "converted_sha256": "9a0784dde8952cabced407922df62a4c9ad592d7c4ad49bb9ac0869b63af8ec3",
+        "definitions": 100,
+        "edits": 672,
+        "equation_definitions": [
+          "Poly.div",
+          "Poly.divAll",
+          "Poly.divCoeffs",
+          "Poly.gcdCoeffs",
+          "Poly.getConst"
+        ],
+        "hashes": {
+          "ir/Init/Data/Int/Linear.c": "60e3592e6fcdcfe077971ddf0a5560646a183c5fe9d4ea81e4393082536fe72d",
+          "lib/lean/Init/Data/Int/Linear.olean": "f923a1a8155c683b843e5e4efb29dd2c500e8d6d9b618757d49498b0898c7a36"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "70cf278587b15b78d6d5ff541d11c7e2d8ef90c41520daf74801e2b2dc61bf37",
+        "module": "Init.Data.Int.Linear",
+        "pinned_blob": "0d334c02f4a08736e675863b63740d4791c6e5c7",
+        "source_lines": 2234,
+        "source_sha256": "b7d2ae684fed1ffaf293f33c2d736861e8fa9f89be108f41a110a7c42243b1ad",
+        "strategies": {
+          "const": 2,
+          "def": 51,
+          "function": 47
+        }
+      },
+      {
+        "converted_sha256": "902eb7e72024077eaff54c122d3c89dcbc674c235fa8eed759ff7521a96c9908",
+        "definitions": 3,
+        "edits": 18,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Data/Iterators/Producers/Monadic/Empty.c": "5d8be1b6c0f93601d50793ab50af6e52c6c7a66db5d75dfe3e2f72e709ca18ce",
+          "lib/lean/Std/Data/Iterators/Producers/Monadic/Empty.olean": "684ec092395c971d6d0c7da78fb7bcd07e2e090b054357e242ee52b2d2ee1fc4"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "d9dfddb13d5f2daa4d19cbc494a9dc5af6a66601d6d1a072102935d629f6a62e",
+        "module": "Std.Data.Iterators.Producers.Monadic.Empty",
+        "pinned_blob": "69171a771e242e603f687d85b63091f851037382",
+        "source_lines": 65,
+        "source_sha256": "245b8242302d418f78041c02b956946618e33042e181c5eb0b28624bb963f890",
+        "strategies": {
+          "def": 2,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "cc17432112eecf5fc07ba22c13cd0da15ea9187670c35ff33a802242a62899c1",
+        "definitions": 110,
+        "edits": 421,
+        "equation_definitions": [
+          "Alt.getCode",
+          "Alt.getParams",
+          "Cases.alts",
+          "Cases.discr",
+          "Cases.resultType",
+          "Cases.typeName",
+          "Cases.updateAlts",
+          "Code.isDecl",
+          "Code.isFun",
+          "Code.isReturnOf",
+          "Code.toCodeDecl!",
+          "CodeDecl.fvarId",
+          "DeclValue.size",
+          "FunDecl.binderName",
+          "FunDecl.fvarId",
+          "FunDecl.params",
+          "FunDecl.type",
+          "FunDecl.updateBinderName",
+          "FunDecl.value",
+          "LitValue.toExpr"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/Basic.c": "4576adf24c634cdc34518a3f65ed3ca0ea3dc32027d6633156f6eb0664c95ff2",
+          "lib/lean/Lean/Compiler/LCNF/Basic.olean": "e4fc60bb05756520835af0fc9342f47848b3e3cb2e4444616e8b584432d025f6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "b82bb8a955fe0e67522424e4032dea310c7773d6835faf772f2b16105c26ecf7",
+        "module": "Lean.Compiler.LCNF.Basic",
+        "pinned_blob": "82c8dee0b9d13f09d58a6404dd5d5abf797d236e",
+        "source_lines": 1263,
+        "source_sha256": "833cb3c38140ece99ee25149529e568839379193064f5a210f5fb5ffba08df59",
+        "strategies": {
+          "const": 17,
+          "def": 14,
+          "function": 79
+        }
+      },
+      {
+        "converted_sha256": "ec4eea43397fc325068f0f106bb0112d7b59c13ce9f44fcff679dcf4a97c31bd",
+        "definitions": 6,
+        "edits": 391,
+        "equation_definitions": [
+          "pmap"
+        ],
+        "hashes": {
+          "ir/Init/Data/List/Attach.c": "b8a0fe29ee0fd6f0252cc1ce2882674c0fed7143b8523f354299af2868b68187",
+          "lib/lean/Init/Data/List/Attach.olean": "769bb417c9df7113a934ff7bb5a9b0832f56bfe06826f8817d01273eef864a8d"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "b9638d128e7c866e904c1b99d059d2a613861a11632909ecdb43058fe29d3ffc",
+        "module": "Init.Data.List.Attach",
+        "pinned_blob": "3721b0623eae725fe5b43691e22942a10e349c97",
+        "source_lines": 875,
+        "source_sha256": "2d392f48cdd9c7886817d3ced7ea82b447e25738ca4249f97492ced94e8baf38",
+        "strategies": {
+          "def": 2,
+          "function": 4
+        }
+      },
+      {
+        "converted_sha256": "8659418a5ab5bcdfd37bb18bbdbb96a987e8cdbdd2ef2996b19c69c3093a3564",
+        "definitions": 11,
+        "edits": 49,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Time/Time/Unit/Nanosecond.c": "bfeaa4a0927cec86147fbcb1132e05a9ca1b7caf8bbb9c99ea1b818a9028fadd",
+          "lib/lean/Std/Time/Time/Unit/Nanosecond.olean": "3fdc3d0945b3b81ad8b35987c1d4acd954d207e1f05fce4f3623e144bee74c63"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "21b54fd7c1b0680be4ff7a62a757f1efd723a3b80e0286d94fc31dabdb04983f",
+        "module": "Std.Time.Time.Unit.Nanosecond",
+        "pinned_blob": "626e760e7771e798f92191620f441da1bd5a666f",
+        "source_lines": 167,
+        "source_sha256": "03563cc3ac4b27744ce308126e11e8d10a40af0f7c11b7e801a7e4f1914dc831",
+        "strategies": {
+          "const": 4,
+          "function": 7
+        }
+      },
+      {
+        "converted_sha256": "9c22629b3c498fbe5ada19819c42723cf7c1d8e0eca49d5d0959599aac4403cd",
+        "definitions": 4,
+        "edits": 222,
+        "equation_definitions": [
+          "recCompiled",
+          "repeat"
+        ],
+        "hashes": {
+          "ir/Init/Data/Nat/Basic.c": "febabcf79a2653c77d6810ca71320cc53b16c9cfb591bb387f3efd3eca52d1b1",
+          "lib/lean/Init/Data/Nat/Basic.olean": "c37d53a6a956f0e6643439eda339eb8986586d22c7c7f122e8b4bcad34914e5b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "0e61200ee15479f51566c49c640c25ea3d18f1b9118e3318715489621b8c0ba0",
+        "module": "Init.Data.Nat.Basic",
+        "pinned_blob": "9d952894c7d70b881bcb1c82151a1d8889499013",
+        "source_lines": 1234,
+        "source_sha256": "e26b5a54eab922f6b650cfe9032fe23172fa8cc0b63c75cff0c8bf99f6175289",
+        "strategies": {
+          "def": 1,
+          "function": 3
+        }
+      },
+      {
+        "converted_sha256": "74072952bf1036821add4241976e2acec2fd3ba94aa8a51cf00a08329c275523",
+        "definitions": 5,
+        "edits": 340,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Nat/Lemmas.c": "b90c7a737946b0c91499a8b195b8eadfc8a91b5058ae6ddc33c95be013fd81ca",
+          "lib/lean/Init/Data/Nat/Lemmas.olean": "eeae749c68027ee9f43f51fc437939a759f971c284b0f59039973c49f902ffe3"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "fb1afa480f840777f9e9e27feba0a17d48ef4bb66dbc17eae62934af337029e2",
+        "module": "Init.Data.Nat.Lemmas",
+        "pinned_blob": "0111c39744128c6d54f437d982a22ec321900a71",
+        "source_lines": 1952,
+        "source_sha256": "c4530be5c96b507c13823378db43912a3ba577a2a23944ce222aaa7d193d2581",
+        "strategies": {
+          "function": 5
+        }
+      },
+      {
+        "converted_sha256": "0b7ca207da75dc01adec08d39299d11a8e728640ce23738c80ae40f3fe01c35d",
+        "definitions": 20,
+        "edits": 126,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Nat/Internal/Linear.c": "2123db80549ed6f8db912032696fc12b0acb8cfdebffbf243bbe2ef351c10dcb",
+          "lib/lean/Init/Data/Nat/Internal/Linear.olean": "bd21c5cc9599dab48d4b52108529aa928668a96d7de050d2c9536b0ceb300e89"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "cdaa9ea28ad97452326e677d13e6a1e357eb43e7d16e2f479bf6fa10481df4ec",
+        "module": "Init.Data.Nat.Internal.Linear",
+        "pinned_blob": "ed9de4c44717b3801a9d32da8e19ea13c0f9cefb",
+        "source_lines": 547,
+        "source_sha256": "8f75864cbcbf54ac893dd839959273e2fa2e6ae31cf310c20a8b7f98db27d75b",
+        "strategies": {
+          "const": 1,
+          "def": 4,
+          "function": 15
+        }
+      },
+      {
+        "converted_sha256": "ea468b97233267929f3a3f63018592e82d4e124a7ec93ae5f05d2d781f1bd0e5",
+        "definitions": 34,
+        "edits": 96,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Data/Options.c": "a2fcbdf86bf69db3390c805f8f01cb18bd9043c94ad160ec25f904b80576dc13",
+          "lib/lean/Lean/Data/Options.olean": "e7cc0765a62dfc95cfe010e0c0ebb23f4297a7041fbf5f66f42688836a2c7fb6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "e4484fbcad09ac229068ef953ef9b6662c68f69be614b7f53b5711136d8b4564",
+        "module": "Lean.Data.Options",
+        "pinned_blob": "875b0607fba2d2e2be4d1c3cbd1a877442b6af71",
+        "source_lines": 259,
+        "source_sha256": "ea52d63ede2afb64ea83f199fbe8c778fdb5991683f98dccd2ff6e345dbaa1e9",
+        "strategies": {
+          "const": 5,
+          "def": 7,
+          "function": 22
+        }
+      },
+      {
+        "converted_sha256": "5ffbf652349ac67a63e8e10aeb132db5c1511ab140186ac88b4b3428ced00649",
+        "definitions": 1,
+        "edits": 3,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/OtherDecl.c": "a7374e6b1908187a18e4343b31c0d53a2dc4dec852b99b63e7770fe7074cdc3b",
+          "lib/lean/Lean/Compiler/LCNF/OtherDecl.olean": "5ef05c49d8b84529d1e37e70b4d5c3f52f26ddbe27a97a71c402ff341a408f5b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "dfe42debe970c5f81ac7606e5496a5fcf8122ba18ff83cb6721c2fb39be46853",
+        "module": "Lean.Compiler.LCNF.OtherDecl",
+        "pinned_blob": "a09e23d6f39bb7e87e7a5b10c2f0fc7556575cd4",
+        "source_lines": 26,
+        "source_sha256": "cb137113a603520d0553a2d5553f60f1c66425a5a79613edade23b45c7a5fd95",
+        "strategies": {
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "f83f136dbcbb18521dca5ee41d9bde948c62edcdd304016fe162ff1fc739349c",
+        "definitions": 44,
+        "edits": 170,
+        "equation_definitions": [
+          "Node.isEmpty",
+          "alter",
+          "alterAux",
+          "collectStats",
+          "contains",
+          "containsAux",
+          "erase",
+          "eraseAux",
+          "find?",
+          "findAux",
+          "findEntry?",
+          "findEntryAux",
+          "findKeyDAux",
+          "foldlMAux",
+          "getCollisionNodeSize",
+          "insert",
+          "insertAtCollisionNodeAux",
+          "insertAux",
+          "isEmpty",
+          "isUnaryNode"
+        ],
+        "hashes": {
+          "ir/Lean/Data/PersistentHashMap.c": "744d795ecd6f3aeacebe145fac2272998c23ffdc2e45b773782b47cc8c095bee",
+          "lib/lean/Lean/Data/PersistentHashMap.olean": "7625a97601a6094fe06d7efcefc53dcd1cd909b6663fd9629f5e0056656b64e6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "aede6c55f70d619107ff1fa36a6db20f19b1507662854b0f93790fae102c413b",
+        "module": "Lean.Data.PersistentHashMap",
+        "pinned_blob": "e4d81c5cc33ac8d6e67ad217402ec8688b11486e",
+        "source_lines": 447,
+        "source_sha256": "d63a21b3bdc0c616417d75c32c3e104cc185667229a8a899de3769c1a4252af4",
+        "strategies": {
+          "const": 2,
+          "def": 2,
+          "function": 40
+        }
+      },
+      {
+        "converted_sha256": "65b96b194b8627e60e2594b1a19821a13639a302d70954db263ff26746a2b40f",
+        "definitions": 1,
+        "edits": 4,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Range/Polymorphic/Char.c": "dc04854c76c3805628e2e8e5953cbd1bad6d65fd5cb8dc6cfa3036a599f5d36e",
+          "lib/lean/Init/Data/Range/Polymorphic/Char.olean": "3fc75f9c8ec753ee3d4110612019cbac5db2961404c8c49f0a9f6ace8712417b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "cdbe08301b4961c985c8bd0ad4e652284d9ddd4b7c4e2e64aa7ccabdc9fdd20a",
+        "module": "Init.Data.Range.Polymorphic.Char",
+        "pinned_blob": "2b2086145a31d9f3bc89411c73c009fa7ba7cdf1",
+        "source_lines": 80,
+        "source_sha256": "9ac365898cd186f08916b9395fd8ce6b740e55157125de2f8f7591f7dcfa68ec",
+        "strategies": {
+          "const": 1
+        }
+      },
+      {
+        "converted_sha256": "9fe41d99f2e51c671879e39f589f94d6c0e27666e8f45a8d19d2f08728615858",
+        "definitions": 1,
+        "edits": 40,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Do/SPred/Laws.c": "92a62b96d8578d57378fb1f64cb0cc255c5cdd406359572468581134c57a5916",
+          "lib/lean/Std/Do/SPred/Laws.olean": "4e4f63be2302f7dea065912e47b0792bed8bfd95e4bf2b7316cae1a8a432b86f"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "9df96478848a8042d264604e463b7a755071eef4cf39c7ca01d8d1371a3f72be",
+        "module": "Std.Do.SPred.Laws",
+        "pinned_blob": "9e762ecf143854a45660037b5333e5e6ca1ca9c8",
+        "source_lines": 183,
+        "source_sha256": "f9310bc9028049e1bce2643b781ace5e868da11cbc47244d1b48ceb48caf0c4f",
+        "strategies": {
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "b94c5b87b6f6e6907dab074a06c6c07ef6c96a78fe1cd91041e698025c9b6f60",
+        "definitions": 7,
+        "edits": 14,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/ScopeM.c": "0a149b683a22ff893a4631811a531bb483b19ef7845b036be8e7dbdd5be0de39",
+          "lib/lean/Lean/Compiler/LCNF/ScopeM.olean": "5e79495ce517159a2850bf5b9cb0ea1f530fca39f568672584a881dcb7ad36b7"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a64375f91700e7d9a54c4f8db853e79cb99e06640dc477896aa4cb36bb21a914",
+        "module": "Lean.Compiler.LCNF.ScopeM",
+        "pinned_blob": "5bc78059af7e9f16d980688c88c3eaeecae3ab1a",
+        "source_lines": 58,
+        "source_sha256": "555ea12e6be42a5e9be8eb3a22dc1d0dbc2ae748fcc7a971da7f63e23b64642a",
+        "strategies": {
+          "const": 2,
+          "function": 5
+        }
+      },
+      {
+        "converted_sha256": "cdd1f71c6e73168d2446f722b40e7c4b0bbd2428a684441ad1a8b23679fe4427",
+        "definitions": 3,
+        "edits": 67,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Range/Polymorphic/Internal/SignedBitVec.c": "4cb3ad8835c508305961446b661efaf5adb7a2630eebc2fd339902d3b7f29a46",
+          "lib/lean/Init/Data/Range/Polymorphic/Internal/SignedBitVec.olean": "1bd6c046e628af9deb5758a8461fdf1036cd4aa71260d6755d193c557d9f88d4"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "4e9159fd1bc1ecf4a1fa7c2e46d5b7a7403e286d4b5c3977a05af4638623bd26",
+        "module": "Init.Data.Range.Polymorphic.Internal.SignedBitVec",
+        "pinned_blob": "f76a64f6ba6aad26ff38c553fee23d9847883768",
+        "source_lines": 329,
+        "source_sha256": "875060a8cfe504a7e93f24e1efd482adbfc48335c1b4918b6c732014448e7890",
+        "strategies": {
+          "def": 3
+        }
+      },
+      {
+        "converted_sha256": "3d74ca828c554c4517126a7b0b1d0c5ceab95b77879f6dbe16173222a2ad2a6f",
+        "definitions": 1,
+        "edits": 32,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Stream.c": "9812d3069d279463e02d1b54c6416baa4a004c49c6b53d22ac40709271b01a5f",
+          "lib/lean/Init/Data/Stream.olean": "f99a172ba68aba2e292ce1fc10ca90f114a0b6b30e21a2ef17b18e523a829334"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "6b12f55df5cd8d7d4a379daa17ac392230dd5c61b600aa9e28474a2400d4a7d2",
+        "module": "Init.Data.Stream",
+        "pinned_blob": "029989c80ba87bf27f7489875f4deeeca3aeb35d",
+        "source_lines": 132,
+        "source_sha256": "95147844e8a36949bbfa534c6b815379dca5e4780e5e202bf9a4f143bc5b967a",
+        "strategies": {
+          "def": 1
+        }
+      },
+      {
+        "converted_sha256": "340d2738edcf91181d3355bac4a2c72107c9b7a6ca7d62e4f9be66c6f03d8e85",
+        "definitions": 18,
+        "edits": 29,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/TelescopeProbe.c": "6787d16744a58347a1b302b44ee5adf1825095401980b79227f473e6bd844452",
+          "lib/lean/Lean/Compiler/TelescopeProbe.olean": "c3073c1993e616c2e86cdc59cfe4ba9602e88220f8f60308520b6670d3ee56fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "bd979d59b64770d5ee094f5449de33600cf6c0a9ff5c48259a4bea98d2fc8bc3",
+        "module": "Lean.Compiler.TelescopeProbe",
+        "pinned_blob": "61b472c934e79b57492cf596ede396f7740230db",
+        "source_lines": 27,
+        "source_sha256": "59625e4a509b037e9a4003077e04803f692d098ae28c487a7ba3bb7bda73860c",
+        "strategies": {
+          "def": 6,
+          "function": 12
+        }
+      },
+      {
+        "converted_sha256": "26facad1f100c5fe4fa6a60b30c9c7b87906b3fbcd61f2733ccb592052cfd4c9",
+        "definitions": 23,
+        "edits": 77,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Time/Zoned/Database/TzIf.c": "5e1fb371fe2cdae64973d587c4100f87cc2f9efdf3b0bd6d3aef48937becda5f",
+          "lib/lean/Std/Time/Zoned/Database/TzIf.olean": "216867009032b8ecbadcd59ac0b2a05c7f0894a70b45dbcc23fb080fea4fb857"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "b16aa3f635f1e47c012ef2cadb281e8da5fc04adf254e865b44db43c4b529858",
+        "module": "Std.Time.Zoned.Database.TzIf",
+        "pinned_blob": "116665f0441768f93400d2e2ccb96446347e5fb9",
+        "source_lines": 333,
+        "source_sha256": "9eb6e0cf2b94f4fa93e3ea7995bba6377eee9cfd3b41f9f5da8c94e45e93d2a6",
+        "strategies": {
+          "const": 12,
+          "function": 11
+        }
+      },
+      {
+        "converted_sha256": "72ce25fe206d688642dc7d784b85efcef0704146c6a0fa1f3e7df363cc1449a7",
+        "definitions": 7,
+        "edits": 69,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/UnlessProbe.c": "fd246d62dd61c38d8539847e543e582dabd87c8249ce15d812f6bb32ad2c8af9",
+          "lib/lean/Lean/Compiler/UnlessProbe.olean": "69228e03dc14894822251ff96b24807791d552eb400717ff813f6487d2f85f77"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "5bd73a223c0bbc30de3faa1c7d4069e34a8e7d8b1fdc1d1db786fe3b8e1a4d43",
+        "module": "Lean.Compiler.UnlessProbe",
+        "pinned_blob": "4a70859dc3e2c1c9350517086bb7664f2538a176",
+        "source_lines": 31,
+        "source_sha256": "bd708d2f197ba646313e4790d6ed5704fd0453d2680aa430cc99603d2aa572cd",
+        "strategies": {
+          "const": 2,
+          "def": 1,
+          "function": 4
+        }
+      }
+    ],
+    "localRecursiveCaseEvidence": {
+      "fixture_sha256": "d1cbe648e5f77750dd44cccff6270da6ff9bb053b37fa38830c2af1c790f8870",
+      "grammar_migration_complete": false,
+      "mapped_recursive_roles": [
+        {
+          "recursiveDeclarationKinds": [
+            "Lean.Parser.Term.letIdDecl"
+          ],
+          "recursiveEquationValueKinds": [],
+          "recursiveGroupCount": 1,
+          "recursiveSimpleValueKinds": [
+            "ps0HostAdjacentCall"
+          ],
+          "recursiveTermContinuationKind": "",
+          "sourceName": "simpleValue"
+        },
+        {
+          "recursiveDeclarationKinds": [
+            "Lean.Parser.Term.letEqnsDecl"
+          ],
+          "recursiveEquationValueKinds": [
+            "ps0HostAdjacentCall",
+            "ps0HostAdjacentCall"
+          ],
+          "recursiveGroupCount": 1,
+          "recursiveSimpleValueKinds": [],
+          "recursiveTermContinuationKind": "",
+          "sourceName": "equationValue"
+        },
+        {
+          "recursiveDeclarationKinds": [
+            "Lean.Parser.Term.letIdDecl",
+            "Lean.Parser.Term.letEqnsDecl"
+          ],
+          "recursiveEquationValueKinds": [
+            "ps0HostAdjacentCall",
+            "ps0HostAdjacentCall"
+          ],
+          "recursiveGroupCount": 1,
+          "recursiveSimpleValueKinds": [
+            "ps0HostAdjacentCall"
+          ],
+          "recursiveTermContinuationKind": "",
+          "sourceName": "mixedValue"
+        },
+        {
+          "recursiveDeclarationKinds": [
+            "Lean.Parser.Term.letIdDecl"
+          ],
+          "recursiveEquationValueKinds": [],
+          "recursiveGroupCount": 1,
+          "recursiveSimpleValueKinds": [
+            "ps0HostAdjacentCall"
+          ],
+          "recursiveTermContinuationKind": "ps0HostAdjacentCall",
+          "sourceName": "pureValue"
+        }
+      ],
+      "oracle": "PS0_LOCAL_REC:7:4:5:7:4",
+      "original_let_rec_separator_and_root_ranges": true,
+      "scope": "native local recursive declaration groups, PS ID signatures/defaults and simple/equation values, native pattern/termination/quotation ownership; not all recursion/control grammar",
+      "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+      "verified_execution": false
+    },
+    "failedInitialInspection": {
+      "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+      "runner": "e31e85e0d4cab4b27da0999dd446e1be95c246a6",
+      "run": 42612250197,
+      "job": 129143336073,
+      "status": "FAILED",
+      "reason": "inspection checker incorrectly keyed different namespaces' repeated short declaration names by a dictionary; retain failure; ordinal source-order matching replaces the collision while keeping all production/mode/hash assertions"
+    },
+    "qualification": "finite Native and PS target-module builds/parity and exact source-role evidence, reusing pinned Lean4 and native Lake; complete transformed compiler graph remains unqualified",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "transformedCompilerGraphThirteenthAttempt": {
+    "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+    "runner": "7a109e74f0e40a16915e7d59d3151d1d24fdc132",
+    "run": 42611545930,
+    "job": 129140934235,
+    "status": "IN_PROGRESS",
+    "freshNativeLakeTargetBuild": true,
+    "nativeCaptureProducerSource": "742c5c180a8ee7314075d63792c220b710e96504",
+    "nativeCaptureProducerRun": 42580512720,
+    "fullGraphBuild": false,
+    "canonicalFixedPoint": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "recordCoercionPriorityTestCandidate": {
+    "source": "3fae64b355cf125fb40b519e79e67c86759d21ee",
+    "runner": "1fe5f3ec93294866eaac7a1c7941985f59d2d9c7",
+    "run": 42612817167,
+    "job": 129145250658,
+    "status": "FAILED",
+    "scope": "native control rejects invalid record fields with a Coe Nat target instance; PS accepted through the unrestricted legacy wrapper, so the intended rejection assertion fails"
+  },
+  "currentContinuation": {
+    "qualifiedSource": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+    "qualifiedRunner": "3872789161031705dfb661752b402869dfeb804c",
+    "run": 42611238733,
+    "linuxJobsPassed": 30,
+    "independentFilesRehashed": 132,
+    "independentInspection": {
+      "status": "PASS",
+      "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+      "checkerSource": "459d420d9676dcb4cc77a2ffbdca6e8941a78f62",
+      "runner": "4b134185144d18e2a34b137d22a557a2ad20b812",
+      "run": 42612639415,
+      "job": 129144667008,
+      "modules": 33,
+      "actualFilesRehashed": 132,
+      "artifacts": [
+        {
+          "id": 13669929878,
+          "name": "ps0-recursive-boundaries-rehash-42612639415",
+          "digest": "sha256:d9ffcb4c77c85122da127d0d3744a50e76cabc68f56d6187e0e14f41396719ea",
+          "size_in_bytes": 55694
+        }
+      ],
+      "scope": "finite SDK-assisted target C/public olean equality and independent actual byte rehash, complete source reconstruction/line/import identity, ordinal definition correspondence and family multiplicities, explicit recursive/lambda/deriving/field source roles; not a transformed dependency graph qualification"
+    },
+    "finiteRealModules": 29,
+    "finiteRealDefinitionHeads": 959,
+    "finiteSyntheticModules": 4,
+    "finiteSyntheticDefinitionHeads": 37,
+    "fullTransformedGraph": {
+      "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+      "runner": "7a109e74f0e40a16915e7d59d3151d1d24fdc132",
+      "run": 42611545930,
+      "job": 129140934235,
+      "status": "IN_PROGRESS",
+      "freshNativeLakeTargetBuild": true,
+      "nativeCaptureProducerSource": "742c5c180a8ee7314075d63792c220b710e96504",
+      "nativeCaptureProducerRun": 42580512720,
+      "fullGraphBuild": false,
+      "canonicalFixedPoint": false,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "nextActions": [
+      "Inspect transformed graph thirteen and address its first remaining failures using pinned native productions",
+      "Validate the new record/coercion priority test and preserve native grammar/quotation boundaries",
+      "Extend remaining ordinary grammar and original-source fidelity roles; keep finite target evidence separate",
+      "Require whole transformed graph linking/runtime/native parity, relocated full compiler operation and canonical fixed point before full compiler completion"
+    ],
+    "goalStatus": "ACTIVE",
+    "obligationsPending": 240,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "recordCoercionBoundaryCandidate": {
+    "source": "446ff7b4720ed812b80f7f8d761c594a88f36b01",
+    "runner": "3fed5aaaea9976288edc6429bb4301b2be3ec9b8",
+    "status": "PENDING",
+    "scope": "exclude only PS0.pscvBracedExpression at the ordinary PS native-leading boundary; no new qualification"
   }
 }
