@@ -5240,5 +5240,112 @@
       "status": "IN_PROGRESS",
       "job": 128901327549
     }
+  },
+  "ps_built_grammar_host_fixed_point": {
+    "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
+    "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
+    "run": 42532849633,
+    "stageOne": {
+      "status": "PASS",
+      "job": 128891725901,
+      "modules": 2567,
+      "nativeLakeJobs": 5138,
+      "freshPsBuiltGrammarHost": "PASS",
+      "hostMetadataFiles": 200,
+      "sourceCensusNativeCompatible": 72797,
+      "sourceCensusMappedPs": 0,
+      "artifact": 13639457688,
+      "sha256": "13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b"
+    },
+    "stageTwo": {
+      "status": "PASS",
+      "job": 128901327549,
+      "modules": 2567,
+      "nativeLakeJobs": 5138,
+      "freshPsBuiltGrammarHost": "PASS",
+      "hostMetadataFiles": 200,
+      "changedC": 0,
+      "changedPublicOlean": 0,
+      "sourceCensusNativeCompatible": 72797,
+      "sourceCensusMappedPs": 0,
+      "artifact": 13639899416,
+      "sha256": "1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c"
+    },
+    "scope": "all six Linux jobs; two full native-compatible compiler stages, fresh grammar-host metadata/runtime in each, strict all-module C/public olean fixed point; not whole canonical PS syntax conversion or later head qualification",
+    "verified_execution": false,
+    "migrationSummary": {
+      "schema": "ps0-compiler-source-migration/1",
+      "source_commit": "2cba0bc26df49c52d653598fd9c791f23209199c",
+      "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "module_count": 2567,
+      "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+      "verified_execution": false,
+      "bootstrap_package_identity": null,
+      "stage_lean_options": {
+        "interpreter.prefer_native": false
+      },
+      "runtime_smoke": "PASS",
+      "runtime_grammar_host": {
+        "status": "PASS",
+        "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+        "evidence_sha256": "1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1",
+        "metadata_files": 200,
+        "provenance": "fresh all-.ps compiler output metadata; explicit pinned Lean SDK dependencies"
+      },
+      "lean_header_sha256": "eb951e1171d39b828e7ad60aed0b90759598b678bfe58cf85c65a1559c021bf9",
+      "scope": "All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers"
+    },
+    "inspection": {
+      "runner": "4fc9653592b931653be89036cd614719516e260a",
+      "run": 42537298767,
+      "job": 128904326108
+    },
+    "status": "PASS",
+    "artifacts": [
+      {
+        "id": 13639899416,
+        "name": "ps0-compiler-stage2-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c"
+      },
+      {
+        "id": 13639457688,
+        "name": "ps0-compiler-stage1-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b"
+      },
+      {
+        "id": 13638251967,
+        "name": "ps0-native-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:8eeacace72f646f5f4e9ef0006e45a097d7a73f8430c137e62e3afbd4e7aaf04"
+      },
+      {
+        "id": 13638061672,
+        "name": "ps0-external-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:b75d2fa1d622eb408a499c528fd5fb6311d9a424e42b2c0cfd0ba00730d8fb50"
+      },
+      {
+        "id": 13637694934,
+        "name": "ps0-project-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:0d1323b692e255641b16e0211eea4e39b4d591cdfda4a61a62144b32867209f8"
+      }
+    ],
+    "stageTwoInspection": {
+      "runner": "e009acafdd65b73dfdd363063cf014554c278400",
+      "run": 42539789861,
+      "job": 128911926744,
+      "status": "PASS",
+      "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+      "hostEvidence_sha256": "1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1",
+      "sortedHostMetadata_sha256": "6fada1ca81b868b0c5aec19c299a4416e241afb8785e35a573e5f9980d3b4fb6"
+    },
+    "fixedPoint": {
+      "changedC": [],
+      "changedPublicOlean": []
+    }
+  },
+  "operator_adapter_candidate": {
+    "source": "88a45dfdf6351e245b0b3bc0ff24f84b65b7b2e3",
+    "runner": "27aec23f926edc86dd5866d455cfd3b6b9f53228",
+    "status": "PENDING",
+    "verified_execution": false
   }
 }

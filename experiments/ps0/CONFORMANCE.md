@@ -1,5 +1,16 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-09 — full native-compatible compiler fixed point and fresh grammar host PASS
+
+Exact source `2cba0bc26df49c52d653598fd9c791f23209199c`, runner `b83ebb191c21c0985c9dc6df3a4cca11ae31e121`: [Linux run 42532849633](https://github.com/dwijayuda/pskernel/actions/runs/42532849633) passed all six jobs. Stage one job 128891725901 and stage two job 128901327549 each built 2,567 modules (2,546 pinned upstream + 21 PS0) with 5,138 native Lake jobs, C/object/static archive/executable linking, runtime checks, and full module/origin census. Stage two reports zero changed C files and zero changed public olean files across all modules.
+
+Both stages passed relocated grammar-host and freshly .ps-built compiler grammar-host checks with 200 metadata files from their own builds; pinned Lean SDK dependencies remain explicit. Independent stage-two artifact inspection [run 42539789861/job 128911926744](https://github.com/dwijayuda/pskernel/actions/runs/42539789861/job/128911926744), runner `e009acafdd65b73dfdd363063cf014554c278400`, passed byte hashes and empty fixed-point arrays. Driver SHA-256 `4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9`; raw host evidence SHA-256 `1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1`; sorted host metadata JSON SHA-256 `6fada1ca81b868b0c5aec19c299a4416e241afb8785e35a573e5f9980d3b4fb6`. Stage-one artifact 13639457688 SHA-256 `13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b`; stage-two artifact 13639899416 SHA-256 `1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c`.
+
+Scope boundary: this earlier source pin has 72,797 native-compatible selected census rows and zero mapped PS rows. It qualifies full native-compatible .ps rebuilds and fixed point, not canonical ProofScript conversion or later macro/lambda/operator source pins. All 242 broad obligations remain PENDING; grammarMigrationComplete and verified_execution remain false.
+
+Operator candidate `e39fb9aa0c62468ece715a0138e8e939ebc8e8cb`, runner `1a8f1e6f4d71f78b4347354df03f2e942a09fd77`, Linux run 42539661055 failed the initial clean build on qualified parser type names in HostCategories. This is a build failure, not functional negative evidence. Corrected candidate `88a45dfdf6351e245b0b3bc0ff24f84b65b7b2e3`, runner `27aec23f926edc86dd5866d455cfd3b6b9f53228`, is pending Linux qualification; no operator conformance claimed.
+
+
 ## Owned lambda operands and exact compiler output — Linux PASS
 
 Qualified source **7f885fcc1caa9277e3633c849d086bb2614e143e**, runner **be50016de092e47d1df9306aac8a941ef6b49bf4**, [run 42537205963](https://github.com/dwijayuda/pskernel/actions/runs/42537205963): **all four jobs PASS** — project **128904045087**, native **128904044934**, proof-linked **128904044798**, host **128904044594**.
