@@ -314,7 +314,7 @@ def ps0NativeFieldDefinition : Lean.Parser.Parser := PS0.DoLayout.fieldDefinitio
 def ps0NativeFieldEquations : Lean.Parser.Parser := PS0.DoLayout.fieldEquations
 @[psDoElem_parser 20000]
 def ps0NativeDoIf : Lean.Parser.Parser := PS0.DoLayout.ifElem
-@[psTerm_parser 30000]
+@[psTerm_parser 30002]
 def ps0NativePunningBraces : Lean.Parser.Parser := PS0.DoLayout.punningBraces
 syntax (name := ps0PositionalArg) PS0.DoLayout.argumentValue : psCallArg
 syntax (name := ps0NamedArg) ident " := " PS0.DoLayout.argumentValue : psCallArg
