@@ -26,7 +26,10 @@ native.write_text('module\nprelude\npublic import Lean\npublic section\nnamespac
                   'def plain : Nat := #[2, 3][0]\n'
                   'def optional : Option Nat := #[2, 3][1]?\n'
                   'def panicValue : Nat := #[2, 3][1]!\n'
-                  "def proofValue : Nat := #[2, 3][0]'(by decide)\n")
+                  "def proofValue : Nat := #[2, 3][0]'(by decide)\n"
+                  'def sliceBoth : Subarray Nat := #[2, 3][0:2]\n'
+                  'def sliceLower : Subarray Nat := #[2, 3][1:]\n'
+                  'def sliceUpper : Subarray Nat := #[2, 3][:1]\n')
 census = work / 'native-census.json'
 run(['lake', 'exe', 'ps0', 'census-source', native, 'NativeIndex', census], 'native-census')
 shapes = []
@@ -37,7 +40,7 @@ for command in json.loads(census.read_text())['commands']:
     value = declaration['valueSyntax']['args'][1]
     shapes.append(dict(name=declaration['sourceName'], kind=value['kind'], arity=len(value['args']),
                        children=[dict(kind=x['kind'], atom=x['atom']) for x in value['args']]))
-assert len(shapes) == 4
+assert len(shapes) == 7
 print('PS0_NATIVE_INDEX_SHAPES:' + json.dumps(shapes, sort_keys=True), flush=True)
 fixture = Path('tests/v1/index_operands.ps')
 run(['lake', 'env', 'lean', 'tests/debug-index-layout.lean'], 'parser-layout')
