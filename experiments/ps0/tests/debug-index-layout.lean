@@ -25,3 +25,15 @@ run_cmd do
     match Parser.runParserCategory env `psTerm input with
     | .ok stx => logInfo m!"PS0_INDEX_PARSE {input}: {kinds stx}"
     | .error error => logInfo m!"PS0_INDEX_PARSE_ERROR {input}: {error}"
+  let retained : System.FilePath := "build/retained-index-signature.txt"
+  if ← retained.pathExists then
+    let input ← IO.FS.readFile retained
+    let (_, parser) ← (Parser.mkParserOfConstant (Parser.parserExtension.getState env).categories
+      `PS0.StandardAdapters.ps0StandardTheorem).run {env, opts := {}}
+    let ictx := Parser.mkInputContext input "retained-index-signature"
+    let parsed := parser.fn.run ictx {env, options := {}} (Parser.getTokenTable env)
+      (Parser.mkParserState input)
+    if !parsed.allErrors.isEmpty then
+      logInfo m!"PS0_INDEX_DECLARATION_ERROR: {parsed.toErrorMsg ictx}"
+    else
+      logInfo m!"PS0_INDEX_DECLARATION_PARSE: {parsed.stxStack.back.getKind}"
