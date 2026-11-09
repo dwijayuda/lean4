@@ -86,7 +86,7 @@ syntax (name := psWhereLocalDefinition) (Lean.Parser.Command.docComment)?
       "{" >> Lean.Parser.sepByIndent (Lean.Parser.categoryParser `psTactic 0) "; "
         (allowTrailingSep := true) >> "}"
 
-syntax (name := psWhereFinallySection) "|" ident Lean.Parser.Term.darrow
+syntax (name := psWhereFinallySection) "|" ident Lean.Parser.darrow
   nativePSWhereTacticBlock : psWhereFinallySection
 syntax (name := psWhereFinallyBraced) "finally" "{" nativePSWhereDefaultTactics
   psWhereFinallySection* "}" : psWhereFinally
@@ -167,11 +167,11 @@ private def lowerWhereTactics (source : Syntax) : MacroM Syntax := do
 private def lowerFinally (source : Syntax) : MacroM Syntax := do
   if source.isOfKind ``psWhereFinallyBraced then
     unless source.getArgs.size == 5 do Macro.throwError "PS0V1-WHERE-FINALLY: invalid braced tail"
-    let sections ← source[3].getArgs.mapM fun section => do
-      unless section.isOfKind ``psWhereFinallySection && section.getArgs.size == 4 do
+    let sections ← source[3].getArgs.mapM fun proofSection => do
+      unless proofSection.isOfKind ``psWhereFinallySection && proofSection.getArgs.size == 4 do
         Macro.throwError "PS0V1-WHERE-FINALLY: invalid subsection"
-      return .node (sourceOrigin section) ``Lean.Parser.Term.whereFinallySubsection
-        #[section[0], section[1], section[2], ← lowerWhereTactics section[3]]
+      return .node (sourceOrigin proofSection) ``Lean.Parser.Term.whereFinallySubsection
+        #[proofSection[0], proofSection[1], proofSection[2], ← lowerWhereTactics proofSection[3]]
     return .node (sourceOrigin source) ``Lean.Parser.Term.whereFinally
       #[source[0], mkNullNode #[← lowerWhereTactics source[2]], mkNullNode sections]
   unless source.isOfKind ``psWhereFinallyNative && source.getArgs.size == 1 do
@@ -181,10 +181,10 @@ private def lowerFinally (source : Syntax) : MacroM Syntax := do
     Macro.throwError "PS0V1-WHERE-FINALLY: unexpected native tail"
   let default ← if native[1].getArgs.isEmpty then pure native[1] else
     pure <| native[1].setArg 0 (← lowerWhereTactics native[1][0])
-  let sections ← native[2].getArgs.mapM fun section => do
-    unless section.isOfKind ``Lean.Parser.Term.whereFinallySubsection && section.getArgs.size == 4 do
+  let sections ← native[2].getArgs.mapM fun proofSection => do
+    unless proofSection.isOfKind ``Lean.Parser.Term.whereFinallySubsection && proofSection.getArgs.size == 4 do
       Macro.throwError "PS0V1-WHERE-FINALLY: unexpected native subsection"
-    return section.setArg 3 (← lowerWhereTactics section[3])
+    return proofSection.setArg 3 (← lowerWhereTactics proofSection[3])
   return (native.setArg 1 default).setArg 2 (native[2].setArgs sections)
 
 private def lowerOptionalFinally (source : Syntax) : MacroM Syntax := do
