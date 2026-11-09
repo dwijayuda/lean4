@@ -99,7 +99,10 @@ example : collectionArgument = 3 := by rfl
 macro "bodyWrapperOrigin " e:psTerm : term => do
   let lowered ← PS0.Syntax.lowerBodyValue e.raw
   unless e.raw.isOfKind ``ps0HostBraces && lowered.isOfKind ``Lean.Parser.Term.paren &&
-      lowered.getRange? == e.raw.getRange? do
+      lowered.getRange? == e.raw.getRange? &&
+      lowered[0].isOfKind ``Lean.Parser.Term.hygienicLParen &&
+      lowered[0][0].getRange? == e.raw[0].getRange? &&
+      lowered[2].getRange? == e.raw[2].getRange? do
     Lean.Macro.throwError "PS0_BODY_WRAPPER_ORIGIN"
   `(True)
 example : bodyWrapperOrigin { /- retain wrapper source span -/ (1 + 1) } := by trivial
