@@ -110,7 +110,7 @@
       "slots": [
         "expression"
       ],
-      "adapter": "ps0HostDoReturn"
+      "adapter": "ps0NativeDoReturn"
     },
     {
       "nativeKind": "Lean.Parser.Term.doExpr",

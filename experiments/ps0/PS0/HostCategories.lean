@@ -230,7 +230,6 @@ syntax (name := ps0HostDoLetMut) (priority := high)
 syntax (name := ps0HostDoBind) (priority := high)
   "let " ident "←" psTerm : psDoElem
 syntax (name := ps0HostDoReassign) (priority := high) ident ":=" psTerm : psDoElem
-syntax (name := ps0HostDoReturn) (priority := high) "return " psTerm : psDoElem
 syntax (name := ps0HostDoExpr) (priority := high)
   Lean.Parser.Term.notFollowedByRedefinedTermToken psTerm : psDoElem
 syntax (name := ps0HostDoItem) ppLine psDoElem ";"? : psDoItem
@@ -480,9 +479,6 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
   | `(psDoElem| $name:ident := $value:psTerm) => do
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
       return (← `(doElem| $name:ident := $value:term)).raw
-  | `(psDoElem| return $value:psTerm) => do
-      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
-      return (← `(doElem| return $value)).raw
   | `(psDoElem| $value:psTerm) => do
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
       return (← `(doElem| $value:term)).raw
