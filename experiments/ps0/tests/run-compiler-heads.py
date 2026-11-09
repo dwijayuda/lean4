@@ -47,11 +47,17 @@ def run(args, label, ok=True):
             timed_out = True
             # Own the native Lake child group so timeout evidence survives and
             # its compiler children do not outlive this bounded qualification.
-            os.killpg(process.pid, signal.SIGTERM)
+            try:
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
             try:
                 code = process.wait(timeout=30)
             except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGKILL)
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
                 code = process.wait(timeout=30)
     output = log_path.read_text()
     print(output, end='', flush=True)
