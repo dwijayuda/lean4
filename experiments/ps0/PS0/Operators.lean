@@ -58,7 +58,7 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
     parsed := (categoryParser `term prec).fn ctx initial
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
-  return parsed.popSyntax.pushSyntax <| .node native.getHeadInfo bridgeKind #[native]
+  return parsed.popSyntax.pushSyntax <| .node .none bridgeKind #[native]
 
 @[implemented_by leadingImpl]
 opaque leadingFn : ParserFn
@@ -82,10 +82,10 @@ private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
   if native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 then
-    return parsed.popSyntax.pushSyntax <| .node native.getHeadInfo ownedPostfixKind #[native]
+    return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
   unless kinds.contains native.getKind && native.getArgs.size == 3 do
     return parsed.mkUnexpectedError "PS0V1-OP-SHAPE: unexpected native binary operator result"
-  return parsed.popSyntax.pushSyntax <| .node native.getHeadInfo ownedKind #[native]
+  return parsed.popSyntax.pushSyntax <| .node .none ownedKind #[native]
 
 @[implemented_by trailingImpl]
 opaque trailingFn : ParserFn
