@@ -99,6 +99,25 @@ def recursivePrefix : Parser :=
 @[run_parser_attribute_hooks] def unlessTerm : Parser :=
   operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.termUnless
 
+private def manyPunningFields (source : Syntax) : Bool := Id.run do
+  unless source.isOfKind ``Lean.Parser.Term.structInst && source.getArgs.size == 6 &&
+      source[1].getArgs.isEmpty && source[4].getArgs.isEmpty &&
+      source[3].getArgs.size == 1 && source[3][0].getArgs.isEmpty &&
+      source[2].isOfKind ``Lean.Parser.Term.structInstFields do return false
+  let fields := source[2][0].getSepArgs
+  return fields.size >= 2 && fields.all fun field =>
+    field.isOfKind ``Lean.Parser.Term.structInstField && field.getArgs.size == 2 &&
+      field[1].getArgs.isEmpty && field[0].getArgs.size == 2 &&
+      field[0][0].isIdent && field[0][1].getArgs.isEmpty
+
+@[run_parser_attribute_hooks] def punningBraces : Parser :=
+  withFn (fun _ ctx initial =>
+    let parsed := Lean.Parser.Term.structInst.fn ctx initial
+    if parsed.hasError then parsed
+    else if manyPunningFields parsed.stxStack.back then PS0.Operators.leading.fn ctx initial
+    else initial.mkUnexpectedError "PS0V1-PUNNING-BRACES: expected a native punning field list")
+    Lean.Parser.Term.structInst
+
 end PS0.DoLayout
 
 @[psTerm_parser low]
@@ -132,6 +151,8 @@ def ps0NativeDoNested : Lean.Parser.Parser := PS0.DoLayout.nestedElem
 def ps0NativeDoUnless : Lean.Parser.Parser := PS0.DoLayout.unlessElem
 @[psTerm_parser 20000]
 def ps0NativeTermUnless : Lean.Parser.Parser := PS0.DoLayout.unlessTerm
+@[psTerm_parser 30000]
+def ps0NativePunningBraces : Lean.Parser.Parser := PS0.DoLayout.punningBraces
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
 syntax (name := ps0NativeEllipsisArg) Lean.Parser.Term.ellipsis : psCallArg

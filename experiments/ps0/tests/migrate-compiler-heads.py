@@ -89,6 +89,16 @@ def single_type_call(operand, role='owned binder type'):
     if operand['kind'] == 'Lean.Parser.Term.fun':
         body = operand['args'][1]
         if body['kind'] == 'Lean.Parser.Term.basicFun':
+            for binder in body['args'][0]['args']:
+                if binder['kind'] == 'Lean.Parser.Term.typeAscription':
+                    assert len(binder['args']) == 5 and len(binder['args'][3]['args']) <= 1
+                    if binder['args'][3]['args']:
+                        single_type_call(binder['args'][3]['args'][0], role + ' lambda binder type')
+                elif binder['kind'] in ['Lean.Parser.Term.implicitBinder',
+                                       'Lean.Parser.Term.strictImplicitBinder',
+                                       'Lean.Parser.Term.instBinder']:
+                    telescope([binder])
+            optional_local_type(body['args'][1], role + ' lambda result type')
             single_type_call(body['args'][3], role + ' lambda body')
         return
     if operand.get('nativeBinaryOperator', False):
@@ -360,6 +370,7 @@ for previous_command, command in original_commands(snapshot['commands']):
         'Lean.Parser.Command.attribute', 'Lean.Parser.Command.structure',
         'Lean.Parser.Command.inductive', 'Lean.Parser.Command.coinductive',
         'Lean.Parser.Command.classInductive',
+        'Lean.Parser.commandSeal__',
     }
     if boundary_hazard:
         use_alias = False

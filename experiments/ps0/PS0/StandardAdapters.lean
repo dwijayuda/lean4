@@ -44,8 +44,13 @@ declare_syntax_cat psStructField
 
 syntax (name := ps0StructFieldDef) ":=" ("private")? psTerm : psStructFieldValue
 syntax (name := ps0StructFieldEqns) ("private")? nativePSMatchAlts : psStructFieldValue
+
+@[run_parser_attribute_hooks] def nativePSStructFieldBinders : Lean.Parser.Parser :=
+  Lean.Parser.many (Lean.Parser.checkColGt >> Lean.Parser.ppSpace >>
+    Lean.Parser.categoryParser `psDeclBinder 0)
+
 syntax (name := ps0StructField) Lean.Parser.Term.structInstLVal
-  (psDeclBinder* (":" psTerm)? psStructFieldValue)? : psStructField
+  (nativePSStructFieldBinders (":" psTerm)? psStructFieldValue)? : psStructField
 
 @[run_parser_attribute_hooks] def nativePSStructFields : Lean.Parser.Parser :=
   Lean.Parser.Term.structInstFields

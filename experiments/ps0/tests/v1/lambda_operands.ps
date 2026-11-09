@@ -74,6 +74,27 @@ def singletonAlternative (n : Nat) : Id LiteralBag := do
   return {n}
 example : (singletonAlternative(3)).value = 3 := by rfl
 
+structure PunningPair where
+  first : Nat
+  second : Nat
+const multiPunning: Id(PunningPair) := do
+  let first := 3
+  let second := 4
+  return {
+    first
+    second
+  }
+example : multiPunning.first = 3 ∧ multiPunning.second = 4 := by constructor <;> rfl
+
+const multiSingletonAlternative: Id(LiteralBag) := do
+  let f : Nat → Nat := Nat.succ
+  let x := 2
+  return {
+    f
+    x
+  }
+example : multiSingletonAlternative.value = 3 := by rfl
+
 meta def nativeLambdaQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| fun (n : Nat) => add (n, 1))
 run_cmd do
