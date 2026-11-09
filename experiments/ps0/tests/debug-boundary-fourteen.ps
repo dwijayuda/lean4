@@ -83,7 +83,7 @@ run_cmd do
           ("native", `term, "do\n  unless linter.deprecated.options.get (← getOptions) do return\n  let some dep := decl.deprecation? | return\n  return ()"),
           ("ps", `psTerm, "do\n  unless linter.deprecated.options.get((← getOptions)) do return\n  let some dep := decl.deprecation? | return\n  return ()")] do
         let inputContext := Lean.Parser.mkInputContext input "<unless-pattern-continuation>"
-        let parser := Lean.Parser.categoryParser category
+        let parser := Lean.Parser.categoryParser category 0
         let state := parser.fn.run inputContext {env := target, options := {}}
           (Lean.Parser.getTokenTable target) (Lean.Parser.mkParserState input)
         Lean.logInfo m!"PS0_BOUNDARY14_PARTIAL {mode} pos={state.pos.byteIdx} errorCount={state.allErrors.size} errors={state.toErrorMsg inputContext} syntax={repr (state.stxStack.extract 0 state.stxStack.size)}"
