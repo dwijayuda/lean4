@@ -21,5 +21,6 @@ unsafe def main : IO Unit := do
       let row := Json.mkObj [("category", toJson category.toString),
         ("depth", toJson depth), ("milliseconds", toJson elapsed)]
       IO.println ("PS0_PAREN_ROW:" ++ row.compress)
+      (← IO.getStdout).flush
       rows := rows.push row
   IO.println ("PS0_PAREN_BUDGET:" ++ (toJson rows).compress)

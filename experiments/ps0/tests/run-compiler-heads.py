@@ -7,6 +7,7 @@ import difflib
 import hashlib
 import json
 import os
+import signal
 import shutil
 import subprocess
 
@@ -35,12 +36,33 @@ relative_module = Path(*module.split('.'))
 driver = ROOT / '.lake/build/bin/ps0'
 
 def run(args, label, ok=True):
-    result = subprocess.run([str(x) for x in args], text=True, stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT, timeout=600)
-    (work / (label + '.log')).write_text(result.stdout)
-    print(result.stdout, end='', flush=True)
-    assert (result.returncode == 0) == ok, (label, result.returncode)
-    return result.stdout
+    log_path = work / (label + '.log')
+    timed_out = False
+    with log_path.open('w') as log:
+        process = subprocess.Popen([str(x) for x in args], stdout=log,
+                                   stderr=subprocess.STDOUT, start_new_session=True)
+        try:
+            code = process.wait(timeout=600)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            # Own the native Lake child group so timeout evidence survives and
+            # its compiler children do not outlive this bounded qualification.
+            os.killpg(process.pid, signal.SIGTERM)
+            try:
+                code = process.wait(timeout=30)
+            except subprocess.TimeoutExpired:
+                os.killpg(process.pid, signal.SIGKILL)
+                code = process.wait(timeout=30)
+    output = log_path.read_text()
+    print(output, end='', flush=True)
+    if timed_out:
+        (work / (label + '-timeout.json')).write_text(json.dumps({
+            'label': label, 'timeout_seconds': 600, 'native_process_group_terminated': True,
+            'partial_log': log_path.name, 'exit_code': code,
+        }, indent=2) + '\n')
+        raise TimeoutError((label, 600, log_path.name))
+    assert (code == 0) == ok, (label, code)
+    return output
 
 def source_declarations(commands):
     for command in commands:
