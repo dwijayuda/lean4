@@ -49,6 +49,7 @@ run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'IndexOperands', work / 'native'], 'native')
 oracle = 'PS0_INDEX:3:2:3:2:3:2:1:1'
 assert oracle in run([work / 'native/IndexOperands'], 'runtime')
+assert 'PS0_PROJECTED_INDEX:3:2:1' in (work / 'runtime.log').read_text()
 prefix = ('function add(x: Nat, y: Nat): Nat := x + y\n'
           'function chooseIndex(n: Nat): Nat := n\n'
           'function bound(n: Nat): 0 < 2 := by decide\n')
@@ -59,6 +60,9 @@ for name, source, reason in [
     ('proof-type', "const bad: Nat := #[2, 3][0]'True.intro", 'type mismatch'),
     ('slice-gap', 'const bad: Subarray(Nat) := #[2, 3][:chooseIndex (1)]', 'PS0V1-CALL-GAP'),
     ('slice-order', 'const bad: Subarray(Nat) := #[2, 3][add(x := 0, 1):]', 'PS0V1-CALL-ORDER'),
+    ('projected-index-gap', 'const bad: Nat := (#[2, 3][chooseIndex (1)]?).getD(0)', 'PS0V1-CALL-GAP'),
+    ('projected-index-order', 'const bad: Nat := (#[2, 3][add(x := 0, 1)]?).getD(0)', 'PS0V1-CALL-ORDER'),
+    ('projected-slice-gap', 'const bad: Nat := (#[2, 3][:chooseIndex (1)]).size', 'PS0V1-CALL-GAP'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + source + '\n')
@@ -67,7 +71,9 @@ for name, source, reason in [
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    'native_syntax_shapes': shapes, 'original_index_tokens_and_ranges': 7,
+    'native_syntax_shapes': shapes, 'original_index_tokens_and_ranges': 10,
+    'projected_oracle': 'PS0_PROJECTED_INDEX:3:2:1',
+    'native_projected_index_quotation_ownership': True,
     'scope': 'four pinned native indexed-access and three competing array-slice productions, PS subject/index/proof/bound operands and callable heads; not all postfix/collection grammar',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')

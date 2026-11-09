@@ -14,6 +14,9 @@ const callableValue: Nat := #[Nat.succ][chooseIndex(0)]!(2)
 const sliceBoth: Subarray(Nat) := #[2, 3][chooseIndex(0):chooseIndex(2)]
 const sliceLower: Subarray(Nat) := #[2, 3][chooseIndex(1):]
 const sliceUpper: Subarray(Nat) := #[2, 3][:chooseIndex(1)]
+const projectedOptionalResult: Nat := (#[2, 3][chooseIndex(1)]?).getD(0)
+const projectedSliceSize: Nat := (#[2, 3][chooseIndex(0):chooseIndex(2)]).size
+const projectedProofValue: Nat := (#[(1, 2), (3, 4)][chooseIndex(0)]'(bound(0))).1
 const indexedProjection: Nat := (#[(1, 2)][0]'(by decide)).1
 theorem indexedSignature (l : List Nat) (i : Nat) (h : i < l.length) :
     l[i]'h = l[i]'h := by rfl
@@ -60,13 +63,22 @@ example : indexOrigin #[2, 3][0]'(bound(1)) := by trivial
 example : indexOrigin #[2, 3][chooseIndex(0):chooseIndex(2)] := by trivial
 example : indexOrigin #[2, 3][chooseIndex(1):] := by trivial
 example : indexOrigin #[2, 3][:chooseIndex(1)] := by trivial
+example : indexOrigin (#[2, 3][chooseIndex(1)]?).getD(0) := by trivial
+example : indexOrigin (#[2, 3][chooseIndex(0):chooseIndex(2)]).size := by trivial
+example : indexOrigin (#[(1, 2), (3, 4)][chooseIndex(0)]'(bound(0))).1 := by trivial
 
 meta def nativeIndexQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| #[2, 3][1]?)
+meta def nativeProjectedIndexQuote : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| (#[2, 3][1]?).getD 0)
 run_cmd do
   let quoted ← Lean.Elab.liftMacroM nativeIndexQuote
   unless quoted.raw.isOfKind `«term__[_]_?» do
     Lean.throwError "PS0_NATIVE_INDEX_QUOTATION"
+  let projected ← Lean.Elab.liftMacroM nativeProjectedIndexQuote
+  unless projected.raw.isOfKind ``Lean.Parser.Term.app &&
+      (originalIndexSyntax? projected.raw).isNone do
+    Lean.throwError "PS0_NATIVE_PROJECTED_INDEX_QUOTATION"
 
 const optionalResult: Nat := optionalValue.getD(0)
 const sliceBothSize: Nat := sliceBoth.size
@@ -74,3 +86,4 @@ const sliceLowerSize: Nat := sliceLower.size
 const sliceUpperSize: Nat := sliceUpper.size
 def main : IO Unit :=
   IO.println s!"PS0_INDEX:{optionalResult}:{plainValue}:{panicValue}:{proofValue}:{callableValue}:{sliceBothSize}:{sliceLowerSize}:{sliceUpperSize}"
+  IO.println s!"PS0_PROJECTED_INDEX:{projectedOptionalResult}:{projectedSliceSize}:{projectedProofValue}"
