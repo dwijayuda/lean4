@@ -99,9 +99,15 @@ unchanged_abbrevs = {d['sourceName'] for d in original_declarations
 mapped = {d['sourceName'] for d in declarations if d['mode'] == 'mapped-ps'}
 expected_mapped = set(plan['declarations']) | unchanged_abbrevs
 assert mapped == expected_mapped, (sorted(mapped), sorted(expected_mapped))
-assert {d['sourceName'] for d in declarations if d['production'] in [
-    'PS0.StandardAdapters.ps0StandardFunction', 'PS0.StandardAdapters.ps0StandardConst',
-]} == set(plan['declarations']), 'every planned alias must reach its actual PS source production'
+strategies = {d['sourceName']: d['targetKeyword'] for d in plan.get('strategies', [])}
+productions = {'function': 'PS0.StandardAdapters.ps0StandardFunction',
+               'const': 'PS0.StandardAdapters.ps0StandardConst',
+               'def': 'PS0.StandardAdapters.ps0StandardDef'}
+for declaration in declarations:
+    if declaration['sourceName'] in plan['declarations']:
+        keyword = strategies.get(declaration['sourceName'], 'function')
+        assert declaration['mode'] == 'mapped-ps'
+        assert declaration['production'] == productions[keyword], declaration
 assert observed['imports'] == json.loads(census.read_text())['imports']
 owned_value_calls = [name for name in args.owned_value_calls.split(',') if name]
 for name in owned_value_calls:
@@ -115,6 +121,7 @@ if args.fixture == 'EmitUtil':
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
     'converted_declarations': plan['declarations'], 'unchanged_abbrev_adapters': sorted(unchanged_abbrevs),
+    'source_strategies': plan.get('strategies', []),
     'owned_value_calls': owned_value_calls,
     'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail']}
                             for d in declarations if d['sourceName'] in plan['declarations']],

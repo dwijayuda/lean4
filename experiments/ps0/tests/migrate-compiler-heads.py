@@ -16,7 +16,7 @@ args = parser.parse_args()
 snapshot = json.loads(args.census.read_text())
 raw = args.source.read_bytes()
 assert snapshot['nativeSource'].encode() == raw, 'planner requires exact captured native source bytes'
-edits, declarations = [], []
+edits, declarations, strategies = [], [], []
 
 def span(node):
     value = node['range']
@@ -67,6 +67,17 @@ def single_type_call(operand, role='owned binder type'):
     for argument in arguments:
         single_type_call(argument, role)
 
+
+def alias_binder(binder):
+    kind, parts = binder['kind'], binder['args']
+    if kind in ['Lean.Parser.Term.implicitBinder', 'Lean.Parser.Term.strictImplicitBinder',
+                'Lean.Parser.Term.instBinder']:
+        return True
+    return (kind == 'Lean.Parser.Term.explicitBinder' and len(parts) == 5
+            and len(parts[1]['args']) == 1 and parts[1]['args'][0]['ident'] is not None
+            and len(parts[2]['args']) == 2)
+
+
 for command in original_commands(snapshot['commands']):
     decl = command['declaration']
     if decl is None or decl['mode'] != 'native-compatible':
@@ -80,40 +91,58 @@ for command in original_commands(snapshot['commands']):
     if result_type:
         assert len(result_type) == 1 and result_type[0]['kind'] == 'Lean.Parser.Term.typeSpec'
         single_type_call(result_type[0]['args'][1], 'owned declaration result type')
-    # Preserve instance groups in place. Only consecutive single-identifier
-    # explicit groups are merged; no binder is reordered or inferred here.
+    use_alias = all(alias_binder(binder) for binder in binders)
+    # Native definition syntax preserves shared/inferred/anonymous binder
+    # elaboration; it still goes through the owned PS signature/value adapters.
     for binder in binders:
         parts = binder['args']
+        if binder['kind'] in ['ident', 'Lean.Parser.Term.hole']:
+            continue
         if binder['kind'] == 'Lean.Parser.Term.instBinder':
             assert len(parts) == 4
             single_type_call(parts[2])
             continue
+        if binder['kind'] in ['Lean.Parser.Term.implicitBinder', 'Lean.Parser.Term.strictImplicitBinder']:
+            assert len(parts) == 4
+            if parts[2]['args']:
+                assert len(parts[2]['args']) == 2
+                single_type_call(parts[2]['args'][1])
+            continue
         assert binder['kind'] == 'Lean.Parser.Term.explicitBinder', decl['sourceName']
-        assert len(parts) == 5 and len(parts[1]['args']) == 1
-        assert parts[1]['args'][0]['ident'] is not None
-        assert len(parts[2]['args']) == 2
-        single_type_call(parts[2]['args'][1])
+        assert len(parts) == 5 and parts[1]['args']
+        assert len(parts[2]['args']) in [0, 2]
+        if parts[2]['args']:
+            single_type_call(parts[2]['args'][1])
         suffix = parts[3]['args']
         if suffix:
-            assert len(suffix) == 1 and suffix[0]['kind'] == 'Lean.Parser.Term.binderDefault'
+            assert len(suffix) == 1
+            if suffix[0]['kind'] == 'Lean.Parser.Term.binderTactic':
+                continue
+            assert suffix[0]['kind'] == 'Lean.Parser.Term.binderDefault'
             assert len(suffix[0]['args']) == 2
             single_type_call(suffix[0]['args'][1], 'owned binder default')
         start, end = span(binder)
         assert raw[start:start + 1] == b'(' and raw[end - 1:end] == b')'
     kw = decl['keywordRange']
     assert raw[kw['start']:kw['end']] == b'def'
-    edit(kw['start'], kw['end'], 'function' if binders else 'const', 'owned PS declaration keyword')
-    if binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
+    keyword = ('function' if binders else 'const') if use_alias else 'def'
+    strategies.append({'sourceName': decl['sourceName'], 'keywordRange': kw,
+                       'targetKeyword': keyword,
+                       'reason': 'typed alias telescope' if use_alias else 'preserve R2 native telescope grouping/inference'})
+    if use_alias:
+        edit(kw['start'], kw['end'], keyword, 'owned PS declaration keyword')
+    if use_alias and binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
         name_end = decl['nameRange']['end']
         first, _ = span(binders[0])
-        assert raw[name_end:first].isspace(), 'head trivia must be whitespace; comments are never discarded'
-        edit(name_end, first, '', 'PS head adjacency')
-    for previous, following in zip(binders, binders[1:]):
+        assert first == name_end or raw[name_end:first].isspace(), 'head trivia must be whitespace; comments are never discarded'
+        if first != name_end:
+            edit(name_end, first, '', 'PS head adjacency')
+    for previous, following in zip(binders, binders[1:]) if use_alias else []:
         if previous['kind'] != 'Lean.Parser.Term.explicitBinder' or following['kind'] != 'Lean.Parser.Term.explicitBinder':
             continue
         _, end = span(previous)
         start, _ = span(following)
-        assert raw[end:start].isspace(), 'group trivia must be whitespace; comments are never discarded'
+        assert start == end or raw[end:start].isspace(), 'group trivia must be whitespace; comments are never discarded'
         edit(end - 1, start + 1, ', ', 'merge consecutive typed groups in source order')
     root = decl.get('valueApplication')
     applications = []
@@ -151,7 +180,8 @@ args.output.write_bytes(converted)
 args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
-    'scope': 'typed explicit/default/instance telescopes and named values in explicit source declaration slots, single type/default-call adjacency, and owned root value calls plus direct lambda-body call roots within their arguments; original argument nodes, quotations and unrelated native commands preserved',
+    'strategies': strategies,
+    'scope': 'R2 alias or native definition telescopes with owned type/default/result and root-call roles; native grouping/inference, original argument nodes and independently owned syntax retained',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_COMPILER_HEAD_MIGRATION: planned ' + str(len(declarations)), flush=True)
