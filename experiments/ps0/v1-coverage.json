@@ -16486,9 +16486,10 @@
       "lastObservedUtc": "2026-11-09 19:39:50 UTC"
     },
     "nextActions": [
-      "Resolve SynthInstance C parity using private module constants and fresh repeat builds without weakening the gate",
-      "Probe and adapt remaining ordinary grammar roles using retained native syntax inventory and exact source-origin controls",
-      "Inspect immutable graph fifteen, then require complete canonical PS graph linking/runtime, relocated compiler operation and fixed point"
+      "Inspect the three new ordinary-role adapter checks; preserve exact native grammar and source positions",
+      "Resolve or precisely qualify the stable SynthInstance C discrepancy without changing the existing parity gate",
+      "Investigate native leanir SDK specialization failure before enabling any separate-compiler default",
+      "Inspect immutable graph fifteen; require fresh canonical PS graph, linking/runtime, relocated compiler operation and fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -16585,26 +16586,44 @@
     },
     "ordinaryHostRoleAudit": {
       "status": "PENDING_BROADER",
+      "candidate": {
+        "source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
+        "runner": "ed67c31b6ac6601128bbf58b3220f3aae458a26f",
+        "status": "PENDING_LINUX",
+        "plannedDefinitions": 33,
+        "plannedProofGuards": 30,
+        "plannedSourceOriginCases": 11,
+        "priorPositiveFailure": {
+          "source": "10b1709dabb6c4fc0b16c80a39bb21feee6039f6",
+          "runner": "8284d18e6a7069b7344706a9bd8368ce659704b1",
+          "run": 42700199135,
+          "job": 129442567519,
+          "error": "termDepIfThenElse lacks matching elaboration handler",
+          "artifact": 13710308572,
+          "digest": "sha256:f724dd94b90caf831876fd2d1a476017c2fb7b1fde4e0ccaf725caac7d977807",
+          "negativeJob": 129442567910,
+          "negativeStatus": "PASS_SEVEN_REJECTIONS"
+        }
+      },
       "finiteEvidenceKey": "ordinaryHostRoleQualification",
       "compilerRegressionKey": "ordinaryHostRoleCompilerRegression",
-      "remainingRoles": [
-        "do-match",
-        "do-for",
-        "do-have",
-        "proof-bound pure if",
-        "type ascription",
-        "native tactic sequences",
-        "try/catch",
-        "other native ordinary expression roles"
+      "remainingConfirmedGaps": [
+        "proof-if",
+        "typed-term",
+        "tactic-body"
+      ],
+      "otherPendingRoles": [
+        "loop invariant/decreasing annotations",
+        "other native ordinary expression roles and source-fidelity controls"
       ],
       "grammarMigrationComplete": false,
       "verified_execution": false
     },
     "ordinaryHostRoleQualification": {
       "status": "QUALIFIED_FINITE",
-      "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
-      "run": 42691593415,
-      "independentRun": 42692357867
+      "source": "a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91",
+      "run": 42698914651,
+      "independentRun": 42700398590
     },
     "ordinaryHostRoleCompilerRegression": {
       "status": "FAILED",
@@ -16613,6 +16632,12 @@
       "passedJobs": 7,
       "totalJobs": 8,
       "failedModule": "Lean.Meta.SynthInstance"
+    },
+    "nativeSeparateCompilerExperiment": {
+      "status": "FAILED_NATIVE_BASELINE",
+      "source": "a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91",
+      "run": 42698914651,
+      "defaultPipelineChanged": false
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -30287,40 +30312,44 @@
     }
   },
   "ordinaryHostRoleQualification": {
-    "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
-    "runner": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
-    "run": 42691593415,
-    "job": 129412419864,
+    "source": "a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91",
+    "runner": "3db203a1a8f21953161760d998bf6a6bfd1ece08",
+    "run": 42698914651,
+    "job": 129438110385,
     "status": "QUALIFIED_FINITE",
     "artifacts": [
       {
-        "id": 13707417435,
-        "name": "ps0-native-index-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593415",
-        "size_in_bytes": 1159936,
-        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707417435",
-        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707417435/zip",
+        "id": 13711036189,
+        "name": "ps0-host-operand-parity-a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91-42698914651",
+        "size_in_bytes": 1016079,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13711036189",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13711036189/zip",
         "expired": false,
-        "created_at": "2026-11-09T20:20:02Z",
-        "expires_at": "2027-02-07T20:17:47Z",
-        "updated_at": "2026-11-09T20:20:02Z",
-        "digest": "sha256:48ec5c40f0af3ab567e5b64ab610c33a69c40d7f06b29548ff788edead28925f",
+        "created_at": "2026-11-09T21:06:25Z",
+        "expires_at": "2027-02-07T21:04:02Z",
+        "updated_at": "2026-11-09T21:06:25Z",
+        "digest": "sha256:6e5a04ddf38b1bec723304b0ea1ee28ad1ca56666b10c7a79fe8b74bfe282195",
         "workflow_run": {
-          "id": 42691593415,
+          "id": 42698914651,
           "repository_id": 1381609925,
           "head_repository_id": 1381609925,
           "head_branch": "ci/ps0-ordinary-hosts-20261110",
-          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+          "head_sha": "3db203a1a8f21953161760d998bf6a6bfd1ece08"
         }
       }
     ],
-    "proofGuards": 17,
-    "mappedDefinitions": 17,
-    "invalidNativeGapAdmissionsResolved": 4,
+    "proofGuards": 22,
+    "mappedDefinitions": 25,
+    "invalidNativeGapAdmissionsResolved": 8,
     "roles": [
       "match motive, discriminants and arm bodies",
       "pattern-lambda arm bodies",
       "record sources, fields, field equations and type",
-      "do-if propositions, let values and branch sequences"
+      "do-if propositions, let values and branch sequences",
+      "do-match discriminants and branch sequences",
+      "named have types, defaults and values",
+      "for collections and bodies (native loop annotations pending)",
+      "try/catch/finally sequences and exception types"
     ],
     "nativeRolesRetained": [
       "match and if-let patterns",
@@ -30335,28 +30364,28 @@
       "tests/migrate-compiler-heads.py"
     ],
     "independentInspection": {
-      "runner": "607177fd9a3cdc95fcfa312d12b79222f99f430c",
-      "run": 42692357867,
-      "job": 129415086989,
+      "runner": "4314782a84b0c0e568923bd079de0625febcd727",
+      "run": 42700398590,
+      "job": 129443255651,
       "status": "PASS",
       "artifacts": [
         {
-          "id": 13706748497,
-          "name": "ps0-ordinary-host-inspection-42692357867",
-          "size_in_bytes": 1111,
-          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706748497",
-          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706748497/zip",
+          "id": 13711217273,
+          "name": "ps0-ordinary-host-inspection-42700398590",
+          "size_in_bytes": 1132,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13711217273",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13711217273/zip",
           "expired": false,
-          "created_at": "2026-11-09T20:22:46Z",
-          "expires_at": "2027-02-07T20:22:35Z",
-          "updated_at": "2026-11-09T20:22:46Z",
-          "digest": "sha256:09411faaf999abe61ef64de214a0a9e61f1cb58dc6531f0037b649ad523cba2b",
+          "created_at": "2026-11-09T21:13:16Z",
+          "expires_at": "2027-02-07T21:13:08Z",
+          "updated_at": "2026-11-09T21:13:16Z",
+          "digest": "sha256:fabaa8eb92acf1c7546eb2c9777490b713a6601ca4df0ec9aadccc759ebbf41d",
           "workflow_run": {
-            "id": 42692357867,
+            "id": 42700398590,
             "repository_id": 1381609925,
             "head_repository_id": 1381609925,
             "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
-            "head_sha": "607177fd9a3cdc95fcfa312d12b79222f99f430c"
+            "head_sha": "4314782a84b0c0e568923bd079de0625febcd727"
           }
         }
       ],
@@ -30364,27 +30393,27 @@
       "actual_native_elf_files_rehashed": 1,
       "comparisons": {
         "ir/MatchHostBootstrap.c": {
-          "baseline": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
-          "migrated": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
-          "planned": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746"
+          "baseline": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe",
+          "migrated": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe",
+          "planned": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe"
         },
         "lib/lean/MatchHostBootstrap.olean": {
-          "baseline": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
-          "migrated": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
-          "planned": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+          "baseline": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138",
+          "migrated": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138",
+          "planned": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138"
         }
       },
       "evidence": {
         "comparisons": {
           "ir/MatchHostBootstrap.c": {
-            "baseline": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
-            "migrated": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
-            "planned": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746"
+            "baseline": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe",
+            "migrated": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe",
+            "planned": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe"
           },
           "lib/lean/MatchHostBootstrap.olean": {
-            "baseline": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
-            "migrated": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
-            "planned": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+            "baseline": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138",
+            "migrated": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138",
+            "planned": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138"
           }
         },
         "grammar_migration_complete": false,
@@ -30392,42 +30421,47 @@
         "logical_imports": [
           "Init"
         ],
-        "mapped_definitions": 17,
-        "mapped_theorems": 17,
-        "native_executable_sha256": "26e67e821ac00f230fd01a0c0820b833b22c913527e29d0946e126007c7e2335",
+        "mapped_definitions": 25,
+        "mapped_theorems": 22,
+        "native_executable_sha256": "7df9433804db0ef85913bc1f5ad3334693b4a5d08d68fe0ccf43ca3812f3eeb4",
         "native_patterns_preserved": true,
         "native_quotation": true,
         "prepared_source_identity": true,
         "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
         "scope": "finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders",
-        "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
-        "source_origin_cases": 4,
-        "source_origin_fixture_sha256": "38a87da8147ed3d26ce0e32768f51a888fb7ffe7635bba1d5ff00b4d90362c4b",
+        "source": "a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91",
+        "source_origin_cases": 8,
+        "source_origin_fixture_sha256": "c3ced23175e005b6c3c7016a81b3803e9ed3db9f9315ba3f25d092b66bfe8a2e",
         "verified_execution": false
       },
       "grammar_migration_complete": false,
       "hashes": {
-        "match-host-42691593415/OrdinaryHostOrigins": "26e67e821ac00f230fd01a0c0820b833b22c913527e29d0946e126007c7e2335",
-        "match-host-42691593415/baseline-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
-        "match-host-42691593415/baseline-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
-        "match-host-42691593415/migrated-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
-        "match-host-42691593415/migrated-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
-        "match-host-42691593415/planned-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
-        "match-host-42691593415/planned-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+        "match-host-42698914651/OrdinaryHostOrigins": "7df9433804db0ef85913bc1f5ad3334693b4a5d08d68fe0ccf43ca3812f3eeb4",
+        "match-host-42698914651/baseline-MatchHostBootstrap.c": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe",
+        "match-host-42698914651/baseline-MatchHostBootstrap.olean": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138",
+        "match-host-42698914651/migrated-MatchHostBootstrap.c": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe",
+        "match-host-42698914651/migrated-MatchHostBootstrap.olean": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138",
+        "match-host-42698914651/planned-MatchHostBootstrap.c": "c9500ed6f99cabdaf8839f696de0fb1609fea29472a795712897f3a572b3a1fe",
+        "match-host-42698914651/planned-MatchHostBootstrap.olean": "5f0dfafa86ee5848ac85d16d621281f4f6812fa8f4bd1ef36a526242788e1138"
       },
-      "invalid_host_gaps_rejected": 4,
-      "mapped_definitions": 17,
-      "mapped_theorems": 17,
-      "producer_run": 42691593415,
-      "producer_runner": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
-      "producer_source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
-      "scope": "finite ordinary match, pattern lambda, record and do-if roles; retained ELF rehashed, runtime observed in producer; broader compiler C parity remains open",
-      "source_origin_cases": 4,
+      "invalid_host_gaps_rejected": 8,
+      "mapped_definitions": 25,
+      "mapped_theorems": 22,
+      "producer_run": 42698914651,
+      "producer_runner": "3db203a1a8f21953161760d998bf6a6bfd1ece08",
+      "producer_source": "a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91",
+      "scope": "finite ordinary match, pattern lambda, record, condition, do-match, named-have, for collection/body and try/catch/finally roles; loop annotations and broader compiler C parity remain open",
+      "source_origin_cases": 8,
       "verified_execution": false
     },
-    "scope": "finite ordinary host adapter stage only; broad compiler C parity and canonical corpus conformance remain open",
+    "scope": "finite eight ordinary-host gap adapters, source fidelity and native linking; native loop annotations, broader host roles, compiler C parity and canonical corpus remain open",
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "sourceOriginCases": 8,
+    "runtimeControls": [
+      "range 3 + 0 + 1 = 4",
+      "IO try/catch/finally: input 0 gives 2 and input 2 gives 3"
+    ]
   },
   "ordinaryHostRoleCompilerRegression": {
     "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
@@ -33167,19 +33201,458 @@
   },
   "ordinaryHostRoleContinuation": {
     "status": "PENDING_BROADER",
+    "candidate": {
+      "source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
+      "runner": "ed67c31b6ac6601128bbf58b3220f3aae458a26f",
+      "status": "PENDING_LINUX",
+      "plannedDefinitions": 33,
+      "plannedProofGuards": 30,
+      "plannedSourceOriginCases": 11,
+      "priorPositiveFailure": {
+        "source": "10b1709dabb6c4fc0b16c80a39bb21feee6039f6",
+        "runner": "8284d18e6a7069b7344706a9bd8368ce659704b1",
+        "run": 42700199135,
+        "job": 129442567519,
+        "error": "termDepIfThenElse lacks matching elaboration handler",
+        "artifact": 13710308572,
+        "digest": "sha256:f724dd94b90caf831876fd2d1a476017c2fb7b1fde4e0ccaf725caac7d977807",
+        "negativeJob": 129442567910,
+        "negativeStatus": "PASS_SEVEN_REJECTIONS"
+      }
+    },
     "finiteEvidenceKey": "ordinaryHostRoleQualification",
     "compilerRegressionKey": "ordinaryHostRoleCompilerRegression",
-    "remainingRoles": [
-      "do-match",
-      "do-for",
-      "do-have",
-      "proof-bound pure if",
-      "type ascription",
-      "native tactic sequences",
-      "try/catch",
-      "other native ordinary expression roles"
+    "remainingConfirmedGaps": [
+      "proof-if",
+      "typed-term",
+      "tactic-body"
+    ],
+    "otherPendingRoles": [
+      "loop invariant/decreasing annotations",
+      "other native ordinary expression roles and source-fidelity controls"
     ],
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "ordinaryHostRoleQualificationHistory": [
+    {
+      "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+      "runner": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+      "run": 42691593415,
+      "job": 129412419864,
+      "status": "QUALIFIED_FINITE",
+      "artifacts": [
+        {
+          "id": 13707417435,
+          "name": "ps0-native-index-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593415",
+          "size_in_bytes": 1159936,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707417435",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707417435/zip",
+          "expired": false,
+          "created_at": "2026-11-09T20:20:02Z",
+          "expires_at": "2027-02-07T20:17:47Z",
+          "updated_at": "2026-11-09T20:20:02Z",
+          "digest": "sha256:48ec5c40f0af3ab567e5b64ab610c33a69c40d7f06b29548ff788edead28925f",
+          "workflow_run": {
+            "id": 42691593415,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-ordinary-hosts-20261110",
+            "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+          }
+        }
+      ],
+      "proofGuards": 17,
+      "mappedDefinitions": 17,
+      "invalidNativeGapAdmissionsResolved": 4,
+      "roles": [
+        "match motive, discriminants and arm bodies",
+        "pattern-lambda arm bodies",
+        "record sources, fields, field equations and type",
+        "do-if propositions, let values and branch sequences"
+      ],
+      "nativeRolesRetained": [
+        "match and if-let patterns",
+        "match discriminant proof binders",
+        "record field binders and lvalues",
+        "native layout groups, tokens and source information",
+        "quotations and independent DSL categories"
+      ],
+      "implementation": [
+        "PS0/HostCategories.lean",
+        "PS0/SourceGrammar.lean",
+        "tests/migrate-compiler-heads.py"
+      ],
+      "independentInspection": {
+        "runner": "607177fd9a3cdc95fcfa312d12b79222f99f430c",
+        "run": 42692357867,
+        "job": 129415086989,
+        "status": "PASS",
+        "artifacts": [
+          {
+            "id": 13706748497,
+            "name": "ps0-ordinary-host-inspection-42692357867",
+            "size_in_bytes": 1111,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706748497",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706748497/zip",
+            "expired": false,
+            "created_at": "2026-11-09T20:22:46Z",
+            "expires_at": "2027-02-07T20:22:35Z",
+            "updated_at": "2026-11-09T20:22:46Z",
+            "digest": "sha256:09411faaf999abe61ef64de214a0a9e61f1cb58dc6531f0037b649ad523cba2b",
+            "workflow_run": {
+              "id": 42692357867,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
+              "head_sha": "607177fd9a3cdc95fcfa312d12b79222f99f430c"
+            }
+          }
+        ],
+        "actual_compiler_files_rehashed": 6,
+        "actual_native_elf_files_rehashed": 1,
+        "comparisons": {
+          "ir/MatchHostBootstrap.c": {
+            "baseline": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+            "migrated": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+            "planned": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746"
+          },
+          "lib/lean/MatchHostBootstrap.olean": {
+            "baseline": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+            "migrated": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+            "planned": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+          }
+        },
+        "evidence": {
+          "comparisons": {
+            "ir/MatchHostBootstrap.c": {
+              "baseline": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+              "migrated": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+              "planned": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746"
+            },
+            "lib/lean/MatchHostBootstrap.olean": {
+              "baseline": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+              "migrated": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+              "planned": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+            }
+          },
+          "grammar_migration_complete": false,
+          "independently_owned_native_dsl": true,
+          "logical_imports": [
+            "Init"
+          ],
+          "mapped_definitions": 17,
+          "mapped_theorems": 17,
+          "native_executable_sha256": "26e67e821ac00f230fd01a0c0820b833b22c913527e29d0946e126007c7e2335",
+          "native_patterns_preserved": true,
+          "native_quotation": true,
+          "prepared_source_identity": true,
+          "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
+          "scope": "finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders",
+          "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+          "source_origin_cases": 4,
+          "source_origin_fixture_sha256": "38a87da8147ed3d26ce0e32768f51a888fb7ffe7635bba1d5ff00b4d90362c4b",
+          "verified_execution": false
+        },
+        "grammar_migration_complete": false,
+        "hashes": {
+          "match-host-42691593415/OrdinaryHostOrigins": "26e67e821ac00f230fd01a0c0820b833b22c913527e29d0946e126007c7e2335",
+          "match-host-42691593415/baseline-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+          "match-host-42691593415/baseline-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+          "match-host-42691593415/migrated-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+          "match-host-42691593415/migrated-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+          "match-host-42691593415/planned-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+          "match-host-42691593415/planned-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+        },
+        "invalid_host_gaps_rejected": 4,
+        "mapped_definitions": 17,
+        "mapped_theorems": 17,
+        "producer_run": 42691593415,
+        "producer_runner": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "producer_source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+        "scope": "finite ordinary match, pattern lambda, record and do-if roles; retained ELF rehashed, runtime observed in producer; broader compiler C parity remains open",
+        "source_origin_cases": 4,
+        "verified_execution": false
+      },
+      "scope": "finite ordinary host adapter stage only; broad compiler C parity and canonical corpus conformance remain open",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    {
+      "source": "91cfdf539b9ae534aac1a38c240bfb63b0b84dc0",
+      "runner": "c266cbfe03c34dd269e1d5c2b093b83a62e00be9",
+      "run": 42694705278,
+      "job": 129423310936,
+      "independentInspection": {
+        "actual_compiler_files_rehashed": 6,
+        "actual_native_elf_files_rehashed": 1,
+        "comparisons": {
+          "ir/MatchHostBootstrap.c": {
+            "baseline": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55",
+            "migrated": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55",
+            "planned": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55"
+          },
+          "lib/lean/MatchHostBootstrap.olean": {
+            "baseline": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd",
+            "migrated": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd",
+            "planned": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd"
+          }
+        },
+        "evidence": {
+          "comparisons": {
+            "ir/MatchHostBootstrap.c": {
+              "baseline": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55",
+              "migrated": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55",
+              "planned": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55"
+            },
+            "lib/lean/MatchHostBootstrap.olean": {
+              "baseline": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd",
+              "migrated": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd",
+              "planned": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd"
+            }
+          },
+          "grammar_migration_complete": false,
+          "independently_owned_native_dsl": true,
+          "logical_imports": [
+            "Init"
+          ],
+          "mapped_definitions": 21,
+          "mapped_theorems": 21,
+          "native_executable_sha256": "26e67e821ac00f230fd01a0c0820b833b22c913527e29d0946e126007c7e2335",
+          "native_patterns_preserved": true,
+          "native_quotation": true,
+          "prepared_source_identity": true,
+          "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
+          "scope": "finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders",
+          "source": "91cfdf539b9ae534aac1a38c240bfb63b0b84dc0",
+          "source_origin_cases": 6,
+          "source_origin_fixture_sha256": "5b2ad54e1660d31c1c9a9b2502023bc07bc2e65771c595d0aac22eaa7981799f",
+          "verified_execution": false
+        },
+        "grammar_migration_complete": false,
+        "hashes": {
+          "match-host-42694705278/OrdinaryHostOrigins": "26e67e821ac00f230fd01a0c0820b833b22c913527e29d0946e126007c7e2335",
+          "match-host-42694705278/baseline-MatchHostBootstrap.c": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55",
+          "match-host-42694705278/baseline-MatchHostBootstrap.olean": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd",
+          "match-host-42694705278/migrated-MatchHostBootstrap.c": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55",
+          "match-host-42694705278/migrated-MatchHostBootstrap.olean": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd",
+          "match-host-42694705278/planned-MatchHostBootstrap.c": "b6af20caeb91cdfb22788a6d25417badd56ca39b6d9fcedb495d312213f2ba55",
+          "match-host-42694705278/planned-MatchHostBootstrap.olean": "a7e4bbebf092b8986b17c30ef86edce3436bdbc94a800c2c8494cbbd44b739dd"
+        },
+        "invalid_host_gaps_rejected": 6,
+        "mapped_definitions": 21,
+        "mapped_theorems": 21,
+        "producer_run": 42694705278,
+        "producer_runner": "c266cbfe03c34dd269e1d5c2b093b83a62e00be9",
+        "producer_source": "91cfdf539b9ae534aac1a38c240bfb63b0b84dc0",
+        "scope": "finite ordinary match, pattern lambda, record and do-if roles; retained ELF rehashed, runtime observed in producer; broader compiler C parity remains open",
+        "source_origin_cases": 6,
+        "status": "PASS",
+        "verified_execution": false,
+        "run": 42696046290,
+        "job": 129428037121,
+        "runner": "0e1eb78bf44b36a173cbef93bc3b35fe3705d3f7",
+        "artifacts": [
+          {
+            "id": 13709436859,
+            "name": "ps0-ordinary-host-inspection-42696046290",
+            "size_in_bytes": 1110,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13709436859",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13709436859/zip",
+            "expired": false,
+            "created_at": "2026-11-09T20:45:59Z",
+            "expires_at": "2027-02-07T20:45:51Z",
+            "updated_at": "2026-11-09T20:45:59Z",
+            "digest": "sha256:83273f50c704003a3cba870c32329d6df69fee80ff464d8b86d9b2bd17c81bb1",
+            "workflow_run": {
+              "id": 42696046290,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
+              "head_sha": "0e1eb78bf44b36a173cbef93bc3b35fe3705d3f7"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "remainingOrdinaryHostTestFirstEvidence": {
+    "source": "66cbc4a6a49af4e9b1b279fb4577bfcf70d9557e",
+    "runner": "e6d21bbf8f8a1730bd50b574f1fe625036b45deb",
+    "run": 42693651410,
+    "job": 129419666137,
+    "status": "TEST_FIRST_FAILED",
+    "observations": [
+      {
+        "case": "do-match",
+        "diagnostic_excerpt": [
+          "✔ [3/3] Built HostIslandProbe (1.8s)",
+          "Build completed successfully (3 jobs)."
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "do-for",
+        "diagnostic_excerpt": [
+          "✔ [3/3] Built HostIslandProbe (1.8s)",
+          "Build completed successfully (3 jobs)."
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "do-have",
+        "diagnostic_excerpt": [
+          "✔ [3/3] Built HostIslandProbe (1.8s)",
+          "Build completed successfully (3 jobs)."
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "proof-if",
+        "diagnostic_excerpt": [
+          "⚠ [3/3] Built HostIslandProbe (1.8s)",
+          "warning: build/host-island-gaps-42693651410/proof-if-source/HostIslandProbe.ps:8:32: Variable name `h` is not explicitly referenced.",
+          "",
+          "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:",
+          "  [apply] _h",
+          "",
+          "Note: This linter can be disabled with `set_option linter.unusedVariables false`",
+          "Build completed successfully (3 jobs)."
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "typed-term",
+        "diagnostic_excerpt": [
+          "✔ [3/3] Built HostIslandProbe (1.9s)",
+          "Build completed successfully (3 jobs)."
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "tactic-body",
+        "diagnostic_excerpt": [
+          "✔ [3/3] Built HostIslandProbe (1.9s)",
+          "Build completed successfully (3 jobs)."
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "do-try",
+        "diagnostic_excerpt": [
+          "✔ [3/3] Built HostIslandProbe (1.8s)",
+          "Build completed successfully (3 jobs)."
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      }
+    ],
+    "artifact": {
+      "id": 13709090151,
+      "name": "ps0-remaining-host-gaps-66cbc4a6a49af4e9b1b279fb4577bfcf70d9557e-42693651410",
+      "size_in_bytes": 24453,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13709090151",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13709090151/zip",
+      "expired": false,
+      "created_at": "2026-11-09T20:32:21Z",
+      "expires_at": "2027-02-07T20:30:45Z",
+      "updated_at": "2026-11-09T20:32:21Z",
+      "digest": "sha256:a522ccea42746c60eab7d977689bba987b9645116a0fc9bed7c0578823a51b90",
+      "workflow_run": {
+        "id": 42693651410,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "head_sha": "e6d21bbf8f8a1730bd50b574f1fe625036b45deb"
+      }
+    },
+    "finiteResolution": {
+      "source": "a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91",
+      "evidenceKey": "ordinaryHostRoleQualification",
+      "resolved": [
+        "do-match",
+        "do-have",
+        "do-for",
+        "do-try"
+      ],
+      "pending": [
+        "proof-if",
+        "typed-term",
+        "tactic-body"
+      ]
+    }
+  },
+  "ordinaryHostNativeSyntaxDiagnosis": {
+    "checker": "d2caad255e8332049cc8a689f9d5ea02222c3619",
+    "runner": "d06668d48452a2c4312153102909419343d8d5da",
+    "run": 42697550812,
+    "job": 129433321267,
+    "status": "PASS_DIAGNOSIS_ONLY",
+    "producerSource": "c6e2e05d0361fb451267f29a44b1ab3434016f8e",
+    "producerRun": 42695756448,
+    "nativeSelfComparison": true,
+    "finalConstantNameSetsEqual": true,
+    "allFinalConstantTypesAndValuesBEq": true,
+    "reprHygieneNameDifferences": 4,
+    "normalizedSyntaxComparedDefinitions": 43,
+    "equalNormalizedSyntaxDefinitions": 39,
+    "excludedNativeDefinitions": [
+      "synthPendingImp"
+    ],
+    "nativeSyntaxDifferences": [
+      "removeUnusedArguments? named argument order",
+      "main native choice versus selected record",
+      "synthInstanceCore? named argument order/grouping",
+      "synthInstance? named argument order/grouping"
+    ],
+    "stableCRepeat": {
+      "native": "a3699eadba9c9e6d9d589aa2910360652599b5efbd3345c6735ab4c69367a7fb",
+      "ps": "aa646c5e0129281da526bb459dd9b103d3cfc48041002c6bebe96f7b03a29865"
+    },
+    "scope": "observations of normalized syntax and loaded public/server/private constants; binder hygiene suffix differences and exact C mismatch remain; not a formal compiler-equivalence theorem"
+  },
+  "nativeSeparateCompilerExperiment": {
+    "source": "a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91",
+    "runner": "3db203a1a8f21953161760d998bf6a6bfd1ece08",
+    "run": 42698914651,
+    "job": 129438110205,
+    "status": "FAILED_NATIVE_BASELINE",
+    "compilerOption": "compiler.postponeCompile=true",
+    "nativeImplementation": "pinned Lake.compileLeanModule invokes SDK bin/leanir; no custom compiler pass",
+    "error": "Unknown constant Std.DTreeMap.Internal.Impl.Const.get?._at_.Lean.NameMap.find?.spec_0._redArg while compiling native Lean.Meta.SynthInstance.getMaxHeartbeats",
+    "artifact": {
+      "id": 13710367906,
+      "name": "ps0-compiler-synthinstance14-separate-a12fda5ee8766194fa3ba0b3729c11ca9e4d8c91-42698914651",
+      "size_in_bytes": 339952,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13710367906",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13710367906/zip",
+      "expired": false,
+      "created_at": "2026-11-09T21:05:28Z",
+      "expires_at": "2027-02-07T21:04:02Z",
+      "updated_at": "2026-11-09T21:05:28Z",
+      "digest": "sha256:78fc134bfeb63df82986cada876ce21ce63c0b654893c6bf72467c54fcd3cbae",
+      "workflow_run": {
+        "id": 42698914651,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "head_sha": "3db203a1a8f21953161760d998bf6a6bfd1ece08"
+      }
+    },
+    "defaultPipelineChanged": false,
+    "scope": "SDK-assisted native separate-compiler experiment; no PS target qualification or parity result"
   }
 }
