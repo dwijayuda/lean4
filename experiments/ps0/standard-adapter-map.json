@@ -4142,25 +4142,299 @@
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
+  "corpusTelescopeQualifiedEvidence": {
+    "source": "bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f",
+    "runner": "16f5b92a032ba35f2ef4104859737eb56d98ce63",
+    "run": 42553645183,
+    "jobs": [
+      {
+        "id": 128954461811,
+        "name": "operator-baseline",
+        "conclusion": "success"
+      },
+      {
+        "id": 128954461991,
+        "name": "native-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 128954462043,
+        "name": "proof-linked",
+        "conclusion": "success"
+      },
+      {
+        "id": 128954462124,
+        "name": "project-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 128954462156,
+        "name": "compiler-fixtures",
+        "conclusion": "success"
+      },
+      {
+        "id": 128954462282,
+        "name": "host-contract",
+        "conclusion": "success"
+      }
+    ],
+    "compilerHeads": 127,
+    "compilerModules": 6,
+    "syntheticSignatures": 18,
+    "modules": [
+      {
+        "converted_sha256": "f3885fec2fcdc57e960f050215edfd81f238f2bef79c0fba69e0a7a85892ab57",
+        "definitions": 110,
+        "edits": 428,
+        "equation_definitions": [
+          "Alt.getCode",
+          "Alt.getParams",
+          "Cases.alts",
+          "Cases.discr",
+          "Cases.resultType",
+          "Cases.typeName",
+          "Cases.updateAlts",
+          "Code.isDecl",
+          "Code.isFun",
+          "Code.isReturnOf",
+          "Code.toCodeDecl!",
+          "CodeDecl.fvarId",
+          "DeclValue.size",
+          "FunDecl.binderName",
+          "FunDecl.fvarId",
+          "FunDecl.params",
+          "FunDecl.type",
+          "FunDecl.updateBinderName",
+          "FunDecl.value",
+          "LitValue.toExpr"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/Basic.c": "4576adf24c634cdc34518a3f65ed3ca0ea3dc32027d6633156f6eb0664c95ff2",
+          "lib/lean/Lean/Compiler/LCNF/Basic.olean": "e4fc60bb05756520835af0fc9342f47848b3e3cb2e4444616e8b584432d025f6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "45fb7fc7d82bf0a9765b625c66e83d1fe8e3c68afc68bfcbb35a4e1837b28771",
+        "module": "Lean.Compiler.LCNF.Basic",
+        "pinned_blob": "82c8dee0b9d13f09d58a6404dd5d5abf797d236e",
+        "source_lines": 1263,
+        "source_sha256": "833cb3c38140ece99ee25149529e568839379193064f5a210f5fb5ffba08df59",
+        "strategies": {
+          "const": 20,
+          "def": 6,
+          "function": 84
+        }
+      },
+      {
+        "converted_sha256": "340d2738edcf91181d3355bac4a2c72107c9b7a6ca7d62e4f9be66c6f03d8e85",
+        "definitions": 18,
+        "edits": 29,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/TelescopeProbe.c": "6787d16744a58347a1b302b44ee5adf1825095401980b79227f473e6bd844452",
+          "lib/lean/Lean/Compiler/TelescopeProbe.olean": "c3073c1993e616c2e86cdc59cfe4ba9602e88220f8f60308520b6670d3ee56fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "82bf3ccdba2ee991cbb0a715c36eb5bb49c96a9e9a32994184b25be0f70c8aa9",
+        "module": "Lean.Compiler.TelescopeProbe",
+        "pinned_blob": "61b472c934e79b57492cf596ede396f7740230db",
+        "source_lines": 27,
+        "source_sha256": "59625e4a509b037e9a4003077e04803f692d098ae28c487a7ba3bb7bda73860c",
+        "strategies": {
+          "def": 6,
+          "function": 12
+        }
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13646940146,
+        "name": "ps0-operator-baseline-42553645183",
+        "digest": "sha256:bda14aee37c24d974e08a25f552ae712f61977a986bf7f89b4c96a4530e45703"
+      },
+      {
+        "id": 13646636681,
+        "name": "ps0-compiler-fixtures-bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f-42553645183",
+        "digest": "sha256:8c860e3329a74d7ac484e826b00763985becf1687f59cb375b3ad8c2ace65eca"
+      },
+      {
+        "id": 13646551602,
+        "name": "ps0-project-bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f-42553645183",
+        "digest": "sha256:d2d97a90889c45d7cba7accfeee06c38fe83ad2de18491c128950a69ceb0b6b1"
+      },
+      {
+        "id": 13645828772,
+        "name": "ps0-external-bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f-42553645183",
+        "digest": "sha256:7a45589f8bac931b0842a629db9451fb6caeafaf81c5c632c29ca06e54429d64"
+      },
+      {
+        "id": 13645359801,
+        "name": "ps0-native-bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f-42553645183",
+        "digest": "sha256:00a0b996c8467582f39f386732bdb8fc1c8f2ddb5c824b3115816e0a30b1e180"
+      }
+    ],
+    "independentInspection": {
+      "runner": "9ab2e7ffef01d6edba2dab7540bfdaa9f10f7e29",
+      "run": 42553933372,
+      "job": 128955363023,
+      "artifact": 13645424848,
+      "zip_sha256": "2a2e581056086b30ee0d129c03992920ad54d9c835d854cf186ed47470298620",
+      "status": "PASS"
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "corpusTelescopeFailureHistory": [
+    {
+      "source": "483ac279f296257bbf2c686e93a96163b7218dd7",
+      "runner": "5db31776e953dbb1ab66e573fcee3fb496817d7d",
+      "run": 42551017700,
+      "projectJob": 128946386255,
+      "status": "FAIL: opaque signature and owned if operands retain parenthesized-call gaps; synthetic 13 and prior five modules pass"
+    },
+    {
+      "source": "3724ad116bc0d2e2e9514006bead88012eee40a5",
+      "runner": "fa2c3bb16875b31dd31c9864836338afd717cad6",
+      "run": 42551624544,
+      "fixtureJob": 128948458886,
+      "projectJob": 128948459173,
+      "status": "FAIL: two cdot section expressions lose native parenthesis hygiene"
+    },
+    {
+      "source": "d6cf36ac2160408d9a5d18833584da27b5f10bdf",
+      "runner": "134ad235650fede0cf5c0a5608bfb3bc8d9e139f",
+      "run": 42552085283,
+      "fixtureJob": 128949681349,
+      "status": "FAIL: LCNF Basic compiles but C differs in embedded panic line numbers after deleted binder whitespace",
+      "native_c_sha256": "4576adf24c634cdc34518a3f65ed3ca0ea3dc32027d6633156f6eb0664c95ff2",
+      "ps_c_sha256": "19354461ad1e83f435fb420e6e65d843bd8a2b0eed5997ce8ae2c7089b0bc6cf",
+      "artifact": 13645409205,
+      "zip_sha256": "8733f300015d85e2efd1ac538ee3fbe8fdfc59a3d1ebdb8012c229a6f0e1cee6",
+      "projectStatus": "cancelled later; not counted as a completed project failure"
+    },
+    {
+      "source": "cd3b62f8003ecd88b5943cb0666cccfc32662f1f",
+      "runner": "a1d9d8e2231dbe6ed910694115e9053724b06601",
+      "run": 42552511645,
+      "fixtureJob": 128951033406,
+      "projectJob": 128951033270,
+      "status": "Basic parity PASS, overall project FAIL on new nested section test also exercising unadapted grouped field projection",
+      "projectArtifact": 13646560531,
+      "projectZipSha256": "8aacaa8ceefc0198046afc3cb97f9ae3995874841e07d3279137c156d2c91b7a",
+      "independent": {
+        "runner": "283b167b998df54c799b6448d3d1779b112c9f64",
+        "run": 42552710036,
+        "job": 128951600078,
+        "status": "PASS",
+        "artifact": 13646565029,
+        "zip_sha256": "db3b4cf55e475a4276009c320b6347790b08be9cc27eb290b51bcdda5f4c72f3"
+      }
+    },
+    {
+      "source": "ba3018a26af9cc26091cdbe51962098b3d4ae1ab",
+      "runner": "b79b8a478601a44d6b8ee4895677f52579ba4547",
+      "run": 42553083850,
+      "status": "all six jobs PASS; 127 actual heads/six modules plus 13 synthetic signatures, before five comment fixtures",
+      "projectJob": 128952751016,
+      "fixtureJob": 128952750979
+    }
+  ],
+  "corpusTelescopeFullPlanningAudit": {
+    "gaps": [
+      {
+        "module": "Lean.Compiler.LCNF.CompilerM",
+        "status": "plan-gap",
+        "reason": "AssertionError: named-call trivia contains comments"
+      },
+      {
+        "module": "Lean.Elab.Tactic.RCases",
+        "status": "plan-gap",
+        "reason": "AssertionError: type-call trivia contains comments; no edit is permitted"
+      },
+      {
+        "module": "Lean.Environment",
+        "status": "plan-gap",
+        "reason": "AssertionError: group trivia must be whitespace; comments are never discarded"
+      },
+      {
+        "module": "Lean.Meta.ExprDefEq",
+        "status": "plan-gap",
+        "reason": "AssertionError: type-call argument trivia contains comments; no edit is permitted"
+      }
+    ],
+    "grammar_migration_complete": false,
+    "modules": 2546,
+    "native_header_adapter_modules": [
+      "Lean",
+      "LeanChecker",
+      "LeanExport",
+      "LeanIR",
+      "Leanc"
+    ],
+    "original_planner_line_count_changes": 389,
+    "planned_definition_count": 25984,
+    "scope": "source identity/census and source edit reconstruction; no converted parse/build/parity acceptance",
+    "source": "483ac279f296257bbf2c686e93a96163b7218dd7",
+    "status_counts": {
+      "plan-gap": 4,
+      "planned-unvalidated": 2542
+    },
+    "strategy_counts": {
+      "const": 4931,
+      "def": 2588,
+      "function": 18465
+    },
+    "verified_execution": false,
+    "runner": "c6dc0baa834965e9a8a1f74bd605f29f4729e0c1",
+    "run": 42551085657,
+    "job": 128946597348,
+    "artifact": 13645569590,
+    "zip_sha256": "b6b8527f68711e52753cf2fbf1b224a8814b443cb8cc80c9100e217be2952ccc",
+    "inspection": {
+      "runner": "e1390f2e0358c197b9b7b274cb0cc0a6732ef2d6",
+      "run": 42553157880,
+      "job": 128952977476,
+      "status": "PASS",
+      "artifact": 13646182780,
+      "zip_sha256": "8dba55b183854504cf95df3f6a8b190549bc48df9d3e5341ff21f3b6d37b520d"
+    },
+    "newerCommentLinePlanning": {
+      "source": "bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f",
+      "runner": "a2a4b0e1f1850d08bfed78a10c6712b5826b7c25",
+      "run": 42553687595,
+      "job": 128954595865,
+      "status": "RUNNING; no result or acceptance claimed"
+    }
+  },
+  "currentTelescopeNativeCompatibleBootstrap": {
+    "source": "cd3b62f8003ecd88b5943cb0666cccfc32662f1f",
+    "runner": "9213118954f115d9c5ba3eb9c26ea62d0a190b2e",
+    "run": 42552622266,
+    "stage1Job": 128952472846,
+    "pr": "https://github.com/dwijayuda/pskernel/pull/241",
+    "status": "RUNNING",
+    "scope": "complete native-compatible .ps source forest through two native Lake build/link stages and fixed point; not canonical ProofScript conversion",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
   "currentContinuation": {
     "status": "ACTIVE_CANONICAL_PS_COMPILER_MIGRATION_INCOMPLETE",
     "branch": "feat/ps0-corpus-telescopes-20261109",
     "goal": "Entire pinned Lean4 compiler corpus builds from .ps using ProofScript syntax and grammars with native Lean4 and Lake; renamed native-only sources do not complete the goal",
     "qualifiedFiniteCheckpoint": {
-      "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
-      "runner": "5797b39ee0af5b5fd8e65381a4039a5923fb5e41",
-      "run": 42547214639,
-      "evidence": "declarationTailsQualifiedEvidence",
-      "convertedCompilerHeads": 17,
-      "compilerModules": 5,
+      "source": "bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f",
+      "runner": "16f5b92a032ba35f2ef4104859737eb56d98ce63",
+      "run": 42553645183,
+      "evidence": "corpusTelescopeQualifiedEvidence",
+      "convertedCompilerHeads": 127,
+      "compilerModules": 6,
+      "syntheticSignatures": 18,
       "rawArtifactInspection": {
-        "runner": "2e79bf2066f97479fccdef9b47f20b4254d77ee3",
-        "run": 42547657922,
-        "job": 128936051911,
-        "status": "PASS",
-        "modules": 5,
-        "convertedHeads": 17,
-        "rawFilesRehashed": 20
+        "runner": "9ab2e7ffef01d6edba2dab7540bfdaa9f10f7e29",
+        "run": 42553933372,
+        "job": 128955363023,
+        "artifact": 13645424848,
+        "zip_sha256": "2a2e581056086b30ee0d129c03992920ad54d9c835d854cf186ed47470298620",
+        "status": "PASS"
       }
     },
     "qualifiedNativeCompatibleFullCompiler": {
@@ -4179,12 +4453,12 @@
       "shapeEligibleDefinitions": 22275,
       "shapeEligibilityIsAcceptance": false
     },
-    "nextPriority": "Fix observed equation/named-call and EOF regressions; qualify every definition in pinned LCNF Basic, complete all-module source planning, then validate the complete converted graph.",
+    "nextPriority": "Complete all-module comment/newline plan audit, then build the entire transformed source graph with PS grammar enabled and native Lake; adapt remaining owned grammar roles from actual failures.",
     "remaining": [
-      "complete source conversion for all pinned upstream and PS0 compiler modules",
-      "remaining telescope/local/layout/field/constructor/notation/interpolation/tactic roles",
-      "current-head full compiler bootstrap and fixed point",
-      "full source-fidelity and automatic original-source diagnostic/IDE presentation"
+      "complete source conversion of all pinned upstream and PS0 compiler modules",
+      "whole transformed graph build/link and current canonical fixed point",
+      "local/layout/field/constructor/notation/interpolation/tactic roles and grouped field projection witness",
+      "complete original-source diagnostic/IDE presentation"
     ],
     "statusTotals": {
       "total": 242,
@@ -4200,8 +4474,26 @@
     },
     "grammarMigrationComplete": false,
     "verified_execution": false,
-    "candidate": "483ac279f296257bbf2c686e93a96163b7218dd7",
-    "candidateRunner": "5db31776e953dbb1ab66e573fcee3fb496817d7d",
-    "candidateRun": 42551017700
+    "corpusPlanning": {
+      "evidence": "corpusTelescopeFullPlanningAudit",
+      "source": "483ac279f296257bbf2c686e93a96163b7218dd7",
+      "modules": 2546,
+      "plannedModules": 2542,
+      "planGaps": 4,
+      "planningIsAcceptance": false,
+      "newerRun": 42553687595,
+      "newerStatus": "RUNNING"
+    },
+    "currentNativeCompatibleBootstrap": {
+      "source": "cd3b62f8003ecd88b5943cb0666cccfc32662f1f",
+      "runner": "9213118954f115d9c5ba3eb9c26ea62d0a190b2e",
+      "run": 42552622266,
+      "stage1Job": 128952472846,
+      "pr": "https://github.com/dwijayuda/pskernel/pull/241",
+      "status": "RUNNING",
+      "scope": "complete native-compatible .ps source forest through two native Lake build/link stages and fixed point; not canonical ProofScript conversion",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    }
   }
 }
