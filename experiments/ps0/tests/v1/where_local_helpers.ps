@@ -1,0 +1,43 @@
+/-! Braced where helpers retain native local recursion, captured scopes and mixed telescopes. -/
+function add(x: Nat, y: Nat): Nat := x + y
+structure LocalPoint where
+  x : Nat
+  y : Nat
+
+function defaultHelper(n: Nat): Nat := helper(n)
+where {
+  def helper(x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+}
+
+function capturedHelper(n: Nat): Nat := helper(1)
+where {
+  /-- Preserve local helper documentation and its permitted attribute. -/
+  @[inline] def helper(x: Nat): Nat := add(n, x)
+}
+
+function equationHelper(n: Nat): Nat := helper(0, n, 0)
+where {
+  def helper(offset: Nat, value: Nat): Nat → Nat
+    | 0 => add(offset, value)
+    | Nat.succ k => helper(offset, value, k)
+}
+
+function recordHelper(n: Nat): Nat := helper(n).x
+where {
+  def helper(k: Nat): LocalPoint where { x := k; y := 0 }
+}
+
+function forwardHelper(n: Nat): Nat := first(n)
+where {
+  def first(x: Nat): Nat := second(x)
+  def second(x: Nat): Nat := add(x, 1)
+}
+
+def main : IO Unit :=
+  do
+    let a := defaultHelper(4)
+    let b := capturedHelper(4)
+    let c := equationHelper(4)
+    let d := recordHelper(4)
+    let e := forwardHelper(4)
+    IO.println s!"PS0_WHERE_LOCAL:{a}:{b}:{c}:{d}:{e}"
