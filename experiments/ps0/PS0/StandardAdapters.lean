@@ -24,91 +24,98 @@ declare_syntax_cat psDeclTail
     Lean.Parser.optional Lean.Parser.Term.whereDecls)
 syntax (name := ps0DeclTail) nativeDeclTail : psDeclTail
 
-private def attachTail (decl : Syntax) (tail? : Option (TSyntax `psDeclTail)) : MacroM Syntax := do
-  let some tail := tail? | return decl
-  for i in [:decl.getArgs.size] do
-    let value := decl[i]
-    if value.isOfKind ``Lean.Parser.Command.declValSimple then
-      return decl.setArg i ((value.setArg 2 tail.raw[0]).setArg 3 tail.raw[1])
-  Macro.throwError "PS0V1-DECL-TAIL: missing native simple declaration value"
+declare_syntax_cat psDeclValue
+
+@[run_parser_attribute_hooks] def nativePSMatchAlts : Lean.Parser.Parser :=
+  Lean.Parser.Term.matchAlts (Lean.Parser.categoryParser `psTerm 0)
+
+syntax (name := ps0DeclSimple) ":=" psTerm (psDeclTail)? : psDeclValue
+syntax (name := ps0DeclEqns) nativePSMatchAlts (psDeclTail)? : psDeclValue
+
+private def nativeValue (source : TSyntax `psDeclValue) : MacroM (TSyntax ``Lean.Parser.Command.declVal) := do
+  let value := source.raw
+  let tail := value.getArgs.back![0]
+  let suffix := if tail.isMissing then mkNullNode #[] else tail[0]
+  let whereDecls := if tail.isMissing then mkNullNode #[] else tail[1]
+  if value.isOfKind ``ps0DeclSimple then
+    return ⟨mkNode ``Lean.Parser.Command.declValSimple
+      #[value[0], ← PS0.Syntax.lower `psTerm value[1], suffix, whereDecls]⟩
+  unless value.isOfKind ``ps0DeclEqns do
+    Macro.throwError "PS0V1-DECL-VALUE: unsupported declaration value"
+  let alts := value[0]
+  let lowered ← alts[0].getArgs.mapM fun alt => do
+    unless alt.isOfKind ``Lean.Parser.Term.matchAlt && alt.getArgs.size == 4 do
+      Macro.throwError "PS0V1-DECL-EQUATIONS: unexpected native alternative shape"
+    return alt.setArg 3 (← PS0.Syntax.lower `psTerm alt[3])
+  return ⟨mkNode ``Lean.Parser.Command.declValEqns
+    #[mkNode ``Lean.Parser.Term.matchAltsWhereDecls
+      #[alts.setArg 0 (alts[0].setArgs lowered), suffix, whereDecls]]⟩
 
 scoped syntax (name := ps0StandardDef) (priority := 20000)
-  declModifiers "def " declId psDeclBinder* (":" psTerm)? ":=" psTerm
-  (psDeclTail)? : command
+  declModifiers "def " declId psDeclBinder* (":" psTerm)? psDeclValue : command
 scoped syntax (name := ps0StandardAbbrev) (priority := 20000)
-  declModifiers "abbrev " declId psDeclBinder* (":" psTerm)? ":=" psTerm
-  (psDeclTail)? : command
+  declModifiers "abbrev " declId psDeclBinder* (":" psTerm)? psDeclValue : command
 scoped syntax (name := ps0StandardTheorem) (priority := 20000)
-  declModifiers "theorem " declId psDeclBinder* ":" psTerm ":=" psTerm
-  (psDeclTail)? : command
+  declModifiers "theorem " declId psDeclBinder* ":" psTerm psDeclValue : command
 scoped syntax (name := ps0StandardExample) (priority := 20000)
-  declModifiers "example " psDeclBinder* (":" psTerm)? ":=" psTerm
-  (psDeclTail)? : command
+  declModifiers "example " psDeclBinder* (":" psTerm)? psDeclValue : command
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardDef)
-  | `($mods:declModifiers def $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm
-      $[$tail:psDeclTail]?) => do
+  | `($mods:declModifiers def $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? $value:psDeclValue) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← ty.mapM nativeTerm
-      let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
+      let value ← nativeValue value
+      let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardAbbrev)
-  | `($mods:declModifiers abbrev $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm
-      $[$tail:psDeclTail]?) => do
+  | `($mods:declModifiers abbrev $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? $value:psDeclValue) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← ty.mapM nativeTerm
-      let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.abbrev| abbrev $name:declId $bs:bracketedBinder* $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
+      let value ← nativeValue value
+      let decl ← `(Lean.Parser.Command.abbrev| abbrev $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardTheorem)
-  | `($mods:declModifiers theorem $name:declId $bs:psDeclBinder* : $ty:psTerm := $body:psTerm
-      $[$tail:psDeclTail]?) => do
+  | `($mods:declModifiers theorem $name:declId $bs:psDeclBinder* : $ty:psTerm $value:psDeclValue) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← nativeTerm ty
-      let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.theorem| theorem $name:declId $bs:bracketedBinder* : $ty:term := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
+      let value ← nativeValue value
+      let decl ← `(Lean.Parser.Command.theorem| theorem $name:declId $bs:bracketedBinder* : $ty:term $value:declVal)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardExample)
-  | `($mods:declModifiers example $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm
-      $[$tail:psDeclTail]?) => do
+  | `($mods:declModifiers example $bs:psDeclBinder* $[: $ty:psTerm]? $value:psDeclValue) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← ty.mapM nativeTerm
-      let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.example| example $bs:bracketedBinder* $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
+      let value ← nativeValue value
+      let decl ← `(Lean.Parser.Command.example| example $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 scoped syntax (name := ps0StandardFunction) (priority := 20000)
-  declModifiers "function " declId psDeclBinder+ (":" psTerm)? ":=" psTerm
-  (psDeclTail)? : command
+  declModifiers "function " declId psDeclBinder+ (":" psTerm)? psDeclValue : command
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardFunction)
-  | `($mods:declModifiers function $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm
-      $[$tail:psDeclTail]?) => do
+  | `($mods:declModifiers function $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? $value:psDeclValue) => do
       let bs ← PS0.Binders.lowerTelescope bs true
       let ty ← ty.mapM nativeTerm
-      let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
+      let value ← nativeValue value
+      let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 scoped syntax (name := ps0StandardOpaque) (priority := 20000)
   declModifiers "opaque " declId psDeclBinder* ":" psTerm (":=" psTerm)? : command
 scoped syntax (name := ps0StandardAxiom) (priority := 20000)
   declModifiers "axiom " declId psDeclBinder* ":" psTerm : command
 scoped syntax (name := ps0StandardConst) (priority := 20000)
-  declModifiers "const " declId (":" psTerm)? ":=" psTerm
-  (psDeclTail)? : command
+  declModifiers "const " declId (":" psTerm)? psDeclValue : command
 scoped syntax (name := ps0StandardInstance) (priority := 20000)
-  declModifiers attrKind "instance" optNamedPrio (declId)? psDeclBinder* ":" psTerm ":=" psTerm
-  (psDeclTail)? : command
+  declModifiers attrKind "instance" optNamedPrio (declId)? psDeclBinder* ":" psTerm psDeclValue : command
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardOpaque)
@@ -129,21 +136,19 @@ macro_rules (kind := ps0StandardAxiom)
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardConst)
-  | `($mods:declModifiers const $name:declId $[: $ty:psTerm]? := $body:psTerm
-      $[$tail:psDeclTail]?) => do
+  | `($mods:declModifiers const $name:declId $[: $ty:psTerm]? $value:psDeclValue) => do
       let ty ← ty.mapM nativeTerm
-      let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.definition| def $name:declId $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
+      let value ← nativeValue value
+      let decl ← `(Lean.Parser.Command.definition| def $name:declId $[: $ty:term]? $value:declVal)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardInstance)
-  | `($mods:declModifiers $kind:attrKind instance $[$prio:namedPrio]? $[$name:declId]? $bs:psDeclBinder* : $ty:psTerm := $body:psTerm
-      $[$tail:psDeclTail]?) => do
+  | `($mods:declModifiers $kind:attrKind instance $[$prio:namedPrio]? $[$name:declId]? $bs:psDeclBinder* : $ty:psTerm $value:psDeclValue) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← nativeTerm ty
-      let body ← nativeTerm body
-      let decl ← `(Lean.Parser.Command.instance| $kind:attrKind instance $[$prio:namedPrio]? $[$name:declId]? $bs:bracketedBinder* : $ty:term := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
+      let value ← nativeValue value
+      let decl ← `(Lean.Parser.Command.instance| $kind:attrKind instance $[$prio:namedPrio]? $[$name:declId]? $bs:bracketedBinder* : $ty:term $value:declVal)
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, decl.raw]
 
 end PS0.StandardAdapters

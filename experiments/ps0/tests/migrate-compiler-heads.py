@@ -41,6 +41,11 @@ def single_type_call(operand, role='owned binder type'):
     if operand['kind'] == 'Lean.Parser.Term.paren':
         single_type_call(operand['args'][1], role)
         return
+    if operand['kind'] == 'Lean.Parser.Term.fun':
+        body = operand['args'][1]
+        if body['kind'] == 'Lean.Parser.Term.basicFun':
+            single_type_call(body['args'][3], role + ' lambda body')
+        return
     if operand.get('nativeBinaryOperator', False):
         assert len(operand['args']) == 3 and operand['args'][1]['atom'] is not None
         single_type_call(operand['args'][0], role)
@@ -50,7 +55,8 @@ def single_type_call(operand, role='owned binder type'):
         return
     function, arguments = operand['args']
     arguments = arguments['args']
-    if not any(argument['kind'] == 'Lean.Parser.Term.paren' for argument in arguments):
+    if not any(argument['kind'] in ['Lean.Parser.Term.paren', 'Lean.Parser.Term.tuple',
+                                   'Lean.Parser.Term.fun'] for argument in arguments):
         return
     assert all(a['kind'] != 'Lean.Parser.Term.namedArgument' for a in arguments)
     _, end = span(function)
@@ -144,26 +150,16 @@ for command in original_commands(snapshot['commands']):
         start, _ = span(following)
         assert start == end or raw[end:start].isspace(), 'group trivia must be whitespace; comments are never discarded'
         edit(end - 1, start + 1, ', ', 'merge consecutive typed groups in source order')
-    root = decl.get('valueApplication')
-    applications = []
-    if root is not None and any(a['kind'] in ['Lean.Parser.Term.paren', 'Lean.Parser.Term.fun'] for a in root['arguments']):
-        applications = [root, *decl.get('lambdaBodyApplications', [])]
-    for application in applications:
-        if application is None or not any(a['kind'] in ['Lean.Parser.Term.paren', 'Lean.Parser.Term.fun'] for a in application['arguments']):
-            continue
-        arguments = application['arguments']
-        assert all(a['kind'] != 'Lean.Parser.Term.namedArgument' for a in arguments), 'named body arguments need their own source role'
-        function_end = application['functionRange']['end']
-        first_start, _ = span(arguments[0])
-        assert raw[function_end:first_start].isspace(), 'body call trivia contains comments; no edit is permitted'
-        edit(function_end, first_start, '(', 'owned value root application opening delimiter')
-        for previous, following in zip(arguments, arguments[1:]):
-            _, end = span(previous)
-            start, _ = span(following)
-            assert raw[end:start].isspace(), 'body argument trivia contains comments; no edit is permitted'
-            edit(end, start, ', ', 'owned value root application argument separator')
-        _, last_end = span(arguments[-1])
-        edit(last_end, last_end, ')', 'owned value root application closing delimiter')
+    value = decl.get('valueSyntax')
+    if value is not None:
+        if value['kind'] == 'Lean.Parser.Command.declValSimple':
+            single_type_call(value['args'][1], 'owned declaration body')
+        elif value['kind'] == 'Lean.Parser.Command.declValEqns':
+            alternatives = value['args'][0]['args'][0]['args'][0]['args']
+            for alternative in alternatives:
+                assert alternative['kind'] == 'Lean.Parser.Term.matchAlt'
+                assert len(alternative['args']) == 4
+                single_type_call(alternative['args'][3], 'owned equation right-hand side')
     declarations.append(decl['sourceName'])
 
 assert declarations, 'no supported native declaration heads'

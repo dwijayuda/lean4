@@ -76,7 +76,9 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
     let hasTail := #[`PS0.StandardAdapters.ps0StandardDef, `PS0.StandardAdapters.ps0StandardAbbrev,
       `PS0.StandardAdapters.ps0StandardTheorem, `PS0.StandardAdapters.ps0StandardFunction,
       `PS0.StandardAdapters.ps0StandardConst].contains kind
-    let value := if hasTail then source[source.getArgs.size - 2] else Syntax.missing
+    let declValue := if hasTail then source.getArgs.back! else Syntax.missing
+    let value := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclSimple then declValue[1] else Syntax.missing
+    let tail := declValue.getArgs.back![0]
     return Json.mkObj [
       ("mode", toJson ("mapped-ps" : String)), ("production", toJson kind.toString),
       ("sourceName", toJson source[2][0].getId.toString),
@@ -86,7 +88,8 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("ownedValueCall", toJson (value.isOfKind `ps0HostAdjacentCall ||
         (value.isOfKind `ps0HostHeadTerm && value[0].isOfKind `ps0HeadCall))),
       ("ownedOperatorKinds", toJson ((ownedOperators value).map Name.toString)),
-      ("nativeWhereTail", toJson (hasTail && source.getArgs.back![0][1].getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
+      ("declarationValueKind", toJson declValue.getKind.toString),
+      ("nativeWhereTail", toJson (hasTail && tail[1].getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
   if source.isOfKind ``Lean.Parser.Command.declaration then
     let native := source[1]
     let supported := #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,
@@ -98,6 +101,7 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
         ("sourceName", toJson native[1][0].getId.toString),
         ("keywordRange", sourceRange native[0]), ("nameRange", sourceRange native[1]),
         ("signatureRange", sourceRange native[2]), ("signatureSyntax", signatureSyntax operators native[2]),
+        ("valueSyntax", signatureSyntax operators native[3]),
         ("valueApplication", valueApplication native),
         ("lambdaBodyApplications", toJson (lambdaBodyApplications native))]
   return .null

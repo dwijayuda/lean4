@@ -97,13 +97,22 @@ declarations = list(source_declarations(observed['commands']))
 unchanged_abbrevs = {d['sourceName'] for d in original_declarations
                      if d['production'] == 'Lean.Parser.Command.abbrev'}
 mapped = {d['sourceName'] for d in declarations if d['mode'] == 'mapped-ps'}
-expected_mapped = set(plan['declarations']) | unchanged_abbrevs
+family_productions = {'Lean.Parser.Command.abbrev': 'PS0.StandardAdapters.ps0StandardAbbrev',
+                      'Lean.Parser.Command.theorem': 'PS0.StandardAdapters.ps0StandardTheorem',
+                      'Lean.Parser.Command.opaque': 'PS0.StandardAdapters.ps0StandardOpaque',
+                      'Lean.Parser.Command.axiom': 'PS0.StandardAdapters.ps0StandardAxiom'}
+expected_other = {d['sourceName']: family_productions[d['production']]
+                  for d in original_declarations if d['production'] in family_productions}
+expected_mapped = set(plan['declarations']) | set(expected_other)
 assert mapped == expected_mapped, (sorted(mapped), sorted(expected_mapped))
 strategies = {d['sourceName']: d['targetKeyword'] for d in plan.get('strategies', [])}
 productions = {'function': 'PS0.StandardAdapters.ps0StandardFunction',
                'const': 'PS0.StandardAdapters.ps0StandardConst',
                'def': 'PS0.StandardAdapters.ps0StandardDef'}
 for declaration in declarations:
+    if declaration['sourceName'] in expected_other:
+        assert declaration['mode'] == 'mapped-ps'
+        assert declaration['production'] == expected_other[declaration['sourceName']], declaration
     if declaration['sourceName'] in plan['declarations']:
         keyword = strategies.get(declaration['sourceName'], 'function')
         assert declaration['mode'] == 'mapped-ps'
