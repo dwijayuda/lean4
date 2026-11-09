@@ -62,6 +62,12 @@ private def letPrefix : Parser :=
 @[run_parser_attribute_hooks] def nestedElem : Parser :=
   operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doNested
 
+@[run_parser_attribute_hooks] def unlessElem : Parser :=
+  operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.doUnless
+
+@[run_parser_attribute_hooks] def unlessTerm : Parser :=
+  operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.termUnless
+
 end PS0.DoLayout
 
 @[psTerm_parser low]
@@ -85,6 +91,10 @@ def ps0NativeDoBind : Lean.Parser.Parser := PS0.DoLayout.bindElem
 def ps0NativeDoReassign : Lean.Parser.Parser := PS0.DoLayout.reassignElem
 @[psDoElem_parser 20000]
 def ps0NativeDoNested : Lean.Parser.Parser := PS0.DoLayout.nestedElem
+@[psDoElem_parser 20000]
+def ps0NativeDoUnless : Lean.Parser.Parser := PS0.DoLayout.unlessElem
+@[psTerm_parser 20000]
+def ps0NativeTermUnless : Lean.Parser.Parser := PS0.DoLayout.unlessTerm
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
 syntax (name := ps0NativeEllipsisArg) Lean.Parser.Term.ellipsis : psCallArg
@@ -172,6 +182,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind ``Lean.Parser.Term.termUnless then
+      return ← lowerNativeUnless source
     if source.isOfKind ``ps0NativeTermBridge then
       let native := source[0]
       rejectHostGap native
@@ -253,6 +265,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   else Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
 
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.doUnless then
+    return ← lowerNativeUnless source
   if source.isOfKind ``Lean.Parser.Term.doLet then
     unless source.getArgs.size == 4 && source[3].isOfKind ``Lean.Parser.Term.letDecl &&
         source[3].getArgs.size == 1 do
@@ -317,6 +331,13 @@ partial def lowerNativeDoSequence (native : Lean.Syntax) : MacroM Lean.Syntax :=
       Macro.throwError "PS0V1-DO-LAYOUT: unexpected native sequence item"
     return item.setArg 0 (← lowerDoElem item[0])
   return native.setArg index (native[index].setArgs items)
+
+partial def lowerNativeUnless (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.getArgs.size == 4 && source[0].isAtom && source[0].getAtomVal == "unless" &&
+      source[2].isAtom && source[2].getAtomVal == "do" do
+    Macro.throwError "PS0V1-UNLESS-SHAPE: unexpected native control node"
+  let source := source.setArg 1 (← lower `psTerm source[1])
+  return source.setArg 3 (← lowerNativeDoSequence source[3])
 
 partial def lowerNativeOptionalType (source : Lean.Syntax) : MacroM Lean.Syntax := do
   if source.getArgs.isEmpty then return source

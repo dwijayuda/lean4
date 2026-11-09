@@ -52,6 +52,9 @@ def single_type_call(operand, role='owned binder type'):
         assert len(operand['args']) == 2
         do_sequence(operand['args'][1])
         return
+    if operand['kind'] == 'Lean.Parser.Term.termUnless':
+        unless_operands(operand)
+        return
     if operand['kind'] == 'termIfThenElse':
         parts = operand['args']
         assert len(parts) == 6 and [parts[i]['atom'] for i in [0, 2, 4]] == ['if', 'then', 'else']
@@ -154,7 +157,9 @@ def local_id_value(declaration):
 
 def do_element(element):
     kind, parts = element['kind'], element['args']
-    if kind == 'Lean.Parser.Term.doExpr':
+    if kind == 'Lean.Parser.Term.doUnless':
+        unless_operands(element)
+    elif kind == 'Lean.Parser.Term.doExpr':
         assert len(parts) == 1
         single_type_call(parts[0], 'owned do expression')
     elif kind == 'Lean.Parser.Term.doReturn':
@@ -183,6 +188,13 @@ def do_element(element):
             do_element(declaration['args'][3])
     # Native patterns, registered DSL elements and unsupported control operands
     # retain their independent parser ownership.
+
+
+def unless_operands(element):
+    parts = element['args']
+    assert len(parts) == 4 and [parts[i]['atom'] for i in [0, 2]] == ['unless', 'do']
+    single_type_call(parts[1], 'owned unless condition')
+    do_sequence(parts[3])
 
 
 def do_sequence(sequence):
