@@ -141,12 +141,19 @@ private partial def command (operators : Array Name) (source : Syntax) : Json :=
     ("declaration", declaration operators viewed),
     ("nestedCommands", toJson (nested.map (command operators)))]
 
+private partial def syntaxKinds (names : NameSet) (source : Syntax) : NameSet :=
+  source.getArgs.foldl syntaxKinds (names.insert source.getKind)
+
 def collect (commands : Array Syntax) : CommandElabM Unit := do
   let output := (← getOptions).get `ps0.sourceCensusPath ("" : String)
   unless output.isEmpty do
     let context ← read
     let env ← getEnv
-    let operators := PS0.OperatorDescriptors.binaryKinds env (← getOptions)
+    -- A scoped parser may no longer be active after its namespace closes.
+    -- Validate descriptors named by the captured nodes as well as active parsers.
+    let names := commands.foldl syntaxKinds {}
+    let operators := PS0.OperatorDescriptors.binaryKinds env (← getOptions) ++
+      PS0.OperatorDescriptors.binaryKindsFor env (← getOptions) names.toArray
     let locals ← env.getLocalConstantInfos
     let imports := env.header.imports.map (fun (i : Import) => i.module.toString)
     let names := locals.map (fun (c : AsyncConstantInfo) => c.toConstantInfo.name.toString)

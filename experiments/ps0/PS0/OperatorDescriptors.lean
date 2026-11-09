@@ -23,16 +23,24 @@ private partial def roles : ParserDescr → Option (Array Nat)
   | .binary n p q => if n == `andthen then do return (← roles p) ++ (← roles q) else none
   | _ => none
 
-private unsafe def binaryKindsImpl (env : Environment) (opts : Options) : Array Name := Id.run do
+private unsafe def binaryKindsForImpl (env : Environment) (opts : Options)
+    (names : Array Name) : Array Name := Id.run do
   let mut result := #[``Lean.Parser.Term.arrow]
-  let some category := getParserCategory? env `term | return result
-  let names := category.kinds.foldl (fun names name _ => names.push name) (#[] : Array Name)
   for name in names do
     if let some info := env.find? name then
       if info.type.getAppFn.isConstOf ``TrailingParserDescr then
         if let .ok (.trailingNode kind _ _ body) := env.evalConst TrailingParserDescr opts name then
           if roles body == some #[0, 1] then result := result.push kind
   return result
+
+@[implemented_by binaryKindsForImpl]
+opaque binaryKindsFor (env : Environment) (opts : Options) (names : Array Name) : Array Name
+
+private unsafe def binaryKindsImpl (env : Environment) (opts : Options) : Array Name :=
+  match getParserCategory? env `term with
+  | none => #[``Lean.Parser.Term.arrow]
+  | some category => binaryKindsForImpl env opts <|
+      category.kinds.foldl (fun names name _ => names.push name) #[]
 
 @[implemented_by binaryKindsImpl]
 opaque binaryKinds (env : Environment) (opts : Options) : Array Name

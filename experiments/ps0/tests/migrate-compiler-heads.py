@@ -32,9 +32,11 @@ def edit(start, end, replacement, role):
                   'new': replacement, 'role': role})
 
 def original_commands(commands):
+    previous = None
     for command in commands:
-        yield command
+        yield previous, command
         yield from original_commands(command.get('nestedCommands', []))
+        previous = command
 
 def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
@@ -262,7 +264,7 @@ def telescope(binders):
         assert raw[start:start + 1] == b'(' and raw[end - 1:end] == b')'
 
 
-for command in original_commands(snapshot['commands']):
+for previous_command, command in original_commands(snapshot['commands']):
     decl = command['declaration']
     if decl is None or decl['mode'] != 'native-compatible':
         continue
@@ -281,6 +283,15 @@ for command in original_commands(snapshot['commands']):
         assert len(result_type) == 1 and result_type[0]['kind'] == 'Lean.Parser.Term.typeSpec'
         single_type_call(result_type[0]['args'][1], 'owned declaration result type')
     use_alias = is_definition and all(alias_binder(binder) for binder in binders)
+    # Contextual aliases remain valid native identifiers. Keep the reserved R2
+    # head after native commands whose identifier/field lists could consume it.
+    boundary_hazard = previous_command is not None and previous_command['headKind'] in {
+        'Lean.Parser.Command.attribute', 'Lean.Parser.Command.structure',
+        'Lean.Parser.Command.inductive', 'Lean.Parser.Command.coinductive',
+        'Lean.Parser.Command.classInductive',
+    }
+    if boundary_hazard:
+        use_alias = False
     if use_alias and binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
         name_end = decl['nameRange']['end']
         first, _ = span(binders[0])
@@ -325,7 +336,10 @@ for command in original_commands(snapshot['commands']):
     keyword = ('function' if binders else 'const') if use_alias else 'def'
     strategies.append({'sourceName': decl['sourceName'], 'keywordRange': kw,
                        'targetKeyword': keyword,
-                       'reason': 'typed alias telescope' if use_alias else 'preserve R2 native telescope grouping/inference or original head trivia'})
+                       'reason': ('typed alias telescope' if use_alias else
+                                  'preserve reserved R2 head after native identifier/field list' if boundary_hazard else
+                                  'preserve R2 native telescope grouping/inference or original head trivia'),
+                       'previousCommandHeadKind': previous_command['headKind'] if previous_command else None})
     if use_alias:
         edit(kw['start'], kw['end'], keyword, 'owned PS declaration keyword')
     if use_alias and binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
