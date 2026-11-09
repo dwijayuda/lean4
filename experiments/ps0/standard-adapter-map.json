@@ -7825,14 +7825,712 @@
       "Std.Data.Internal.List.Associative"
     ],
     "independentInspection": {
-      "status": "PENDING",
-      "runner": "8f574f0b805236ae513694972156df79a79416a9",
-      "expectedModules": 28,
-      "expectedActualFiles": 112
+      "status": "PASS",
+      "runner": "f91b53cdf378619b04e97c8eec6988691081e540",
+      "run": 42602223686,
+      "job": 129109243439,
+      "modules": 28,
+      "actualFilesRehashed": 112,
+      "artifact": {
+        "id": 13665793573,
+        "name": "ps0-native-boundaries-rehash-42602223686",
+        "digest": "sha256:d54a2df342603430deaee97c77b579900d22e92a477b86c192a04daa5db23da1",
+        "size_in_bytes": 42718
+      },
+      "scope": "actual native and PS target C/public olean byte equality and independent rehash, exact edit reconstruction/line/import identity, mapped declaration modes and standard family multiplicities; finite SDK-assisted targets only"
     },
     "qualification": "finite SDK-assisted native Lake target C/public olean parity, native declaration family multiplicities, exact source reconstruction and owned source-token/range assertions; full transformed dependency graph remains separate",
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "modules": [
+      {
+        "converted_sha256": "b7fa9dbf19f415c46e0e1d6652b3ae4c22f43db9acf897698d298138258a8311",
+        "definitions": 0,
+        "edits": 4,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Array/Perm.c": "6a0303950dda09f4c838ada00d0232cd2fd5ef859e7a2ff75da9619c694444be",
+          "lib/lean/Init/Data/Array/Perm.olean": "9859e01697722586f061953d635cc5224fbed42cb1e04980470db0a41636cf38"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "6cd5e3394faf139ddaca3b5147a0cec5f5e4f4e3dd0b1c150e8e76a73d902d1d",
+        "module": "Init.Data.Array.Perm",
+        "pinned_blob": "b08ecedda868a775aff18bb58b105974ff2d7899",
+        "source_lines": 153,
+        "source_sha256": "d6904d4d764cef21ee13fba6aa3d439dd98289344057337e47944c322db34142",
+        "strategies": {}
+      },
+      {
+        "converted_sha256": "8c9813e8e5a5ef573255270f58f58137f6d19eae237c4a7b99708c6afd1aa80c",
+        "definitions": 43,
+        "edits": 6663,
+        "equation_definitions": [
+          "Option.dmap",
+          "containsKey",
+          "eraseKey",
+          "getEntry!",
+          "getEntry?",
+          "getEntryD",
+          "getKey?",
+          "getValue?",
+          "getValueCast?",
+          "replaceEntry"
+        ],
+        "hashes": {
+          "ir/Std/Data/Internal/List/Associative.c": "68003a189804790eb852b0387422e4aa14c167636db99efaa59ba35d19a5d192",
+          "lib/lean/Std/Data/Internal/List/Associative.olean": "a7b7a2370bc045d28d0eb5d734ed055e16c91158b87b99ee2a876e6c81d56444"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "0c371279ddc32da2a11351938d5d218be068499ba2368a72e0b01c6e4f67579a",
+        "module": "Std.Data.Internal.List.Associative",
+        "pinned_blob": "a662911b51429329607eaea56ab8d04990df2901",
+        "source_lines": 10382,
+        "source_sha256": "5320117e23a5c29e583c0fe3f0bc857e2e8378c9d466ae91d6daed1d12be5fe6",
+        "strategies": {
+          "const": 1,
+          "def": 6,
+          "function": 36
+        }
+      },
+      {
+        "converted_sha256": "d93567379270671804719482c238ff14661e6fd3d0e00cb07d84f9677307fd5b",
+        "definitions": 3,
+        "edits": 13,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/ClosedTermCache.c": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2",
+          "lib/lean/Lean/Compiler/ClosedTermCache.olean": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "5ff2fa266fd93edb5e2bab486cf86d1193faafa83495fc30e2d623a1f066c2ce",
+        "module": "Lean.Compiler.ClosedTermCache",
+        "pinned_blob": "20b7acf5d684789ab52b81dda7def4b19568213c",
+        "source_lines": 40,
+        "source_sha256": "e1184350de6ef6ade1dc0f34d7320a4fc7445c5f9a7132d9ed7fc1f5518c38b9",
+        "strategies": {
+          "function": 3
+        }
+      },
+      {
+        "converted_sha256": "e34092b6c851a5e47e63bf8a7dbf7edae0983d18416933dfa53110adae293b6e",
+        "definitions": 4,
+        "edits": 25,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/DeclHash.c": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c",
+          "lib/lean/Lean/Compiler/LCNF/DeclHash.olean": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "5cb85e0cdbcddc0be2e5e9dad12edb1dbdaa7e0f5341196f43af8c43cf262ea2",
+        "module": "Lean.Compiler.LCNF.DeclHash",
+        "pinned_blob": "5f818560cb8fcba0df6f64acb6bdc01c48425189",
+        "source_lines": 64,
+        "source_sha256": "b91bd09cd5fbf9f0def82b12c7ef5d2c5c5465f55edfeec8ad59a640f0b5d1d0",
+        "strategies": {
+          "function": 4
+        }
+      },
+      {
+        "converted_sha256": "dc659cf8a5aebed91588f6b637c388856094403a8c23f730871b13bfa687b49a",
+        "definitions": 4,
+        "edits": 40,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DeclarationForms.c": "5d7e11adf7656b2daa64d191f23782a4ce5d06f5eb01cba6ec5c6ad2f0f1e159",
+          "lib/lean/Lean/Compiler/DeclarationForms.olean": "2a1f9d698857303ec6d63f36a7ccaa1332ae80d5634cfaa2649db6a41361baf7"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "8001dd55fd0ac944b1e95b81dbdd789124752159963e80ff7094403910d69a81",
+        "module": "Lean.Compiler.DeclarationForms",
+        "pinned_blob": "3761abd09f5c184ed9effb4f4749669bb1ac3039",
+        "source_lines": 59,
+        "source_sha256": "a79bce6dfbc24697a420d694507b1f43681db2ebeace76bbf12ab5b1877ebe54",
+        "strategies": {
+          "const": 1,
+          "def": 2,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "ee2266490c79e1347eb72566b39b9587e3843cba03c7508a810420bda872ca8a",
+        "definitions": 8,
+        "edits": 50,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DoLayoutProbe.c": "d391d37b19052ef8df2399c29ea235b1d61faa78f59f54d3d2ad42afe9ca06ca",
+          "lib/lean/Lean/Compiler/DoLayoutProbe.olean": "33fc5547e1c25f121c708c6131070bcdad029a68816b3ce6be411a2df3553a46"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a9be2adc52d2a23200434407dc17f2be68ce24eff4c5564fe00e16200bc7be80",
+        "module": "Lean.Compiler.DoLayoutProbe",
+        "pinned_blob": "09c87f1ea65f4907f3b5fbca7c854faabe533933",
+        "source_lines": 37,
+        "source_sha256": "644afda53861fd8b61c38d32168a852933594b3b0196c0e6f383ff593fbbedc4",
+        "strategies": {
+          "const": 5,
+          "def": 1,
+          "function": 2
+        }
+      },
+      {
+        "converted_sha256": "96c8466d93c4b2825f82ce044d3c4286c78ddd8816f247637591eb10c79e5fe1",
+        "definitions": 2,
+        "edits": 11,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/EmitUtil.c": "ab93c952e9ed62b7c7ca780f12a0f671db8c3308b5a601926fcf36d7d0408d16",
+          "lib/lean/Lean/Compiler/LCNF/EmitUtil.olean": "5be3a7804a7288819fb630226673d7a1454043658fe2a4ddb25a3b6a45280553"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "bde4186b73388d63d42e006ec2b3200a378fb7a309360ca7058d29260b88f9c9",
+        "module": "Lean.Compiler.LCNF.EmitUtil",
+        "pinned_blob": "a1283439481c82fe7835b7b2d743e5e57bfd1111",
+        "source_lines": 56,
+        "source_sha256": "a940bfa697130609453846c9af49f426cb644a03f3fa4974f3ca947c3798436e",
+        "strategies": {
+          "def": 1,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "703212ed3421815962922308536832cc2fe1f16b199c62abda1e024667a18a8e",
+        "definitions": 26,
+        "edits": 100,
+        "equation_definitions": [
+          "add",
+          "div",
+          "elim0",
+          "land",
+          "lor",
+          "mod",
+          "modn",
+          "mul",
+          "shiftLeft",
+          "shiftRight",
+          "sub",
+          "succ",
+          "xor"
+        ],
+        "hashes": {
+          "ir/Init/Data/Fin/Basic.c": "54d27ad85376bf29c77c6fadd29cf2f2a74491c670afe9215d26fdd575ac5cdc",
+          "lib/lean/Init/Data/Fin/Basic.olean": "8f599a56bbf94a1e62b8403e65742ac650ae7f0555bafd8e9e5ab41f0b124850"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "d63fa497d302045867503872c5c3eee5331981b3320a5ffdc572739589353207",
+        "module": "Init.Data.Fin.Basic",
+        "pinned_blob": "6fee3ab2eaacf1b76de02ea7f7880f29fbac8294",
+        "source_lines": 423,
+        "source_sha256": "bb3d4e46cb40a24f5a09e6e003c76f2b84140a598df81233f0bffe3afe08cbf4",
+        "strategies": {
+          "const": 13,
+          "def": 4,
+          "function": 9
+        }
+      },
+      {
+        "converted_sha256": "dfbc8d1d5ad2823981dd09cfbd4ed6418968ea80ff9c01185d9a169021bf389a",
+        "definitions": 41,
+        "edits": 356,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Grind/AC.c": "a578c7babb9c24a9a306383e07e903510c8032304f4159037b81c9329a9a9f63",
+          "lib/lean/Init/Grind/AC.olean": "6a08956e021397d08df8c20c85f81d29c6293dfd7a6be0e0a7c7e02ed370826e"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "36469dde89600eea17e2444c5a1baac49dec5e335f2049c1cbffb94e88b4c9c4",
+        "module": "Init.Grind.AC",
+        "pinned_blob": "ed2fd91db65a2b928158478308a22c300d14ab85",
+        "source_lines": 713,
+        "source_sha256": "11f082933c55a50ee11e1c5833f76b40a9336827343b602b6cc60d7e42cdd44a",
+        "strategies": {
+          "def": 28,
+          "function": 13
+        }
+      },
+      {
+        "converted_sha256": "b90100fad1c19dc06321ca66f8c852eaac08a62222146a73470f24a47144721a",
+        "definitions": 52,
+        "edits": 411,
+        "equation_definitions": [
+          "Prod.map"
+        ],
+        "hashes": {
+          "ir/Init/Core.c": "e62dac2531da1648a0a3c82613e32077f3f815a76eebbcd5fce91287c479cb97",
+          "lib/lean/Init/Core.olean": "701ec5ec5217eaabed28ddd717710d605d516aab274be20c96572600463d7814"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "fc2af3dec773f85c69bf319edcb20a44f5a6309ebd27678e465d6065b4ba8205",
+        "module": "Init.Core",
+        "pinned_blob": "23e784c3806badcabd1e8f19c50946d66bc3c87a",
+        "source_lines": 2488,
+        "source_sha256": "264a0b48fedc91fadf55fc5caac8d91003e3908a6e5e42736e2ac8bf1f7cdf99",
+        "strategies": {
+          "const": 3,
+          "def": 14,
+          "function": 35
+        }
+      },
+      {
+        "converted_sha256": "1a7823ce458d574cf7eef892b24c97b897115f34d29096124aa744c2bbcfe919",
+        "definitions": 236,
+        "edits": 1128,
+        "equation_definitions": [
+          "Bool.Internal.not",
+          "ByteArray.push",
+          "ByteArray.size",
+          "List.append",
+          "List.beq",
+          "List.concat",
+          "List.flatten",
+          "List.foldl",
+          "List.get",
+          "List.length",
+          "List.lengthTRAux",
+          "List.map",
+          "List.set",
+          "MonadExcept.ofExcept",
+          "Name.hasMacroScopes",
+          "Nat.add",
+          "Nat.beq",
+          "Nat.ble",
+          "Nat.mod",
+          "Nat.mul",
+          "Nat.pow",
+          "Nat.pred",
+          "Nat.sub",
+          "Option.map",
+          "Substring.Raw.bsize",
+          "appendCore",
+          "assembleParts",
+          "beq",
+          "eraseMacroScopesAux",
+          "extractImported",
+          "extractMacroScopesAux",
+          "extractMainModule",
+          "getHeadInfo?",
+          "getId",
+          "getInfo?",
+          "isIdent",
+          "isMissing",
+          "simpMacroScopesAux"
+        ],
+        "hashes": {
+          "ir/Init/Prelude.c": "c2dd15475af819d54fe5522abcfe5a8b910df2db100e35627ec0c88ec370df72",
+          "lib/lean/Init/Prelude.olean": "4adc149394f7833f84b2c7f3c96fc9ed4d60f83db84328d68f78a6a037865ffd"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "7a55bd032c4b26463e5e1d5f0f2147ab4c2b6ce6e8aa757096c8b545b36bc65f",
+        "module": "Init.Prelude",
+        "pinned_blob": "58a4c37053f30d37b824190b934e759c16e53d7a",
+        "source_lines": 6160,
+        "source_sha256": "390e6b57ead28cb821a65533b21357f2f02d0a1525602f5a1ce9ee3eeb81fd12",
+        "strategies": {
+          "const": 44,
+          "def": 72,
+          "function": 120
+        }
+      },
+      {
+        "converted_sha256": "0afc4ef9b34d6ace30e0213e3956b997866fe6544f04f16a26fb3ab0d78f1111",
+        "definitions": 18,
+        "edits": 171,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/WF.c": "0332dc7f1d48ff60f3a5259bb415b6dde80984829e32748adddf429117bac9e4",
+          "lib/lean/Init/WF.olean": "6c0665dec4c392781f9f872f379d24e90bae7a99edb33e91014a152a7feabbd6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "110f29db01219220473fa3903e02c687c46d0ef411a7ef375e6846be01b8eef4",
+        "module": "Init.WF",
+        "pinned_blob": "1d0216ed49d1250db35bc6b551fb03c0c7777293",
+        "source_lines": 533,
+        "source_sha256": "fe7c0a49de4a9c4b4fac24493f40598a1374837b17a6c334fc1ed03e23646e01",
+        "strategies": {
+          "const": 2,
+          "function": 16
+        }
+      },
+      {
+        "converted_sha256": "c2ffaf4c97f1172c5a3d1a5cc8a6b99c8b310c14d5fbe4d11149763a1f70cc81",
+        "definitions": 10,
+        "edits": 28,
+        "equation_definitions": [
+          "InlineAttributeKind.toAttrString"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/InlineAttrs.c": "20b77c4be84aa67c3159150a1d6b61e0ab20daad861078ed1de1f16abfd5b4e9",
+          "lib/lean/Lean/Compiler/InlineAttrs.olean": "87b9576a3e80d49208825ff3053ad2f37131d17c82484ce4eaf4c7311708d849"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "4213a4f3b1c89b9f9523efa2bd4f039cb4fab74b1b7a04164dcce3c4960e0462",
+        "module": "Lean.Compiler.InlineAttrs",
+        "pinned_blob": "97135e8faf9478a4e4422feb66cdb97fc3209674",
+        "source_lines": 106,
+        "source_sha256": "a3599016d38e2128d6c1f3cc384a544540b33db1288221754700da42c7e7d01c",
+        "strategies": {
+          "def": 1,
+          "function": 9
+        }
+      },
+      {
+        "converted_sha256": "9a0784dde8952cabced407922df62a4c9ad592d7c4ad49bb9ac0869b63af8ec3",
+        "definitions": 100,
+        "edits": 672,
+        "equation_definitions": [
+          "Poly.div",
+          "Poly.divAll",
+          "Poly.divCoeffs",
+          "Poly.gcdCoeffs",
+          "Poly.getConst"
+        ],
+        "hashes": {
+          "ir/Init/Data/Int/Linear.c": "60e3592e6fcdcfe077971ddf0a5560646a183c5fe9d4ea81e4393082536fe72d",
+          "lib/lean/Init/Data/Int/Linear.olean": "f923a1a8155c683b843e5e4efb29dd2c500e8d6d9b618757d49498b0898c7a36"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "1665d9ac91e5328086a2ad6b91e8eb6e277b63b89749c549d40ecc35387b1ee1",
+        "module": "Init.Data.Int.Linear",
+        "pinned_blob": "0d334c02f4a08736e675863b63740d4791c6e5c7",
+        "source_lines": 2234,
+        "source_sha256": "b7d2ae684fed1ffaf293f33c2d736861e8fa9f89be108f41a110a7c42243b1ad",
+        "strategies": {
+          "const": 2,
+          "def": 51,
+          "function": 47
+        }
+      },
+      {
+        "converted_sha256": "902eb7e72024077eaff54c122d3c89dcbc674c235fa8eed759ff7521a96c9908",
+        "definitions": 3,
+        "edits": 18,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Data/Iterators/Producers/Monadic/Empty.c": "5d8be1b6c0f93601d50793ab50af6e52c6c7a66db5d75dfe3e2f72e709ca18ce",
+          "lib/lean/Std/Data/Iterators/Producers/Monadic/Empty.olean": "684ec092395c971d6d0c7da78fb7bcd07e2e090b054357e242ee52b2d2ee1fc4"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "63a65d3a55fa3330d4eab483c0dfa0363fbd4e9f290cc0db4280100a762533c2",
+        "module": "Std.Data.Iterators.Producers.Monadic.Empty",
+        "pinned_blob": "69171a771e242e603f687d85b63091f851037382",
+        "source_lines": 65,
+        "source_sha256": "245b8242302d418f78041c02b956946618e33042e181c5eb0b28624bb963f890",
+        "strategies": {
+          "def": 2,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "cc17432112eecf5fc07ba22c13cd0da15ea9187670c35ff33a802242a62899c1",
+        "definitions": 110,
+        "edits": 421,
+        "equation_definitions": [
+          "Alt.getCode",
+          "Alt.getParams",
+          "Cases.alts",
+          "Cases.discr",
+          "Cases.resultType",
+          "Cases.typeName",
+          "Cases.updateAlts",
+          "Code.isDecl",
+          "Code.isFun",
+          "Code.isReturnOf",
+          "Code.toCodeDecl!",
+          "CodeDecl.fvarId",
+          "DeclValue.size",
+          "FunDecl.binderName",
+          "FunDecl.fvarId",
+          "FunDecl.params",
+          "FunDecl.type",
+          "FunDecl.updateBinderName",
+          "FunDecl.value",
+          "LitValue.toExpr"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/Basic.c": "4576adf24c634cdc34518a3f65ed3ca0ea3dc32027d6633156f6eb0664c95ff2",
+          "lib/lean/Lean/Compiler/LCNF/Basic.olean": "e4fc60bb05756520835af0fc9342f47848b3e3cb2e4444616e8b584432d025f6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a8a72900826b07d185f8806c378b5e27ced1ca5198debcdf3006654a9db6b14f",
+        "module": "Lean.Compiler.LCNF.Basic",
+        "pinned_blob": "82c8dee0b9d13f09d58a6404dd5d5abf797d236e",
+        "source_lines": 1263,
+        "source_sha256": "833cb3c38140ece99ee25149529e568839379193064f5a210f5fb5ffba08df59",
+        "strategies": {
+          "const": 17,
+          "def": 14,
+          "function": 79
+        }
+      },
+      {
+        "converted_sha256": "ec4eea43397fc325068f0f106bb0112d7b59c13ce9f44fcff679dcf4a97c31bd",
+        "definitions": 6,
+        "edits": 391,
+        "equation_definitions": [
+          "pmap"
+        ],
+        "hashes": {
+          "ir/Init/Data/List/Attach.c": "b8a0fe29ee0fd6f0252cc1ce2882674c0fed7143b8523f354299af2868b68187",
+          "lib/lean/Init/Data/List/Attach.olean": "769bb417c9df7113a934ff7bb5a9b0832f56bfe06826f8817d01273eef864a8d"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a21ff983d9ba76a74c3291096092db116f6eb568f06605579d53d33a25a3f21e",
+        "module": "Init.Data.List.Attach",
+        "pinned_blob": "3721b0623eae725fe5b43691e22942a10e349c97",
+        "source_lines": 875,
+        "source_sha256": "2d392f48cdd9c7886817d3ced7ea82b447e25738ca4249f97492ced94e8baf38",
+        "strategies": {
+          "def": 2,
+          "function": 4
+        }
+      },
+      {
+        "converted_sha256": "8659418a5ab5bcdfd37bb18bbdbb96a987e8cdbdd2ef2996b19c69c3093a3564",
+        "definitions": 11,
+        "edits": 49,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Time/Time/Unit/Nanosecond.c": "bfeaa4a0927cec86147fbcb1132e05a9ca1b7caf8bbb9c99ea1b818a9028fadd",
+          "lib/lean/Std/Time/Time/Unit/Nanosecond.olean": "3fdc3d0945b3b81ad8b35987c1d4acd954d207e1f05fce4f3623e144bee74c63"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "13b4a6cb4aabb1c4da4ec575af5186d03e8647399df49c193d27cdac78d1ce07",
+        "module": "Std.Time.Time.Unit.Nanosecond",
+        "pinned_blob": "626e760e7771e798f92191620f441da1bd5a666f",
+        "source_lines": 167,
+        "source_sha256": "03563cc3ac4b27744ce308126e11e8d10a40af0f7c11b7e801a7e4f1914dc831",
+        "strategies": {
+          "const": 4,
+          "function": 7
+        }
+      },
+      {
+        "converted_sha256": "1cba45218dbca21c355fb8506d08afe1219d53c4c2afbab671f88d9da24b2a07",
+        "definitions": 4,
+        "edits": 219,
+        "equation_definitions": [
+          "recCompiled",
+          "repeat"
+        ],
+        "hashes": {
+          "ir/Init/Data/Nat/Basic.c": "febabcf79a2653c77d6810ca71320cc53b16c9cfb591bb387f3efd3eca52d1b1",
+          "lib/lean/Init/Data/Nat/Basic.olean": "c37d53a6a956f0e6643439eda339eb8986586d22c7c7f122e8b4bcad34914e5b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "e953d185e5e1ab8197eb10142f137c33e865bae35cc879386cefe92623102d5d",
+        "module": "Init.Data.Nat.Basic",
+        "pinned_blob": "9d952894c7d70b881bcb1c82151a1d8889499013",
+        "source_lines": 1234,
+        "source_sha256": "e26b5a54eab922f6b650cfe9032fe23172fa8cc0b63c75cff0c8bf99f6175289",
+        "strategies": {
+          "def": 1,
+          "function": 3
+        }
+      },
+      {
+        "converted_sha256": "abfff446a7caab49ad08c9097ecd18396bcf671146eb47cbb2170f12269e3333",
+        "definitions": 5,
+        "edits": 322,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Nat/Lemmas.c": "b90c7a737946b0c91499a8b195b8eadfc8a91b5058ae6ddc33c95be013fd81ca",
+          "lib/lean/Init/Data/Nat/Lemmas.olean": "eeae749c68027ee9f43f51fc437939a759f971c284b0f59039973c49f902ffe3"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c883c81eddb1f193844811464bd0fda8e0deab6adcad3be681617e59466f7cf9",
+        "module": "Init.Data.Nat.Lemmas",
+        "pinned_blob": "0111c39744128c6d54f437d982a22ec321900a71",
+        "source_lines": 1952,
+        "source_sha256": "c4530be5c96b507c13823378db43912a3ba577a2a23944ce222aaa7d193d2581",
+        "strategies": {
+          "function": 5
+        }
+      },
+      {
+        "converted_sha256": "0b7ca207da75dc01adec08d39299d11a8e728640ce23738c80ae40f3fe01c35d",
+        "definitions": 20,
+        "edits": 126,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Nat/Internal/Linear.c": "2123db80549ed6f8db912032696fc12b0acb8cfdebffbf243bbe2ef351c10dcb",
+          "lib/lean/Init/Data/Nat/Internal/Linear.olean": "bd21c5cc9599dab48d4b52108529aa928668a96d7de050d2c9536b0ceb300e89"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c9a9c83d96c81e70535741c214b4bd3c4bad54bdbd0f631aa8d5f340d9e26496",
+        "module": "Init.Data.Nat.Internal.Linear",
+        "pinned_blob": "ed9de4c44717b3801a9d32da8e19ea13c0f9cefb",
+        "source_lines": 547,
+        "source_sha256": "8f75864cbcbf54ac893dd839959273e2fa2e6ae31cf310c20a8b7f98db27d75b",
+        "strategies": {
+          "const": 1,
+          "def": 4,
+          "function": 15
+        }
+      },
+      {
+        "converted_sha256": "5ffbf652349ac67a63e8e10aeb132db5c1511ab140186ac88b4b3428ced00649",
+        "definitions": 1,
+        "edits": 3,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/OtherDecl.c": "a7374e6b1908187a18e4343b31c0d53a2dc4dec852b99b63e7770fe7074cdc3b",
+          "lib/lean/Lean/Compiler/LCNF/OtherDecl.olean": "5ef05c49d8b84529d1e37e70b4d5c3f52f26ddbe27a97a71c402ff341a408f5b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "21a862d3afba9e83a457bc0ecb7b26274a7ad503c4423c583a611d57939ca114",
+        "module": "Lean.Compiler.LCNF.OtherDecl",
+        "pinned_blob": "a09e23d6f39bb7e87e7a5b10c2f0fc7556575cd4",
+        "source_lines": 26,
+        "source_sha256": "cb137113a603520d0553a2d5553f60f1c66425a5a79613edade23b45c7a5fd95",
+        "strategies": {
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "f83f136dbcbb18521dca5ee41d9bde948c62edcdd304016fe162ff1fc739349c",
+        "definitions": 44,
+        "edits": 170,
+        "equation_definitions": [
+          "Node.isEmpty",
+          "alter",
+          "alterAux",
+          "collectStats",
+          "contains",
+          "containsAux",
+          "erase",
+          "eraseAux",
+          "find?",
+          "findAux",
+          "findEntry?",
+          "findEntryAux",
+          "findKeyDAux",
+          "foldlMAux",
+          "getCollisionNodeSize",
+          "insert",
+          "insertAtCollisionNodeAux",
+          "insertAux",
+          "isEmpty",
+          "isUnaryNode"
+        ],
+        "hashes": {
+          "ir/Lean/Data/PersistentHashMap.c": "744d795ecd6f3aeacebe145fac2272998c23ffdc2e45b773782b47cc8c095bee",
+          "lib/lean/Lean/Data/PersistentHashMap.olean": "7625a97601a6094fe06d7efcefc53dcd1cd909b6663fd9629f5e0056656b64e6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "28f09343544d5487d4d171323e8fbd1cbadf7f606086cf145b990db3a4a7192b",
+        "module": "Lean.Data.PersistentHashMap",
+        "pinned_blob": "e4d81c5cc33ac8d6e67ad217402ec8688b11486e",
+        "source_lines": 447,
+        "source_sha256": "d63a21b3bdc0c616417d75c32c3e104cc185667229a8a899de3769c1a4252af4",
+        "strategies": {
+          "const": 2,
+          "def": 2,
+          "function": 40
+        }
+      },
+      {
+        "converted_sha256": "9fe41d99f2e51c671879e39f589f94d6c0e27666e8f45a8d19d2f08728615858",
+        "definitions": 1,
+        "edits": 40,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Do/SPred/Laws.c": "92a62b96d8578d57378fb1f64cb0cc255c5cdd406359572468581134c57a5916",
+          "lib/lean/Std/Do/SPred/Laws.olean": "4e4f63be2302f7dea065912e47b0792bed8bfd95e4bf2b7316cae1a8a432b86f"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "1316bd4f1b6fa365cbfceecaf642932bf3702619e5d00938f84b5439d614eb5f",
+        "module": "Std.Do.SPred.Laws",
+        "pinned_blob": "9e762ecf143854a45660037b5333e5e6ca1ca9c8",
+        "source_lines": 183,
+        "source_sha256": "f9310bc9028049e1bce2643b781ace5e868da11cbc47244d1b48ceb48caf0c4f",
+        "strategies": {
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "b94c5b87b6f6e6907dab074a06c6c07ef6c96a78fe1cd91041e698025c9b6f60",
+        "definitions": 7,
+        "edits": 14,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/ScopeM.c": "0a149b683a22ff893a4631811a531bb483b19ef7845b036be8e7dbdd5be0de39",
+          "lib/lean/Lean/Compiler/LCNF/ScopeM.olean": "5e79495ce517159a2850bf5b9cb0ea1f530fca39f568672584a881dcb7ad36b7"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c93f94272e344539e3d6eb06e2c85cb7577e1b1fe567166b412cb5f05e027df4",
+        "module": "Lean.Compiler.LCNF.ScopeM",
+        "pinned_blob": "5bc78059af7e9f16d980688c88c3eaeecae3ab1a",
+        "source_lines": 58,
+        "source_sha256": "555ea12e6be42a5e9be8eb3a22dc1d0dbc2ae748fcc7a971da7f63e23b64642a",
+        "strategies": {
+          "const": 2,
+          "function": 5
+        }
+      },
+      {
+        "converted_sha256": "3d74ca828c554c4517126a7b0b1d0c5ceab95b77879f6dbe16173222a2ad2a6f",
+        "definitions": 1,
+        "edits": 32,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Stream.c": "9812d3069d279463e02d1b54c6416baa4a004c49c6b53d22ac40709271b01a5f",
+          "lib/lean/Init/Data/Stream.olean": "f99a172ba68aba2e292ce1fc10ca90f114a0b6b30e21a2ef17b18e523a829334"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "8c4db185b18c7414d8b6858d5135af43e23520be8c438083c20bb67c0e2b6e1b",
+        "module": "Init.Data.Stream",
+        "pinned_blob": "029989c80ba87bf27f7489875f4deeeca3aeb35d",
+        "source_lines": 132,
+        "source_sha256": "95147844e8a36949bbfa534c6b815379dca5e4780e5e202bf9a4f143bc5b967a",
+        "strategies": {
+          "def": 1
+        }
+      },
+      {
+        "converted_sha256": "340d2738edcf91181d3355bac4a2c72107c9b7a6ca7d62e4f9be66c6f03d8e85",
+        "definitions": 18,
+        "edits": 29,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/TelescopeProbe.c": "6787d16744a58347a1b302b44ee5adf1825095401980b79227f473e6bd844452",
+          "lib/lean/Lean/Compiler/TelescopeProbe.olean": "c3073c1993e616c2e86cdc59cfe4ba9602e88220f8f60308520b6670d3ee56fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "b368e362a68dbb7a64f07d8a34f6750b3e60bb9a43d9121b2fb7b072287d373e",
+        "module": "Lean.Compiler.TelescopeProbe",
+        "pinned_blob": "61b472c934e79b57492cf596ede396f7740230db",
+        "source_lines": 27,
+        "source_sha256": "59625e4a509b037e9a4003077e04803f692d098ae28c487a7ba3bb7bda73860c",
+        "strategies": {
+          "def": 6,
+          "function": 12
+        }
+      },
+      {
+        "converted_sha256": "72ce25fe206d688642dc7d784b85efcef0704146c6a0fa1f3e7df363cc1449a7",
+        "definitions": 7,
+        "edits": 69,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/UnlessProbe.c": "fd246d62dd61c38d8539847e543e582dabd87c8249ce15d812f6bb32ad2c8af9",
+          "lib/lean/Lean/Compiler/UnlessProbe.olean": "69228e03dc14894822251ff96b24807791d552eb400717ff813f6487d2f85f77"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "43ce750c40aeae374953abac918894f09747808e803104e42514046d33f96563",
+        "module": "Lean.Compiler.UnlessProbe",
+        "pinned_blob": "4a70859dc3e2c1c9350517086bb7664f2538a176",
+        "source_lines": 31,
+        "source_sha256": "bd708d2f197ba646313e4790d6ed5704fd0453d2680aa430cc99603d2aa572cd",
+        "strategies": {
+          "const": 2,
+          "def": 1,
+          "function": 4
+        }
+      }
+    ],
+    "finiteRealModules": 24,
+    "finiteRealDefinitionHeads": 748,
+    "finiteSyntheticModules": 4,
+    "finiteSyntheticDefinitionHeads": 37
   },
   "transformedCompilerGraphTwelfthAttempt": {
     "source": "c31599ff0685581b83e657c4e888dd79023c5407",
@@ -7856,10 +8554,19 @@
     "run": 42600424984,
     "linuxJobsPassed": 25,
     "independentInspection": {
-      "status": "PENDING",
-      "runner": "8f574f0b805236ae513694972156df79a79416a9",
-      "expectedModules": 28,
-      "expectedActualFiles": 112
+      "status": "PASS",
+      "runner": "f91b53cdf378619b04e97c8eec6988691081e540",
+      "run": 42602223686,
+      "job": 129109243439,
+      "modules": 28,
+      "actualFilesRehashed": 112,
+      "artifact": {
+        "id": 13665793573,
+        "name": "ps0-native-boundaries-rehash-42602223686",
+        "digest": "sha256:d54a2df342603430deaee97c77b579900d22e92a477b86c192a04daa5db23da1",
+        "size_in_bytes": 42718
+      },
+      "scope": "actual native and PS target C/public olean byte equality and independent rehash, exact edit reconstruction/line/import identity, mapped declaration modes and standard family multiplicities; finite SDK-assisted targets only"
     },
     "previousIndependentlyQualifiedSource": "bdc951bb97131ece1e44dcd853ee0faf5430ef40",
     "previousIndependentFilesRehashed": 88,
@@ -7880,13 +8587,17 @@
       "verified_execution": false
     },
     "nextActions": [
-      "Independently rehash all retained finite target C/public olean bytes and exact source/mode/family evidence",
       "Inspect full transformed graph twelve and adapt its first remaining PS grammar failures without native declaration fallback",
       "After full graph success, qualify native parity, linking, relocated grammar metadata and canonical compiler fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "independentFilesRehashed": 112,
+    "finiteRealModules": 24,
+    "finiteRealDefinitionHeads": 748,
+    "finiteSyntheticModules": 4,
+    "finiteSyntheticDefinitionHeads": 37
   }
 }
