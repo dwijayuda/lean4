@@ -81,7 +81,8 @@ def single_type_call(operand, role='owned binder type'):
         previous_end = span(function)[1]
         for argument in arguments:
             start, end = span(argument)
-            assert start == previous_end or raw[previous_end:start].isspace(), 'named-call trivia contains comments'
+            assert previous_end <= start
+            trivia = raw[previous_end:start]
             previous_end = end
             is_named = argument['kind'] == 'Lean.Parser.Term.namedArgument'
             left, right = (start + 1, end - 1) if is_named else (start, end)
@@ -92,20 +93,20 @@ def single_type_call(operand, role='owned binder type'):
                     chunks += [raw[cursor:change['start']], change['new'].encode()]
                     cursor = change['end']
             chunks.append(raw[cursor:right])
-            (named if is_named else positional).append(b''.join(chunks))
+            (named if is_named else positional).append(trivia + b''.join(chunks))
         start, end = span(operand)
         function_start, function_end = span(function)
-        replacement = raw[function_start:function_end] + b'(' + b', '.join(positional + named) + b')'
+        replacement = raw[function_start:function_end] + b'(' + b','.join(positional + named) + b')'
         edit(start, end, replacement.decode(), role + ' call with named arguments last; preserve original argument terms')
         return
     _, end = span(function)
     start, _ = span(arguments[0])
-    assert start == end or raw[end:start].isspace(), 'type-call trivia contains comments; no edit is permitted'
+    assert end <= start
     edit(end, start, '(' + raw[end:start].decode(), role + ' call opening delimiter; preserve argument parentheses and trivia')
     for previous, following in zip(arguments, arguments[1:]):
         _, end = span(previous)
         start, _ = span(following)
-        assert raw[end:start].isspace(), 'type-call argument trivia contains comments; no edit is permitted'
+        assert end <= start
         edit(end, start, ',' + raw[end:start].decode(), role + ' call argument separator; preserve original trivia')
     _, argument_end = span(arguments[-1])
     edit(argument_end, argument_end, ')', role + ' call closing delimiter; preserve original argument parentheses')
@@ -141,6 +142,11 @@ for command in original_commands(snapshot['commands']):
         assert len(result_type) == 1 and result_type[0]['kind'] == 'Lean.Parser.Term.typeSpec'
         single_type_call(result_type[0]['args'][1], 'owned declaration result type')
     use_alias = is_definition and all(alias_binder(binder) for binder in binders)
+    if use_alias and binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
+        name_end = decl['nameRange']['end']
+        first, _ = span(binders[0])
+        if any(byte not in b' \t' for byte in raw[name_end:first]):
+            use_alias = False
     # Native definition syntax preserves shared/inferred/anonymous binder
     # elaboration; it still goes through the owned PS signature/value adapters.
     for binder in binders:
@@ -184,7 +190,7 @@ for command in original_commands(snapshot['commands']):
     keyword = ('function' if binders else 'const') if use_alias else 'def'
     strategies.append({'sourceName': decl['sourceName'], 'keywordRange': kw,
                        'targetKeyword': keyword,
-                       'reason': 'typed alias telescope' if use_alias else 'preserve R2 native telescope grouping/inference'})
+                       'reason': 'typed alias telescope' if use_alias else 'preserve R2 native telescope grouping/inference or original head trivia'})
     if use_alias:
         edit(kw['start'], kw['end'], keyword, 'owned PS declaration keyword')
     if use_alias and binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
@@ -198,7 +204,7 @@ for command in original_commands(snapshot['commands']):
             continue
         _, end = span(previous)
         start, _ = span(following)
-        assert start == end or raw[end:start].isspace(), 'group trivia must be whitespace; comments are never discarded'
+        assert end <= start
         edit(end - 1, start + 1, ',' + raw[end:start].decode(),
              'merge consecutive typed groups; preserve original intervening whitespace and line breaks')
     value = decl.get('valueSyntax')

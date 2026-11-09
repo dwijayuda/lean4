@@ -53,6 +53,11 @@ plan_file = work / 'plan.json'
 run(['python3', 'tests/migrate-compiler-heads.py', census, original, converted,
      '--plan', plan_file], 'plan')
 plan = json.loads(plan_file.read_text())
+if args.fixture == 'TelescopeProbe':
+    for marker in ['PS0_HEAD_TRIVIA', 'PS0_GROUP_TRIVIA', 'PS0_CALL_TRIVIA',
+                   'PS0_ARG_TRIVIA', 'PS0_TYPE_TRIVIA', 'PS0_NAMED_TRIVIA']:
+        assert original.read_bytes().count(marker.encode()) == converted.read_bytes().count(marker.encode()) == 1
+    assert original.read_bytes().count(b'\n') == converted.read_bytes().count(b'\n')
 original_declarations = list(source_declarations(json.loads(census.read_text())['commands']))
 expected = ({d['sourceName'] for d in original_declarations
              if d['production'] == 'Lean.Parser.Command.definition'}
