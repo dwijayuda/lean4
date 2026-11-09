@@ -20,9 +20,16 @@ private unsafe def loadParts (file : String) (allParts : Bool) : IO ModuleData :
   for (_, region) in parts do
     let _ ← Runtime.markPersistent region
   if allParts then
+    -- Later parts replace public/server stubs with the private constant body.
+    -- Comparing concatenated arrays would compare a body with an earlier stub.
+    let mut constants : Array ConstantInfo := #[]
+    for (part, _) in parts.reverse do
+      for constant in part.constants do
+        unless constants.any (fun previous => previous.name == constant.name) do
+          constants := constants.push constant
     result := { result with
-      constants := parts.foldl (fun acc part => acc ++ part.1.constants) #[]
-      constNames := parts.foldl (fun acc part => acc ++ part.1.constNames) #[]
+      constants
+      constNames := constants.map (·.name)
       extraConstNames := parts.foldl (fun acc part => acc ++ part.1.extraConstNames) #[] }
   return result
 

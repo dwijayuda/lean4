@@ -124,6 +124,41 @@ private theorem proofBranchValue : proofBranch 0 = 3 := rfl
 private theorem patternBranchValue : patternBranch 3 = 3 := rfl
 private theorem boundBranchValue : boundBranch 3 = 3 := rfl
 '''
+native += '''def doMatchValue (n : Nat) : Id Nat := do
+  match (dependent := false) n with
+  | 0 => return add 1 2
+  | Nat.succ k => return add k 1
+def doMatchPair (n m : Nat) : Id Nat := do
+  match n, m with
+  | 0, 0 => return add 1 2
+  | a, b => return add a b
+def haveValue (n : Nat) : Id Nat := do
+  have k : Nat := add n 1
+  return k
+def haveDefault (n : Nat) : Id Nat := do
+  have step (x : Nat := add n 1) : Nat := add x 1
+  return step
+'''
+ps += '''function doMatchValue(n: Nat): Id(Nat) := do
+  match (dependent := false) n with
+  | 0 => return add(1, 2)
+  | Nat.succ k => return add(k, 1)
+function doMatchPair(n: Nat, m: Nat): Id(Nat) := do
+  match n, m with
+  | 0, 0 => return add(1, 2)
+  | a, b => return add(a, b)
+function haveValue(n: Nat): Id(Nat) := do
+  have k : Nat := add(n, 1)
+  return k
+function haveDefault(n: Nat): Id(Nat) := do
+  have step (x: Nat := add(n, 1)): Nat := add(x, 1)
+  return step
+'''
+guards += '''private theorem doMatchValueResult : doMatchValue 3 = 3 := rfl
+private theorem doMatchPairResult : doMatchPair 2 3 = 5 := rfl
+private theorem haveValueResult : haveValue 3 = 4 := rfl
+private theorem haveDefaultResult : haveDefault 3 = 5 := rfl
+'''
 
 
 def run(args, label):
@@ -167,7 +202,7 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
         observed = json.loads(census.read_text())
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
-        assert len(rows) == 34 and all(d['mode'] == 'mapped-ps' for d in rows)
+        assert len(rows) == 42 and all(d['mode'] == 'mapped-ps' for d in rows)
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
@@ -182,10 +217,10 @@ runtime = run([executable], 'runtime-origins')
 assert runtime.strip() == 'PS0_HOST_ORIGINS: PASS'
 shutil.copy2(executable, work / 'OrdinaryHostOrigins')
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    comparisons=comparisons, mapped_definitions=17, mapped_theorems=17, logical_imports=['Init'],
+    comparisons=comparisons, mapped_definitions=21, mapped_theorems=21, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
     source_origin_fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    source_origin_cases=4, independently_owned_native_dsl=True, native_quotation=True,
+    source_origin_cases=6, independently_owned_native_dsl=True, native_quotation=True,
     native_executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
     runtime_oracle='PS0_HOST_ORIGINS: PASS',
     scope='finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders',

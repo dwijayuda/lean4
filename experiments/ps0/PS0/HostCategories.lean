@@ -110,6 +110,18 @@ def namedDeclaration : Parser :=
   leadingNode ``Lean.Parser.Term.doLet maxPrec <|
     letPrefix >> namedDeclaration
 
+@[run_parser_attribute_hooks] def haveElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doHave maxPrec <|
+    "have " >> Lean.Parser.Term.letConfig >> namedDeclaration
+
+@[run_parser_attribute_hooks] def matchElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doMatch leadPrec <|
+    "match " >> optional Lean.Parser.Term.dependentParam >>
+      optional Lean.Parser.Term.generalizingParam >>
+      optional (operands #[(`term, `psTerm)] Lean.Parser.Term.motive) >>
+      sepBy1 (operands #[(`term, `psTerm)] Lean.Parser.Term.matchDiscr) ", " >>
+      " with" >> ppDedent (Lean.Parser.Term.matchAlts sequence)
+
 @[run_parser_attribute_hooks] def namedLetTerm : Parser :=
   leadingNode ``Lean.Parser.Term.«let» leadPrec <|
     withPosition ("let" >> Lean.Parser.Term.letConfig >> namedDeclaration) >>
@@ -206,6 +218,10 @@ def ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
 def ps0NativeDoExpression : Lean.Parser.Parser := PS0.DoLayout.expressionElem
 @[psDoElem_parser 20000]
 def ps0NativeDoLet : Lean.Parser.Parser := PS0.DoLayout.letElem
+@[psDoElem_parser 20000]
+def ps0NativeDoHave : Lean.Parser.Parser := PS0.DoLayout.haveElem
+@[psDoElem_parser 20000]
+def ps0NativeDoMatch : Lean.Parser.Parser := PS0.DoLayout.matchElem
 @[psDoElem_parser 20000]
 def ps0NativeDoLetRec : Lean.Parser.Parser := PS0.DoLayout.recursiveElem
 @[psTerm_parser 20000]
@@ -485,6 +501,17 @@ partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRe
   lower `psTerm source
 
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.doMatch then
+    unless source.getArgs.size == 7 do
+      Macro.throwError "PS0V1-DO-MATCH: unexpected native match shape"
+    let view := source.setArgs #[source[0], source[2], source[3], source[4], source[5], source[6]]
+    let lowered ← lowerNativeMatch view true
+    return source.setArgs #[lowered[0], source[1], lowered[1], lowered[2], lowered[3], lowered[4], lowered[5]]
+  if source.isOfKind ``Lean.Parser.Term.doHave then
+    unless source.getArgs.size == 3 && source[2].isOfKind ``Lean.Parser.Term.letDecl &&
+        source[2].getArgs.size == 1 do
+      Macro.throwError "PS0V1-DO-HAVE: unexpected native named declaration"
+    return source.setArg 2 (source[2].setArg 0 (← lowerNativeLocalId source[2][0]))
   if source.isOfKind ``Lean.Parser.Term.doIf then
     unless source.getArgs.size == 6 do
       Macro.throwError "PS0V1-DO-IF: unexpected native branch shape"
@@ -557,13 +584,14 @@ partial def lowerFunType (optionalType : Lean.Syntax) : MacroM Lean.Syntax := do
   if optionalType.getArgs.isEmpty then return optionalType
   return optionalType.setArg 1 (← lower `psTerm optionalType[1])
 
-partial def lowerNativeMatchAlternatives (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+partial def lowerNativeMatchAlternatives (source : Lean.Syntax) (sequence : Bool := false) : MacroM Lean.Syntax := withRef source do
   unless source.isOfKind ``Lean.Parser.Term.matchAlts && source.getArgs.size == 1 do
     Macro.throwError "PS0V1-MATCH-ALTERNATIVES: unexpected native alternatives"
   let alternatives ← source[0].getArgs.mapM fun alternative => do
     unless alternative.isOfKind ``Lean.Parser.Term.matchAlt && alternative.getArgs.size == 4 do
       Macro.throwError "PS0V1-MATCH-ALTERNATIVE: unexpected native pattern/body roles"
-    return alternative.setArg 3 (← lower `psTerm alternative[3])
+    let rhs ← if sequence then lowerNativeDoSequence alternative[3] else lower `psTerm alternative[3]
+    return alternative.setArg 3 rhs
   return source.setArg 0 (source[0].setArgs alternatives)
 
 partial def lowerNativeIfRole (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
@@ -630,7 +658,7 @@ partial def lowerNativeRecord (source : Lean.Syntax) : MacroM Lean.Syntax := wit
   unless source[4].getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native result type"
   return source.setArg 4 (source[4].setArg 1 (← lower `psTerm source[4][1]))
 
-partial def lowerNativeMatch (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+partial def lowerNativeMatch (source : Lean.Syntax) (sequence : Bool := false) : MacroM Lean.Syntax := withRef source do
   unless source.getArgs.size == 6 && source[2].getArgs.size <= 1 do
     Macro.throwError "PS0V1-MATCH-SHAPE: unexpected native match"
   let source ← if source[2].getArgs.isEmpty then pure source else do
@@ -644,7 +672,7 @@ partial def lowerNativeMatch (source : Lean.Syntax) : MacroM Lean.Syntax := with
       Macro.throwError "PS0V1-MATCH-DISCRIMINANT: unexpected native discriminant"
     return discriminant.setArg 1 (← lower `psTerm discriminant[1])
   return (source.setArg 3 (source[3].setArgs discriminants)).setArg 5
-    (← lowerNativeMatchAlternatives source[5])
+    (← lowerNativeMatchAlternatives source[5] sequence)
 
 partial def lowerNativeDoSequence (native : Lean.Syntax) : MacroM Lean.Syntax := do
   let index ← if native.isOfKind ``Lean.Parser.Term.doSeqIndent then pure 0

@@ -269,11 +269,14 @@ def single_type_call(operand, role='owned binder type'):
     edit(argument_end, argument_end, ')', role + ' call closing delimiter; preserve original argument parentheses')
 
 
-def match_alternatives(source, role):
+def match_alternatives(source, role, sequence=False):
     assert source['kind'] == 'Lean.Parser.Term.matchAlts' and len(source['args']) == 1
     for alternative in source['args'][0]['args']:
         assert alternative['kind'] == 'Lean.Parser.Term.matchAlt' and len(alternative['args']) == 4
-        single_type_call(alternative['args'][3], role + ' body')
+        if sequence:
+            do_sequence(alternative['args'][3])
+        else:
+            single_type_call(alternative['args'][3], role + ' body')
 
 
 def record_fields(source, role):
@@ -342,7 +345,24 @@ def do_element(element):
             do_sequence(parts[8]['args'][0])
         return
     kind, parts = element['kind'], element['args']
-    if kind == 'Lean.Parser.Term.doIf':
+    if kind == 'Lean.Parser.Term.doMatch':
+        assert len(parts) == 7 and len(parts[3]['args']) <= 1
+        if parts[3]['args']:
+            motive = parts[3]['args'][0]
+            assert motive['kind'] == 'Lean.Parser.Term.motive' and len(motive['args']) == 5
+            single_type_call(motive['args'][3], 'owned do-match motive')
+        for discr in parts[4]['args']:
+            if discr['atom'] is not None:
+                continue
+            assert discr['kind'] == 'Lean.Parser.Term.matchDiscr' and len(discr['args']) == 2
+            single_type_call(discr['args'][1], 'owned do-match discriminant')
+        match_alternatives(parts[6], 'owned do-match alternative', sequence=True)
+    elif kind == 'Lean.Parser.Term.doHave':
+        assert len(parts) == 3 and parts[2]['kind'] == 'Lean.Parser.Term.letDecl'
+        declaration = parts[2]['args'][0]
+        if declaration['kind'] == 'Lean.Parser.Term.letIdDecl':
+            local_id_value(declaration)
+    elif kind == 'Lean.Parser.Term.doIf':
         assert len(parts) == 6
         for part in parts:
             do_if_role(part)

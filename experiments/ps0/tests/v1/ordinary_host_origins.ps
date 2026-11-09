@@ -9,7 +9,8 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
   let kind := before.getKind
   let selected := #[``Lean.Parser.Term.«match», ``Lean.Parser.Term.matchAlt,
     ``Lean.Parser.Term.structInst, ``Lean.Parser.Term.structInstField,
-    ``Lean.Parser.Term.doIf, ``Lean.Parser.Term.doIfLet, ``Lean.Parser.Term.doIfProp]
+    ``Lean.Parser.Term.doIf, ``Lean.Parser.Term.doIfLet, ``Lean.Parser.Term.doIfProp,
+    ``Lean.Parser.Term.doMatch, ``Lean.Parser.Term.doHave]
   let mut count := 0
   if selected.contains kind then
     let some lowered := sameHostNode? after before
@@ -21,6 +22,8 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
       else if kind == ``Lean.Parser.Term.structInstField then #[0]
       else if kind == ``Lean.Parser.Term.doIfLet then #[0, 1]
       else if kind == ``Lean.Parser.Term.doIfProp then #[0]
+      else if kind == ``Lean.Parser.Term.doMatch then #[0, 1, 2, 5]
+      else if kind == ``Lean.Parser.Term.doHave then #[0, 1]
       else #[0, 2]
     for index in unchanged do
       unless before[index].eqWithInfo lowered[index] do
@@ -48,6 +51,13 @@ example : hostOrigin do
   if h : n = 0 then return add(n, 1)
   else if let some (Nat.succ k) := some n then return add(k, 1)
   else return 0 := by trivial
+example : hostOrigin do
+  match (dependent := false) h : n with
+  | some (Nat.succ k) => return add(k, 1)
+  | _ => return 0 := by trivial
+example : hostOrigin do
+  have step (x: Nat := add(n, 1)): Nat := add(x, 1)
+  return step := by trivial
 
 macro "nativeMatchBody " e:term : term => pure e
 function pairSum(p: Nat × Nat): Nat := p.1 + p.2
