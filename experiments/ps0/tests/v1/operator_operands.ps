@@ -2,6 +2,10 @@
 function add(x: Nat, y: Nat): Nat := x + y
 const mixed: Nat := add(1, 2) + add(3, 4) * 2
 const rightOperand: Nat := 1 + add(2, 3)
+const dollarOperand: Nat := Nat.succ $ add(1, 2)
+const dollarProjection: String := "; ".intercalate $ ["left", "right"]
+example : dollarOperand = 4 := by rfl
+example : dollarProjection = "left; right" := by rfl
 const leftAssoc: Nat := add(10, 0) - add(3, 0) - add(2, 0)
 const rightAssoc: Nat := add(2, 0) ^ add(3, 0) ^ add(2, 0)
 const grouped: Nat := (add(1, 2) + 1) * add(2, 0)

@@ -20,9 +20,9 @@ private def label : Name → String
 private partial def roles : ParserDescr → Option (Array Nat)
   | .symbol _ | .nonReservedSymbol .. | .unicodeSymbol .. => some #[0]
   | .cat `term _ => some #[1]
-  | .const n => if #["ppSpace", "ppLine", "ppHardLine", "ppAllowUngrouped"].contains (label n) then some #[] else none
+  | .const n => if #["ppSpace", "ppLine", "ppHardLine", "ppAllowUngrouped", "ws"].contains (label n) then some #[] else none
   | .unary n p =>
-      if #["ppGroup", "ppRealGroup", "withoutPosition", "withPosition"].contains (label n) then roles p else none
+      if #["ppGroup", "ppRealGroup", "withoutPosition", "withPosition", "atomic"].contains (label n) then roles p else none
   | .binary n p q => if n == `andthen then do return (← roles p) ++ (← roles q) else none
   | _ => none
 
