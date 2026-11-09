@@ -65,7 +65,8 @@ private def letPrefix : Parser :=
   withoutPosition (categoryParser `psTerm 0)
 
 @[run_parser_attribute_hooks] def ascriptionTerm : Parser :=
-  operands #[(`term, `psTerm)] Lean.Parser.Term.typeAscription
+  withCache `PS0.DoLayout.ascriptionTerm <|
+    operands #[(`term, `psTerm)] Lean.Parser.Term.typeAscription
 
 @[run_parser_attribute_hooks] def byTerm : Parser :=
   operands #[(`tactic, `psTactic)] Lean.Parser.Term.byTactic
@@ -474,39 +475,9 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
-    if source.isOfKind ``Lean.Parser.Term.tuple then
-      unless source.getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native delimiters"
-      if source[1].getArgs.isEmpty then return source
-      unless source[1].getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native elements"
-      let rest ← source[1][2].getArgs.mapM fun value => do
-        if value.isAtom then return value
-        lower `psTerm value
-      return source.setArg 1 ((source[1].setArg 0 (← lower `psTerm source[1][0])).setArg 2
-        (source[1][2].setArgs rest))
-    if source.isOfKind `«term[_]» || source.isOfKind `«term#[_,]» then
-      unless source.getArgs.size == 3 do Macro.throwError "PS0V1-COLLECTION: unexpected native elements"
-      let values ← source[1].getArgs.mapM fun value => do
-        if value.isAtom then return value
-        lower `psTerm value
-      return source.setArg 1 (source[1].setArgs values)
-    if source.isOfKind `termS!_ then
-      unless source.getArgs.size == 2 && source[1].isOfKind `interpolatedStrKind do
-        Macro.throwError "PS0V1-INTERPOLATION: unexpected native string lexer result"
-      let values ← source[1].getArgs.mapM fun value => do
-        if value.isOfKind `interpolatedStrLitKind then return value
-        lower `psTerm value
-      return source.setArg 1 (source[1].setArgs values)
-    if source.isOfKind ``Lean.Parser.Term.«forall» then
-      unless source.getArgs.size == 5 do Macro.throwError "PS0V1-FORALL: unexpected native binder roles"
-      let binders ← source[1].getArgs.mapM lowerNativeLocalBinder
-      let source := source.setArg 1 (source[1].setArgs binders)
-      let source := source.setArg 2 (← lowerNativeOptionalType source[2])
-      return source.setArg 4 (← lower `psTerm source[4])
-    if source.isOfKind `termIfLet then
-      unless source.getArgs.size == 9 do Macro.throwError "PS0V1-PATTERN-IF: unexpected native pattern/value roles"
-      let source := source.setArg 4 (← lower `psTerm source[4])
-      let source := source.setArg 6 (← lower `psTerm source[6])
-      return source.setArg 8 (← lower `psTerm source[8])
+    if #[``Lean.Parser.Term.tuple, `«term[_]», `«term#[_,]», `termS!_,
+        ``Lean.Parser.Term.«forall», `termIfLet].contains source.getKind then
+      return ← lowerAggregateValue source
     if source.isOfKind `termDepIfThenElse then
       unless source.getArgs.size == 8 do Macro.throwError "PS0V1-DEPENDENT-IF: unexpected native condition"
       let source := source.setArg 3 (← lower `psTerm source[3])
@@ -651,6 +622,42 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | `(psDoSeq| $native:doSeq) => return native.raw
     | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoSeq"
   else Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
+
+partial def lowerAggregateValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.tuple then
+    unless source.getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native delimiters"
+    if source[1].getArgs.isEmpty then return source
+    unless source[1].getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native elements"
+    let rest ← source[1][2].getArgs.mapM fun value => do
+      if value.isAtom then return value
+      lower `psTerm value
+    return source.setArg 1 ((source[1].setArg 0 (← lower `psTerm source[1][0])).setArg 2
+      (source[1][2].setArgs rest))
+  if source.isOfKind `«term[_]» || source.isOfKind `«term#[_,]» then
+    unless source.getArgs.size == 3 do Macro.throwError "PS0V1-COLLECTION: unexpected native elements"
+    let values ← source[1].getArgs.mapM fun value => do
+      if value.isAtom then return value
+      lower `psTerm value
+    return source.setArg 1 (source[1].setArgs values)
+  if source.isOfKind `termS!_ then
+    unless source.getArgs.size == 2 && source[1].isOfKind `interpolatedStrKind do
+      Macro.throwError "PS0V1-INTERPOLATION: unexpected native string lexer result"
+    let values ← source[1].getArgs.mapM fun value => do
+      if value.isOfKind `interpolatedStrLitKind then return value
+      lower `psTerm value
+    return source.setArg 1 (source[1].setArgs values)
+  if source.isOfKind ``Lean.Parser.Term.«forall» then
+    unless source.getArgs.size == 5 do Macro.throwError "PS0V1-FORALL: unexpected native binder roles"
+    let binders ← source[1].getArgs.mapM lowerNativeLocalBinder
+    let source := source.setArg 1 (source[1].setArgs binders)
+    let source := source.setArg 2 (← lowerNativeOptionalType source[2])
+    return source.setArg 4 (← lower `psTerm source[4])
+  if source.isOfKind `termIfLet then
+    unless source.getArgs.size == 9 do Macro.throwError "PS0V1-PATTERN-IF: unexpected native pattern/value roles"
+    let source := source.setArg 4 (← lower `psTerm source[4])
+    let source := source.setArg 6 (← lower `psTerm source[6])
+    return source.setArg 8 (← lower `psTerm source[8])
+  Macro.throwError "PS0V1-AGGREGATE: unexpected owned aggregate root"
 
 partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if source.isOfKind ``ps0HostBraces && (punningIdentifier? source[1]).isNone then
