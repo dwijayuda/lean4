@@ -15,6 +15,7 @@ parser.add_argument('--fixture', default='ClosedTermCache')
 parser.add_argument('--module', default='Lean.Compiler.ClosedTermCache')
 parser.add_argument('--blob', default='20b7acf5d684789ab52b81dda7def4b19568213c')
 parser.add_argument('--declarations', default='cacheClosedTermName,getClosedTermName?,isClosedTermName')
+parser.add_argument('--owned-value-calls', default='')
 args = parser.parse_args()
 work = ROOT / 'build' / ('compiler-heads-' + os.environ['GITHUB_RUN_ID'] + '-' + args.fixture)
 work.mkdir(parents=True, exist_ok=False)
@@ -97,12 +98,23 @@ assert {d['sourceName'] for d in declarations if d['production'] in [
     'PS0.StandardAdapters.ps0StandardFunction', 'PS0.StandardAdapters.ps0StandardConst',
 ]} == set(plan['declarations']), 'every planned alias must reach its actual PS source production'
 assert observed['imports'] == json.loads(census.read_text())['imports']
+owned_value_calls = [name for name in args.owned_value_calls.split(',') if name]
+for name in owned_value_calls:
+    declaration = next(d for d in declarations if d['sourceName'] == name)
+    assert declaration['ownedValueCall'], declaration
+    assert any('term_&&_' in kind for kind in declaration['ownedOperatorKinds']), declaration
+    assert any('term_!=_' in kind for kind in declaration['ownedOperatorKinds']), declaration
+if args.fixture == 'EmitUtil':
+    assert next(d for d in declarations if d['sourceName'] == 'collectUsedDecls')['nativeWhereTail']
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
     'converted_declarations': plan['declarations'], 'unchanged_abbrev_adapters': sorted(unchanged_abbrevs),
+    'owned_value_calls': owned_value_calls,
+    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail']}
+                            for d in declarations if d['sourceName'] in plan['declarations']],
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',
-    'scope': 'real typed compiler declaration heads, including explicit nested commands; native bodies retained; not whole grammar migration',
+    'scope': 'real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_PINNED_COMPILER_HEADS_NATIVE_PARITY: PASS', flush=True)
