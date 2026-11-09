@@ -160,6 +160,12 @@ private def loweringInfo (source : Lean.Syntax) : SourceInfo :=
   | some span => .synthetic span.start span.stop false
   | none => .none
 
+private partial def punningIdentifier? (source : Lean.Syntax) : Option Lean.Syntax :=
+  if source.isIdent then some source else
+  if #[`ps0NativeTermBridge, `ps0HostHeadTerm, `ps0NativeHeadBridge].contains source.getKind &&
+      source.getArgs.size == 1 then punningIdentifier? source[0]
+  else none
+
 private def rejectHostGap (source : Lean.Syntax) : MacroM Unit := do
   if let .node (.synthetic ..) _ _ := source then return ()
   if source.isOfKind ``Lean.Parser.Term.app then
@@ -226,11 +232,11 @@ partial def lower (category : Name) (source : Lean.Syntax) :
         return .node (loweringInfo source) ``Lean.Parser.Term.paren
           #[source[0], ← lower `psTerm body.raw, source[2]]
     | `(psTerm| { $body:psTerm }) => do
-        let native ← lower `psTerm body.raw
-        if native.isIdent then
-          let field : TSyntax `ident := ⟨native⟩
-          return (← `({ $field:ident })).raw
-        let body : TSyntax `term := ⟨native⟩
+        if let some identifier := punningIdentifier? body.raw then
+          let field : TSyntax `ident := ⟨identifier⟩
+          let record ← `({ $field:ident })
+          return (record.raw.setArg 0 source[0]).setArg 5 source[2]
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
         return (← `(($body))).raw
     | `(psTerm| if $cond:psTerm then $yes:psTerm else $no:psTerm) => do
         let cond : TSyntax `term := ⟨← lower `psTerm cond.raw⟩

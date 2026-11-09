@@ -53,6 +53,15 @@ macro "lambdaArrowOrigin " e:psTerm : term => do
 example : lambdaArrowOrigin fun n ↦ add(n, 1) := by trivial
 example : lambdaArrowOrigin λ n => add(n, 1) := by trivial
 
+macro "recordPunOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless e.raw.isOfKind ``ps0HostBraces && lowered.isOfKind ``Lean.Parser.Term.structInst &&
+      lowered.getArgs.size == 6 && lowered[0].eqWithInfo e.raw[0] &&
+      lowered[5].eqWithInfo e.raw[2] && lowered.getRange? == e.raw.getRange? do
+    Lean.Macro.throwError "PS0_RECORD_PUN_ORIGIN"
+  `(True)
+example : recordPunOrigin { /- original pun -/ root } := by trivial
+
 meta def nativeLambdaQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| fun (n : Nat) => add (n, 1))
 run_cmd do
