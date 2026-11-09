@@ -64,7 +64,7 @@ private def lowerField (field : Syntax) : MacroM Syntax := do
     pure <| mkNullNode #[mkNode ``Lean.Parser.Term.typeSpec
       #[ty[0], ← PS0.Syntax.lower `psTerm ty[1]]]
   let value := optionalBody[2]
-  let value ← if value.isOfKind ``ps0StructFieldDef then do
+  let value : Syntax ← if value.isOfKind ``ps0StructFieldDef then do
     pure <| mkNode ``Lean.Parser.Term.structInstFieldDef
       #[value[0], value[1], ← PS0.Syntax.lower `psTerm value[2]]
     else if value.isOfKind ``ps0StructFieldEqns then do
