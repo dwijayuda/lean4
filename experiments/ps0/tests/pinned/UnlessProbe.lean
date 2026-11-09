@@ -21,5 +21,11 @@ def early (n : Nat) : IO Nat := do
   return add n (20)
 def termValue : IO Unit := unless below (add (1) (2)) do
   observe (add (1) (2))
+def patternValue (n : Nat) : IO Nat := do
+  let some value ← pure (if below (n) then some n else none)
+    | return add n (1)
+  unless below (add value (1)) do
+    return add value (10)
+  return add value (20)
 
 end Lean.Compiler.UnlessProbe

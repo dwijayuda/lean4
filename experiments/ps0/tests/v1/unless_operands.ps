@@ -39,6 +39,31 @@ macro "unlessOrigin " e:psTerm : term => do
   `(True)
 example : unlessOrigin unless below(add(1, 2)) do { observe(add(1, 2)) } := by trivial
 
+macro "patternOrigin " e:psTerm : term => do
+  let binding := e.raw[1][0][0][0][0]
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  let nativeBinding := lowered[1][0][0][0]
+  unless binding.isOfKind ``Lean.Parser.Term.doLetArrow &&
+      binding[3].isOfKind ``Lean.Parser.Term.doPatDecl &&
+      nativeBinding.isOfKind ``Lean.Parser.Term.doLetArrow &&
+      nativeBinding[3].isOfKind ``Lean.Parser.Term.doPatDecl &&
+      binding.getRange?.isSome && nativeBinding.getRange? == binding.getRange? &&
+      nativeBinding[2].eqWithInfo binding[2] &&
+      nativeBinding[3][0].eqWithInfo binding[3][0] &&
+      nativeBinding[3][1].eqWithInfo binding[3][1] &&
+      nativeBinding[3][2].eqWithInfo binding[3][2] &&
+      nativeBinding[3][4][0].eqWithInfo binding[3][4][0] &&
+      nativeBinding[3][3].getRange? == binding[3][3].getRange? &&
+      nativeBinding[3][4][1].getRange? == binding[3][4][1].getRange? &&
+      nativeBinding[3][4][2].getRange? == binding[3][4][2].getRange? do
+    Lean.Macro.throwError "PS0_PATTERN_BIND_ORIGIN"
+  `(True)
+example : patternOrigin do
+  let some n ← pure((some 3 : Option Nat))
+    | return add(0, 1)
+  return add(n, 2)
+:= by trivial
+
 macro "nativeUnless " seq:doSeq : term => `(do $seq)
 const nativeValue: IO Nat := nativeUnless
   unless below (3) do return add (1) (2)

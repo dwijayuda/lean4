@@ -55,6 +55,7 @@ for name, expression, reason in [
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
     'original_condition_block_token_ranges': True,
+    'original_pattern_optional_type_arrow_and_branch_ranges': True,
     'native_quotation_and_explicit_doSeq_ownership': True,
     'scope': 'native doUnless/termUnless condition and sequence operands and native pattern-binding value/fallback/continuation do elements; pattern and optional native type remain unchanged; not all control/pattern grammar',
     'grammar_migration_complete': False, 'verified_execution': False,

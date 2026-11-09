@@ -193,6 +193,8 @@ if args.fixture in ['UnlessProbe', 'InlineAttrs']:
         assert declaration['doUnlessConditionKinds'] == ['ps0HostAdjacentCall', 'ps0HostAdjacentCall'], declaration
         assert declaration['doUnlessBlockKinds'] == ['Lean.Parser.Term.doSeqIndent', 'Lean.Parser.Term.doSeqIndent'], declaration
         assert next(d for d in declarations if d['sourceName'] == 'termValue')['valueRootKind'] == 'Lean.Parser.Term.termUnless'
+        pattern = next(d for d in declarations if d['sourceName'] == 'patternValue')
+        assert pattern['doPatternBindingCount'] == 1 and pattern['doUnlessConditionKinds'] == ['ps0HostAdjacentCall'], pattern
     else:
         assert declaration['doPatternBindingCount'] == 1, declaration
         assert 'PS0.Operators.ownedBinary' in declaration['doUnlessConditionKinds'], declaration
