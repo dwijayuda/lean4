@@ -72,6 +72,11 @@ def single_type_call(operand, role='owned binder type'):
         assert len(operand['args']) == 2
         do_sequence(operand['args'][1])
         return
+    if operand['kind'] == 'Lean.Parser.Term.letrec':
+        assert len(operand['args']) == 5
+        recursive_declarations(operand['args'][2])
+        single_type_call(operand['args'][4], role + ' local recursive continuation')
+        return
     if operand['kind'] == 'Lean.Parser.Term.termUnless':
         unless_operands(operand)
         return
@@ -177,7 +182,10 @@ def local_id_value(declaration):
 
 def do_element(element):
     kind, parts = element['kind'], element['args']
-    if kind == 'Lean.Parser.Term.doUnless':
+    if kind == 'Lean.Parser.Term.doLetRec':
+        assert len(parts) == 3
+        recursive_declarations(parts[2])
+    elif kind == 'Lean.Parser.Term.doUnless':
         unless_operands(element)
     elif kind == 'Lean.Parser.Term.doExpr':
         assert len(parts) == 1
@@ -218,6 +226,27 @@ def do_element(element):
                     do_sequence(branches[2]['args'][0])
     # Native patterns, registered DSL elements and unsupported control operands
     # retain their independent parser ownership.
+
+
+def recursive_declarations(group):
+    assert group['kind'] == 'Lean.Parser.Term.letRecDecls' and len(group['args']) == 1
+    for declaration in group['args'][0]['args']:
+        if declaration['atom'] is not None:
+            continue
+        assert declaration['kind'] == 'Lean.Parser.Term.letRecDecl' and len(declaration['args']) == 4
+        wrapper = declaration['args'][2]
+        assert wrapper['kind'] == 'Lean.Parser.Term.letDecl' and len(wrapper['args']) == 1
+        value = wrapper['args'][0]
+        if value['kind'] == 'Lean.Parser.Term.letIdDecl':
+            local_id_value(value)
+        else:
+            assert value['kind'] == 'Lean.Parser.Term.letEqnsDecl' and len(value['args']) == 4
+            telescope(value['args'][1]['args'])
+            optional_local_type(value['args'][2], 'owned recursive local result type')
+            assert value['args'][3]['kind'] == 'Lean.Parser.Term.matchAlts'
+            for alternative in value['args'][3]['args'][0]['args']:
+                assert alternative['kind'] == 'Lean.Parser.Term.matchAlt' and len(alternative['args']) == 4
+                single_type_call(alternative['args'][3], 'owned recursive local equation value')
 
 
 def unless_operands(element):

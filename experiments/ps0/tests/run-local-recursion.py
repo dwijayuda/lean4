@@ -22,7 +22,11 @@ def run(args, label, ok=True):
 
 
 native = work / 'NativeRec.ps'
-native.write_text('''abbrev box (α : Type) : Type := α
+native.write_text('''module
+prelude
+public import Lean
+public section
+abbrev box (α : Type) : Type := α
 def add (x y : Nat) : Nat := x + y
 def simple : Id Nat := do
   let rec step (n : box Nat) (bias : Nat := add 1 2) : box Nat := add n bias
@@ -55,6 +59,7 @@ def walk(value):
 
 
 walk(json.loads(census.read_text()))
+assert shapes, 'native control must retain native declaration values'
 print('PS0_NATIVE_RECURSION_SHAPES:' + json.dumps(shapes, sort_keys=True), flush=True)
 fixture = Path('tests/v1/local_recursion_operands.ps')
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')

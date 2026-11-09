@@ -51,6 +51,33 @@ private def letPrefix : Parser :=
       (notFollowedBy (nonReservedSymbol "rec") "rec" >>
         operands #[(`term, `psTerm)] Lean.Parser.Term.letIdDecl)
 
+private def recursiveDeclaration : Parser :=
+  node ``Lean.Parser.Term.letRecDecl <|
+    optional Lean.Parser.Command.docComment >> optional Lean.Parser.Term.attributes >>
+    node ``Lean.Parser.Term.letDecl
+      (notFollowedBy (nonReservedSymbol "rec") "rec" >>
+        (node ``Lean.Parser.Term.letIdDecl
+          (atomic (operands #[(`term, `psTerm)] Lean.Parser.Term.letIdLhs >> " := ") >>
+            categoryParser `psTerm 0) <|>
+         node ``Lean.Parser.Term.letEqnsDecl
+          (operands #[(`term, `psTerm)] Lean.Parser.Term.letIdLhs >>
+            Lean.Parser.Term.matchAlts (categoryParser `psTerm 0)))) >>
+    Lean.Parser.Termination.suffix
+
+private def recursiveDeclarations : Parser :=
+  node ``Lean.Parser.Term.letRecDecls <| sepBy1 recursiveDeclaration ", "
+
+private def recursivePrefix : Parser :=
+  group (symbol "let " >> nonReservedSymbol "rec ")
+
+@[run_parser_attribute_hooks] def recursiveElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doLetRec maxPrec <| recursivePrefix >> recursiveDeclarations
+
+@[run_parser_attribute_hooks] def recursiveTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.letrec leadPrec <|
+    withPosition (recursivePrefix >> recursiveDeclarations) >>
+      Lean.Parser.Term.optSemicolon (categoryParser `psTerm 0)
+
 @[run_parser_attribute_hooks] def bindElem : Parser :=
   leadingNode ``Lean.Parser.Term.doLetArrow maxPrec <| withPosition <|
     letPrefix >> operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.doIdDecl
@@ -89,6 +116,10 @@ def ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
 def ps0NativeDoExpression : Lean.Parser.Parser := PS0.DoLayout.expressionElem
 @[psDoElem_parser 20000]
 def ps0NativeDoLet : Lean.Parser.Parser := PS0.DoLayout.letElem
+@[psDoElem_parser 20000]
+def ps0NativeDoLetRec : Lean.Parser.Parser := PS0.DoLayout.recursiveElem
+@[psTerm_parser 20000]
+def ps0NativeTermLetRec : Lean.Parser.Parser := PS0.DoLayout.recursiveTerm
 @[psDoElem_parser 20000]
 def ps0NativeDoBind : Lean.Parser.Parser := PS0.DoLayout.bindElem
 @[psDoElem_parser 10000]
@@ -206,6 +237,11 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind ``Lean.Parser.Term.letrec then
+      unless source.getArgs.size == 5 do
+        Macro.throwError "PS0V1-LOCAL-REC: unexpected native term shape"
+      let source := source.setArg 2 (← lowerNativeRecursiveDeclarations source[2])
+      return source.setArg 4 (← lower `psTerm source[4])
     if source.isOfKind ``Lean.Parser.Term.termUnless then
       return ← lowerNativeUnless source
     if source.isOfKind ``ps0NativeTermBridge then
@@ -306,6 +342,10 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   else Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
 
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.doLetRec then
+    unless source.getArgs.size == 3 do
+      Macro.throwError "PS0V1-LOCAL-REC: unexpected native do shape"
+    return source.setArg 2 (← lowerNativeRecursiveDeclarations source[2])
   if source.isOfKind ``Lean.Parser.Term.doUnless then
     return ← lowerNativeUnless source
   if source.isOfKind ``Lean.Parser.Term.doLet then
@@ -425,6 +465,32 @@ partial def lowerNativeLocalId (source : Lean.Syntax) : MacroM Lean.Syntax := do
   let source := source.setArg 1 (source[1].setArgs binders)
   let source := source.setArg 2 (← lowerNativeOptionalType source[2])
   return source.setArg 4 (← lower `psTerm source[4])
+
+partial def lowerNativeRecursiveDeclarations (source : Lean.Syntax) : MacroM Lean.Syntax := do
+  unless source.isOfKind ``Lean.Parser.Term.letRecDecls && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-LOCAL-REC: unexpected native declaration group"
+  let items ← source[0].getArgs.mapM fun declaration => do
+    if declaration.isAtom then return declaration
+    unless declaration.isOfKind ``Lean.Parser.Term.letRecDecl && declaration.getArgs.size == 4 &&
+        declaration[2].isOfKind ``Lean.Parser.Term.letDecl && declaration[2].getArgs.size == 1 do
+      Macro.throwError "PS0V1-LOCAL-REC: unexpected native recursive declaration"
+    let value := declaration[2][0]
+    let value ← if value.isOfKind ``Lean.Parser.Term.letIdDecl then
+        lowerNativeLocalId value
+      else do
+        unless value.isOfKind ``Lean.Parser.Term.letEqnsDecl && value.getArgs.size == 4 &&
+            value[3].isOfKind ``Lean.Parser.Term.matchAlts do
+          Macro.throwError "PS0V1-LOCAL-REC: unexpected native recursive value"
+        let binders ← value[1].getArgs.mapM lowerNativeLocalBinder
+        let value := value.setArg 1 (value[1].setArgs binders)
+        let value := value.setArg 2 (← lowerNativeOptionalType value[2])
+        let alternatives ← value[3][0].getArgs.mapM fun alternative => do
+          unless alternative.isOfKind ``Lean.Parser.Term.matchAlt && alternative.getArgs.size == 4 do
+            Macro.throwError "PS0V1-LOCAL-REC: unexpected native equation alternative"
+          return alternative.setArg 3 (← lower `psTerm alternative[3])
+        pure <| value.setArg 3 (value[3].setArg 0 (value[3][0].setArgs alternatives))
+    return declaration.setArg 2 (declaration[2].setArg 0 value)
+  return source.setArg 0 (source[0].setArgs items)
 
 partial def lowerFunBinder (source : Lean.Syntax) :
     MacroM (TSyntax ``Lean.Parser.Term.funBinder) := withRef source do
