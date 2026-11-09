@@ -22,7 +22,7 @@ def run(args, label, ok=True):
 
 
 native = work / 'NativeIndex.ps'
-native.write_text('module\nprelude\npublic import Lean\npublic section\n'
+native.write_text('module\nprelude\npublic import Lean\npublic section\nnamespace NativeIndexProbe\n'
                   'def plain : Nat := #[2, 3][0]\n'
                   'def optional : Option Nat := #[2, 3][1]?\n'
                   'def panicValue : Nat := #[2, 3][1]!\n'

@@ -12,19 +12,21 @@ const panicValue: Nat := (makeStore(2) |>.entries)[chooseIndex(1)]!
 const proofValue: Nat := #[2, 3][0]'(bound(1))
 const callableValue: Nat := #[Nat.succ][chooseIndex(0)]!(2)
 
+meta partial def originalIndexSyntax? (source : Lean.Syntax) : Option Lean.Syntax :=
+  if source.isOfKind `PS0.Operators.ownedPostfix &&
+      #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»].contains source[0].getKind then
+    some source[0]
+  else source.getArgs.findSome? originalIndexSyntax?
+
+meta partial def nativeIndexSyntax? (kind : Lean.Name) (source : Lean.Syntax) : Option Lean.Syntax :=
+  if source.getKind == kind then some source
+  else source.getArgs.findSome? (nativeIndexSyntax? kind)
+
 macro "indexOrigin " e:psTerm : term => do
-  let rec originalIndex? (source : Lean.Syntax) : Option Lean.Syntax :=
-    if source.isOfKind `PS0.Operators.ownedPostfix &&
-        #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»].contains source[0].getKind then
-      some source[0]
-    else source.getArgs.findSome? originalIndex?
-  let some original := originalIndex? e.raw
+  let some original := originalIndexSyntax? e.raw
     | Lean.Macro.throwError "PS0_INDEX_OWNERSHIP"
   let lowered ← PS0.Syntax.lower `psTerm e.raw
-  let rec nativeIndex? (source : Lean.Syntax) : Option Lean.Syntax :=
-    if source.getKind == original.getKind then some source
-    else source.getArgs.findSome? nativeIndex?
-  let some native := nativeIndex? lowered
+  let some native := nativeIndexSyntax? original.getKind lowered
     | Lean.Macro.throwError "PS0_INDEX_NATIVE_KIND"
   unless original.getArgs.size == native.getArgs.size &&
       original.getRange? == native.getRange? &&
