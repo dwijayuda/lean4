@@ -531,6 +531,9 @@ partial def lowerLocalBinder (source : Lean.Syntax) : MacroM (Array Lean.Syntax)
       if let some previous := result? then
         unless sameLocalBinders previous candidate do
           Macro.throwError "PS0V1-BINDER-AMBIGUITY: different successful binder partitions"
+        -- Coalescing keeps the original native delimiters/source information.
+        -- Every alternative is still normalized and checked before elaboration.
+        if alternative.isOfKind ``ps0NativeLocalBinder then result? := some candidate
       else result? := some candidate
     return result?.getD #[]
   if source.isOfKind ``ps0NativeLocalBinder then

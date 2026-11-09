@@ -40,7 +40,13 @@ meta def localSpan (source : Lean.Syntax) : String :=
 meta partial def checkLocalBinderOrigin (before : Lean.Syntax)
     (after : Array Lean.Syntax) : Lean.MacroM Unit := do
   if before.isOfKind Lean.choiceKind then
-    for alternative in before.getArgs do checkLocalBinderOrigin alternative after
+    for alternative in before.getArgs do
+      let candidate ← PS0.Syntax.lowerLocalBinder alternative
+      checkLocalBinderOrigin alternative candidate
+      if alternative.isOfKind `ps0NativeLocalBinder then
+        unless candidate.size == after.size &&
+            (candidate.zip after).all (fun (x, y) => x.eqWithInfo y) do
+          Lean.Macro.throwError "PS0_LOCAL_COALESCED_NATIVE_ORIGIN"
   else if before.isOfKind `ps0NativeLocalBinder then
     let original := before[0]
     unless after.size == 1 && original.getKind == after[0]!.getKind &&

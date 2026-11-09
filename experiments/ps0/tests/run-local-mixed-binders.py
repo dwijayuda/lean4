@@ -22,6 +22,8 @@ def run(args, label, ok=True):
 
 
 fixture = Path('tests/v1/local_mixed_binders.ps')
+native_layouts = run(['lake', 'env', 'lean', 'tests/debug-local-layout.lean'], 'native-layouts')
+assert native_layouts.count('PS0_NATIVE_LOCAL_LAYOUT ') == 6
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'LocalMixed', work / 'native'], 'native')
 oracle = 'PS0_LOCAL_MIXED:7:7:7:8:7:5'
@@ -45,6 +47,7 @@ for name, declaration, reason in [
     'origin_cases': 6, 'rejection_cases': 6,
     'native_quotation_control': True, 'duplicate_partition_coalesced': True,
     'different_partition_rejected': True,
+    'native_layout_controls': 6, 'array_update_boundary': 'native parser only; not an elaboration/runtime claim',
     'scope': 'finite named do/pure let and let-rec mixed/comma telescopes, native DSL control; not all local/where grammar',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
