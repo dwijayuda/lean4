@@ -225,8 +225,12 @@ def single_type_call(operand, role='owned binder type'):
     if grouped_head:
         function_start, _ = span(function)
         edit(function_start, function_start, '(', role + ' group low-precedence native call head')
-    edit(end, start, (')(' if grouped_head else '(') + raw[end:start].decode(),
-         role + ' call opening delimiter; preserve argument parentheses and trivia')
+    gap = raw[end:start]
+    # Reuse a leading head-gap blank for the delimiter so first-argument native
+    # layout anchors keep their original column. Comments and line breaks stay.
+    retained_gap = gap[1:] if gap.startswith(b' ') else gap
+    edit(end, start, (')(' if grouped_head else '(') + retained_gap.decode(),
+         role + ' call opening delimiter; retain argument parentheses, comments and line breaks')
     for previous, following in zip(arguments, arguments[1:]):
         _, end = span(previous)
         start, _ = span(following)
