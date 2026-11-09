@@ -10,6 +10,7 @@ import re
 SCHEMA = 'ps0-native-source-census/1'
 # Native capture role changes require a new contract marker before reuse.
 OPERATOR_SCOPE = 'active-and-captured-kinds/1'
+ADJACENT_HEAD_SCOPE = 'native-environment/1'
 
 
 def declarations(commands):
@@ -17,6 +18,19 @@ def declarations(commands):
         if command['declaration'] is not None:
             yield command['declaration']
         yield from declarations(command.get('nestedCommands', []))
+
+
+def needs_head_lexical_refresh(snapshot):
+    for declaration in declarations(snapshot['commands']):
+        if declaration.get('production') != 'Lean.Parser.Command.definition':
+            continue
+        binders = declaration['signatureSyntax']['args'][0]['args']
+        if binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
+            if (snapshot.get('adjacentHeadLexicalScope') != ADJACENT_HEAD_SCOPE or
+                    'adjacentCallSpelling' not in declaration or
+                    'nameIdentifierRange' not in declaration):
+                return True
+    return False
 
 
 class NativeCensusCache:
