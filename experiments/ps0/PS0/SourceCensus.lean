@@ -76,7 +76,7 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
     let hasTail := #[`PS0.StandardAdapters.ps0StandardDef, `PS0.StandardAdapters.ps0StandardAbbrev,
       `PS0.StandardAdapters.ps0StandardTheorem, `PS0.StandardAdapters.ps0StandardFunction,
       `PS0.StandardAdapters.ps0StandardConst].contains kind
-    let value := if hasTail then source[source.getArgs.size - 3] else Syntax.missing
+    let value := if hasTail then source[source.getArgs.size - 2] else Syntax.missing
     return Json.mkObj [
       ("mode", toJson ("mapped-ps" : String)), ("production", toJson kind.toString),
       ("sourceName", toJson source[2][0].getId.toString),
@@ -86,7 +86,7 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("ownedValueCall", toJson (value.isOfKind `ps0HostAdjacentCall ||
         (value.isOfKind `ps0HostHeadTerm && value[0].isOfKind `ps0HeadCall))),
       ("ownedOperatorKinds", toJson ((ownedOperators value).map Name.toString)),
-      ("nativeWhereTail", toJson (hasTail && source.getArgs.back!.getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
+      ("nativeWhereTail", toJson (hasTail && source.getArgs.back![1].getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
   if source.isOfKind ``Lean.Parser.Command.declaration then
     let native := source[1]
     let supported := #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,

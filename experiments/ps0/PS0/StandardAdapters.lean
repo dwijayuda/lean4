@@ -16,81 +16,86 @@ namespace PS0.StandardAdapters
 private def nativeTerm (body : TSyntax `psTerm) : MacroM (TSyntax `term) := do
   return ⟨← PS0.Syntax.lower `psTerm body.raw⟩
 
-private def attachTail (decl : Syntax) (suffix : TSyntax ``Lean.Parser.Termination.suffix)
-    (locals : Option (TSyntax ``Lean.Parser.Term.whereDecls)) : MacroM Syntax := do
-  let localNode := mkNullNode (match locals with | some value => #[value.raw] | none => #[])
+declare_syntax_cat psDeclTail
+
+@[run_parser_attribute_hooks] def nativeDeclTail : Lean.Parser.Parser :=
+  Lean.Parser.withoutInfo (Lean.Parser.Termination.suffix >>
+    Lean.Parser.optional Lean.Parser.Term.whereDecls)
+syntax (name := ps0DeclTail) nativeDeclTail : psDeclTail
+
+private def attachTail (decl : Syntax) (tail : TSyntax `psDeclTail) : MacroM Syntax := do
   for i in [:decl.getArgs.size] do
     let value := decl[i]
     if value.isOfKind ``Lean.Parser.Command.declValSimple then
-      return decl.setArg i ((value.setArg 2 suffix.raw).setArg 3 localNode)
+      return decl.setArg i ((value.setArg 2 tail.raw[0]).setArg 3 tail.raw[1])
   Macro.throwError "PS0V1-DECL-TAIL: missing native simple declaration value"
 
 scoped syntax (name := ps0StandardDef) (priority := 20000)
   declModifiers "def " declId psDeclBinder* (":" psTerm)? ":=" psTerm
-  Lean.Parser.Termination.suffix (Lean.Parser.Term.whereDecls)? : command
+  psDeclTail : command
 scoped syntax (name := ps0StandardAbbrev) (priority := 20000)
   declModifiers "abbrev " declId psDeclBinder* (":" psTerm)? ":=" psTerm
-  Lean.Parser.Termination.suffix (Lean.Parser.Term.whereDecls)? : command
+  psDeclTail : command
 scoped syntax (name := ps0StandardTheorem) (priority := 20000)
   declModifiers "theorem " declId psDeclBinder* ":" psTerm ":=" psTerm
-  Lean.Parser.Termination.suffix (Lean.Parser.Term.whereDecls)? : command
+  psDeclTail : command
 scoped syntax (name := ps0StandardExample) (priority := 20000)
   declModifiers "example " psDeclBinder* (":" psTerm)? ":=" psTerm
-  Lean.Parser.Termination.suffix (Lean.Parser.Term.whereDecls)? : command
+  psDeclTail : command
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardDef)
   | `($mods:declModifiers def $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm
-      $suffix:Lean.Parser.Termination.suffix $[$locals:Lean.Parser.Term.whereDecls]?) => do
+      $tail:psDeclTail) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw suffix locals]
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardAbbrev)
   | `($mods:declModifiers abbrev $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm
-      $suffix:Lean.Parser.Termination.suffix $[$locals:Lean.Parser.Term.whereDecls]?) => do
+      $tail:psDeclTail) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
       let decl ← `(Lean.Parser.Command.abbrev| abbrev $name:declId $bs:bracketedBinder* $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw suffix locals]
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardTheorem)
   | `($mods:declModifiers theorem $name:declId $bs:psDeclBinder* : $ty:psTerm := $body:psTerm
-      $suffix:Lean.Parser.Termination.suffix $[$locals:Lean.Parser.Term.whereDecls]?) => do
+      $tail:psDeclTail) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← nativeTerm ty
       let body ← nativeTerm body
       let decl ← `(Lean.Parser.Command.theorem| theorem $name:declId $bs:bracketedBinder* : $ty:term := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw suffix locals]
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardExample)
   | `($mods:declModifiers example $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm
-      $suffix:Lean.Parser.Termination.suffix $[$locals:Lean.Parser.Term.whereDecls]?) => do
+      $tail:psDeclTail) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
       let decl ← `(Lean.Parser.Command.example| example $bs:bracketedBinder* $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw suffix locals]
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
 
 scoped syntax (name := ps0StandardFunction) (priority := 20000)
   declModifiers "function " declId psDeclBinder+ (":" psTerm)? ":=" psTerm
-  Lean.Parser.Termination.suffix (Lean.Parser.Term.whereDecls)? : command
+  psDeclTail : command
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardFunction)
   | `($mods:declModifiers function $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? := $body:psTerm
-      $suffix:Lean.Parser.Termination.suffix $[$locals:Lean.Parser.Term.whereDecls]?) => do
+      $tail:psDeclTail) => do
       let bs ← PS0.Binders.lowerTelescope bs true
       let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw suffix locals]
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
 
 scoped syntax (name := ps0StandardOpaque) (priority := 20000)
   declModifiers "opaque " declId psDeclBinder* ":" psTerm (":=" psTerm)? : command
@@ -98,10 +103,10 @@ scoped syntax (name := ps0StandardAxiom) (priority := 20000)
   declModifiers "axiom " declId psDeclBinder* ":" psTerm : command
 scoped syntax (name := ps0StandardConst) (priority := 20000)
   declModifiers "const " declId (":" psTerm)? ":=" psTerm
-  Lean.Parser.Termination.suffix (Lean.Parser.Term.whereDecls)? : command
+  psDeclTail : command
 scoped syntax (name := ps0StandardInstance) (priority := 20000)
   declModifiers attrKind "instance" optNamedPrio (declId)? psDeclBinder* ":" psTerm ":=" psTerm
-  Lean.Parser.Termination.suffix (Lean.Parser.Term.whereDecls)? : command
+  psDeclTail : command
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardOpaque)
@@ -123,20 +128,20 @@ macro_rules (kind := ps0StandardAxiom)
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardConst)
   | `($mods:declModifiers const $name:declId $[: $ty:psTerm]? := $body:psTerm
-      $suffix:Lean.Parser.Termination.suffix $[$locals:Lean.Parser.Term.whereDecls]?) => do
+      $tail:psDeclTail) => do
       let ty ← ty.mapM nativeTerm
       let body ← nativeTerm body
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $[: $ty:term]? := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw suffix locals]
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardInstance)
   | `($mods:declModifiers $kind:attrKind instance $[$prio:namedPrio]? $[$name:declId]? $bs:psDeclBinder* : $ty:psTerm := $body:psTerm
-      $suffix:Lean.Parser.Termination.suffix $[$locals:Lean.Parser.Term.whereDecls]?) => do
+      $tail:psDeclTail) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← nativeTerm ty
       let body ← nativeTerm body
       let decl ← `(Lean.Parser.Command.instance| $kind:attrKind instance $[$prio:namedPrio]? $[$name:declId]? $bs:bracketedBinder* : $ty:term := $body:term)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw suffix locals]
+      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, ← attachTail decl.raw tail]
 
 end PS0.StandardAdapters
