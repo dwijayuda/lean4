@@ -1,0 +1,49 @@
+/-! Local recursive signatures and values use PS operands; native recursion remains Lean's. -/
+function Box(α: Type): Type := α
+function add(x: Nat, y: Nat): Nat := x + y
+
+const simpleValue: Id(Nat) := do
+  let rec step (n : Box(Nat)) (bias : Nat := add(1, 2)) : Box(Nat) := add(n, bias)
+  return step(4)
+
+const equationValue: Id(Nat) := do
+  let rec total : Nat → Nat
+    | 0 => add(0, 1)
+    | n + 1 => add(total(n), 1)
+  return total(3)
+
+const mixedValue: Id(Nat) := do
+  let rec step (n : Nat) : Nat := add(n, 1),
+    total : Nat → Nat
+      | 0 => step(2)
+      | n + 1 => add(total(n), 1)
+  return total(2)
+
+const pureValue: Nat :=
+  let rec step (n : Box(Nat)) (bias : Nat := add(1, 2)) : Box(Nat) := add(n, bias)
+  step(4)
+
+macro "localRecOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless e.raw.isOfKind ``Lean.Parser.Term.letrec && lowered.isOfKind ``Lean.Parser.Term.letrec &&
+      e.raw.getArgs.size == 5 && lowered.getArgs.size == 5 &&
+      #[0, 1, 3].all (fun index => lowered[index].eqWithInfo e.raw[index]) &&
+      lowered.getRange? == e.raw.getRange? do
+    Lean.Macro.throwError "PS0_LOCAL_REC_ORIGIN"
+  `(True)
+example : localRecOrigin (let rec /- keep rec trivia -/ step (n : Nat) : Nat := add(n, 1); step(2)) := by trivial
+
+macro "nativeRecursive " seq:doSeq : term => `(do $seq)
+const nativeValue: Id(Nat) := nativeRecursive
+  let rec step (n : Nat) : Nat := Nat.add n 1
+  return step 3
+
+meta def nativeRecQuote : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| let rec step (n : Nat) : Nat := Nat.add n 1; step 2)
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeRecQuote
+  unless quoted.raw.isOfKind ``Lean.Parser.Term.letrec do
+    Lean.throwError "PS0_NATIVE_RECURSION_QUOTATION"
+
+def main : IO Unit :=
+  IO.println s!"PS0_LOCAL_REC:{simpleValue}:{equationValue}:{mixedValue}:{pureValue}:{nativeValue}"
