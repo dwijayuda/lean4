@@ -12,6 +12,8 @@ import time
 parser = argparse.ArgumentParser()
 parser.add_argument('--driver', type=Path)
 parser.add_argument('--compare', type=Path)
+parser.add_argument('--source-plans', type=Path)
+parser.add_argument('--plan-source')
 args = parser.parse_args()
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
@@ -90,6 +92,73 @@ for name in ['PS0', 'PS0Main']:
     run([driver, 'convert-native', ROOT / (name + '.lean'), source / (name + '.ps')], 'convert-root-' + name)
     originals[name + '.lean'] = ROOT / (name + '.lean')
 
+source_plans = {}
+if args.source_plans:
+    assert args.plan_source, 'the exact source-planner commit must be explicit'
+    reports = [path for path in args.source_plans.rglob('evidence.json')
+               if path.parent.name.startswith('corpus-source-plan-')]
+    assert len(reports) == 1, reports
+    report_path = reports[0]
+    report = json.loads(report_path.read_text())
+    assert report['source'] == args.plan_source
+    assert report['lean_commit'] == LEAN
+    assert report['inventory_sha256'] == digest(ROOT / 'compiler-source-inventory.json')
+    assert report['count'] == manifest['count'] == len(report['modules'])
+    assert report['status_counts'] == {'planned-unvalidated': manifest['count']}, report['status_counts']
+    entries = {entry['module']: entry for entry in manifest['entries']}
+    for item in report['modules']:
+        module = item['module']
+        assert item['blob'] == entries[module]['blob']
+        original = sdk / entries[module]['sdkPath']
+        assert digest(original) == item['original_sha256']
+        folder = report_path.parent / 'modules' / module
+        target = source / Path(*module.split('.')).with_suffix('.ps')
+        assert target.read_bytes() == (folder / 'original.ps').read_bytes()
+        plan = json.loads((folder / 'plan.json').read_text())
+        census = folder / 'native-census.json'
+        assert digest(census) == item['census_sha256']
+        raw = target.read_bytes()
+        assert hashlib.sha256(raw).hexdigest() == plan['source_sha256']
+        cursor, chunks = 0, []
+        for change in plan['edits']:
+            assert cursor <= change['start'] <= change['end'] <= len(raw)
+            assert raw[change['start']:change['end']].decode() == change['old']
+            assert change['old'].count('\n') == change['new'].count('\n')
+            chunks += [raw[cursor:change['start']], change['new'].encode()]
+            cursor = change['end']
+        chunks.append(raw[cursor:])
+        converted = b''.join(chunks)
+        assert converted == (folder / 'converted.ps').read_bytes()
+        assert hashlib.sha256(converted).hexdigest() == item['converted_sha256'] == plan['result_sha256']
+        target.write_bytes(converted)
+        source_plans[module] = plan
+    # The compiler's own modules must also enter the transformed graph.
+    # Use their original native syntax and the same source planner, not a fallback.
+    for relative in sorted(set(originals) - {name.replace('.', '/') + '.lean' for name in entries}):
+        module = str(Path(relative).with_suffix('')).replace('/', '.')
+        target = source / Path(relative).with_suffix('.ps')
+        folder = evidence / 'self-source-plans' / module
+        folder.mkdir(parents=True, exist_ok=False)
+        original, census, converted, plan_file = [folder / name for name in
+                                                ['original.ps', 'native-census.json', 'converted.ps', 'plan.json']]
+        shutil.copy2(target, original)
+        run(['lake', 'env', driver, 'census-source', original, module, census], 'self-census-' + module)
+        run(['python3', 'tests/migrate-compiler-heads.py', census, original, converted,
+             '--plan', plan_file, '--allow-empty'], 'self-plan-' + module)
+        plan = json.loads(plan_file.read_text())
+        assert digest(target) == plan['source_sha256']
+        assert digest(converted) == plan['result_sha256']
+        shutil.copy2(converted, target)
+        source_plans[module] = plan
+    assert len(source_plans) == len(originals)
+    shutil.copytree(source, evidence / 'transformed-source')
+    (evidence / 'source-plan-summary.json').write_text(json.dumps({
+        'planner_source': args.plan_source, 'planner_evidence_sha256': digest(report_path),
+        'module_count': len(source_plans), 'source_grammar': True,
+        'definitions': sum(len(plan['declarations']) for plan in source_plans.values()),
+        'grammar_migration_complete': False, 'verified_execution': False,
+    }, indent=2) + '\n')
+
 assert not list(source.rglob('*.lean'))
 inputs = {}
 for relative, original in sorted(originals.items()):
@@ -99,7 +168,8 @@ for relative, original in sorted(originals.items()):
     inputs[module] = {
         'original': str(original), 'ps': str(target),
         'original_sha256': digest(original), 'ps_sha256': digest(target),
-        'body_mode': 'byte-identical' if original.read_bytes() == target.read_bytes() else 'native-header-adapter',
+        'body_mode': ('planned-ps-grammar' if args.source_plans else
+                      'byte-identical' if original.read_bytes() == target.read_bytes() else 'native-header-adapter'),
     }
 modules = work / 'modules.txt'
 modules.write_text('\n'.join(sorted(inputs)) + '\n')
@@ -117,12 +187,32 @@ if baseline:
 
 build = work / 'artifacts'
 shutil.copytree(sysroot / 'include', build / 'include')
-run(['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
+build_command = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
      '-Kbootstrap=true',
+     *(['-KsourceGrammar=true'] if args.source_plans else []),
      '-Kroots=Init,Std,Lean,Lake,LeanChecker,LeanExport,LeanIR,Leanc,LakeMain,PS0,PS0Main', '-KrootModule=PS0Main',
      '-Kdriver=' + str(driver), '-KmoduleNames=' + ','.join(sorted(inputs)),
      '-KlinkMap=' + str(evidence / 'compiler-link.map'),
-     '-KprojectBuildDir=' + str(build), 'build', 'PS0Project:static', 'ps0project'], 'compiler-build')
+     '-KprojectBuildDir=' + str(build), 'build', 'PS0Project:static', 'ps0project']
+try:
+    run(build_command, 'compiler-build')
+except Exception:
+    completed = []
+    for module in inputs:
+        rel = Path(*module.split('.'))
+        census = build / 'lib/lean' / rel.with_suffix('.ilean.ps0-source-census.json')
+        if census.is_file():
+            retained = evidence / 'partial-source-census' / rel.with_suffix('.json')
+            retained.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(census, retained)
+            completed.append(module)
+    (evidence / 'failed-build.json').write_text(json.dumps({
+        'source_commit': os.environ['PS0_SOURCE_SHA'], 'lean_commit': LEAN,
+        'module_count': len(inputs), 'source_grammar': bool(args.source_plans),
+        'completed_census_modules': sorted(completed), 'status': 'FAILED',
+        'grammar_migration_complete': False, 'verified_execution': False,
+    }, indent=2) + '\n')
+    raise
 
 outputs = {}
 for module, data in inputs.items():
@@ -131,6 +221,24 @@ for module, data in inputs.items():
     assert receipt['source'] == data['ps'], (module, receipt)
     setup = json.loads((build / 'ir' / rel.with_suffix('.setup.json')).read_text())
     assert setup['options']['interpreter.prefer_native'] is False, (module, setup['options'])
+    if args.source_plans:
+        assert setup['options']['ps0.sourceGrammar'] is True, (module, setup['options'])
+        census_file = build / 'lib/lean' / rel.with_suffix('.ilean.ps0-source-census.json')
+        observed = json.loads(census_file.read_text())
+        def declarations(commands):
+            for command in commands:
+                if command['declaration'] is not None:
+                    yield command['declaration']
+                yield from declarations(command.get('nestedCommands', []))
+        mapped = {declaration['sourceName']: declaration for declaration in declarations(observed['commands'])}
+        productions = {'function': 'PS0.StandardAdapters.ps0StandardFunction',
+                       'const': 'PS0.StandardAdapters.ps0StandardConst',
+                       'def': 'PS0.StandardAdapters.ps0StandardDef'}
+        for strategy in source_plans[module]['strategies']:
+            declaration = mapped[strategy['sourceName']]
+            assert declaration['mode'] == 'mapped-ps'
+            assert declaration['production'] == productions[strategy['targetKeyword']], declaration
+        assert not any(declaration['mode'] == 'native-compatible' for declaration in mapped.values()), (module, mapped)
     olean = build / 'lib/lean' / rel.with_suffix('.olean')
     cfile = build / 'ir' / rel.with_suffix('.c')
     assert olean.is_file() and cfile.is_file(), module
@@ -142,11 +250,14 @@ result = {
     'lean_commit': LEAN, 'module_count': len(inputs), 'inputs': inputs, 'outputs': outputs,
     'driver_sha256': digest(migrated), 'verified_execution': False,
     'bootstrap_package_identity': None,
-    'stage_lean_options': {'interpreter.prefer_native': False},
+    'stage_lean_options': {'interpreter.prefer_native': False,
+                           **({'ps0.sourceGrammar': True} if args.source_plans else {})},
     'runtime_smoke': 'PENDING',
     'runtime_grammar_host': {'status': 'PENDING'},
     'lean_header_sha256': digest(build / 'include/lean/lean.h'),
-    'scope': 'All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers',
+    'scope': ('All pinned upstream and PS0 source plans compiled with PS grammar enabled' if args.source_plans else
+              'All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers'),
+    'grammar_migration_complete': False,
 }
 shutil.copy2(migrated, evidence / 'migrated-ps0')
 (evidence / 'migration.json').write_text(json.dumps(result, indent=2) + '\n')
