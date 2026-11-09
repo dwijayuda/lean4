@@ -16486,9 +16486,9 @@
       "lastObservedUtc": "2026-11-09 19:39:50 UTC"
     },
     "nextActions": [
-      "Inspect graph fifteen at its immutable source and runner; native capture preparation passed, but the complete target graph is unqualified until its own checks finish",
-      "Audit ordinary host bodies beneath borrowed native match, pattern lambda, record and control syntax against the frozen PS application rules, preserving quotations and independent DSL ownership",
-      "Require relocated compiler operation and canonical PS fixed point; investigate any new corpus grammar or source-fidelity failures without native-compatible escapes"
+      "Resolve SynthInstance C parity using private module constants and fresh repeat builds without weakening the gate",
+      "Probe and adapt remaining ordinary grammar roles using retained native syntax inventory and exact source-origin controls",
+      "Inspect immutable graph fifteen, then require complete canonical PS graph linking/runtime, relocated compiler operation and fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -16584,91 +16584,35 @@
       "verified_execution": false
     },
     "ordinaryHostRoleAudit": {
-      "source": "f70703ffe0b19ff4caa30f8054744cab7f201279",
-      "runner": "85ecfebdb78a3b2501c62cd41ebf8b7f726827e0",
-      "run": 42685900466,
-      "job": 129392517737,
-      "status": "PENDING_IMPLEMENTATION",
-      "testFirstStatus": "FAILED",
-      "harness": "tests/run-host-island-gaps.py",
-      "requirement": "Frozen R2 context-uniform host application: ordinary host operands reject spaced parenthesized application while native quotation and independent DSL categories retain native ownership",
-      "route": "actual native Lake project setup with bootstrap=true, sourceGrammar=true, explicit module/prelude/public import Init",
-      "observations": [
-        {
-          "case": "match",
-          "diagnostic_excerpt": [
-            "✔ [3/3] Built HostIslandProbe (977ms)",
-            "Build completed successfully (3 jobs)."
-          ],
-          "invalid_host_gap_rejected": false,
-          "native_baseline_passed": true,
-          "ps_exit_code": 0
-        },
-        {
-          "case": "pattern-lambda",
-          "diagnostic_excerpt": [
-            "✔ [3/3] Built HostIslandProbe (1.1s)",
-            "Build completed successfully (3 jobs)."
-          ],
-          "invalid_host_gap_rejected": false,
-          "native_baseline_passed": true,
-          "ps_exit_code": 0
-        },
-        {
-          "case": "record-field",
-          "diagnostic_excerpt": [
-            "✔ [3/3] Built HostIslandProbe (992ms)",
-            "Build completed successfully (3 jobs)."
-          ],
-          "invalid_host_gap_rejected": false,
-          "native_baseline_passed": true,
-          "ps_exit_code": 0
-        },
-        {
-          "case": "do-if",
-          "diagnostic_excerpt": [
-            "✔ [3/3] Built HostIslandProbe (1000ms)",
-            "Build completed successfully (3 jobs)."
-          ],
-          "invalid_host_gap_rejected": false,
-          "native_baseline_passed": true,
-          "ps_exit_code": 0
-        }
-      ],
-      "artifacts": [
-        {
-          "id": 13703729365,
-          "name": "ps0-native-index-f70703ffe0b19ff4caa30f8054744cab7f201279-42685900466",
-          "size_in_bytes": 50145,
-          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13703729365",
-          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13703729365/zip",
-          "expired": false,
-          "created_at": "2026-11-09T19:43:38Z",
-          "expires_at": "2027-02-07T19:42:23Z",
-          "updated_at": "2026-11-09T19:43:38Z",
-          "digest": "sha256:019616e3a2f12daf3a7eb4ad7e70cfbbc2126a1a012d1d53e3096c3cbc5c9595",
-          "workflow_run": {
-            "id": 42685900466,
-            "repository_id": 1381609925,
-            "head_repository_id": 1381609925,
-            "head_branch": "ci/ps0-index-operands-20261109",
-            "head_sha": "85ecfebdb78a3b2501c62cd41ebf8b7f726827e0"
-          }
-        }
-      ],
-      "primarySuiteIncludesProbe": false,
-      "implementationComplete": false,
-      "scope": "four typed counterexamples: match arm, pattern-lambda arm, record field value and do-if body; all native baselines pass and invalid PS inputs are admitted",
-      "diagnosticHistory": [
-        {
-          "source": "0c09e208bb5fbe9a7202a5cf82bbf12c72204f12",
-          "run": 42685256768,
-          "status": "INVALID_PROBE_INVOCATION",
-          "reason": "direct CLI -D argument is unsupported by the Lake module adapter; replaced with real Lake module setup"
-        }
+      "status": "PENDING_BROADER",
+      "finiteEvidenceKey": "ordinaryHostRoleQualification",
+      "compilerRegressionKey": "ordinaryHostRoleCompilerRegression",
+      "remainingRoles": [
+        "do-match",
+        "do-for",
+        "do-have",
+        "proof-bound pure if",
+        "type ascription",
+        "native tactic sequences",
+        "try/catch",
+        "other native ordinary expression roles"
       ],
       "grammarMigrationComplete": false,
       "verified_execution": false
+    },
+    "ordinaryHostRoleQualification": {
+      "status": "QUALIFIED_FINITE",
+      "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+      "run": 42691593415,
+      "independentRun": 42692357867
+    },
+    "ordinaryHostRoleCompilerRegression": {
+      "status": "FAILED",
+      "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+      "run": 42691593746,
+      "passedJobs": 7,
+      "totalJobs": 8,
+      "failedModule": "Lean.Meta.SynthInstance"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -30333,6 +30277,2907 @@
         "status": "INVALID_PROBE_INVOCATION",
         "reason": "direct CLI -D argument is unsupported by the Lake module adapter; replaced with real Lake module setup"
       }
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "finiteResolution": {
+      "evidenceKey": "ordinaryHostRoleQualification",
+      "status": "FOUR_OBSERVED_GAPS_RESOLVED_FINITE",
+      "source": "1fecb9236446c9a1291e7820994a9da0c812e11b"
+    }
+  },
+  "ordinaryHostRoleQualification": {
+    "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+    "runner": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+    "run": 42691593415,
+    "job": 129412419864,
+    "status": "QUALIFIED_FINITE",
+    "artifacts": [
+      {
+        "id": 13707417435,
+        "name": "ps0-native-index-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593415",
+        "size_in_bytes": 1159936,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707417435",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707417435/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:20:02Z",
+        "expires_at": "2027-02-07T20:17:47Z",
+        "updated_at": "2026-11-09T20:20:02Z",
+        "digest": "sha256:48ec5c40f0af3ab567e5b64ab610c33a69c40d7f06b29548ff788edead28925f",
+        "workflow_run": {
+          "id": 42691593415,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      }
+    ],
+    "proofGuards": 17,
+    "mappedDefinitions": 17,
+    "invalidNativeGapAdmissionsResolved": 4,
+    "roles": [
+      "match motive, discriminants and arm bodies",
+      "pattern-lambda arm bodies",
+      "record sources, fields, field equations and type",
+      "do-if propositions, let values and branch sequences"
+    ],
+    "nativeRolesRetained": [
+      "match and if-let patterns",
+      "match discriminant proof binders",
+      "record field binders and lvalues",
+      "native layout groups, tokens and source information",
+      "quotations and independent DSL categories"
+    ],
+    "implementation": [
+      "PS0/HostCategories.lean",
+      "PS0/SourceGrammar.lean",
+      "tests/migrate-compiler-heads.py"
+    ],
+    "independentInspection": {
+      "runner": "607177fd9a3cdc95fcfa312d12b79222f99f430c",
+      "run": 42692357867,
+      "job": 129415086989,
+      "status": "PASS",
+      "artifacts": [
+        {
+          "id": 13706748497,
+          "name": "ps0-ordinary-host-inspection-42692357867",
+          "size_in_bytes": 1111,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706748497",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706748497/zip",
+          "expired": false,
+          "created_at": "2026-11-09T20:22:46Z",
+          "expires_at": "2027-02-07T20:22:35Z",
+          "updated_at": "2026-11-09T20:22:46Z",
+          "digest": "sha256:09411faaf999abe61ef64de214a0a9e61f1cb58dc6531f0037b649ad523cba2b",
+          "workflow_run": {
+            "id": 42692357867,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
+            "head_sha": "607177fd9a3cdc95fcfa312d12b79222f99f430c"
+          }
+        }
+      ],
+      "actual_compiler_files_rehashed": 6,
+      "actual_native_elf_files_rehashed": 1,
+      "comparisons": {
+        "ir/MatchHostBootstrap.c": {
+          "baseline": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+          "migrated": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+          "planned": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746"
+        },
+        "lib/lean/MatchHostBootstrap.olean": {
+          "baseline": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+          "migrated": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+          "planned": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+        }
+      },
+      "evidence": {
+        "comparisons": {
+          "ir/MatchHostBootstrap.c": {
+            "baseline": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+            "migrated": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+            "planned": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746"
+          },
+          "lib/lean/MatchHostBootstrap.olean": {
+            "baseline": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+            "migrated": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+            "planned": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+          }
+        },
+        "grammar_migration_complete": false,
+        "independently_owned_native_dsl": true,
+        "logical_imports": [
+          "Init"
+        ],
+        "mapped_definitions": 17,
+        "mapped_theorems": 17,
+        "native_executable_sha256": "26e67e821ac00f230fd01a0c0820b833b22c913527e29d0946e126007c7e2335",
+        "native_patterns_preserved": true,
+        "native_quotation": true,
+        "prepared_source_identity": true,
+        "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
+        "scope": "finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders",
+        "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+        "source_origin_cases": 4,
+        "source_origin_fixture_sha256": "38a87da8147ed3d26ce0e32768f51a888fb7ffe7635bba1d5ff00b4d90362c4b",
+        "verified_execution": false
+      },
+      "grammar_migration_complete": false,
+      "hashes": {
+        "match-host-42691593415/OrdinaryHostOrigins": "26e67e821ac00f230fd01a0c0820b833b22c913527e29d0946e126007c7e2335",
+        "match-host-42691593415/baseline-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+        "match-host-42691593415/baseline-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+        "match-host-42691593415/migrated-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+        "match-host-42691593415/migrated-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24",
+        "match-host-42691593415/planned-MatchHostBootstrap.c": "0dda39f5f5b91ec329fe2ce7b0eb2b013e10d4516f0cfd19bf04debc92d6e746",
+        "match-host-42691593415/planned-MatchHostBootstrap.olean": "684fc54ea154ff75889aa33c83a2459223eb23561bcf77fc3ed2ee69b7f72a24"
+      },
+      "invalid_host_gaps_rejected": 4,
+      "mapped_definitions": 17,
+      "mapped_theorems": 17,
+      "producer_run": 42691593415,
+      "producer_runner": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+      "producer_source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+      "scope": "finite ordinary match, pattern lambda, record and do-if roles; retained ELF rehashed, runtime observed in producer; broader compiler C parity remains open",
+      "source_origin_cases": 4,
+      "verified_execution": false
+    },
+    "scope": "finite ordinary host adapter stage only; broad compiler C parity and canonical corpus conformance remain open",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "ordinaryHostRoleCompilerRegression": {
+    "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+    "runner": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+    "run": 42691593746,
+    "status": "FAILED",
+    "jobs": [
+      {
+        "id": 129412426304,
+        "run_id": 42691593746,
+        "workflow_name": "PS0 native indexing qualification",
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "run_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/runs/42691593746",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUlmxxc8AAAAeIZTqQA",
+        "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/jobs/129412426304",
+        "html_url": "https://github.com/dwijayuda/pskernel/actions/runs/42691593746/job/129412426304",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-11-09T20:17:48Z",
+        "started_at": "2026-11-09T20:17:51Z",
+        "completed_at": "2026-11-09T20:19:24Z",
+        "name": "compiler-synthinstance14",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-09T20:17:52Z",
+            "completed_at": "2026-11-09T20:17:52Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-09T20:17:52Z",
+            "completed_at": "2026-11-09T20:17:53Z"
+          },
+          {
+            "name": "Read exact source pin",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-09T20:17:53Z",
+            "completed_at": "2026-11-09T20:17:54Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-09T20:17:54Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Install checksum-verified pinned Linux Lean inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:18:11Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-09T20:18:11Z",
+            "completed_at": "2026-11-09T20:18:11Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-09T20:18:11Z",
+            "completed_at": "2026-11-09T20:18:14Z"
+          },
+          {
+            "name": "Record exact source and build clean PS0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-09T20:18:14Z",
+            "completed_at": "2026-11-09T20:18:36Z"
+          },
+          {
+            "name": "Qualify entire pinned Lean.Meta.SynthInstance through native Lake",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 11,
+            "started_at": "2026-11-09T20:18:36Z",
+            "completed_at": "2026-11-09T20:19:14Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-09T20:19:14Z",
+            "completed_at": "2026-11-09T20:19:21Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-11-09T20:19:21Z",
+            "completed_at": "2026-11-09T20:19:21Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-11-09T20:19:21Z",
+            "completed_at": "2026-11-09T20:19:21Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-11-09T20:19:21Z",
+            "completed_at": "2026-11-09T20:19:21Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/dwijayuda/pskernel/check-runs/129412426304",
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "runner_id": 1000037114,
+        "runner_name": "GitHub Actions 1000037114",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 129412426338,
+        "run_id": 42691593746,
+        "workflow_name": "PS0 native indexing qualification",
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "run_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/runs/42691593746",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUlmxxc8AAAAeIZTqYg",
+        "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/jobs/129412426338",
+        "html_url": "https://github.com/dwijayuda/pskernel/actions/runs/42691593746/job/129412426338",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-11-09T20:17:48Z",
+        "started_at": "2026-11-09T20:17:51Z",
+        "completed_at": "2026-11-09T20:19:11Z",
+        "name": "compiler-compilerm14",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-09T20:17:51Z",
+            "completed_at": "2026-11-09T20:17:53Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-09T20:17:53Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Read exact source pin",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:56Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-09T20:17:56Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Install checksum-verified pinned Linux Lean inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:18:10Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-09T20:18:10Z",
+            "completed_at": "2026-11-09T20:18:11Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-09T20:18:11Z",
+            "completed_at": "2026-11-09T20:18:14Z"
+          },
+          {
+            "name": "Record exact source and build clean PS0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-09T20:18:14Z",
+            "completed_at": "2026-11-09T20:18:37Z"
+          },
+          {
+            "name": "Qualify entire pinned Lean.Compiler.LCNF.CompilerM through native Lake",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-09T20:18:37Z",
+            "completed_at": "2026-11-09T20:18:59Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-09T20:18:59Z",
+            "completed_at": "2026-11-09T20:19:09Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-11-09T20:19:09Z",
+            "completed_at": "2026-11-09T20:19:09Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-11-09T20:19:09Z",
+            "completed_at": "2026-11-09T20:19:09Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-11-09T20:19:09Z",
+            "completed_at": "2026-11-09T20:19:09Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/dwijayuda/pskernel/check-runs/129412426338",
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "runner_id": 1000037116,
+        "runner_name": "GitHub Actions 1000037116",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 129412426384,
+        "run_id": 42691593746,
+        "workflow_name": "PS0 native indexing qualification",
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "run_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/runs/42691593746",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUlmxxc8AAAAeIZTqkA",
+        "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/jobs/129412426384",
+        "html_url": "https://github.com/dwijayuda/pskernel/actions/runs/42691593746/job/129412426384",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-11-09T20:17:48Z",
+        "started_at": "2026-11-09T20:17:51Z",
+        "completed_at": "2026-11-09T20:20:24Z",
+        "name": "compiler-natbasic",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-09T20:17:52Z",
+            "completed_at": "2026-11-09T20:17:53Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-09T20:17:53Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Read exact source pin",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:56Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-09T20:17:56Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Install checksum-verified pinned Linux Lean inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:18:09Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-09T20:18:09Z",
+            "completed_at": "2026-11-09T20:18:09Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-09T20:18:09Z",
+            "completed_at": "2026-11-09T20:18:14Z"
+          },
+          {
+            "name": "Record exact source and build clean PS0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-09T20:18:14Z",
+            "completed_at": "2026-11-09T20:18:51Z"
+          },
+          {
+            "name": "Qualify entire pinned Init.Data.Nat.Basic through native Lake",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-09T20:18:51Z",
+            "completed_at": "2026-11-09T20:20:16Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-09T20:20:16Z",
+            "completed_at": "2026-11-09T20:20:20Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-11-09T20:20:20Z",
+            "completed_at": "2026-11-09T20:20:20Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-11-09T20:20:20Z",
+            "completed_at": "2026-11-09T20:20:21Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-11-09T20:20:21Z",
+            "completed_at": "2026-11-09T20:20:21Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/dwijayuda/pskernel/check-runs/129412426384",
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "runner_id": 1000037115,
+        "runner_name": "GitHub Actions 1000037115",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 129412426492,
+        "run_id": 42691593746,
+        "workflow_name": "PS0 native indexing qualification",
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "run_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/runs/42691593746",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUlmxxc8AAAAeIZTq_A",
+        "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/jobs/129412426492",
+        "html_url": "https://github.com/dwijayuda/pskernel/actions/runs/42691593746/job/129412426492",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-11-09T20:17:48Z",
+        "started_at": "2026-11-09T20:17:51Z",
+        "completed_at": "2026-11-09T20:19:15Z",
+        "name": "compiler-setoption14",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-09T20:17:52Z",
+            "completed_at": "2026-11-09T20:17:53Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-09T20:17:53Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Read exact source pin",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Install checksum-verified pinned Linux Lean inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:18:09Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-09T20:18:09Z",
+            "completed_at": "2026-11-09T20:18:10Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-09T20:18:10Z",
+            "completed_at": "2026-11-09T20:18:11Z"
+          },
+          {
+            "name": "Record exact source and build clean PS0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-09T20:18:11Z",
+            "completed_at": "2026-11-09T20:18:53Z"
+          },
+          {
+            "name": "Qualify entire pinned Lean.Elab.SetOption through native Lake",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-09T20:18:53Z",
+            "completed_at": "2026-11-09T20:19:07Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-09T20:19:07Z",
+            "completed_at": "2026-11-09T20:19:11Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-11-09T20:19:11Z",
+            "completed_at": "2026-11-09T20:19:11Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-11-09T20:19:11Z",
+            "completed_at": "2026-11-09T20:19:11Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-11-09T20:19:11Z",
+            "completed_at": "2026-11-09T20:19:11Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/dwijayuda/pskernel/check-runs/129412426492",
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "runner_id": 1000037117,
+        "runner_name": "GitHub Actions 1000037117",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 129412426582,
+        "run_id": 42691593746,
+        "workflow_name": "PS0 native indexing qualification",
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "run_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/runs/42691593746",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUlmxxc8AAAAeIZTrVg",
+        "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/jobs/129412426582",
+        "html_url": "https://github.com/dwijayuda/pskernel/actions/runs/42691593746/job/129412426582",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-11-09T20:17:48Z",
+        "started_at": "2026-11-09T20:17:51Z",
+        "completed_at": "2026-11-09T20:19:33Z",
+        "name": "compiler-parserbasic14",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-09T20:17:52Z",
+            "completed_at": "2026-11-09T20:17:53Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-09T20:17:53Z",
+            "completed_at": "2026-11-09T20:17:54Z"
+          },
+          {
+            "name": "Read exact source pin",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-09T20:17:54Z",
+            "completed_at": "2026-11-09T20:17:54Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-09T20:17:54Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:56Z"
+          },
+          {
+            "name": "Install checksum-verified pinned Linux Lean inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-09T20:17:56Z",
+            "completed_at": "2026-11-09T20:18:08Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-09T20:18:08Z",
+            "completed_at": "2026-11-09T20:18:09Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-09T20:18:09Z",
+            "completed_at": "2026-11-09T20:18:11Z"
+          },
+          {
+            "name": "Record exact source and build clean PS0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-09T20:18:11Z",
+            "completed_at": "2026-11-09T20:18:38Z"
+          },
+          {
+            "name": "Qualify entire pinned Lean.Parser.Basic through native Lake",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-09T20:18:38Z",
+            "completed_at": "2026-11-09T20:19:27Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-09T20:19:27Z",
+            "completed_at": "2026-11-09T20:19:30Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-11-09T20:19:30Z",
+            "completed_at": "2026-11-09T20:19:30Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-11-09T20:19:30Z",
+            "completed_at": "2026-11-09T20:19:30Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-11-09T20:19:30Z",
+            "completed_at": "2026-11-09T20:19:30Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/dwijayuda/pskernel/check-runs/129412426582",
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "runner_id": 1000037120,
+        "runner_name": "GitHub Actions 1000037120",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 129412426648,
+        "run_id": 42691593746,
+        "workflow_name": "PS0 native indexing qualification",
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "run_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/runs/42691593746",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUlmxxc8AAAAeIZTrmA",
+        "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/jobs/129412426648",
+        "html_url": "https://github.com/dwijayuda/pskernel/actions/runs/42691593746/job/129412426648",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-11-09T20:17:48Z",
+        "started_at": "2026-11-09T20:17:51Z",
+        "completed_at": "2026-11-09T20:18:54Z",
+        "name": "compiler-ambiguousopen14",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-09T20:17:52Z",
+            "completed_at": "2026-11-09T20:17:53Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-09T20:17:53Z",
+            "completed_at": "2026-11-09T20:17:54Z"
+          },
+          {
+            "name": "Read exact source pin",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-09T20:17:54Z",
+            "completed_at": "2026-11-09T20:17:54Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-09T20:17:54Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:56Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-09T20:17:56Z",
+            "completed_at": "2026-11-09T20:17:56Z"
+          },
+          {
+            "name": "Install checksum-verified pinned Linux Lean inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-09T20:17:56Z",
+            "completed_at": "2026-11-09T20:18:10Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-09T20:18:10Z",
+            "completed_at": "2026-11-09T20:18:10Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-09T20:18:10Z",
+            "completed_at": "2026-11-09T20:18:13Z"
+          },
+          {
+            "name": "Record exact source and build clean PS0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-09T20:18:13Z",
+            "completed_at": "2026-11-09T20:18:38Z"
+          },
+          {
+            "name": "Qualify entire pinned Lean.Linter.AmbiguousOpen through native Lake",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-09T20:18:38Z",
+            "completed_at": "2026-11-09T20:18:48Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-09T20:18:48Z",
+            "completed_at": "2026-11-09T20:18:50Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-11-09T20:18:50Z",
+            "completed_at": "2026-11-09T20:18:50Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-11-09T20:18:50Z",
+            "completed_at": "2026-11-09T20:18:51Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-11-09T20:18:51Z",
+            "completed_at": "2026-11-09T20:18:51Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/dwijayuda/pskernel/check-runs/129412426648",
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "runner_id": 1000037118,
+        "runner_name": "GitHub Actions 1000037118",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 129412426651,
+        "run_id": 42691593746,
+        "workflow_name": "PS0 native indexing qualification",
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "run_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/runs/42691593746",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUlmxxc8AAAAeIZTrmw",
+        "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/jobs/129412426651",
+        "html_url": "https://github.com/dwijayuda/pskernel/actions/runs/42691593746/job/129412426651",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-11-09T20:17:48Z",
+        "started_at": "2026-11-09T20:17:52Z",
+        "completed_at": "2026-11-09T20:19:19Z",
+        "name": "compiler-defeqattrib14",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-09T20:17:53Z",
+            "completed_at": "2026-11-09T20:17:54Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-09T20:17:54Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Read exact source pin",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:17:57Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-09T20:17:57Z",
+            "completed_at": "2026-11-09T20:17:58Z"
+          },
+          {
+            "name": "Install checksum-verified pinned Linux Lean inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-09T20:17:58Z",
+            "completed_at": "2026-11-09T20:18:11Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-09T20:18:11Z",
+            "completed_at": "2026-11-09T20:18:11Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-09T20:18:11Z",
+            "completed_at": "2026-11-09T20:18:12Z"
+          },
+          {
+            "name": "Record exact source and build clean PS0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-09T20:18:12Z",
+            "completed_at": "2026-11-09T20:18:51Z"
+          },
+          {
+            "name": "Qualify entire pinned Lean.DefEqAttrib through native Lake",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-09T20:18:51Z",
+            "completed_at": "2026-11-09T20:19:12Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-09T20:19:12Z",
+            "completed_at": "2026-11-09T20:19:15Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-11-09T20:19:15Z",
+            "completed_at": "2026-11-09T20:19:16Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-11-09T20:19:16Z",
+            "completed_at": "2026-11-09T20:19:16Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-11-09T20:19:16Z",
+            "completed_at": "2026-11-09T20:19:16Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/dwijayuda/pskernel/check-runs/129412426651",
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "runner_id": 1000037119,
+        "runner_name": "GitHub Actions 1000037119",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 129412426779,
+        "run_id": 42691593746,
+        "workflow_name": "PS0 native indexing qualification",
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "run_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/runs/42691593746",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUlmxxc8AAAAeIZTsGw",
+        "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9",
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/jobs/129412426779",
+        "html_url": "https://github.com/dwijayuda/pskernel/actions/runs/42691593746/job/129412426779",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-11-09T20:17:48Z",
+        "started_at": "2026-11-09T20:17:51Z",
+        "completed_at": "2026-11-09T20:20:20Z",
+        "name": "index-operands",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-09T20:17:52Z",
+            "completed_at": "2026-11-09T20:17:53Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-09T20:17:53Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Read exact source pin",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:55Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-09T20:17:55Z",
+            "completed_at": "2026-11-09T20:17:56Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-09T20:17:56Z",
+            "completed_at": "2026-11-09T20:17:56Z"
+          },
+          {
+            "name": "Run actions/cache/restore@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-09T20:17:56Z",
+            "completed_at": "2026-11-09T20:17:56Z"
+          },
+          {
+            "name": "Install checksum-verified pinned Linux Lean inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-09T20:17:56Z",
+            "completed_at": "2026-11-09T20:18:10Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-09T20:18:10Z",
+            "completed_at": "2026-11-09T20:18:10Z"
+          },
+          {
+            "name": "Run actions/cache/save@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-09T20:18:10Z",
+            "completed_at": "2026-11-09T20:18:14Z"
+          },
+          {
+            "name": "Record exact source and build clean PS0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-09T20:18:14Z",
+            "completed_at": "2026-11-09T20:18:45Z"
+          },
+          {
+            "name": "Run actions/download-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-09T20:18:45Z",
+            "completed_at": "2026-11-09T20:18:47Z"
+          },
+          {
+            "name": "Inspect exact retained indexed signature",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-09T20:18:47Z",
+            "completed_at": "2026-11-09T20:18:47Z"
+          },
+          {
+            "name": "Retain native local declaration layouts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-11-09T20:18:47Z",
+            "completed_at": "2026-11-09T20:18:47Z"
+          },
+          {
+            "name": "Qualify local mixed binder syntax and native linking",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-11-09T20:18:47Z",
+            "completed_at": "2026-11-09T20:19:07Z"
+          },
+          {
+            "name": "Qualify native indexed access and source fidelity",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-11-09T20:19:07Z",
+            "completed_at": "2026-11-09T20:19:25Z"
+          },
+          {
+            "name": "Qualify native empty-return line boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-11-09T20:19:25Z",
+            "completed_at": "2026-11-09T20:19:29Z"
+          },
+          {
+            "name": "Retain native where-local and finally layouts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-11-09T20:19:29Z",
+            "completed_at": "2026-11-09T20:19:30Z"
+          },
+          {
+            "name": "Inspect syntax-only source where parser",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-11-09T20:19:30Z",
+            "completed_at": "2026-11-09T20:19:35Z"
+          },
+          {
+            "name": "Inspect graph fourteen native operand boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-11-09T20:19:35Z",
+            "completed_at": "2026-11-09T20:19:46Z"
+          },
+          {
+            "name": "Test-first braced where local helpers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 20,
+            "started_at": "2026-11-09T20:19:46Z",
+            "completed_at": "2026-11-09T20:20:16Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21,
+            "started_at": "2026-11-09T20:20:16Z",
+            "completed_at": "2026-11-09T20:20:17Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 41,
+            "started_at": "2026-11-09T20:20:17Z",
+            "completed_at": "2026-11-09T20:20:17Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 42,
+            "started_at": "2026-11-09T20:20:17Z",
+            "completed_at": "2026-11-09T20:20:17Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 43,
+            "started_at": "2026-11-09T20:20:17Z",
+            "completed_at": "2026-11-09T20:20:17Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/dwijayuda/pskernel/check-runs/129412426779",
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "runner_id": 1000037121,
+        "runner_name": "GitHub Actions 1000037121",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13708170120,
+        "name": "ps0-compiler-synthinstance14-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593746",
+        "size_in_bytes": 760604,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13708170120",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13708170120/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:19:21Z",
+        "expires_at": "2027-02-07T20:17:48Z",
+        "updated_at": "2026-11-09T20:19:21Z",
+        "digest": "sha256:7767b7195bd3863d49494026aee658796142c2953223d318608ffa58eebfd38d",
+        "workflow_run": {
+          "id": 42691593746,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      },
+      {
+        "id": 13707462039,
+        "name": "ps0-compiler-compilerm14-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593746",
+        "size_in_bytes": 604604,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707462039",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707462039/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:19:08Z",
+        "expires_at": "2027-02-07T20:17:48Z",
+        "updated_at": "2026-11-09T20:19:08Z",
+        "digest": "sha256:f45ffc332faa3b5fa12fa852e9de02a6ff52f35fe08ab4e41e0b15ea0369362d",
+        "workflow_run": {
+          "id": 42691593746,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      },
+      {
+        "id": 13707362187,
+        "name": "ps0-compiler-setoption14-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593746",
+        "size_in_bytes": 94036,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707362187",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707362187/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:19:11Z",
+        "expires_at": "2027-02-07T20:17:48Z",
+        "updated_at": "2026-11-09T20:19:11Z",
+        "digest": "sha256:1e902576b1e49792727924688ab4d46546ac1b36c396de95ecaaa2f2ee8472ad",
+        "workflow_run": {
+          "id": 42691593746,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      },
+      {
+        "id": 13707287634,
+        "name": "ps0-compiler-natbasic-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593746",
+        "size_in_bytes": 503685,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707287634",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707287634/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:20:20Z",
+        "expires_at": "2027-02-07T20:17:48Z",
+        "updated_at": "2026-11-09T20:20:20Z",
+        "digest": "sha256:1b9e68a0b15d527a5290984d138ebfae062a40e23dfcc12a970622ccf9a98de1",
+        "workflow_run": {
+          "id": 42691593746,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      },
+      {
+        "id": 13706962681,
+        "name": "ps0-compiler-ambiguousopen14-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593746",
+        "size_in_bytes": 80947,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706962681",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706962681/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:18:50Z",
+        "expires_at": "2027-02-07T20:17:48Z",
+        "updated_at": "2026-11-09T20:18:50Z",
+        "digest": "sha256:59d045b11dad83d594f73fde62068f26f1e7121cb2910e66c521723e15ce6376",
+        "workflow_run": {
+          "id": 42691593746,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      },
+      {
+        "id": 13706822866,
+        "name": "ps0-native-index-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593746",
+        "size_in_bytes": 177809,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706822866",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706822866/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:20:17Z",
+        "expires_at": "2027-02-07T20:17:48Z",
+        "updated_at": "2026-11-09T20:20:17Z",
+        "digest": "sha256:b6830a73e4479883ac8ea98518804d416442bcbc2821b42f58c00d5078c821d4",
+        "workflow_run": {
+          "id": 42691593746,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      },
+      {
+        "id": 13706613638,
+        "name": "ps0-compiler-parserbasic14-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593746",
+        "size_in_bytes": 795934,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706613638",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706613638/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:19:29Z",
+        "expires_at": "2027-02-07T20:17:48Z",
+        "updated_at": "2026-11-09T20:19:29Z",
+        "digest": "sha256:f80863c6415a9c8caa9a01541d755c2ab2764743281bbadeb724e14f1d0993e0",
+        "workflow_run": {
+          "id": 42691593746,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      },
+      {
+        "id": 13706129763,
+        "name": "ps0-compiler-defeqattrib14-1fecb9236446c9a1291e7820994a9da0c812e11b-42691593746",
+        "size_in_bytes": 141886,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706129763",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13706129763/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:19:15Z",
+        "expires_at": "2027-02-07T20:17:48Z",
+        "updated_at": "2026-11-09T20:19:15Z",
+        "digest": "sha256:973294491586bbb544634af81d842ecafd83d2cb5d20d448041592e1dff41c9a",
+        "workflow_run": {
+          "id": 42691593746,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "5457d0ef73faeaaf0627feb96c8f1827ac5294b9"
+        }
+      }
+    ],
+    "passedJobs": 7,
+    "totalJobs": 8,
+    "failedModule": "Lean.Meta.SynthInstance",
+    "failedJob": 129412426304,
+    "publicOleanIdentical": true,
+    "publicOleanSha256": "4eefb428530425f8387beacbcd31960154c9ea1ade42ce6980086fd7a4dc9039",
+    "cSha256": {
+      "native": "a3699eadba9c9e6d9d589aa2910360652599b5efbd3345c6735ab4c69367a7fb",
+      "ps": "aa646c5e0129281da526bb459dd9b103d3cfc48041002c6bebe96f7b03a29865"
+    },
+    "privateAndRepeatDiagnosis": "PENDING; diagnostic source 87fce86ed6638f32d4b6aa8543765d6f9cb096f2 failed its diagnostic subprocess before repeat builds, retained exact output being read",
+    "scope": "No broad qualification from seven passing jobs; C parity remains required"
+  },
+  "nativeHostRoleInventory": {
+    "source": "1fecb9236446c9a1291e7820994a9da0c812e11b",
+    "runner": "3c2d1002d00e690b3d957a3ba66ecdfa553903d7",
+    "run": 42691695074,
+    "job": 129412782886,
+    "status": "PASS_INVENTORY_ONLY",
+    "retainedNativeCaptures": 2087,
+    "producerSource": "0942ac5898b144d0f8ff3181ff6b4dacbfc76b8c",
+    "producerRun": 42681043836,
+    "artifacts": [
+      {
+        "id": 13707920672,
+        "name": "ps0-host-role-inventory-1fecb9236446c9a1291e7820994a9da0c812e11b-42691695074",
+        "size_in_bytes": 146238,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707920672",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13707920672/zip",
+        "expired": false,
+        "created_at": "2026-11-09T20:19:18Z",
+        "expires_at": "2027-02-07T20:18:26Z",
+        "updated_at": "2026-11-09T20:19:18Z",
+        "digest": "sha256:fb5249dcbd7fff56eab2add547d7d702b3e71bbbeb751d86c46a4102d7a8d91a",
+        "workflow_run": {
+          "id": 42691695074,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "3c2d1002d00e690b3d957a3ba66ecdfa553903d7"
+        }
+      }
+    ],
+    "counts": [
+      {
+        "roleKind": "value:Lean.Parser.Term.app",
+        "occurrences": 191715,
+        "modules": 2022
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doSeqItem",
+        "occurrences": 99888,
+        "modules": 1194
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.hygienicLParen",
+        "occurrences": 69101,
+        "modules": 1858
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doExpr",
+        "occurrences": 60517,
+        "modules": 1182
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.paren",
+        "occurrences": 59142,
+        "modules": 1828
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doSeqIndent",
+        "occurrences": 55561,
+        "modules": 1194
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letConfig",
+        "occurrences": 40462,
+        "modules": 1554
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.hole",
+        "occurrences": 34178,
+        "modules": 1519
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.byTactic",
+        "occurrences": 32758,
+        "modules": 749
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.dotIdent",
+        "occurrences": 28934,
+        "modules": 1295
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letId",
+        "occurrences": 26533,
+        "modules": 1467
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchAlt",
+        "occurrences": 26187,
+        "modules": 1269
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letDecl",
+        "occurrences": 24273,
+        "modules": 1486
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letIdDecl",
+        "occurrences": 23119,
+        "modules": 1452
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstField",
+        "occurrences": 21149,
+        "modules": 1288
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstLVal",
+        "occurrences": 21142,
+        "modules": 1288
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.proj",
+        "occurrences": 20027,
+        "modules": 1353
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLetArrow",
+        "occurrences": 16876,
+        "modules": 1007
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstFieldDef",
+        "occurrences": 16862,
+        "modules": 1245
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.do",
+        "occurrences": 16391,
+        "modules": 1192
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.nestedAction",
+        "occurrences": 15874,
+        "modules": 1002
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doReturn",
+        "occurrences": 15521,
+        "modules": 1022
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.fun",
+        "occurrences": 15517,
+        "modules": 1371
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.basicFun",
+        "occurrences": 15191,
+        "modules": 1363
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIdDecl",
+        "occurrences": 14537,
+        "modules": 976
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLet",
+        "occurrences": 13408,
+        "modules": 944
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.anonymousCtor",
+        "occurrences": 12316,
+        "modules": 937
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstFields",
+        "occurrences": 12190,
+        "modules": 1325
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIf",
+        "occurrences": 10755,
+        "modules": 966
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchAlts",
+        "occurrences": 9465,
+        "modules": 1269
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIfProp",
+        "occurrences": 9396,
+        "modules": 925
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.tuple",
+        "occurrences": 8555,
+        "modules": 950
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInst",
+        "occurrences": 8435,
+        "modules": 917
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.optEllipsis",
+        "occurrences": 8435,
+        "modules": 917
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.namedArgument",
+        "occurrences": 8391,
+        "modules": 984
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchDiscr",
+        "occurrences": 6930,
+        "modules": 1095
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.typeSpec",
+        "occurrences": 6253,
+        "modules": 1046
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doubleQuotedName",
+        "occurrences": 5537,
+        "modules": 472
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.let",
+        "occurrences": 4145,
+        "modules": 598
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.cdot",
+        "occurrences": 4045,
+        "modules": 775
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.explicitBinder",
+        "occurrences": 4031,
+        "modules": 643
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doReassign",
+        "occurrences": 3135,
+        "modules": 499
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letIdDeclNoBinders",
+        "occurrences": 3099,
+        "modules": 498
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doMatch",
+        "occurrences": 3037,
+        "modules": 701
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.match",
+        "occurrences": 2936,
+        "modules": 694
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.ellipsis",
+        "occurrences": 2777,
+        "modules": 429
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doPatDecl",
+        "occurrences": 2715,
+        "modules": 579
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.pipeProj",
+        "occurrences": 2667,
+        "modules": 640
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIfLet",
+        "occurrences": 2563,
+        "modules": 568
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.quotedName",
+        "occurrences": 2509,
+        "modules": 477
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doForDecl",
+        "occurrences": 2373,
+        "modules": 540
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letRecDecl",
+        "occurrences": 2346,
+        "modules": 625
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchAltsWhereDecls",
+        "occurrences": 2258,
+        "modules": 496
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doFor",
+        "occurrences": 2168,
+        "modules": 540
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLetElse",
+        "occurrences": 2077,
+        "modules": 487
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIfLetPure",
+        "occurrences": 1717,
+        "modules": 488
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doUnless",
+        "occurrences": 1692,
+        "modules": 464
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.termReturn",
+        "occurrences": 1654,
+        "modules": 428
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchExprPat",
+        "occurrences": 1612,
+        "modules": 129
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.quot",
+        "occurrences": 1582,
+        "modules": 156
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.syntheticHole",
+        "occurrences": 1497,
+        "modules": 208
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.typeAscription",
+        "occurrences": 1404,
+        "modules": 375
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchExprAlt",
+        "occurrences": 1283,
+        "modules": 90
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.whereDecls",
+        "occurrences": 1200,
+        "modules": 550
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.explicit",
+        "occurrences": 1186,
+        "modules": 153
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.arrow",
+        "occurrences": 941,
+        "modules": 298
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.dynamicQuot",
+        "occurrences": 884,
+        "modules": 141
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letPatDecl",
+        "occurrences": 872,
+        "modules": 335
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.subst",
+        "occurrences": 846,
+        "modules": 193
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIfLetBind",
+        "occurrences": 846,
+        "modules": 276
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doTry",
+        "occurrences": 570,
+        "modules": 236
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letI",
+        "occurrences": 518,
+        "modules": 29
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.unreachable",
+        "occurrences": 476,
+        "modules": 170
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.byTactic'",
+        "occurrences": 454,
+        "modules": 78
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doCatch",
+        "occurrences": 437,
+        "modules": 198
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.implicitBinder",
+        "occurrences": 421,
+        "modules": 174
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.have",
+        "occurrences": 390,
+        "modules": 118
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.leading_parser",
+        "occurrences": 384,
+        "modules": 10
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.show",
+        "occurrences": 380,
+        "modules": 66
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letRecDecls",
+        "occurrences": 380,
+        "modules": 188
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doReassignArrow",
+        "occurrences": 374,
+        "modules": 155
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.inferInstanceAs",
+        "occurrences": 352,
+        "modules": 105
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.forall",
+        "occurrences": 329,
+        "modules": 109
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doNested",
+        "occurrences": 324,
+        "modules": 169
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letEqnsDecl",
+        "occurrences": 312,
+        "modules": 153
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.panic",
+        "occurrences": 287,
+        "modules": 105
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.namedPattern",
+        "occurrences": 275,
+        "modules": 96
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doContinue",
+        "occurrences": 271,
+        "modules": 119
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchExprAlts",
+        "occurrences": 268,
+        "modules": 90
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchExprElseAlt",
+        "occurrences": 268,
+        "modules": 90
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLetExpr",
+        "occurrences": 247,
+        "modules": 65
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doAssert",
+        "occurrences": 241,
+        "modules": 88
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.attrKind",
+        "occurrences": 234,
+        "modules": 105
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.sufficesDecl",
+        "occurrences": 217,
+        "modules": 65
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.stateRefT",
+        "occurrences": 217,
+        "modules": 142
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.attributes",
+        "occurrences": 215,
+        "modules": 88
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.attrInstance",
+        "occurrences": 210,
+        "modules": 91
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLetRec",
+        "occurrences": 184,
+        "modules": 111
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letrec",
+        "occurrences": 179,
+        "modules": 86
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doMatchExpr",
+        "occurrences": 160,
+        "modules": 69
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstFieldEqns",
+        "occurrences": 143,
+        "modules": 77
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.fromTerm",
+        "occurrences": 140,
+        "modules": 60
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.precheckedQuot",
+        "occurrences": 124,
+        "modules": 18
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doBreak",
+        "occurrences": 123,
+        "modules": 74
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doFinally",
+        "occurrences": 119,
+        "modules": 71
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchExpr",
+        "occurrences": 111,
+        "modules": 38
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doWhile",
+        "occurrences": 104,
+        "modules": 73
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.unsafe",
+        "occurrences": 101,
+        "modules": 46
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.hole.antiquot",
+        "occurrences": 98,
+        "modules": 28
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.depArrow",
+        "occurrences": 97,
+        "modules": 44
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLetMetaExpr",
+        "occurrences": 79,
+        "modules": 24
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doSeq.pseudo.antiquot",
+        "occurrences": 78,
+        "modules": 14
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doCatchMatch",
+        "occurrences": 72,
+        "modules": 25
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doHave",
+        "occurrences": 64,
+        "modules": 36
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.prop",
+        "occurrences": 60,
+        "modules": 18
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.funBinder.pseudo.antiquot",
+        "occurrences": 55,
+        "modules": 18
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.instBinder",
+        "occurrences": 51,
+        "modules": 25
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.nofun",
+        "occurrences": 50,
+        "modules": 20
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.explicitUniv",
+        "occurrences": 47,
+        "modules": 12
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.bracketedBinder.pseudo.antiquot",
+        "occurrences": 47,
+        "modules": 19
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doRepeat",
+        "occurrences": 47,
+        "modules": 30
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.attrInstance.antiquot",
+        "occurrences": 42,
+        "modules": 12
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.termTry",
+        "occurrences": 40,
+        "modules": 30
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.nomatch",
+        "occurrences": 39,
+        "modules": 18
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.attrKind.antiquot",
+        "occurrences": 38,
+        "modules": 12
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchAlt.antiquot",
+        "occurrences": 38,
+        "modules": 15
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doSeqIndent.antiquot",
+        "occurrences": 35,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.binderDefault",
+        "occurrences": 33,
+        "modules": 22
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.assert",
+        "occurrences": 26,
+        "modules": 18
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.haveI",
+        "occurrences": 24,
+        "modules": 10
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchDiscr.antiquot",
+        "occurrences": 23,
+        "modules": 12
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.termUnless",
+        "occurrences": 22,
+        "modules": 20
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.type",
+        "occurrences": 21,
+        "modules": 12
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.falseVal",
+        "occurrences": 21,
+        "modules": 5
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.attributes.antiquot",
+        "occurrences": 21,
+        "modules": 5
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.whereFinally",
+        "occurrences": 20,
+        "modules": 9
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.strictImplicitBinder",
+        "occurrences": 19,
+        "modules": 12
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.open",
+        "occurrences": 17,
+        "modules": 14
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.whereDecls.antiquot",
+        "occurrences": 17,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.withAnonymousAntiquot",
+        "occurrences": 17,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.declName",
+        "occurrences": 16,
+        "modules": 8
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letExpr",
+        "occurrences": 16,
+        "modules": 12
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.throwNamedErrorMacro",
+        "occurrences": 15,
+        "modules": 6
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchExprPat.antiquot",
+        "occurrences": 15,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.privateDecl",
+        "occurrences": 13,
+        "modules": 6
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.noErrorIfUnused",
+        "occurrences": 13,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.suffices",
+        "occurrences": 12,
+        "modules": 6
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.motive.antiquot",
+        "occurrences": 12,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.trailing_parser",
+        "occurrences": 12,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstField.antiquot",
+        "occurrences": 12,
+        "modules": 8
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.generalizingParam",
+        "occurrences": 11,
+        "modules": 5
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letDecl.antiquot",
+        "occurrences": 11,
+        "modules": 7
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.binderTactic",
+        "occurrences": 10,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchAlts.antiquot",
+        "occurrences": 10,
+        "modules": 5
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstLVal.antiquot",
+        "occurrences": 9,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.termFor",
+        "occurrences": 9,
+        "modules": 6
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letConfig.antiquot",
+        "occurrences": 9,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.trueVal.antiquot",
+        "occurrences": 9,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.falseVal.antiquot",
+        "occurrences": 9,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.generalizingParam.antiquot",
+        "occurrences": 7,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIfCond.pseudo.antiquot",
+        "occurrences": 7,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.local",
+        "occurrences": 7,
+        "modules": 6
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.sorry",
+        "occurrences": 6,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.throwNamedErrorAtMacro",
+        "occurrences": 6,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLoopInvariant.antiquot",
+        "occurrences": 6,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLoopDecreasing.antiquot",
+        "occurrences": 6,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIfProp.antiquot",
+        "occurrences": 6,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.dbgTrace",
+        "occurrences": 6,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.inaccessible",
+        "occurrences": 6,
+        "modules": 5
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.implicitBinder.antiquot",
+        "occurrences": 6,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.basicFun.antiquot",
+        "occurrences": 6,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.binderTactic.antiquot",
+        "occurrences": 5,
+        "modules": 5
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.binderDefault.antiquot",
+        "occurrences": 5,
+        "modules": 5
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letMVar",
+        "occurrences": 5,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doDbgTrace",
+        "occurrences": 5,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.let_delayed",
+        "occurrences": 5,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.borrowed",
+        "occurrences": 4,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.typeSpec.antiquot",
+        "occurrences": 4,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.macroDollarArg",
+        "occurrences": 4,
+        "modules": 4
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letRecDecl.antiquot",
+        "occurrences": 4,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.motive",
+        "occurrences": 4,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letPatDecl.antiquot",
+        "occurrences": 4,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.ensureExpectedType",
+        "occurrences": 4,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.sort",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstArrayRef",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letIdDecl.antiquot",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.waitIfTypeMVar",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doErased",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIdDecl.antiquot",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doPatDecl.antiquot",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.dependentParam",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.trueVal",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.matchExprAlts.antiquot",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doCatch.antiquot",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.byTactic'.antiquot",
+        "occurrences": 3,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.byTactic.antiquot",
+        "occurrences": 3,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.binop",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.binop_lazy",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.leftact",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.rightact",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.unop",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doAssertion",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.typeOf",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.forInMacro'",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.forInMacro",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.logNamedErrorMacro",
+        "occurrences": 3,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.scoped",
+        "occurrences": 3,
+        "modules": 3
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.omission",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.whereFinally.antiquot",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letPosOpt",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letOpts.antiquot",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letOptEq",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.dependentParam.antiquot",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.clear",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.instBinder.antiquot",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doForDecl.antiquot",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doSeqItem.antiquot",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLoopInvariant",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doLoopDecreasing",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.InternalSyntax.doSkip",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letEqnsDecl.antiquot",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letRecDecls.antiquot",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doCatchMatch.antiquot",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.debugAssert",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.binrel",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.binrel_no_prop",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.defaultOrOfNonempty",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letIdDeclNoBinders.antiquot",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.ensureTypeOf",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.logNamedErrorAtMacro",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.logNamedWarningMacro",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.logNamedWarningAtMacro",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.noImplicitLambda",
+        "occurrences": 2,
+        "modules": 2
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.completion",
+        "occurrences": 2,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letNegOpt",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letOpts",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letOptZeta",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doErasedArrow",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.waitIfTypeContainsMVar",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.waitIfContainsMVar",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.waitForExpectedType",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.withDeclName",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doExpr.antiquot",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstDefault",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doDebugAssert",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.idbg",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doIdbg",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.nofun.antiquot",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doRepeatUntil",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.letIdBinder.pseudo.antiquot",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.structInstFieldBinder.pseudo.antiquot",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.showTermElabImpl",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.doForward",
+        "occurrences": 1,
+        "modules": 1
+      },
+      {
+        "roleKind": "value:Lean.Parser.Term.mdataDiagnostic",
+        "occurrences": 1,
+        "modules": 1
+      }
+    ],
+    "scope": "all captured native declaration signature/value syntax, including native patterns and DSL ancestors; inventory is not proof of PS role ownership or conformance",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "ordinaryHostRoleContinuation": {
+    "status": "PENDING_BROADER",
+    "finiteEvidenceKey": "ordinaryHostRoleQualification",
+    "compilerRegressionKey": "ordinaryHostRoleCompilerRegression",
+    "remainingRoles": [
+      "do-match",
+      "do-for",
+      "do-have",
+      "proof-bound pure if",
+      "type ascription",
+      "native tactic sequences",
+      "try/catch",
+      "other native ordinary expression roles"
     ],
     "grammarMigrationComplete": false,
     "verified_execution": false

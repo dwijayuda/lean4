@@ -28,8 +28,23 @@ cases = [
      'function bad(n: Nat): IslandCell := { value := pairSum (n, 1) }'),
     ('do-if', 'def bad (n : Nat) : Id Nat := do\n  if n == 0 then return pairSum (n, 1)\n  return n',
      'function bad(n: Nat): Id(Nat) := do\n  if n == 0 then return pairSum (n, 1)\n  return n'),
+    ('do-match', 'def bad (n : Nat) : Id Nat := do\n  match n with\n  | 0 => return pairSum (n, 1)\n  | k => return k',
+     'function bad(n: Nat): Id(Nat) := do\n  match n with\n  | 0 => return pairSum (n, 1)\n  | k => return k'),
+    ('do-for', 'def bad (n : Nat) : Id Nat := do\n  let mut result := n\n  for k in [0:1] do\n    result := pairSum (k, 1)\n  return result',
+     'function bad(n: Nat): Id(Nat) := do\n  let mut result := n\n  for k in [0:1] do\n    result := pairSum (k, 1)\n  return result'),
+    ('do-have', 'def bad (n : Nat) : Id Nat := do\n  have k : Nat := pairSum (n, 1)\n  return k',
+     'function bad(n: Nat): Id(Nat) := do\n  have k : Nat := pairSum (n, 1)\n  return k'),
+    ('proof-if', 'def bad (n : Nat) : Nat := if h : n = 0 then pairSum (n, 1) else n',
+     'function bad(n: Nat): Nat := if h : n = 0 then pairSum (n, 1) else n'),
+    ('typed-term', 'def bad (n : Nat) : Nat := (pairSum (n, 1) : Nat)',
+     'function bad(n: Nat): Nat := (pairSum (n, 1) : Nat)'),
+    ('tactic-body', 'def bad (n : Nat) : Nat := by exact pairSum (n, 1)',
+     'function bad(n: Nat): Nat := by exact pairSum (n, 1)'),
+    ('do-try', 'def bad (n : Nat) : IO Nat := do\n  try return pairSum (n, 1)\n  catch _ => return n',
+     'function bad(n: Nat): IO(Nat) := do\n  try return pairSum (n, 1)\n  catch _ => return n'),
 ]
 observations = []
+assert selected and selected <= {name for name, _, _ in cases}, selected
 for name, native, ps in cases:
     if name not in selected:
         continue
@@ -59,7 +74,7 @@ for name, native, ps in cases:
                              invalid_host_gap_rejected=result.returncode != 0 and 'PS0V1-CALL-GAP' in diagnostic))
     print('PS0_HOST_ISLAND_OBSERVATION:' + json.dumps(observations[-1], sort_keys=True), flush=True)
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    observations=observations, scope='ordinary match, pattern lambda, record value and do-if host operands; native baselines typecheck',
+    observations=observations, scope='selected ordinary host operands beneath native syntax; native baselines typecheck',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
 assert all(row['invalid_host_gap_rejected'] for row in observations), 'ordinary host bodies must not silently accept native-only parenthesized application'
 print('PS0_HOST_ISLAND_GAPS: PASS', flush=True)
