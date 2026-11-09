@@ -58,7 +58,7 @@ macro "recordPunOrigin " e:psTerm : term => do
   unless e.raw.isOfKind ``ps0HostBraces && lowered.isOfKind ``Lean.Parser.Term.structInst &&
       lowered.getArgs.size == 6 && lowered[0].eqWithInfo e.raw[0] &&
       lowered[5].eqWithInfo e.raw[2] && lowered.getRange? == e.raw.getRange? do
-    Lean.Macro.throwError "PS0_RECORD_PUN_ORIGIN"
+    Lean.Macro.throwError s!"PS0_RECORD_PUN_ORIGIN: source={e.raw.getKind}; native={lowered.getKind}/{lowered.getArgs.size}; sourceRange={repr e.raw.getRange?}; nativeRange={repr lowered.getRange?}"
   `(True)
 example : recordPunOrigin { /- original pun -/ root } := by trivial
 

@@ -235,7 +235,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
         if let some identifier := punningIdentifier? body.raw then
           let field : TSyntax `ident := ⟨identifier⟩
           let record ← `({ $field:ident })
-          return (record.raw.setArg 0 source[0]).setArg 5 source[2]
+          let native := (record.raw.setArg 0 source[0]).setArg 5 source[2]
+          return .node (loweringInfo source) native.getKind native.getArgs
         let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
         return (← `(($body))).raw
     | `(psTerm| if $cond:psTerm then $yes:psTerm else $no:psTerm) => do
