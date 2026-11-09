@@ -147,6 +147,23 @@ def single_type_call(operand, role='owned binder type'):
         for index in [1, 3, 5]:
             single_type_call(parts[index], role + ' conditional operand')
         return
+    if operand['kind'] == 'termDepIfThenElse':
+        parts = operand['args']
+        assert len(parts) == 8
+        for index in [3, 5, 7]:
+            single_type_call(parts[index], role + ' proof-bound conditional operand')
+        return
+    if operand['kind'] == 'Lean.Parser.Term.typeAscription':
+        parts = operand['args']
+        assert len(parts) == 5 and len(parts[3]['args']) <= 1
+        single_type_call(parts[1], role + ' ascribed value')
+        if parts[3]['args']:
+            single_type_call(parts[3]['args'][0], role + ' ascribed type')
+        return
+    if operand['kind'] == 'Lean.Parser.Term.byTactic':
+        assert len(operand['args']) == 2
+        where_tactics(operand['args'][1])
+        return
     if operand['kind'] == 'Lean.Parser.Term.match':
         parts = operand['args']
         assert len(parts) == 6 and len(parts[2]['args']) <= 1

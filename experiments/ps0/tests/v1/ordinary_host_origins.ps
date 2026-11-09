@@ -12,7 +12,8 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
     ``Lean.Parser.Term.doIf, ``Lean.Parser.Term.doIfLet, ``Lean.Parser.Term.doIfProp,
     ``Lean.Parser.Term.doMatch, ``Lean.Parser.Term.doHave,
     ``Lean.Parser.Term.doFor, ``Lean.Parser.Term.doForDecl, ``Lean.Parser.Term.doTry,
-    ``Lean.Parser.Term.doCatch, ``Lean.Parser.Term.doCatchMatch, ``Lean.Parser.Term.doFinally]
+    ``Lean.Parser.Term.doCatch, ``Lean.Parser.Term.doCatchMatch, ``Lean.Parser.Term.doFinally,
+    `termDepIfThenElse, ``Lean.Parser.Term.typeAscription, ``Lean.Parser.Term.byTactic]
   let mut count := 0
   if selected.contains kind then
     let some lowered := sameHostNode? after before
@@ -31,6 +32,9 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
       else if kind == ``Lean.Parser.Term.doTry then #[0]
       else if kind == ``Lean.Parser.Term.doCatch then #[0, 1, 3]
       else if kind == ``Lean.Parser.Term.doCatchMatch || kind == ``Lean.Parser.Term.doFinally then #[0]
+      else if kind == `termDepIfThenElse then #[0, 1, 2, 4, 6]
+      else if kind == ``Lean.Parser.Term.typeAscription then #[0, 2, 4]
+      else if kind == ``Lean.Parser.Term.byTactic then #[0]
       else #[0, 2]
     for index in unchanged do
       unless before[index].eqWithInfo lowered[index] do
@@ -72,6 +76,9 @@ example : hostOrigin do
 example : hostOrigin do { try { return add(n, 1) }
   catch e : IO.Error => { return add(n, 2) }
   finally { pure(()) } } := by trivial
+example : hostOrigin if h : n = 0 then add(n, 1) else add(n, 2) := by trivial
+example : hostOrigin (add(n, 1) : Id(Nat)) := by trivial
+example : hostOrigin by { exact add(n, 1) } := by trivial
 
 macro "nativeMatchBody " e:term : term => pure e
 function pairSum(p: Nat × Nat): Nat := p.1 + p.2

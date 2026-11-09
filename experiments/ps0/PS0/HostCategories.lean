@@ -60,6 +60,18 @@ private def letPrefix : Parser :=
 @[run_parser_attribute_hooks] def argumentValue : Parser :=
   withoutPosition (categoryParser `psTerm 0)
 
+@[run_parser_attribute_hooks] def ascriptionTerm : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.typeAscription
+
+@[run_parser_attribute_hooks] def byTerm : Parser :=
+  operands #[(`tactic, `psTactic)] Lean.Parser.Term.byTactic
+
+@[run_parser_attribute_hooks] def dependentIfTerm : Parser :=
+  leadingNode `termDepIfThenElse leadPrec <|
+    ppRealGroup (ppRealFill (ppIndent ("if " >> Lean.Parser.Term.binderIdent >> " : " >>
+      categoryParser `psTerm 0 >> " then") >> ppSpace >> categoryParser `psTerm 0) >>
+      ppDedent ppSpace >> ppRealFill ("else " >> categoryParser `psTerm 0))
+
 @[run_parser_attribute_hooks] def matchTerm : Parser :=
   leadingNode ``Lean.Parser.Term.«match» leadPrec <|
     "match " >> optional Lean.Parser.Term.generalizingParam >>
@@ -275,6 +287,12 @@ def ps0NativeTermUnless : Lean.Parser.Parser := PS0.DoLayout.unlessTerm
 @[psTerm_parser 20000]
 def ps0NativeTermMatch : Lean.Parser.Parser := PS0.DoLayout.matchTerm
 @[psTerm_parser 20000]
+def ps0NativeTypeAscription : Lean.Parser.Parser := PS0.DoLayout.ascriptionTerm
+@[psTerm_parser 20000]
+def ps0NativeBy : Lean.Parser.Parser := PS0.DoLayout.byTerm
+@[psTerm_parser 20000]
+def ps0NativeDependentIf : Lean.Parser.Parser := PS0.DoLayout.dependentIfTerm
+@[psTerm_parser 20000]
 def ps0NativePatternLambda : Lean.Parser.Parser := PS0.DoLayout.patternLambda
 @[psTerm_parser 20000]
 def ps0NativeRecord : Lean.Parser.Parser := PS0.DoLayout.recordTerm
@@ -393,6 +411,20 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind `termDepIfThenElse then
+      unless source.getArgs.size == 8 do Macro.throwError "PS0V1-DEPENDENT-IF: unexpected native condition"
+      let source := source.setArg 3 (← lower `psTerm source[3])
+      let source := source.setArg 5 (← lower `psTerm source[5])
+      return source.setArg 7 (← lower `psTerm source[7])
+    if source.isOfKind ``Lean.Parser.Term.typeAscription then
+      unless source.getArgs.size == 5 && source[3].getArgs.size <= 1 do
+        Macro.throwError "PS0V1-ASCRIPTION: unexpected native value/type roles"
+      let source := source.setArg 1 (← lower `psTerm source[1])
+      if source[3].getArgs.isEmpty then return source
+      return source.setArg 3 (source[3].setArg 0 (← lower `psTerm source[3][0]))
+    if source.isOfKind ``Lean.Parser.Term.byTactic then
+      unless source.getArgs.size == 2 do Macro.throwError "PS0V1-BY: unexpected native tactic term"
+      return source.setArg 1 (← lowerNativeTacticSequence source[1])
     if source.isOfKind ``Lean.Parser.Term.structInst then
       return ← lowerNativeRecord source
     if source.isOfKind ``Lean.Parser.Term.«match» then
@@ -747,6 +779,20 @@ partial def lowerNativeDoSequence (native : Lean.Syntax) : MacroM Lean.Syntax :=
       Macro.throwError "PS0V1-DO-LAYOUT: unexpected native sequence item"
     return item.setArg 0 (← lowerDoElem item[0])
   return native.setArg index (native[index].setArgs items)
+
+partial def lowerNativeTacticSequence (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.isOfKind ``Lean.Parser.Tactic.tacticSeq && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-TACTIC-SEQUENCE: unexpected native sequence"
+  let inner := source[0]
+  let index ← if inner.isOfKind ``Lean.Parser.Tactic.tacticSeqBracketed && inner.getArgs.size == 3 then
+      pure 1
+    else if inner.isOfKind ``Lean.Parser.Tactic.tacticSeq1Indented && inner.getArgs.size == 1 then
+      pure 0
+    else Macro.throwError "PS0V1-TACTIC-LAYOUT: unexpected native tactic layout"
+  let items ← inner[index].getArgs.mapM fun item => do
+    if item.isAtom || item.isMissing || item.isOfKind nullKind then return item
+    lower `psTactic item
+  return source.setArg 0 (inner.setArg index (inner[index].setArgs items))
 
 partial def lowerNativePatternBind (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   unless source.getArgs.size == 5 do

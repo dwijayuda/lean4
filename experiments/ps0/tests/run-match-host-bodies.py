@@ -201,6 +201,35 @@ function catchMatchValue(n: Nat): IO(Nat) := do
 '''
 guards += '''private theorem forPairsResult : forPairs 3 = 13 := rfl
 '''
+native += '''def proofIf (n : Nat) : Nat := if h : n = 0 then add n 3 else add n 1
+def typedValue (n : Nat) : Nat := (add n 1 : Nat)
+def inferredAscription (n : Nat) : Nat := (add n 1 :)
+def typedId (n : Nat) : Id Nat := (add n 1 : Id Nat)
+def tacticValue (n : Nat) : Nat := by
+  exact add n 1
+def tacticBraced (n : Nat) : Nat := by { exact add n 1 }
+def tacticApply (n : Nat) : Nat := by apply add n 1
+def tacticRefine (n : Nat) : Nat := by refine add n 1
+'''
+ps += '''function proofIf(n: Nat): Nat := if h : n = 0 then add(n, 3) else add(n, 1)
+function typedValue(n: Nat): Nat := (add(n, 1) : Nat)
+function inferredAscription(n: Nat): Nat := (add(n, 1) :)
+function typedId(n: Nat): Id(Nat) := (add(n, 1) : Id(Nat))
+function tacticValue(n: Nat): Nat := by
+  exact add(n, 1)
+function tacticBraced(n: Nat): Nat := by { exact add(n, 1) }
+function tacticApply(n: Nat): Nat := by apply add(n, 1)
+function tacticRefine(n: Nat): Nat := by refine add(n, 1)
+'''
+guards += '''private theorem proofIfResult : proofIf 0 = 3 := rfl
+private theorem typedValueResult : typedValue 3 = 4 := rfl
+private theorem inferredAscriptionResult : inferredAscription 3 = 4 := rfl
+private theorem typedIdResult : typedId 3 = 4 := rfl
+private theorem tacticValueResult : tacticValue 3 = 4 := rfl
+private theorem tacticBracedResult : tacticBraced 3 = 4 := rfl
+private theorem tacticApplyResult : tacticApply 3 = 4 := rfl
+private theorem tacticRefineResult : tacticRefine 3 = 4 := rfl
+'''
 
 
 def run(args, label):
@@ -244,7 +273,7 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
         observed = json.loads(census.read_text())
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
-        assert len(rows) == 47 and all(d['mode'] == 'mapped-ps' for d in rows)
+        assert len(rows) == 63 and all(d['mode'] == 'mapped-ps' for d in rows)
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
@@ -259,10 +288,10 @@ runtime = run([executable], 'runtime-origins')
 assert runtime.strip() == 'PS0_HOST_ORIGINS: PASS'
 shutil.copy2(executable, work / 'OrdinaryHostOrigins')
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    comparisons=comparisons, mapped_definitions=25, mapped_theorems=22, logical_imports=['Init'],
+    comparisons=comparisons, mapped_definitions=33, mapped_theorems=30, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
     source_origin_fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    source_origin_cases=8, independently_owned_native_dsl=True, native_quotation=True,
+    source_origin_cases=11, independently_owned_native_dsl=True, native_quotation=True,
     native_executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
     runtime_oracle='PS0_HOST_ORIGINS: PASS',
     scope='finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders',
