@@ -18,6 +18,7 @@ declare_syntax_cat psFunBinder
 declare_syntax_cat psDoElem
 declare_syntax_cat psDoItem
 declare_syntax_cat psLocalBinder
+declare_syntax_cat psStructInstFieldDecl
 
 namespace PS0.DoLayout
 open Lean.Parser
@@ -70,6 +71,34 @@ private def letPrefix : Parser :=
   leadingNode ``Lean.Parser.Term.«fun» maxPrec <|
     ppAllowUngrouped >> unicodeSymbol "λ" "fun" (preserveForPP := true) >>
       Lean.Parser.Term.matchAlts (categoryParser `psTerm 0)
+
+@[run_parser_attribute_hooks] def recordTerm : Parser :=
+  operands #[(`term, `psTerm), (`structInstFieldDecl, `psStructInstFieldDecl)]
+    Lean.Parser.Term.structInst
+
+@[run_parser_attribute_hooks] def fieldDefinition : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.structInstFieldDef
+
+@[run_parser_attribute_hooks] def fieldEquations : Parser :=
+  node ``Lean.Parser.Term.structInstFieldEqns <|
+    optional "private" >> Lean.Parser.Term.matchAlts (categoryParser `psTerm 0)
+
+private def ifCondition : Parser :=
+  node ``Lean.Parser.Term.doIfLet
+      ("let " >> termParser >>
+        (operands #[(`term, `psTerm)] Lean.Parser.Term.doIfLetPure <|>
+         operands #[(`term, `psTerm)] Lean.Parser.Term.doIfLetBind)) <|>
+    operands #[(`term, `psTerm)] Lean.Parser.Term.doIfProp
+
+@[run_parser_attribute_hooks] def ifElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doIf maxPrec <| withResetCache <|
+    withPositionAfterLinebreak <| ppRealGroup <|
+      ppRealFill (ppIndent ("if " >> ifCondition >> " then") >> ppSpace >> sequence) >>
+      many (checkColGe "'else if' in 'do' must be indented" >>
+        group (ppDedent ppSpace >> ppRealFill
+          (Lean.Parser.Term.elseIf >> ifCondition >> " then " >> sequence))) >>
+      optional (checkColGe "'else' in 'do' must be indented" >>
+        ppDedent ppSpace >> ppRealFill ("else " >> sequence))
 
 def namedDeclaration : Parser :=
   node ``Lean.Parser.Term.letDecl <|
@@ -201,6 +230,14 @@ def ps0NativeTermUnless : Lean.Parser.Parser := PS0.DoLayout.unlessTerm
 def ps0NativeTermMatch : Lean.Parser.Parser := PS0.DoLayout.matchTerm
 @[psTerm_parser 20000]
 def ps0NativePatternLambda : Lean.Parser.Parser := PS0.DoLayout.patternLambda
+@[psTerm_parser 20000]
+def ps0NativeRecord : Lean.Parser.Parser := PS0.DoLayout.recordTerm
+@[psStructInstFieldDecl_parser]
+def ps0NativeFieldDefinition : Lean.Parser.Parser := PS0.DoLayout.fieldDefinition
+@[psStructInstFieldDecl_parser]
+def ps0NativeFieldEquations : Lean.Parser.Parser := PS0.DoLayout.fieldEquations
+@[psDoElem_parser 20000]
+def ps0NativeDoIf : Lean.Parser.Parser := PS0.DoLayout.ifElem
 @[psTerm_parser 30000]
 def ps0NativePunningBraces : Lean.Parser.Parser := PS0.DoLayout.punningBraces
 syntax (name := ps0PositionalArg) PS0.DoLayout.argumentValue : psCallArg
@@ -309,6 +346,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind ``Lean.Parser.Term.structInst then
+      return ← lowerNativeRecord source
     if source.isOfKind ``Lean.Parser.Term.«match» then
       return ← lowerNativeMatch source
     if source.isOfKind ``Lean.Parser.Term.«fun» && source.getArgs.size == 2 &&
@@ -446,6 +485,10 @@ partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRe
   lower `psTerm source
 
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.doIf then
+    unless source.getArgs.size == 6 do
+      Macro.throwError "PS0V1-DO-IF: unexpected native branch shape"
+    return source.setArgs (← source.getArgs.mapM lowerNativeIfRole)
   if source.isOfKind ``Lean.Parser.Term.doLetElse then
     unless source.getArgs.size == 9 && source[8].getArgs.size <= 1 do
       Macro.throwError "PS0V1-DO-PATTERN-LET: unexpected native fallback/continuation"
@@ -522,6 +565,70 @@ partial def lowerNativeMatchAlternatives (source : Lean.Syntax) : MacroM Lean.Sy
       Macro.throwError "PS0V1-MATCH-ALTERNATIVE: unexpected native pattern/body roles"
     return alternative.setArg 3 (← lower `psTerm alternative[3])
   return source.setArg 0 (source[0].setArgs alternatives)
+
+partial def lowerNativeIfRole (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.doIfProp && source.getArgs.size == 2 then
+    return source.setArg 1 (← lower `psTerm source[1])
+  if source.isOfKind ``Lean.Parser.Term.doIfLet && source.getArgs.size == 3 then
+    let value := source[2]
+    unless (value.isOfKind ``Lean.Parser.Term.doIfLetPure ||
+        value.isOfKind ``Lean.Parser.Term.doIfLetBind) && value.getArgs.size == 2 do
+      Macro.throwError "PS0V1-DO-IF-LET: unexpected native value role"
+    return source.setArg 2 (value.setArg 1 (← lower `psTerm value[1]))
+  if source.isOfKind ``Lean.Parser.Term.doSeqIndent ||
+      source.isOfKind ``Lean.Parser.Term.doSeqBracketed then
+    return ← lowerNativeDoSequence source
+  if source.isOfKind nullKind then
+    return source.setArgs (← source.getArgs.mapM lowerNativeIfRole)
+  if source.isAtom || source.isOfKind ``Lean.Parser.Term.elseIf then return source
+  Macro.throwError s!"PS0V1-DO-IF-ROLE: unexpected native condition/sequence role {source.getKind}"
+
+partial def lowerNativeRecordField (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.isOfKind ``Lean.Parser.Term.structInstField && source.getArgs.size == 2 do
+    Macro.throwError "PS0V1-RECORD-FIELD: unexpected native field"
+  let lvalue := source[0]
+  let components ← lvalue.getArgs.mapM fun part => do
+    if part.isOfKind ``Lean.Parser.Term.structInstArrayRef then
+      return part.setArg 1 (← lower `psTerm part[1])
+    if part.isOfKind nullKind then
+      return part.setArgs (← part.getArgs.mapM fun child => do
+        if child.isOfKind ``Lean.Parser.Term.structInstArrayRef then
+          return child.setArg 1 (← lower `psTerm child[1])
+        return child)
+    return part
+  let source := source.setArg 0 (lvalue.setArgs components)
+  if source[1].getArgs.isEmpty then return source
+  unless source[1].getArgs.size == 3 do
+    Macro.throwError "PS0V1-RECORD-FIELD: unexpected native binder/type/value roles"
+  let body := source[1]
+  let binders ← body[0].getArgs.mapM lowerNativeLocalBinder
+  let body := body.setArg 0 (body[0].setArgs binders)
+  let body := body.setArg 1 (← lowerNativeOptionalType body[1])
+  let rhs := body[2]
+  let rhs ← if rhs.isOfKind ``Lean.Parser.Term.structInstFieldDef && rhs.getArgs.size == 3 then
+      pure <| rhs.setArg 2 (← lower `psTerm rhs[2])
+    else if rhs.isOfKind ``Lean.Parser.Term.structInstFieldEqns && rhs.getArgs.size == 2 then
+      pure <| rhs.setArg 1 (← lowerNativeMatchAlternatives rhs[1])
+    else Macro.throwError "PS0V1-RECORD-FIELD: unexpected native field declaration"
+  return source.setArg 1 (body.setArg 2 rhs)
+
+partial def lowerNativeRecord (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.getArgs.size == 6 && source[2].isOfKind ``Lean.Parser.Term.structInstFields do
+    Macro.throwError "PS0V1-RECORD: unexpected native structure instance"
+  let update := source[1]
+  let source ← if update.getArgs.isEmpty then pure source else do
+    unless update.getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native update sources"
+    let values ← update[0].getArgs.mapM fun value => do
+      if value.isAtom then return value
+      lower `psTerm value
+    pure <| source.setArg 1 (update.setArg 0 (update[0].setArgs values))
+  let fields ← source[2][0].getArgs.mapM fun field => do
+    if field.isAtom || field.isOfKind nullKind then return field
+    lowerNativeRecordField field
+  let source := source.setArg 2 (source[2].setArg 0 (source[2][0].setArgs fields))
+  if source[4].getArgs.isEmpty then return source
+  unless source[4].getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native result type"
+  return source.setArg 4 (source[4].setArg 1 (← lower `psTerm source[4][1]))
 
 partial def lowerNativeMatch (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   unless source.getArgs.size == 6 && source[2].getArgs.size <= 1 do

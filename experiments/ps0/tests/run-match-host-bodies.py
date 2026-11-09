@@ -23,7 +23,7 @@ def multi (n m : Nat) : Nat := match n, m with
 def named (n : Nat) : Nat := match h : n with
   | 0 => add 1 2
   | Nat.succ k => add k 1
-def withMotive (n : Nat) : Nat := match (motive := Nat) n with
+def withMotive (n : Nat) : Nat := match (motive := Nat → Nat) n with
   | 0 => add 1 2
   | Nat.succ k => add k 1
 def options (n : Nat) : Nat := match some n with
@@ -46,7 +46,7 @@ function multi(n: Nat, m: Nat): Nat := match n, m with
 function named(n: Nat): Nat := match h : n with
   | 0 => add(1, 2)
   | Nat.succ k => add(k, 1)
-function withMotive(n: Nat): Nat := match (motive := Nat) n with
+function withMotive(n: Nat): Nat := match (motive := Nat → Nat) n with
   | 0 => add(1, 2)
   | Nat.succ k => add(k, 1)
 function options(n: Nat): Nat := match some n with
@@ -67,6 +67,62 @@ private theorem motiveValue : withMotive 0 = 3 := rfl
 private theorem optionValue : options 3 = 3 := rfl
 private theorem alternativeValue : alternatives 1 = 3 := rfl
 private theorem patternValue : pattern 3 = 3 := rfl
+'''
+
+# Deliberately retain native pattern application and field binders. Only the
+# ordinary value roles change grammar, with original UTF-8 bytes retained.
+native += '''-- Source fidelity: π / 😀; native patterns stay native.
+structure AdapterCell where
+  value : Nat
+  step : Nat → Nat
+def record (n : Nat) : AdapterCell := { value := add n 1, step x := add x n }
+def typedRecord (n : Nat) : AdapterCell := { value := add n 1, step := fun x => add x n : AdapterCell }
+def updated (n : Nat) : AdapterCell := { record n with value := add n 2 }
+def fieldEqns (n : Nat) : AdapterCell := { value := n, step | 0 => add n 1 | Nat.succ k => add k n }
+def branch (n : Nat) : Id Nat := do
+  if n == 0 then return add 1 2
+  else if n == 1 then return add 2 2
+  else return add n 0
+def proofBranch (n : Nat) : Id Nat := do
+  if h : n = 0 then return add n 3
+  return add n 1
+def patternBranch (n : Nat) : Id Nat := do
+  if let some (Nat.succ k) := some n then return add k 1
+  return 0
+def boundBranch (n : Nat) : Id Nat := do
+  if let some (Nat.succ k) ← pure (some n) then return add k 1
+  return 0
+'''
+ps += '''-- Source fidelity: π / 😀; native patterns stay native.
+structure AdapterCell where
+  value : Nat
+  step : Nat → Nat
+function record(n: Nat): AdapterCell := { value := add(n, 1), step x := add(x, n) }
+function typedRecord(n: Nat): AdapterCell := { value := add(n, 1), step := fun x => add(x, n) : AdapterCell }
+function updated(n: Nat): AdapterCell := { record(n) with value := add(n, 2) }
+function fieldEqns(n: Nat): AdapterCell := { value := n, step | 0 => add(n, 1) | Nat.succ k => add(k, n) }
+function branch(n: Nat): Id(Nat) := do
+  if n == 0 then return add(1, 2)
+  else if n == 1 then return add(2, 2)
+  else return add(n, 0)
+function proofBranch(n: Nat): Id(Nat) := do
+  if h : n = 0 then return add(n, 3)
+  return add(n, 1)
+function patternBranch(n: Nat): Id(Nat) := do
+  if let some (Nat.succ k) := some n then return add(k, 1)
+  return 0
+function boundBranch(n: Nat): Id(Nat) := do
+  if let some (Nat.succ k) ← pure(some n) then return add(k, 1)
+  return 0
+'''
+guards += '''private theorem recordValue : (record 3).value = 4 := rfl
+private theorem typedRecordValue : (typedRecord 3).step 2 = 5 := rfl
+private theorem updatedValue : (updated 3).value = 5 := rfl
+private theorem fieldEquationValue : (fieldEqns 3).step 0 = 4 := rfl
+private theorem branchValue : branch 1 = 4 := rfl
+private theorem proofBranchValue : proofBranch 0 = 3 := rfl
+private theorem patternBranchValue : patternBranch 3 = 3 := rfl
+private theorem boundBranchValue : boundBranch 3 = 3 := rfl
 '''
 
 
@@ -102,7 +158,7 @@ for label, body in [('baseline', native), ('migrated', ps)]:
         observed = json.loads(census.read_text())
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
-        assert len(rows) == 18 and all(d['mode'] == 'mapped-ps' for d in rows)
+        assert len(rows) == 34 and all(d['mode'] == 'mapped-ps' for d in rows)
         shutil.copy2(census, work / 'migrated-source-census.json')
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
@@ -110,8 +166,8 @@ for label, body in [('baseline', native), ('migrated', ps)]:
         shutil.copy2(file, work / (label + '-MatchHostBootstrap' + file.suffix))
 assert all(pair['baseline'] == pair['migrated'] for pair in comparisons.values())
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    comparisons=comparisons, mapped_definitions=9, mapped_theorems=9, logical_imports=['Init'],
+    comparisons=comparisons, mapped_definitions=17, mapped_theorems=17, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
-    scope='finite native term-match and pattern-lambda bodies; motive/discriminant/alternative operands with native pattern roles',
+    scope='finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
 print('PS0_MATCH_HOST_NATIVE_PARITY: PASS', flush=True)

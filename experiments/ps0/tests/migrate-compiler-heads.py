@@ -161,6 +161,19 @@ def single_type_call(operand, role='owned binder type'):
             single_type_call(discriminant['args'][1], role + ' match discriminant')
         match_alternatives(parts[5], role + ' match alternative')
         return
+    if operand['kind'] == 'Lean.Parser.Term.structInst':
+        parts = operand['args']
+        assert len(parts) == 6
+        if parts[1]['args']:
+            assert len(parts[1]['args']) == 2
+            for source in parts[1]['args'][0]['args']:
+                if source['atom'] is None:
+                    single_type_call(source, role + ' record update source')
+        record_fields(parts[2], role)
+        if parts[4]['args']:
+            assert len(parts[4]['args']) == 2
+            single_type_call(parts[4]['args'][1], role + ' record result type')
+        return
     if operand['kind'] == 'Lean.Parser.Term.fun':
         body = operand['args'][1]
         if body['kind'] == 'Lean.Parser.Term.basicFun':
@@ -263,6 +276,36 @@ def match_alternatives(source, role):
         single_type_call(alternative['args'][3], role + ' body')
 
 
+def record_fields(source, role):
+    assert source['kind'] == 'Lean.Parser.Term.structInstFields' and len(source['args']) == 1
+    for field in source['args'][0]['args']:
+        if field['atom'] is not None or field['kind'] == 'null':
+            continue
+        assert field['kind'] == 'Lean.Parser.Term.structInstField' and len(field['args']) == 2
+        def index_role(part):
+            if part['kind'] == 'Lean.Parser.Term.structInstArrayRef':
+                assert len(part['args']) == 3
+                single_type_call(part['args'][1], role + ' record lvalue index')
+            elif part['kind'] == 'null':
+                for child in part['args']:
+                    index_role(child)
+        for part in field['args'][0]['args']:
+            index_role(part)
+        body = field['args'][1]['args']
+        if not body:
+            continue
+        assert len(body) == 3
+        telescope(body[0]['args'])
+        optional_local_type(body[1], role + ' record field type')
+        rhs = body[2]
+        if rhs['kind'] == 'Lean.Parser.Term.structInstFieldDef':
+            assert len(rhs['args']) == 3
+            single_type_call(rhs['args'][2], role + ' record field value')
+        else:
+            assert rhs['kind'] == 'Lean.Parser.Term.structInstFieldEqns' and len(rhs['args']) == 2
+            match_alternatives(rhs['args'][1], role + ' record field equation')
+
+
 def alias_binder(binder):
     kind, parts = binder['kind'], binder['args']
     if kind in ['Lean.Parser.Term.implicitBinder', 'Lean.Parser.Term.strictImplicitBinder',
@@ -299,7 +342,11 @@ def do_element(element):
             do_sequence(parts[8]['args'][0])
         return
     kind, parts = element['kind'], element['args']
-    if kind == 'Lean.Parser.Term.doLetRec':
+    if kind == 'Lean.Parser.Term.doIf':
+        assert len(parts) == 6
+        for part in parts:
+            do_if_role(part)
+    elif kind == 'Lean.Parser.Term.doLetRec':
         assert len(parts) == 2
         recursive_declarations(parts[1])
     elif kind == 'Lean.Parser.Term.doUnless':
@@ -343,6 +390,25 @@ def do_element(element):
                     do_sequence(branches[2]['args'][0])
     # Native patterns, registered DSL elements and unsupported control operands
     # retain their independent parser ownership.
+
+
+def do_if_role(source):
+    kind, parts = source['kind'], source['args']
+    if kind == 'Lean.Parser.Term.doIfProp':
+        assert len(parts) == 2
+        single_type_call(parts[1], 'owned do-if proposition')
+    elif kind == 'Lean.Parser.Term.doIfLet':
+        assert len(parts) == 3 and parts[2]['kind'] in [
+            'Lean.Parser.Term.doIfLetPure', 'Lean.Parser.Term.doIfLetBind']
+        assert len(parts[2]['args']) == 2
+        single_type_call(parts[2]['args'][1], 'owned do-if pattern value')
+    elif kind in ['Lean.Parser.Term.doSeqIndent', 'Lean.Parser.Term.doSeqBracketed']:
+        do_sequence(source)
+    elif kind == 'null':
+        for child in parts:
+            do_if_role(child)
+    else:
+        assert source['atom'] is not None or kind == 'Lean.Parser.Term.elseIf', kind
 
 
 def recursive_declarations(group):
