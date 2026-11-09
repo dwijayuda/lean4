@@ -36,24 +36,36 @@ def original_commands(commands):
         yield from original_commands(command.get('nestedCommands', []))
 
 def single_type_call(operand, role='owned binder type'):
-    # Only this explicitly owned type operand is adapted. Quotation, DSL and
-    # arbitrary application descendants are never traversed by the planner.
+    # Follow only the native roles which the owned parser recursively adapts.
+    # Quotation, DSL and other native syntax remain opaque.
+    if operand['kind'] == 'Lean.Parser.Term.paren':
+        single_type_call(operand['args'][1], role)
+        return
+    if operand.get('nativeBinaryOperator', False):
+        assert len(operand['args']) == 3 and operand['args'][1]['atom'] is not None
+        single_type_call(operand['args'][0], role)
+        single_type_call(operand['args'][2], role)
+        return
     if operand['kind'] != 'Lean.Parser.Term.app':
         return
     function, arguments = operand['args']
-    if len(arguments['args']) != 1:
+    arguments = arguments['args']
+    if not any(argument['kind'] == 'Lean.Parser.Term.paren' for argument in arguments):
         return
-    argument = arguments['args'][0]
-    if argument['kind'] != 'Lean.Parser.Term.paren':
-        return
+    assert all(a['kind'] != 'Lean.Parser.Term.namedArgument' for a in arguments)
     _, end = span(function)
-    start, _ = span(argument)
-    if start == end:
-        return
-    assert raw[end:start].isspace(), 'type-call trivia contains comments; no edit is permitted'
+    start, _ = span(arguments[0])
+    assert start == end or raw[end:start].isspace(), 'type-call trivia contains comments; no edit is permitted'
     edit(end, start, '(', role + ' call opening delimiter; preserve original argument parentheses')
-    _, argument_end = span(argument)
+    for previous, following in zip(arguments, arguments[1:]):
+        _, end = span(previous)
+        start, _ = span(following)
+        assert raw[end:start].isspace(), 'type-call argument trivia contains comments; no edit is permitted'
+        edit(end, start, ', ', role + ' call argument separator')
+    _, argument_end = span(arguments[-1])
     edit(argument_end, argument_end, ')', role + ' call closing delimiter; preserve original argument parentheses')
+    for argument in arguments:
+        single_type_call(argument, role)
 
 for command in original_commands(snapshot['commands']):
     decl = command['declaration']
@@ -64,6 +76,10 @@ for command in original_commands(snapshot['commands']):
     signature = decl['signatureSyntax']
     assert signature['kind'] == 'Lean.Parser.Command.optDeclSig'
     binders = signature['args'][0]['args']
+    result_type = signature['args'][1]['args']
+    if result_type:
+        assert len(result_type) == 1 and result_type[0]['kind'] == 'Lean.Parser.Term.typeSpec'
+        single_type_call(result_type[0]['args'][1], 'owned declaration result type')
     # Preserve instance groups in place. Only consecutive single-identifier
     # explicit groups are merged; no binder is reordered or inferred here.
     for binder in binders:
@@ -101,10 +117,10 @@ for command in original_commands(snapshot['commands']):
         edit(end - 1, start + 1, ', ', 'merge consecutive typed groups in source order')
     root = decl.get('valueApplication')
     applications = []
-    if root is not None and any(a['kind'] == 'Lean.Parser.Term.paren' for a in root['arguments']):
+    if root is not None and any(a['kind'] in ['Lean.Parser.Term.paren', 'Lean.Parser.Term.fun'] for a in root['arguments']):
         applications = [root, *decl.get('lambdaBodyApplications', [])]
     for application in applications:
-        if application is None or not any(a['kind'] == 'Lean.Parser.Term.paren' for a in application['arguments']):
+        if application is None or not any(a['kind'] in ['Lean.Parser.Term.paren', 'Lean.Parser.Term.fun'] for a in application['arguments']):
             continue
         arguments = application['arguments']
         assert all(a['kind'] != 'Lean.Parser.Term.namedArgument' for a in arguments), 'named body arguments need their own source role'
