@@ -370,7 +370,7 @@ partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRe
     unless native.raw.isOfKind ``Lean.Parser.Term.paren && native.raw.getArgs.size == 3 &&
         native.raw[0].isOfKind ``Lean.Parser.Term.hygienicLParen && native.raw[0].getArgs.size == 2 do
       Macro.throwError "PS0V1-BODY-WRAPPER: unexpected native parenthesis shape"
-    let opening := .node (loweringInfo source[0]) ``Lean.Parser.Term.hygienicLParen
+    let opening : Lean.Syntax := .node (loweringInfo source[0]) ``Lean.Parser.Term.hygienicLParen
       #[.atom (loweringInfo source[0]) "(", native.raw[0][1]]
     return .node (loweringInfo source) native.raw.getKind
       #[opening, body.raw, .atom (loweringInfo source[2]) ")"]
