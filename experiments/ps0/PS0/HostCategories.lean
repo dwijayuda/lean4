@@ -558,6 +558,94 @@ private def lowerAggregateValue
     return source.setArg 8 (← lowerTerm source[8])
   Macro.throwError "PS0V1-AGGREGATE: unexpected owned aggregate root"
 
+private def lowerNativeRecordFieldWith
+    (lowerTerm lowerBinder lowerType lowerAlts : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.isOfKind ``Lean.Parser.Term.structInstField && source.getArgs.size == 2 do
+    Macro.throwError "PS0V1-RECORD-FIELD: unexpected native field"
+  let lvalue := source[0]
+  let components ← lvalue.getArgs.mapM fun part => do
+    if part.isOfKind ``Lean.Parser.Term.structInstArrayRef then
+      return part.setArg 1 (← lowerTerm part[1])
+    if part.isOfKind nullKind then
+      return part.setArgs (← part.getArgs.mapM fun child => do
+        if child.isOfKind ``Lean.Parser.Term.structInstArrayRef then
+          return child.setArg 1 (← lowerTerm child[1])
+        return child)
+    return part
+  let source := source.setArg 0 (lvalue.setArgs components)
+  if source[1].getArgs.isEmpty then return source
+  unless source[1].getArgs.size == 3 do
+    Macro.throwError "PS0V1-RECORD-FIELD: unexpected native binder/type/value roles"
+  let body := source[1]
+  let binders ← body[0].getArgs.mapM lowerBinder
+  let body := body.setArg 0 (body[0].setArgs binders)
+  let body := body.setArg 1 (← lowerType body[1])
+  let rhs := body[2]
+  let rhs ← if rhs.isOfKind ``Lean.Parser.Term.structInstFieldDef && rhs.getArgs.size == 3 then
+      pure <| rhs.setArg 2 (← lowerTerm rhs[2])
+    else if rhs.isOfKind ``Lean.Parser.Term.structInstFieldEqns && rhs.getArgs.size == 2 then
+      pure <| rhs.setArg 1 (← lowerAlts rhs[1])
+    else Macro.throwError "PS0V1-RECORD-FIELD: unexpected native field declaration"
+  return source.setArg 1 (body.setArg 2 rhs)
+
+
+private def lowerNativeRecordWith
+    (lowerTerm lowerField : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.getArgs.size == 6 && source[2].isOfKind ``Lean.Parser.Term.structInstFields do
+    Macro.throwError "PS0V1-RECORD: unexpected native structure instance"
+  let update := source[1]
+  let source ← if update.getArgs.isEmpty then pure source else do
+    unless update.getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native update sources"
+    let values ← update[0].getArgs.mapM fun value => do
+      if value.isAtom then return value
+      lowerTerm value
+    pure <| source.setArg 1 (update.setArg 0 (update[0].setArgs values))
+  let fields ← source[2][0].getArgs.mapM fun field => do
+    if field.isAtom || field.isOfKind nullKind then return field
+    lowerField field
+  let source := source.setArg 2 (source[2].setArg 0 (source[2][0].setArgs fields))
+  if source[4].getArgs.isEmpty then return source
+  unless source[4].getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native result type"
+  return source.setArg 4 (source[4].setArg 1 (← lowerTerm source[4][1]))
+
+
+private def lowerNativeTacticSequenceWith
+    (lowerTactic : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.isOfKind ``Lean.Parser.Tactic.tacticSeq && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-TACTIC-SEQUENCE: unexpected native sequence"
+  let inner := source[0]
+  let index ← if inner.isOfKind ``Lean.Parser.Tactic.tacticSeqBracketed && inner.getArgs.size == 3 then
+      pure 1
+    else if inner.isOfKind ``Lean.Parser.Tactic.tacticSeq1Indented && inner.getArgs.size == 1 then
+      pure 0
+    else Macro.throwError "PS0V1-TACTIC-LAYOUT: unexpected native tactic layout"
+  let items ← inner[index].getArgs.mapM fun item => do
+    if item.isAtom || item.isMissing || item.isOfKind nullKind then return item
+    lowerTactic item
+  return source.setArg 0 (inner.setArg index (inner[index].setArgs items))
+
+
+private def lowerNativeLocalBinderWith
+    (lowerTerm lowerBinderType : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := do
+  if source.isIdent || source.isOfKind ``Lean.Parser.Term.hole then return source
+  if source.isOfKind ``Lean.Parser.Term.instBinder then
+    return source.setArg 2 (← lowerTerm source[2])
+  unless source.isOfKind ``Lean.Parser.Term.explicitBinder ||
+      source.isOfKind ``Lean.Parser.Term.implicitBinder ||
+      source.isOfKind ``Lean.Parser.Term.strictImplicitBinder do
+    Macro.throwError "PS0V1-LOCAL-BINDER: unexpected native binder"
+  let source := source.setArg 2 (← lowerBinderType source[2])
+  if source.isOfKind ``Lean.Parser.Term.explicitBinder && !source[3].getArgs.isEmpty &&
+      source[3][0].isOfKind ``Lean.Parser.Term.binderDefault then
+    return source.setArg 3 (source[3].setArg 0
+      (source[3][0].setArg 1 (← lowerTerm source[3][0][1])))
+  return source
+
+
 set_option maxHeartbeats 800000 in
 mutual
 partial def lower (category : Name) (source : Lean.Syntax) :
@@ -889,53 +977,10 @@ partial def lowerNativeTry (source : Lean.Syntax) : MacroM Lean.Syntax := withRe
   return source.setArg 3 (source[3].setArg 0
     (finalizer.setArg 1 (← lowerNativeDoSequence finalizer[1])))
 
-partial def lowerNativeRecordField (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
-  unless source.isOfKind ``Lean.Parser.Term.structInstField && source.getArgs.size == 2 do
-    Macro.throwError "PS0V1-RECORD-FIELD: unexpected native field"
-  let lvalue := source[0]
-  let components ← lvalue.getArgs.mapM fun part => do
-    if part.isOfKind ``Lean.Parser.Term.structInstArrayRef then
-      return part.setArg 1 (← lower `psTerm part[1])
-    if part.isOfKind nullKind then
-      return part.setArgs (← part.getArgs.mapM fun child => do
-        if child.isOfKind ``Lean.Parser.Term.structInstArrayRef then
-          return child.setArg 1 (← lower `psTerm child[1])
-        return child)
-    return part
-  let source := source.setArg 0 (lvalue.setArgs components)
-  if source[1].getArgs.isEmpty then return source
-  unless source[1].getArgs.size == 3 do
-    Macro.throwError "PS0V1-RECORD-FIELD: unexpected native binder/type/value roles"
-  let body := source[1]
-  let binders ← body[0].getArgs.mapM lowerNativeLocalBinder
-  let body := body.setArg 0 (body[0].setArgs binders)
-  let body := body.setArg 1 (← lowerNativeOptionalType body[1])
-  let rhs := body[2]
-  let rhs ← if rhs.isOfKind ``Lean.Parser.Term.structInstFieldDef && rhs.getArgs.size == 3 then
-      pure <| rhs.setArg 2 (← lower `psTerm rhs[2])
-    else if rhs.isOfKind ``Lean.Parser.Term.structInstFieldEqns && rhs.getArgs.size == 2 then
-      pure <| rhs.setArg 1 (← lowerNativeMatchAlternatives rhs[1])
-    else Macro.throwError "PS0V1-RECORD-FIELD: unexpected native field declaration"
-  return source.setArg 1 (body.setArg 2 rhs)
-
-partial def lowerNativeRecord (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
-  unless source.getArgs.size == 6 && source[2].isOfKind ``Lean.Parser.Term.structInstFields do
-    Macro.throwError "PS0V1-RECORD: unexpected native structure instance"
-  let update := source[1]
-  let source ← if update.getArgs.isEmpty then pure source else do
-    unless update.getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native update sources"
-    let values ← update[0].getArgs.mapM fun value => do
-      if value.isAtom then return value
-      lower `psTerm value
-    pure <| source.setArg 1 (update.setArg 0 (update[0].setArgs values))
-  let fields ← source[2][0].getArgs.mapM fun field => do
-    if field.isAtom || field.isOfKind nullKind then return field
-    lowerNativeRecordField field
-  let source := source.setArg 2 (source[2].setArg 0 (source[2][0].setArgs fields))
-  if source[4].getArgs.isEmpty then return source
-  unless source[4].getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native result type"
-  return source.setArg 4 (source[4].setArg 1 (← lower `psTerm source[4][1]))
-
+partial def lowerNativeRecordField (source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerNativeRecordFieldWith (lower `psTerm) lowerNativeLocalBinder lowerNativeOptionalType (fun value => lowerNativeMatchAlternatives value) source
+partial def lowerNativeRecord (source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerNativeRecordWith (lower `psTerm) lowerNativeRecordField source
 partial def lowerNativeMatch (source : Lean.Syntax) (sequence : Bool := false) : MacroM Lean.Syntax := withRef source do
   unless source.getArgs.size == 6 && source[2].getArgs.size <= 1 do
     Macro.throwError "PS0V1-MATCH-SHAPE: unexpected native match"
@@ -962,20 +1007,8 @@ partial def lowerNativeDoSequence (native : Lean.Syntax) : MacroM Lean.Syntax :=
     return item.setArg 0 (← lowerDoElem item[0])
   return native.setArg index (native[index].setArgs items)
 
-partial def lowerNativeTacticSequence (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
-  unless source.isOfKind ``Lean.Parser.Tactic.tacticSeq && source.getArgs.size == 1 do
-    Macro.throwError "PS0V1-TACTIC-SEQUENCE: unexpected native sequence"
-  let inner := source[0]
-  let index ← if inner.isOfKind ``Lean.Parser.Tactic.tacticSeqBracketed && inner.getArgs.size == 3 then
-      pure 1
-    else if inner.isOfKind ``Lean.Parser.Tactic.tacticSeq1Indented && inner.getArgs.size == 1 then
-      pure 0
-    else Macro.throwError "PS0V1-TACTIC-LAYOUT: unexpected native tactic layout"
-  let items ← inner[index].getArgs.mapM fun item => do
-    if item.isAtom || item.isMissing || item.isOfKind nullKind then return item
-    lower `psTactic item
-  return source.setArg 0 (inner.setArg index (inner[index].setArgs items))
-
+partial def lowerNativeTacticSequence (source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerNativeTacticSequenceWith (lower `psTactic) source
 partial def lowerNativePatternBind (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   unless source.getArgs.size == 5 do
     Macro.throwError "PS0V1-DO-PATTERN-BIND: unexpected native pattern binding"
@@ -1002,21 +1035,8 @@ partial def lowerNativeOptionalType (source : Lean.Syntax) : MacroM Lean.Syntax 
       source[0].getArgs.size == 2 do Macro.throwError "PS0V1-LOCAL-TYPE: unexpected native type specification"
   return source.setArg 0 (source[0].setArg 1 (← lower `psTerm source[0][1]))
 
-partial def lowerNativeLocalBinder (source : Lean.Syntax) : MacroM Lean.Syntax := do
-  if source.isIdent || source.isOfKind ``Lean.Parser.Term.hole then return source
-  if source.isOfKind ``Lean.Parser.Term.instBinder then
-    return source.setArg 2 (← lower `psTerm source[2])
-  unless source.isOfKind ``Lean.Parser.Term.explicitBinder ||
-      source.isOfKind ``Lean.Parser.Term.implicitBinder ||
-      source.isOfKind ``Lean.Parser.Term.strictImplicitBinder do
-    Macro.throwError "PS0V1-LOCAL-BINDER: unexpected native binder"
-  let source := source.setArg 2 (← lowerFunType source[2])
-  if source.isOfKind ``Lean.Parser.Term.explicitBinder && !source[3].getArgs.isEmpty &&
-      source[3][0].isOfKind ``Lean.Parser.Term.binderDefault then
-    return source.setArg 3 (source[3].setArg 0
-      (source[3][0].setArg 1 (← lower `psTerm source[3][0][1])))
-  return source
-
+partial def lowerNativeLocalBinder (source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerNativeLocalBinderWith (lower `psTerm) lowerFunType source
 partial def lowerLocalBinder (source : Lean.Syntax) : MacroM (Array Lean.Syntax) := withRef source do
   if source.isOfKind choiceKind then
     let mut result? : Option (Array Lean.Syntax) := none
