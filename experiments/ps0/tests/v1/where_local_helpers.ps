@@ -9,7 +9,7 @@ meta partial def whereTactics (owned : Bool) (source : Lean.Syntax) : Array Lean
   let kinds := if owned then #[`ps0HostExact, `ps0HostApply, `ps0HostRefine]
     else #[`Lean.Parser.Tactic.exact, `Lean.Parser.Tactic.apply, `Lean.Parser.Tactic.refine]
   if kinds.contains source.getKind then #[source]
-  else source.getArgs.foldl (fun result child => result ++ whereTactics owned child) #[]
+  else source.getArgs.foldl((fun result child => result ++ whereTactics(owned, child)), #[])
 
 macro "whereOrigin " clause:psWhereClause : term => do
   let before := clause.raw
