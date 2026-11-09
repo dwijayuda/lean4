@@ -10,6 +10,9 @@ public section
 open Lean Lean.Parser
 namespace PS0.OperatorDescriptors
 
+def builtinBinaryKinds : Array Name :=
+  #[``Lean.Parser.Term.arrow, ``Lean.Parser.Term.subst]
+
 private def label : Name → String
   | .str _ s => s
   | _ => ""
@@ -25,7 +28,7 @@ private partial def roles : ParserDescr → Option (Array Nat)
 
 private unsafe def binaryKindsForImpl (env : Environment) (opts : Options)
     (names : Array Name) : Array Name := Id.run do
-  let mut result := #[``Lean.Parser.Term.arrow]
+  let mut result := builtinBinaryKinds
   for name in names do
     if let some info := env.find? name then
       if info.type.getAppFn.isConstOf ``TrailingParserDescr then
@@ -38,7 +41,7 @@ opaque binaryKindsFor (env : Environment) (opts : Options) (names : Array Name) 
 
 private unsafe def binaryKindsImpl (env : Environment) (opts : Options) : Array Name :=
   match getParserCategory? env `term with
-  | none => #[``Lean.Parser.Term.arrow]
+  | none => builtinBinaryKinds
   | some category => binaryKindsForImpl env opts <|
       category.kinds.foldl (fun names name _ => names.push name) #[]
 
