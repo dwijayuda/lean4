@@ -67,7 +67,15 @@ private def commandOperands (parser : Parser) : Parser :=
     (fun ctx => {ctx with options := ctx.options.setBool `ps0.sourceGrammar true})) parser
 
 private def ownedCommandWords : Array String :=
-  #["set_option", "open", "attribute", "variable", "omit", "mutual"]
+  #["set_option", "open", "attribute", "variable", "include", "omit", "mutual"]
+
+private def escapedDeclaration (source : Syntax) : Bool :=
+  let native := if source.isOfKind `ps0NativeCommandBridge then source[0] else source
+  native.isOfKind ``Lean.Parser.Command.declaration &&
+    #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,
+      ``Lean.Parser.Command.theorem, ``Lean.Parser.Command.example,
+      ``Lean.Parser.Command.opaque, ``Lean.Parser.Command.axiom,
+      ``Lean.Parser.Command.instance].contains native[1].getKind
 
 private def unownedCommand (parser : Parser) : Parser :=
   withFn (fun parse ctx state =>
@@ -76,7 +84,11 @@ private def unownedCommand (parser : Parser) : Parser :=
     | .ok (.atom _ word) =>
         if ownedCommandWords.contains word then
           state.mkError "PS0-SOURCE-COMMAND: scoped/mutual command uses its owned parser"
-        else parse ctx state
+        else
+          let parsed := parse ctx state
+          if !parsed.hasError && escapedDeclaration parsed.stxStack.back then
+            parsed.mkError "PS0-SOURCE-DECLARATION: standard declaration requires its PS adapter"
+          else parsed
     | _ => parse ctx state) parser
 
 private def installCommandOperands : IO Unit := do
@@ -97,6 +109,7 @@ private def installCommandOperands : IO Unit := do
       (``Lean.Parser.Command.«open», Lean.Parser.Command.«open»),
       (``Lean.Parser.Command.«attribute», Lean.Parser.Command.«attribute»),
       (``Lean.Parser.Command.«variable», Lean.Parser.Command.«variable»),
+      (``Lean.Parser.Command.«include», Lean.Parser.Command.«include»),
       (``Lean.Parser.Command.«omit», Lean.Parser.Command.«omit»)] do
     addBuiltinLeadingParser `psCommand name parser 20000
   addBuiltinTrailingParser `psCommand ``Lean.Parser.Command.«in»

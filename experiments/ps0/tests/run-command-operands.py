@@ -28,6 +28,12 @@ const scopedValue: Nat := scopedInc(2)
 const openedValue: Nat := opened(2)
 const nestedValue: Nat := wrapperNested(2)
 const mutualValue: Nat := oddSide(3)
+section
+variable (needed : True)
+include needed in
+theorem included : True := True.intro
+end
+const includedProof: True := included(True.intro)
 def main : IO Unit := IO.println s!"PS0_COMMAND_OPERANDS:{scopedValue}:{openedValue}:{nestedValue}:{mutualValue}"
 ''')
 (source / 'Quoted.ps').write_text('''module
@@ -38,6 +44,8 @@ meta def scopedQuote : Lean.MacroM(Lean.TSyntax `command) :=
   `(command| set_option pp.universes true in def function (x : Nat) : Nat := x)
 meta def mutualQuote : Lean.MacroM(Lean.TSyntax `command) :=
   `(command| mutual def function (x : Nat) : Nat := x end)
+meta def includeQuote : Lean.MacroM(Lean.TSyntax `command) :=
+  `(command| include needed in theorem function : True := True.intro)
 run_cmd do
   let scopedCommand ← Lean.Elab.liftMacroM scopedQuote
   unless scopedCommand.raw.isOfKind ``Lean.Parser.Command.in &&
@@ -47,6 +55,10 @@ run_cmd do
   unless mutualCommand.raw.isOfKind ``Lean.Parser.Command.mutual &&
       mutualCommand.raw[1].getArgs.all (fun c => c.isOfKind ``Lean.Parser.Command.declaration) do
     Lean.throwError "mutual native quotation was reinterpreted as PS"
+  let includedCommand ← Lean.Elab.liftMacroM includeQuote
+  unless includedCommand.raw.isOfKind ``Lean.Parser.Command.in &&
+      includedCommand.raw[2].isOfKind ``Lean.Parser.Command.declaration do
+    Lean.throwError "include native quotation was reinterpreted as PS"
 ''')
 driver = ROOT / '.lake/build/bin/ps0'
 
@@ -80,16 +92,17 @@ def collect(commands):
 
 collect(data['commands'])
 mapped = {c['declaration']['sourceName'] for c in rows if c['declaration'] and c['declaration']['mode'] == 'mapped-ps'}
-assert {'scopedInc', 'opened', 'wrapperNested', 'evenSide', 'oddSide'} <= mapped, mapped
+assert {'scopedInc', 'opened', 'wrapperNested', 'evenSide', 'oddSide', 'included'} <= mapped, mapped
 for row in rows:
     decl = row['declaration']
     if decl and decl['mode'] == 'mapped-ps':
         span = decl['keywordRange']
-        assert raw[span['start']:span['end']] in [b'function', b'const', b'def']
+        assert raw[span['start']:span['end']] in [b'function', b'const', b'def', b'theorem']
 for name, code, diagnostic in [
     ('scoped-gap', 'set_option pp.universes true in\nfunction bad(n: Nat := add (1, 2)): Nat := n', 'PS0V1-CALL-GAP'),
     ('open-gap', 'open Nat in\nfunction bad(n: Nat := add (1, 2)): Nat := n', 'PS0V1-CALL-GAP'),
     ('mutual-order', 'mutual\nfunction bad(n: Nat := add(x := 1, 2)): Nat := n\nend', 'PS0V1-CALL-ORDER'),
+    ('include-gap', 'section\nvariable (h : True)\ninclude h in\nfunction bad(n: Nat := add (1, 2)): Nat := n\nend', 'PS0V1-CALL-GAP'),
 ]:
     path = source / 'Bad.ps'
     path.write_text('module\nprelude\npublic import Init\npublic section\nfunction add(x: Nat, y: Nat): Nat := x + y\n' + code + '\n')
