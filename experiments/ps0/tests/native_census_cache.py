@@ -8,6 +8,7 @@ import json
 import re
 
 SCHEMA = 'ps0-native-source-census/1'
+# Native capture role changes require a new contract marker before reuse.
 OPERATOR_SCOPE = 'active-and-captured-kinds/1'
 
 

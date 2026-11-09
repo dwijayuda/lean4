@@ -18,7 +18,12 @@ parser.add_argument('--source-plans', type=Path)
 parser.add_argument('--plan-source')
 parser.add_argument('--native-censuses', type=Path)
 parser.add_argument('--census-source')
+parser.add_argument('--prepare-only', action='store_true')
 args = parser.parse_args()
+if bool(args.native_censuses) != bool(args.census_source):
+    parser.error('--native-censuses and --census-source must be supplied together')
+if (args.native_censuses or args.prepare_only) and not args.source_plans:
+    parser.error('native census reuse and preparation-only require --source-plans')
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
 driver = (args.driver or ROOT / '.lake/build/bin/ps0').resolve()
@@ -247,6 +252,15 @@ modules.write_text('\n'.join(sorted(inputs)) + '\n')
 }, indent=2) + '\n')
 print('PS0_COMPILER_PS_INPUTS: ' + str(len(inputs)) + '; byte_identical=' +
       str(sum(x['body_mode'] == 'byte-identical' for x in inputs.values())), flush=True)
+if args.prepare_only:
+    (evidence / 'preparation-only.json').write_text(json.dumps({
+        'source_commit': os.environ['PS0_SOURCE_SHA'], 'lean_commit': LEAN,
+        'module_count': len(inputs), 'source_grammar': True,
+        'scope': 'prepared transformed source and plans only; target dependency graph is not compiled',
+        'compiled_graph': False, 'grammar_migration_complete': False, 'verified_execution': False,
+    }, indent=2) + '\n')
+    print('PS0_COMPILER_PS_PREPARATION_ONLY: ' + str(len(inputs)), flush=True)
+    raise SystemExit(0)
 baseline = json.loads(args.compare.read_text()) if args.compare else None
 if baseline:
     assert digest(driver) == baseline['driver_sha256'], 'stage driver differs from the uploaded stage-one executable'
