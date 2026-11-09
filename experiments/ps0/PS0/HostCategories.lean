@@ -28,6 +28,7 @@ syntax (name := ps0NativeDoBridge) (priority := low) doSeq : psDoSeq
 syntax (name := ps0NativeDoElemBridge) (priority := low) doElem : psDoElem
 syntax (name := ps0PositionalArg) psTerm : psCallArg
 syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
+syntax (name := ps0NativeEllipsisArg) Lean.Parser.Term.ellipsis : psCallArg
 
 syntax (name := ps0NativeFunBinderBridge) (priority := low) Lean.Parser.Term.funBinder : psFunBinder
 syntax (name := ps0FunExplicit) (priority := high)
@@ -269,6 +270,14 @@ partial def lowerCall (head : Lean.Syntax) (args : Array (TSyntax `psCallArg))
   let mut seen : Array Name := #[]
   let mut nativeArgs : Array Lean.Syntax := #[]
   for arg in args do
+    if arg.raw.isOfKind ``ps0NativeEllipsisArg then
+      unless positional do
+        withRef arg do Macro.throwError "PS0V1-CALL-ORDER: positional argument after named argument"
+      let completion := arg.raw[0]
+      unless completion.isOfKind ``Lean.Parser.Term.ellipsis && completion.getArgs.size == 1 do
+        Macro.throwError "PS0V1-CALL-ELLIPSIS: unexpected native completion argument"
+      nativeArgs := nativeArgs.push completion
+      continue
     match arg with
     | `(psCallArg| $name:ident := $value:psTerm) =>
         let n := name.getId
