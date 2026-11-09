@@ -10,14 +10,14 @@ unsafe def main : IO Unit := do
   let mut rows := #[]
   for category in #[`term, `psTerm] do
     for depth in #[4, 8, 12, 16] do
-      let text := String.ofList (List.replicate depth '(') ++ "Nat.succ(1)" ++
+      let body := if category == `term then "Nat.succ 1" else "Nat.succ(1)"
+      let text := String.ofList (List.replicate depth '(') ++ body ++
         String.ofList (List.replicate depth ')')
       let start ← IO.monoMsNow
-      let state := (categoryParser category 0).fn.run (mkInputContext text "paren-budget")
-        {env, options := {}} (getTokenTable env) (mkParserState text)
+      let result := runParserCategory env category text "paren-budget"
       let elapsed := (← IO.monoMsNow) - start
-      unless !state.hasError && state.pos == text.rawEndPos do
-        throw (IO.userError s!"PS0_PAREN_PARSE: {category}/{depth}")
+      if let .error diagnostic := result then
+        throw (IO.userError s!"PS0_PAREN_PARSE: {category}/{depth}: {diagnostic}")
       let row := Json.mkObj [("category", toJson category.toString),
         ("depth", toJson depth), ("milliseconds", toJson elapsed)]
       IO.println ("PS0_PAREN_ROW:" ++ row.compress)
