@@ -1,5 +1,20 @@
 # PS0 — AI Work State (9 November 2026)
 
+## 2026-11-09 — exact body-wrapper delimiter spans: thirty Linux jobs and 132-file parity PASS
+
+Qualified source **7a3de3e43865ae3148086eb040e9bfbcdd8189cb**, runner **2df76ac33106ea6b4b1f93f0fd37ff2c9a39bcbc**, [42620129671](https://github.com/dwijayuda/pskernel/actions/runs/42620129671): **all thirty Linux jobs PASS**. Both JSON ledgers record every exact job and all twenty-nine artifact digests. Binder/default/mixed signatures, local recursion, recursive projects, clean native Lake compilation/linking/runtime, relocated grammar metadata and proof-linked gates pass.
+
+The optional direct-body wrapper still lowers to Lean's native parentheses. Its generated opening and closing tokens now carry mapped synthetic ranges from the original PS opening/closing brace spans, and the native hygienic-parenthesis node keeps Lean's quotation-generated hygiene information. The whole wrapper range remains mapped. The transformed delimiter spelling is not claimed to be an unchanged original token.
+
+Test-first **d32747eb9844cab75ec1c859eaf80ecae2218a9f / e099b52a450e9800993eb778e73835df5af96269**, **42619486575 / 129167642354**, is retained as **FAILED** with **PS0_BODY_WRAPPER_ORIGIN**: the previous whole-root range check did not cover the new opening/closing token-range assertions. At the qualified source, the whole range and both exact delimiter ranges pass. Existing direct/local wrapper semantics, valid ordinary collection argument, native Singleton rejection, record/coercion priority, quotation/explicit DSL ownership and semantic/rejection oracles remain required.
+
+[Independent inspection 42621716358 / 129175272849](https://github.com/dwijayuda/pskernel/actions/runs/42621716358/job/129175272849), runner **85ff8d9c31e3b6351266d88c2d7f7e709b0a4538**, checker/artifact source **7a3de3e43865ae3148086eb040e9bfbcdd8189cb**, is **PASS**: **132 actual native/PS C/public olean files / 33 modules**, complete source/edit reconstruction, mapped modes/productions/family multiplicities, recursive/lambda/deriving/field roles and retained whole-wrapper/delimiter-range assertions. Artifact **13675284193**, SHA-256 **4e7e5634de234c20b6b77a304ec756adb757e5c31e7baea228cd7276bf9aa00d**. Finite SDK-assisted target coverage remains **959 definition heads / 29 real modules**, with **37 heads / four synthetic probes** separate. Standalone lambda/unless/local-recursion executable bytes are not retained for independent rehash.
+
+Full transformed graph thirteen **68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf / 7a109e74f0e40a16915e7d59d3151d1d24fdc132**, [42611545930 / 129140934235](https://github.com/dwijayuda/pskernel/actions/runs/42611545930/job/129140934235), remains **IN PROGRESS** at its older exact pin. It targets all **2,569** planned-PS inputs with fresh native Lake compilation/linking, reusing only validated native syntax captures. Its result is not promoted to newer code; it is not restarted merely because it remains live.
+
+**Goal ACTIVE / NOT COMPLETE. 240 PENDING / two historical finite PASS / 242 obligations.** Complete ordinary-role/source-fidelity coverage, full transformed graph parity/linking/runtime, relocated full compiler operation and canonical fixed point remain open. Frozen R2, pinned Lean and trust restrictions are unchanged. grammarMigrationComplete and verified_execution remain false.
+
+
 ## 2026-11-09 — direct body wrappers versus ordinary brace collections: thirty Linux jobs and 132-file parity PASS
 
 Qualified source **ce4dc54cc933d335ace1917781a3546d5e8453bb**, runner **a68b3de917e14b806e3a2bdfc574932d65cd4da6**, [run 42617432355](https://github.com/dwijayuda/pskernel/actions/runs/42617432355): **all thirty jobs PASS**. Both machine ledgers retain every exact job and all twenty-nine artifact digests. Existing binder/default/mixed signatures, local recursion, source fidelity, recursive projects, clean native Lake compilation, linking/runtime, relocated grammar metadata and proof-linked gates pass.
