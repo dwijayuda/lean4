@@ -1,0 +1,19 @@
+module
+public meta import Lean
+public meta import PS0.SourceGrammar
+public meta section
+
+/-! Inspect the syntax-only bootstrap host in an isolated Init target environment. -/
+run_cmd do
+  PS0.SourceGrammar.install {}
+  unsafe Lean.enableInitializersExecution
+  let target ← Lean.importModules #[{module := `Init}] {}
+  for (category, input) in [
+      (`psTerm, "add(n, 1)"),
+      (`psTactic, "exact(add(n, 1))"),
+      (`psWhereFinally, "finally { exact(add(n, 1)) }"),
+      (`psWhereFinally, "finally\n  exact(add(n, 1))"),
+      (`psWhereClause, "where { finally { exact(add(n, 1)) } }")] do
+    match Lean.Parser.runParserCategory target category input with
+    | .ok source => Lean.logInfo m!"PS0_SOURCE_WHERE_PARSE_OK {category} {input}: {repr source}"
+    | .error error => Lean.logInfo m!"PS0_SOURCE_WHERE_PARSE_ERROR {category} {input}: {error}"

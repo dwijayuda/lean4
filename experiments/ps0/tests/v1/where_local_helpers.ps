@@ -4,6 +4,47 @@ structure LocalPoint where
   x : Nat
   y : Nat
 
+macro "whereOrigin " clause:psWhereClause : term => do
+  let before := clause.raw
+  let after ← PS0.StandardAdapters.lowerWhereClause before
+  unless after.isOfKind ``Lean.Parser.Term.whereDecls &&
+      before.getRange? == after.getRange? && before[0].eqWithInfo after[0] do
+    Lean.Macro.throwError "PS0_WHERE_CLAUSE_ORIGIN"
+  let helpers := before[2].getArgs.filter (·.isOfKind `PS0.StandardAdapters.psWhereLocalDefinition)
+  let nativeHelpers := after[1].getArgs.filter (·.isOfKind ``Lean.Parser.Term.letRecDecl)
+  unless helpers.size == nativeHelpers.size do Lean.Macro.throwError "PS0_WHERE_HELPER_ARITY"
+  for (helper, native) in helpers.zip nativeHelpers do
+    let value := native[2][0]
+    unless helper.getRange? == native.getRange? &&
+        helper[0].eqWithInfo native[0] && helper[1].eqWithInfo native[1] &&
+        helper[3].eqWithInfo value[0] && helper[4].getRange? == value[1].getRange? &&
+        helper[7].eqWithInfo native[3] do
+      Lean.Macro.throwError "PS0_WHERE_HELPER_ORIGIN"
+    if !helper[5].getArgs.isEmpty then
+      unless helper[5][0][0].eqWithInfo value[2][0][0] &&
+          helper[5][0][1].getRange? == value[2][0][1].getRange? do
+        Lean.Macro.throwError "PS0_WHERE_TYPE_ORIGIN"
+    if helper[6].isOfKind `PS0.StandardAdapters.psWhereLocalSimple then
+      unless helper[6][0].eqWithInfo value[3] do Lean.Macro.throwError "PS0_WHERE_ASSIGN_ORIGIN"
+  `(True)
+
+example : whereOrigin where { def helper(x: Nat, y: Nat := add(1, 2)): Nat := add(x, y) } := by trivial
+example : whereOrigin where {
+  /-- Keep the native doc comment. -/
+  @[inline] def helper(x: Nat): Nat := x
+} := by trivial
+example : whereOrigin where { def helper(x: Nat): Nat → Nat | 0 => x | Nat.succ k => helper(x, k) } := by trivial
+example : whereOrigin where { def helper(x: Nat): LocalPoint where { x := x; y := 0 } } := by trivial
+example : whereOrigin where { def first(x: Nat): Nat := second(x); def second(x: Nat): Nat := x } := by trivial
+
+meta def nativeWhereTailQuote : Lean.MacroM(Lean.TSyntax ``Lean.Parser.Term.whereDecls) :=
+  `(Lean.Parser.Term.whereDecls| where helper (x y : Nat) : Nat := Nat.add x y)
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeWhereTailQuote
+  let binder := quoted.raw[1][0][2][0][1][0]
+  unless binder.isOfKind ``Lean.Parser.Term.explicitBinder && binder[1].getArgs.size == 2 do
+    Lean.throwError "PS0_WHERE_NATIVE_QUOTATION"
+
 function defaultHelper(n: Nat): Nat := helper(n)
 where {
   def helper(x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)

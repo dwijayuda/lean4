@@ -292,7 +292,7 @@ def do_element(element):
 def recursive_declarations(group):
     assert group['kind'] == 'Lean.Parser.Term.letRecDecls' and len(group['args']) == 1
     for declaration in group['args'][0]['args']:
-        if declaration['atom'] is not None:
+        if declaration['atom'] is not None or declaration['kind'] == 'null':
             continue
         assert declaration['kind'] == 'Lean.Parser.Term.letRecDecl' and len(declaration['args']) == 4
         wrapper = declaration['args'][2]

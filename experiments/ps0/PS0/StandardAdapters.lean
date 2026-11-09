@@ -217,7 +217,8 @@ private def lowerWhereLocal (source : Syntax) : MacroM Syntax := withRef source 
   return .node (sourceOrigin source) ``Lean.Parser.Term.letRecDecl
     #[source[0], source[1], mkNode ``Lean.Parser.Term.letDecl #[declaration], source[7]]
 
-private def lowerWhere (source : Syntax) : MacroM Syntax := do
+/-- Lower an owned where clause to the pinned native local-recursion/proof-tail structure. -/
+def lowerWhereClause (source : Syntax) : MacroM Syntax := do
   if source.isOfKind ``psWhereBraced && source.getArgs.size == 5 then
     let helpers ← source[2].getArgs.mapM fun helper => do
       if helper.isAtom || helper.isOfKind nullKind then return helper
@@ -235,7 +236,7 @@ private def lowerWhere (source : Syntax) : MacroM Syntax := do
 
 private def lowerOptionalWhere (source : Syntax) : MacroM Syntax := do
   if source.getArgs.isEmpty then return source
-  return source.setArg 0 (← lowerWhere source[0])
+  return source.setArg 0 (← lowerWhereClause source[0])
 
 private def nativeValue (source : TSyntax `psDeclValue) : MacroM (TSyntax ``Lean.Parser.Command.declVal) := do
   let value := source.raw
