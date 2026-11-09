@@ -26,8 +26,8 @@ const pureValue: Nat :=
 macro "localRecOrigin " e:psTerm : term => do
   let lowered ← PS0.Syntax.lower `psTerm e.raw
   unless e.raw.isOfKind ``Lean.Parser.Term.letrec && lowered.isOfKind ``Lean.Parser.Term.letrec &&
-      e.raw.getArgs.size == 5 && lowered.getArgs.size == 5 &&
-      #[0, 1, 3].all (fun index => lowered[index].eqWithInfo e.raw[index]) &&
+      e.raw.getArgs.size == 4 && lowered.getArgs.size == 4 &&
+      #[0, 2].all (fun index => lowered[index].eqWithInfo e.raw[index]) &&
       lowered.getRange? == e.raw.getRange? do
     Lean.Macro.throwError "PS0_LOCAL_REC_ORIGIN"
   `(True)

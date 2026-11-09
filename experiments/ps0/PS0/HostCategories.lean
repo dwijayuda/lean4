@@ -238,10 +238,10 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
     if source.isOfKind ``Lean.Parser.Term.letrec then
-      unless source.getArgs.size == 5 do
+      unless source.getArgs.size == 4 do
         Macro.throwError "PS0V1-LOCAL-REC: unexpected native term shape"
-      let source := source.setArg 2 (← lowerNativeRecursiveDeclarations source[2])
-      return source.setArg 4 (← lower `psTerm source[4])
+      let source := source.setArg 1 (← lowerNativeRecursiveDeclarations source[1])
+      return source.setArg 3 (← lower `psTerm source[3])
     if source.isOfKind ``Lean.Parser.Term.termUnless then
       return ← lowerNativeUnless source
     if source.isOfKind ``ps0NativeTermBridge then
@@ -343,9 +343,9 @@ partial def lower (category : Name) (source : Lean.Syntax) :
 
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if source.isOfKind ``Lean.Parser.Term.doLetRec then
-    unless source.getArgs.size == 3 do
+    unless source.getArgs.size == 2 do
       Macro.throwError "PS0V1-LOCAL-REC: unexpected native do shape"
-    return source.setArg 2 (← lowerNativeRecursiveDeclarations source[2])
+    return source.setArg 1 (← lowerNativeRecursiveDeclarations source[1])
   if source.isOfKind ``Lean.Parser.Term.doUnless then
     return ← lowerNativeUnless source
   if source.isOfKind ``Lean.Parser.Term.doLet then

@@ -73,9 +73,9 @@ def single_type_call(operand, role='owned binder type'):
         do_sequence(operand['args'][1])
         return
     if operand['kind'] == 'Lean.Parser.Term.letrec':
-        assert len(operand['args']) == 5
-        recursive_declarations(operand['args'][2])
-        single_type_call(operand['args'][4], role + ' local recursive continuation')
+        assert len(operand['args']) == 4
+        recursive_declarations(operand['args'][1])
+        single_type_call(operand['args'][3], role + ' local recursive continuation')
         return
     if operand['kind'] == 'Lean.Parser.Term.termUnless':
         unless_operands(operand)
@@ -183,8 +183,8 @@ def local_id_value(declaration):
 def do_element(element):
     kind, parts = element['kind'], element['args']
     if kind == 'Lean.Parser.Term.doLetRec':
-        assert len(parts) == 3
-        recursive_declarations(parts[2])
+        assert len(parts) == 2
+        recursive_declarations(parts[1])
     elif kind == 'Lean.Parser.Term.doUnless':
         unless_operands(element)
     elif kind == 'Lean.Parser.Term.doExpr':
