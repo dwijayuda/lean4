@@ -12,6 +12,8 @@ run_cmd do
   let install ← IO.ofExcept <| unsafe host.evalConst (Lean.Options → IO Unit) {} implementation
   unsafe Lean.enableInitializersExecution
   install {}
+  let patternParser ← IO.ofExcept <| unsafe host.evalConst Lean.Parser.Parser {}
+    `PS0.DoLayout.patternLetElseElem
   unsafe Lean.enableInitializersExecution
   let cases := [
     ("unless", `doElem, `psDoElem,
@@ -20,6 +22,15 @@ run_cmd do
     ("pattern", `doElem, `psDoElem,
       "let .ident info _ id preresolved := nsStx.raw | return",
       "let .ident info _ id preresolved := nsStx.raw | return"),
+    ("pattern-some", `doElem, `psDoElem,
+      "let some dep := decl.deprecation? | return",
+      "let some dep := decl.deprecation? | return"),
+    ("pattern-some-continuation", `term, `psTerm,
+      "do\n  let some dep := decl.deprecation? | return\n  return ()",
+      "do\n  let some dep := decl.deprecation? | return\n  return ()"),
+    ("pattern-call-value", `term, `psTerm,
+      "do\n  let some dep := Option.some 1 | return\n  return ()",
+      "do\n  let some dep := Option.some(1) | return\n  return ()"),
     ("match-lambda", `doElem, `psDoElem,
       "if preresolved.any fun | .namespace _ => true | _ => false then return",
       "if preresolved.any fun | .namespace _ => true | _ => false then return"),
@@ -42,8 +53,8 @@ run_cmd do
       "\n  let .ident info _ id preresolved := nsStx.raw | return\n  let .original .. := info | return\n  if preresolved.any fun | .namespace _ => true | _ => false then return\n  return ()",
       "\n  let .ident info _ id preresolved := nsStx.raw | return\n  let .original .. := info | return\n  if preresolved.any fun | .namespace _ => true | _ => false then return\n  return ()"),
     ("unless-continuation", `doSeq, `psDoSeq,
-      "\n  unless linter.deprecated.options.get (← getOptions) do return\n  let some dep := decl.deprecation? | return\n  let extraMsg := match dep.text?, dep.newName? with\n    | some text, _ => m!\": {text}\"\n    | none, _ => m!\"\"\n  return ()",
-      "\n  unless linter.deprecated.options.get((← getOptions)) do return\n  let some dep := decl.deprecation? | return\n  let extraMsg := match dep.text?, dep.newName? with\n    | some text, _ => m!\": {text}\"\n    | none, _ => m!\"\"\n  return ()"),
+      "\n  unless linter.deprecated.options.get (← getOptions) do return\n  let some dep := decl.deprecation? | return\n  return ()",
+      "\n  unless linter.deprecated.options.get((← getOptions)) do return\n  let some dep := decl.deprecation? | return\n  return ()"),
     ("lambda-bind", `doSeq, `psDoSeq,
       "\n    let strict ← withEqLhsRhs info.type fun lhs rhs =>\n      withImplicit (isDefEq lhs rhs)\n    return strict",
       "\n    let strict ← withEqLhsRhs(info.type, fun lhs rhs =>\n      withImplicit((isDefEq lhs rhs)))\n    return strict"),
@@ -62,6 +73,11 @@ run_cmd do
         `Lean.Meta.AbstractMVars, `Lean.Meta.Check, `Init.While, `Lean.Util.CollectFVars])] do
     unsafe Lean.enableInitializersExecution
     let target ← Lean.importModules (modules.map fun moduleName => {module := moduleName}) {}
+    let input := "let some dep := decl.deprecation? | return\n  return ()"
+    let inputContext := Lean.Parser.mkInputContext input "<direct-pattern-let>"
+    let state := patternParser.fn.run inputContext {env := target, options := {}}
+      (Lean.Parser.getTokenTable target) (Lean.Parser.mkParserState input)
+    Lean.logInfo m!"PS0_BOUNDARY14_DIRECT {context} pos={state.pos.byteIdx} errors={state.toErrorMsg inputContext} syntax={repr state.stxStack.toArray}"
     for (label, nativeCategory, psCategory, native, ps) in cases do
       for (mode, category, input) in [("native", nativeCategory, native), ("ps", psCategory, ps)] do
         let (category, input) := if category == `doSeq then (`term, "do" ++ input)
