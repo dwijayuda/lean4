@@ -62,6 +62,16 @@ def owns_postfix(operand):
     return False
 
 
+def call_head_needs_group(operand):
+    if operand['kind'] == 'Lean.Parser.Term.pipeProj':
+        return True
+    if operand['kind'] in ['Lean.Parser.Term.proj', '«term__[_]»', "«term__[_]'_»",
+                           '«term__[_]_?»', '«term__[_]_!»', 'Array.«term__[_:_]»',
+                           'Array.«term__[_:]»', 'Array.«term__[:_]»']:
+        return call_head_needs_group(operand['args'][0])
+    return False
+
+
 def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
     # Quotation, DSL and other native syntax remain opaque.
@@ -199,13 +209,21 @@ def single_type_call(operand, role='owned binder type'):
             (named if is_named else positional).append(trivia + rewritten(left, right))
         start, end = span(operand)
         function_start, function_end = span(function)
-        replacement = rewritten(function_start, function_end) + b'(' + b','.join(positional + named) + b')'
+        head = rewritten(function_start, function_end)
+        if call_head_needs_group(function):
+            head = b'(' + head + b')'
+        replacement = head + b'(' + b','.join(positional + named) + b')'
         edit(start, end, replacement.decode(), role + ' call with named arguments last; preserve original argument terms')
         return
     _, end = span(function)
     start, _ = span(arguments[0])
     assert end <= start
-    edit(end, start, '(' + raw[end:start].decode(), role + ' call opening delimiter; preserve argument parentheses and trivia')
+    grouped_head = call_head_needs_group(function)
+    if grouped_head:
+        function_start, _ = span(function)
+        edit(function_start, function_start, '(', role + ' group low-precedence native call head')
+    edit(end, start, (')(' if grouped_head else '(') + raw[end:start].decode(),
+         role + ' call opening delimiter; preserve argument parentheses and trivia')
     for previous, following in zip(arguments, arguments[1:]):
         _, end = span(previous)
         start, _ = span(following)
