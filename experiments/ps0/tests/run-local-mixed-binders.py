@@ -4,6 +4,7 @@ from pathlib import Path
 import hashlib
 import json
 import os
+import shutil
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,13 +29,42 @@ run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'LocalMixed', work / 'native'], 'native')
 oracle = 'PS0_LOCAL_MIXED:7:7:7:8:7:5'
 assert oracle in run([work / 'native/LocalMixed'], 'runtime')
+bootstrap_comparisons = {}
+bootstrap_sources = {
+    'baseline': ('def plus (x y : Nat) : Nat := x + y\n'
+                 'def value : Nat := let step (x : Nat) (y : Nat := plus 1 2) : Nat := plus x y; step 4\n'),
+    'migrated': ('function plus(x: Nat, y: Nat): Nat := x + y\n'
+                 'const value: Nat := let step (x: Nat, y: Nat := plus(1, 2)): Nat := plus(x, y); step(4)\n'),
+}
+for label, text in bootstrap_sources.items():
+    source_root = work / (label + '-source')
+    source_root.mkdir()
+    source = source_root / 'LocalMixedBootstrap.ps'
+    source.write_text('module\nprelude\npublic import Init\npublic section\n' + text)
+    shutil.copy2(source, work / (label + '-LocalMixedBootstrap.ps'))
+    header = json.loads(run([ROOT / '.lake/build/bin/ps0', 'lake-header', source], label + '-header'))
+    assert [entry['module'] for entry in header['imports']] == ['Init']
+    directory = work / (label + '-bootstrap')
+    args = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source_root),
+            '-Kroots=LocalMixedBootstrap', '-KmoduleNames=LocalMixedBootstrap',
+            '-Kdriver=' + str(ROOT / '.lake/build/bin/ps0'),
+            '-KprojectBuildDir=' + str(directory), '-Kbootstrap=true']
+    if label == 'migrated':
+        args += ['-KsourceGrammar=true']
+    run([*args, 'build', 'LocalMixedBootstrap'], label + '-bootstrap')
+    for relative in ['ir/LocalMixedBootstrap.c', 'lib/lean/LocalMixedBootstrap.olean']:
+        path = directory / relative
+        bootstrap_comparisons.setdefault(relative, {})[label] = hashlib.sha256(path.read_bytes()).hexdigest()
+        shutil.copy2(path, work / (label + '-LocalMixedBootstrap' + path.suffix))
+assert all(pair['baseline'] == pair['migrated'] for pair in bootstrap_comparisons.values())
+print('PS0_LOCAL_MIXED_PRELUDE_NATIVE_PARITY: PASS', flush=True)
 prefix = 'abbrev Box (α : Type) : Type := α\nfunction add(x: Nat, y: Nat): Nat := x + y\n'
 for name, declaration, reason in [
     ('type-gap', 'let step (x: Box (Nat), y: Nat): Nat := add(x, y)', 'PS0V1-CALL-GAP'),
     ('default-gap', 'let rec step (x: Nat, y: Nat := add (1, 2)): Nat := add(x, y)', 'PS0V1-CALL-GAP'),
     ('default-order', 'let step (x: Nat, y: Nat := add(x := 1, 2)): Nat := add(x, y)', 'PS0V1-CALL-ORDER'),
     ('default-type', 'let step (x: Nat, y: Nat := "bad"): Nat := add(x, y)', 'type mismatch'),
-    ('empty-local', 'let step (): Nat := 1', 'unexpected'),
+    ('empty-local', 'let step (): Nat := 1', 'Invalid pattern'),
     ('instance-spacing', 'let step (x: Nat)[Inhabited(Nat)]: Nat := x', 'space'),
 ]:
     path = work / (name + '.ps')
@@ -48,6 +78,8 @@ for name, declaration, reason in [
     'native_quotation_control': True, 'duplicate_partition_coalesced': True,
     'different_partition_rejected': True,
     'native_layout_controls': 6, 'array_update_boundary': 'native parser only; not an elaboration/runtime claim',
+    'prelude_native_parity': bootstrap_comparisons,
+    'prelude_logical_imports': ['Init'],
     'scope': 'finite named do/pure let and let-rec mixed/comma telescopes, native DSL control; not all local/where grammar',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
