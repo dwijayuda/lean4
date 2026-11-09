@@ -129,7 +129,7 @@ for path in [Path('ir') / relative_module.with_suffix('.c'), Path('lib/lean') / 
                                      str(baseline / public_olean), str(migrated / public_olean), '--all-parts'],
                                     capture_output=True, text=True, timeout=600)
         (work / 'c-parity-olean-diagnostic.log').write_text(diagnostic.stdout + diagnostic.stderr)
-        assert diagnostic.returncode == 0, diagnostic.stderr
+        assert diagnostic.returncode == 0, (diagnostic.stdout + diagnostic.stderr)[:8000]
         details = json.loads(diagnostic.stdout)
         print('PS0_C_PARITY_OLEAN_DIAGNOSTIC:' + json.dumps(dict(
             public_olean_sha256={'native': sha(baseline / public_olean), 'ps': sha(migrated / public_olean)},

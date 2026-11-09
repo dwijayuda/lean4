@@ -14,8 +14,9 @@ private unsafe def loadParts (file : String) (allParts : Bool) : IO ModuleData :
   let parts ← if allParts then
       readModuleDataParts #[file, OLeanLevel.server.adjustFileName file,
         OLeanLevel.private.adjustFileName file]
-    else return #[← readModuleData file]
-  let mut result := parts[0]!.1
+    else do pure #[← readModuleData file]
+  let some (first, _) := parts[0]? | throw (IO.userError "module parts are empty")
+  let mut result := first
   for (_, region) in parts do
     let _ ← Runtime.markPersistent region
   if allParts then
