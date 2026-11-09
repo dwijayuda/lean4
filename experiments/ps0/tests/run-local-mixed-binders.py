@@ -29,7 +29,9 @@ assert 'PS0_LOCAL_ARRAY_UPDATE_BOUNDARY: PASS' in native_layouts
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'LocalMixed', work / 'native'], 'native')
 oracle = 'PS0_LOCAL_MIXED:7:7:7:8:7:5'
-assert oracle in run([work / 'native/LocalMixed'], 'runtime')
+runtime = run([work / 'native/LocalMixed'], 'runtime')
+equation_oracle = 'PS0_LOCAL_EQNS:7:7'
+assert oracle in runtime and equation_oracle in runtime
 bootstrap_comparisons = {}
 bootstrap_sources = {
     'baseline': ('def plus (x y : Nat) : Nat := x + y\n'
@@ -88,6 +90,7 @@ for name, declaration, reason in [
     assert reason.lower() in diagnostic.lower(), (name, reason)
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
+    'recursive_equation_oracle': equation_oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
     'origin_cases': 6, 'rejection_cases': 6,
     'native_quotation_control': True, 'duplicate_partition_coalesced': True,

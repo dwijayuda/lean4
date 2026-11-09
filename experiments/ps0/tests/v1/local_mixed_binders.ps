@@ -133,7 +133,7 @@ example : automaticValue = 4 := by decide
 example : dependentDefault = 9 := by decide
 example : adjacentInstance = 4 := by decide
 example : recursiveEquationValue = 7 := by decide
-example : doRecursiveEquationValue = 7 := by decide
+example : Id.run(doRecursiveEquationValue) = 7 := by decide
 
 meta def nativeLocalQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| let step (x y : Nat) : Nat := Nat.add x y; step 2 3)
@@ -156,4 +156,6 @@ run_cmd do
     unless rejected do Lean.Macro.throwError "PS0_LOCAL_AMBIGUITY_NOT_REJECTED"
 
 def main : IO Unit :=
-  IO.println s!"PS0_LOCAL_MIXED:{ordinaryValue}:{recursiveValue}:{pureRecursiveValue}:{mixedValue}:{pureValue}:{nativeValue}"
+  do
+    IO.println s!"PS0_LOCAL_MIXED:{ordinaryValue}:{recursiveValue}:{pureRecursiveValue}:{mixedValue}:{pureValue}:{nativeValue}"
+    IO.println s!"PS0_LOCAL_EQNS:{recursiveEquationValue}:{Id.run(doRecursiveEquationValue)}"
