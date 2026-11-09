@@ -92,6 +92,18 @@ const localWrapper: Id(Nat) := do
   return value
 example : directWrapper = 2 ∧ localWrapper = 2 := by constructor <;> rfl
 
+function readBag(b: LiteralBag): Nat := b.value
+const collectionArgument: Nat := readBag({ 1 + 2 })
+example : collectionArgument = 3 := by rfl
+
+macro "bodyWrapperOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lowerBodyValue e.raw
+  unless e.raw.isOfKind ``ps0HostBraces && lowered.isOfKind ``Lean.Parser.Term.paren &&
+      lowered.getRange? == e.raw.getRange? do
+    Lean.Macro.throwError "PS0_BODY_WRAPPER_ORIGIN"
+  `(True)
+example : bodyWrapperOrigin { /- retain wrapper source span -/ (1 + 1) } := by trivial
+
 meta def nativeLambdaQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| fun (n : Nat) => add (n, 1))
 run_cmd do

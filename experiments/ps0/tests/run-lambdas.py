@@ -83,6 +83,8 @@ for name, source, reason in [
     'original_lambda_and_arrow_token_checks': 2,
     'native_and_ps_invalid_multi_pun_rejection': 'not a field of structure',
     'native_and_ps_coerced_invalid_multi_pun_rejection': 'not a field of structure',
+    'native_and_ps_argument_collection_typing_rejection': 'Singleton',
+    'direct_and_local_body_wrappers_and_original_root_range': True,
     'projection': {
         'source_sha256': hashlib.sha256(Path(projection).read_bytes()).hexdigest(),
         'executable_sha256': hashlib.sha256((work / 'projection-native/SectionProjection').read_bytes()).hexdigest(),

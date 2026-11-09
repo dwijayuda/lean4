@@ -99,7 +99,7 @@ private def nativeValue (source : TSyntax `psDeclValue) : MacroM (TSyntax ``Lean
   let whereDecls := if tail.isMissing then defaults.raw[3][3] else tail[1]
   if value.isOfKind ``ps0DeclSimple then
     return ⟨mkNode ``Lean.Parser.Command.declValSimple
-      #[value[0], ← PS0.Syntax.lower `psTerm value[1], suffix, whereDecls]⟩
+      #[value[0], ← PS0.Syntax.lowerBodyValue value[1], suffix, whereDecls]⟩
   unless value.isOfKind ``ps0DeclEqns do
     Macro.throwError "PS0V1-DECL-VALUE: unsupported declaration value"
   return ⟨mkNode ``Lean.Parser.Command.declValEqns

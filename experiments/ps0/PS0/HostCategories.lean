@@ -305,7 +305,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
           let record ← `({ $field:ident })
           return ← nativeBraceOrigins source record.raw
         let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
-        return (← `(($body))).raw
+          let collection ← `({ $body:term })
+          return ← nativeBraceOrigins source collection.raw
     | `(psTerm| if $cond:psTerm then $yes:psTerm else $no:psTerm) => do
         let cond : TSyntax `term := ⟨← lower `psTerm cond.raw⟩
         let yes : TSyntax `term := ⟨← lower `psTerm yes.raw⟩
@@ -362,6 +363,13 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoSeq"
   else Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
 
+partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``ps0HostBraces && (punningIdentifier? source[1]).isNone then
+    let body : TSyntax `term := ⟨← lower `psTerm source[1]⟩
+    let native ← `(($body))
+    return .node (loweringInfo source) native.raw.getKind native.raw.getArgs
+  lower `psTerm source
+
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if source.isOfKind ``Lean.Parser.Term.doLetRec then
     unless source.getArgs.size == 2 do
@@ -400,11 +408,11 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
   match source with
   | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
       let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
-      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+      let value : TSyntax `term := ⟨← lowerBodyValue value.raw⟩
       return (← `(doElem| let mut $name:ident $[: $ty:term]? := $value)).raw
   | `(psDoElem| let $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
       let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
-      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
+      let value : TSyntax `term := ⟨← lowerBodyValue value.raw⟩
       return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
   | `(psDoElem| let $name:ident ← $value:psTerm) => do
       let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
@@ -485,7 +493,10 @@ partial def lowerNativeLocalId (source : Lean.Syntax) : MacroM Lean.Syntax := do
   let binders ← source[1].getArgs.mapM lowerNativeLocalBinder
   let source := source.setArg 1 (source[1].setArgs binders)
   let source := source.setArg 2 (← lowerNativeOptionalType source[2])
-  return source.setArg 4 (← lower `psTerm source[4])
+  let value ← if source.isOfKind ``Lean.Parser.Term.letIdDecl then
+      lowerBodyValue source[4]
+    else lower `psTerm source[4]
+  return source.setArg 4 value
 
 partial def lowerNativeRecursiveDeclarations (source : Lean.Syntax) : MacroM Lean.Syntax := do
   unless source.isOfKind ``Lean.Parser.Term.letRecDecls && source.getArgs.size == 1 do
