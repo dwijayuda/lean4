@@ -73,14 +73,17 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
     `PS0.StandardAdapters.ps0StandardDef, `PS0.StandardAdapters.ps0StandardAbbrev,
     `PS0.StandardAdapters.ps0StandardTheorem, `PS0.StandardAdapters.ps0StandardOpaque,
     `PS0.StandardAdapters.ps0StandardAxiom, `PS0.StandardAdapters.ps0StandardFunction,
-    `PS0.StandardAdapters.ps0StandardConst, `PS0.StandardAdapters.ps0StandardInstance]
+    `PS0.StandardAdapters.ps0StandardConst, `PS0.StandardAdapters.ps0StandardInstance,
+    `PS0.StandardAdapters.ps0StandardExample]
   if mapped.contains kind then
     let isInstance := kind == `PS0.StandardAdapters.ps0StandardInstance
-    let name := if isInstance then source[4][0] else source[2]
-    let signature := if isInstance then source[5] else source[3]
+    let isExample := kind == `PS0.StandardAdapters.ps0StandardExample
+    let name := if isExample then Syntax.missing else if isInstance then source[4][0] else source[2]
+    let signature := if isExample then source[2] else if isInstance then source[5] else source[3]
     let hasTail := #[`PS0.StandardAdapters.ps0StandardDef, `PS0.StandardAdapters.ps0StandardAbbrev,
       `PS0.StandardAdapters.ps0StandardTheorem, `PS0.StandardAdapters.ps0StandardFunction,
-      `PS0.StandardAdapters.ps0StandardConst, `PS0.StandardAdapters.ps0StandardInstance].contains kind
+      `PS0.StandardAdapters.ps0StandardConst, `PS0.StandardAdapters.ps0StandardInstance,
+      `PS0.StandardAdapters.ps0StandardExample].contains kind
     let declValue := if hasTail then source.getArgs.back! else Syntax.missing
     let value := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclSimple then declValue[1] else Syntax.missing
     let tail := if hasTail then declValue.getArgs.back![0] else Syntax.missing
@@ -104,18 +107,19 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
     let native := source[1]
     let supported := #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,
       ``Lean.Parser.Command.theorem, ``Lean.Parser.Command.opaque, ``Lean.Parser.Command.axiom,
-      ``Lean.Parser.Command.instance]
+      ``Lean.Parser.Command.instance, ``Lean.Parser.Command.example]
     if supported.contains native.getKind then
       let isInstance := native.isOfKind ``Lean.Parser.Command.instance
-      let name := if isInstance then native[3][0] else native[1]
-      let signature := if isInstance then native[4] else native[2]
+      let isExample := native.isOfKind ``Lean.Parser.Command.example
+      let name := if isExample then Syntax.missing else if isInstance then native[3][0] else native[1]
+      let signature := if isExample then native[1] else if isInstance then native[4] else native[2]
       return Json.mkObj [
         ("mode", toJson ("native-compatible" : String)),
         ("production", toJson native.getKind.toString),
         ("sourceName", toJson (if name.isMissing then "" else name[0].getId.toString)),
         ("keywordRange", sourceRange (if isInstance then native[1] else native[0])), ("nameRange", sourceRange name),
         ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
-        ("valueSyntax", signatureSyntax operators (if isInstance then native[5] else native[3])),
+        ("valueSyntax", signatureSyntax operators (if isExample then native[2] else if isInstance then native[5] else native[3])),
         ("valueApplication", valueApplication native),
         ("lambdaBodyApplications", toJson (lambdaBodyApplications native))]
   return .null

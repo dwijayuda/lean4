@@ -134,9 +134,10 @@ if args.source_plans:
         assert hashlib.sha256(converted).hexdigest() == item['converted_sha256'] == plan['result_sha256']
         target.write_bytes(converted)
         source_plans[module] = plan
-    def missing_instance_view(commands):
-        return any((command['headKind'] == 'Lean.Parser.Command.instance' and command['declaration'] is None)
-                   or missing_instance_view(command.get('nestedCommands', [])) for command in commands)
+    def missing_declaration_view(commands):
+        return any((command['headKind'] in ['Lean.Parser.Command.instance', 'Lean.Parser.Command.example']
+                    and command['declaration'] is None)
+                   or missing_declaration_view(command.get('nestedCommands', [])) for command in commands)
     refreshed = []
     def refresh_plan(item):
         module = item['module']
@@ -144,7 +145,7 @@ if args.source_plans:
         original, census = cached / 'original.ps', cached / 'native-census.json'
         folder = evidence / 'current-source-plans' / module
         folder.mkdir(parents=True, exist_ok=False)
-        if missing_instance_view(json.loads(census.read_text())['commands']):
+        if missing_declaration_view(json.loads(census.read_text())['commands']):
             census = folder / 'native-census.json'
             run([driver, 'census-source', original, module, census], 'refresh-census-' + module)
             refreshed.append(module)
@@ -192,7 +193,7 @@ if args.source_plans:
     shutil.copytree(source, evidence / 'transformed-source')
     (evidence / 'source-plan-summary.json').write_text(json.dumps({
         'input_census_source': args.plan_source, 'planner_source': os.environ['PS0_SOURCE_SHA'],
-        'refreshed_instance_censuses': sorted(refreshed), 'planner_evidence_sha256': digest(report_path),
+        'refreshed_declaration_censuses': sorted(refreshed), 'planner_evidence_sha256': digest(report_path),
         'module_count': len(source_plans), 'source_grammar': True,
         'definitions': sum(len(plan['declarations']) for plan in source_plans.values()),
         'grammar_migration_complete': False, 'verified_execution': False,

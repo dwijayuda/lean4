@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Compile real pinned compiler declaration heads through the native PS grammar."""
 from pathlib import Path
+from collections import Counter
 import argparse
 import difflib
 import hashlib
@@ -114,35 +115,36 @@ observed = json.loads((migrated / 'lib/lean' / relative_module.with_suffix('.ile
 declarations = list(source_declarations(observed['commands']))
 unchanged_abbrevs = {d['sourceName'] for d in original_declarations
                      if d['production'] == 'Lean.Parser.Command.abbrev'}
-mapped = {d['sourceName'] for d in declarations if d['mode'] == 'mapped-ps'}
 family_productions = {'Lean.Parser.Command.abbrev': 'PS0.StandardAdapters.ps0StandardAbbrev',
                       'Lean.Parser.Command.theorem': 'PS0.StandardAdapters.ps0StandardTheorem',
                       'Lean.Parser.Command.opaque': 'PS0.StandardAdapters.ps0StandardOpaque',
                       'Lean.Parser.Command.axiom': 'PS0.StandardAdapters.ps0StandardAxiom',
-                      'Lean.Parser.Command.instance': 'PS0.StandardAdapters.ps0StandardInstance'}
-expected_other = {d['sourceName']: family_productions[d['production']]
-                  for d in original_declarations if d['production'] in family_productions}
-expected_mapped = set(plan['declarations']) | set(expected_other)
-assert mapped == expected_mapped, (sorted(mapped), sorted(expected_mapped))
-strategies = {d['sourceName']: d['targetKeyword'] for d in plan.get('strategies', [])}
+                      'Lean.Parser.Command.instance': 'PS0.StandardAdapters.ps0StandardInstance',
+                      'Lean.Parser.Command.example': 'PS0.StandardAdapters.ps0StandardExample'}
+expected_other = Counter((d['sourceName'], family_productions[d['production']])
+                         for d in original_declarations if d['production'] in family_productions)
 productions = {'function': 'PS0.StandardAdapters.ps0StandardFunction',
                'const': 'PS0.StandardAdapters.ps0StandardConst',
                'def': 'PS0.StandardAdapters.ps0StandardDef'}
-for declaration in declarations:
-    if declaration['sourceName'] in expected_other:
-        assert declaration['mode'] == 'mapped-ps'
-        assert declaration['production'] == expected_other[declaration['sourceName']], declaration
-    if declaration['sourceName'] in plan['declarations']:
-        keyword = strategies.get(declaration['sourceName'], 'function')
-        assert declaration['mode'] == 'mapped-ps'
-        assert declaration['production'] == productions[keyword], declaration
+expected_mapped = expected_other + Counter((s['sourceName'], productions[s['targetKeyword']])
+                                           for s in plan['strategies'])
+actual_mapped = Counter((d['sourceName'], d['production'])
+                       for d in declarations if d['mode'] == 'mapped-ps')
+assert actual_mapped == expected_mapped, (actual_mapped, expected_mapped)
+assert all(d['mode'] == 'mapped-ps' for d in declarations)
+native_definitions = [d for d in original_declarations if d['production'] == 'Lean.Parser.Command.definition']
+mapped_definitions = [d for d in declarations if d['production'] in productions.values()]
+assert [d['sourceName'] for d in native_definitions] == plan['declarations']
+assert len(native_definitions) == len(mapped_definitions) == len(plan['strategies'])
+for native, strategy, mapped in zip(native_definitions, plan['strategies'], mapped_definitions):
+    assert native['sourceName'] == strategy['sourceName'] == mapped['sourceName']
+    assert mapped['production'] == productions[strategy['targetKeyword']]
+    if native.get('valueSyntax', {}).get('kind') == 'Lean.Parser.Command.declValEqns':
+        assert mapped['declarationValueKind'] == 'PS0.StandardAdapters.ps0DeclEqns', mapped
+        assert mapped['equationBodyKinds'], mapped
 equation_definitions = {d['sourceName'] for d in original_declarations
                         if d['production'] == 'Lean.Parser.Command.definition'
                         and d.get('valueSyntax', {}).get('kind') == 'Lean.Parser.Command.declValEqns'}
-for declaration in declarations:
-    if declaration['sourceName'] in equation_definitions:
-        assert declaration['declarationValueKind'] == 'PS0.StandardAdapters.ps0DeclEqns', declaration
-        assert declaration['equationBodyKinds'], declaration
 assert observed['imports'] == json.loads(census.read_text())['imports']
 owned_value_calls = [name for name in args.owned_value_calls.split(',') if name]
 for name in owned_value_calls:
@@ -153,6 +155,7 @@ for name in owned_value_calls:
 if args.fixture == 'EmitUtil':
     assert next(d for d in declarations if d['sourceName'] == 'collectUsedDecls')['nativeWhereTail']
 if args.fixture == 'DeclarationForms':
+    assert sum(d['production'] == 'PS0.StandardAdapters.ps0StandardExample' for d in declarations) == 2
     assert next(d for d in declarations if d['sourceName'] == 'make')['whereFieldCount'] == 3
     assert next(d for d in declarations if d['sourceName'] == 'boolTransform')['whereFieldCount'] == 1
     assert next(d for d in declarations if d['sourceName'] == 'natTransform')['whereFieldCount'] == 1
@@ -165,7 +168,7 @@ if args.fixture == 'DeclarationForms':
     'equation_definitions': sorted(equation_definitions),
     'owned_value_calls': owned_value_calls,
     'non_definition_source_roles': [{key: d.get(key) for key in ['sourceName', 'production', 'mode', 'declarationValueKind', 'equationBodyKinds', 'whereFieldCount']}
-                                    for d in declarations if d['sourceName'] in expected_other],
+                                    for d in declarations if d['production'] in family_productions.values()],
     'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds']}
                             for d in declarations if d['sourceName'] in plan['declarations']],
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',

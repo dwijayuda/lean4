@@ -205,7 +205,7 @@ for command in original_commands(snapshot['commands']):
         continue
     supported = ['Lean.Parser.Command.definition', 'Lean.Parser.Command.abbrev',
                  'Lean.Parser.Command.theorem', 'Lean.Parser.Command.opaque', 'Lean.Parser.Command.axiom',
-                 'Lean.Parser.Command.instance']
+                 'Lean.Parser.Command.instance', 'Lean.Parser.Command.example']
     if decl['production'] not in supported:
         continue
     is_definition = decl['production'] == 'Lean.Parser.Command.definition'

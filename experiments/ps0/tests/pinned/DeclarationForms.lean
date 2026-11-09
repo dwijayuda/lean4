@@ -47,4 +47,8 @@ def boolDecision (a b : Bool) : Decidable (Eq a b) where
     | true, false => Bool.noConfusion
     | true, true => rfl
 
+example [Subsingleton α] (p : α → Prop) : Subsingleton (Subtype p) :=
+  ⟨fun ⟨x, _⟩ ⟨y, _⟩ => by congr; exact Subsingleton.elim x y⟩
+example (n : Nat := Nat.add (1) (2)) : Eq (n) (n) := Eq.refl (n)
+
 end Lean.Compiler.DeclarationForms
