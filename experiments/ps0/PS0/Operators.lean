@@ -14,6 +14,10 @@ namespace PS0.Operators
 def ownedKind : Name := `PS0.Operators.ownedBinary
 def bridgeKind : Name := `ps0NativeTermBridge
 
+builtin_initialize
+  registerBuiltinNodeKind ownedKind
+  registerBuiltinNodeKind bridgeKind
+
 private def label : Name → String
   | .str _ s => s
   | _ => ""
@@ -94,9 +98,5 @@ opaque trailingFn : ParserFn
 
 @[expose, run_parser_attribute_hooks] def trailing : TrailingParser :=
   withFn (fun _ => trailingFn) (node ownedKind (categoryParser `term 0))
-
-builtin_initialize
-  registerBuiltinNodeKind ownedKind
-  registerBuiltinNodeKind bridgeKind
 
 end PS0.Operators
