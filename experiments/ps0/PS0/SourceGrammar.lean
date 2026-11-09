@@ -17,7 +17,7 @@ register_builtin_option ps0.sourceGrammar : Bool := {
 
 private def categoryNames : Array Name :=
   #[`psTerm, `psCommand, `psTactic, `psDoSeq, `psCallArg, `psHead,
-    `psDoElem, `psDoItem, `psBinderParam, `psDeclBinder, `psFunBinder, `psDeclTail, `psDeclValue,
+    `psDoElem, `psDoItem, `psLocalBinder, `psBinderParam, `psDeclBinder, `psFunBinder, `psDeclTail, `psDeclValue,
     `psStructFieldValue, `psStructField, `psDefDeriving]
 
 private def commandNames : Array Name :=
@@ -171,6 +171,7 @@ private unsafe def installImpl (options : Options) : IO Unit := do
     Elab.Term.termElabAttribute.addBuiltin `PS0.pscvEmptyCall entry.declName entry.value
   registerBuiltinNodeKind `PS0.pscvEmptyCall
   registerBuiltinNodeKind `PS0.Binders.binderDefault
+  copyMacros host `ps0LocalCommaBinder
   let native ← categoryParserFnRef.get
   categoryParserFnRef.set (rootDispatch native)
 
