@@ -2,6 +2,7 @@
 """Qualify finite owned lambda operands while retaining native binder elaboration."""
 from pathlib import Path
 import json
+import hashlib
 import os
 import subprocess
 
@@ -43,7 +44,14 @@ for name, source, reason in [
     assert reason is None or reason in diagnostic, (name, reason)
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
-    'scope': 'single-body lambda operands and native binder/pattern elaboration; native quotations remain opaque; not all lambda/match/term grammar',
+    'projection': {
+        'source_sha256': hashlib.sha256(Path(projection).read_bytes()).hexdigest(),
+        'executable_sha256': hashlib.sha256((work / 'projection-native/SectionProjection').read_bytes()).hexdigest(),
+        'oracle': 'PS0_SECTION_PROJECTION:3',
+        'original_range_checks': 2,
+        'native_head_gap_rejection': 'PS0V1-CALL-GAP',
+    },
+    'scope': 'single-body lambda operands, nested sections and native projection reuse with original ranges; native quotations remain opaque; not all lambda/match/term grammar',
     'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_LAMBDA_OPERANDS: PASS', flush=True)

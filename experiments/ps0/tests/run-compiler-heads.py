@@ -81,15 +81,15 @@ def build(source, directory, grammar=False, ok=True):
         target = directory / 'lib/lean' / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         target.symlink_to(item)
-    args = ['lake', '-R', '-f', 'lakefile.project.lean',
+    build_args = ['lake', '-R', '-f', 'lakefile.project.lean',
             '-KsourceRoot=' + str(source.parents[len(module.split('.')) - 1]), '-Kroots=' + args.roots,
             '-KmoduleNames=' + module, '-KrootModule=CompilerHeadProbeMain',
             '-Kdriver=' + str(driver), '-KprojectBuildDir=' + str(directory)]
     if grammar:
-        args += ['-KsourceGrammar=true']
+        build_args += ['-KsourceGrammar=true']
     if args.bootstrap:
-        args += ['-Kbootstrap=true']
-    run([*args, 'build', module], directory.name, ok)
+        build_args += ['-Kbootstrap=true']
+    run([*build_args, 'build', module], directory.name, ok)
 
 baseline, migrated = work / 'baseline', work / 'migrated'
 build(original, baseline)

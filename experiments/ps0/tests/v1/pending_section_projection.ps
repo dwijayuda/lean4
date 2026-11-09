@@ -1,4 +1,11 @@
 /-! Grouped field projection retains native projection and nested section semantics. -/
+macro "psProjectionOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless e.raw.getRange?.isSome && lowered.getRange? == e.raw.getRange? do
+    Lean.Macro.throwError "PS0_PROJECTION_ORIGIN: original projection range changed"
+  `(True)
+example : psProjectionOrigin (List.map((· + 1), [1])).head! := by trivial
+example : psProjectionOrigin (· + (List.map((· + 1), [1])).head!) := by trivial
 function nestedSectionProjection(xs : List Nat): List Nat :=
   xs.map((· + (List.map((· + 1), [1])).head!))
 example : nestedSectionProjection([1, 2]) = [3, 4] := by { rfl }
