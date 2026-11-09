@@ -45,7 +45,7 @@ def owns_postfix(operand):
                 'Lean.Parser.Term.pipeProj']:
         return True
     if kind == 'Lean.Parser.Term.proj':
-        return owns_postfix(parts[0])
+        return True
     if kind == 'Lean.Parser.Term.paren':
         return owns_postfix(parts[1])
     if kind == 'Lean.Parser.Term.app':

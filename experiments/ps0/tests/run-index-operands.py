@@ -74,7 +74,7 @@ for name, source, reason in [
     'native_syntax_shapes': shapes, 'original_index_tokens_and_ranges': 13,
     'projected_oracle': 'PS0_PROJECTED_INDEX:3:2:1',
     'native_projected_index_quotation_ownership': True,
-    'scope': 'four pinned native indexed-access and three competing array-slice productions, PS subject/index/proof/bound operands and callable heads; not all postfix/collection grammar',
+    'scope': 'four pinned native indexed-access and three competing array-slice productions, PS operands beneath parenthesized projected heads and callable heads; thirteen original-token/range assertions, not all postfix/collection grammar',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_INDEX_OPERANDS: PASS', flush=True)

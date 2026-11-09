@@ -84,10 +84,13 @@ private unsafe def leadingWith (head : Bool) : ParserFn := fun ctx initial => un
     let collected := entry.1.info.collectKinds {}
     !kinds.any collected.contains && !bracketKinds.any collected.contains &&
       !collected.contains ``Lean.Parser.Term.pipeProj &&
-      !collected.contains ``Lean.Parser.Term.pipeCompletion
+      !collected.contains ``Lean.Parser.Term.pipeCompletion &&
+      !collected.contains ``Lean.Parser.Term.proj &&
+      !collected.contains ``Lean.Parser.Term.completion
   let mut trailingTable := category.tables.trailingTable
   if head then
     trailingTable := filterToken (filterToken trailingTable `«[» keep) `«|>.» keep
+    trailingTable := filterToken trailingTable `«.» keep
   else
     trailingTable := {}
     for (token, parsers) in category.tables.trailingTable do
