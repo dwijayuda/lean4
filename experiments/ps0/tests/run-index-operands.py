@@ -42,6 +42,21 @@ for command in json.loads(census.read_text())['commands']:
                        children=[dict(kind=x['kind'], atom=x['atom']) for x in value['args']]))
 assert len(shapes) == 7
 print('PS0_NATIVE_INDEX_SHAPES:' + json.dumps(shapes, sort_keys=True), flush=True)
+transport_source = work / 'NativeTransport.ps'
+transport_source.write_text('module\nprelude\npublic import Lean\npublic section\n'
+                            'namespace NativeTransportProbe\n'
+                            'theorem transport (n : Nat) : n * 0 = 0 * n :=\n'
+                            '  (Nat.zero_mul n).symm ▸ (Nat.mul_zero n).symm ▸ rfl\n')
+transport_census = work / 'transport-census.json'
+run(['lake', 'exe', 'ps0', 'census-source', transport_source, 'NativeTransport', transport_census],
+    'native-transport-census')
+transport = next(row['declaration']['valueSyntax']['args'][1]
+                 for row in json.loads(transport_census.read_text())['commands']
+                 if row['declaration'])
+assert transport['kind'] == 'Lean.Parser.Term.subst' and len(transport['args']) == 3
+assert transport['args'][1]['atom'] == '▸' and transport['nativeBinaryOperator'] is True
+transport_shape = dict(kind=transport['kind'], arity=3, token=transport['args'][1]['atom'])
+print('PS0_NATIVE_TRANSPORT_SHAPE:' + json.dumps(transport_shape, sort_keys=True), flush=True)
 fixture = Path('tests/v1/index_operands.ps')
 assert 'PS0_INDEX_PARSE_ERROR' not in run(
     ['lake', 'env', 'lean', 'tests/debug-index-layout.lean'], 'parser-layout')
@@ -63,6 +78,7 @@ for name, source, reason in [
     ('projected-index-gap', 'const bad: Nat := (#[2, 3][chooseIndex (1)]?).getD(0)', 'PS0V1-CALL-GAP'),
     ('projected-index-order', 'const bad: Nat := (#[2, 3][add(x := 0, 1)]?).getD(0)', 'PS0V1-CALL-ORDER'),
     ('projected-slice-gap', 'const bad: Nat := (#[2, 3][:chooseIndex (1)]).size', 'PS0V1-CALL-GAP'),
+    ('transport-gap', 'theorem bad (n : Nat) : n * 0 = 0 * n := (Nat.zero_mul (n)).symm ▸ (Nat.mul_zero(n)).symm ▸ rfl', 'PS0V1-CALL-GAP'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + source + '\n')
@@ -73,6 +89,7 @@ for name, source, reason in [
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
     'native_syntax_shapes': shapes, 'original_index_tokens_and_ranges': 13,
     'original_projection_tokens_and_ranges': 3,
+    'native_transport_shape': transport_shape, 'original_transport_token_and_range': True,
     'projected_oracle': 'PS0_PROJECTED_INDEX:3:2:1',
     'native_projected_index_quotation_ownership': True,
     'scope': 'four pinned native indexed-access and three competing array-slice productions, PS operands beneath parenthesized projected heads and callable heads; thirteen original-token/range assertions, not all postfix/collection grammar',

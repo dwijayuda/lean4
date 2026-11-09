@@ -45,6 +45,11 @@ meta partial def originalProjectionSyntax? (source : Lean.Syntax) : Option Lean.
       source[0].isOfKind ``Lean.Parser.Term.proj then some source[0]
   else source.getArgs.findSome? originalProjectionSyntax?
 
+meta partial def originalTransportSyntax? (source : Lean.Syntax) : Option Lean.Syntax :=
+  if source.isOfKind `PS0.Operators.ownedBinary &&
+      source[0].isOfKind ``Lean.Parser.Term.subst then some source[0]
+  else source.getArgs.findSome? originalTransportSyntax?
+
 macro "indexOrigin " e:psTerm : term => do
   let some original := originalIndexSyntax? e.raw
     | Lean.Macro.throwError "PS0_INDEX_OWNERSHIP"
@@ -93,10 +98,24 @@ example : projectionOrigin (#[2, 3][1]?).getD(0) := by trivial
 example : projectionOrigin (#[2, 3][0:2]).size := by trivial
 example : projectionOrigin (#[(1, 2), (3, 4)][0]'(by decide)).1 := by trivial
 
+macro "transportOrigin " e:psTerm : term => do
+  let some original := originalTransportSyntax? e.raw
+    | Lean.Macro.throwError "PS0_TRANSPORT_OWNERSHIP"
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  let some native := nativeIndexSyntax? ``Lean.Parser.Term.subst lowered
+    | Lean.Macro.throwError "PS0_TRANSPORT_NATIVE_KIND"
+  unless original.getArgs.size == 3 && native.getArgs.size == 3 &&
+      original.getRange? == native.getRange? && original[1].eqWithInfo native[1] do
+    Lean.Macro.throwError "PS0_TRANSPORT_TOKEN_ORIGIN"
+  `(True)
+example (n : Nat) : transportOrigin (Nat.zero_mul(n)).symm ▸ (Nat.mul_zero(n)).symm ▸ rfl := by trivial
+
 meta def nativeIndexQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| #[2, 3][1]?)
 meta def nativeProjectedIndexQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| (#[2, 3][1]?).getD 0)
+meta def nativeTransportQuote : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| h ▸ rfl)
 run_cmd do
   let quoted ← Lean.Elab.liftMacroM nativeIndexQuote
   unless quoted.raw.isOfKind `«term__[_]_?» do
@@ -105,6 +124,10 @@ run_cmd do
   unless projected.raw.isOfKind ``Lean.Parser.Term.app &&
       (originalIndexSyntax? projected.raw).isNone do
     Lean.throwError "PS0_NATIVE_PROJECTED_INDEX_QUOTATION"
+  let transport ← Lean.Elab.liftMacroM nativeTransportQuote
+  unless transport.raw.isOfKind ``Lean.Parser.Term.subst &&
+      (originalTransportSyntax? transport.raw).isNone do
+    Lean.throwError "PS0_NATIVE_TRANSPORT_QUOTATION"
 
 const optionalResult: Nat := optionalValue.getD(0)
 const sliceBothSize: Nat := sliceBoth.size
