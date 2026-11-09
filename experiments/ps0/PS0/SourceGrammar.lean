@@ -77,6 +77,22 @@ private def escapedDeclaration (source : Syntax) : Bool :=
       ``Lean.Parser.Command.opaque, ``Lean.Parser.Command.axiom,
       ``Lean.Parser.Command.instance].contains native[1].getKind
 
+private def declarationDiagnostic (ctx : ParserContext) (state : ParserState) : String := Id.run do
+  let some category := getParserCategory? ctx.env `psCommand
+    | return "PS command category is unavailable"
+  let keep := fun (entry : Parser × Nat) =>
+    !(entry.1.info.collectKinds {}).contains `ps0NativeCommandBridge
+  let mut leadingTable : TokenMap (Parser × Nat) := {}
+  for (token, parsers) in category.tables.leadingTable do
+    for entry in (parsers.filter keep).reverse do
+      leadingTable := leadingTable.insert token entry
+  let tables := {category.tables with
+    leadingTable, leadingParsers := category.tables.leadingParsers.filter keep}
+  let owned := leadingParser `psCommand tables category.behavior
+    (mkCategoryAntiquotParser `psCommand).fn ctx state
+  if owned.hasError then return owned.toErrorMsg ctx.toInputContext
+  return s!"owned parser stopped at byte {owned.pos.byteIdx}"
+
 private def unownedCommand (parser : Parser) : Parser :=
   withFn (fun parse ctx state =>
     let (state, token) := peekToken ctx state
@@ -87,7 +103,8 @@ private def unownedCommand (parser : Parser) : Parser :=
         else
           let parsed := parse ctx state
           if !parsed.hasError && escapedDeclaration parsed.stxStack.back then
-            parsed.mkError "PS0-SOURCE-DECLARATION: standard declaration requires its PS adapter"
+            parsed.mkError ("PS0-SOURCE-DECLARATION: standard declaration requires its PS adapter; " ++
+              declarationDiagnostic ctx state)
           else parsed
     | _ => parse ctx state) parser
 
