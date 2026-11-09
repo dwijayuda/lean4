@@ -18,6 +18,9 @@ builtin_initialize
   registerBuiltinNodeKind ownedKind
   registerBuiltinNodeKind bridgeKind
 
+run_cmd do
+  modifyEnv fun env => addSyntaxNodeKind (addSyntaxNodeKind env ownedKind) bridgeKind
+
 private def label : Name → String
   | .str _ s => s
   | _ => ""
