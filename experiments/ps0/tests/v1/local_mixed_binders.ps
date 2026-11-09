@@ -115,9 +115,13 @@ const automaticValue: Nat :=
 const dependentDefault: Nat :=
   let step (x: Nat, y: Nat := add(x, 1)): Nat := add(x, y)
   step(4)
+const adjacentInstance: Nat :=
+  let step (x: Nat)[Inhabited(Nat)]: Nat := x
+  step(4)
 example : localShapes = 6 := by decide
 example : automaticValue = 4 := by decide
 example : dependentDefault = 9 := by decide
+example : adjacentInstance = 4 := by decide
 
 meta def nativeLocalQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| let step (x y : Nat) : Nat := Nat.add x y; step 2 3)

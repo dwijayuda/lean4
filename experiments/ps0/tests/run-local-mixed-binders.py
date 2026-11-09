@@ -25,6 +25,7 @@ def run(args, label, ok=True):
 fixture = Path('tests/v1/local_mixed_binders.ps')
 native_layouts = run(['lake', 'env', 'lean', 'tests/debug-local-layout.lean'], 'native-layouts')
 assert native_layouts.count('PS0_NATIVE_LOCAL_LAYOUT ') == 6
+assert 'PS0_LOCAL_ARRAY_UPDATE_BOUNDARY: PASS' in native_layouts
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'LocalMixed', work / 'native'], 'native')
 oracle = 'PS0_LOCAL_MIXED:7:7:7:8:7:5'
@@ -52,6 +53,20 @@ for label, text in bootstrap_sources.items():
     if label == 'migrated':
         args += ['-KsourceGrammar=true']
     run([*args, 'build', 'LocalMixedBootstrap'], label + '-bootstrap')
+    source_map = directory / 'lib/lean/LocalMixedBootstrap.ilean.ps0-source-map.json'
+    mapping = json.loads(source_map.read_text())
+    assert mapping['source'].encode() == source.read_bytes()
+    assert all(segment['kind'] == 'original' for segment in mapping['segments'])
+    shutil.copy2(source_map, work / (label + '-bootstrap-source-map.json'))
+    if label == 'migrated':
+        census_path = directory / 'lib/lean/LocalMixedBootstrap.ilean.ps0-source-census.json'
+        census = json.loads(census_path.read_text())
+        declarations = [row['declaration'] for row in census['commands'] if row['declaration']]
+        assert len(declarations) == 2
+        assert all(row['mode'] == 'mapped-ps' for row in declarations)
+        assert {row['production'] for row in declarations} == {
+            'PS0.StandardAdapters.ps0StandardFunction', 'PS0.StandardAdapters.ps0StandardConst'}
+        shutil.copy2(census_path, work / 'migrated-bootstrap-source-census.json')
     for relative in ['ir/LocalMixedBootstrap.c', 'lib/lean/LocalMixedBootstrap.olean']:
         path = directory / relative
         bootstrap_comparisons.setdefault(relative, {})[label] = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -65,7 +80,7 @@ for name, declaration, reason in [
     ('default-order', 'let step (x: Nat, y: Nat := add(x := 1, 2)): Nat := add(x, y)', 'PS0V1-CALL-ORDER'),
     ('default-type', 'let step (x: Nat, y: Nat := "bad"): Nat := add(x, y)', 'type mismatch'),
     ('empty-local', 'let step (): Nat := 1', 'Invalid pattern'),
-    ('instance-spacing', 'let step (x: Nat)[Inhabited(Nat)]: Nat := x', 'space'),
+    ('default-forward', 'let step (x: Nat, y: Nat := add(z, 1), z: Nat := 2): Nat := add(x, y)', 'Unknown identifier'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + 'const bad: Id(Nat) := do\n  ' + declaration + '\n  return step(4)\n')
@@ -80,6 +95,7 @@ for name, declaration, reason in [
     'native_layout_controls': 6, 'array_update_boundary': 'native parser only; not an elaboration/runtime claim',
     'prelude_native_parity': bootstrap_comparisons,
     'prelude_logical_imports': ['Init'],
+    'prelude_mapped_definitions': 2,
     'scope': 'finite named do/pure let and let-rec mixed/comma telescopes, native DSL control; not all local/where grammar',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
