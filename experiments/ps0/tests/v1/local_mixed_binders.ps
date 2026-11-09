@@ -118,10 +118,22 @@ const dependentDefault: Nat :=
 const adjacentInstance: Nat :=
   let step (x: Nat)[Inhabited(Nat)]: Nat := x
   step(4)
+const recursiveEquationValue: Nat :=
+  let rec step (x: Nat, y: Nat := add(1, 2)): Nat → Nat
+    | 0 => add(x, y)
+    | Nat.succ n => step(x, y, n)
+  step(4, 3, 0)
+const doRecursiveEquationValue: Id(Nat) := do
+  let rec step (x: Nat, y: Nat := add(1, 2)): Nat → Nat
+    | 0 => add(x, y)
+    | Nat.succ n => step(x, y, n)
+  return step(4, 3, 0)
 example : localShapes = 6 := by decide
 example : automaticValue = 4 := by decide
 example : dependentDefault = 9 := by decide
 example : adjacentInstance = 4 := by decide
+example : recursiveEquationValue = 7 := by decide
+example : doRecursiveEquationValue = 7 := by decide
 
 meta def nativeLocalQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| let step (x y : Nat) : Nat := Nat.add x y; step 2 3)
