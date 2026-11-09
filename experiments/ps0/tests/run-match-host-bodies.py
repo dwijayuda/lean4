@@ -253,7 +253,7 @@ function patternIf(n: Nat): Nat := if let some (Nat.succ k) := some(add(n, 1)) t
 guards += '''private theorem tupleValueResult : tupleValue 2 = (3, 2) := rfl
 private theorem listValueResult : listValue 2 = [3, 2] := rfl
 private theorem arrayValueResult : arrayValue 2 = #[3, 2] := rfl
-private theorem interpolationValueResult : interpolationValue 2 = "value:3" := rfl
+private theorem interpolationValueResult : interpolationValue 2 = s!"value:{3}" := rfl
 private theorem forallDomainResult : forallDomain = (∀ (n : Fin 3), n.val < 3) := rfl
 private theorem forallBodyResult : forallBody = (∀ (n : Nat), n = n) := rfl
 private theorem patternLetResult : patternLet 2 = 5 := rfl

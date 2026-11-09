@@ -5,7 +5,7 @@ const rightOperand: Nat := 1 + add(2, 3)
 const dollarOperand: Nat := Nat.succ $ add(1, 2)
 const dollarProjection: String := "; ".intercalate $ ["left", "right"]
 example : dollarOperand = 4 := by rfl
-example : dollarProjection = "left; right" := by rfl
+example : dollarProjection = "; ".intercalate ["left", "right"] := by rfl
 const leftAssoc: Nat := add(10, 0) - add(3, 0) - add(2, 0)
 const rightAssoc: Nat := add(2, 0) ^ add(3, 0) ^ add(2, 0)
 const grouped: Nat := (add(1, 2) + 1) * add(2, 0)
@@ -46,5 +46,6 @@ run_cmd do
   unless quoted.raw.getArgs.size == 3 && quoted.raw[0].isOfKind ``Lean.Parser.Term.app &&
       quoted.raw[0][1].getArgs.size == 1 do
     Lean.throwError "PS0_NATIVE_OPERATOR_QUOTATION"
-def main : IO Unit :=
+def main : IO Unit := do
   IO.println s!"PS0_OPERATORS:{mixed}:{rightOperand}:{leftAssoc}:{rightAssoc}:{grouped}:{fromFin}:{custom}:{localOp}:{defaultValue}:{typeValue}:{mixedValue}"
+  IO.println s!"PS0_DOLLAR:{dollarOperand}:{dollarProjection}"

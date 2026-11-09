@@ -117,6 +117,8 @@ function runtimeTry(n: Nat): IO(Nat) := do
   catch _ => return n + 2
   finally pure(())
 
+function runtimeInterpolation(n: Nat): String := s!"value:{pairSum(n, 1)}"
+
 def main : IO Unit := do
   let mut total := 3
   for k in [0:2] do total := total + k
@@ -124,4 +126,5 @@ def main : IO Unit := do
   let a ← runtimeTry(0)
   let b ← runtimeTry(2)
   unless a == 2 && b == 3 do throw(IO.userError("PS0_HOST_TRY_RUNTIME"))
+  unless runtimeInterpolation(2) == "value:3" do throw(IO.userError("PS0_HOST_INTERPOLATION_RUNTIME"))
   IO.println "PS0_HOST_ORIGINS: PASS"
