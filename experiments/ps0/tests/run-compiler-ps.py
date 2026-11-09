@@ -132,9 +132,19 @@ if args.source_plans:
         assert hashlib.sha256(converted).hexdigest() == item['converted_sha256'] == plan['result_sha256']
         target.write_bytes(converted)
         source_plans[module] = plan
+    self_relatives = sorted(set(originals) - {name.replace('.', '/') + '.lean' for name in entries})
+    self_modules = [str(Path(relative).with_suffix('')).replace('/', '.') for relative in self_relatives]
+    # Converted modern headers require matching modern dependency metadata.
+    # This SDK-assisted preparation does not enter the final graph's build directory.
+    self_metadata = work / 'self-native-metadata'
+    run(['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
+         '-Kbootstrap=true', '-Kroots=PS0,PS0Main', '-KrootModule=PS0Main',
+         '-Kdriver=' + str(driver), '-KmoduleNames=' + ','.join(self_modules),
+         '-KprojectBuildDir=' + str(self_metadata), 'build', 'PS0Project'], 'self-native-metadata')
+    self_env = {**os.environ, 'LEAN_PATH': str(self_metadata / 'lib/lean')}
     # The compiler's own modules must also enter the transformed graph.
     # Use their original native syntax and the same source planner, not a fallback.
-    for relative in sorted(set(originals) - {name.replace('.', '/') + '.lean' for name in entries}):
+    for relative in self_relatives:
         module = str(Path(relative).with_suffix('')).replace('/', '.')
         target = source / Path(relative).with_suffix('.ps')
         folder = evidence / 'self-source-plans' / module
@@ -142,7 +152,7 @@ if args.source_plans:
         original, census, converted, plan_file = [folder / name for name in
                                                 ['original.ps', 'native-census.json', 'converted.ps', 'plan.json']]
         shutil.copy2(target, original)
-        run(['lake', 'env', driver, 'census-source', original, module, census], 'self-census-' + module)
+        run([driver, 'census-source', original, module, census], 'self-census-' + module, env=self_env)
         run(['python3', 'tests/migrate-compiler-heads.py', census, original, converted,
              '--plan', plan_file, '--allow-empty'], 'self-plan-' + module)
         plan = json.loads(plan_file.read_text())
