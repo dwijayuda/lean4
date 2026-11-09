@@ -77,7 +77,7 @@ run_cmd do
     let inputContext := Lean.Parser.mkInputContext input "<direct-pattern-let>"
     let state := patternParser.fn.run inputContext {env := target, options := {}}
       (Lean.Parser.getTokenTable target) (Lean.Parser.mkParserState input)
-    Lean.logInfo m!"PS0_BOUNDARY14_DIRECT {context} pos={state.pos.byteIdx} errors={state.toErrorMsg inputContext} syntax={repr state.stxStack.toArray}"
+    Lean.logInfo m!"PS0_BOUNDARY14_DIRECT {context} pos={state.pos.byteIdx} errorCount={state.allErrors.size} errors={state.toErrorMsg inputContext} syntax={repr (state.stxStack.extract 0 state.stxStack.size)}"
     for (label, nativeCategory, psCategory, native, ps) in cases do
       for (mode, category, input) in [("native", nativeCategory, native), ("ps", psCategory, ps)] do
         let (category, input) := if category == `doSeq then (`term, "do" ++ input)
