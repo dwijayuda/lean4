@@ -43,7 +43,8 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
   let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
   let keep := fun (entry : Parser × Nat) =>
     let collected := entry.1.info.collectKinds {}
-    !kinds.any collected.contains && !collected.contains ``Lean.Parser.Term.pipeProj
+    !kinds.any collected.contains && !collected.contains ``Lean.Parser.Term.pipeProj &&
+      !collected.contains ``Lean.Parser.Term.pipeCompletion
   let mut trailingTable : TokenMap (Parser × Nat) := {}
   for (token, parsers) in category.tables.trailingTable do
     for entry in (parsers.filter keep).reverse do
