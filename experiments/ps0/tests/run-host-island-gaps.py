@@ -39,7 +39,9 @@ for name, native, ps in cases:
                             capture_output=True, text=True, timeout=300)
     diagnostic = result.stdout + result.stderr
     (work / (name + '-ps.log')).write_text(diagnostic)
+    print(diagnostic, end='', flush=True)
     observations.append(dict(case=name, native_baseline_passed=True, ps_exit_code=result.returncode,
+                             diagnostic_excerpt=diagnostic.splitlines()[:8],
                              invalid_host_gap_rejected=result.returncode != 0 and 'PS0V1-CALL-GAP' in diagnostic))
     print('PS0_HOST_ISLAND_OBSERVATION:' + json.dumps(observations[-1], sort_keys=True), flush=True)
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
