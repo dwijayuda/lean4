@@ -61,7 +61,7 @@ private def operandParser (parser : Parser) : Parser :=
 private unsafe def leadingWith (head : Bool) : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
     | return initial.mkUnexpectedError "PS0V1-OP-CATEGORY: missing native term category"
-  let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
+  let kinds := if head then #[] else PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
   let keepLeading := fun (entry : Parser × Nat) =>
     !(entry.1.info.collectKinds {}).contains `PS0.pscvBracedExpression
   let mut leadingTable : TokenMap (Parser × Nat) := {}
