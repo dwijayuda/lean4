@@ -18,6 +18,8 @@ unsafe def main : IO Unit := do
       let elapsed := (← IO.monoMsNow) - start
       unless !state.hasError && state.pos == text.rawEndPos do
         throw (IO.userError s!"PS0_PAREN_PARSE: {category}/{depth}")
-      rows := rows.push <| Json.mkObj [("category", toJson category.toString),
+      let row := Json.mkObj [("category", toJson category.toString),
         ("depth", toJson depth), ("milliseconds", toJson elapsed)]
+      IO.println ("PS0_PAREN_ROW:" ++ row.compress)
+      rows := rows.push row
   IO.println ("PS0_PAREN_BUDGET:" ++ (toJson rows).compress)
