@@ -91,21 +91,18 @@ private def rejectHostGap (source : Lean.Syntax) : MacroM Unit := do
             if stop < start then
               withRef arg do Macro.throwError "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
 
-private partial def checkProjectionSubject (operators : Array Name) (source : Lean.Syntax) : MacroM Unit := do
+private partial def checkProjectionSubject (source : Lean.Syntax) : MacroM Unit := do
   if let .node (.synthetic ..) _ _ := source then return ()
   rejectHostGap source
   if source.isOfKind ``Lean.Parser.Term.paren then
-    checkProjectionSubject operators source[1]
+    checkProjectionSubject source[1]
   else if source.isOfKind ``Lean.Parser.Term.proj then
-    checkProjectionSubject operators source[0]
+    checkProjectionSubject source[0]
   else if source.isOfKind ``Lean.Parser.Term.app then
-    checkProjectionSubject operators source[0]
+    checkProjectionSubject source[0]
     for argument in source[1].getArgs do
-      checkProjectionSubject operators
+      checkProjectionSubject
         (if argument.isOfKind ``Lean.Parser.Term.namedArgument then argument[3] else argument)
-  else if operators.contains source.getKind && source.getArgs.size == 3 then
-    checkProjectionSubject operators source[0]
-    checkProjectionSubject operators source[2]
 
 mutual
 partial def lower (category : Name) (source : Lean.Syntax) :
@@ -117,7 +114,7 @@ partial def lower (category : Name) (source : Lean.Syntax) :
       let native := source[0]
       rejectHostGap native
       if native.isOfKind ``Lean.Parser.Term.proj then
-        checkProjectionSubject (PS0.OperatorDescriptors.binaryKinds (← getEnv) (← getOptions)) native[0]
+        checkProjectionSubject native[0]
       return native
     if source.isOfKind `PS0.Operators.ownedBinary then
       let native := source[0]
