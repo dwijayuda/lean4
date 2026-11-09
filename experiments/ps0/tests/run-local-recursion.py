@@ -92,7 +92,7 @@ for name, body, reason in [
     ('body-gap', '  let rec step (n : Nat) := add (n, 1)\n  return step(1)', 'PS0V1-CALL-GAP'),
     ('equation-gap', '  let rec step : Nat → Nat\n    | n => add (n, 1)\n  return step(1)', 'PS0V1-CALL-GAP'),
     ('body-order', '  let rec step (n : Nat) := add(x := n, 1)\n  return step(1)', 'PS0V1-CALL-ORDER'),
-    ('default-type', '  let rec step (n : Nat := "wrong") := n\n  return step(1)', 'Type mismatch'),
+    ('default-type', '  let rec step (n : Nat := "wrong") := n\n  return step(1)', 'Application type mismatch'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + 'const bad: Id(Nat) := do\n' + body + '\n')
