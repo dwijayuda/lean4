@@ -1,5 +1,37 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-09 — native operators with binder/default integration: Linux PASS
+
+Qualified implementation **90e32a5ec5ce258e0310c1084512e076d283d682**, runner **7345a50e7cd811f2f46dab12afb8c2eb491c187d**, [run 42542351315](https://github.com/dwijayuda/pskernel/actions/runs/42542351315): **all five jobs PASS** — project **128919944343**, native **128919944382**, proof-linked **128919944333**, host **128919944234**, pre-adapter rejection **128919944456**.
+
+The thin adapter borrows the current environment's native binary parser tables, priorities, descriptor shapes, Pratt checks, scoped notation and native elaboration. A temporary environment category dispatch routes only validated term operands to PS using native cache reset/restore helpers. Native operator nodes/tokens survive lowering. The inspected pinned SDK inventory contains **86 trailing descriptor declarations**; this is an inventory count, not a claim that every descriptor or notation shape is supported.
+
+Native prefix selection queries the actual native parser over its precedence range. The failed trace showed builtin arrow returns **lhsPrec=1024**, which is not its binding threshold; the corrected adapter no longer equates these values. This restores **PS0V1-CALL-EMPTY** after arrow result types and supports a native curried **List Nat -> Nat** type operand. Native syntax-kind registration and formatter/parenthesizer hooks use Lean's parser infrastructure in the owning module.
+
+**PS0_OPERATORS:17:6:5:512:8:1:10:10:4:2:4** and **PS0_NATIVE_OPERATOR_OPERANDS: PASS** cover PS calls on both sides, native precedence/associativity, grouping, equality/arrow types, scoped/local operators, mixed binder types/defaults/instance order, runtime values, call-gap/order diagnostics, out-of-scope rejection and independently native quotation syntax. **PS0_BINDERS:3:3:2:3:3:3**, **PS0_SIGNATURE_HEADS:3:3:3** and **PS0_BINDER_OPERANDS: PASS** remain green. Native Lake generates C/objects and links/runs the executables. Existing recursive projects, macros/lambdas, prelude/no-hidden-import, modern startup, scoped/mutual commands and UTF-8/CRLF/source-origin suites pass.
+
+All **15 converted heads in four actual compiler modules** retain strict original/converted C and public olean byte equality. [Independent artifact inspection 42542833648/job 128921344044](https://github.com/dwijayuda/pskernel/actions/runs/42542833648/job/128921344044), runner **454ad81fffcb6145b8a5da0e14d2a970008ccb03**, passes all four comparison records, operator evidence, descriptor inventory and relocated host metadata. Current SDK-backed relocated driver SHA-256 **60d21d7c408344edb5ebfd9d4cd5075ca5d888c928fe2bc925662656a8f9a4bd**; **108** metadata files preserve byte hashes including **PS0/Operators.olean**. Raw host evidence SHA-256 **d63b4d7a736e3eda2cc714c85f59676c68a112e56adecfd4aa01228682c85317**; sorted host metadata JSON SHA-256 **67d5c2eb0f0bd91037fbbba0f29d3873d43759c84554dbdbdd2925d91a9f5fa5**. SDK dependencies remain explicit.
+
+Project artifact **13642430069**, ZIP SHA-256 **710a898ff031b813c7a4191ab7c2c533620ad11b27e8550c1ab44264be384f83**; native **13642365111**, SHA-256 **811d084e7621830e137de83825b43a97a37e9f472c3933947dc19a8cc1e32ab4**; proof **13641584331**, SHA-256 **de541649f584081ebfa51dc49625f1402e4faf4de48ba6105e23f35824de0d27**; baseline **13641867846**, SHA-256 **74ce11e366689c551cf09284dfc69c4fadcdb2117b6f7a1ac0911a5880c8c617**.
+
+The separate pre-adapter job builds source **6dc96dd983c0d37fc91bf39d05777540f4f1322d** and requires native rejection of the three-line operator probe: **unexpected token '+'; expected command**, checker exit **1**. Probe SHA-256 **2cb5919ba8e80d3aaf9af1b8b0098d62bc5dcb0379da3a423c5a12d6582df794**, full original fixture SHA-256 **14e8364299e8f40b354daaf2dfb35a505269c7bef7ed240108d38ed5b2ef3ae7**. This establishes the missing operator behavior; the initial inventory initializer failure was only a harness failure. Exact failed source/runner/run/job identities and the cancelled intermediate run are retained in both JSON ledgers. Opaque native identity remains checked on a native application; binary expressions now use their owned adapter. The positive Unit-call oracle uses adjacent **inferredNullary()** where the newly owned equality exposes the PS call boundary.
+
+**Goal ACTIVE / NOT COMPLETE.** Full canonical ProofScript compiler-source conversion is not established. This current pin has finite grammar and compiler-module qualification, not a full current-head compiler bootstrap. The separate earlier source **2cba0bc26df49c52d653598fd9c791f23209199c** retains all-six-job native-compatible fixed-point qualification below (72,797 native-compatible census rows / zero mapped PS rows). **240 of 242 tracked obligations remain PENDING; two historical finite cases are PASS**; grammarMigrationComplete and verified_execution remain false.
+
+Next actual compiler candidate: pinned **src/Lean/Compiler/LCNF/EmitUtil.lean**, blob **a1283439481c82fe7835b7b2d743e5e57bfd1111**, **usesModuleFrom** has a direct lambda argument with **!= / &&** operands. Add source-conformance evidence first, adapt only explicitly selected original roles, and require strict whole-module C/public olean equality. This next candidate is not implemented or qualified. Remaining notation shapes, layout/field/constructor/local-declaration roles, complete source conversion, current-head bootstrap, and automatic diagnostic/IDE source presentation remain open.
+
+
+## 2026-11-09 — full native-compatible compiler fixed point and fresh grammar host PASS
+
+Exact source `2cba0bc26df49c52d653598fd9c791f23209199c`, runner `b83ebb191c21c0985c9dc6df3a4cca11ae31e121`: [Linux run 42532849633](https://github.com/dwijayuda/pskernel/actions/runs/42532849633) passed all six jobs. Stage one job 128891725901 and stage two job 128901327549 each built 2,567 modules (2,546 pinned upstream + 21 PS0) with 5,138 native Lake jobs, C/object/static archive/executable linking, runtime checks, and full module/origin census. Stage two reports zero changed C files and zero changed public olean files across all modules.
+
+Both stages passed relocated grammar-host and freshly .ps-built compiler grammar-host checks with 200 metadata files from their own builds; pinned Lean SDK dependencies remain explicit. Independent stage-two artifact inspection [run 42539789861/job 128911926744](https://github.com/dwijayuda/pskernel/actions/runs/42539789861/job/128911926744), runner `e009acafdd65b73dfdd363063cf014554c278400`, passed byte hashes and empty fixed-point arrays. Driver SHA-256 `4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9`; raw host evidence SHA-256 `1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1`; sorted host metadata JSON SHA-256 `6fada1ca81b868b0c5aec19c299a4416e241afb8785e35a573e5f9980d3b4fb6`. Stage-one artifact 13639457688 SHA-256 `13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b`; stage-two artifact 13639899416 SHA-256 `1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c`.
+
+Scope boundary: this earlier source pin has 72,797 native-compatible selected census rows and zero mapped PS rows. It qualifies full native-compatible .ps rebuilds and fixed point, not canonical ProofScript conversion or later macro/lambda/operator source pins. 240 of 242 tracked obligations remain PENDING; two historical finite cases are PASS; grammarMigrationComplete and verified_execution remain false.
+
+Operator candidate `e39fb9aa0c62468ece715a0138e8e939ebc8e8cb`, runner `1a8f1e6f4d71f78b4347354df03f2e942a09fd77`, Linux run 42539661055 failed the initial clean build on qualified parser type names in HostCategories. This is a build failure, not functional negative evidence. Corrected candidate `88a45dfdf6351e245b0b3bc0ff24f84b65b7b2e3`, runner `27aec23f926edc86dd5866d455cfd3b6b9f53228`, is pending Linux qualification; no operator conformance claimed.
+
+
 ## Owned lambda operands and exact compiler output — Linux PASS
 
 Qualified source **7f885fcc1caa9277e3633c849d086bb2614e143e**, runner **be50016de092e47d1df9306aac8a941ef6b49bf4**, [run 42537205963](https://github.com/dwijayuda/pskernel/actions/runs/42537205963): **all four jobs PASS** — project **128904045087**, native **128904044934**, proof-linked **128904044798**, host **128904044594**.
@@ -17,7 +49,7 @@ The native source census additionally records **only direct single-body lambda a
 
 Test-first run **42536259326 / 128901122247** fails before the adapter; first implementation **42536727424 / 128902548521** retains all compiler parity but its fixture also used unrelated unsupported call-left arrow syntax, legacy reserved **unicode(** spelling and a nonadjacent **MacroM** type application. The revised fixture isolates lambda operands; these broader parser/lexer roles are not promoted to completion. Both failed source/runner/artifact identities remain in the ledgers.
 
-## Fresh .ps-built compiler host — stage one PASS, stage two IN PROGRESS
+## Historical stage-one snapshot — superseded by the full fixed-point PASS above
 
 Separate exact source **2cba0bc26df49c52d653598fd9c791f23209199c**, runner **b83ebb191c21c0985c9dc6df3a4cca11ae31e121**, [run 42532849633](https://github.com/dwijayuda/pskernel/actions/runs/42532849633): prerequisite jobs all PASS, compiler stage one **128891725901 PASS**. **2,567 modules / 5,138 native Lake jobs** build and link the .ps source forest. The resulting executable and **200 host metadata files freshly compiled from that forest** pass the relocated missing-host negative, PS prelude compile/link/runtime, stage-option and no-hidden-import probes.
 
@@ -25,7 +57,7 @@ Driver SHA-256 **4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e
 
 This earlier forest has **72,797 native-compatible selected rows / zero mapped PS rows**. Stage two **128901327549 IN PROGRESS** will require the same fresh host checks and strict all-module C/public-olean fixed point. It neither completes canonical grammar conversion nor qualifies this newer lambda/macro head. The earlier fixed point at source **28904e5a7ccb19a15e311ecc654541dc0ee639ec** remains separate.
 
-Goal **ACTIVE / NOT COMPLETE**. Remaining owned operator/layout/field/constructor/local-declaration contexts, complete checked source conversion, full current-head bootstrap and diagnostic/IDE fidelity remain open. All 242 broad obligations remain PENDING; no trust/reference pin or exact-output gate is relaxed and no verified-execution certificate is issued. Earlier pending lambda and stage-one notes below are superseded by these exact finite results.
+Goal **ACTIVE / NOT COMPLETE**. Remaining owned operator/layout/field/constructor/local-declaration contexts, complete checked source conversion, full current-head bootstrap and diagnostic/IDE fidelity remain open. 240 of 242 tracked obligations remain PENDING; two historical finite cases are PASS; no trust/reference pin or exact-output gate is relaxed and no verified-execution certificate is issued. Earlier pending lambda and stage-one notes below are superseded by these exact finite results.
 
 
 ## Registered owned term macros — native Lean dispatch PASS
@@ -40,7 +72,7 @@ The owned **psTerm** boundary now calls pinned **Lean.Macro.expandMacro?** for r
 
 The same passing run retains **all 15 converted compiler heads / four modules** with strict C/public-olean parity, mixed/default/nested-command/quoted-source tests and the SDK-backed relocated native grammar host. The separate full compiler integration **42532849633**, source **2cba0bc26df49c52d653598fd9c791f23209199c**, runner **b83ebb191c21c0985c9dc6df3a4cca11ae31e121**, has **all four prerequisite jobs PASS** and compiler stage one **128891725901 IN PROGRESS** as last checked. Its fresh .ps-built grammar host and stage-two fixed point are **not qualified yet**; this older pin does not qualify the newer macro implementation.
 
-Goal **ACTIVE / NOT COMPLETE**. Complete source conversion and remaining owned operand roles, including richer lambda/operator/layout/field/constructor contexts, plus full diagnostic/IDE fidelity, remain open. All 242 broad obligations remain PENDING; no verified-execution certificate is issued.
+Goal **ACTIVE / NOT COMPLETE**. Complete source conversion and remaining owned operand roles, including richer lambda/operator/layout/field/constructor contexts, plus full diagnostic/IDE fidelity, remain open. 240 of 242 tracked obligations remain PENDING; two historical finite cases are PASS; no verified-execution certificate is issued.
 
 
 ## Fresh .ps-built compiler grammar-host integration — IN PROGRESS
@@ -71,7 +103,7 @@ ScopeM uses **10 explicit edits**; OtherDecl uses **3**, preserving instance/def
 
 [Independent inspection 42532451421](https://github.com/dwijayuda/pskernel/actions/runs/42532451421), runner **0da9b2bc17077b3c237bd4ab377fad06edaeaa45**, job **128889408555 PASS**, verifies exact module/source hashes, native comparisons, retained edit plans and host manifest. [Mixed/default artifact 13637936782](https://github.com/dwijayuda/pskernel/actions/runs/42531956835/artifacts/13637936782), ZIP SHA-256 **12cc0c080d2e5b5e07559278a0b91d7533643ecfe0ba3131fa698bbcd62bbdc5**. [Expanded native-host artifact 13637607576](https://github.com/dwijayuda/pskernel/actions/runs/42532092264/artifacts/13637607576), ZIP SHA-256 **9ada1694e4ac3d252fa7bd904319e6630d534190d5e56227dd901654cb9321bc**. All native/proof artifact IDs and digests, test-first planner failures and resolved harness failures remain in both JSON ledgers.
 
-The earlier full native-compatible **2,567-module / 5,138-job** per-stage fixed point at source **28904e5a7ccb19a15e311ecc654541dc0ee639ec** remains qualified separately in **run 42522976977** with all six jobs PASS and zero C/public-olean differences. It has **72,792 native-compatible selected rows / zero mapped PS rows** and does not qualify this later head. Goal **ACTIVE / NOT COMPLETE**: remaining owned grammar roles, complete checked source conversion, fully migrated grammar-host bootstrap and source diagnostic/IDE fidelity remain open; all 242 broad obligations remain PENDING, and no verified-execution certificate is issued. Earlier ScopeM/default/host pending notes below are superseded by this finite result.
+The earlier full native-compatible **2,567-module / 5,138-job** per-stage fixed point at source **28904e5a7ccb19a15e311ecc654541dc0ee639ec** remains qualified separately in **run 42522976977** with all six jobs PASS and zero C/public-olean differences. It has **72,792 native-compatible selected rows / zero mapped PS rows** and does not qualify this later head. Goal **ACTIVE / NOT COMPLETE**: remaining owned grammar roles, complete checked source conversion, fully migrated grammar-host bootstrap and source diagnostic/IDE fidelity remain open; 240 of 242 tracked obligations remain PENDING; two historical finite cases are PASS, and no verified-execution certificate is issued. Earlier ScopeM/default/host pending notes below are superseded by this finite result.
 
 
 ## Native strict-binder lexical fidelity — Linux PASS
@@ -571,8 +603,8 @@ body operands. Native `.lean` is unaffected.
 
 The v1 coverage ledger has seven additional **standard-operand
 candidate fixture links** on existing call-case IDs, not seven new
-requirements or qualifying PASS records. All 242 entries remain
-unqualified until an exact-commit Lean 4.35.0 CI result is examined.
+requirements or qualifying PASS records. In that initial candidate snapshot all 242 entries were unqualified.
+The current ledger has 240 PENDING entries and two historical finite PASS cases.
 
 
 ### Inferred-result and private source alias parity

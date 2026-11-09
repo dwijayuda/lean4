@@ -2439,211 +2439,6 @@
       "ciRun": null
     }
   ],
-  "currentContinuation": {
-    "branch": "feat/ps0-recursive-projects-20261108",
-    "status": "QUALIFIED_PINNED_COMPILER_SOURCE_REPLACEMENT_AND_C_OLEAN_FIXED_POINT",
-    "goal": "Replace Lean compiler .lean program sources with .ps using native Lean and Lake infrastructure",
-    "fixtures": [
-      "tests/run-project.py",
-      "tests/run-categories.py",
-      "tests/run-compiler-ps.py"
-    ],
-    "note": "Job conclusions are recorded individually; the overall workflow and compiler-source/fixed-point gates are not yet PASS. Broad families remain pending.",
-    "checkpoint": {
-      "sourceCommit": "b842b26fa2dffaee6a73f03fb70ca77683ccaf31",
-      "runnerCommit": "a2ff849cd861a32e52dbfee94f0283c749f37040",
-      "run": "https://github.com/dwijayuda/pskernel/actions/runs/42483607627",
-      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
-      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
-      "projectJob": 128740672990,
-      "nativeJob": 128740672968,
-      "hostJob": 128740672920,
-      "projectArtifact": {
-        "id": 13618347877,
-        "sha256": "1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980"
-      },
-      "nativeArtifact": {
-        "id": 13618945967,
-        "sha256": "af1386f8c90e7a630cb85b12e101b76fda5b30bf4b120aefac76a44425c721af"
-      }
-    },
-    "boundedEvidence": [
-      {
-        "fixture": "tests/run-project.py",
-        "jobId": 128740672990,
-        "oracles": [
-          "PS0_RECURSIVE_PROJECT: PASS",
-          "PS0_PROJECT_LOCAL_ENTRY: PASS"
-        ],
-        "scope": "recursive .ps public/meta imports, native dependency, actual native execution 42:7 then 45:7 then 45:9, warm executable hash/mtime reuse, no-replacement publication, prelude/no hidden imports, local-main requirement, collisions, native cycles and private visibility"
-      },
-      {
-        "fixture": "tests/run-categories.py + tests/v1/standard_category_slots.ps",
-        "jobId": 128740672990,
-        "oracles": [
-          "PS0_CATEGORY_SLOTS:3:3:3:3:3",
-          "PS0_STANDARD_CATEGORY_SLOTS: PASS"
-        ],
-        "scope": "mapped declaration/type/proof operands, general/chained/closure calls, selected conditional/single-return do/braced exact, exact native tuple DSL/quotation ownership, order/duplicate/gap negatives"
-      },
-      {
-        "fixture": "tests/run-native.py",
-        "jobId": 128740672968,
-        "oracles": [
-          "PS0_LAKE_NATIVE: PASS"
-        ],
-        "scope": "single-module native execution, cache/source/import invalidation, atomic/no-replacement publication, invalid entry/call/visibility, actual unresolved-symbol linker failure"
-      }
-    ],
-    "compilerMigration": {
-      "status": "FAIL_NATIVE_BOOTSTRAP_SYMBOL_IDENTITY",
-      "jobId": 128741050411,
-      "expectedPinnedSourceFiles": 2546,
-      "manifest": "compiler-source-inventory.json",
-      "test": "tests/run-compiler-ps.py",
-      "required": "all source Git blobs, actual .ps input selection, generated olean/C artifacts, native migrated executable, and second clean-stage output comparison",
-      "observedModules": 2564,
-      "observedByteIdentical": 2541,
-      "diagnostic": "Init/Coe.ps: native extern String.hash sought lp_ps0_String_hash under ordinary ps0 package identity",
-      "artifactId": 13618597372,
-      "artifactSha256": "c52865ecad9ffe006e8c34c06128dc2e0672cb6b10f67594c99bd2cfcda14c57",
-      "nextCandidate": "Native Lake bootstrap mode with pinned SDK include headers; no source/kernel/compiler semantic relaxation"
-    },
-    "bootstrapCandidate": {
-      "checkpoint": {
-        "sourceCommit": "46541521a95ac7829279faf441f922a977061f6f",
-        "runnerCommit": "8f31edbc9012876b9b0024f97f5db6e972e938d1",
-        "run": "https://github.com/dwijayuda/pskernel/actions/runs/42484334810",
-        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
-        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
-        "projectJob": 128742816345,
-        "nativeJob": 128742815964,
-        "hostJob": 128742816215,
-        "projectArtifact": {
-          "id": 13618417596,
-          "sha256": "3afec24187928ff6612d82a83e9d1a649f0e3bb5e48ffe3cf139db6f692045e8"
-        },
-        "nativeArtifact": {
-          "id": 13619106570,
-          "sha256": "b2606413204ed50d1baba66b0e3f7f85b84db5ca7db858e457e81140bf96d5d0"
-        },
-        "proofJob": 128742816265,
-        "proofArtifact": {
-          "id": 13618907619,
-          "sha256": "8d01f936943a3d4026802436cec9cba03234ff63adf6f448c0ab198702cceb01"
-        }
-      },
-      "status": "FULL_NATIVE_BUILD_PASS_SMOKE_HARNESS_FAIL",
-      "compilerStage1Job": 128743130971,
-      "bootstrapMode": "native Lake bootstrap=true; package identity none; pinned SDK include headers",
-      "note": "Compiler-source and fixed-point qualification remain open; prior failure is retained separately.",
-      "compilerSourceBuild": {
-        "moduleCount": 2564,
-        "nativeLakeJobs": 5131,
-        "status": "PASS_BUILD_LINK_AND_INPUT_ARTIFACT_ASSERTIONS",
-        "environmentCommand": "PASS",
-        "sourceSmoke": "FAIL_MISSING_REBUILT_PS0_LEAN_PATH",
-        "perModuleOutputHashesRetained": false,
-        "binaryRetained": false,
-        "artifactId": 13620495494,
-        "artifactSha256": "c0afd12a60321f83d1ff7bbf1810c77c2fd90d3cc5a988b2cfb28df228706749"
-      }
-    },
-    "linkProvenance": {
-      "sourceCommit": "46541521a95ac7829279faf441f922a977061f6f",
-      "runnerCommit": "3dddb837c8b29b7619c945bcc3d4304ef7d47ff3",
-      "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488039370",
-      "jobId": 128754113727,
-      "artifactId": 13620281682,
-      "artifactSha256": "95dbb7bc8665da8cf269c9fb7e7ae5bc60d7480c8a67b0b3e42ef0198f5c97bf",
-      "status": "PASS_LINK_MAP_ONLY",
-      "oracle": "Actual rebuilt Lean/Elab/Frontend, Lean/Compiler/LCNF/EmitC, PS0/LakeFrontend and PS0Main C objects; zero SDK libLean.a/libStd.a/libInit.a source-archive lines",
-      "limits": "ELF and runtime smoke not qualified at this failed build checkpoint"
-    },
-    "currentCandidate": {
-      "checkpoint": {
-        "sourceCommit": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
-        "runnerCommit": "0bca62aefdb00992d891f57c1a608dc0dacd60a3",
-        "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488162021",
-        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
-        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
-        "projectJob": 128754567397,
-        "nativeJob": 128754567736,
-        "hostJob": 128754567546,
-        "projectArtifact": {
-          "id": 13619929692,
-          "sha256": "d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d"
-        },
-        "nativeArtifact": {
-          "id": 13620303005,
-          "sha256": "b7e489f9fa186b0fe31a64830a02fdb9ad07dab8eb5b430529001ea1d4c03a99"
-        },
-        "proofJob": 128754567672,
-        "proofArtifact": {
-          "id": 13620970053,
-          "sha256": "9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900"
-        }
-      },
-      "status": "PASS_ALL_SIX_LINUX_JOBS",
-      "compilerStage1Job": 128754834515,
-      "changes": [
-        "native library search path for migrated smoke",
-        "retain executable and per-module hashes before smoke",
-        "native Lake shared compiler input job with executed driver-invalidation test"
-      ],
-      "compilerStage1": {
-        "jobId": 128754834515,
-        "status": "PASS",
-        "moduleCount": 2564,
-        "pinnedSourceCount": 2546,
-        "nativeLakeJobs": 5132,
-        "artifactId": 13622010384,
-        "artifactSha256": "de68e47310d1a58631c98072d4c786eede503f282c18830c3d0f13c2f422b23b",
-        "binaryAndPerModuleHashesRetained": true,
-        "runtimeSmoke": "PASS"
-      },
-      "compilerStage2": {
-        "jobId": 128763580779,
-        "status": "PASS",
-        "moduleCount": 2564,
-        "nativeLakeJobs": 5132,
-        "changedC": 0,
-        "changedOlean": 0,
-        "artifactId": 13621859608,
-        "artifactSha256": "dae31cf63a2098b2cfa67940936424fa16fd361c700d202b54c934ad24eb3827",
-        "oracle": "PS0_COMPILER_PS_FIXED_POINT: PASS; PS0_COMPILER_PS_SOURCE: PASS; modules=2564",
-        "scope": "fresh Linux job; exact stage-one migrated executable; all pinned inputs and all generated C/public olean hashes match; runtime source smoke PASS"
-      },
-      "nativeLinkAndElfAudit": {
-        "source": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
-        "runner": "54a3d0356609a24ec94090adedcc0a1645134f6b",
-        "run": 42491501152,
-        "job": 128764669538,
-        "status": "PASS_LINK_MAP_AND_ELF",
-        "driverSha256": "3c7371ca39e9689dd55c1b6fa1fbd3821f10c584a96c81f605e8350380bd339a",
-        "sourceArchiveFallback": 0,
-        "sourceSharedFallback": 0,
-        "needed": [
-          "libc.so.6",
-          "ld-linux-x86-64.so.2",
-          "libpthread.so.0",
-          "libdl.so.2",
-          "librt.so.1",
-          "libm.so.6"
-        ],
-        "nativeSymbols": [
-          "l_Lean_Elab_runFrontend",
-          "l_Lean_Compiler_LCNF_emitC",
-          "l_PS0_LakeFrontend_compile"
-        ],
-        "runtimeSmoke": "PASS",
-        "artifactId": 13621487247,
-        "artifactSha256": "8c9159eefd30f5204d277c888ea64eb40b5618beacca8a6825515f202637f6b6"
-      },
-      "scope": "All 2546 pinned compiler .lean Git blobs and 18 PS0 modules built from .ps; native C backend and reused pinned C++ runtime; generated capability forest, no upstream/main source cutover; no complete PS-specific grammar or formal execution-correspondence claim.",
-      "note": "Final documentation-only heads may follow the exact qualified implementation/test source; the immutable runner selector remains pinned to that source."
-    }
-  },
   "grammarFidelityContinuation": {
     "status": "PASS_FINITE_GRAMMAR_AND_SOURCE_ORIGIN_CASES",
     "sourceCommit": "1d76c795edbbaa79fe4d938f073114e5bd76a3ae",
@@ -5223,22 +5018,821 @@
       "job": 128904326108
     }
   },
+  "ps_built_grammar_host_fixed_point": {
+    "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
+    "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
+    "run": 42532849633,
+    "stageOne": {
+      "status": "PASS",
+      "job": 128891725901,
+      "modules": 2567,
+      "nativeLakeJobs": 5138,
+      "freshPsBuiltGrammarHost": "PASS",
+      "hostMetadataFiles": 200,
+      "sourceCensusNativeCompatible": 72797,
+      "sourceCensusMappedPs": 0,
+      "artifact": 13639457688,
+      "sha256": "13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b"
+    },
+    "stageTwo": {
+      "status": "PASS",
+      "job": 128901327549,
+      "modules": 2567,
+      "nativeLakeJobs": 5138,
+      "freshPsBuiltGrammarHost": "PASS",
+      "hostMetadataFiles": 200,
+      "changedC": 0,
+      "changedPublicOlean": 0,
+      "sourceCensusNativeCompatible": 72797,
+      "sourceCensusMappedPs": 0,
+      "artifact": 13639899416,
+      "sha256": "1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c"
+    },
+    "scope": "all six Linux jobs; two full native-compatible compiler stages, fresh grammar-host metadata/runtime in each, strict all-module C/public olean fixed point; not whole canonical PS syntax conversion or later head qualification",
+    "verified_execution": false,
+    "migrationSummary": {
+      "schema": "ps0-compiler-source-migration/1",
+      "source_commit": "2cba0bc26df49c52d653598fd9c791f23209199c",
+      "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "module_count": 2567,
+      "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+      "verified_execution": false,
+      "bootstrap_package_identity": null,
+      "stage_lean_options": {
+        "interpreter.prefer_native": false
+      },
+      "runtime_smoke": "PASS",
+      "runtime_grammar_host": {
+        "status": "PASS",
+        "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+        "evidence_sha256": "1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1",
+        "metadata_files": 200,
+        "provenance": "fresh all-.ps compiler output metadata; explicit pinned Lean SDK dependencies"
+      },
+      "lean_header_sha256": "eb951e1171d39b828e7ad60aed0b90759598b678bfe58cf85c65a1559c021bf9",
+      "scope": "All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers"
+    },
+    "inspection": {
+      "runner": "4fc9653592b931653be89036cd614719516e260a",
+      "run": 42537298767,
+      "job": 128904326108
+    },
+    "status": "PASS",
+    "artifacts": [
+      {
+        "id": 13639899416,
+        "name": "ps0-compiler-stage2-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c"
+      },
+      {
+        "id": 13639457688,
+        "name": "ps0-compiler-stage1-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b"
+      },
+      {
+        "id": 13638251967,
+        "name": "ps0-native-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:8eeacace72f646f5f4e9ef0006e45a097d7a73f8430c137e62e3afbd4e7aaf04"
+      },
+      {
+        "id": 13638061672,
+        "name": "ps0-external-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:b75d2fa1d622eb408a499c528fd5fb6311d9a424e42b2c0cfd0ba00730d8fb50"
+      },
+      {
+        "id": 13637694934,
+        "name": "ps0-project-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:0d1323b692e255641b16e0211eea4e39b4d591cdfda4a61a62144b32867209f8"
+      }
+    ],
+    "stageTwoInspection": {
+      "runner": "e009acafdd65b73dfdd363063cf014554c278400",
+      "run": 42539789861,
+      "job": 128911926744,
+      "status": "PASS",
+      "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+      "hostEvidence_sha256": "1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1",
+      "sortedHostMetadata_sha256": "6fada1ca81b868b0c5aec19c299a4416e241afb8785e35a573e5f9980d3b4fb6"
+    },
+    "fixedPoint": {
+      "changedC": [],
+      "changedPublicOlean": []
+    }
+  },
+  "historicalRecursiveProjectContinuation": {
+    "branch": "feat/ps0-recursive-projects-20261108",
+    "status": "QUALIFIED_PINNED_COMPILER_SOURCE_REPLACEMENT_AND_C_OLEAN_FIXED_POINT",
+    "goal": "Replace Lean compiler .lean program sources with .ps using native Lean and Lake infrastructure",
+    "fixtures": [
+      "tests/run-project.py",
+      "tests/run-categories.py",
+      "tests/run-compiler-ps.py"
+    ],
+    "note": "Job conclusions are recorded individually; the overall workflow and compiler-source/fixed-point gates are not yet PASS. Broad families remain pending.",
+    "checkpoint": {
+      "sourceCommit": "b842b26fa2dffaee6a73f03fb70ca77683ccaf31",
+      "runnerCommit": "a2ff849cd861a32e52dbfee94f0283c749f37040",
+      "run": "https://github.com/dwijayuda/pskernel/actions/runs/42483607627",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "projectJob": 128740672990,
+      "nativeJob": 128740672968,
+      "hostJob": 128740672920,
+      "projectArtifact": {
+        "id": 13618347877,
+        "sha256": "1676b6c5b5da9d84f24a569bf53877fc424824018337fca8caf814baebc71980"
+      },
+      "nativeArtifact": {
+        "id": 13618945967,
+        "sha256": "af1386f8c90e7a630cb85b12e101b76fda5b30bf4b120aefac76a44425c721af"
+      }
+    },
+    "boundedEvidence": [
+      {
+        "fixture": "tests/run-project.py",
+        "jobId": 128740672990,
+        "oracles": [
+          "PS0_RECURSIVE_PROJECT: PASS",
+          "PS0_PROJECT_LOCAL_ENTRY: PASS"
+        ],
+        "scope": "recursive .ps public/meta imports, native dependency, actual native execution 42:7 then 45:7 then 45:9, warm executable hash/mtime reuse, no-replacement publication, prelude/no hidden imports, local-main requirement, collisions, native cycles and private visibility"
+      },
+      {
+        "fixture": "tests/run-categories.py + tests/v1/standard_category_slots.ps",
+        "jobId": 128740672990,
+        "oracles": [
+          "PS0_CATEGORY_SLOTS:3:3:3:3:3",
+          "PS0_STANDARD_CATEGORY_SLOTS: PASS"
+        ],
+        "scope": "mapped declaration/type/proof operands, general/chained/closure calls, selected conditional/single-return do/braced exact, exact native tuple DSL/quotation ownership, order/duplicate/gap negatives"
+      },
+      {
+        "fixture": "tests/run-native.py",
+        "jobId": 128740672968,
+        "oracles": [
+          "PS0_LAKE_NATIVE: PASS"
+        ],
+        "scope": "single-module native execution, cache/source/import invalidation, atomic/no-replacement publication, invalid entry/call/visibility, actual unresolved-symbol linker failure"
+      }
+    ],
+    "compilerMigration": {
+      "status": "FAIL_NATIVE_BOOTSTRAP_SYMBOL_IDENTITY",
+      "jobId": 128741050411,
+      "expectedPinnedSourceFiles": 2546,
+      "manifest": "compiler-source-inventory.json",
+      "test": "tests/run-compiler-ps.py",
+      "required": "all source Git blobs, actual .ps input selection, generated olean/C artifacts, native migrated executable, and second clean-stage output comparison",
+      "observedModules": 2564,
+      "observedByteIdentical": 2541,
+      "diagnostic": "Init/Coe.ps: native extern String.hash sought lp_ps0_String_hash under ordinary ps0 package identity",
+      "artifactId": 13618597372,
+      "artifactSha256": "c52865ecad9ffe006e8c34c06128dc2e0672cb6b10f67594c99bd2cfcda14c57",
+      "nextCandidate": "Native Lake bootstrap mode with pinned SDK include headers; no source/kernel/compiler semantic relaxation"
+    },
+    "bootstrapCandidate": {
+      "checkpoint": {
+        "sourceCommit": "46541521a95ac7829279faf441f922a977061f6f",
+        "runnerCommit": "8f31edbc9012876b9b0024f97f5db6e972e938d1",
+        "run": "https://github.com/dwijayuda/pskernel/actions/runs/42484334810",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "projectJob": 128742816345,
+        "nativeJob": 128742815964,
+        "hostJob": 128742816215,
+        "projectArtifact": {
+          "id": 13618417596,
+          "sha256": "3afec24187928ff6612d82a83e9d1a649f0e3bb5e48ffe3cf139db6f692045e8"
+        },
+        "nativeArtifact": {
+          "id": 13619106570,
+          "sha256": "b2606413204ed50d1baba66b0e3f7f85b84db5ca7db858e457e81140bf96d5d0"
+        },
+        "proofJob": 128742816265,
+        "proofArtifact": {
+          "id": 13618907619,
+          "sha256": "8d01f936943a3d4026802436cec9cba03234ff63adf6f448c0ab198702cceb01"
+        }
+      },
+      "status": "FULL_NATIVE_BUILD_PASS_SMOKE_HARNESS_FAIL",
+      "compilerStage1Job": 128743130971,
+      "bootstrapMode": "native Lake bootstrap=true; package identity none; pinned SDK include headers",
+      "note": "Compiler-source and fixed-point qualification remain open; prior failure is retained separately.",
+      "compilerSourceBuild": {
+        "moduleCount": 2564,
+        "nativeLakeJobs": 5131,
+        "status": "PASS_BUILD_LINK_AND_INPUT_ARTIFACT_ASSERTIONS",
+        "environmentCommand": "PASS",
+        "sourceSmoke": "FAIL_MISSING_REBUILT_PS0_LEAN_PATH",
+        "perModuleOutputHashesRetained": false,
+        "binaryRetained": false,
+        "artifactId": 13620495494,
+        "artifactSha256": "c0afd12a60321f83d1ff7bbf1810c77c2fd90d3cc5a988b2cfb28df228706749"
+      }
+    },
+    "linkProvenance": {
+      "sourceCommit": "46541521a95ac7829279faf441f922a977061f6f",
+      "runnerCommit": "3dddb837c8b29b7619c945bcc3d4304ef7d47ff3",
+      "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488039370",
+      "jobId": 128754113727,
+      "artifactId": 13620281682,
+      "artifactSha256": "95dbb7bc8665da8cf269c9fb7e7ae5bc60d7480c8a67b0b3e42ef0198f5c97bf",
+      "status": "PASS_LINK_MAP_ONLY",
+      "oracle": "Actual rebuilt Lean/Elab/Frontend, Lean/Compiler/LCNF/EmitC, PS0/LakeFrontend and PS0Main C objects; zero SDK libLean.a/libStd.a/libInit.a source-archive lines",
+      "limits": "ELF and runtime smoke not qualified at this failed build checkpoint"
+    },
+    "currentCandidate": {
+      "checkpoint": {
+        "sourceCommit": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
+        "runnerCommit": "0bca62aefdb00992d891f57c1a608dc0dacd60a3",
+        "run": "https://github.com/dwijayuda/pskernel/actions/runs/42488162021",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "projectJob": 128754567397,
+        "nativeJob": 128754567736,
+        "hostJob": 128754567546,
+        "projectArtifact": {
+          "id": 13619929692,
+          "sha256": "d1ea345719129239bf82acf92b543546e513e375d9e4211dfca815577edd759d"
+        },
+        "nativeArtifact": {
+          "id": 13620303005,
+          "sha256": "b7e489f9fa186b0fe31a64830a02fdb9ad07dab8eb5b430529001ea1d4c03a99"
+        },
+        "proofJob": 128754567672,
+        "proofArtifact": {
+          "id": 13620970053,
+          "sha256": "9f0e5517f1f8947ff73a97603855728a6adb630dd1262ef0bc95302151052900"
+        }
+      },
+      "status": "PASS_ALL_SIX_LINUX_JOBS",
+      "compilerStage1Job": 128754834515,
+      "changes": [
+        "native library search path for migrated smoke",
+        "retain executable and per-module hashes before smoke",
+        "native Lake shared compiler input job with executed driver-invalidation test"
+      ],
+      "compilerStage1": {
+        "jobId": 128754834515,
+        "status": "PASS",
+        "moduleCount": 2564,
+        "pinnedSourceCount": 2546,
+        "nativeLakeJobs": 5132,
+        "artifactId": 13622010384,
+        "artifactSha256": "de68e47310d1a58631c98072d4c786eede503f282c18830c3d0f13c2f422b23b",
+        "binaryAndPerModuleHashesRetained": true,
+        "runtimeSmoke": "PASS"
+      },
+      "compilerStage2": {
+        "jobId": 128763580779,
+        "status": "PASS",
+        "moduleCount": 2564,
+        "nativeLakeJobs": 5132,
+        "changedC": 0,
+        "changedOlean": 0,
+        "artifactId": 13621859608,
+        "artifactSha256": "dae31cf63a2098b2cfa67940936424fa16fd361c700d202b54c934ad24eb3827",
+        "oracle": "PS0_COMPILER_PS_FIXED_POINT: PASS; PS0_COMPILER_PS_SOURCE: PASS; modules=2564",
+        "scope": "fresh Linux job; exact stage-one migrated executable; all pinned inputs and all generated C/public olean hashes match; runtime source smoke PASS"
+      },
+      "nativeLinkAndElfAudit": {
+        "source": "fb86cc425f0688bf3c6e98ff6c7adb8e899fe883",
+        "runner": "54a3d0356609a24ec94090adedcc0a1645134f6b",
+        "run": 42491501152,
+        "job": 128764669538,
+        "status": "PASS_LINK_MAP_AND_ELF",
+        "driverSha256": "3c7371ca39e9689dd55c1b6fa1fbd3821f10c584a96c81f605e8350380bd339a",
+        "sourceArchiveFallback": 0,
+        "sourceSharedFallback": 0,
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2",
+          "libpthread.so.0",
+          "libdl.so.2",
+          "librt.so.1",
+          "libm.so.6"
+        ],
+        "nativeSymbols": [
+          "l_Lean_Elab_runFrontend",
+          "l_Lean_Compiler_LCNF_emitC",
+          "l_PS0_LakeFrontend_compile"
+        ],
+        "runtimeSmoke": "PASS",
+        "artifactId": 13621487247,
+        "artifactSha256": "8c9159eefd30f5204d277c888ea64eb40b5618beacca8a6825515f202637f6b6"
+      },
+      "scope": "All 2546 pinned compiler .lean Git blobs and 18 PS0 modules built from .ps; native C backend and reused pinned C++ runtime; generated capability forest, no upstream/main source cutover; no complete PS-specific grammar or formal execution-correspondence claim.",
+      "note": "Final documentation-only heads may follow the exact qualified implementation/test source; the immutable runner selector remains pinned to that source."
+    }
+  },
+  "nativeOperatorQualifiedEvidence": {
+    "status": "PASS_FINITE_NATIVE_OPERATOR_ADAPTERS",
+    "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+    "runner": "7345a50e7cd811f2f46dab12afb8c2eb491c187d",
+    "run": 42542351315,
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "jobs": [
+      {
+        "id": 128919944234,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128919944333,
+        "name": "proof-linked",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128919944343,
+        "name": "project-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128919944382,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128919944456,
+        "name": "operator-baseline",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13642430069,
+        "name": "ps0-project-90e32a5ec5ce258e0310c1084512e076d283d682-42542351315",
+        "digest": "sha256:710a898ff031b813c7a4191ab7c2c533620ad11b27e8550c1ab44264be384f83"
+      },
+      {
+        "id": 13642365111,
+        "name": "ps0-native-90e32a5ec5ce258e0310c1084512e076d283d682-42542351315",
+        "digest": "sha256:811d084e7621830e137de83825b43a97a37e9f472c3933947dc19a8cc1e32ab4"
+      },
+      {
+        "id": 13641867846,
+        "name": "ps0-operator-baseline-42542351315",
+        "digest": "sha256:74ce11e366689c551cf09284dfc69c4fadcdb2117b6f7a1ac0911a5880c8c617"
+      },
+      {
+        "id": 13641584331,
+        "name": "ps0-external-90e32a5ec5ce258e0310c1084512e076d283d682-42542351315",
+        "digest": "sha256:de541649f584081ebfa51dc49625f1402e4faf4de48ba6105e23f35824de0d27"
+      }
+    ],
+    "inspection": {
+      "runner": "454ad81fffcb6145b8a5da0e14d2a970008ccb03",
+      "run": 42542833648,
+      "job": 128921344044,
+      "status": "PASS"
+    },
+    "modules": [
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/ClosedTermCache.c": {
+            "native": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2",
+            "ps": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2"
+          },
+          "lib/lean/Lean/Compiler/ClosedTermCache.olean": {
+            "native": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e",
+            "ps": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e"
+          }
+        },
+        "converted_declarations": [
+          "cacheClosedTermName",
+          "getClosedTermName?",
+          "isClosedTermName"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "module": "Lean.Compiler.ClosedTermCache",
+        "pinned_blob": "20b7acf5d684789ab52b81dda7def4b19568213c",
+        "scope": "real typed compiler declaration heads, including explicit nested commands; native bodies retained; not whole grammar migration",
+        "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+        "unchanged_abbrev_adapters": [],
+        "verified_execution": false
+      },
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/LCNF/DeclHash.c": {
+            "native": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c",
+            "ps": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c"
+          },
+          "lib/lean/Lean/Compiler/LCNF/DeclHash.olean": {
+            "native": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb",
+            "ps": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb"
+          }
+        },
+        "converted_declarations": [
+          "hashParams",
+          "hashAlt",
+          "hashAlts",
+          "hashCode"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "module": "Lean.Compiler.LCNF.DeclHash",
+        "pinned_blob": "5f818560cb8fcba0df6f64acb6bdc01c48425189",
+        "scope": "real typed compiler declaration heads, including explicit nested commands; native bodies retained; not whole grammar migration",
+        "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+        "unchanged_abbrev_adapters": [],
+        "verified_execution": false
+      },
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/LCNF/OtherDecl.c": {
+            "native": "a7374e6b1908187a18e4343b31c0d53a2dc4dec852b99b63e7770fe7074cdc3b",
+            "ps": "a7374e6b1908187a18e4343b31c0d53a2dc4dec852b99b63e7770fe7074cdc3b"
+          },
+          "lib/lean/Lean/Compiler/LCNF/OtherDecl.olean": {
+            "native": "5ef05c49d8b84529d1e37e70b4d5c3f52f26ddbe27a97a71c402ff341a408f5b",
+            "ps": "5ef05c49d8b84529d1e37e70b4d5c3f52f26ddbe27a97a71c402ff341a408f5b"
+          }
+        },
+        "converted_declarations": [
+          "getOtherDeclType"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "module": "Lean.Compiler.LCNF.OtherDecl",
+        "pinned_blob": "a09e23d6f39bb7e87e7a5b10c2f0fc7556575cd4",
+        "scope": "real typed compiler declaration heads, including explicit nested commands; native bodies retained; not whole grammar migration",
+        "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+        "unchanged_abbrev_adapters": [],
+        "verified_execution": false
+      },
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/LCNF/ScopeM.c": {
+            "native": "0a149b683a22ff893a4631811a531bb483b19ef7845b036be8e7dbdd5be0de39",
+            "ps": "0a149b683a22ff893a4631811a531bb483b19ef7845b036be8e7dbdd5be0de39"
+          },
+          "lib/lean/Lean/Compiler/LCNF/ScopeM.olean": {
+            "native": "5e79495ce517159a2850bf5b9cb0ea1f530fca39f568672584a881dcb7ad36b7",
+            "ps": "5e79495ce517159a2850bf5b9cb0ea1f530fca39f568672584a881dcb7ad36b7"
+          }
+        },
+        "converted_declarations": [
+          "getScope",
+          "setScope",
+          "clearScope",
+          "withBackTrackingScope",
+          "withNewScope",
+          "isInScope",
+          "addToScope"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "module": "Lean.Compiler.LCNF.ScopeM",
+        "pinned_blob": "5bc78059af7e9f16d980688c88c3eaeecae3ab1a",
+        "scope": "real typed compiler declaration heads, including explicit nested commands; native bodies retained; not whole grammar migration",
+        "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+        "unchanged_abbrev_adapters": [
+          "ScopeM"
+        ],
+        "verified_execution": false
+      }
+    ],
+    "operand": {
+      "oracle": "PS0_OPERATORS:17:6:5:512:8:1:10:10:4:2:4",
+      "scope": "finite native operator descriptor adapter, precedence/scoping and owned term operands; not all notation or whole grammar",
+      "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+      "verified_execution": false
+    },
+    "descriptor": {
+      "count": 86,
+      "file_sha256": "0a122f1626c70ac5fca8e5fd0f21dfb28d80c8047a4c3612a31e65425ac2c42f",
+      "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
+    },
+    "host": {
+      "driver_sha256": "60d21d7c408344edb5ebfd9d4cd5075ca5d888c928fe2bc925662656a8f9a4bd",
+      "metadata_files": 108,
+      "raw_evidence_sha256": "d63b4d7a736e3eda2cc714c85f59676c68a112e56adecfd4aa01228682c85317",
+      "sorted_metadata_sha256": "67d5c2eb0f0bd91037fbbba0f29d3873d43759c84554dbdbdd2925d91a9f5fa5",
+      "source": "90e32a5ec5ce258e0310c1084512e076d283d682"
+    },
+    "pre_adapter": {
+      "checker_exit": 1,
+      "expected_rejection": "unconsumed binary operator after owned PS call before operator adapters",
+      "fixture_sha256": "14e8364299e8f40b354daaf2dfb35a505269c7bef7ed240108d38ed5b2ef3ae7",
+      "probe_sha256": "2cb5919ba8e80d3aaf9af1b8b0098d62bc5dcb0379da3a423c5a12d6582df794",
+      "source": "6dc96dd983c0d37fc91bf39d05777540f4f1322d",
+      "status": "PASS",
+      "verified_execution": false
+    },
+    "implementation": {
+      "nativeParserSelection": "current environment/scoped native parser categories; native descriptor validation for single-token/single-term trailing binary parsers plus native builtin arrow",
+      "nativeLeadingBoundary": "query native category parser over its supported precedence range; do not equate returned lhsPrec with binding threshold",
+      "nativeTrailing": "native indexed tables, parser priorities, longestMatchFn, checkPrec/checkLhsPrec and notation elaboration",
+      "ownedOperands": "temporary environment category dispatch with native fresh-cache/restore helpers; no global term override",
+      "lowering": "retain native operator node and token, lower only validated operand roles",
+      "metadataRegistration": "native syntax-kind environment registration and owning-module parser attribute hooks/formatters"
+    },
+    "oracles": [
+      "PS0_OPERATORS:17:6:5:512:8:1:10:10:4:2:4",
+      "PS0_NATIVE_OPERATOR_OPERANDS: PASS",
+      "PS0_BINDERS:3:3:2:3:3:3",
+      "PS0_SIGNATURE_HEADS:3:3:3",
+      "PS0_BINDER_OPERANDS: PASS",
+      "PS0_NATIVE_OPERATOR_PRE_ADAPTER_REJECTION: PASS",
+      "PS0_SOURCE_FIDELITY_MAP: PASS"
+    ],
+    "scope": "finite operator composition including call LHS/RHS, precedence/associativity, grouping, equality/arrow types, native curried List Nat arrow operand, scoped/local operators, mixed binder/type/default operands, call diagnostics, native quotations, native Lake C/object/link/runtime, 15 exact compiler heads in four actual modules and relocated SDK-backed host; not all notation, current-head full compiler bootstrap or complete PS grammar/canonical corpus conversion",
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "failedCandidates": [
+      {
+        "source": "6dc96dd983c0d37fc91bf39d05777540f4f1322d",
+        "runner": "3f0e0163d4fdadbc6c0e55fa64d178c43f2811ce",
+        "run": 42538853269,
+        "job": 128909092545,
+        "observed": "inventory harness failed initialization before functional operator checks; not functional negative evidence"
+      },
+      {
+        "source": "e39fb9aa0c62468ece715a0138e8e939ebc8e8cb",
+        "runner": "1a8f1e6f4d71f78b4347354df03f2e942a09fd77",
+        "run": 42539661055,
+        "job": 128911533945,
+        "observed": "clean build: incorrectly qualified native parser types"
+      },
+      {
+        "source": "88a45dfdf6351e245b0b3bc0ff24f84b65b7b2e3",
+        "runner": "27aec23f926edc86dd5866d455cfd3b6b9f53228",
+        "run": 42540160992,
+        "job": 128913074206,
+        "observed": "clean build: imported parser formatter generation requires owning-module hooks"
+      },
+      {
+        "source": "f3f1bc9a20922176d2500a26dee641b311d67474",
+        "runner": "6a6b1ab623b10cbf9ea87fcb6e284c53283f3dba",
+        "run": 42540481427,
+        "job": 128914069044,
+        "observed": "clean build: imported parser generation still refused before owning-module hooks"
+      },
+      {
+        "source": "42860300b2a93ed126a754ac6e08361e9e3ff46e",
+        "runner": "6404a5e90f9efb4f578a8a3e2678db7d43a5be74",
+        "run": 42540615807,
+        "job": 128914460240,
+        "observed": "clean build: native syntax kinds must exist in parser environment before hooks"
+      },
+      {
+        "source": "fb35081ec62723272b58e51949e50e142ed6498f",
+        "runner": "c54e95c9d14d2af0ecb3d0eb2dd2c1a45d678161",
+        "run": 42540728063,
+        "job": 128914805254,
+        "observed": "builtin IO registration alone did not update current parser environment"
+      },
+      {
+        "source": "1e4d828b666d5c09d79fb370d37f58bb6f1ba728",
+        "runner": "f3200c860a764269768f059227c1a8b4355bb271",
+        "run": 42540845974,
+        "job": 128915178179,
+        "observed": "operator suite and compiler parity pass; opaque-native operator fixture and empty returned-function diagnostic fail"
+      },
+      {
+        "source": "d5ed3d6d3d9b8991bd4f19e5d3b452955c729c08",
+        "runner": "94d95120e23e9a7c1bf065aaeddac054a6e5f6ea",
+        "run": 42541509303,
+        "job": 128917251481,
+        "observed": "trace observes builtin arrow lhsPrec=1024 and command stops before empty-call parentheses; binder diagnostic fails; native Unit call with whitespace now exposed in owned equality"
+      },
+      {
+        "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+        "runner": "479c8c14ca8e2c178d78f311f6db01368b09e27a",
+        "run": 42542086390,
+        "job": 128919034762,
+        "status": "CANCELLED_BY_NEW_RUN",
+        "baselineJob": 128919034947,
+        "observed": "functional binder/operator positives pass; baseline checker correctly rejects + but harness expected tuple mismatch; final run corrects exact expected diagnostic without changing implementation"
+      }
+    ]
+  },
+  "operator_adapter_candidate": {
+    "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+    "runner": "7345a50e7cd811f2f46dab12afb8c2eb491c187d",
+    "run": 42542351315,
+    "status": "QUALIFIED_FINITE",
+    "evidence": "nativeOperatorQualifiedEvidence",
+    "verified_execution": false
+  },
+  "psBuiltGrammarHostFixedPointQualifiedEvidence": {
+    "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
+    "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
+    "run": 42532849633,
+    "stageOne": {
+      "status": "PASS",
+      "job": 128891725901,
+      "modules": 2567,
+      "nativeLakeJobs": 5138,
+      "freshPsBuiltGrammarHost": "PASS",
+      "hostMetadataFiles": 200,
+      "sourceCensusNativeCompatible": 72797,
+      "sourceCensusMappedPs": 0,
+      "artifact": 13639457688,
+      "sha256": "13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b"
+    },
+    "stageTwo": {
+      "status": "PASS",
+      "job": 128901327549,
+      "modules": 2567,
+      "nativeLakeJobs": 5138,
+      "freshPsBuiltGrammarHost": "PASS",
+      "hostMetadataFiles": 200,
+      "changedC": 0,
+      "changedPublicOlean": 0,
+      "sourceCensusNativeCompatible": 72797,
+      "sourceCensusMappedPs": 0,
+      "artifact": 13639899416,
+      "sha256": "1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c"
+    },
+    "scope": "all six Linux jobs; two full native-compatible compiler stages, fresh grammar-host metadata/runtime in each, strict all-module C/public olean fixed point; not whole canonical PS syntax conversion or later head qualification",
+    "verified_execution": false,
+    "migrationSummary": {
+      "schema": "ps0-compiler-source-migration/1",
+      "source_commit": "2cba0bc26df49c52d653598fd9c791f23209199c",
+      "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "module_count": 2567,
+      "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+      "verified_execution": false,
+      "bootstrap_package_identity": null,
+      "stage_lean_options": {
+        "interpreter.prefer_native": false
+      },
+      "runtime_smoke": "PASS",
+      "runtime_grammar_host": {
+        "status": "PASS",
+        "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+        "evidence_sha256": "1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1",
+        "metadata_files": 200,
+        "provenance": "fresh all-.ps compiler output metadata; explicit pinned Lean SDK dependencies"
+      },
+      "lean_header_sha256": "eb951e1171d39b828e7ad60aed0b90759598b678bfe58cf85c65a1559c021bf9",
+      "scope": "All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers"
+    },
+    "inspection": {
+      "runner": "4fc9653592b931653be89036cd614719516e260a",
+      "run": 42537298767,
+      "job": 128904326108
+    },
+    "status": "PASS",
+    "artifacts": [
+      {
+        "id": 13639899416,
+        "name": "ps0-compiler-stage2-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c"
+      },
+      {
+        "id": 13639457688,
+        "name": "ps0-compiler-stage1-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b"
+      },
+      {
+        "id": 13638251967,
+        "name": "ps0-native-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:8eeacace72f646f5f4e9ef0006e45a097d7a73f8430c137e62e3afbd4e7aaf04"
+      },
+      {
+        "id": 13638061672,
+        "name": "ps0-external-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:b75d2fa1d622eb408a499c528fd5fb6311d9a424e42b2c0cfd0ba00730d8fb50"
+      },
+      {
+        "id": 13637694934,
+        "name": "ps0-project-2cba0bc26df49c52d653598fd9c791f23209199c-42532849633",
+        "digest": "sha256:0d1323b692e255641b16e0211eea4e39b4d591cdfda4a61a62144b32867209f8"
+      }
+    ],
+    "stageTwoInspection": {
+      "runner": "e009acafdd65b73dfdd363063cf014554c278400",
+      "run": 42539789861,
+      "job": 128911926744,
+      "status": "PASS",
+      "driver_sha256": "4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9",
+      "hostEvidence_sha256": "1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1",
+      "sortedHostMetadata_sha256": "6fada1ca81b868b0c5aec19c299a4416e241afb8785e35a573e5f9980d3b4fb6"
+    },
+    "fixedPoint": {
+      "changedC": [],
+      "changedPublicOlean": []
+    }
+  },
   "psBuiltGrammarHostCandidateEvidence": {
     "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
     "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
     "run": 42532849633,
     "pr": 234,
-    "status": "IN_PROGRESS",
-    "scope": "full native-compatible compiler stages plus relocated grammar hosting with metadata freshly produced from all-.ps compiler outputs; SDK dependencies explicit; not whole canonical PS grammar conversion",
-    "grammarMigrationComplete": false,
-    "verified_execution": false,
+    "status": "PASS_ALL_SIX_LINUX_JOBS",
     "stageOne": {
       "status": "PASS",
-      "job": 128891725901
+      "job": 128891725901,
+      "modules": 2567,
+      "nativeLakeJobs": 5138,
+      "freshPsBuiltGrammarHost": "PASS",
+      "hostMetadataFiles": 200,
+      "sourceCensusNativeCompatible": 72797,
+      "sourceCensusMappedPs": 0,
+      "artifact": 13639457688,
+      "sha256": "13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b"
     },
     "stageTwo": {
-      "status": "IN_PROGRESS",
-      "job": 128901327549
+      "status": "PASS",
+      "job": 128901327549,
+      "modules": 2567,
+      "nativeLakeJobs": 5138,
+      "freshPsBuiltGrammarHost": "PASS",
+      "hostMetadataFiles": 200,
+      "changedC": 0,
+      "changedPublicOlean": 0,
+      "sourceCensusNativeCompatible": 72797,
+      "sourceCensusMappedPs": 0,
+      "artifact": 13639899416,
+      "sha256": "1d8a0f86f5f324a8b9ec98f26613a2dd1c80a27067340044bc31a047ba59388c"
+    },
+    "evidence": "psBuiltGrammarHostFixedPointQualifiedEvidence",
+    "scope": "all six Linux jobs; two full native-compatible compiler stages, fresh grammar-host metadata/runtime in each, strict all-module C/public olean fixed point; not whole canonical PS syntax conversion or later head qualification",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "currentContinuation": {
+    "status": "ACTIVE_CANONICAL_PS_COMPILER_MIGRATION_INCOMPLETE",
+    "branch": "feat/ps0-native-operators-20261109",
+    "goal": "Entire pinned Lean4 compiler corpus in .ps using ProofScript syntax and grammars, reusing Lean4 and Lake end to end; renamed native-only sources do not complete the goal",
+    "qualifiedFiniteCheckpoint": {
+      "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
+      "runner": "7345a50e7cd811f2f46dab12afb8c2eb491c187d",
+      "run": 42542351315,
+      "evidence": "nativeOperatorQualifiedEvidence",
+      "convertedCompilerHeads": 15,
+      "compilerModules": 4
+    },
+    "qualifiedNativeCompatibleFullCompiler": {
+      "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
+      "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
+      "run": 42532849633,
+      "evidence": "psBuiltGrammarHostFixedPointQualifiedEvidence",
+      "modules": 2567,
+      "nativeCompatibleSelectedRows": 72797,
+      "mappedPsSelectedRows": 0
+    },
+    "remaining": [
+      "complete canonical PS grammar/source conversion of all 2546 upstream modules",
+      "remaining native notation/layout/field/constructor/local-declaration roles",
+      "current-head full compiler bootstrap and fixed point",
+      "automatic original-source diagnostic/IDE presentation and full fidelity"
+    ],
+    "nextActualCompilerCandidate": {
+      "path": "src/Lean/Compiler/LCNF/EmitUtil.lean",
+      "blob": "a1283439481c82fe7835b7b2d743e5e57bfd1111",
+      "declaration": "usesModuleFrom",
+      "sourcePin": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "rationale": "actual root native application env.header.modules.any with direct unparenthesized lambda; body != and && operators exercise finite owned operators through owned lambda",
+      "needed": [
+        "write source-conformance test first",
+        "allow explicit planner declaration selection without hiding unconverted collectUsedDecls",
+        "record mapped PS valueRootKind from actual original source callback",
+        "adapt finite direct lambda argument root calls without arbitrary subtree traversal",
+        "strict native C/public olean equality and wholemodule scope boundaries"
+      ],
+      "scope": "one proposed next actual compiler function; not implemented or qualified"
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "history": "Prior recursive project continuation is retained as historicalRecursiveProjectContinuation in v1-coverage.json; immutable earlier evidence records remain source-pinned.",
+    "statusTotals": {
+      "historicalPassCases": [
+        "PS0-P-CALL-01",
+        "PS0-N-MOD-04"
+      ],
+      "PENDING": 240,
+      "featureFamiliesPending": 100,
+      "boundaryWitnessesPending": 31,
+      "acceptanceCasesPending": 109,
+      "note": "No case status is changed by the native operator checkpoint. Historical finite PASS cases remain source-pinned.",
+      "PASS": 2,
+      "total": 242
     }
+  },
+  "statusTotals": {
+    "historicalPassCases": [
+      "PS0-P-CALL-01",
+      "PS0-N-MOD-04"
+    ],
+    "PENDING": 240,
+    "featureFamiliesPending": 100,
+    "boundaryWitnessesPending": 31,
+    "acceptanceCasesPending": 109,
+    "note": "No case status is changed by the native operator checkpoint. Historical finite PASS cases remain source-pinned.",
+    "PASS": 2,
+    "total": 242
   }
 }

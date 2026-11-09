@@ -1,0 +1,46 @@
+/-! Owned calls compose with native operator precedence, notation and scopes. -/
+function add(x: Nat, y: Nat): Nat := x + y
+const mixed: Nat := add(1, 2) + add(3, 4) * 2
+const rightOperand: Nat := 1 + add(2, 3)
+const leftAssoc: Nat := add(10, 0) - add(3, 0) - add(2, 0)
+const rightAssoc: Nat := add(2, 0) ^ add(3, 0) ^ add(2, 0)
+const grouped: Nat := (add(1, 2) + 1) * add(2, 0)
+const equalityProof: add(1, 2) = 3 := by rfl
+const fnFromFin: Fin(add(1, 2)) → Nat := fun (x : Fin(add(1, 2))) => x.val
+const fromFin: Nat := fnFromFin(⟨1, by decide⟩)
+const curriedArrow: List Nat -> Nat := fun xs => xs.length
+example : curriedArrow([1, 2, 3]) = 3 := by rfl
+function operatorDefault(x: Nat := 1 + add(1, 2)): Nat := x
+function operatorType(x: Fin(add(1, 2) + 1)): Nat := x.val
+function operatorMixed {α: Type}(x: α)[Inhabited α](n: Nat := 1 + add(1, 2)): Nat := n
+const defaultValue: Nat := operatorDefault()
+const typeValue: Nat := operatorType(⟨2, by decide⟩)
+const mixedValue: Nat := operatorMixed((), α := Unit)
+namespace OperatorScope
+scoped infixl:65 " <+> " => Nat.add
+end OperatorScope
+open scoped OperatorScope
+const custom: Nat := add(1, 2) <+> add(3, 4)
+section
+local infixr:64 " <%%> " => Nat.add
+const localOp: Nat := add(1, 2) <%%> add(3, 4)
+end
+example : mixed = 17 := by rfl
+example : rightOperand = 6 := by rfl
+example : leftAssoc = 5 := by rfl
+example : rightAssoc = 512 := by rfl
+example : grouped = 8 := by rfl
+example : fromFin = 1 := by rfl
+example : custom = 10 := by rfl
+example : localOp = 10 := by rfl
+example : defaultValue = 4 := by rfl
+example : typeValue = 2 := by rfl
+example : mixedValue = 4 := by rfl
+meta def nativeOperatorQuote : Lean.MacroM(Lean.TSyntax `term) := `(term| fn (1, 2) + 3)
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeOperatorQuote
+  unless quoted.raw.getArgs.size == 3 && quoted.raw[0].isOfKind ``Lean.Parser.Term.app &&
+      quoted.raw[0][1].getArgs.size == 1 do
+    Lean.throwError "PS0_NATIVE_OPERATOR_QUOTATION"
+def main : IO Unit :=
+  IO.println s!"PS0_OPERATORS:{mixed}:{rightOperand}:{leftAssoc}:{rightAssoc}:{grouped}:{fromFin}:{custom}:{localOp}:{defaultValue}:{typeValue}:{mixedValue}"
