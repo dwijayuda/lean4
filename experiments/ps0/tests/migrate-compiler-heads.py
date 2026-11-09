@@ -479,6 +479,13 @@ for previous_command, command in original_commands(snapshot['commands']):
     if boundary_hazard:
         use_alias = False
     if use_alias and binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
+        adjacent_spelling = decl.get('adjacentCallSpelling')
+        if adjacent_spelling:
+            identifier = decl['nameIdentifierRange']
+            name_start, identifier_end = identifier['start'], identifier['end']
+            if raw[name_start:identifier_end].decode() != adjacent_spelling:
+                edit(name_start, identifier_end, adjacent_spelling,
+                     'native lexer requires escaped declaration identifier before adjacent binder group')
         name_end = decl['nameRange']['end']
         first, _ = span(binders[0])
         if any(byte not in b' \t' for byte in raw[name_end:first]):

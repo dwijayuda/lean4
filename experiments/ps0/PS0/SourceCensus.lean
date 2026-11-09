@@ -124,7 +124,23 @@ private partial def ownedDoNodes (source : Syntax) : Array Syntax := Id.run do
         nodes := nodes ++ ownedDoNodes decl[4][2][0]
   return nodes
 
-private def declaration (operators : Array Name) (source : Syntax) : Json := Id.run do
+private def adjacentCallSpelling (env : Environment) (name : Syntax) : String := Id.run do
+  let identifier := name[0]
+  let .ident _ raw _ _ := identifier | return ""
+  let spelling := raw.toString
+  if !name[1].getArgs.isEmpty then return spelling
+  let input := spelling ++ "("
+  let context := Lean.Parser.mkInputContext input "<adjacent-declaration-head>"
+  let state := Lean.Parser.identFn.run context {env, options := {}}
+    (Lean.Parser.getTokenTable env) (Lean.Parser.mkParserState input)
+  if state.allErrors.isEmpty && state.pos.byteIdx == spelling.utf8ByteSize then return spelling
+  match identifier.getId with
+  | .str prefix component =>
+      let escaped := "«" ++ component ++ "»"
+      return if prefix.isAnonymous then escaped else prefix.toString ++ "." ++ escaped
+  | _ => return spelling
+
+private def declaration (env : Environment) (operators : Array Name) (source : Syntax) : Json := Id.run do
   let kind := source.getKind
   let mapped := #[
     `PS0.StandardAdapters.ps0StandardDef, `PS0.StandardAdapters.ps0StandardAbbrev,
@@ -186,6 +202,8 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("sourceName", toJson (if name.isMissing then "" else name[0].getId.toString)),
       ("keywordRange", sourceRange (if isInstance then source[2] else source[1])), ("nameRange", sourceRange name),
       ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
+      ("nameIdentifierRange", sourceRange name[0]),
+      ("adjacentCallSpelling", toJson (adjacentCallSpelling env name)),
       ("valueRootKind", toJson value.getKind.toString),
       ("recursiveGroupCount", toJson recursiveGroups.size),
       ("recursiveDeclarationKinds", toJson (recursiveValues.map (fun item => item.getKind.toString))),
@@ -242,12 +260,14 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
         ("sourceName", toJson (if name.isMissing then "" else name[0].getId.toString)),
         ("keywordRange", sourceRange (if isInstance then native[1] else native[0])), ("nameRange", sourceRange name),
         ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
+        ("nameIdentifierRange", sourceRange name[0]),
+        ("adjacentCallSpelling", toJson (adjacentCallSpelling env name)),
         ("valueSyntax", signatureSyntax operators (if isExample then native[2] else if isInstance then native[5] else native[3])),
         ("valueApplication", valueApplication native),
         ("lambdaBodyApplications", toJson (lambdaBodyApplications native))]
   return .null
 
-private partial def command (operators : Array Name) (source : Syntax) : Json :=
+private partial def command (env : Environment) (operators : Array Name) (source : Syntax) : Json :=
   let viewed := if source.isOfKind `ps0NativeCommandBridge then source[0] else source
   let nested := if viewed.isOfKind ``Lean.Parser.Command.«in» then #[viewed[2]] else
     if viewed.isOfKind ``Lean.Parser.Command.«mutual» then viewed[1].getArgs else #[]
@@ -255,8 +275,8 @@ private partial def command (operators : Array Name) (source : Syntax) : Json :=
     ("kind", toJson source.getKind.toString), ("range", sourceRange source),
     ("headKind", toJson (if viewed.isOfKind ``Lean.Parser.Command.declaration then
       viewed[1].getKind.toString else viewed.getKind.toString)),
-    ("declaration", declaration operators viewed),
-    ("nestedCommands", toJson (nested.map (command operators)))]
+    ("declaration", declaration env operators viewed),
+    ("nestedCommands", toJson (nested.map (command env operators)))]
 
 private partial def syntaxKinds (names : NameSet) (source : Syntax) : NameSet :=
   source.getArgs.foldl syntaxKinds (names.insert source.getKind)
@@ -278,9 +298,10 @@ def collect (commands : Array Syntax) : CommandElabM Unit := do
     let data := Json.mkObj [
       ("schema", toJson ("ps0-native-source-census/1" : String)),
       ("operatorDescriptorScope", toJson ("active-and-captured-kinds/1" : String)),
+      ("adjacentHeadLexicalScope", toJson ("native-environment/1" : String)),
       ("leanCommit", toJson Lean.githash), ("module", toJson (← getMainModule).toString),
       ("file", toJson context.fileName), ("nativeSource", toJson context.fileMap.source),
-      ("commands", toJson (commands.map (command operators))),
+      ("commands", toJson (commands.map (command env operators))),
       ("imports", toJson imports),
       ("environmentDeclNames", toJson names),
       ("grammarMigrationComplete", toJson false)]
