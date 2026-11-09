@@ -42,6 +42,22 @@ cases = [
      'function bad(n: Nat): Nat := by exact pairSum (n, 1)'),
     ('do-try', 'def bad (n : Nat) : IO Nat := do\n  try return pairSum (n, 1)\n  catch _ => return n',
      'function bad(n: Nat): IO(Nat) := do\n  try return pairSum (n, 1)\n  catch _ => return n'),
+    ('pattern-if', 'def bad (n : Nat) : Nat := if let some (Nat.succ k) := some n then pairSum (k, 1) else 0',
+     'function bad(n: Nat): Nat := if let some (Nat.succ k) := some n then pairSum (k, 1) else 0'),
+    ('tuple-element', 'def bad (n : Nat) : Nat × Nat := (pairSum (n, 1), n)',
+     'function bad(n: Nat): Nat × Nat := (pairSum (n, 1), n)'),
+    ('list-element', 'def bad (n : Nat) : List Nat := [pairSum (n, 1)]',
+     'function bad(n: Nat): List(Nat) := [pairSum (n, 1)]'),
+    ('array-element', 'def bad (n : Nat) : Array Nat := #[pairSum (n, 1)]',
+     'function bad(n: Nat): Array(Nat) := #[pairSum (n, 1)]'),
+    ('interpolation', 'def bad (n : Nat) : String := s!"value:{pairSum (n, 1)}"',
+     'function bad(n: Nat): String := s!"value:{pairSum (n, 1)}"'),
+    ('forall-domain', 'def bad (n : Nat) : Type := ∀ (_ : Fin (pairSum (n, 1))), Nat',
+     'function bad(n: Nat): Type := ∀ (_ : Fin (pairSum (n, 1))), Nat'),
+    ('forall-body', 'def bad (n : Nat) : Type := ∀ (_ : Nat), Fin (pairSum (n, 1))',
+     'function bad(n: Nat): Type := ∀ (_ : Nat), Fin (pairSum (n, 1))'),
+    ('pattern-let', 'def bad (n : Nat) : Nat := let (a, b) := (n, 1); pairSum (a, b)',
+     'function bad(n: Nat): Nat := let (a, b) := (n, 1); pairSum (a, b)'),
 ]
 observations = []
 assert selected and selected <= {name for name, _, _ in cases}, selected
