@@ -23,7 +23,7 @@ def multi (n m : Nat) : Nat := match n, m with
 def named (n : Nat) : Nat := match h : n with
   | 0 => add 1 2
   | Nat.succ k => add k 1
-def withMotive (n : Nat) : Nat := match (motive := fun _ => Nat) n with
+def withMotive (n : Nat) : Nat := match (motive := Nat) n with
   | 0 => add 1 2
   | Nat.succ k => add k 1
 def options (n : Nat) : Nat := match some n with
@@ -46,7 +46,7 @@ function multi(n: Nat, m: Nat): Nat := match n, m with
 function named(n: Nat): Nat := match h : n with
   | 0 => add(1, 2)
   | Nat.succ k => add(k, 1)
-function withMotive(n: Nat): Nat := match (motive := fun _ => Nat) n with
+function withMotive(n: Nat): Nat := match (motive := Nat) n with
   | 0 => add(1, 2)
   | Nat.succ k => add(k, 1)
 function options(n: Nat): Nat := match some n with
@@ -58,15 +58,15 @@ function alternatives(n: Nat): Nat := match n with
   | k => k
 function pattern(n: Nat): Nat := (fun | 0 => add(1, 2) | Nat.succ k => add(k, 1))(n)
 '''
-guards = '''theorem unaryZero : unary 0 = 3 := rfl
-theorem unaryFour : unary 4 = 4 := rfl
-theorem multiZero : multi 0 0 = 3 := rfl
-theorem multiValues : multi 2 3 = 5 := rfl
-theorem namedValue : named 2 = 2 := rfl
-theorem motiveValue : withMotive 0 = 3 := rfl
-theorem optionValue : options 3 = 3 := rfl
-theorem alternativeValue : alternatives 1 = 3 := rfl
-theorem patternValue : pattern 3 = 3 := rfl
+guards = '''private theorem unaryZero : unary 0 = 3 := rfl
+private theorem unaryFour : unary 4 = 4 := rfl
+private theorem multiZero : multi 0 0 = 3 := rfl
+private theorem multiValues : multi 2 3 = 5 := rfl
+private theorem namedValue : named 2 = 2 := rfl
+private theorem motiveValue : withMotive 0 = 3 := rfl
+private theorem optionValue : options 3 = 3 := rfl
+private theorem alternativeValue : alternatives 1 = 3 := rfl
+private theorem patternValue : pattern 3 = 3 := rfl
 '''
 
 
