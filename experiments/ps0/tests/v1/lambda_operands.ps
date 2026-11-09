@@ -86,6 +86,12 @@ const multiPunning: Id(PunningPair) := do
   }
 example : multiPunning.first = 3 ∧ multiPunning.second = 4 := by constructor <;> rfl
 
+const directWrapper: Nat := { (1 + 1) }
+const localWrapper: Id(Nat) := do
+  let value : Nat := { (1 + 1) }
+  return value
+example : directWrapper = 2 ∧ localWrapper = 2 := by constructor <;> rfl
+
 meta def nativeLambdaQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| fun (n : Nat) => add (n, 1))
 run_cmd do

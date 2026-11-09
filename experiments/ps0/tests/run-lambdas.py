@@ -47,6 +47,13 @@ native_coerced_diagnostic = run(['lake', 'exe', 'ps0', 'census-source', native_c
                                 'NativeCoercedInvalidPunning', work / 'coerced-invalid-punning-census.json'],
                                'native-coerced-invalid-punning', ok=False)
 assert 'not a field of structure' in native_coerced_diagnostic
+native_argument_wrapper = work / 'native-argument-wrapper.ps'
+native_argument_wrapper.write_text('module\nprelude\npublic import Lean\npublic section\n'
+                                   'def bad : Nat := Nat.succ ({ (1 + 1) })\n')
+native_argument_diagnostic = run(['lake', 'exe', 'ps0', 'census-source', native_argument_wrapper,
+                                 'NativeArgumentWrapper', work / 'argument-wrapper-census.json'],
+                                'native-argument-wrapper', ok=False)
+assert 'Singleton' in native_argument_diagnostic
 prefix = 'function add(x: Nat, y: Nat): Nat := x + y\nabbrev sized (n : Nat) := Fin n\n'
 for name, source, reason in [
     ('body-gap', 'const bad: Nat → Nat := fun (n : Nat) => add (n, 1)', 'PS0V1-CALL-GAP'),
@@ -64,6 +71,7 @@ for name, source, reason in [
      'instance : Coe Nat PunningTarget where\n  coe n := ⟨n⟩\n'
      'const bad: Id(PunningTarget) := do\n  let f : Nat → Nat := Nat.succ\n  let x := 2\n'
      '  return {\n    f\n    x\n  }', 'not a field of structure'),
+    ('argument-wrapper', 'const bad: Nat := Nat.succ({ (1 + 1) })', 'Singleton'),
 ]:
     file = work / (name + '.ps')
     file.write_text(prefix + source + '\n')
