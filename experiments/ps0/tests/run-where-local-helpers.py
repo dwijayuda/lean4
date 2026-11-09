@@ -164,7 +164,7 @@ assert 'does not currently support any named sub-sections' in native_diagnostic
     'contextual_oracle': contextual_oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
     'rejection_cases': 10,
-    'origin_cases': 5, 'native_quotation_control': True,
+    'origin_cases': 8, 'native_quotation_control': True,
     'prelude_native_parity': bootstrap_comparisons,
     'prelude_logical_imports': ['Init'], 'prelude_mapped_definitions': 8,
     'mapped_where_roles': bootstrap_roles,

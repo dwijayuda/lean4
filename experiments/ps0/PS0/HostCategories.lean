@@ -372,13 +372,16 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     match source with
     | `(psTactic| exact $body:psTerm) => do
         let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
-        return (← `(tactic| exact $body)).raw
+        let native ← `(tactic| exact $body)
+        return .node (loweringInfo source) native.raw.getKind (native.raw.setArg 0 source[0]).getArgs
     | `(psTactic| apply $body:psTerm) => do
         let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
-        return (← `(tactic| apply $body)).raw
+        let native ← `(tactic| apply $body)
+        return .node (loweringInfo source) native.raw.getKind (native.raw.setArg 0 source[0]).getArgs
     | `(psTactic| refine $body:psTerm) => do
         let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
-        return (← `(tactic| refine $body)).raw
+        let native ← `(tactic| refine $body)
+        return .node (loweringInfo source) native.raw.getKind (native.raw.setArg 0 source[0]).getArgs
     | `(psTactic| $native:tactic) => return native.raw
     | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTactic"
   else if category == `psDoSeq then

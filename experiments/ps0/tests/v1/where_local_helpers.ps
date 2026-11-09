@@ -5,6 +5,12 @@ structure LocalPoint where
   x : Nat
   y : Nat
 
+meta partial def whereTactics (owned : Bool) (source : Lean.Syntax) : Array Lean.Syntax :=
+  let kinds := if owned then #[`ps0HostExact, `ps0HostApply, `ps0HostRefine]
+    else #[`Lean.Parser.Tactic.exact, `Lean.Parser.Tactic.apply, `Lean.Parser.Tactic.refine]
+  if kinds.contains source.getKind then #[source]
+  else source.getArgs.foldl (fun result child => result ++ whereTactics owned child) #[]
+
 macro "whereOrigin " clause:psWhereClause : term => do
   let before := clause.raw
   let after ← PS0.StandardAdapters.lowerWhereClause before
@@ -27,6 +33,21 @@ macro "whereOrigin " clause:psWhereClause : term => do
         Lean.Macro.throwError "PS0_WHERE_TYPE_ORIGIN"
     if helper[6].isOfKind `PS0.StandardAdapters.psWhereLocalSimple then
       unless helper[6][0].eqWithInfo value[3] do Lean.Macro.throwError "PS0_WHERE_ASSIGN_ORIGIN"
+  if !before[3].getArgs.isEmpty then
+    let original := before[3][0]
+    let original := if original.isOfKind `PS0.StandardAdapters.psWhereFinallyNative then original[0] else original
+    let native := after[2][0]
+    unless original.getRange? == native.getRange? && original[0].eqWithInfo native[0] do
+      Lean.Macro.throwError "PS0_WHERE_FINALLY_ORIGIN"
+    let originalTactics := whereTactics true original
+    let nativeTactics := whereTactics false native
+    unless originalTactics.size == nativeTactics.size && originalTactics.size == 1 do
+      Lean.Macro.throwError "PS0_WHERE_TACTIC_ARITY"
+    for (originalTactic, nativeTactic) in originalTactics.zip nativeTactics do
+      unless originalTactic.getRange? == nativeTactic.getRange? &&
+          originalTactic[0].eqWithInfo nativeTactic[0] &&
+          originalTactic[1].getRange? == nativeTactic.getArgs.back!.getRange? do
+        Lean.Macro.throwError "PS0_WHERE_TACTIC_ORIGIN"
   `(True)
 
 example : whereOrigin where { def helper(x: Nat, y: Nat := add(1, 2)): Nat := add(x, y) } := by trivial
@@ -37,6 +58,9 @@ example : whereOrigin where {
 example : whereOrigin where { def helper(x: Nat): Nat → Nat | 0 => x | Nat.succ k => helper(x, k) } := by trivial
 example : whereOrigin where { def helper(x: Nat): LocalPoint where { x := x; y := 0 } } := by trivial
 example : whereOrigin where { def first(x: Nat): Nat := second(x); def second(x: Nat): Nat := x } := by trivial
+example : whereOrigin where { finally { exact add(1, 2) } } := by trivial
+example : whereOrigin where { finally { apply Nat.succ } } := by trivial
+example : whereOrigin where { finally { refine Nat.succ(0) } } := by trivial
 
 meta def nativeWhereTailQuote : Lean.MacroM(Lean.TSyntax ``Lean.Parser.Term.whereDecls) :=
   `(Lean.Parser.Term.whereDecls| where helper (x y : Nat) : Nat := Nat.add x y)
