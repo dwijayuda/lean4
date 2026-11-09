@@ -186,6 +186,12 @@ if args.fixture == 'DoLayoutProbe':
     assert layout['doElementKinds'] == [
         'Lean.Parser.Term.doLet', 'Lean.Parser.Term.doLet', 'Lean.Parser.Term.doReassign',
         'Lean.Parser.Term.doLetArrow', 'Lean.Parser.Term.doExpr', 'Lean.Parser.Term.doReturn'], layout
+if args.fixture == 'Stream':
+    declaration = next(d for d in declarations if d['sourceName'] == 'Stream.forIn')
+    assert declaration['recursiveGroupCount'] == 1, declaration
+    assert declaration['recursiveDeclarationKinds'] == ['Lean.Parser.Term.letIdDecl'], declaration
+    assert declaration['recursiveSimpleValueKinds'] == ['ps0HostDo'], declaration
+    assert 'Lean.Parser.Term.doLetRec' in declaration['ownedDoElementKinds'], declaration
 if args.fixture in ['UnlessProbe', 'InlineAttrs']:
     name = 'bodyValue' if args.fixture == 'UnlessProbe' else 'isValidMacroInline'
     declaration = next(d for d in declarations if d['sourceName'] == name)
@@ -212,7 +218,7 @@ if args.fixture in ['UnlessProbe', 'InlineAttrs']:
     'owned_value_calls': owned_value_calls,
     'non_definition_source_roles': [{key: d.get(key) for key in ['sourceName', 'production', 'mode', 'declarationValueKind', 'equationBodyKinds', 'whereFieldCount']}
                                     for d in declarations if d['production'] in family_productions.values()],
-    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds', 'doSequenceKind', 'doElementKinds', 'ownedDoElementKinds', 'doPatternBindingCount', 'doUnlessConditionKinds', 'doUnlessBlockKinds', 'termUnlessConditionKind']}
+    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds', 'doSequenceKind', 'doElementKinds', 'ownedDoElementKinds', 'doPatternBindingCount', 'doUnlessConditionKinds', 'doUnlessBlockKinds', 'termUnlessConditionKind', 'nativeDefDeriving', 'recursiveGroupCount', 'recursiveDeclarationKinds', 'recursiveSimpleValueKinds', 'recursiveEquationValueKinds', 'recursiveTermContinuationKind']}
                             for d in declarations if d['sourceName'] in plan['declarations']],
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',
     'scope': 'real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration',

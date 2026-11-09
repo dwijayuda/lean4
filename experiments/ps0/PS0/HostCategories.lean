@@ -51,7 +51,7 @@ private def letPrefix : Parser :=
       (notFollowedBy (nonReservedSymbol "rec") "rec" >>
         operands #[(`term, `psTerm)] Lean.Parser.Term.letIdDecl)
 
-private def recursiveDeclaration : Parser :=
+def recursiveDeclaration : Parser :=
   node ``Lean.Parser.Term.letRecDecl <|
     optional Lean.Parser.Command.docComment >> optional Lean.Parser.Term.attributes >>
     node ``Lean.Parser.Term.letDecl
@@ -64,10 +64,10 @@ private def recursiveDeclaration : Parser :=
             Lean.Parser.Term.matchAlts (categoryParser `psTerm 0)))) >>
     Lean.Parser.Termination.suffix
 
-private def recursiveDeclarations : Parser :=
+def recursiveDeclarations : Parser :=
   node ``Lean.Parser.Term.letRecDecls <| sepBy1 recursiveDeclaration ", "
 
-private def recursivePrefix : Parser :=
+def recursivePrefix : Parser :=
   group (symbol "let " >> nonReservedSymbol "rec ")
 
 @[run_parser_attribute_hooks] def recursiveElem : Parser :=

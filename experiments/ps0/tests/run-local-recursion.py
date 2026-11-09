@@ -63,6 +63,25 @@ assert shapes, 'native control must retain native declaration values'
 print('PS0_NATIVE_RECURSION_SHAPES:' + json.dumps(shapes, sort_keys=True), flush=True)
 fixture = Path('tests/v1/local_recursion_operands.ps')
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
+mapped_census = work / 'mapped-census.json'
+run(['lake', 'exe', 'ps0', 'census-source', fixture, 'LocalRecFixture', mapped_census], 'mapped-census')
+rows = {command['declaration']['sourceName']: command['declaration']
+        for command in json.loads(mapped_census.read_text())['commands'] if command['declaration'] is not None}
+recursive_roles = []
+for name in ['simpleValue', 'equationValue', 'mixedValue', 'pureValue']:
+    row = rows[name]
+    assert row['mode'] == 'mapped-ps' and row['recursiveGroupCount'] == 1, row
+    if name in ['simpleValue', 'mixedValue', 'pureValue']:
+        assert row['recursiveSimpleValueKinds'] == ['ps0HostAdjacentCall'], row
+    if name in ['equationValue', 'mixedValue']:
+        assert row['recursiveEquationValueKinds'] == ['ps0HostAdjacentCall'] * 2, row
+    if name == 'pureValue':
+        assert row['recursiveTermContinuationKind'] == 'ps0HostAdjacentCall', row
+    else:
+        assert 'Lean.Parser.Term.doLetRec' in row['ownedDoElementKinds'], row
+    recursive_roles.append({key: row[key] for key in ['sourceName', 'recursiveGroupCount',
+                           'recursiveDeclarationKinds', 'recursiveSimpleValueKinds',
+                           'recursiveEquationValueKinds', 'recursiveTermContinuationKind']})
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'LocalRec', work / 'native'], 'native')
 oracle = 'PS0_LOCAL_REC:7:4:5:7:4'
 assert oracle in run([work / 'native/LocalRec'], 'runtime')
@@ -81,6 +100,7 @@ for name, body, reason in [
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
+    'mapped_recursive_roles': recursive_roles,
     'original_let_rec_separator_and_root_ranges': True,
     'scope': 'native local recursive declaration groups, PS ID signatures/defaults and simple/equation values, native pattern/termination/quotation ownership; not all recursion/control grammar',
     'grammar_migration_complete': False, 'verified_execution': False,

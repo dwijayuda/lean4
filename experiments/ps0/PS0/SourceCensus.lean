@@ -79,7 +79,7 @@ private partial def ownedDoNodes (source : Syntax) : Array Syntax := Id.run do
     return source[index].getArgs.foldl (fun nodes item => nodes ++ ownedDoNodes item) #[]
   let known := #[``Lean.Parser.Term.doLet, ``Lean.Parser.Term.doLetArrow,
     ``Lean.Parser.Term.doReassign, ``Lean.Parser.Term.doReturn, ``Lean.Parser.Term.doExpr,
-    ``Lean.Parser.Term.doNested, ``Lean.Parser.Term.doUnless]
+    ``Lean.Parser.Term.doNested, ``Lean.Parser.Term.doUnless, ``Lean.Parser.Term.doLetRec]
   unless known.contains source.getKind do return #[]
   let mut nodes := #[source]
   if source.isOfKind ``Lean.Parser.Term.doUnless then
@@ -126,6 +126,12 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
     let doElements := if doSequence.isOfKind ``Lean.Parser.Term.doSeqIndent then doSequence[0].getArgs
       else if doSequence.isOfKind ``Lean.Parser.Term.doSeqBracketed then doSequence[1].getArgs else #[]
     let ownedDoElements := ownedDoNodes doSequence
+    let recursiveGroups := if value.isOfKind ``Lean.Parser.Term.letrec then #[value[2]] else
+      (ownedDoElements.filter (·.isOfKind ``Lean.Parser.Term.doLetRec)).map (·[2])
+    let recursiveValues := recursiveGroups.foldl (fun values group =>
+      values ++ group[0].getSepArgs.map (fun declaration => declaration[2][0])) #[]
+    let recursiveSimpleValues := recursiveValues.filter (·.isOfKind ``Lean.Parser.Term.letIdDecl)
+    let recursiveEquationValues := recursiveValues.filter (·.isOfKind ``Lean.Parser.Term.letEqnsDecl)
     let unlessElements := ownedDoElements.filter (·.isOfKind ``Lean.Parser.Term.doUnless)
     let patternBindings := ownedDoElements.filter fun item => item.isOfKind ``Lean.Parser.Term.doLetArrow &&
       item[3].isOfKind ``Lean.Parser.Term.doPatDecl
@@ -138,6 +144,13 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("keywordRange", sourceRange (if isInstance then source[2] else source[1])), ("nameRange", sourceRange name),
       ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
       ("valueRootKind", toJson value.getKind.toString),
+      ("recursiveGroupCount", toJson recursiveGroups.size),
+      ("recursiveDeclarationKinds", toJson (recursiveValues.map (fun item => item.getKind.toString))),
+      ("recursiveSimpleValueKinds", toJson (recursiveSimpleValues.map (fun item => item[4].getKind.toString))),
+      ("recursiveEquationValueKinds", toJson (recursiveEquationValues.foldl (fun bodies item =>
+        bodies ++ item[3][0].getArgs.map (fun alternative => alternative[3].getKind.toString)) (#[] : Array String))),
+      ("recursiveTermContinuationKind", toJson (if value.isOfKind ``Lean.Parser.Term.letrec then
+        value[4].getKind.toString else "")),
       ("nativeDefDeriving", toJson (hasDerivingSlot && !last.getArgs.isEmpty &&
         !last[0][0].getArgs.isEmpty)),
       ("doSequenceKind", toJson doSequence.getKind.toString),
