@@ -58,6 +58,22 @@ cases = [
      'function bad(n: Nat): Type := ∀ (_ : Nat), Fin (pairSum (n, 1))'),
     ('pattern-let', 'def bad (n : Nat) : Nat := let (a, b) := (n, 1); pairSum (a, b)',
      'function bad(n: Nat): Nat := let (a, b) := (n, 1); pairSum (a, b)'),
+    ('anonymous-constructor', 'def bad (n : Nat) : Nat × Nat := ⟨pairSum (n, 1), n⟩',
+     'function bad(n: Nat): Nat × Nat := ⟨pairSum (n, 1), n⟩'),
+    ('show-body', 'def bad (n : Nat) : Nat := show Nat from pairSum (n, 1)',
+     'function bad(n: Nat): Nat := show Nat from pairSum (n, 1)'),
+    ('show-type', 'def bad (n : Nat) : Nat := show (fun (_ : Nat) => Nat) (pairSum (n, 1)) from 0',
+     'function bad(n: Nat): Nat := show (fun (_ : Nat) => Nat) (pairSum (n, 1)) from 0'),
+    ('pure-have', 'def bad (n : Nat) : Nat := have k : Nat := pairSum (n, 1); k',
+     'function bad(n: Nat): Nat := have k : Nat := pairSum (n, 1); k'),
+    ('while-body', 'def bad (n : Nat) : IO Nat := do\n  while false do\n    return pairSum (n, 1)\n  return n',
+     'function bad(n: Nat): IO(Nat) := do\n  while false do\n    return pairSum (n, 1)\n  return n'),
+    ('while-condition', 'def bad (n : Nat) : IO Nat := do\n  while pairSum (n, 1) == 0 do\n    break\n  return n',
+     'function bad(n: Nat): IO(Nat) := do\n  while pairSum (n, 1) == 0 do\n    break\n  return n'),
+    ('repeat-body', 'def bad (n : Nat) : IO Nat := do\n  let mut result := n\n  repeat\n    result := pairSum (result, 1)\n  until true\n  return result',
+     'function bad(n: Nat): IO(Nat) := do\n  let mut result := n\n  repeat\n    result := pairSum (result, 1)\n  until true\n  return result'),
+    ('repeat-condition', 'def bad (n : Nat) : IO Nat := do\n  repeat\n    pure ()\n  until pairSum (n, 1) == 0\n  return n',
+     'function bad(n: Nat): IO(Nat) := do\n  repeat\n    pure(())\n  until pairSum (n, 1) == 0\n  return n'),
 ]
 observations = []
 assert selected and selected <= {name for name, _, _ in cases}, selected
