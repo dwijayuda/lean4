@@ -6865,34 +6865,409 @@
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
+  "whereInstanceQualifiedEvidence": {
+    "source": "cbd741ec3c0ef5f5ef1f3537b6fa8569fd746128",
+    "runner": "b5045a4577f1809c6868cfc21dc788cb3450bd86",
+    "run": 42558307141,
+    "jobs": [
+      {
+        "id": 128968882286,
+        "name": "proof-linked",
+        "conclusion": "success"
+      },
+      {
+        "id": 128968882436,
+        "name": "operator-baseline",
+        "conclusion": "success"
+      },
+      {
+        "id": 128968882445,
+        "name": "project-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 128968882496,
+        "name": "host-contract",
+        "conclusion": "success"
+      },
+      {
+        "id": 128968882510,
+        "name": "native-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 128968882514,
+        "name": "compiler-fixtures",
+        "conclusion": "success"
+      }
+    ],
+    "compilerHeads": 127,
+    "compilerModules": 6,
+    "telescopeSignatures": 18,
+    "syntheticDeclarationForms": {
+      "blob": "1ca3c9c225c082c656b63e9b61012fcfee8fbd1b",
+      "definitions": 2,
+      "theorems": 1,
+      "instances": 2,
+      "roles": [
+        {
+          "declarationValueKind": "PS0.StandardAdapters.ps0DeclEqns",
+          "equationBodyKinds": [
+            "ps0HostAdjacentCall",
+            "ps0HostAdjacentCall"
+          ],
+          "mode": "mapped-ps",
+          "production": "PS0.StandardAdapters.ps0StandardTheorem",
+          "sourceName": "boolRefl",
+          "whereFieldCount": 0
+        },
+        {
+          "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+          "equationBodyKinds": [],
+          "mode": "mapped-ps",
+          "production": "PS0.StandardAdapters.ps0StandardInstance",
+          "sourceName": "natTransform",
+          "whereFieldCount": 1
+        },
+        {
+          "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+          "equationBodyKinds": [],
+          "mode": "mapped-ps",
+          "production": "PS0.StandardAdapters.ps0StandardInstance",
+          "sourceName": "",
+          "whereFieldCount": 1
+        }
+      ]
+    },
+    "modules": [
+      {
+        "converted_sha256": "6be0341b4b685ca5b8dbd1e94679029c4b2cf80e8fc2297ec9f7257a0934da3a",
+        "definitions": 2,
+        "edits": 24,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DeclarationForms.c": "d7989e7a83a2a678f4e4fd8232564786e94b0a1438d70e4b6771982527d40fd0",
+          "lib/lean/Lean/Compiler/DeclarationForms.olean": "b0541bb3f2cf5dae8ca5df87450210f107ebf9d976087b8cf0267381e0651a71"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "31fed7b783da0434c538912258306a7763df2bc512cb34de0a2b29499e087598",
+        "module": "Lean.Compiler.DeclarationForms",
+        "pinned_blob": "1ca3c9c225c082c656b63e9b61012fcfee8fbd1b",
+        "source_lines": 36,
+        "source_sha256": "2666d9118d4f5bb8941b8517789a20981c0c61f72eb4255a7c2528008c3316f2",
+        "strategies": {
+          "const": 1,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "b8dc4a093eaf005efac5caebfc44e0e972f9030d5f208f3d7f772493d580490b",
+        "definitions": 110,
+        "edits": 432,
+        "equation_definitions": [
+          "Alt.getCode",
+          "Alt.getParams",
+          "Cases.alts",
+          "Cases.discr",
+          "Cases.resultType",
+          "Cases.typeName",
+          "Cases.updateAlts",
+          "Code.isDecl",
+          "Code.isFun",
+          "Code.isReturnOf",
+          "Code.toCodeDecl!",
+          "CodeDecl.fvarId",
+          "DeclValue.size",
+          "FunDecl.binderName",
+          "FunDecl.fvarId",
+          "FunDecl.params",
+          "FunDecl.type",
+          "FunDecl.updateBinderName",
+          "FunDecl.value",
+          "LitValue.toExpr"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/Basic.c": "4576adf24c634cdc34518a3f65ed3ca0ea3dc32027d6633156f6eb0664c95ff2",
+          "lib/lean/Lean/Compiler/LCNF/Basic.olean": "e4fc60bb05756520835af0fc9342f47848b3e3cb2e4444616e8b584432d025f6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "8c158be9cc68bd12756b02e3cdf8a42ccf6385a7e60642a0b2e7340bb5d32cdf",
+        "module": "Lean.Compiler.LCNF.Basic",
+        "pinned_blob": "82c8dee0b9d13f09d58a6404dd5d5abf797d236e",
+        "source_lines": 1263,
+        "source_sha256": "833cb3c38140ece99ee25149529e568839379193064f5a210f5fb5ffba08df59",
+        "strategies": {
+          "const": 20,
+          "def": 6,
+          "function": 84
+        }
+      },
+      {
+        "converted_sha256": "340d2738edcf91181d3355bac4a2c72107c9b7a6ca7d62e4f9be66c6f03d8e85",
+        "definitions": 18,
+        "edits": 29,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/TelescopeProbe.c": "6787d16744a58347a1b302b44ee5adf1825095401980b79227f473e6bd844452",
+          "lib/lean/Lean/Compiler/TelescopeProbe.olean": "c3073c1993e616c2e86cdc59cfe4ba9602e88220f8f60308520b6670d3ee56fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "7d599f3f901f49037b3c9c64719b97918ef3dbc54dce4c7410191ae56cf4409b",
+        "module": "Lean.Compiler.TelescopeProbe",
+        "pinned_blob": "61b472c934e79b57492cf596ede396f7740230db",
+        "source_lines": 27,
+        "source_sha256": "59625e4a509b037e9a4003077e04803f692d098ae28c487a7ba3bb7bda73860c",
+        "strategies": {
+          "def": 6,
+          "function": 12
+        }
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13648437218,
+        "name": "ps0-external-cbd741ec3c0ef5f5ef1f3537b6fa8569fd746128-42558307141",
+        "digest": "sha256:a763c9f46d062c6771cc0875d75f3eff41c0bf1a4d55d82a04a3335b649c5eb1"
+      },
+      {
+        "id": 13648297917,
+        "name": "ps0-native-cbd741ec3c0ef5f5ef1f3537b6fa8569fd746128-42558307141",
+        "digest": "sha256:770b096a3bec49c5ee7b94df91cb32ffb8aead7f4ee8a27d72cbe17b6cac1ff5"
+      },
+      {
+        "id": 13648248474,
+        "name": "ps0-compiler-fixtures-cbd741ec3c0ef5f5ef1f3537b6fa8569fd746128-42558307141",
+        "digest": "sha256:78a7b20574f8d128eea2e0ee24b330c53d1cea3a26fbb8c1a83ec69623292317"
+      },
+      {
+        "id": 13648034490,
+        "name": "ps0-project-cbd741ec3c0ef5f5ef1f3537b6fa8569fd746128-42558307141",
+        "digest": "sha256:24d958b6449b85b36bf42237a09fc3f033b1a4a4b0cec7ab78f9433043ed8cd5"
+      },
+      {
+        "id": 13647464264,
+        "name": "ps0-operator-baseline-42558307141",
+        "digest": "sha256:b1c313167c9a9c9f7e4c5b019866c80e7fbd553c52c48f0bc7496a3568013bcc"
+      }
+    ],
+    "independentInspection": {
+      "runner": "e52900881f546fb2df116cb648a6d4ea4d80cc82",
+      "run": 42561835562,
+      "job": 128979733700,
+      "status": "PASS",
+      "artifact": 13649562141,
+      "zip_sha256": "802b4a42ec0aa97347e323ec0d504322ade4fe2d4b2e07a8fa55987a9e8162ba"
+    },
+    "scope": "finite owned theorem equations, instance signatures, simple/equation where fields; current curried/multiline and projection followups are unqualified",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "completeUpstreamSourcePlanningEvidence": {
+    "gaps": [],
+    "grammar_migration_complete": false,
+    "modules": 2546,
+    "native_header_adapter_modules": [
+      "Lean",
+      "LeanChecker",
+      "LeanExport",
+      "LeanIR",
+      "Leanc"
+    ],
+    "original_planner_line_count_changes": 0,
+    "planned_definition_count": 26328,
+    "scope": "all 2546 upstream original blobs/censuses and source-plan reconstruction with zero line-count changes; no converted compilation acceptance",
+    "source": "bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f",
+    "status_counts": {
+      "planned-unvalidated": 2546
+    },
+    "strategy_counts": {
+      "const": 4964,
+      "def": 2992,
+      "function": 18372
+    },
+    "verified_execution": false,
+    "runner": "a2a4b0e1f1850d08bfed78a10c6712b5826b7c25",
+    "run": 42553687595,
+    "job": 128954595865,
+    "artifact": 13646703566,
+    "zip_sha256": "352030b1ed3bc8df096226fd402710d51ec666bd24cc52cbe9a79cb0cc230fd9",
+    "inspection": {
+      "runner": "32986601700fcbc3a3fe9e614cee341730978c24",
+      "run": 42555836975,
+      "job": 128961199319,
+      "status": "PASS",
+      "artifact": 13646789743,
+      "zip_sha256": "d0f91ba7035c6a8e2eca4db1e4e7fa891dc5c4b710ad99c34b78768ce7db1ae8"
+    }
+  },
+  "telescopeNativeCompatibleFixedPointQualifiedEvidence": {
+    "fixed_point": {
+      "changed_c": [],
+      "changed_olean": []
+    },
+    "grammar_migration_complete": false,
+    "mapped_ps_rows": 0,
+    "modules": 2569,
+    "native_compatible_rows": 72820,
+    "scope": "native-compatible full compiler; original target output hashes and host metadata manifest, actual retained executables rehashed; not canonical source conversion",
+    "source": "cd3b62f8003ecd88b5943cb0666cccfc32662f1f",
+    "stages": [
+      {
+        "census_sha256": "c05197936178f121ca9a13b33c6199bd794d75a191ac1dfa02bc8567e1ca1746",
+        "driver_sha256": "60f125f1e8db2ec17c9f5e486afecc125d2eb98e99e12be278b469b65ac92d5d",
+        "host_metadata_files": 220,
+        "host_sha256": "c203d9b82430f709155f58065a3f05f07b0f03854cb843def4caeb173e1b6a0a",
+        "host_sorted_metadata_sha256": "d1c46d741594c32e64d87173d660b4d03fc9b9d2d532bd063e5a42c892913003",
+        "stage": "native-stage-one"
+      },
+      {
+        "census_sha256": "c05197936178f121ca9a13b33c6199bd794d75a191ac1dfa02bc8567e1ca1746",
+        "driver_sha256": "60f125f1e8db2ec17c9f5e486afecc125d2eb98e99e12be278b469b65ac92d5d",
+        "host_metadata_files": 220,
+        "host_sha256": "c203d9b82430f709155f58065a3f05f07b0f03854cb843def4caeb173e1b6a0a",
+        "host_sorted_metadata_sha256": "d1c46d741594c32e64d87173d660b4d03fc9b9d2d532bd063e5a42c892913003",
+        "stage": "native-stage-two"
+      }
+    ],
+    "verified_execution": false,
+    "runner": "9213118954f115d9c5ba3eb9c26ea62d0a190b2e",
+    "run": 42552622266,
+    "jobs": [
+      {
+        "id": 128951338336,
+        "name": "native-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 128951338398,
+        "name": "proof-linked",
+        "conclusion": "success"
+      },
+      {
+        "id": 128951338442,
+        "name": "host-contract",
+        "conclusion": "success"
+      },
+      {
+        "id": 128951338484,
+        "name": "project-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 128952472846,
+        "name": "compiler-stage1",
+        "conclusion": "success"
+      },
+      {
+        "id": 128963361286,
+        "name": "compiler-stage2",
+        "conclusion": "success"
+      }
+    ],
+    "stage1Job": 128952472846,
+    "stage2Job": 128963361286,
+    "artifacts": [
+      {
+        "id": 13648113157,
+        "name": "ps0-compiler-stage2-cd3b62f8003ecd88b5943cb0666cccfc32662f1f-42552622266",
+        "digest": "sha256:5a46d746109dc7b35c117f7f341a3bf7c593c80cc5c26d61fe91df17b63a1c09"
+      },
+      {
+        "id": 13647179302,
+        "name": "ps0-compiler-stage1-cd3b62f8003ecd88b5943cb0666cccfc32662f1f-42552622266",
+        "digest": "sha256:34807ad3882894b2e110d1ac9920dfc09a7df5904753d8a55e7fcbffc7ad5943"
+      }
+    ],
+    "inspection": {
+      "runner": "e52900881f546fb2df116cb648a6d4ea4d80cc82",
+      "run": 42561835562,
+      "job": 128979733929,
+      "status": "PASS",
+      "artifact": 13649796900,
+      "zip_sha256": "2542f7de04d45f6c7e16059bc11de270752a018211788d78609f9e0f37fefa2a"
+    }
+  },
+  "transformedCompilerGraphAttempt": {
+    "status": "FAILED; goal remains active",
+    "source": "cbd741ec3c0ef5f5ef1f3537b6fa8569fd746128",
+    "runner": "61f5a398e4d78f8f6a7dfc0d86500c99489c500d",
+    "run": 42558312304,
+    "job": 128968897453,
+    "pr": "https://github.com/dwijayuda/pskernel/pull/242",
+    "inputs": 2569,
+    "upstream": 2546,
+    "self": 23,
+    "refreshedInstanceCensuses": 769,
+    "sourceGrammar": true,
+    "interpreterPreferNative": false,
+    "sourceFallback": false,
+    "artifact": 13649335082,
+    "zip_sha256": "dbc28f1663b3d22f2f12f0a4fe700bad6dfb24d2dd1a2befe845b62c2e5ba1cb",
+    "firstFailure": "Init.Prelude line 1273 reflects_decide: unexpected identifier; expected const or function; subsequent dependent declaration failures are cascades",
+    "earlier": [
+      {
+        "source": "2f040ea0838058417068d5233c2caef3d371f9dc",
+        "runner": "5cfd54e885ea554e4f6f01985089cbc29f6c14c0",
+        "run": 42555272514,
+        "job": 128959462355,
+        "artifact": 13646808635,
+        "zip_sha256": "6546cc9351e1832698fc6ec10b576da4297907354341a2026767d9644d48dfc2",
+        "failure": "Self-planning imported legacy PS0 metadata from converted modern module headers; final graph not reached"
+      },
+      {
+        "source": "3cf82b1b05bb6b3250f98a913ef4bbaaea0ea409",
+        "runner": "ca3c43b5860392b19d857308d934f4e928ba51c5",
+        "run": 42555788472,
+        "job": 128961051169,
+        "artifact": 13647402213,
+        "zip_sha256": "a5de10b42a3ae2021c9670268977916ff451bd857d4e151bee52a43ea9fe0dbb",
+        "failure": "Full 2569 transformed inputs prepared; Init.Prelude theorem equation call gaps, instance operand gaps and missing where values; graph did not build"
+      }
+    ],
+    "currentFollowup": {
+      "source": "514e7faca6def86a4658eec81c925e004af5c5ff",
+      "runner": "9b6dae1cdc00fdae4a517a180e5717ef5d8d0767",
+      "run": 42562055058,
+      "status": "RUNNING DIAGNOSTICS; not qualified"
+    },
+    "remaining": [
+      "curried/native where field boundaries",
+      "grouped field projections and remaining source-fidelity boundaries",
+      "entire transformed graph build/link/runtime and canonical fixed point",
+      "remaining ordinary local/layout/field/constructor/notation/interpolation/tactic roles"
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
   "currentContinuation": {
     "status": "ACTIVE_CANONICAL_PS_COMPILER_MIGRATION_INCOMPLETE",
     "branch": "feat/ps0-corpus-telescopes-20261109",
     "goal": "Entire pinned Lean4 compiler corpus builds from .ps using ProofScript syntax and grammars with native Lean4 and Lake; renamed native-only sources do not complete the goal",
     "qualifiedFiniteCheckpoint": {
-      "source": "bb08239fa5caad63c3cf0cb9bea71cfaf23b1a1f",
-      "runner": "16f5b92a032ba35f2ef4104859737eb56d98ce63",
-      "run": 42553645183,
-      "evidence": "corpusTelescopeQualifiedEvidence",
+      "source": "cbd741ec3c0ef5f5ef1f3537b6fa8569fd746128",
+      "runner": "b5045a4577f1809c6868cfc21dc788cb3450bd86",
+      "run": 42558307141,
+      "evidence": "whereInstanceQualifiedEvidence",
       "convertedCompilerHeads": 127,
       "compilerModules": 6,
-      "syntheticSignatures": 18,
+      "telescopeSignatures": 18,
+      "syntheticDeclarationForms": 5,
       "rawArtifactInspection": {
-        "runner": "9ab2e7ffef01d6edba2dab7540bfdaa9f10f7e29",
-        "run": 42553933372,
-        "job": 128955363023,
-        "artifact": 13645424848,
-        "zip_sha256": "2a2e581056086b30ee0d129c03992920ad54d9c835d854cf186ed47470298620",
-        "status": "PASS"
+        "runner": "e52900881f546fb2df116cb648a6d4ea4d80cc82",
+        "run": 42561835562,
+        "job": 128979733700,
+        "status": "PASS",
+        "artifact": 13649562141,
+        "zip_sha256": "802b4a42ec0aa97347e323ec0d504322ade4fe2d4b2e07a8fa55987a9e8162ba"
       }
     },
     "qualifiedNativeCompatibleFullCompiler": {
-      "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
-      "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
-      "run": 42532849633,
-      "evidence": "psBuiltGrammarHostFixedPointQualifiedEvidence",
-      "modules": 2567,
-      "nativeCompatibleSelectedRows": 72797,
+      "source": "cd3b62f8003ecd88b5943cb0666cccfc32662f1f",
+      "runner": "9213118954f115d9c5ba3eb9c26ea62d0a190b2e",
+      "run": 42552622266,
+      "evidence": "telescopeNativeCompatibleFixedPointQualifiedEvidence",
+      "modules": 2569,
+      "nativeCompatibleSelectedRows": 72820,
       "mappedPsSelectedRows": 0
     },
     "corpusObligationAudit": {
@@ -6902,7 +7277,7 @@
       "shapeEligibleDefinitions": 22275,
       "shapeEligibilityIsAcceptance": false
     },
-    "nextPriority": "Complete all-module comment/newline plan audit, then build the entire transformed source graph with PS grammar enabled and native Lake; adapt remaining owned grammar roles from actual failures.",
+    "nextPriority": "Resolve actual Init.Prelude field-layout and grouped projection diagnostics; rebuild the entire transformed upstream/self graph with native Lake, then require complete source-role and byte-parity/fixed-point evidence.",
     "remaining": [
       "complete source conversion of all pinned upstream and PS0 compiler modules",
       "whole transformed graph build/link and current canonical fixed point",
@@ -6924,25 +7299,25 @@
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "corpusPlanning": {
-      "evidence": "corpusTelescopeFullPlanningAudit",
-      "source": "483ac279f296257bbf2c686e93a96163b7218dd7",
+      "evidence": "completeUpstreamSourcePlanningEvidence",
       "modules": 2546,
-      "plannedModules": 2542,
-      "planGaps": 4,
-      "planningIsAcceptance": false,
-      "newerRun": 42553687595,
-      "newerStatus": "RUNNING"
+      "definitionHeads": 26328,
+      "plannedModules": 2546,
+      "planGaps": 0,
+      "lineCountChanges": 0,
+      "planningIsAcceptance": false
     },
     "currentNativeCompatibleBootstrap": {
+      "status": "PASS; native-compatible only",
       "source": "cd3b62f8003ecd88b5943cb0666cccfc32662f1f",
-      "runner": "9213118954f115d9c5ba3eb9c26ea62d0a190b2e",
       "run": 42552622266,
-      "stage1Job": 128952472846,
-      "pr": "https://github.com/dwijayuda/pskernel/pull/241",
-      "status": "RUNNING",
-      "scope": "complete native-compatible .ps source forest through two native Lake build/link stages and fixed point; not canonical ProofScript conversion",
-      "grammarMigrationComplete": false,
-      "verified_execution": false
+      "evidence": "telescopeNativeCompatibleFixedPointQualifiedEvidence"
+    },
+    "transformedGraph": {
+      "evidence": "transformedCompilerGraphAttempt",
+      "status": "FAILED",
+      "run": 42558312304,
+      "inputs": 2569
     }
   }
 }
