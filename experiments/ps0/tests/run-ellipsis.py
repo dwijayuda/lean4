@@ -28,6 +28,8 @@ assert 'PS0_NATIVE_ELLIPSIS:PASS' in run([work / 'native/EllipsisOperands'], 'ru
 for name, source, reason in [
     ('named-before-ellipsis', 'const bad: Eq(3, 3) := Eq.refl(a := 3, ..)', 'PS0V1-CALL-ORDER'),
     ('unresolved-ellipsis', 'function identity(n: Nat): Nat := n\nconst bad: Nat := identity(..)', None),
+    ('nonterminal-ellipsis', 'const bad: Eq(3, 3) := Eq.refl(.., 3)', "unexpected '..'"),
+    ('repeated-ellipsis', 'const bad: Eq(3, 3) := Eq.refl(.., ..)', "unexpected '..'"),
 ]:
     path = work / (name + '.ps')
     path.write_text(source + '\n')

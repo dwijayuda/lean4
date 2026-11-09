@@ -51,4 +51,9 @@ example [Subsingleton α] (p : α → Prop) : Subsingleton (Subtype p) :=
   ⟨fun ⟨x, _⟩ ⟨y, _⟩ => by congr; exact Subsingleton.elim x y⟩
 example (n : Nat := Nat.add (1) (2)) : Eq (n) (n) := Eq.refl (n)
 
+theorem nestedEllipsis (a i j : Nat) : a - i ≤ a + j - i :=
+  Nat.sub_le_sub_right (Nat.le_add_right ..) ..
+theorem namedEllipsis (a i j : Nat) : a - i ≤ a + j - i :=
+  Nat.sub_le_sub_right (Nat.le_add_right ..) (k := i) ..
+
 end Lean.Compiler.DeclarationForms

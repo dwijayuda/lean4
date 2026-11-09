@@ -9,11 +9,13 @@ macro "ellipsisOrigin " e:psTerm : term => do
   unless lowered.getRange? == e.raw.getRange? && e.raw.getRange?.isSome do
     Lean.Macro.throwError "PS0_ELLIPSIS_ORIGIN: call span changed"
   match e with
-  | `(psTerm| $head:ident($argument:psCallArg)) =>
-    unless argument.raw.isOfKind ``ps0NativeEllipsisArg &&
-        lowered[1].getArgs.size == 1 && lowered[1][0].eqWithInfo argument.raw[0] do
+  | `(psTerm| $head:ident($[$arguments:psCallArg],*)) =>
+    unless arguments.size > 0 && arguments[0]!.raw.isOfKind ``ps0NativeEllipsisArg &&
+        lowered[1].getArgs.size == arguments.size &&
+        lowered[1].getArgs.back!.eqWithInfo arguments[0]!.raw[0] do
       Lean.Macro.throwError "PS0_ELLIPSIS_ORIGIN: native completion syntax changed"
   | _ => Lean.Macro.throwError "PS0_ELLIPSIS_ORIGIN: expected one native completion argument"
   `(True)
 example : ellipsisOrigin Eq.refl(..) := by trivial
+example : ellipsisOrigin Eq.refl(.., a := 3) := by trivial
 def main : IO Unit := IO.println "PS0_NATIVE_ELLIPSIS:PASS"
