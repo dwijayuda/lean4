@@ -75,6 +75,38 @@ def call_head_needs_group(operand):
 def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
     # Quotation, DSL and other native syntax remain opaque.
+    parts = operand['args']
+    if operand['kind'] == 'Lean.Parser.Term.tuple':
+        assert len(parts) == 3 and len(parts[1]['args']) in [0, 3]
+        if parts[1]['args']:
+            single_type_call(parts[1]['args'][0], role + ' tuple first element')
+            for value in parts[1]['args'][2]['args']:
+                if value['atom'] is None:
+                    single_type_call(value, role + ' tuple remaining element')
+        return
+    if operand['kind'] in ['«term[_]»', '«term#[_,]»']:
+        assert len(parts) == 3
+        for value in parts[1]['args']:
+            if value['atom'] is None:
+                single_type_call(value, role + ' collection element')
+        return
+    if operand['kind'] == 'termS!_':
+        assert len(parts) == 2 and parts[1]['kind'] == 'interpolatedStrKind'
+        for value in parts[1]['args']:
+            if value['kind'] != 'interpolatedStrLitKind':
+                single_type_call(value, role + ' interpolated value')
+        return
+    if operand['kind'] == 'Lean.Parser.Term.forall':
+        assert len(parts) == 5
+        telescope(parts[1]['args'])
+        optional_local_type(parts[2], role + ' forall binder type')
+        single_type_call(parts[4], role + ' forall body')
+        return
+    if operand['kind'] == 'termIfLet':
+        assert len(parts) == 9
+        for index in [4, 6, 8]:
+            single_type_call(parts[index], role + ' pattern-if value')
+        return
     slice_shapes = {'Array.«term__[_:_]»': (6, [2, 4]),
                     'Array.«term__[_:]»': (5, [2]), 'Array.«term__[:_]»': (5, [3])}
     if operand['kind'] in slice_shapes:
@@ -137,6 +169,11 @@ def single_type_call(operand, role='owned binder type'):
         if declaration['kind'] == 'Lean.Parser.Term.letIdDecl':
             local_id_value(declaration)
             single_type_call(parts[4], role + ' named local continuation')
+        elif declaration['kind'] == 'Lean.Parser.Term.letPatDecl':
+            assert len(declaration['args']) == 5
+            optional_local_type(declaration['args'][2], role + ' pattern local type')
+            single_type_call(declaration['args'][4], role + ' pattern local value')
+            single_type_call(parts[4], role + ' pattern local continuation')
         return
     if operand['kind'] == 'Lean.Parser.Term.termUnless':
         unless_operands(operand)

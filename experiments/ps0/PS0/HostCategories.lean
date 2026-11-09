@@ -1,3 +1,7 @@
+/-
+Copyright (c) 2026 Dwijayuda. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
 module
 public meta import Lean
 public import PS0.Operators
@@ -65,6 +69,38 @@ private def letPrefix : Parser :=
 
 @[run_parser_attribute_hooks] def byTerm : Parser :=
   operands #[(`tactic, `psTactic)] Lean.Parser.Term.byTactic
+
+@[run_parser_attribute_hooks] def tupleTerm : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.tuple
+
+@[run_parser_attribute_hooks] def forallTerm : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.«forall»
+
+@[run_parser_attribute_hooks] def listTerm : Parser :=
+  leadingNode `«term[_]» maxPrec <|
+    "[" >> withoutPosition (sepBy (categoryParser `psTerm 0) ", " (allowTrailingSep := true)) >> "]"
+
+@[run_parser_attribute_hooks] def arrayTerm : Parser :=
+  leadingNode `«term#[_,]» maxPrec <|
+    "#[" >> withoutPosition (sepBy (categoryParser `psTerm 0) ", " (allowTrailingSep := true)) >> "]"
+
+@[run_parser_attribute_hooks] def interpolationTerm : Parser :=
+  leadingNode `termS!_ maxPrec <| "s!" >> interpolatedStr (categoryParser `psTerm 0)
+
+@[run_parser_attribute_hooks] def patternIfTerm : Parser :=
+  leadingNode `termIfLet leadPrec <|
+    "if " >> "let " >> termParser >> " := " >> categoryParser `psTerm 0 >>
+      " then " >> categoryParser `psTerm 0 >> " else " >> categoryParser `psTerm 0
+
+@[run_parser_attribute_hooks] def patternLetTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.«let» leadPrec <|
+    withPosition ("let" >> Lean.Parser.Term.letConfig >>
+      node ``Lean.Parser.Term.letDecl
+        (node ``Lean.Parser.Term.letPatDecl
+          (atomic (ppSpace >> termParser >> pushNone >>
+            operands #[(`term, `psTerm)] Lean.Parser.Term.optType >> " := ") >>
+            categoryParser `psTerm 0))) >>
+      Lean.Parser.Term.optSemicolon (categoryParser `psTerm 0)
 
 @[run_parser_attribute_hooks] def dependentIfTerm : Parser :=
   leadingNode `termDepIfThenElse leadPrec <|
@@ -303,6 +339,20 @@ def ps0NativeTypeAscription : Lean.Parser.Parser := PS0.DoLayout.ascriptionTerm
 @[psTerm_parser 20000]
 def ps0NativeBy : Lean.Parser.Parser := PS0.DoLayout.byTerm
 @[psTerm_parser 20000]
+def ps0NativeTuple : Lean.Parser.Parser := PS0.DoLayout.tupleTerm
+@[psTerm_parser 20000]
+def ps0NativeForall : Lean.Parser.Parser := PS0.DoLayout.forallTerm
+@[psTerm_parser 20000]
+def ps0NativeList : Lean.Parser.Parser := PS0.DoLayout.listTerm
+@[psTerm_parser 20000]
+def ps0NativeArray : Lean.Parser.Parser := PS0.DoLayout.arrayTerm
+@[psTerm_parser 20000]
+def ps0NativeInterpolation : Lean.Parser.Parser := PS0.DoLayout.interpolationTerm
+@[psTerm_parser 20000]
+def ps0NativePatternIf : Lean.Parser.Parser := PS0.DoLayout.patternIfTerm
+@[psTerm_parser 10000]
+def ps0NativePatternLet : Lean.Parser.Parser := PS0.DoLayout.patternLetTerm
+@[psTerm_parser 20000]
 def ps0NativeDependentIf : Lean.Parser.Parser := PS0.DoLayout.dependentIfTerm
 @[psTerm_parser 20000]
 def ps0NativePatternLambda : Lean.Parser.Parser := PS0.DoLayout.patternLambda
@@ -424,6 +474,39 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind ``Lean.Parser.Term.tuple then
+      unless source.getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native delimiters"
+      if source[1].getArgs.isEmpty then return source
+      unless source[1].getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native elements"
+      let rest ← source[1][2].getArgs.mapM fun value => do
+        if value.isAtom then return value
+        lower `psTerm value
+      return source.setArg 1 ((source[1].setArg 0 (← lower `psTerm source[1][0])).setArg 2
+        (source[1][2].setArgs rest))
+    if source.isOfKind `«term[_]» || source.isOfKind `«term#[_,]» then
+      unless source.getArgs.size == 3 do Macro.throwError "PS0V1-COLLECTION: unexpected native elements"
+      let values ← source[1].getArgs.mapM fun value => do
+        if value.isAtom then return value
+        lower `psTerm value
+      return source.setArg 1 (source[1].setArgs values)
+    if source.isOfKind `termS!_ then
+      unless source.getArgs.size == 2 && source[1].isOfKind `interpolatedStrKind do
+        Macro.throwError "PS0V1-INTERPOLATION: unexpected native string lexer result"
+      let values ← source[1].getArgs.mapM fun value => do
+        if value.isOfKind `interpolatedStrLitKind then return value
+        lower `psTerm value
+      return source.setArg 1 (source[1].setArgs values)
+    if source.isOfKind ``Lean.Parser.Term.«forall» then
+      unless source.getArgs.size == 5 do Macro.throwError "PS0V1-FORALL: unexpected native binder roles"
+      let binders ← source[1].getArgs.mapM lowerNativeLocalBinder
+      let source := source.setArg 1 (source[1].setArgs binders)
+      let source := source.setArg 2 (← lowerNativeOptionalType source[2])
+      return source.setArg 4 (← lower `psTerm source[4])
+    if source.isOfKind `termIfLet then
+      unless source.getArgs.size == 9 do Macro.throwError "PS0V1-PATTERN-IF: unexpected native pattern/value roles"
+      let source := source.setArg 4 (← lower `psTerm source[4])
+      let source := source.setArg 6 (← lower `psTerm source[6])
+      return source.setArg 8 (← lower `psTerm source[8])
     if source.isOfKind `termDepIfThenElse then
       unless source.getArgs.size == 8 do Macro.throwError "PS0V1-DEPENDENT-IF: unexpected native condition"
       let source := source.setArg 3 (← lower `psTerm source[3])
@@ -449,7 +532,13 @@ partial def lower (category : Name) (source : Lean.Syntax) :
       unless source.getArgs.size == 5 && source[2].isOfKind ``Lean.Parser.Term.letDecl &&
           source[2].getArgs.size == 1 do
         Macro.throwError "PS0V1-LOCAL-LET: unexpected native term shape"
-      let source := source.setArg 2 (source[2].setArg 0 (← lowerNativeLocalId source[2][0]))
+      let declaration := source[2][0]
+      let declaration ← if declaration.isOfKind ``Lean.Parser.Term.letPatDecl then do
+          unless declaration.getArgs.size == 5 do Macro.throwError "PS0V1-PATTERN-LET: unexpected native pattern/value roles"
+          let declaration := declaration.setArg 2 (← lowerNativeOptionalType declaration[2])
+          pure <| declaration.setArg 4 (← lower `psTerm declaration[4])
+        else lowerNativeLocalId declaration
+      let source := source.setArg 2 (source[2].setArg 0 declaration)
       return source.setArg 4 (← lower `psTerm source[4])
     if source.isOfKind ``Lean.Parser.Term.letrec then
       unless source.getArgs.size == 4 do

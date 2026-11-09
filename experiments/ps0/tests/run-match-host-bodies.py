@@ -232,6 +232,35 @@ private theorem tacticRefineResult : tacticRefine 3 = 4 := rfl
 '''
 
 
+native += '''def tupleValue (n : Nat) : Nat × Nat := (add n 1, n)
+def listValue (n : Nat) : List Nat := [add n 1, n,]
+def arrayValue (n : Nat) : Array Nat := #[add n 1, n,]
+def interpolationValue (n : Nat) : String := s!"value:{add n 1}"
+def forallDomain : Prop := ∀ (n : Fin (add 1 2)), n.val < 3
+def forallBody : Prop := forall (n : Nat), add n 0 = n
+def patternLet (n : Nat) : Nat := let (a, b) : Nat × Nat := (add n 1, n); add a b
+def patternIf (n : Nat) : Nat := if let some (Nat.succ k) := some (add n 1) then add k 1 else add n 0
+'''
+ps += '''function tupleValue(n: Nat): Nat × Nat := (add(n, 1), n)
+function listValue(n: Nat): List(Nat) := [add(n, 1), n,]
+function arrayValue(n: Nat): Array(Nat) := #[add(n, 1), n,]
+function interpolationValue(n: Nat): String := s!"value:{add(n, 1)}"
+const forallDomain: Prop := ∀ (n : Fin(add(1, 2))), n.val < 3
+const forallBody: Prop := forall (n : Nat), add(n, 0) = n
+function patternLet(n: Nat): Nat := let (a, b) : Nat × Nat := (add(n, 1), n); add(a, b)
+function patternIf(n: Nat): Nat := if let some (Nat.succ k) := some(add(n, 1)) then add(k, 1) else add(n, 0)
+'''
+guards += '''private theorem tupleValueResult : tupleValue 2 = (3, 2) := rfl
+private theorem listValueResult : listValue 2 = [3, 2] := rfl
+private theorem arrayValueResult : arrayValue 2 = #[3, 2] := rfl
+private theorem interpolationValueResult : interpolationValue 2 = "value:3" := rfl
+private theorem forallDomainResult : forallDomain = (∀ (n : Fin 3), n.val < 3) := rfl
+private theorem forallBodyResult : forallBody = (∀ (n : Nat), n = n) := rfl
+private theorem patternLetResult : patternLet 2 = 5 := rfl
+private theorem patternIfResult : patternIf 2 = 3 := rfl
+'''
+
+
 def run(args, label):
     result = subprocess.run([str(x) for x in args], capture_output=True, text=True, timeout=300)
     text = result.stdout + result.stderr
@@ -274,7 +303,7 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
         observed = json.loads(census.read_text())
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
-        assert len(rows) == 63 and all(d['mode'] == 'mapped-ps' for d in rows)
+        assert len(rows) == 79 and all(d['mode'] == 'mapped-ps' for d in rows)
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
@@ -289,10 +318,10 @@ runtime = run([executable], 'runtime-origins')
 assert runtime.strip() == 'PS0_HOST_ORIGINS: PASS'
 shutil.copy2(executable, work / 'OrdinaryHostOrigins')
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    comparisons=comparisons, mapped_definitions=33, mapped_theorems=30, logical_imports=['Init'],
+    comparisons=comparisons, mapped_definitions=41, mapped_theorems=38, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
     source_origin_fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    source_origin_cases=11, independently_owned_native_dsl=True, native_quotation=True,
+    source_origin_cases=19, independently_owned_native_dsl=True, native_quotation=True,
     native_executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
     runtime_oracle='PS0_HOST_ORIGINS: PASS',
     scope='finite native term/do matches, pattern lambda, record, if/have/for/try, ascriptions and direct tactic operands; loop annotations and deeper ordinary roles remain open',
