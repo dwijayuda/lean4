@@ -4,15 +4,15 @@ meta import PS0.StandardAdapters
 
 /-! Inspect native indexing dispatch and PS operands before elaboration. -/
 open Lean Elab.Command
-open scoped PS0.StandardAdapters
 meta section
 partial def kinds (stx : Syntax) : String :=
   toString stx.getKind ++ "(" ++ String.intercalate "," (stx.getArgs.toList.map kinds) ++ ")"
+open scoped PS0.StandardAdapters
 run_cmd do
   let env ← getEnv
   let some native := Parser.getParserCategory? env `term | throwError "missing native terms"
   for (token, parsers) in native.tables.trailingTable do
-    if token == "[" then
+    if token == `«[» then
       for (parser, _) in parsers do
         logInfo m!"PS0_NATIVE_INDEX_PARSER {repr ((parser.info.collectKinds {}).toArray)}"
   for input in ["#[2, 3]", "xs[0]", "xs[chooseIndex(0)]", "xs[chooseIndex(0)]?",
