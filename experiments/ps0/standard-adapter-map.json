@@ -11480,27 +11480,1219 @@
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
-  "currentContinuation": {
-    "qualifiedSource": "446ff7b4720ed812b80f7f8d761c594a88f36b01",
-    "qualifiedRunner": "3fed5aaaea9976288edc6429bb4301b2be3ec9b8",
-    "run": 42613411617,
+  "bodyWrapperOwnershipTestCandidate": {
+    "source": "1d9abc58b3e13365389539e110fb42b253707481",
+    "runner": "45f60d11135386bfc4b80c841cbf5d1fc852ad42",
+    "run": 42616040228,
+    "status": "PENDING",
+    "scope": "test-first direct declaration/local-definition wrappers versus ordinary argument collection syntax; not a compiler qualification"
+  },
+  "bodyWrapperOwnershipEvidence": {
+    "source": "ce4dc54cc933d335ace1917781a3546d5e8453bb",
+    "runner": "a68b3de917e14b806e3a2bdfc574932d65cd4da6",
+    "run": 42617432355,
+    "status": "PASS",
     "linuxJobsPassed": 30,
-    "independentFilesRehashed": 132,
+    "jobs": [
+      {
+        "id": 129160699508,
+        "name": "project-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699656,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699704,
+        "name": "compiler-fixtures",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699741,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699767,
+        "name": "proof-linked",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699813,
+        "name": "compiler-associative",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699847,
+        "name": "compiler-initwf",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699848,
+        "name": "compiler-core",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699849,
+        "name": "compiler-iteratorempty",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699865,
+        "name": "compiler-natlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699887,
+        "name": "operator-baseline",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699904,
+        "name": "compiler-listattach",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699938,
+        "name": "compiler-natbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699954,
+        "name": "compiler-prelude",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160699966,
+        "name": "compiler-rangechar",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700008,
+        "name": "compiler-tzif",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700021,
+        "name": "do-layout",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700035,
+        "name": "compiler-options",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700039,
+        "name": "compiler-natlemmas",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700048,
+        "name": "compiler-spredlaws",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700115,
+        "name": "compiler-extdtreemapbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700128,
+        "name": "compiler-intlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700140,
+        "name": "compiler-nanosecond",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700162,
+        "name": "compiler-stream",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700249,
+        "name": "compiler-unless",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700269,
+        "name": "compiler-signedbitvec",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700292,
+        "name": "compiler-finbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700321,
+        "name": "compiler-arrayperm",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700325,
+        "name": "compiler-persistenthashmap",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129160700354,
+        "name": "compiler-grindac",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13674090180,
+        "name": "ps0-compiler-persistenthashmap-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:0729f40d7f94fd7dcd24f1fd460ce289943e7a17780e1e01ac7f1f30d2512f2e",
+        "size_in_bytes": 509066
+      },
+      {
+        "id": 13674090031,
+        "name": "ps0-compiler-core-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:93974d25d269d1d5b81603c9826098c4ad8ebc6c6377368f95201864867181f4",
+        "size_in_bytes": 1455392
+      },
+      {
+        "id": 13674045237,
+        "name": "ps0-compiler-extdtreemapbasic-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:be60011523cccc2fb9bcff10208776f40eb375bc1198e19b8049c4949e74f99a",
+        "size_in_bytes": 980791
+      },
+      {
+        "id": 13673915373,
+        "name": "ps0-compiler-finbasic-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:e203e0f2f76ecb8bddbb3668531f1e0d5e310ea90e0e76dd31acc0c9e883a48c",
+        "size_in_bytes": 166300
+      },
+      {
+        "id": 13673801006,
+        "name": "ps0-compiler-iteratorempty-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:d77561592a2c0acfd98c258bdba4dfcb359e80ea4c60c4c61e9957f0bd2fbc03",
+        "size_in_bytes": 63902
+      },
+      {
+        "id": 13673771006,
+        "name": "ps0-compiler-spredlaws-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:428a088725380b5aa69c39eb02b8e81d2aaf0f394f26cf2f95d7f9a034ce30e2",
+        "size_in_bytes": 113828
+      },
+      {
+        "id": 13673760724,
+        "name": "ps0-compiler-natlinear-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:5d0328c3a7d64752e55d2b5f8dc3cdb0d4f0ac533a8773bcc786fbc4382eb9c1",
+        "size_in_bytes": 444298
+      },
+      {
+        "id": 13673711054,
+        "name": "ps0-compiler-arrayperm-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:54fa946ae3c3730212f6f3c129f8bb66c00e841edfc2fbd7a9adf61642bb5368",
+        "size_in_bytes": 86604
+      },
+      {
+        "id": 13673646938,
+        "name": "ps0-compiler-unless-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:52f31e59967852cb3216050ba7e3c376359eaf7c0e217c2713a7c302dc2f3ea8",
+        "size_in_bytes": 136515
+      },
+      {
+        "id": 13673631258,
+        "name": "ps0-compiler-stream-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:2c46f4ab0948a479eb2a48b4f1c97d258e4c7d927cd47515879480b8114afb45",
+        "size_in_bytes": 119603
+      },
+      {
+        "id": 13673581269,
+        "name": "ps0-compiler-grindac-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:7706294e4ad4fdee9bf9c98e1e3d4f1eff29b976e59b1ab223da00ababfac00e",
+        "size_in_bytes": 632608
+      },
+      {
+        "id": 13673467086,
+        "name": "ps0-compiler-associative-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:722c389eb2263acf07cb6da99756a7ef8c7bf5a88c72fbe31c0b7d9d39b00a37",
+        "size_in_bytes": 4831689
+      },
+      {
+        "id": 13673151998,
+        "name": "ps0-compiler-natbasic-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:bd4d3f54d104bb8f0d4b163d94fe33edcc59ec74cc340dd85eaa6d8f03f3be2c",
+        "size_in_bytes": 495653
+      },
+      {
+        "id": 13673112983,
+        "name": "ps0-compiler-options-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:3e12c0e6501b02b765f17601922f0d50ae4ce06c480b14f43fdd458724d5605f",
+        "size_in_bytes": 370631
+      },
+      {
+        "id": 13673062638,
+        "name": "ps0-compiler-listattach-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:d4dbd2618df27e517b8d33eccaf839732dff05ac236be48394f2a95df0c281d6",
+        "size_in_bytes": 506762
+      },
+      {
+        "id": 13672957869,
+        "name": "ps0-compiler-initwf-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:19ebca3823f34a3afc97dfce54804776e6c3142b9ac7e286f5922df97a1f0881",
+        "size_in_bytes": 275034
+      },
+      {
+        "id": 13672839202,
+        "name": "ps0-do-layout-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:0bc1470a94e2fb7cefec5b1cfa44ecaa760f9cc50645cd39a224420fe30041aa",
+        "size_in_bytes": 47882
+      },
+      {
+        "id": 13672798235,
+        "name": "ps0-compiler-prelude-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:8f2de35cb329005ffc8fb00873371790c58ba5c81a62dba5632c254aff02d204",
+        "size_in_bytes": 2933528
+      },
+      {
+        "id": 13672759352,
+        "name": "ps0-native-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:71e318bac1e28498418731b1f43f6b651a6d1462414da973423c0e1abe0d55ec",
+        "size_in_bytes": 4132
+      },
+      {
+        "id": 13672748515,
+        "name": "ps0-compiler-nanosecond-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:a7ff7187e6f3b3d1f1282e19c9f3ecd09f102783104a6846954253fde5824858",
+        "size_in_bytes": 106826
+      },
+      {
+        "id": 13672728467,
+        "name": "ps0-compiler-rangechar-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:e73bb88606e267938ad5eae4572e5b793b5de48386bfe926987200816f6f8328",
+        "size_in_bytes": 41047
+      },
+      {
+        "id": 13672574907,
+        "name": "ps0-external-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:411c913afc7fc53ebe0a189a788e76666b39f80b32c5144cfc47018c34f35d7b",
+        "size_in_bytes": 30118
+      },
+      {
+        "id": 13672414063,
+        "name": "ps0-compiler-natlemmas-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:bd5f4fa1cd71745956654a1dd983cd6f1a403c0bf9ecd2a2bfc533ceb454fe30",
+        "size_in_bytes": 849842
+      },
+      {
+        "id": 13672304687,
+        "name": "ps0-compiler-signedbitvec-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:1e0581ee4d71203fca9578da89fd93a5689415dace5f8e3639824674bfa27e73",
+        "size_in_bytes": 93172
+      },
+      {
+        "id": 13672239663,
+        "name": "ps0-compiler-fixtures-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:99f1410570cc6d7c23d35a200d34a40e8c89bf831bb07d5fafbab33714432f77",
+        "size_in_bytes": 3928199
+      },
+      {
+        "id": 13672204733,
+        "name": "ps0-project-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:e01a8bc7cab541c5c43d8da2c3940ba18f125c54961b804945cdf79b132817e5",
+        "size_in_bytes": 80884493
+      },
+      {
+        "id": 13672084610,
+        "name": "ps0-operator-baseline-42617432355",
+        "digest": "sha256:37650a3bc24ffd8ad5abbd7646461c6f00b70b7885f2b588b039d30e587aa0d9",
+        "size_in_bytes": 2297
+      },
+      {
+        "id": 13672064514,
+        "name": "ps0-compiler-intlinear-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:70ef46d89410f6be6f6ff5a6b8451db260a9203c1490a88a033e9e4d2314caa5",
+        "size_in_bytes": 1335045
+      },
+      {
+        "id": 13672049868,
+        "name": "ps0-compiler-tzif-ce4dc54cc933d335ace1917781a3546d5e8453bb-42617432355",
+        "digest": "sha256:ca9ba0a0355bb5e9099f93c77fd35ada917e1bb243c0b789b13c4415ab6f0d81",
+        "size_in_bytes": 225123
+      }
+    ],
     "independentInspection": {
       "status": "PASS",
-      "source": "446ff7b4720ed812b80f7f8d761c594a88f36b01",
-      "checkerSource": "446ff7b4720ed812b80f7f8d761c594a88f36b01",
-      "runner": "7f1981f1963819e59f3e84de5e68ab29a3e307e2",
-      "run": 42614902534,
-      "job": 129152228992,
+      "source": "ce4dc54cc933d335ace1917781a3546d5e8453bb",
+      "checkerSource": "ce4dc54cc933d335ace1917781a3546d5e8453bb",
+      "runner": "3e1107f2588cc2b9780e909abfee8fc783723860",
+      "run": 42618468839,
+      "job": 129164177788,
       "modules": 33,
       "actualFilesRehashed": 132,
       "artifacts": [
         {
-          "id": 13671379640,
-          "name": "ps0-recursive-boundaries-rehash-42614902534",
-          "digest": "sha256:a704b2d9c4ad503d65f6b9586afc9aaf4b209c9a0ee7156680571d2d6eba45e9",
-          "size_in_bytes": 55698
+          "id": 13673402785,
+          "name": "ps0-recursive-boundaries-rehash-42618468839",
+          "digest": "sha256:54177cecaab979529516135e08508587c8145ba050d2e89f65323d55fd2a7838",
+          "size_in_bytes": 55752
+        }
+      ],
+      "scope": "finite SDK-assisted target C/public olean equality and independent actual byte rehash, complete source reconstruction/line/import identity, ordinal definition correspondence and family multiplicities, explicit recursive/lambda/deriving/field source roles; not a transformed dependency graph qualification"
+    },
+    "finiteRealModules": 29,
+    "finiteRealDefinitionHeads": 959,
+    "finiteSyntheticModules": 4,
+    "finiteSyntheticDefinitionHeads": 37,
+    "modules": [
+      {
+        "converted_sha256": "b7fa9dbf19f415c46e0e1d6652b3ae4c22f43db9acf897698d298138258a8311",
+        "definitions": 0,
+        "edits": 4,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Array/Perm.c": "6a0303950dda09f4c838ada00d0232cd2fd5ef859e7a2ff75da9619c694444be",
+          "lib/lean/Init/Data/Array/Perm.olean": "9859e01697722586f061953d635cc5224fbed42cb1e04980470db0a41636cf38"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "00a87b41887daca4f8a1da8c0260adbdbcfb587f2e8f6020b69c73f87ace85c1",
+        "module": "Init.Data.Array.Perm",
+        "pinned_blob": "b08ecedda868a775aff18bb58b105974ff2d7899",
+        "source_lines": 153,
+        "source_sha256": "d6904d4d764cef21ee13fba6aa3d439dd98289344057337e47944c322db34142",
+        "strategies": {}
+      },
+      {
+        "converted_sha256": "8c9813e8e5a5ef573255270f58f58137f6d19eae237c4a7b99708c6afd1aa80c",
+        "definitions": 43,
+        "edits": 6663,
+        "equation_definitions": [
+          "Option.dmap",
+          "containsKey",
+          "eraseKey",
+          "getEntry!",
+          "getEntry?",
+          "getEntryD",
+          "getKey?",
+          "getValue?",
+          "getValueCast?",
+          "replaceEntry"
+        ],
+        "hashes": {
+          "ir/Std/Data/Internal/List/Associative.c": "68003a189804790eb852b0387422e4aa14c167636db99efaa59ba35d19a5d192",
+          "lib/lean/Std/Data/Internal/List/Associative.olean": "a7b7a2370bc045d28d0eb5d734ed055e16c91158b87b99ee2a876e6c81d56444"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "ec44c833eadbbae9430aa78cbae68fbbf421414957d00598ffeb792317be4c81",
+        "module": "Std.Data.Internal.List.Associative",
+        "pinned_blob": "a662911b51429329607eaea56ab8d04990df2901",
+        "source_lines": 10382,
+        "source_sha256": "5320117e23a5c29e583c0fe3f0bc857e2e8378c9d466ae91d6daed1d12be5fe6",
+        "strategies": {
+          "const": 1,
+          "def": 6,
+          "function": 36
+        }
+      },
+      {
+        "converted_sha256": "d93567379270671804719482c238ff14661e6fd3d0e00cb07d84f9677307fd5b",
+        "definitions": 3,
+        "edits": 13,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/ClosedTermCache.c": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2",
+          "lib/lean/Lean/Compiler/ClosedTermCache.olean": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a2bdc231af4876cb165146d92679423c51450e7ef41fc24380bcc6ca041b218e",
+        "module": "Lean.Compiler.ClosedTermCache",
+        "pinned_blob": "20b7acf5d684789ab52b81dda7def4b19568213c",
+        "source_lines": 40,
+        "source_sha256": "e1184350de6ef6ade1dc0f34d7320a4fc7445c5f9a7132d9ed7fc1f5518c38b9",
+        "strategies": {
+          "function": 3
+        }
+      },
+      {
+        "converted_sha256": "e34092b6c851a5e47e63bf8a7dbf7edae0983d18416933dfa53110adae293b6e",
+        "definitions": 4,
+        "edits": 25,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/DeclHash.c": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c",
+          "lib/lean/Lean/Compiler/LCNF/DeclHash.olean": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "440b9e0d3f4083cbd27fb4b1e1302a6a4f1305db29115f697133c07ec153a87b",
+        "module": "Lean.Compiler.LCNF.DeclHash",
+        "pinned_blob": "5f818560cb8fcba0df6f64acb6bdc01c48425189",
+        "source_lines": 64,
+        "source_sha256": "b91bd09cd5fbf9f0def82b12c7ef5d2c5c5465f55edfeec8ad59a640f0b5d1d0",
+        "strategies": {
+          "function": 4
+        }
+      },
+      {
+        "converted_sha256": "dc659cf8a5aebed91588f6b637c388856094403a8c23f730871b13bfa687b49a",
+        "definitions": 4,
+        "edits": 40,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DeclarationForms.c": "5d7e11adf7656b2daa64d191f23782a4ce5d06f5eb01cba6ec5c6ad2f0f1e159",
+          "lib/lean/Lean/Compiler/DeclarationForms.olean": "2a1f9d698857303ec6d63f36a7ccaa1332ae80d5634cfaa2649db6a41361baf7"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "05bdb28f9cd93f780b99847b2e83763a7c0d1c465b494e8236c1bbba9ac0d381",
+        "module": "Lean.Compiler.DeclarationForms",
+        "pinned_blob": "3761abd09f5c184ed9effb4f4749669bb1ac3039",
+        "source_lines": 59,
+        "source_sha256": "a79bce6dfbc24697a420d694507b1f43681db2ebeace76bbf12ab5b1877ebe54",
+        "strategies": {
+          "const": 1,
+          "def": 2,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "ee2266490c79e1347eb72566b39b9587e3843cba03c7508a810420bda872ca8a",
+        "definitions": 8,
+        "edits": 50,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DoLayoutProbe.c": "d391d37b19052ef8df2399c29ea235b1d61faa78f59f54d3d2ad42afe9ca06ca",
+          "lib/lean/Lean/Compiler/DoLayoutProbe.olean": "33fc5547e1c25f121c708c6131070bcdad029a68816b3ce6be411a2df3553a46"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "adf6c6c36878c3f5ec3cbc4a6ccccbd8367e63b2d5991ede9a8439eb1dd4ba7d",
+        "module": "Lean.Compiler.DoLayoutProbe",
+        "pinned_blob": "09c87f1ea65f4907f3b5fbca7c854faabe533933",
+        "source_lines": 37,
+        "source_sha256": "644afda53861fd8b61c38d32168a852933594b3b0196c0e6f383ff593fbbedc4",
+        "strategies": {
+          "const": 5,
+          "def": 1,
+          "function": 2
+        }
+      },
+      {
+        "converted_sha256": "96c8466d93c4b2825f82ce044d3c4286c78ddd8816f247637591eb10c79e5fe1",
+        "definitions": 2,
+        "edits": 11,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/EmitUtil.c": "ab93c952e9ed62b7c7ca780f12a0f671db8c3308b5a601926fcf36d7d0408d16",
+          "lib/lean/Lean/Compiler/LCNF/EmitUtil.olean": "5be3a7804a7288819fb630226673d7a1454043658fe2a4ddb25a3b6a45280553"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "99b7bf32724dfd7879020f2f36dd068260a7ca985b21f14055a748c1d412b45f",
+        "module": "Lean.Compiler.LCNF.EmitUtil",
+        "pinned_blob": "a1283439481c82fe7835b7b2d743e5e57bfd1111",
+        "source_lines": 56,
+        "source_sha256": "a940bfa697130609453846c9af49f426cb644a03f3fa4974f3ca947c3798436e",
+        "strategies": {
+          "def": 1,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "cdf3d3196d7403ba8206010843e2b3ca521486efcfd9539f42a8d2596aa082ea",
+        "definitions": 150,
+        "edits": 1029,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Data/ExtDTreeMap/Basic.c": "4c29cf7ac07cc684806d8b461ac5861b72bd7e995e9002e1a320f9c182baf408",
+          "lib/lean/Std/Data/ExtDTreeMap/Basic.olean": "44a1a59bf0031115e910a1354a20e13b303f0eca8a4c39173fbfbc2837ce2104"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "04842758a47b3d2e0fb9ed53b65e0f53e030bd91f5c1374414e8156fcfb0a729",
+        "module": "Std.Data.ExtDTreeMap.Basic",
+        "pinned_blob": "61b9f6c98cfab57ece20d2fab1d02b364a2fffa0",
+        "source_lines": 970,
+        "source_sha256": "2dbcdf4ae566bbfbf26ab5ae2bfa7ed78d40056afb6334e84729d4655d8cfcf1",
+        "strategies": {
+          "const": 1,
+          "def": 7,
+          "function": 142
+        }
+      },
+      {
+        "converted_sha256": "703212ed3421815962922308536832cc2fe1f16b199c62abda1e024667a18a8e",
+        "definitions": 26,
+        "edits": 100,
+        "equation_definitions": [
+          "add",
+          "div",
+          "elim0",
+          "land",
+          "lor",
+          "mod",
+          "modn",
+          "mul",
+          "shiftLeft",
+          "shiftRight",
+          "sub",
+          "succ",
+          "xor"
+        ],
+        "hashes": {
+          "ir/Init/Data/Fin/Basic.c": "54d27ad85376bf29c77c6fadd29cf2f2a74491c670afe9215d26fdd575ac5cdc",
+          "lib/lean/Init/Data/Fin/Basic.olean": "8f599a56bbf94a1e62b8403e65742ac650ae7f0555bafd8e9e5ab41f0b124850"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "9cecfa2b525c7a1ae886532387ff28c2ed6cbbfea9239b222393815a68c71700",
+        "module": "Init.Data.Fin.Basic",
+        "pinned_blob": "6fee3ab2eaacf1b76de02ea7f7880f29fbac8294",
+        "source_lines": 423,
+        "source_sha256": "bb3d4e46cb40a24f5a09e6e003c76f2b84140a598df81233f0bffe3afe08cbf4",
+        "strategies": {
+          "const": 13,
+          "def": 4,
+          "function": 9
+        }
+      },
+      {
+        "converted_sha256": "dfbc8d1d5ad2823981dd09cfbd4ed6418968ea80ff9c01185d9a169021bf389a",
+        "definitions": 41,
+        "edits": 356,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Grind/AC.c": "a578c7babb9c24a9a306383e07e903510c8032304f4159037b81c9329a9a9f63",
+          "lib/lean/Init/Grind/AC.olean": "6a08956e021397d08df8c20c85f81d29c6293dfd7a6be0e0a7c7e02ed370826e"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a5e98909dc8166b5ec82ea9b67b53d4f54bd6b96e2005ef249822602373def0c",
+        "module": "Init.Grind.AC",
+        "pinned_blob": "ed2fd91db65a2b928158478308a22c300d14ab85",
+        "source_lines": 713,
+        "source_sha256": "11f082933c55a50ee11e1c5833f76b40a9336827343b602b6cc60d7e42cdd44a",
+        "strategies": {
+          "def": 28,
+          "function": 13
+        }
+      },
+      {
+        "converted_sha256": "b90100fad1c19dc06321ca66f8c852eaac08a62222146a73470f24a47144721a",
+        "definitions": 52,
+        "edits": 411,
+        "equation_definitions": [
+          "Prod.map"
+        ],
+        "hashes": {
+          "ir/Init/Core.c": "e62dac2531da1648a0a3c82613e32077f3f815a76eebbcd5fce91287c479cb97",
+          "lib/lean/Init/Core.olean": "701ec5ec5217eaabed28ddd717710d605d516aab274be20c96572600463d7814"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "3ee3da46521c1515dfeaebfdef40fbc1de281cb69342161122329f6d806d8a29",
+        "module": "Init.Core",
+        "pinned_blob": "23e784c3806badcabd1e8f19c50946d66bc3c87a",
+        "source_lines": 2488,
+        "source_sha256": "264a0b48fedc91fadf55fc5caac8d91003e3908a6e5e42736e2ac8bf1f7cdf99",
+        "strategies": {
+          "const": 3,
+          "def": 14,
+          "function": 35
+        }
+      },
+      {
+        "converted_sha256": "6c07b50df35a30e6c194c32164291a4c9d33603ddde863ffc5e0e0cfd5bffda4",
+        "definitions": 236,
+        "edits": 1147,
+        "equation_definitions": [
+          "Bool.Internal.not",
+          "ByteArray.push",
+          "ByteArray.size",
+          "List.append",
+          "List.beq",
+          "List.concat",
+          "List.flatten",
+          "List.foldl",
+          "List.get",
+          "List.length",
+          "List.lengthTRAux",
+          "List.map",
+          "List.set",
+          "MonadExcept.ofExcept",
+          "Name.hasMacroScopes",
+          "Nat.add",
+          "Nat.beq",
+          "Nat.ble",
+          "Nat.mod",
+          "Nat.mul",
+          "Nat.pow",
+          "Nat.pred",
+          "Nat.sub",
+          "Option.map",
+          "Substring.Raw.bsize",
+          "appendCore",
+          "assembleParts",
+          "beq",
+          "eraseMacroScopesAux",
+          "extractImported",
+          "extractMacroScopesAux",
+          "extractMainModule",
+          "getHeadInfo?",
+          "getId",
+          "getInfo?",
+          "isIdent",
+          "isMissing",
+          "simpMacroScopesAux"
+        ],
+        "hashes": {
+          "ir/Init/Prelude.c": "c2dd15475af819d54fe5522abcfe5a8b910df2db100e35627ec0c88ec370df72",
+          "lib/lean/Init/Prelude.olean": "4adc149394f7833f84b2c7f3c96fc9ed4d60f83db84328d68f78a6a037865ffd"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "8f329b25d56bef5fdc5ae64dc0c9a1631704844d4798580d91ec722ae466c408",
+        "module": "Init.Prelude",
+        "pinned_blob": "58a4c37053f30d37b824190b934e759c16e53d7a",
+        "source_lines": 6160,
+        "source_sha256": "390e6b57ead28cb821a65533b21357f2f02d0a1525602f5a1ce9ee3eeb81fd12",
+        "strategies": {
+          "const": 44,
+          "def": 72,
+          "function": 120
+        }
+      },
+      {
+        "converted_sha256": "7b039cdfceae87e753c9aff067c9350ce37f88745cc6d65886b52b0767b298d0",
+        "definitions": 18,
+        "edits": 186,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/WF.c": "0332dc7f1d48ff60f3a5259bb415b6dde80984829e32748adddf429117bac9e4",
+          "lib/lean/Init/WF.olean": "6c0665dec4c392781f9f872f379d24e90bae7a99edb33e91014a152a7feabbd6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "18327010e2ce8d010ea659d1ed46145c3defb8f9d9640fcbfeb51d231885b768",
+        "module": "Init.WF",
+        "pinned_blob": "1d0216ed49d1250db35bc6b551fb03c0c7777293",
+        "source_lines": 533,
+        "source_sha256": "fe7c0a49de4a9c4b4fac24493f40598a1374837b17a6c334fc1ed03e23646e01",
+        "strategies": {
+          "const": 2,
+          "function": 16
+        }
+      },
+      {
+        "converted_sha256": "c2ffaf4c97f1172c5a3d1a5cc8a6b99c8b310c14d5fbe4d11149763a1f70cc81",
+        "definitions": 10,
+        "edits": 28,
+        "equation_definitions": [
+          "InlineAttributeKind.toAttrString"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/InlineAttrs.c": "20b77c4be84aa67c3159150a1d6b61e0ab20daad861078ed1de1f16abfd5b4e9",
+          "lib/lean/Lean/Compiler/InlineAttrs.olean": "87b9576a3e80d49208825ff3053ad2f37131d17c82484ce4eaf4c7311708d849"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "967d26d2b082d0db36a6c43f846acdcc6fc6af06df0f3c4332112ed3bc45b741",
+        "module": "Lean.Compiler.InlineAttrs",
+        "pinned_blob": "97135e8faf9478a4e4422feb66cdb97fc3209674",
+        "source_lines": 106,
+        "source_sha256": "a3599016d38e2128d6c1f3cc384a544540b33db1288221754700da42c7e7d01c",
+        "strategies": {
+          "def": 1,
+          "function": 9
+        }
+      },
+      {
+        "converted_sha256": "9a0784dde8952cabced407922df62a4c9ad592d7c4ad49bb9ac0869b63af8ec3",
+        "definitions": 100,
+        "edits": 672,
+        "equation_definitions": [
+          "Poly.div",
+          "Poly.divAll",
+          "Poly.divCoeffs",
+          "Poly.gcdCoeffs",
+          "Poly.getConst"
+        ],
+        "hashes": {
+          "ir/Init/Data/Int/Linear.c": "60e3592e6fcdcfe077971ddf0a5560646a183c5fe9d4ea81e4393082536fe72d",
+          "lib/lean/Init/Data/Int/Linear.olean": "f923a1a8155c683b843e5e4efb29dd2c500e8d6d9b618757d49498b0898c7a36"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "faed3cd394147d85bdffb87a45be50469c412283edfb2a4161fa19a34706b933",
+        "module": "Init.Data.Int.Linear",
+        "pinned_blob": "0d334c02f4a08736e675863b63740d4791c6e5c7",
+        "source_lines": 2234,
+        "source_sha256": "b7d2ae684fed1ffaf293f33c2d736861e8fa9f89be108f41a110a7c42243b1ad",
+        "strategies": {
+          "const": 2,
+          "def": 51,
+          "function": 47
+        }
+      },
+      {
+        "converted_sha256": "902eb7e72024077eaff54c122d3c89dcbc674c235fa8eed759ff7521a96c9908",
+        "definitions": 3,
+        "edits": 18,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Data/Iterators/Producers/Monadic/Empty.c": "5d8be1b6c0f93601d50793ab50af6e52c6c7a66db5d75dfe3e2f72e709ca18ce",
+          "lib/lean/Std/Data/Iterators/Producers/Monadic/Empty.olean": "684ec092395c971d6d0c7da78fb7bcd07e2e090b054357e242ee52b2d2ee1fc4"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "042d9dd99b55598447a58b75081292cf76ff0edbcbeb2738ca943d4d100f360c",
+        "module": "Std.Data.Iterators.Producers.Monadic.Empty",
+        "pinned_blob": "69171a771e242e603f687d85b63091f851037382",
+        "source_lines": 65,
+        "source_sha256": "245b8242302d418f78041c02b956946618e33042e181c5eb0b28624bb963f890",
+        "strategies": {
+          "def": 2,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "cc17432112eecf5fc07ba22c13cd0da15ea9187670c35ff33a802242a62899c1",
+        "definitions": 110,
+        "edits": 421,
+        "equation_definitions": [
+          "Alt.getCode",
+          "Alt.getParams",
+          "Cases.alts",
+          "Cases.discr",
+          "Cases.resultType",
+          "Cases.typeName",
+          "Cases.updateAlts",
+          "Code.isDecl",
+          "Code.isFun",
+          "Code.isReturnOf",
+          "Code.toCodeDecl!",
+          "CodeDecl.fvarId",
+          "DeclValue.size",
+          "FunDecl.binderName",
+          "FunDecl.fvarId",
+          "FunDecl.params",
+          "FunDecl.type",
+          "FunDecl.updateBinderName",
+          "FunDecl.value",
+          "LitValue.toExpr"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/Basic.c": "4576adf24c634cdc34518a3f65ed3ca0ea3dc32027d6633156f6eb0664c95ff2",
+          "lib/lean/Lean/Compiler/LCNF/Basic.olean": "e4fc60bb05756520835af0fc9342f47848b3e3cb2e4444616e8b584432d025f6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "11b566ce1e42c776f301968e94db9871cc65bcbbc8cc901b8a1952bef9d7bef7",
+        "module": "Lean.Compiler.LCNF.Basic",
+        "pinned_blob": "82c8dee0b9d13f09d58a6404dd5d5abf797d236e",
+        "source_lines": 1263,
+        "source_sha256": "833cb3c38140ece99ee25149529e568839379193064f5a210f5fb5ffba08df59",
+        "strategies": {
+          "const": 17,
+          "def": 14,
+          "function": 79
+        }
+      },
+      {
+        "converted_sha256": "ec4eea43397fc325068f0f106bb0112d7b59c13ce9f44fcff679dcf4a97c31bd",
+        "definitions": 6,
+        "edits": 391,
+        "equation_definitions": [
+          "pmap"
+        ],
+        "hashes": {
+          "ir/Init/Data/List/Attach.c": "b8a0fe29ee0fd6f0252cc1ce2882674c0fed7143b8523f354299af2868b68187",
+          "lib/lean/Init/Data/List/Attach.olean": "769bb417c9df7113a934ff7bb5a9b0832f56bfe06826f8817d01273eef864a8d"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "31a35c277176129ab26366169f12e3c00398e695a0f549d9dcfa7d7fa15c9d1c",
+        "module": "Init.Data.List.Attach",
+        "pinned_blob": "3721b0623eae725fe5b43691e22942a10e349c97",
+        "source_lines": 875,
+        "source_sha256": "2d392f48cdd9c7886817d3ced7ea82b447e25738ca4249f97492ced94e8baf38",
+        "strategies": {
+          "def": 2,
+          "function": 4
+        }
+      },
+      {
+        "converted_sha256": "8659418a5ab5bcdfd37bb18bbdbb96a987e8cdbdd2ef2996b19c69c3093a3564",
+        "definitions": 11,
+        "edits": 49,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Time/Time/Unit/Nanosecond.c": "bfeaa4a0927cec86147fbcb1132e05a9ca1b7caf8bbb9c99ea1b818a9028fadd",
+          "lib/lean/Std/Time/Time/Unit/Nanosecond.olean": "3fdc3d0945b3b81ad8b35987c1d4acd954d207e1f05fce4f3623e144bee74c63"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "d54285c143d00793544ec2727a16145a41b6315b158041547fac6db86dfc6f07",
+        "module": "Std.Time.Time.Unit.Nanosecond",
+        "pinned_blob": "626e760e7771e798f92191620f441da1bd5a666f",
+        "source_lines": 167,
+        "source_sha256": "03563cc3ac4b27744ce308126e11e8d10a40af0f7c11b7e801a7e4f1914dc831",
+        "strategies": {
+          "const": 4,
+          "function": 7
+        }
+      },
+      {
+        "converted_sha256": "9c22629b3c498fbe5ada19819c42723cf7c1d8e0eca49d5d0959599aac4403cd",
+        "definitions": 4,
+        "edits": 222,
+        "equation_definitions": [
+          "recCompiled",
+          "repeat"
+        ],
+        "hashes": {
+          "ir/Init/Data/Nat/Basic.c": "febabcf79a2653c77d6810ca71320cc53b16c9cfb591bb387f3efd3eca52d1b1",
+          "lib/lean/Init/Data/Nat/Basic.olean": "c37d53a6a956f0e6643439eda339eb8986586d22c7c7f122e8b4bcad34914e5b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a2bb6522ce40bdcc8de47ad075b89570f5ac82fd4753515d0df01994e996f7e2",
+        "module": "Init.Data.Nat.Basic",
+        "pinned_blob": "9d952894c7d70b881bcb1c82151a1d8889499013",
+        "source_lines": 1234,
+        "source_sha256": "e26b5a54eab922f6b650cfe9032fe23172fa8cc0b63c75cff0c8bf99f6175289",
+        "strategies": {
+          "def": 1,
+          "function": 3
+        }
+      },
+      {
+        "converted_sha256": "74072952bf1036821add4241976e2acec2fd3ba94aa8a51cf00a08329c275523",
+        "definitions": 5,
+        "edits": 340,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Nat/Lemmas.c": "b90c7a737946b0c91499a8b195b8eadfc8a91b5058ae6ddc33c95be013fd81ca",
+          "lib/lean/Init/Data/Nat/Lemmas.olean": "eeae749c68027ee9f43f51fc437939a759f971c284b0f59039973c49f902ffe3"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "3ace2a8a17e5a384302ddaf2f63e604d0cbc508d5bd955895b4824c718bfc439",
+        "module": "Init.Data.Nat.Lemmas",
+        "pinned_blob": "0111c39744128c6d54f437d982a22ec321900a71",
+        "source_lines": 1952,
+        "source_sha256": "c4530be5c96b507c13823378db43912a3ba577a2a23944ce222aaa7d193d2581",
+        "strategies": {
+          "function": 5
+        }
+      },
+      {
+        "converted_sha256": "0b7ca207da75dc01adec08d39299d11a8e728640ce23738c80ae40f3fe01c35d",
+        "definitions": 20,
+        "edits": 126,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Nat/Internal/Linear.c": "2123db80549ed6f8db912032696fc12b0acb8cfdebffbf243bbe2ef351c10dcb",
+          "lib/lean/Init/Data/Nat/Internal/Linear.olean": "bd21c5cc9599dab48d4b52108529aa928668a96d7de050d2c9536b0ceb300e89"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "8d83b4022e69cb76a91977227f4c164833b85bdcbb7bb464a9f25d6bae6c161c",
+        "module": "Init.Data.Nat.Internal.Linear",
+        "pinned_blob": "ed9de4c44717b3801a9d32da8e19ea13c0f9cefb",
+        "source_lines": 547,
+        "source_sha256": "8f75864cbcbf54ac893dd839959273e2fa2e6ae31cf310c20a8b7f98db27d75b",
+        "strategies": {
+          "const": 1,
+          "def": 4,
+          "function": 15
+        }
+      },
+      {
+        "converted_sha256": "ea468b97233267929f3a3f63018592e82d4e124a7ec93ae5f05d2d781f1bd0e5",
+        "definitions": 34,
+        "edits": 96,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Data/Options.c": "a2fcbdf86bf69db3390c805f8f01cb18bd9043c94ad160ec25f904b80576dc13",
+          "lib/lean/Lean/Data/Options.olean": "e7cc0765a62dfc95cfe010e0c0ebb23f4297a7041fbf5f66f42688836a2c7fb6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "373f69f6570d14302e98fb91c4da47b81c9446cc9f7d4b8b237413e659e9acec",
+        "module": "Lean.Data.Options",
+        "pinned_blob": "875b0607fba2d2e2be4d1c3cbd1a877442b6af71",
+        "source_lines": 259,
+        "source_sha256": "ea52d63ede2afb64ea83f199fbe8c778fdb5991683f98dccd2ff6e345dbaa1e9",
+        "strategies": {
+          "const": 5,
+          "def": 7,
+          "function": 22
+        }
+      },
+      {
+        "converted_sha256": "5ffbf652349ac67a63e8e10aeb132db5c1511ab140186ac88b4b3428ced00649",
+        "definitions": 1,
+        "edits": 3,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/OtherDecl.c": "a7374e6b1908187a18e4343b31c0d53a2dc4dec852b99b63e7770fe7074cdc3b",
+          "lib/lean/Lean/Compiler/LCNF/OtherDecl.olean": "5ef05c49d8b84529d1e37e70b4d5c3f52f26ddbe27a97a71c402ff341a408f5b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c772e5c812937436f7b0bebe0562485648f7b347b1607d65a55726f990378070",
+        "module": "Lean.Compiler.LCNF.OtherDecl",
+        "pinned_blob": "a09e23d6f39bb7e87e7a5b10c2f0fc7556575cd4",
+        "source_lines": 26,
+        "source_sha256": "cb137113a603520d0553a2d5553f60f1c66425a5a79613edade23b45c7a5fd95",
+        "strategies": {
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "f83f136dbcbb18521dca5ee41d9bde948c62edcdd304016fe162ff1fc739349c",
+        "definitions": 44,
+        "edits": 170,
+        "equation_definitions": [
+          "Node.isEmpty",
+          "alter",
+          "alterAux",
+          "collectStats",
+          "contains",
+          "containsAux",
+          "erase",
+          "eraseAux",
+          "find?",
+          "findAux",
+          "findEntry?",
+          "findEntryAux",
+          "findKeyDAux",
+          "foldlMAux",
+          "getCollisionNodeSize",
+          "insert",
+          "insertAtCollisionNodeAux",
+          "insertAux",
+          "isEmpty",
+          "isUnaryNode"
+        ],
+        "hashes": {
+          "ir/Lean/Data/PersistentHashMap.c": "744d795ecd6f3aeacebe145fac2272998c23ffdc2e45b773782b47cc8c095bee",
+          "lib/lean/Lean/Data/PersistentHashMap.olean": "7625a97601a6094fe06d7efcefc53dcd1cd909b6663fd9629f5e0056656b64e6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "7cbd824c525c4d31af49b2c0ebdf5ceb3554d2c8a64ceade9114a4b10393ee8a",
+        "module": "Lean.Data.PersistentHashMap",
+        "pinned_blob": "e4d81c5cc33ac8d6e67ad217402ec8688b11486e",
+        "source_lines": 447,
+        "source_sha256": "d63a21b3bdc0c616417d75c32c3e104cc185667229a8a899de3769c1a4252af4",
+        "strategies": {
+          "const": 2,
+          "def": 2,
+          "function": 40
+        }
+      },
+      {
+        "converted_sha256": "65b96b194b8627e60e2594b1a19821a13639a302d70954db263ff26746a2b40f",
+        "definitions": 1,
+        "edits": 4,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Range/Polymorphic/Char.c": "dc04854c76c3805628e2e8e5953cbd1bad6d65fd5cb8dc6cfa3036a599f5d36e",
+          "lib/lean/Init/Data/Range/Polymorphic/Char.olean": "3fc75f9c8ec753ee3d4110612019cbac5db2961404c8c49f0a9f6ace8712417b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "6af8c3f01ba00a8aa597d55a34576a7ab643d5fb54e63565a0432ded1bc333ec",
+        "module": "Init.Data.Range.Polymorphic.Char",
+        "pinned_blob": "2b2086145a31d9f3bc89411c73c009fa7ba7cdf1",
+        "source_lines": 80,
+        "source_sha256": "9ac365898cd186f08916b9395fd8ce6b740e55157125de2f8f7591f7dcfa68ec",
+        "strategies": {
+          "const": 1
+        }
+      },
+      {
+        "converted_sha256": "9fe41d99f2e51c671879e39f589f94d6c0e27666e8f45a8d19d2f08728615858",
+        "definitions": 1,
+        "edits": 40,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Do/SPred/Laws.c": "92a62b96d8578d57378fb1f64cb0cc255c5cdd406359572468581134c57a5916",
+          "lib/lean/Std/Do/SPred/Laws.olean": "4e4f63be2302f7dea065912e47b0792bed8bfd95e4bf2b7316cae1a8a432b86f"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c047468dc1f44ee76028d7a7151ff4932891659770a4119de1871339b2fdb981",
+        "module": "Std.Do.SPred.Laws",
+        "pinned_blob": "9e762ecf143854a45660037b5333e5e6ca1ca9c8",
+        "source_lines": 183,
+        "source_sha256": "f9310bc9028049e1bce2643b781ace5e868da11cbc47244d1b48ceb48caf0c4f",
+        "strategies": {
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "b94c5b87b6f6e6907dab074a06c6c07ef6c96a78fe1cd91041e698025c9b6f60",
+        "definitions": 7,
+        "edits": 14,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/ScopeM.c": "0a149b683a22ff893a4631811a531bb483b19ef7845b036be8e7dbdd5be0de39",
+          "lib/lean/Lean/Compiler/LCNF/ScopeM.olean": "5e79495ce517159a2850bf5b9cb0ea1f530fca39f568672584a881dcb7ad36b7"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "acbb84516674054f46f0189608dac98129625e59db0d1ed82ebdd7bc6fcb99a5",
+        "module": "Lean.Compiler.LCNF.ScopeM",
+        "pinned_blob": "5bc78059af7e9f16d980688c88c3eaeecae3ab1a",
+        "source_lines": 58,
+        "source_sha256": "555ea12e6be42a5e9be8eb3a22dc1d0dbc2ae748fcc7a971da7f63e23b64642a",
+        "strategies": {
+          "const": 2,
+          "function": 5
+        }
+      },
+      {
+        "converted_sha256": "cdd1f71c6e73168d2446f722b40e7c4b0bbd2428a684441ad1a8b23679fe4427",
+        "definitions": 3,
+        "edits": 67,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Range/Polymorphic/Internal/SignedBitVec.c": "4cb3ad8835c508305961446b661efaf5adb7a2630eebc2fd339902d3b7f29a46",
+          "lib/lean/Init/Data/Range/Polymorphic/Internal/SignedBitVec.olean": "1bd6c046e628af9deb5758a8461fdf1036cd4aa71260d6755d193c557d9f88d4"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "b0c46ffba72d7cd5fc55c675f367577f8b1220eae6c44e8d03dcc7bf84e66c35",
+        "module": "Init.Data.Range.Polymorphic.Internal.SignedBitVec",
+        "pinned_blob": "f76a64f6ba6aad26ff38c553fee23d9847883768",
+        "source_lines": 329,
+        "source_sha256": "875060a8cfe504a7e93f24e1efd482adbfc48335c1b4918b6c732014448e7890",
+        "strategies": {
+          "def": 3
+        }
+      },
+      {
+        "converted_sha256": "3d74ca828c554c4517126a7b0b1d0c5ceab95b77879f6dbe16173222a2ad2a6f",
+        "definitions": 1,
+        "edits": 32,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Stream.c": "9812d3069d279463e02d1b54c6416baa4a004c49c6b53d22ac40709271b01a5f",
+          "lib/lean/Init/Data/Stream.olean": "f99a172ba68aba2e292ce1fc10ca90f114a0b6b30e21a2ef17b18e523a829334"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "d7783332330477ae44ff490a01baf3d62274be6c91bd8f250d63e6a2a01df9af",
+        "module": "Init.Data.Stream",
+        "pinned_blob": "029989c80ba87bf27f7489875f4deeeca3aeb35d",
+        "source_lines": 132,
+        "source_sha256": "95147844e8a36949bbfa534c6b815379dca5e4780e5e202bf9a4f143bc5b967a",
+        "strategies": {
+          "def": 1
+        }
+      },
+      {
+        "converted_sha256": "340d2738edcf91181d3355bac4a2c72107c9b7a6ca7d62e4f9be66c6f03d8e85",
+        "definitions": 18,
+        "edits": 29,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/TelescopeProbe.c": "6787d16744a58347a1b302b44ee5adf1825095401980b79227f473e6bd844452",
+          "lib/lean/Lean/Compiler/TelescopeProbe.olean": "c3073c1993e616c2e86cdc59cfe4ba9602e88220f8f60308520b6670d3ee56fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "96b9d0ff0cacd87ecbb02a79361f21537bd2c907b946ee14b8acd03d1f501cff",
+        "module": "Lean.Compiler.TelescopeProbe",
+        "pinned_blob": "61b472c934e79b57492cf596ede396f7740230db",
+        "source_lines": 27,
+        "source_sha256": "59625e4a509b037e9a4003077e04803f692d098ae28c487a7ba3bb7bda73860c",
+        "strategies": {
+          "def": 6,
+          "function": 12
+        }
+      },
+      {
+        "converted_sha256": "26facad1f100c5fe4fa6a60b30c9c7b87906b3fbcd61f2733ccb592052cfd4c9",
+        "definitions": 23,
+        "edits": 77,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Time/Zoned/Database/TzIf.c": "5e1fb371fe2cdae64973d587c4100f87cc2f9efdf3b0bd6d3aef48937becda5f",
+          "lib/lean/Std/Time/Zoned/Database/TzIf.olean": "216867009032b8ecbadcd59ac0b2a05c7f0894a70b45dbcc23fb080fea4fb857"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "b5429a01f49006541048205ae748d79179a6f932fec6a36069636380e0838e10",
+        "module": "Std.Time.Zoned.Database.TzIf",
+        "pinned_blob": "116665f0441768f93400d2e2ccb96446347e5fb9",
+        "source_lines": 333,
+        "source_sha256": "9eb6e0cf2b94f4fa93e3ea7995bba6377eee9cfd3b41f9f5da8c94e45e93d2a6",
+        "strategies": {
+          "const": 12,
+          "function": 11
+        }
+      },
+      {
+        "converted_sha256": "72ce25fe206d688642dc7d784b85efcef0704146c6a0fa1f3e7df363cc1449a7",
+        "definitions": 7,
+        "edits": 69,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/UnlessProbe.c": "fd246d62dd61c38d8539847e543e582dabd87c8249ce15d812f6bb32ad2c8af9",
+          "lib/lean/Lean/Compiler/UnlessProbe.olean": "69228e03dc14894822251ff96b24807791d552eb400717ff813f6487d2f85f77"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "1d6a894076dae2fb847adfd9b2f7c169401c66db1dedc529a240470323a68fe6",
+        "module": "Lean.Compiler.UnlessProbe",
+        "pinned_blob": "4a70859dc3e2c1c9350517086bb7664f2538a176",
+        "source_lines": 31,
+        "source_sha256": "bd708d2f197ba646313e4790d6ed5704fd0453d2680aa430cc99603d2aa572cd",
+        "strategies": {
+          "const": 2,
+          "def": 1,
+          "function": 4
+        }
+      }
+    ],
+    "testFirst": {
+      "source": "1d9abc58b3e13365389539e110fb42b253707481",
+      "runner": "45f60d11135386bfc4b80c841cbf5d1fc852ad42",
+      "run": 42616040228,
+      "job": 129156035315,
+      "status": "FAILED",
+      "nativeDiagnostic": "failed to synthesize Singleton",
+      "psFailure": "PS incorrectly accepted the ordinary argument as a body wrapper"
+    },
+    "scope": "finite eligible direct declaration and local ID definition wrappers versus ordinary native singleton/collection expressions, preserving original wrapper root range; native record priority and all existing finite checks retained; not every wrapper/local field/control role",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "currentContinuation": {
+    "qualifiedSource": "ce4dc54cc933d335ace1917781a3546d5e8453bb",
+    "qualifiedRunner": "a68b3de917e14b806e3a2bdfc574932d65cd4da6",
+    "run": 42617432355,
+    "linuxJobsPassed": 30,
+    "independentFilesRehashed": 132,
+    "independentInspection": {
+      "status": "PASS",
+      "source": "ce4dc54cc933d335ace1917781a3546d5e8453bb",
+      "checkerSource": "ce4dc54cc933d335ace1917781a3546d5e8453bb",
+      "runner": "3e1107f2588cc2b9780e909abfee8fc783723860",
+      "run": 42618468839,
+      "job": 129164177788,
+      "modules": 33,
+      "actualFilesRehashed": 132,
+      "artifacts": [
+        {
+          "id": 13673402785,
+          "name": "ps0-recursive-boundaries-rehash-42618468839",
+          "digest": "sha256:54177cecaab979529516135e08508587c8145ba050d2e89f65323d55fd2a7838",
+          "size_in_bytes": 55752
         }
       ],
       "scope": "finite SDK-assisted target C/public olean equality and independent actual byte rehash, complete source reconstruction/line/import identity, ordinal definition correspondence and family multiplicities, explicit recursive/lambda/deriving/field source roles; not a transformed dependency graph qualification"
@@ -11524,20 +12716,13 @@
       "verified_execution": false
     },
     "nextActions": [
-      "Inspect full transformed graph thirteen without cancelling its evidence; then qualify the next complete graph at the newer source",
-      "Validate direct declaration/local-definition wrapper ownership versus ordinary collection arguments",
-      "Extend remaining ordinary grammar/source-fidelity roles, then require whole-graph native parity/linking/runtime and canonical compiler fixed point"
+      "Inspect full transformed graph thirteen when terminal, preserve its exact failures/successes, and qualify the next complete graph at the newer source",
+      "Extend remaining ordinary grammar and original-source fidelity, including unadapted local/field/control roles and complete braced ownership",
+      "Require whole transformed graph native parity/linking/runtime, relocated full compiler operation and canonical fixed point before full replacement completion"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
     "grammarMigrationComplete": false,
     "verified_execution": false
-  },
-  "bodyWrapperOwnershipTestCandidate": {
-    "source": "1d9abc58b3e13365389539e110fb42b253707481",
-    "runner": "45f60d11135386bfc4b80c841cbf5d1fc852ad42",
-    "run": 42616040228,
-    "status": "PENDING",
-    "scope": "test-first direct declaration/local-definition wrappers versus ordinary argument collection syntax; not a compiler qualification"
   }
 }
