@@ -47,15 +47,17 @@ for path in sorted(args.artifact.rglob('evidence.json')):
     native_census = json.loads((root / 'original-census.json').read_text())
     assert native_census['nativeSource'].encode() == original
     assert observed['imports'] == native_census['imports']
-    mapped = {declaration['sourceName']: declaration for declaration in declarations(observed['commands'])}
     productions = dict(function='PS0.StandardAdapters.ps0StandardFunction',
                        const='PS0.StandardAdapters.ps0StandardConst',
                        def_='PS0.StandardAdapters.ps0StandardDef')
-    for strategy in plan['strategies']:
-        declaration = mapped[strategy['sourceName']]
+    mapped = [declaration for declaration in declarations(observed['commands'])
+              if declaration['production'] in set(productions.values()) | {'Lean.Parser.Command.definition'}]
+    assert len(mapped) == len(plan['strategies']), evidence['module']
+    for strategy, declaration in zip(plan['strategies'], mapped):
+        assert declaration['sourceName'] == strategy['sourceName'], (evidence['module'], strategy, declaration)
         keyword = strategy['targetKeyword']
         assert declaration['mode'] == 'mapped-ps'
-        assert declaration['production'] == productions['def_' if keyword == 'def' else keyword]
+        assert declaration['production'] == productions['def_' if keyword == 'def' else keyword], (evidence['module'], strategy, declaration)
     hashes = {}
     for relative, recorded in evidence['comparisons'].items():
         native, ps = (root / 'baseline' / relative).read_bytes(), (root / 'migrated' / relative).read_bytes()
