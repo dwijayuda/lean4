@@ -85,8 +85,20 @@ private def letPrefix : Parser :=
       Lean.Parser.Term.matchAlts (categoryParser `psTerm 0)
 
 @[run_parser_attribute_hooks] def recordTerm : Parser :=
-  operands #[(`term, `psTerm), (`structInstFieldDecl, `psStructInstFieldDecl)]
-    Lean.Parser.Term.structInst
+  withFn (fun parse ctx initial =>
+    let parsed := parse ctx initial
+    if parsed.hasError then parsed else
+      let source := parsed.stxStack.back
+      if source.getArgs.size == 6 && source[1].getArgs.isEmpty &&
+          source[2].isOfKind ``Lean.Parser.Term.structInstFields &&
+          source[2][0].getArgs.isEmpty && source[4].getArgs.isEmpty &&
+          source[3].getArgs.size == 1 && source[3][0].getArgs.isEmpty then
+        -- No PS operands occur in `{}`. Preserve the native empty-collection/
+        -- structure choice instead of committing to a structure before typing.
+        PS0.Operators.leading.fn ctx initial
+      else parsed)
+    (operands #[(`term, `psTerm), (`structInstFieldDecl, `psStructInstFieldDecl)]
+      Lean.Parser.Term.structInst)
 
 @[run_parser_attribute_hooks] def fieldDefinition : Parser :=
   operands #[(`term, `psTerm)] Lean.Parser.Term.structInstFieldDef
