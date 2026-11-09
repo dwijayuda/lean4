@@ -17,8 +17,8 @@ def ownedPostfixKind : Name := `PS0.Operators.ownedPostfix
 def bridgeKind : Name := `ps0NativeTermBridge
 
 def indexArity? (kind : Name) : Option Nat :=
-  if kind == `«term__[_]» then some 5
-  else if kind == `«term__[_]'_» then some 6
+  if kind == `«term__[_]» then some 4
+  else if kind == `«term__[_]'_» then some 5
   else if kind == `«term__[_]_?» || kind == `«term__[_]_!» then some 7
   else none
 

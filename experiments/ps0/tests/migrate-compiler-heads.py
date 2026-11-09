@@ -41,14 +41,15 @@ def original_commands(commands):
 def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
     # Quotation, DSL and other native syntax remain opaque.
-    index_arities = {'«term__[_]»': 5, "«term__[_]'_»": 6,
+    index_arities = {'«term__[_]»': 4, "«term__[_]'_»": 5,
                      '«term__[_]_?»': 7, '«term__[_]_!»': 7}
     if operand['kind'] in index_arities:
         assert len(operand['args']) == index_arities[operand['kind']]
         single_type_call(operand['args'][0], role + ' indexed subject')
-        single_type_call(operand['args'][3], role + ' index operand')
+        index = 3 if index_arities[operand['kind']] == 7 else 2
+        single_type_call(operand['args'][index], role + ' index operand')
         if operand['kind'] == "«term__[_]'_»":
-            single_type_call(operand['args'][5], role + ' index proof')
+            single_type_call(operand['args'][4], role + ' index proof')
         return
     if operand['kind'] == 'choice':
         pending = len(edits)

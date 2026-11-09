@@ -579,12 +579,14 @@ partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef sou
 partial def lowerNativeIndex (source : Lean.Syntax) (head : Bool) : MacroM Lean.Syntax := do
   let some arity := PS0.Operators.indexArity? source.getKind
     | Macro.throwError "PS0V1-INDEX-SHAPE: unsupported native indexed access"
-  unless source.getArgs.size == arity && source[2].isAtom && source[2].getAtomVal == "[" do
+  let index := if arity == 7 then 3 else 2
+  unless source.getArgs.size == arity && source[index - 1].isAtom &&
+      source[index - 1].getAtomVal == "[" do
     Macro.throwError "PS0V1-INDEX-SHAPE: unexpected native indexed access"
   let subject ← if head then lowerHead source[0] else lower `psTerm source[0]
-  let source := (source.setArg 0 subject).setArg 3 (← lower `psTerm source[3])
+  let source := (source.setArg 0 subject).setArg index (← lower `psTerm source[index])
   if source.isOfKind `«term__[_]'_» then
-    return source.setArg 5 (← lower `psTerm source[5])
+    return source.setArg 4 (← lower `psTerm source[4])
   return source
 
 partial def lowerCall (head : Lean.Syntax) (args : Array (TSyntax `psCallArg))

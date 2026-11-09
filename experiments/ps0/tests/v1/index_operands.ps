@@ -28,10 +28,11 @@ macro "indexOrigin " e:psTerm : term => do
   let lowered ← PS0.Syntax.lower `psTerm e.raw
   let some native := nativeIndexSyntax? original.getKind lowered
     | Lean.Macro.throwError "PS0_INDEX_NATIVE_KIND"
+  let indexSlot := if original.getArgs.size == 7 then 3 else 2
   unless original.getArgs.size == native.getArgs.size &&
       original.getRange? == native.getRange? &&
       (original.getArgs.zip native.getArgs).toList.zipIdx.all (fun ((before, after), index) =>
-        if index == 0 || index == 3 || (original.isOfKind `«term__[_]'_» && index == 5) then true
+        if index == 0 || index == indexSlot || (original.isOfKind `«term__[_]'_» && index == 4) then true
         else before.eqWithInfo after) do
     Lean.Macro.throwError "PS0_INDEX_TOKEN_ORIGIN"
   `(True)
