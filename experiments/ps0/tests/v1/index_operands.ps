@@ -20,7 +20,8 @@ theorem indexedSignature (l : List Nat) (i : Nat) (h : i < l.length) :
 
 meta partial def originalIndexSyntax? (source : Lean.Syntax) : Option Lean.Syntax :=
   if source.isOfKind `PS0.Operators.ownedPostfix &&
-      #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»].contains source[0].getKind then
+      #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»,
+        `Array.«term__[_:_]», `Array.«term__[_:]», `Array.«term__[:_]»].contains source[0].getKind then
     some source[0]
   else source.getArgs.findSome? originalIndexSyntax?
 
@@ -35,10 +36,15 @@ macro "indexOrigin " e:psTerm : term => do
   let some native := nativeIndexSyntax? original.getKind lowered
     | Lean.Macro.throwError "PS0_INDEX_NATIVE_KIND"
   let indexSlot := if original.getArgs.size == 7 then 3 else 2
+  let operandSlots : Array Nat := if original.isOfKind `Array.«term__[_:_]» then #[0, 2, 4]
+    else if original.isOfKind `Array.«term__[_:]» then #[0, 2]
+    else if original.isOfKind `Array.«term__[:_]» then #[0, 3]
+    else if original.isOfKind `«term__[_]'_» then #[0, indexSlot, 4]
+    else #[0, indexSlot]
   unless original.getArgs.size == native.getArgs.size &&
       original.getRange? == native.getRange? &&
       (original.getArgs.zip native.getArgs).toList.zipIdx.all (fun ((before, after), index) =>
-        if index == 0 || index == indexSlot || (original.isOfKind `«term__[_]'_» && index == 4) then true
+        if operandSlots.contains index then true
         else before.eqWithInfo after) do
     Lean.Macro.throwError "PS0_INDEX_TOKEN_ORIGIN"
   `(True)
@@ -46,6 +52,9 @@ example : indexOrigin #[2, 3][chooseIndex(0)] := by trivial
 example : indexOrigin (makeStore(2) |>.entries)[chooseIndex(1)]? := by trivial
 example : indexOrigin #[2, 3][chooseIndex(1)]! := by trivial
 example : indexOrigin #[2, 3][0]'(bound(1)) := by trivial
+example : indexOrigin #[2, 3][chooseIndex(0):chooseIndex(2)] := by trivial
+example : indexOrigin #[2, 3][chooseIndex(1):] := by trivial
+example : indexOrigin #[2, 3][:chooseIndex(1)] := by trivial
 
 meta def nativeIndexQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| #[2, 3][1]?)
@@ -55,5 +64,8 @@ run_cmd do
     Lean.throwError "PS0_NATIVE_INDEX_QUOTATION"
 
 const optionalResult: Nat := optionalValue.getD(0)
+const sliceBothSize: Nat := sliceBoth.size
+const sliceLowerSize: Nat := sliceLower.size
+const sliceUpperSize: Nat := sliceUpper.size
 def main : IO Unit :=
-  IO.println s!"PS0_INDEX:{optionalResult}:{plainValue}:{panicValue}:{proofValue}:{callableValue}"
+  IO.println s!"PS0_INDEX:{optionalResult}:{plainValue}:{panicValue}:{proofValue}:{callableValue}:{sliceBothSize}:{sliceLowerSize}:{sliceUpperSize}"

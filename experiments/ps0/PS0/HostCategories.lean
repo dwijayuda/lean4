@@ -286,6 +286,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
       let native := source[0]
       if (PS0.Operators.indexArity? native.getKind).isSome then
         return ← lowerNativeIndex native false
+      if (PS0.Operators.sliceShape? native.getKind).isSome then
+        return ← lowerNativeSlice native false
       if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
         let arguments ← native[4].getArgs.mapM fun argument => do
           if argument.isOfKind ``Lean.Parser.Term.ellipsis then return argument
@@ -558,6 +560,8 @@ partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef sou
     let native := source[0]
     if (PS0.Operators.indexArity? native.getKind).isSome then
       return ← lowerNativeIndex native true
+    if (PS0.Operators.sliceShape? native.getKind).isSome then
+      return ← lowerNativeSlice native true
     unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
       Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native head projection"
     return native.setArg 0 (← lowerHead native[0])
@@ -576,6 +580,17 @@ partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef sou
         checkProjectionSubject native.raw[0]
       return native.raw
   | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported postfix head"
+
+partial def lowerNativeSlice (source : Lean.Syntax) (head : Bool) : MacroM Lean.Syntax := do
+  let some (arity, bounds) := PS0.Operators.sliceShape? source.getKind
+    | Macro.throwError "PS0V1-SLICE-SHAPE: unsupported native array slice"
+  unless source.getArgs.size == arity && source[1].isAtom && source[1].getAtomVal == "[" do
+    Macro.throwError "PS0V1-SLICE-SHAPE: unexpected native array slice"
+  let subject ← if head then lowerHead source[0] else lower `psTerm source[0]
+  let mut result := source.setArg 0 subject
+  for index in bounds do
+    result := result.setArg index (← lower `psTerm source[index])
+  return result
 
 partial def lowerNativeIndex (source : Lean.Syntax) (head : Bool) : MacroM Lean.Syntax := do
   let some arity := PS0.Operators.indexArity? source.getKind

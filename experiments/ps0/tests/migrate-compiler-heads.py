@@ -41,6 +41,15 @@ def original_commands(commands):
 def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
     # Quotation, DSL and other native syntax remain opaque.
+    slice_shapes = {'Array.«term__[_:_]»': (6, [2, 4]),
+                    'Array.«term__[_:]»': (5, [2]), 'Array.«term__[:_]»': (5, [3])}
+    if operand['kind'] in slice_shapes:
+        arity, bounds = slice_shapes[operand['kind']]
+        assert len(operand['args']) == arity
+        single_type_call(operand['args'][0], role + ' slice subject')
+        for index in bounds:
+            single_type_call(operand['args'][index], role + ' slice bound')
+        return
     index_arities = {'«term__[_]»': 4, "«term__[_]'_»": 5,
                      '«term__[_]_?»': 7, '«term__[_]_!»': 7}
     if operand['kind'] in index_arities:

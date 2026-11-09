@@ -26,6 +26,15 @@ def indexArity? (kind : Name) : Option Nat :=
 def indexKinds : Array Name :=
   #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»]
 
+def sliceShape? (kind : Name) : Option (Nat × Array Nat) :=
+  if kind == `Array.«term__[_:_]» then some (6, #[2, 4])
+  else if kind == `Array.«term__[_:]» then some (5, #[2])
+  else if kind == `Array.«term__[:_]» then some (5, #[3])
+  else none
+
+def bracketKinds : Array Name :=
+  indexKinds ++ #[`Array.«term__[_:_]», `Array.«term__[_:]», `Array.«term__[:_]»]
+
 builtin_initialize
   registerBuiltinNodeKind ownedKind
   registerBuiltinNodeKind ownedPostfixKind
@@ -63,7 +72,7 @@ private unsafe def leadingWith (head : Bool) : ParserFn := fun ctx initial => un
     leadingTable, leadingParsers := category.tables.leadingParsers.filter keepLeading}
   let keep := fun (entry : Parser × Nat) =>
     let collected := entry.1.info.collectKinds {}
-    !kinds.any collected.contains && !indexKinds.any collected.contains &&
+    !kinds.any collected.contains && !bracketKinds.any collected.contains &&
       !collected.contains ``Lean.Parser.Term.pipeProj &&
       !collected.contains ``Lean.Parser.Term.pipeCompletion
   let mut trailingTable : TokenMap (Parser × Nat) := {}
@@ -106,7 +115,7 @@ private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx in
   if state.hasError then return state
   let candidates := (indexedParsers ++ category.tables.trailingParsers).filter fun (parser, _) =>
     let collected := parser.info.collectKinds {}
-    kinds.any collected.contains || indexKinds.any collected.contains ||
+    kinds.any collected.contains || bracketKinds.any collected.contains ||
       collected.contains ``Lean.Parser.Term.proj ||
       (!projectionOnly && collected.contains ``Lean.Parser.Term.pipeProj)
   if candidates.isEmpty then return initial.mkUnexpectedError "no owned native binary operator"
@@ -125,6 +134,10 @@ private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx in
   if let some arity := indexArity? native.getKind then
     unless native.getArgs.size == arity do
       return parsed.mkUnexpectedError "PS0V1-INDEX-SHAPE: unexpected native indexed access"
+    return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
+  if let some (arity, _) := sliceShape? native.getKind then
+    unless native.getArgs.size == arity do
+      return parsed.mkUnexpectedError "PS0V1-SLICE-SHAPE: unexpected native array slice"
     return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
   if native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 then
     return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
