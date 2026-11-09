@@ -18621,10 +18621,10 @@
       "independentRun": 42712824864
     },
     "ordinaryAggregateCandidate": {
-      "source": "385e5787e6359ee1cf64af7f5adaf645e55c78a5",
-      "runner": "da133feb7148e72bd41ff3b6a49fed82419407f5",
-      "positiveRun": 42720723998,
-      "negativeRun": 42720723628,
+      "source": "67bd1dcd1b183c013a4be941326b1978962d633b",
+      "runner": "7e9c2b3f6b7a4c9eae3db9cff4ecdd1a21f2ed47",
+      "positiveRun": 42723160821,
+      "negativeRun": 42723160297,
       "status": "PENDING",
       "plannedDefinitions": 48,
       "plannedProofGuards": 43,
@@ -18637,7 +18637,17 @@
       "priorNegativeRun": 42720723628,
       "priorNegativeJob": 129513702472,
       "priorFailure": "PS0/HostCategories.lean:935:26/62: synthesize pending MVars exceeded scoped 800000 heartbeats during clean build",
-      "scope": "native aggregate walker outside mutual block with explicit callbacks; same compiler heartbeat bound"
+      "scope": "native aggregate walker outside mutual block with explicit callbacks; same compiler heartbeat bound",
+      "priorCallbackFailure": {
+        "source": "385e5787e6359ee1cf64af7f5adaf645e55c78a5",
+        "positiveRun": 42721776657,
+        "positiveJob": 129517234177,
+        "negativeRun": 42721778433,
+        "negativeJob": 129517235109,
+        "heartbeatBound": 800000,
+        "phase": "clean implementation elaboration",
+        "grammarTestsReached": false
+      }
     },
     "ordinaryHostRestoredBroadMatrix": {
       "source": "ad3b7d491f19476ec7c87c6521f3fcef1b687dd9",
@@ -39416,10 +39426,10 @@
     }
   },
   "ordinaryAggregateCandidate": {
-    "source": "385e5787e6359ee1cf64af7f5adaf645e55c78a5",
-    "runner": "da133feb7148e72bd41ff3b6a49fed82419407f5",
-    "positiveRun": 42720723998,
-    "negativeRun": 42720723628,
+    "source": "67bd1dcd1b183c013a4be941326b1978962d633b",
+    "runner": "7e9c2b3f6b7a4c9eae3db9cff4ecdd1a21f2ed47",
+    "positiveRun": 42723160821,
+    "negativeRun": 42723160297,
     "status": "PENDING",
     "plannedDefinitions": 48,
     "plannedProofGuards": 43,
@@ -39432,7 +39442,17 @@
     "priorNegativeRun": 42720723628,
     "priorNegativeJob": 129513702472,
     "priorFailure": "PS0/HostCategories.lean:935:26/62: synthesize pending MVars exceeded scoped 800000 heartbeats during clean build",
-    "scope": "native aggregate walker outside mutual block with explicit callbacks; same compiler heartbeat bound"
+    "scope": "native aggregate walker outside mutual block with explicit callbacks; same compiler heartbeat bound",
+    "priorCallbackFailure": {
+      "source": "385e5787e6359ee1cf64af7f5adaf645e55c78a5",
+      "positiveRun": 42721776657,
+      "positiveJob": 129517234177,
+      "negativeRun": 42721778433,
+      "negativeJob": 129517235109,
+      "heartbeatBound": 800000,
+      "phase": "clean implementation elaboration",
+      "grammarTestsReached": false
+    }
   },
   "ordinaryAggregateCandidateHistory": [
     {
