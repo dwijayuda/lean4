@@ -1,11 +1,14 @@
 module
 public meta import Lean
-public meta import PS0.SourceGrammar
 public meta section
 
 /-! Inspect the syntax-only bootstrap host in an isolated Init target environment. -/
 run_cmd do
-  PS0.SourceGrammar.install {}
+  unsafe Lean.enableInitializersExecution
+  let host ← Lean.importModules #[{module := `PS0.SourceGrammar, isMeta := true}] {}
+  let install ← IO.ofExcept <| unsafe host.evalConst (Lean.Options → IO Unit) {} `PS0.SourceGrammar.install
+  unsafe Lean.enableInitializersExecution
+  install {}
   unsafe Lean.enableInitializersExecution
   let target ← Lean.importModules #[{module := `Init}] {}
   for (category, input) in [
