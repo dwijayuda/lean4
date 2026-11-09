@@ -33,6 +33,41 @@ where {
   def second(x: Nat): Nat := add(x, 1)
 }
 
+function wrappedHelper(n: Nat): Nat := helper(n)
+where {
+  def helper(x: Nat): Nat := { add(x, 1) }
+}
+
+function nativeWhereHelper(n: Nat): Nat := helper(n)
+where
+  helper(x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+
+function namedProof(n: Nat): Nat := ?value
+where {
+  finally { | value => { exact(add(n, 1)) } }
+}
+
+function defaultProof(n: Nat): Nat := ?value
+where {
+  finally { exact(add(n, 2)) }
+}
+
+function helperProof(n: Nat): Nat := helper(n) + ?value
+where {
+  def helper(x: Nat): Nat := add(x, 1)
+  finally { | value => { exact(2) } }
+}
+
+function nativeProof(n: Nat): Nat := ?value
+where
+finally
+| value => exact(add(n, 3))
+
+example : namedProof(4) = 5 := by decide
+example : defaultProof(4) = 6 := by decide
+example : helperProof(4) = 7 := by decide
+example : nativeProof(4) = 7 := by decide
+
 def main : IO Unit :=
   do
     let a := defaultHelper(4)
@@ -40,4 +75,11 @@ def main : IO Unit :=
     let c := equationHelper(4)
     let d := recordHelper(4)
     let e := forwardHelper(4)
+    let f := wrappedHelper(4)
+    let g := nativeWhereHelper(4)
+    let h := namedProof(4)
+    let i := defaultProof(4)
+    let j := helperProof(4)
+    let k := nativeProof(4)
     IO.println s!"PS0_WHERE_LOCAL:{a}:{b}:{c}:{d}:{e}"
+    IO.println s!"PS0_WHERE_PROOF:{f}:{g}:{h}:{i}:{j}:{k}"

@@ -217,7 +217,7 @@ private def lowerWhereLocal (source : Syntax) : MacroM Syntax := withRef source 
 private def lowerWhere (source : Syntax) : MacroM Syntax := do
   if source.isOfKind ``psWhereBraced && source.getArgs.size == 5 then
     let helpers ← source[2].getArgs.mapM fun helper => do
-      if helper.isAtom then return helper
+      if helper.isAtom || helper.isOfKind nullKind then return helper
       return ← lowerWhereLocal helper
     return .node (sourceOrigin source) ``Lean.Parser.Term.whereDecls
       #[source[0], source[2].setArgs helpers, ← lowerOptionalFinally source[3]]

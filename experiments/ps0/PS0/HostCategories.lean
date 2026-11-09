@@ -584,7 +584,7 @@ partial def lowerNativeRecursiveDeclarations (source : Lean.Syntax) : MacroM Lea
   unless source.isOfKind ``Lean.Parser.Term.letRecDecls && source.getArgs.size == 1 do
     Macro.throwError "PS0V1-LOCAL-REC: unexpected native declaration group"
   let items ← source[0].getArgs.mapM fun declaration => do
-    if declaration.isAtom then return declaration
+    if declaration.isAtom || declaration.isOfKind nullKind then return declaration
     unless declaration.isOfKind ``Lean.Parser.Term.letRecDecl && declaration.getArgs.size == 4 &&
         declaration[2].isOfKind ``Lean.Parser.Term.letDecl && declaration[2].getArgs.size == 1 do
       Macro.throwError "PS0V1-LOCAL-REC: unexpected native recursive declaration"
