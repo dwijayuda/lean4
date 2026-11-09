@@ -20,7 +20,7 @@ meta partial def originalIndexSyntax? (source : Lean.Syntax) : Option Lean.Synta
 
 meta partial def nativeIndexSyntax? (kind : Lean.Name) (source : Lean.Syntax) : Option Lean.Syntax :=
   if source.getKind == kind then some source
-  else source.getArgs.findSome? (nativeIndexSyntax? kind)
+  else source.getArgs.findSome?(nativeIndexSyntax?(kind))
 
 macro "indexOrigin " e:psTerm : term => do
   let some original := originalIndexSyntax? e.raw
@@ -48,5 +48,6 @@ run_cmd do
   unless quoted.raw.isOfKind `«term__[_]_?» do
     Lean.throwError "PS0_NATIVE_INDEX_QUOTATION"
 
+const optionalResult: Nat := optionalValue.getD(0)
 def main : IO Unit :=
-  IO.println s!"PS0_INDEX:{optionalValue.getD(0)}:{plainValue}:{panicValue}:{proofValue}:{callableValue}"
+  IO.println s!"PS0_INDEX:{optionalResult}:{plainValue}:{panicValue}:{proofValue}:{callableValue}"

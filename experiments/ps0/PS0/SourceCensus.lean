@@ -70,6 +70,32 @@ private partial def ownedOperators (source : Syntax) : Array Name := Id.run do
   unless containers.contains source.getKind do return #[]
   return source.getArgs.foldl (fun kinds arg => kinds ++ ownedOperators arg) #[]
 
+private partial def ownedIndices (operators : Array Name) (source : Syntax) : Array Json := Id.run do
+  if source.isOfKind `PS0.Operators.ownedPostfix then
+    let native := source[0]
+    let kinds := #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»]
+    if kinds.contains native.getKind then
+      let index := if native.getArgs.size == 7 then 3 else 2
+      let proof := if native.isOfKind `«term__[_]'_» then native[4] else Syntax.missing
+      return #[Json.mkObj [
+        ("kind", toJson native.getKind.toString), ("range", sourceRange native),
+        ("syntax", signatureSyntax operators native),
+        ("subjectKind", toJson native[0].getKind.toString),
+        ("indexKind", toJson native[index].getKind.toString),
+        ("proofKind", toJson proof.getKind.toString)]] ++
+        ownedIndices operators native[0] ++ ownedIndices operators native[index] ++
+        ownedIndices operators proof
+    if native.isOfKind ``Lean.Parser.Term.pipeProj then
+      return ownedIndices operators native[0] ++ ownedIndices operators native[4]
+    return ownedIndices operators native[0]
+  if source.isOfKind `PS0.Operators.ownedBinary then
+    return source[0].getArgs.foldl (fun found child => found ++ ownedIndices operators child) #[]
+  let containers := #[`null, `ps0HostAdjacentCall, `ps0HostHeadTerm, `ps0HeadCall,
+    `ps0HeadEmptyCall, `ps0ParenthesizedHead, `ps0HostParens, `ps0HostBraces,
+    `ps0PositionalArg, `ps0NamedArg, `ps0HostLambda]
+  unless containers.contains source.getKind do return #[]
+  return source.getArgs.foldl (fun found child => found ++ ownedIndices operators child) #[]
+
 private partial def ownedDoNodes (source : Syntax) : Array Syntax := Id.run do
   if source.isOfKind `ps0HostDo then return ownedDoNodes source[1]
   if source.isOfKind `ps0NativeLayoutDoSeq then return ownedDoNodes source[0]
@@ -164,6 +190,7 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("ownedValueCall", toJson (value.isOfKind `ps0HostAdjacentCall ||
         (value.isOfKind `ps0HostHeadTerm && value[0].isOfKind `ps0HeadCall))),
       ("ownedOperatorKinds", toJson ((ownedOperators value).map Name.toString)),
+      ("ownedIndexedAccess", toJson (ownedIndices operators value)),
       ("declarationValueKind", toJson declValue.getKind.toString),
       ("equationBodyKinds", toJson equationBodies),
       ("whereFieldCount", toJson (if declValue.isOfKind `PS0.StandardAdapters.ps0DeclWhere then
