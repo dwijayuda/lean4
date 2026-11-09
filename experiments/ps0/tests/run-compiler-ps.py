@@ -230,15 +230,18 @@ for module, data in inputs.items():
                 if command['declaration'] is not None:
                     yield command['declaration']
                 yield from declarations(command.get('nestedCommands', []))
-        mapped = {declaration['sourceName']: declaration for declaration in declarations(observed['commands'])}
+        mapped = list(declarations(observed['commands']))
         productions = {'function': 'PS0.StandardAdapters.ps0StandardFunction',
                        'const': 'PS0.StandardAdapters.ps0StandardConst',
                        'def': 'PS0.StandardAdapters.ps0StandardDef'}
-        for strategy in source_plans[module]['strategies']:
-            declaration = mapped[strategy['sourceName']]
+        definition_kinds = set(productions.values()) | {'Lean.Parser.Command.definition'}
+        definitions = [declaration for declaration in mapped if declaration['production'] in definition_kinds]
+        assert len(definitions) == len(source_plans[module]['strategies']), module
+        for strategy, declaration in zip(source_plans[module]['strategies'], definitions):
+            assert declaration['sourceName'] == strategy['sourceName'], (module, strategy, declaration)
             assert declaration['mode'] == 'mapped-ps'
             assert declaration['production'] == productions[strategy['targetKeyword']], declaration
-        assert not any(declaration['mode'] == 'native-compatible' for declaration in mapped.values()), (module, mapped)
+        assert not any(declaration['mode'] == 'native-compatible' for declaration in mapped), (module, mapped)
     olean = build / 'lib/lean' / rel.with_suffix('.olean')
     cfile = build / 'ir' / rel.with_suffix('.c')
     assert olean.is_file() and cfile.is_file(), module
