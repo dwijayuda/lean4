@@ -35,6 +35,13 @@ def run(args, label, ok=True):
     assert (result.returncode == 0) == ok, (label, result.returncode)
     return result.stdout
 
+def source_declarations(commands):
+    for command in commands:
+        if command['declaration'] is not None:
+            yield command['declaration']
+        yield from source_declarations(command.get('nestedCommands', []))
+
+
 original = work / 'original/src' / relative_module.with_suffix('.ps')
 original.parent.mkdir(parents=True)
 shutil.copy2(fixture, original)
@@ -45,7 +52,11 @@ plan_file = work / 'plan.json'
 run(['python3', 'tests/migrate-compiler-heads.py', census, original, converted,
      '--plan', plan_file], 'plan')
 plan = json.loads(plan_file.read_text())
-assert set(plan['declarations']) == set(args.declarations.split(',')), plan['declarations']
+original_declarations = list(source_declarations(json.loads(census.read_text())['commands']))
+expected = ({d['sourceName'] for d in original_declarations
+             if d['production'] == 'Lean.Parser.Command.definition'}
+            if args.declarations == 'ALL' else set(args.declarations.split(',')))
+assert set(plan['declarations']) == expected, plan['declarations']
 
 def build(source, directory, grammar=False, ok=True):
     # Native module lookup resolves a namespace prefix in one library root. The
@@ -82,13 +93,7 @@ for path in [Path('ir') / relative_module.with_suffix('.c'), Path('lib/lean') / 
              baseline / path, migrated / path], 'olean-diagnostic')
     assert comparisons[path]['native'] == comparisons[path]['ps'], (path, comparisons[path])
 observed = json.loads((migrated / 'lib/lean' / relative_module.with_suffix('.ilean.ps0-source-census.json')).read_text())
-def source_declarations(commands):
-    for command in commands:
-        if command['declaration'] is not None:
-            yield command['declaration']
-        yield from source_declarations(command.get('nestedCommands', []))
 declarations = list(source_declarations(observed['commands']))
-original_declarations = list(source_declarations(json.loads(census.read_text())['commands']))
 unchanged_abbrevs = {d['sourceName'] for d in original_declarations
                      if d['production'] == 'Lean.Parser.Command.abbrev'}
 mapped = {d['sourceName'] for d in declarations if d['mode'] == 'mapped-ps'}
