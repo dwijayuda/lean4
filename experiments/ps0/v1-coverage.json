@@ -16486,10 +16486,10 @@
       "lastObservedUtc": "2026-11-09 19:39:50 UTC"
     },
     "nextActions": [
-      "Inspect aggregate clean build and bounded parenthesis probe; qualify nineteen grammar boundaries and native artifact parity",
-      "Inspect Prelude, Int.Linear and Associative migrated timeouts with exact current-source evidence",
-      "Complete corrected dollar fixture kernel-expansion and string-runtime checks",
-      "Require refreshed native census contract, complete canonical PS graph, native linking/runtime, relocated compiler operation and fixed point"
+      "Validate shared native grouping caches using full finite stage and retained bounded parser rows",
+      "Inspect captured partial output from bounded Associative compiler diagnosis before promoting a broad matrix",
+      "Complete further ordinary grammar/loop-contract adapters with native controls and source fidelity",
+      "Refresh native census contract and require complete canonical PS graph, linking/runtime, relocated compiler operation and fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -16606,10 +16606,10 @@
       "verified_execution": false
     },
     "ordinaryHostRoleQualification": {
-      "status": "QUALIFIED_FINITE",
-      "source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
-      "run": 42701804872,
-      "independentRun": 42703198481
+      "status": "QUALIFIED_FINITE_SEMANTIC_ORIGIN_GAP_RUNTIME",
+      "source": "3e3381ae058f154648e1c85a07d0f00799b70b5e",
+      "run": 42715896118,
+      "independentRun": 42716744994
     },
     "ordinaryHostRoleCompilerRegression": {
       "source": "96cc1e06eb77953c1aafd1aa76c325b668a99af8",
@@ -18621,30 +18621,11 @@
       "independentRun": 42712824864
     },
     "ordinaryAggregateCandidate": {
-      "source": "b5bf32cbc610bb07883c7b2881f189a35807980e",
-      "runner": "b159789e06e75863110f0c0c2aecff0433543f2b",
+      "source": "f89de60f6081cdce5853f001f5e7104860133cfb",
+      "runner": "e384f90ece977398aec11b1aa2a3f56eb269d1bf",
+      "run": 42716920746,
       "status": "PENDING",
-      "plannedDefinitions": 41,
-      "plannedProofGuards": 38,
-      "plannedOriginCases": 19,
-      "plannedInvalidGapRejections": 19,
-      "testCorrectionSource": "eac13dbd1eee2005e129ea4085015a693905176d",
-      "previousRuns": [
-        {
-          "source": "cbabb1069028551fafb61dbd4e4db84587112003",
-          "run": 42710551582,
-          "job": 129478622579,
-          "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
-        },
-        {
-          "run": 42711184598,
-          "job": 129480821526,
-          "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
-        }
-      ],
-      "grammarMigrationComplete": false,
-      "verified_execution": false,
-      "scope": "split native-root and aggregate lowering; nineteen planned boundaries, parenthesis budget and three timed-out modules"
+      "scope": "native shared-cache tuple/ascription productions; finite suite plus bounded parser probe"
     },
     "ordinaryHostRestoredBroadMatrix": {
       "source": "ad3b7d491f19476ec7c87c6521f3fcef1b687dd9",
@@ -18683,6 +18664,34 @@
       "status": "PASS",
       "tests": 5,
       "scope": "versioned native syntax cache identity/invalidation only"
+    },
+    "ordinaryHostParserPerformanceFailure": {
+      "source": "3e3381ae058f154648e1c85a07d0f00799b70b5e",
+      "run": 42715896118,
+      "job": 129497197382,
+      "status": "FAILED_60_SECOND_PARSER_PROBE",
+      "depthIdentified": false,
+      "nativeVersusPsTimingIdentified": false
+    },
+    "correctedDollarSuite": {
+      "source": "b5bf32cbc610bb07883c7b2881f189a35807980e",
+      "runner": "b159789e06e75863110f0c0c2aecff0433543f2b",
+      "run": 42714318525,
+      "job": 129491749823,
+      "status": "PASS_PRODUCER",
+      "runtime": "PS0_DOLLAR:4:left; right",
+      "artifact": {
+        "id": 13716154524,
+        "sha256": "cc18f3c08ba831038cbaaffafd5747c15c8133efd13d46c4af8f89f1b4ed12f5"
+      }
+    },
+    "compilerTimeoutPartialOutputDiagnosis": {
+      "source": "1600893863c88d47bc13634685e3687565079996",
+      "runner": "567c34638c9aed411bf86934b88e814be1e4b6b9",
+      "run": 42716258848,
+      "job": 129498450116,
+      "status": "PENDING",
+      "scope": "partial output preserved under existing 600-second migrated build bound"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -32357,91 +32366,97 @@
     }
   },
   "ordinaryHostRoleQualification": {
-    "source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
-    "runner": "ed67c31b6ac6601128bbf58b3220f3aae458a26f",
-    "run": 42701804872,
-    "job": 129448180323,
-    "status": "QUALIFIED_FINITE",
-    "mappedDefinitions": 33,
-    "proofGuards": 30,
-    "invalidNativeGapAdmissionsResolved": 11,
-    "sourceOriginCases": 11,
+    "source": "3e3381ae058f154648e1c85a07d0f00799b70b5e",
+    "runner": "657d40c92121afc45d624ac4d898278071c27668",
+    "run": 42715896118,
+    "job": 129497197382,
+    "status": "QUALIFIED_FINITE_SEMANTIC_ORIGIN_GAP_RUNTIME",
+    "producerJobConclusion": "FAILURE_SEPARATE_60_SECOND_PARSER_PROBE",
+    "mappedDefinitions": 41,
+    "proofGuards": 38,
+    "sourceOriginCases": 19,
+    "invalidNativeGapAdmissionsResolved": 19,
     "producerArtifact": {
-      "id": 13712271245,
-      "sha256": "f5c486c7a413150a74c9aa7fad602357fbb447ca4fdfbcbb6b614984d7931201"
+      "id": 13719185116,
+      "sha256": "a613388a9a7d3602482dbf600266c1319fba8eb6164d82d53649d307e44b4a68"
     },
     "independentInspection": {
-      "actual_compiler_files_rehashed": 6,
-      "actual_native_elf_files_rehashed": 1,
-      "comparisons": {
-        "ir/MatchHostBootstrap.c": {
-          "baseline": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
-          "migrated": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
-          "planned": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804"
-        },
-        "lib/lean/MatchHostBootstrap.olean": {
-          "baseline": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
-          "migrated": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
-          "planned": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c"
-        }
+      "runner": "56fda70522004db1e4ec098a10e95a9845e563fc",
+      "run": 42716744994,
+      "job": 129500160030,
+      "status": "PASS",
+      "artifact": {
+        "id": 13718217375,
+        "sha256": "37c3c04fc04b5703fd355c1f9779d7a6f34f36280f68903d9139a5e74c047cf5"
       },
-      "evidence": {
+      "report": {
+        "actual_compiler_files_rehashed": 6,
+        "actual_native_elf_files_rehashed": 1,
         "comparisons": {
           "ir/MatchHostBootstrap.c": {
-            "baseline": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
-            "migrated": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
-            "planned": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804"
+            "baseline": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+            "migrated": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+            "planned": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607"
           },
           "lib/lean/MatchHostBootstrap.olean": {
-            "baseline": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
-            "migrated": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
-            "planned": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c"
+            "baseline": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+            "migrated": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+            "planned": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
           }
         },
+        "evidence": {
+          "comparisons": {
+            "ir/MatchHostBootstrap.c": {
+              "baseline": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+              "migrated": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+              "planned": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607"
+            },
+            "lib/lean/MatchHostBootstrap.olean": {
+              "baseline": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+              "migrated": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+              "planned": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
+            }
+          },
+          "grammar_migration_complete": false,
+          "independently_owned_native_dsl": true,
+          "logical_imports": [
+            "Init"
+          ],
+          "mapped_definitions": 41,
+          "mapped_theorems": 38,
+          "native_executable_sha256": "22ccd65b41c9b7be8a087d91b4e61b98dc28f979c82835a41e9bf96be6a3e058",
+          "native_patterns_preserved": true,
+          "native_quotation": true,
+          "prepared_source_identity": true,
+          "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
+          "scope": "finite native term/do matches, pattern lambda, record, if/have/for/try, ascriptions and direct tactic operands; loop annotations and deeper ordinary roles remain open",
+          "source": "3e3381ae058f154648e1c85a07d0f00799b70b5e",
+          "source_origin_cases": 19,
+          "source_origin_fixture_sha256": "148e9beff6c46d4784c582b15461621056c30d2be4d225c9ccebd5dddcafe2a7",
+          "verified_execution": false
+        },
         "grammar_migration_complete": false,
-        "independently_owned_native_dsl": true,
-        "logical_imports": [
-          "Init"
-        ],
-        "mapped_definitions": 33,
-        "mapped_theorems": 30,
-        "native_executable_sha256": "7df9433804db0ef85913bc1f5ad3334693b4a5d08d68fe0ccf43ca3812f3eeb4",
-        "native_patterns_preserved": true,
-        "native_quotation": true,
-        "prepared_source_identity": true,
-        "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
-        "scope": "finite native term/do matches, pattern lambda, record, if/have/for/try, ascriptions and direct tactic operands; loop annotations and deeper ordinary roles remain open",
-        "source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
-        "source_origin_cases": 11,
-        "source_origin_fixture_sha256": "f6a988c19c9515fd4db597e501c892b04a5aaf9fb9b1b90dd00fe0d7c2620438",
+        "hashes": {
+          "match-host-42715896118/OrdinaryHostOrigins": "22ccd65b41c9b7be8a087d91b4e61b98dc28f979c82835a41e9bf96be6a3e058",
+          "match-host-42715896118/baseline-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+          "match-host-42715896118/baseline-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+          "match-host-42715896118/migrated-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+          "match-host-42715896118/migrated-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+          "match-host-42715896118/planned-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+          "match-host-42715896118/planned-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
+        },
+        "invalid_host_gaps_rejected": 19,
+        "mapped_definitions": 41,
+        "mapped_theorems": 38,
+        "producer_job_status": "FAILURE_SEPARATE_PARENTHESIS_PROBE",
+        "producer_run": 42715896118,
+        "producer_runner": "657d40c92121afc45d624ac4d898278071c27668",
+        "producer_source": "3e3381ae058f154648e1c85a07d0f00799b70b5e",
+        "scope": "finite nineteen ordinary host boundaries including tuple/list/array/interpolation, forall domain/body and pure pattern values; loop annotations and complete compiler qualification remain open",
+        "separate_parser_probe": "60-second timeout; finite semantic/origin/gap/runtime steps passed",
+        "source_origin_cases": 19,
+        "status": "PASS",
         "verified_execution": false
-      },
-      "grammar_migration_complete": false,
-      "hashes": {
-        "match-host-42701804872/OrdinaryHostOrigins": "7df9433804db0ef85913bc1f5ad3334693b4a5d08d68fe0ccf43ca3812f3eeb4",
-        "match-host-42701804872/baseline-MatchHostBootstrap.c": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
-        "match-host-42701804872/baseline-MatchHostBootstrap.olean": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
-        "match-host-42701804872/migrated-MatchHostBootstrap.c": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
-        "match-host-42701804872/migrated-MatchHostBootstrap.olean": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
-        "match-host-42701804872/planned-MatchHostBootstrap.c": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
-        "match-host-42701804872/planned-MatchHostBootstrap.olean": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c"
-      },
-      "invalid_host_gaps_rejected": 11,
-      "mapped_definitions": 33,
-      "mapped_theorems": 30,
-      "producer_run": 42701804872,
-      "producer_runner": "ed67c31b6ac6601128bbf58b3220f3aae458a26f",
-      "producer_source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
-      "scope": "finite ordinary match, pattern lambda, record, condition, do-match, named-have, for collection/body and try/catch/finally roles; loop annotations and broader compiler C parity remain open",
-      "source_origin_cases": 11,
-      "status": "PASS",
-      "verified_execution": false,
-      "runner": "0a85aad620cb5ce5c30836f11c489d5f64cc78b0",
-      "run": 42703198481,
-      "job": 129453069602,
-      "artifact": {
-        "id": 13712476101,
-        "sha256": "6f291259d001365f0704ac4728eabd3463ba764fbf487c0850945bcbb221acc9"
       }
     },
     "grammarMigrationComplete": false,
@@ -32457,7 +32472,12 @@
       "try/catch/finally sequences and exception types",
       "proof-bound pure if values",
       "type-ascribed values and types",
-      "direct exact/apply/refine tactic operands"
+      "direct exact/apply/refine tactic operands",
+      "tuple/list/array elements",
+      "string interpolation values",
+      "forall domains and bodies",
+      "pure pattern-if values",
+      "pure pattern-let types/values/continuations"
     ],
     "nativeRolesRetained": [
       "match and if-let patterns",
@@ -34204,6 +34224,117 @@
       "runtimeControls": [
         "range 3 + 0 + 1 = 4",
         "IO try/catch/finally: input 0 gives 2 and input 2 gives 3"
+      ]
+    },
+    {
+      "source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
+      "runner": "ed67c31b6ac6601128bbf58b3220f3aae458a26f",
+      "run": 42701804872,
+      "job": 129448180323,
+      "status": "QUALIFIED_FINITE",
+      "mappedDefinitions": 33,
+      "proofGuards": 30,
+      "invalidNativeGapAdmissionsResolved": 11,
+      "sourceOriginCases": 11,
+      "producerArtifact": {
+        "id": 13712271245,
+        "sha256": "f5c486c7a413150a74c9aa7fad602357fbb447ca4fdfbcbb6b614984d7931201"
+      },
+      "independentInspection": {
+        "actual_compiler_files_rehashed": 6,
+        "actual_native_elf_files_rehashed": 1,
+        "comparisons": {
+          "ir/MatchHostBootstrap.c": {
+            "baseline": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
+            "migrated": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
+            "planned": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804"
+          },
+          "lib/lean/MatchHostBootstrap.olean": {
+            "baseline": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
+            "migrated": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
+            "planned": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c"
+          }
+        },
+        "evidence": {
+          "comparisons": {
+            "ir/MatchHostBootstrap.c": {
+              "baseline": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
+              "migrated": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
+              "planned": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804"
+            },
+            "lib/lean/MatchHostBootstrap.olean": {
+              "baseline": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
+              "migrated": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
+              "planned": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c"
+            }
+          },
+          "grammar_migration_complete": false,
+          "independently_owned_native_dsl": true,
+          "logical_imports": [
+            "Init"
+          ],
+          "mapped_definitions": 33,
+          "mapped_theorems": 30,
+          "native_executable_sha256": "7df9433804db0ef85913bc1f5ad3334693b4a5d08d68fe0ccf43ca3812f3eeb4",
+          "native_patterns_preserved": true,
+          "native_quotation": true,
+          "prepared_source_identity": true,
+          "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
+          "scope": "finite native term/do matches, pattern lambda, record, if/have/for/try, ascriptions and direct tactic operands; loop annotations and deeper ordinary roles remain open",
+          "source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
+          "source_origin_cases": 11,
+          "source_origin_fixture_sha256": "f6a988c19c9515fd4db597e501c892b04a5aaf9fb9b1b90dd00fe0d7c2620438",
+          "verified_execution": false
+        },
+        "grammar_migration_complete": false,
+        "hashes": {
+          "match-host-42701804872/OrdinaryHostOrigins": "7df9433804db0ef85913bc1f5ad3334693b4a5d08d68fe0ccf43ca3812f3eeb4",
+          "match-host-42701804872/baseline-MatchHostBootstrap.c": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
+          "match-host-42701804872/baseline-MatchHostBootstrap.olean": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
+          "match-host-42701804872/migrated-MatchHostBootstrap.c": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
+          "match-host-42701804872/migrated-MatchHostBootstrap.olean": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c",
+          "match-host-42701804872/planned-MatchHostBootstrap.c": "b86cecf879dc7a21980288d4230817aa4e64a808d813d4e14ae1ffbce372b804",
+          "match-host-42701804872/planned-MatchHostBootstrap.olean": "1d175a26e1a4212728a0510a2cb4aae4701a3448d67b7ba7e9966771a75bfd9c"
+        },
+        "invalid_host_gaps_rejected": 11,
+        "mapped_definitions": 33,
+        "mapped_theorems": 30,
+        "producer_run": 42701804872,
+        "producer_runner": "ed67c31b6ac6601128bbf58b3220f3aae458a26f",
+        "producer_source": "e8cddaade5840641a5e428fdbbb1cebac2d44861",
+        "scope": "finite ordinary match, pattern lambda, record, condition, do-match, named-have, for collection/body and try/catch/finally roles; loop annotations and broader compiler C parity remain open",
+        "source_origin_cases": 11,
+        "status": "PASS",
+        "verified_execution": false,
+        "runner": "0a85aad620cb5ce5c30836f11c489d5f64cc78b0",
+        "run": 42703198481,
+        "job": 129453069602,
+        "artifact": {
+          "id": 13712476101,
+          "sha256": "6f291259d001365f0704ac4728eabd3463ba764fbf487c0850945bcbb221acc9"
+        }
+      },
+      "grammarMigrationComplete": false,
+      "verified_execution": false,
+      "roles": [
+        "match motive, discriminants and arm bodies",
+        "pattern-lambda arm bodies",
+        "record sources, fields, field equations and type",
+        "do-if propositions, let values and branch sequences",
+        "do-match discriminants and branch sequences",
+        "named have types, defaults and values",
+        "for collections and bodies (native loop annotations pending)",
+        "try/catch/finally sequences and exception types",
+        "proof-bound pure if values",
+        "type-ascribed values and types",
+        "direct exact/apply/refine tactic operands"
+      ],
+      "nativeRolesRetained": [
+        "match and if-let patterns",
+        "match discriminant proof binders",
+        "record field binders and lvalues",
+        "native layout groups, tokens and source information",
+        "quotations and independent DSL categories"
       ]
     }
   ],
@@ -39064,30 +39195,11 @@
     }
   },
   "ordinaryAggregateCandidate": {
-    "source": "b5bf32cbc610bb07883c7b2881f189a35807980e",
-    "runner": "b159789e06e75863110f0c0c2aecff0433543f2b",
+    "source": "f89de60f6081cdce5853f001f5e7104860133cfb",
+    "runner": "e384f90ece977398aec11b1aa2a3f56eb269d1bf",
+    "run": 42716920746,
     "status": "PENDING",
-    "plannedDefinitions": 41,
-    "plannedProofGuards": 38,
-    "plannedOriginCases": 19,
-    "plannedInvalidGapRejections": 19,
-    "testCorrectionSource": "eac13dbd1eee2005e129ea4085015a693905176d",
-    "previousRuns": [
-      {
-        "source": "cbabb1069028551fafb61dbd4e4db84587112003",
-        "run": 42710551582,
-        "job": 129478622579,
-        "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
-      },
-      {
-        "run": 42711184598,
-        "job": 129480821526,
-        "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
-      }
-    ],
-    "grammarMigrationComplete": false,
-    "verified_execution": false,
-    "scope": "split native-root and aggregate lowering; nineteen planned boundaries, parenthesis budget and three timed-out modules"
+    "scope": "native shared-cache tuple/ascription productions; finite suite plus bounded parser probe"
   },
   "ordinaryAggregateCandidateHistory": [
     {
@@ -39124,5 +39236,33 @@
         "grammarTestsReached": false
       }
     }
-  ]
+  ],
+  "ordinaryHostParserPerformanceFailure": {
+    "source": "3e3381ae058f154648e1c85a07d0f00799b70b5e",
+    "run": 42715896118,
+    "job": 129497197382,
+    "status": "FAILED_60_SECOND_PARSER_PROBE",
+    "depthIdentified": false,
+    "nativeVersusPsTimingIdentified": false
+  },
+  "correctedDollarSuite": {
+    "source": "b5bf32cbc610bb07883c7b2881f189a35807980e",
+    "runner": "b159789e06e75863110f0c0c2aecff0433543f2b",
+    "run": 42714318525,
+    "job": 129491749823,
+    "status": "PASS_PRODUCER",
+    "runtime": "PS0_DOLLAR:4:left; right",
+    "artifact": {
+      "id": 13716154524,
+      "sha256": "cc18f3c08ba831038cbaaffafd5747c15c8133efd13d46c4af8f89f1b4ed12f5"
+    }
+  },
+  "compilerTimeoutPartialOutputDiagnosis": {
+    "source": "1600893863c88d47bc13634685e3687565079996",
+    "runner": "567c34638c9aed411bf86934b88e814be1e4b6b9",
+    "run": 42716258848,
+    "job": 129498450116,
+    "status": "PENDING",
+    "scope": "partial output preserved under existing 600-second migrated build bound"
+  }
 }
