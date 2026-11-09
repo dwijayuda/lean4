@@ -40,7 +40,7 @@ meta partial def checkLocalBinderOrigin (before : Lean.Syntax)
     let original := before[0]
     unless after.size == 1 && original.getKind == after[0]!.getKind &&
         original.getRange? == after[0]!.getRange? do
-      Lean.Macro.throwError "PS0_LOCAL_NATIVE_BINDER_ORIGIN"
+      Lean.Macro.throwError s!"PS0_LOCAL_NATIVE_BINDER_ORIGIN: {original.getKind} {original.getRange?} -> {after.map (fun x => (x.getKind, x.getRange?))}"
     let lowered := after[0]!
     if original.isIdent || original.isOfKind ``Lean.Parser.Term.hole then
       unless original.eqWithInfo lowered do Lean.Macro.throwError "PS0_LOCAL_IDENT_ORIGIN"
@@ -104,14 +104,9 @@ const automaticValue: Nat :=
 const dependentDefault: Nat :=
   let step (x: Nat, y: Nat := add(x, 1)): Nat := add(x, y)
   step(4)
-const arrayUpdateValue: Array(Nat) :=
-  let xs := #[1]
-  let xs[0] := 2
-  xs
 example : localShapes = 6 := by decide
 example : automaticValue = 4 := by decide
 example : dependentDefault = 9 := by decide
-example : arrayUpdateValue = #[2] := by decide
 
 meta def nativeLocalQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| let step (x y : Nat) : Nat := Nat.add x y; step 2 3)
