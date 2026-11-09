@@ -12,3 +12,9 @@ run_cmd do
     let state := (categoryParser category 0).fn.run (mkInputContext text "operator-boundary")
       {env, options := {}} (getTokenTable env) (mkParserState text)
     logInfo m!"PS0_OPERATOR_PARSE_BOUNDARY category={category} input={text} stop={state.pos.byteIdx} lhsPrec={state.lhsPrec} error={state.hasError} syntax={repr state.stxStack.back}"
+  let (_, parser) ← (mkParserOfConstant (parserExtension.getState env).categories
+    `PS0.StandardAdapters.ps0StandardDef).run {env, opts := {}}
+  let text := "def bad : Unit → Nat := higher()"
+  let input := mkInputContext text "operator-declaration"
+  let state := parser.fn.run input {env, options := {}} (getTokenTable env) (mkParserState text)
+  logInfo m!"PS0_OPERATOR_DECLARATION_BOUNDARY stop={state.pos.byteIdx} error={state.hasError} diagnostic={state.toErrorMsg input} syntax={repr state.stxStack.back}"

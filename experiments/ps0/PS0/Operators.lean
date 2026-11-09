@@ -60,13 +60,22 @@ private def operandParser (parser : Parser) : Parser :=
 
 private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
   let kinds := operatorKinds ctx.env ctx.options
-  let mut prec := 0
+  let mut prec := ctx.prec
   let mut parsed := (categoryParser `term prec).fn ctx initial
   while !parsed.hasError && kinds.contains parsed.stxStack.back.getKind do
-    let next := parsed.lhsPrec + 1
-    if next <= prec then
+    -- Builtin parsers may return max lhsPrec while checking a lower binding power.
+    -- Ask the native parser for its first operator-free prefix instead.
+    let mut low := prec
+    let mut high := maxPrec + 1
+    while low + 1 < high do
+      let middle := low + (high - low) / 2
+      let probe := (categoryParser `term middle).fn ctx initial
+      if probe.hasError || !kinds.contains probe.stxStack.back.getKind then
+        high := middle
+      else low := middle
+    if high <= prec then
       return parsed.mkUnexpectedError "PS0V1-OP-PRECEDENCE: native operator did not advance binding power"
-    prec := next
+    prec := high
     parsed := (categoryParser `term prec).fn ctx initial
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
