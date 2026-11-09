@@ -1,5 +1,33 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-09 — scoped binary operands and native command boundaries: fifteen Linux jobs PASS
+
+Qualified source **742c5c180a8ee7314075d63792c220b710e96504**, runner **43da8f7c5bfb576214e660bb62cc6d70ac992f84**, [run 42580480225](https://github.com/dwijayuda/pskernel/actions/runs/42580480225): **all fifteen jobs PASS**, including the existing binder/default, mixed-signature, original-source fidelity, recursive project, native Lake build/link/runtime and proof-linked gates. Four new whole-module jobs pass: Nat.Internal.Linear **129039222067**, Grind.AC **129039222225**, iterator Empty **129039221997**, SPred.Laws **129039221915**. The machine ledgers record the authoritative job IDs and every retained artifact digest.
+
+The planner preserves the reserved **R2-owned def** after native attribute and structure/inductive identifier/field lists. Its signature and value still use mapped PS productions; no native-compatible fallback or globally reserved contextual alias is introduced. Actual source observations require the protected heads **Expr.toPoly**, **Expr.toSeq'** and **IterM.empty**. Each choice records its actual previous native command head. Original comments and line breaks are retained, and the independently reconstructed edits equal the retained converted bytes.
+
+The native-source census now also validates binary parser descriptors named by captured syntax nodes. A scoped parser can disappear from the active category after its namespace closes; its original descriptor remains available in the environment. **Std.Do.term_⊣⊢ₛ_** is validated for **and_curry, or_curry and imp_curry**, so their ordinary curry operands receive PS call edits. Native parser precedence, scopes, macro expansion, elaboration and Lake compilation remain in Lean. The descriptor shape guard is unchanged; arbitrary quotations and DSL nodes do not acquire ordinary term ownership. Cached corpus censuses with missing standard-family views or possible uncaptured binary shapes are refreshed before replanning; **operatorDescriptorScope=active-and-captured-kinds/1** identifies the richer capture.
+
+The four new modules add **65 actual definition heads** to finite qualification. These are SDK-assisted target-module builds with fresh native Lake outputs, separate from compiling the entire transformed dependency graph.
+
+| Pinned module | Definitions | Line-preserving edits | C SHA-256, native = PS | Public olean SHA-256, native = PS |
+| --- | ---: | ---: | --- | --- |
+| Init.Grind.AC | 41 | 308 | a578c7babb9c24a9a306383e07e903510c8032304f4159037b81c9329a9a9f63 | 6a08956e021397d08df8c20c85f81d29c6293dfd7a6be0e0a7c7e02ed370826e |
+| Std.Data.Iterators.Producers.Monadic.Empty | 3 | 18 | 5d8be1b6c0f93601d50793ab50af6e52c6c7a66db5d75dfe3e2f72e709ca18ce | 684ec092395c971d6d0c7da78fb7bcd07e2e090b054357e242ee52b2d2ee1fc4 |
+| Init.Data.Nat.Internal.Linear | 20 | 126 | 2123db80549ed6f8db912032696fc12b0acb8cfdebffbf243bbe2ef351c10dcb | bd21c5cc9599dab48d4b52108529aa928668a96d7de050d2c9536b0ceb300e89 |
+| Std.Do.SPred.Laws | 1 | 40 | 92a62b96d8578d57378fb1f64cb0cc255c5cdd406359572468581134c57a5916 | 4e4f63be2302f7dea065912e47b0792bed8bfd95e4bf2b7316cae1a8a432b86f |
+
+[Independent inspection 42581263491 / 129040287671](https://github.com/dwijayuda/pskernel/actions/runs/42581263491/job/129040287671), runner **4d84bde2df233ed368bdaf5a74777beb2bb0db7a**, is **PASS**: **48 actual files / twelve modules** rehashed, source edits reconstructed, line counts/imports/actual mapped productions and family multiplicities checked, and the protected native heads and three captured scoped binary roles checked. Existing ellipsis/layout source hashes, node identity/runtime/rejection logs remain checked. Artifact **13656629723**, SHA-256 **73d322210170d3217776345a66281d9c114fedd628f16f02e1dd9f628d0a2d0e**. Runtime executable bytes are not retained for independent rehash. Only this exact inspection job is promoted; historical frozen inspection jobs keep their own outcomes.
+
+The test-first source **76331cce05e543f741ae808f1dde6abff4dc8494**, runner **c50f1921547e74968558ae8db219d06202b23241**, [run 42579747378](https://github.com/dwijayuda/pskernel/actions/runs/42579747378), reproduced all four failures: iterator **129035419593**, Linear **129035419650**, SPred **129035419765**, AC **129035419945**. First corrected source **50cd86d8e21bdbbb476f3544506a3308f088f9d9**, runner **282c5fcfbc4a8bcce6646cfb8bbd723131f8971b**, [run 42580064736](https://github.com/dwijayuda/pskernel/actions/runs/42580064736), then passed all fifteen jobs; the qualified follow-up adds explicit assertions and cached-census refresh.
+
+Full transformed graph nine uses source **742c5c180a8ee7314075d63792c220b710e96504**, runner **6c9c5105f0de3528ebd010211dff5391c00a0ffe**, [run 42580512720 / job 129037820525](https://github.com/dwijayuda/pskernel/actions/runs/42580512720/job/129037820525). It is **IN PROGRESS**, not accepted. Graph eight remains terminal FAILED at its exact older pin below. No entire transformed graph build, native parity or canonical fixed point is claimed.
+
+**Goal ACTIVE / NOT COMPLETE. 240 PENDING / two historical finite PASS / 242 obligations.** The richer finite evidence does not close whole grammar families. Remaining ordinary control/pattern/local-recursion, prefix/postfix/whitespace, nested action/interpolation/constructor, initializer/tactic/diagnostic and original-source IDE roles stay open. Trust rules and the pinned R2/Lean identities are unchanged; grammarMigrationComplete and verified_execution remain false.
+
+
+
+
 ## 2026-11-09 — full transformed graph eight: four new module boundaries, FAILED
 
 [Run 42576363997 / job 129024876695](https://github.com/dwijayuda/pskernel/actions/runs/42576363997/job/129024876695) is now terminal **FAILED**, at source **ec35e2f50009a7b794141fe57c88d990b25f9df3**, runner **51fd8ffa5349a819c1ad19bcfb225fd02ea881ed**. All **2,569** transformed inputs are prepared; the actual native Lake graph builds **Init.Prelude, Init.Core, Init.Data.Nat.Basic and Init.Data.Fin.Basic**. No complete graph linking/parity/fixed point is claimed. Retained artifact **13656320255**, SHA-256 **4a39e956d3ea706292ff148095baf5718bce05602a575949fbde1a3712350cc7**.

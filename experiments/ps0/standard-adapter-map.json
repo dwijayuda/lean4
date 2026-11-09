@@ -5830,82 +5830,554 @@
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
-  "currentContinuation": {
-    "status": "ACTIVE / NOT COMPLETE",
-    "qualifiedSource": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
-    "qualifiedRunner": "028dd5bb09e20c4e0c9ca321bae4c00b755aa892",
-    "qualifiedRun": 42575555454,
-    "qualifiedJobs": 11,
-    "canonicalGraph": {
-      "source": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
-      "runner": "51fd8ffa5349a819c1ad19bcfb225fd02ea881ed",
-      "run": 42576363997,
-      "job": 129024876695,
-      "status": "FAILED",
-      "preparedInputs": 2569,
-      "actualObservedBuiltFoundations": [
-        "Init.Prelude",
-        "Init.Core",
-        "Init.Data.Nat.Basic",
-        "Init.Data.Fin.Basic"
-      ],
-      "failures": [
-        {
-          "module": "Std.Do.SPred.Laws",
-          "locations": [
-            "146:65",
-            "151:64",
-            "156:66"
-          ],
-          "error": "PS0V1-CALL-GAP in ordinary SVal.curry operands"
-        },
-        {
-          "module": "Init.Data.Nat.Internal.Linear",
-          "locations": [
-            "126:0",
-            "126:20"
-          ],
-          "error": "Unknown constant function / unexpected '(' after an attribute command; subsequent missing Expr.toPoly errors are cascades"
-        },
-        {
-          "module": "Init.Grind.AC",
-          "locations": [
-            "70:0",
-            "70:20"
-          ],
-          "error": "Unknown constant function / unexpected '(' after an attribute command; subsequent Expr.toSeq' errors are cascades"
-        },
-        {
-          "module": "Std.Data.Iterators.Producers.Monadic.Empty",
-          "locations": [
-            "36:41"
-          ],
-          "error": "Unexpected comma after a converted function head following an empty structure where block; subsequent type/instance errors are cascades"
-        }
-      ],
-      "artifact": {
-        "id": 13656320255,
-        "sha256": "4a39e956d3ea706292ff148095baf5718bce05602a575949fbde1a3712350cc7"
+  "scopedBinaryAndCommandBoundaryEvidence": {
+    "source": "742c5c180a8ee7314075d63792c220b710e96504",
+    "runner": "43da8f7c5bfb576214e660bb62cc6d70ac992f84",
+    "run": 42580480225,
+    "status": "PASS",
+    "jobs": [
+      {
+        "name": "project-build",
+        "id": 129039221732,
+        "status": "completed",
+        "conclusion": "success"
       },
+      {
+        "name": "compiler-spredlaws",
+        "id": 129039221915,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "compiler-prelude",
+        "id": 129039221920,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "compiler-fixtures",
+        "id": 129039221958,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "compiler-core",
+        "id": 129039221961,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "compiler-natbasic",
+        "id": 129039221984,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "compiler-iteratorempty",
+        "id": 129039221997,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "host-contract",
+        "id": 129039222018,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "do-layout",
+        "id": 129039222036,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "native-build",
+        "id": 129039222052,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "compiler-natlinear",
+        "id": 129039222067,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "operator-baseline",
+        "id": 129039222069,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "proof-linked",
+        "id": 129039222125,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "compiler-finbasic",
+        "id": 129039222149,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "compiler-grindac",
+        "id": 129039222225,
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "name": "ps0-external-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13657825217,
+        "sha256": "57be6f2c289f605665e32a221bef1a3784cedeb7b2c8f81df145232b33c09769"
+      },
+      {
+        "name": "ps0-compiler-prelude-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13657615329,
+        "sha256": "71902f68313728f8d2d92b1920923b9c8892c53164cefe9f60a9ba8b13f6a873"
+      },
+      {
+        "name": "ps0-compiler-iteratorempty-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13657480498,
+        "sha256": "0ce6f65343bc0c14e3b6beddb0e09f2150422f856f20f14b1498e02d0daf6a44"
+      },
+      {
+        "name": "ps0-project-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13657451481,
+        "sha256": "3069a0b480a648a9cdc1e3fc284d4edca1e674ea4d3135291da8928a0f92da4b"
+      },
+      {
+        "name": "ps0-compiler-fixtures-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13657227819,
+        "sha256": "deadffb790a12636d83f1ff547a4cee4f987a90f37dc1d9a6946a56941a236c7"
+      },
+      {
+        "name": "ps0-compiler-spredlaws-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13657023261,
+        "sha256": "a9f17f7bd53eefac8922c6df5760536da3c57ef044d22d179b1a2ac3218bae0c"
+      },
+      {
+        "name": "ps0-compiler-grindac-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13656983427,
+        "sha256": "5029220c050b5d004e6a98201aefc81a5ad3c654223114a784b757a44b53fd93"
+      },
+      {
+        "name": "ps0-compiler-natlinear-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13656858742,
+        "sha256": "abe4eb9085d2fe2d3338848462f5315d0f5da4835e2203277bd73d696555e8ba"
+      },
+      {
+        "name": "ps0-compiler-core-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13656789173,
+        "sha256": "71b23fdcf3309c5afff1bb6a860702246c67fb0a7f8d45a7c1b56d929ecdc1cd"
+      },
+      {
+        "name": "ps0-compiler-natbasic-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13656778999,
+        "sha256": "daff48343cc6a1c91ddbd0d9cb836847be16cb13102fdfb9f7c749c5d053e290"
+      },
+      {
+        "name": "ps0-operator-baseline-42580480225",
+        "id": 13656418916,
+        "sha256": "1b16a98791115fcbddbb193d3a7de5f1c4a4362f3f6951e2be19b8b7c656cd5b"
+      },
+      {
+        "name": "ps0-do-layout-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13656404130,
+        "sha256": "db2dff103a9a0156af6c81cd3b3da4feec9b4fae9944db041141b4cbaf75b4fa"
+      },
+      {
+        "name": "ps0-native-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13656309379,
+        "sha256": "46e55f773b54527757c7565d864d6265e0d9455460b5f97468390a50426527e5"
+      },
+      {
+        "name": "ps0-compiler-finbasic-742c5c180a8ee7314075d63792c220b710e96504-42580480225",
+        "id": 13656284496,
+        "sha256": "cd66e4552dfb33637fdc20fe26863ba58ba4babc5c66cf212e5cdda42420713a"
+      }
+    ],
+    "independentInspection": {
+      "runner": "4d84bde2df233ed368bdaf5a74777beb2bb0db7a",
+      "run": 42581263491,
+      "job": 129040287671,
+      "status": "PASS",
+      "artifact": {
+        "id": 13656629723,
+        "sha256": "73d322210170d3217776345a66281d9c114fedd628f16f02e1dd9f628d0a2d0e"
+      },
+      "modules": 12,
+      "actualFilesRehashed": 48,
+      "runtimeExecutableBytesRetained": false
+    },
+    "modules": [
+      {
+        "converted_sha256": "dc659cf8a5aebed91588f6b637c388856094403a8c23f730871b13bfa687b49a",
+        "definitions": 4,
+        "edits": 40,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DeclarationForms.c": "5d7e11adf7656b2daa64d191f23782a4ce5d06f5eb01cba6ec5c6ad2f0f1e159",
+          "lib/lean/Lean/Compiler/DeclarationForms.olean": "2a1f9d698857303ec6d63f36a7ccaa1332ae80d5634cfaa2649db6a41361baf7"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "315e2c865fb9916545259382851ebc978ce129d129fad70e8c56ea637c8bdbd4",
+        "module": "Lean.Compiler.DeclarationForms",
+        "pinned_blob": "3761abd09f5c184ed9effb4f4749669bb1ac3039",
+        "source_lines": 59,
+        "source_sha256": "a79bce6dfbc24697a420d694507b1f43681db2ebeace76bbf12ab5b1877ebe54",
+        "strategies": {
+          "const": 1,
+          "def": 2,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "ee2266490c79e1347eb72566b39b9587e3843cba03c7508a810420bda872ca8a",
+        "definitions": 8,
+        "edits": 50,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/DoLayoutProbe.c": "d391d37b19052ef8df2399c29ea235b1d61faa78f59f54d3d2ad42afe9ca06ca",
+          "lib/lean/Lean/Compiler/DoLayoutProbe.olean": "33fc5547e1c25f121c708c6131070bcdad029a68816b3ce6be411a2df3553a46"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "6f7afbae0cc62d8f1c8d22ca01843ac3152f578714f8638a7a4c6d20afbf387a",
+        "module": "Lean.Compiler.DoLayoutProbe",
+        "pinned_blob": "09c87f1ea65f4907f3b5fbca7c854faabe533933",
+        "source_lines": 37,
+        "source_sha256": "644afda53861fd8b61c38d32168a852933594b3b0196c0e6f383ff593fbbedc4",
+        "strategies": {
+          "const": 5,
+          "def": 1,
+          "function": 2
+        }
+      },
+      {
+        "converted_sha256": "703212ed3421815962922308536832cc2fe1f16b199c62abda1e024667a18a8e",
+        "definitions": 26,
+        "edits": 100,
+        "equation_definitions": [
+          "add",
+          "div",
+          "elim0",
+          "land",
+          "lor",
+          "mod",
+          "modn",
+          "mul",
+          "shiftLeft",
+          "shiftRight",
+          "sub",
+          "succ",
+          "xor"
+        ],
+        "hashes": {
+          "ir/Init/Data/Fin/Basic.c": "54d27ad85376bf29c77c6fadd29cf2f2a74491c670afe9215d26fdd575ac5cdc",
+          "lib/lean/Init/Data/Fin/Basic.olean": "8f599a56bbf94a1e62b8403e65742ac650ae7f0555bafd8e9e5ab41f0b124850"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c88e9baa3a71fecdbb3546a9fc1439711e0ef19c6e53627d99d5ff409d2e342b",
+        "module": "Init.Data.Fin.Basic",
+        "pinned_blob": "6fee3ab2eaacf1b76de02ea7f7880f29fbac8294",
+        "source_lines": 423,
+        "source_sha256": "bb3d4e46cb40a24f5a09e6e003c76f2b84140a598df81233f0bffe3afe08cbf4",
+        "strategies": {
+          "const": 13,
+          "def": 4,
+          "function": 9
+        }
+      },
+      {
+        "converted_sha256": "70ec24c4f040c1469d6c833507a8a3a461aa13065f57efab3c5cfc3860212d2d",
+        "definitions": 41,
+        "edits": 308,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Grind/AC.c": "a578c7babb9c24a9a306383e07e903510c8032304f4159037b81c9329a9a9f63",
+          "lib/lean/Init/Grind/AC.olean": "6a08956e021397d08df8c20c85f81d29c6293dfd7a6be0e0a7c7e02ed370826e"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "5e9c2d325395b78868c1a6976597631c4c3f0430a663b0b3e63a8b4e2deecdbb",
+        "module": "Init.Grind.AC",
+        "pinned_blob": "ed2fd91db65a2b928158478308a22c300d14ab85",
+        "source_lines": 713,
+        "source_sha256": "11f082933c55a50ee11e1c5833f76b40a9336827343b602b6cc60d7e42cdd44a",
+        "strategies": {
+          "def": 28,
+          "function": 13
+        }
+      },
+      {
+        "converted_sha256": "b90100fad1c19dc06321ca66f8c852eaac08a62222146a73470f24a47144721a",
+        "definitions": 52,
+        "edits": 411,
+        "equation_definitions": [
+          "Prod.map"
+        ],
+        "hashes": {
+          "ir/Init/Core.c": "e62dac2531da1648a0a3c82613e32077f3f815a76eebbcd5fce91287c479cb97",
+          "lib/lean/Init/Core.olean": "701ec5ec5217eaabed28ddd717710d605d516aab274be20c96572600463d7814"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "cc7d02de99122ef3350c8e54b82abee4282a565dbfb562f2658ae81ad96786a7",
+        "module": "Init.Core",
+        "pinned_blob": "23e784c3806badcabd1e8f19c50946d66bc3c87a",
+        "source_lines": 2488,
+        "source_sha256": "264a0b48fedc91fadf55fc5caac8d91003e3908a6e5e42736e2ac8bf1f7cdf99",
+        "strategies": {
+          "const": 3,
+          "def": 14,
+          "function": 35
+        }
+      },
+      {
+        "converted_sha256": "1a7823ce458d574cf7eef892b24c97b897115f34d29096124aa744c2bbcfe919",
+        "definitions": 236,
+        "edits": 1128,
+        "equation_definitions": [
+          "Bool.Internal.not",
+          "ByteArray.push",
+          "ByteArray.size",
+          "List.append",
+          "List.beq",
+          "List.concat",
+          "List.flatten",
+          "List.foldl",
+          "List.get",
+          "List.length",
+          "List.lengthTRAux",
+          "List.map",
+          "List.set",
+          "MonadExcept.ofExcept",
+          "Name.hasMacroScopes",
+          "Nat.add",
+          "Nat.beq",
+          "Nat.ble",
+          "Nat.mod",
+          "Nat.mul",
+          "Nat.pow",
+          "Nat.pred",
+          "Nat.sub",
+          "Option.map",
+          "Substring.Raw.bsize",
+          "appendCore",
+          "assembleParts",
+          "beq",
+          "eraseMacroScopesAux",
+          "extractImported",
+          "extractMacroScopesAux",
+          "extractMainModule",
+          "getHeadInfo?",
+          "getId",
+          "getInfo?",
+          "isIdent",
+          "isMissing",
+          "simpMacroScopesAux"
+        ],
+        "hashes": {
+          "ir/Init/Prelude.c": "c2dd15475af819d54fe5522abcfe5a8b910df2db100e35627ec0c88ec370df72",
+          "lib/lean/Init/Prelude.olean": "4adc149394f7833f84b2c7f3c96fc9ed4d60f83db84328d68f78a6a037865ffd"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "a24fd17986a8ea2c9323c354989691fe9f9d4e8d56819e22d3529611bd572186",
+        "module": "Init.Prelude",
+        "pinned_blob": "58a4c37053f30d37b824190b934e759c16e53d7a",
+        "source_lines": 6160,
+        "source_sha256": "390e6b57ead28cb821a65533b21357f2f02d0a1525602f5a1ce9ee3eeb81fd12",
+        "strategies": {
+          "const": 44,
+          "def": 72,
+          "function": 120
+        }
+      },
+      {
+        "converted_sha256": "902eb7e72024077eaff54c122d3c89dcbc674c235fa8eed759ff7521a96c9908",
+        "definitions": 3,
+        "edits": 18,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Data/Iterators/Producers/Monadic/Empty.c": "5d8be1b6c0f93601d50793ab50af6e52c6c7a66db5d75dfe3e2f72e709ca18ce",
+          "lib/lean/Std/Data/Iterators/Producers/Monadic/Empty.olean": "684ec092395c971d6d0c7da78fb7bcd07e2e090b054357e242ee52b2d2ee1fc4"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "f9fb60d039b65f7076fc4795b483f46f64cdf80998f81fb44e31eec22dee93e9",
+        "module": "Std.Data.Iterators.Producers.Monadic.Empty",
+        "pinned_blob": "69171a771e242e603f687d85b63091f851037382",
+        "source_lines": 65,
+        "source_sha256": "245b8242302d418f78041c02b956946618e33042e181c5eb0b28624bb963f890",
+        "strategies": {
+          "def": 2,
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "cc17432112eecf5fc07ba22c13cd0da15ea9187670c35ff33a802242a62899c1",
+        "definitions": 110,
+        "edits": 421,
+        "equation_definitions": [
+          "Alt.getCode",
+          "Alt.getParams",
+          "Cases.alts",
+          "Cases.discr",
+          "Cases.resultType",
+          "Cases.typeName",
+          "Cases.updateAlts",
+          "Code.isDecl",
+          "Code.isFun",
+          "Code.isReturnOf",
+          "Code.toCodeDecl!",
+          "CodeDecl.fvarId",
+          "DeclValue.size",
+          "FunDecl.binderName",
+          "FunDecl.fvarId",
+          "FunDecl.params",
+          "FunDecl.type",
+          "FunDecl.updateBinderName",
+          "FunDecl.value",
+          "LitValue.toExpr"
+        ],
+        "hashes": {
+          "ir/Lean/Compiler/LCNF/Basic.c": "4576adf24c634cdc34518a3f65ed3ca0ea3dc32027d6633156f6eb0664c95ff2",
+          "lib/lean/Lean/Compiler/LCNF/Basic.olean": "e4fc60bb05756520835af0fc9342f47848b3e3cb2e4444616e8b584432d025f6"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c10c62a46e7675fb75a71fd0d8a31574433857efe4e2e87055858dbd3fff9084",
+        "module": "Lean.Compiler.LCNF.Basic",
+        "pinned_blob": "82c8dee0b9d13f09d58a6404dd5d5abf797d236e",
+        "source_lines": 1263,
+        "source_sha256": "833cb3c38140ece99ee25149529e568839379193064f5a210f5fb5ffba08df59",
+        "strategies": {
+          "const": 17,
+          "def": 14,
+          "function": 79
+        }
+      },
+      {
+        "converted_sha256": "1cba45218dbca21c355fb8506d08afe1219d53c4c2afbab671f88d9da24b2a07",
+        "definitions": 4,
+        "edits": 219,
+        "equation_definitions": [
+          "recCompiled",
+          "repeat"
+        ],
+        "hashes": {
+          "ir/Init/Data/Nat/Basic.c": "febabcf79a2653c77d6810ca71320cc53b16c9cfb591bb387f3efd3eca52d1b1",
+          "lib/lean/Init/Data/Nat/Basic.olean": "c37d53a6a956f0e6643439eda339eb8986586d22c7c7f122e8b4bcad34914e5b"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "f95c08531f6c9173a9b155e821ed50780f637240b18000de1d9ad51a6a33c599",
+        "module": "Init.Data.Nat.Basic",
+        "pinned_blob": "9d952894c7d70b881bcb1c82151a1d8889499013",
+        "source_lines": 1234,
+        "source_sha256": "e26b5a54eab922f6b650cfe9032fe23172fa8cc0b63c75cff0c8bf99f6175289",
+        "strategies": {
+          "def": 1,
+          "function": 3
+        }
+      },
+      {
+        "converted_sha256": "0b7ca207da75dc01adec08d39299d11a8e728640ce23738c80ae40f3fe01c35d",
+        "definitions": 20,
+        "edits": 126,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Init/Data/Nat/Internal/Linear.c": "2123db80549ed6f8db912032696fc12b0acb8cfdebffbf243bbe2ef351c10dcb",
+          "lib/lean/Init/Data/Nat/Internal/Linear.olean": "bd21c5cc9599dab48d4b52108529aa928668a96d7de050d2c9536b0ceb300e89"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "c51b07a42b6e6fce15e925b2f951de55033f298e329f84aacf9a7ef41e1908da",
+        "module": "Init.Data.Nat.Internal.Linear",
+        "pinned_blob": "ed9de4c44717b3801a9d32da8e19ea13c0f9cefb",
+        "source_lines": 547,
+        "source_sha256": "8f75864cbcbf54ac893dd839959273e2fa2e6ae31cf310c20a8b7f98db27d75b",
+        "strategies": {
+          "const": 1,
+          "def": 4,
+          "function": 15
+        }
+      },
+      {
+        "converted_sha256": "9fe41d99f2e51c671879e39f589f94d6c0e27666e8f45a8d19d2f08728615858",
+        "definitions": 1,
+        "edits": 40,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Std/Do/SPred/Laws.c": "92a62b96d8578d57378fb1f64cb0cc255c5cdd406359572468581134c57a5916",
+          "lib/lean/Std/Do/SPred/Laws.olean": "4e4f63be2302f7dea065912e47b0792bed8bfd95e4bf2b7316cae1a8a432b86f"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "1a9994551c6eda438c3b4bd03a1e76ddc75860f4b0d1ab833a58159a3662fed8",
+        "module": "Std.Do.SPred.Laws",
+        "pinned_blob": "9e762ecf143854a45660037b5333e5e6ca1ca9c8",
+        "source_lines": 183,
+        "source_sha256": "f9310bc9028049e1bce2643b781ace5e868da11cbc47244d1b48ceb48caf0c4f",
+        "strategies": {
+          "function": 1
+        }
+      },
+      {
+        "converted_sha256": "340d2738edcf91181d3355bac4a2c72107c9b7a6ca7d62e4f9be66c6f03d8e85",
+        "definitions": 18,
+        "edits": 29,
+        "equation_definitions": [],
+        "hashes": {
+          "ir/Lean/Compiler/TelescopeProbe.c": "6787d16744a58347a1b302b44ee5adf1825095401980b79227f473e6bd844452",
+          "lib/lean/Lean/Compiler/TelescopeProbe.olean": "c3073c1993e616c2e86cdc59cfe4ba9602e88220f8f60308520b6670d3ee56fb"
+        },
+        "line_count_preserved": true,
+        "mapped_census_sha256": "6398ec719b854b48184640da97e3f8552ae576ca1b303ecfe6c97c0040efdbbb",
+        "module": "Lean.Compiler.TelescopeProbe",
+        "pinned_blob": "61b472c934e79b57492cf596ede396f7740230db",
+        "source_lines": 27,
+        "source_sha256": "59625e4a509b037e9a4003077e04803f692d098ae28c487a7ba3bb7bda73860c",
+        "strategies": {
+          "def": 6,
+          "function": 12
+        }
+      }
+    ],
+    "qualification": "finite SDK-assisted native Lake target C/public olean parity; actual mapped PS source productions, source edits, line counts, family multiplicities, contextual boundaries and captured scoped binary roles; not entire transformed dependency graph",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "transformedCompilerGraphNinthAttempt": {
+    "source": "742c5c180a8ee7314075d63792c220b710e96504",
+    "runner": "6c9c5105f0de3528ebd010211dff5391c00a0ffe",
+    "run": 42580512720,
+    "job": 129037820525,
+    "status": "IN_PROGRESS",
+    "fullGraphBuild": false,
+    "canonicalFixedPoint": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "currentContinuation": {
+    "qualifiedSource": "742c5c180a8ee7314075d63792c220b710e96504",
+    "qualifiedRunner": "43da8f7c5bfb576214e660bb62cc6d70ac992f84",
+    "run": 42580480225,
+    "linuxJobsPassed": 15,
+    "independentFilesRehashed": 48,
+    "fullTransformedGraph": {
+      "source": "742c5c180a8ee7314075d63792c220b710e96504",
+      "runner": "6c9c5105f0de3528ebd010211dff5391c00a0ffe",
+      "run": 42580512720,
+      "job": 129037820525,
+      "status": "IN_PROGRESS",
       "fullGraphBuild": false,
       "canonicalFixedPoint": false,
       "grammarMigrationComplete": false,
       "verified_execution": false
     },
-    "next": "Add direct SDK-backed qualification for the four actual failing modules. Inspect imported SPred binary operator ownership; preserve owned def syntax or enforce native command boundaries after greedy attribute/empty-structure commands without reserving contextual alias words inside DSLs. Validate fixes on Linux, then resume full transformed compilation; retain all remaining grammar/source/IDE and canonical fixed-point requirements.",
-    "remainingGrammarRoles": [
-      "Control-flow and pattern do operands beyond the qualified ID subset",
-      "Local recursion and remaining local binding roles",
-      "Prefix operators with PS operands and remaining ordinary term roles",
-      "Whitespace applications and all high-postfix contexts",
-      "Nested actions, constructor/record operands and interpolation",
-      "Initializers and other ordinary command operands",
-      "Context-uniform tactic/diagnostic operands",
-      "Original-source diagnostics/IDE fidelity and complete conformance obligations"
+    "nextActions": [
+      "Wait for transformed graph nine; inspect its first failures or qualify full native parity and canonical fixed point if it passes",
+      "Continue remaining ordinary PS grammar and source fidelity adapters through actual pinned modules",
+      "Keep exact Linux source/runner/job/artifact evidence and all pending grammar obligations explicit"
     ],
-    "pendingObligations": 240,
-    "historicalFinitePass": 2,
-    "totalObligations": 242,
+    "goalStatus": "ACTIVE",
+    "obligationsPending": 240,
     "grammarMigrationComplete": false,
     "verified_execution": false
   }
