@@ -12730,14 +12730,107 @@
     "runner": "7a109e74f0e40a16915e7d59d3151d1d24fdc132",
     "run": 42611545930,
     "job": 129140934235,
-    "status": "IN_PROGRESS",
+    "status": "FAILED",
     "freshNativeLakeTargetBuild": true,
     "nativeCaptureProducerSource": "742c5c180a8ee7314075d63792c220b710e96504",
     "nativeCaptureProducerRun": 42580512720,
     "fullGraphBuild": false,
     "canonicalFixedPoint": false,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "preparedInputs": 2569,
+    "artifacts": [
+      {
+        "id": 13677736091,
+        "name": "ps0-transformed-corpus-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611545930",
+        "size_in_bytes": 126517242,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677736091",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677736091/zip",
+        "expired": false,
+        "created_at": "2026-11-09T13:09:03Z",
+        "expires_at": "2027-02-07T11:45:31Z",
+        "updated_at": "2026-11-09T13:09:03Z",
+        "digest": "sha256:19232b5cc002c2758e0df10c6b64e748f165e872c29a7ab4cba3383c0f6bab33",
+        "workflow_run": {
+          "id": 42611545930,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-transformed-corpus-20261109",
+          "head_sha": "7a109e74f0e40a16915e7d59d3151d1d24fdc132"
+        }
+      }
+    ],
+    "failures": [
+      {
+        "module": "Lean.Data.JsonRpc",
+        "line": 430,
+        "reason": "anonymous section consumes the function alias as its optional section name"
+      },
+      {
+        "module": "Lean.Environment",
+        "line": 1198,
+        "reason": "native indexed access following an owned pipeline projection is not admitted"
+      }
+    ],
+    "partialAudit": {
+      "status": "PASS",
+      "runner": "60fb63afc49c9a7959c227f160081a96c952de0d",
+      "run": 42626339709,
+      "job": 129190992725,
+      "artifacts": [
+        {
+          "id": 13677674407,
+          "name": "ps0-transformed-thirteen-modes-42626339709",
+          "size_in_bytes": 131284,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677674407",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677674407/zip",
+          "expired": false,
+          "created_at": "2026-11-09T13:32:33Z",
+          "expires_at": "2027-02-07T13:32:17Z",
+          "updated_at": "2026-11-09T13:32:33Z",
+          "digest": "sha256:50c1d6b6ba00d936a892071fa6fad815df14563ce1a6d586bfdc11f6f5c2cede",
+          "workflow_run": {
+            "id": 42626339709,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
+            "head_sha": "60fb63afc49c9a7959c227f160081a96c952de0d"
+          }
+        }
+      ],
+      "summary": {
+        "canonical_fixed_point": false,
+        "censuses_without_successful_lake_job": [],
+        "definition_heads_in_those_observations": 10670,
+        "full_graph_build": false,
+        "fully_mapped_mode_modules": 1345,
+        "grammar_migration_complete": false,
+        "job": 129140934235,
+        "native_compatible_escapes": [],
+        "prepared_inputs": 2569,
+        "production_counts": {
+          "PS0.StandardAdapters.ps0StandardAbbrev": 656,
+          "PS0.StandardAdapters.ps0StandardAxiom": 12,
+          "PS0.StandardAdapters.ps0StandardConst": 1655,
+          "PS0.StandardAdapters.ps0StandardDef": 1400,
+          "PS0.StandardAdapters.ps0StandardExample": 72,
+          "PS0.StandardAdapters.ps0StandardFunction": 7615,
+          "PS0.StandardAdapters.ps0StandardInstance": 4629,
+          "PS0.StandardAdapters.ps0StandardOpaque": 454,
+          "PS0.StandardAdapters.ps0StandardTheorem": 45144
+        },
+        "refreshed_native_censuses": 0,
+        "reused_native_censuses": 1872,
+        "run": 42611545930,
+        "scope": "successful native Lake job log entries plus retained source observations/plan identity; no retained target C/public olean rehash, runtime, full graph or fixed point acceptance",
+        "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+        "successful_lake_modules_with_retained_source_observations": 1345,
+        "successful_lake_modules_with_warnings": [
+          "Lean.Data.Json.FromToJson.Basic"
+        ],
+        "verified_execution": false
+      }
+    }
   },
   "recordCoercionPriorityTestCandidate": {
     "source": "3fae64b355cf125fb40b519e79e67c86759d21ee",
@@ -16340,22 +16433,231 @@
       "runner": "7a109e74f0e40a16915e7d59d3151d1d24fdc132",
       "run": 42611545930,
       "job": 129140934235,
-      "status": "IN_PROGRESS",
+      "status": "FAILED",
       "freshNativeLakeTargetBuild": true,
       "nativeCaptureProducerSource": "742c5c180a8ee7314075d63792c220b710e96504",
       "nativeCaptureProducerRun": 42580512720,
       "fullGraphBuild": false,
       "canonicalFixedPoint": false,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "preparedInputs": 2569,
+      "artifacts": [
+        {
+          "id": 13677736091,
+          "name": "ps0-transformed-corpus-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611545930",
+          "size_in_bytes": 126517242,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677736091",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677736091/zip",
+          "expired": false,
+          "created_at": "2026-11-09T13:09:03Z",
+          "expires_at": "2027-02-07T11:45:31Z",
+          "updated_at": "2026-11-09T13:09:03Z",
+          "digest": "sha256:19232b5cc002c2758e0df10c6b64e748f165e872c29a7ab4cba3383c0f6bab33",
+          "workflow_run": {
+            "id": 42611545930,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-transformed-corpus-20261109",
+            "head_sha": "7a109e74f0e40a16915e7d59d3151d1d24fdc132"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "module": "Lean.Data.JsonRpc",
+          "line": 430,
+          "reason": "anonymous section consumes the function alias as its optional section name"
+        },
+        {
+          "module": "Lean.Environment",
+          "line": 1198,
+          "reason": "native indexed access following an owned pipeline projection is not admitted"
+        }
+      ],
+      "partialAudit": {
+        "status": "PASS",
+        "runner": "60fb63afc49c9a7959c227f160081a96c952de0d",
+        "run": 42626339709,
+        "job": 129190992725,
+        "artifacts": [
+          {
+            "id": 13677674407,
+            "name": "ps0-transformed-thirteen-modes-42626339709",
+            "size_in_bytes": 131284,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677674407",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677674407/zip",
+            "expired": false,
+            "created_at": "2026-11-09T13:32:33Z",
+            "expires_at": "2027-02-07T13:32:17Z",
+            "updated_at": "2026-11-09T13:32:33Z",
+            "digest": "sha256:50c1d6b6ba00d936a892071fa6fad815df14563ce1a6d586bfdc11f6f5c2cede",
+            "workflow_run": {
+              "id": 42626339709,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
+              "head_sha": "60fb63afc49c9a7959c227f160081a96c952de0d"
+            }
+          }
+        ],
+        "summary": {
+          "canonical_fixed_point": false,
+          "censuses_without_successful_lake_job": [],
+          "definition_heads_in_those_observations": 10670,
+          "full_graph_build": false,
+          "fully_mapped_mode_modules": 1345,
+          "grammar_migration_complete": false,
+          "job": 129140934235,
+          "native_compatible_escapes": [],
+          "prepared_inputs": 2569,
+          "production_counts": {
+            "PS0.StandardAdapters.ps0StandardAbbrev": 656,
+            "PS0.StandardAdapters.ps0StandardAxiom": 12,
+            "PS0.StandardAdapters.ps0StandardConst": 1655,
+            "PS0.StandardAdapters.ps0StandardDef": 1400,
+            "PS0.StandardAdapters.ps0StandardExample": 72,
+            "PS0.StandardAdapters.ps0StandardFunction": 7615,
+            "PS0.StandardAdapters.ps0StandardInstance": 4629,
+            "PS0.StandardAdapters.ps0StandardOpaque": 454,
+            "PS0.StandardAdapters.ps0StandardTheorem": 45144
+          },
+          "refreshed_native_censuses": 0,
+          "reused_native_censuses": 1872,
+          "run": 42611545930,
+          "scope": "successful native Lake job log entries plus retained source observations/plan identity; no retained target C/public olean rehash, runtime, full graph or fixed point acceptance",
+          "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+          "successful_lake_modules_with_retained_source_observations": 1345,
+          "successful_lake_modules_with_warnings": [
+            "Lean.Data.Json.FromToJson.Basic"
+          ],
+          "verified_execution": false
+        }
+      }
     },
     "nextActions": [
-      "Inspect full transformed graph thirteen when terminal, preserve its exact failures/successes, and qualify the next complete graph at the newer source",
+      "Qualify anonymous-section and native indexing boundaries, independently inspect target evidence, then run the next complete transformed graph",
       "Extend remaining ordinary grammar and original-source fidelity, including unadapted local/field/control roles and complete braced ownership",
       "Require whole transformed graph native parity/linking/runtime, relocated full compiler operation and canonical fixed point before full replacement completion"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "canonicalGraphThirteenthTerminalEvidence": {
+    "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+    "runner": "7a109e74f0e40a16915e7d59d3151d1d24fdc132",
+    "run": 42611545930,
+    "job": 129140934235,
+    "status": "FAILED",
+    "freshNativeLakeTargetBuild": true,
+    "nativeCaptureProducerSource": "742c5c180a8ee7314075d63792c220b710e96504",
+    "nativeCaptureProducerRun": 42580512720,
+    "fullGraphBuild": false,
+    "canonicalFixedPoint": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "preparedInputs": 2569,
+    "artifacts": [
+      {
+        "id": 13677736091,
+        "name": "ps0-transformed-corpus-68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf-42611545930",
+        "size_in_bytes": 126517242,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677736091",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677736091/zip",
+        "expired": false,
+        "created_at": "2026-11-09T13:09:03Z",
+        "expires_at": "2027-02-07T11:45:31Z",
+        "updated_at": "2026-11-09T13:09:03Z",
+        "digest": "sha256:19232b5cc002c2758e0df10c6b64e748f165e872c29a7ab4cba3383c0f6bab33",
+        "workflow_run": {
+          "id": 42611545930,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-transformed-corpus-20261109",
+          "head_sha": "7a109e74f0e40a16915e7d59d3151d1d24fdc132"
+        }
+      }
+    ],
+    "failures": [
+      {
+        "module": "Lean.Data.JsonRpc",
+        "line": 430,
+        "reason": "anonymous section consumes the function alias as its optional section name"
+      },
+      {
+        "module": "Lean.Environment",
+        "line": 1198,
+        "reason": "native indexed access following an owned pipeline projection is not admitted"
+      }
+    ],
+    "partialAudit": {
+      "status": "PASS",
+      "runner": "60fb63afc49c9a7959c227f160081a96c952de0d",
+      "run": 42626339709,
+      "job": 129190992725,
+      "artifacts": [
+        {
+          "id": 13677674407,
+          "name": "ps0-transformed-thirteen-modes-42626339709",
+          "size_in_bytes": 131284,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677674407",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13677674407/zip",
+          "expired": false,
+          "created_at": "2026-11-09T13:32:33Z",
+          "expires_at": "2027-02-07T13:32:17Z",
+          "updated_at": "2026-11-09T13:32:33Z",
+          "digest": "sha256:50c1d6b6ba00d936a892071fa6fad815df14563ce1a6d586bfdc11f6f5c2cede",
+          "workflow_run": {
+            "id": 42626339709,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
+            "head_sha": "60fb63afc49c9a7959c227f160081a96c952de0d"
+          }
+        }
+      ],
+      "summary": {
+        "canonical_fixed_point": false,
+        "censuses_without_successful_lake_job": [],
+        "definition_heads_in_those_observations": 10670,
+        "full_graph_build": false,
+        "fully_mapped_mode_modules": 1345,
+        "grammar_migration_complete": false,
+        "job": 129140934235,
+        "native_compatible_escapes": [],
+        "prepared_inputs": 2569,
+        "production_counts": {
+          "PS0.StandardAdapters.ps0StandardAbbrev": 656,
+          "PS0.StandardAdapters.ps0StandardAxiom": 12,
+          "PS0.StandardAdapters.ps0StandardConst": 1655,
+          "PS0.StandardAdapters.ps0StandardDef": 1400,
+          "PS0.StandardAdapters.ps0StandardExample": 72,
+          "PS0.StandardAdapters.ps0StandardFunction": 7615,
+          "PS0.StandardAdapters.ps0StandardInstance": 4629,
+          "PS0.StandardAdapters.ps0StandardOpaque": 454,
+          "PS0.StandardAdapters.ps0StandardTheorem": 45144
+        },
+        "refreshed_native_censuses": 0,
+        "reused_native_censuses": 1872,
+        "run": 42611545930,
+        "scope": "successful native Lake job log entries plus retained source observations/plan identity; no retained target C/public olean rehash, runtime, full graph or fixed point acceptance",
+        "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
+        "successful_lake_modules_with_retained_source_observations": 1345,
+        "successful_lake_modules_with_warnings": [
+          "Lean.Data.Json.FromToJson.Basic"
+        ],
+        "verified_execution": false
+      }
+    }
+  },
+  "nativeIndexAdapterCandidate": {
+    "source": "9ca0c09067110fec8efa1702620227eaff393524",
+    "runner": "59694ee53a44d132aca722bfeebf2a6898fdfa68",
+    "run": 42627018468,
+    "status": "PENDING_NOT_QUALIFIED",
+    "scope": "anonymous-section declaration boundary and four borrowed native indexed-access productions with PS subject/index/proof operands",
     "grammarMigrationComplete": false,
     "verified_execution": false
   }
