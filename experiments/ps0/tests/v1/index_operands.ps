@@ -19,7 +19,7 @@ theorem indexedSignature (l : List Nat) (i : Nat) (h : i < l.length) :
     l[i]'h = l[i]'h := by rfl
 theorem indexedUnattach {p : Nat → Prop} {l : List { x // p x }}
     (i : Nat) (h : i < l.unattach.length) :
-    l.unattach[i] = (l[i]'(by simpa using h)).1 := by simp [List.unattach]
+    l.unattach[i] = (l[i]'(by simpa using h)).1 := by exact List.getElem_unattach i h
 
 meta partial def originalIndexSyntax? (source : Lean.Syntax) : Option Lean.Syntax :=
   if source.isOfKind `PS0.Operators.ownedPostfix &&
