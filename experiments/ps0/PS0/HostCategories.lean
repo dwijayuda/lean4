@@ -283,6 +283,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
       return (native.setArg 0 lhs).setArg 2 rhs
     if source.isOfKind `PS0.Operators.ownedPostfix then
       let native := source[0]
+      if (PS0.Operators.indexArity? native.getKind).isSome then
+        return ← lowerNativeIndex native false
       if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
         let arguments ← native[4].getArgs.mapM fun argument => do
           if argument.isOfKind ``Lean.Parser.Term.ellipsis then return argument
@@ -553,6 +555,8 @@ partial def lowerFunBinder (source : Lean.Syntax) :
 partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if source.isOfKind `PS0.Operators.ownedPostfix then
     let native := source[0]
+    if (PS0.Operators.indexArity? native.getKind).isSome then
+      return ← lowerNativeIndex native true
     unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
       Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native head projection"
     return native.setArg 0 (← lowerHead native[0])
@@ -571,6 +575,17 @@ partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef sou
         checkProjectionSubject native.raw[0]
       return native.raw
   | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported postfix head"
+
+partial def lowerNativeIndex (source : Lean.Syntax) (head : Bool) : MacroM Lean.Syntax := do
+  let some arity := PS0.Operators.indexArity? source.getKind
+    | Macro.throwError "PS0V1-INDEX-SHAPE: unsupported native indexed access"
+  unless source.getArgs.size == arity && source[2].isAtom && source[2].getAtomVal == "[" do
+    Macro.throwError "PS0V1-INDEX-SHAPE: unexpected native indexed access"
+  let subject ← if head then lowerHead source[0] else lower `psTerm source[0]
+  let source := (source.setArg 0 subject).setArg 3 (← lower `psTerm source[3])
+  if source.isOfKind `«term__[_]'_» then
+    return source.setArg 5 (← lower `psTerm source[5])
+  return source
 
 partial def lowerCall (head : Lean.Syntax) (args : Array (TSyntax `psCallArg))
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do

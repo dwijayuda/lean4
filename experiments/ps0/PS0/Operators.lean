@@ -16,6 +16,15 @@ def ownedKind : Name := `PS0.Operators.ownedBinary
 def ownedPostfixKind : Name := `PS0.Operators.ownedPostfix
 def bridgeKind : Name := `ps0NativeTermBridge
 
+def indexArity? (kind : Name) : Option Nat :=
+  if kind == `«term__[_]» then some 5
+  else if kind == `«term__[_]'_» then some 6
+  else if kind == `«term__[_]_?» || kind == `«term__[_]_!» then some 7
+  else none
+
+def indexKinds : Array Name :=
+  #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»]
+
 builtin_initialize
   registerBuiltinNodeKind ownedKind
   registerBuiltinNodeKind ownedPostfixKind
@@ -51,7 +60,8 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
     leadingTable, leadingParsers := category.tables.leadingParsers.filter keepLeading}
   let keep := fun (entry : Parser × Nat) =>
     let collected := entry.1.info.collectKinds {}
-    !kinds.any collected.contains && !collected.contains ``Lean.Parser.Term.pipeProj &&
+    !kinds.any collected.contains && !indexKinds.any collected.contains &&
+      !collected.contains ``Lean.Parser.Term.pipeProj &&
       !collected.contains ``Lean.Parser.Term.pipeCompletion
   let mut trailingTable : TokenMap (Parser × Nat) := {}
   for (token, parsers) in category.tables.trailingTable do
@@ -82,7 +92,8 @@ private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx in
   if state.hasError then return state
   let candidates := (indexedParsers ++ category.tables.trailingParsers).filter fun (parser, _) =>
     let collected := parser.info.collectKinds {}
-    kinds.any collected.contains || collected.contains ``Lean.Parser.Term.proj ||
+    kinds.any collected.contains || indexKinds.any collected.contains ||
+      collected.contains ``Lean.Parser.Term.proj ||
       (!projectionOnly && collected.contains ``Lean.Parser.Term.pipeProj)
   if candidates.isEmpty then return initial.mkUnexpectedError "no owned native binary operator"
   let candidates := candidates.map fun (parser, priority) =>
@@ -96,6 +107,10 @@ private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx in
       return parsed.mkUnexpectedError "PS0V1-OP-CHOICE: unsupported native operator alternatives"
     return parsed.popSyntax.pushSyntax <| .node .none ownedKind #[native]
   if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
+    return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
+  if let some arity := indexArity? native.getKind then
+    unless native.getArgs.size == arity do
+      return parsed.mkUnexpectedError "PS0V1-INDEX-SHAPE: unexpected native indexed access"
     return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
   if native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 then
     return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
