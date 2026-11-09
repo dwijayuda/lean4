@@ -562,7 +562,8 @@ partial def lowerNativeLocalId (source : Lean.Syntax) : MacroM Lean.Syntax := do
       source.isOfKind ``Lean.Parser.Term.letIdDeclNoBinders) && source.getArgs.size == 5 do
     Macro.throwError "PS0V1-LOCAL-ID: unexpected native declaration"
   let binders ← lowerLocalTelescope source[1].getArgs
-  let source := source.setArg 1 (source[1].setArgs binders)
+  let source := source.setArg 1
+    (.node (loweringInfo source[1]) source[1].getKind binders)
   let source := source.setArg 2 (← lowerNativeOptionalType source[2])
   let value ← if source.isOfKind ``Lean.Parser.Term.letIdDecl then
       lowerBodyValue source[4]
@@ -585,7 +586,8 @@ partial def lowerNativeRecursiveDeclarations (source : Lean.Syntax) : MacroM Lea
             value[3].isOfKind ``Lean.Parser.Term.matchAlts do
           Macro.throwError "PS0V1-LOCAL-REC: unexpected native recursive value"
         let binders ← lowerLocalTelescope value[1].getArgs
-        let value := value.setArg 1 (value[1].setArgs binders)
+        let value := value.setArg 1
+          (.node (loweringInfo value[1]) value[1].getKind binders)
         let value := value.setArg 2 (← lowerNativeOptionalType value[2])
         let alternatives ← value[3][0].getArgs.mapM fun alternative => do
           unless alternative.isOfKind ``Lean.Parser.Term.matchAlt && alternative.getArgs.size == 4 do
