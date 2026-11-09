@@ -7701,6 +7701,472 @@
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
+  "nativePrattDoQualifiedEvidence": {
+    "source": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
+    "runner": "028dd5bb09e20c4e0c9ca321bae4c00b755aa892",
+    "run": 42575555454,
+    "status": "PASS",
+    "jobs": [
+      {
+        "id": 129022350273,
+        "name": "host-contract",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350489,
+        "name": "compiler-fixtures",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350491,
+        "name": "project-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350504,
+        "name": "proof-linked",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350505,
+        "name": "compiler-prelude",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350591,
+        "name": "compiler-natbasic",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350598,
+        "name": "do-layout",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350603,
+        "name": "operator-baseline",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350658,
+        "name": "compiler-core",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350684,
+        "name": "native-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 129022350724,
+        "name": "compiler-finbasic",
+        "conclusion": "success"
+      }
+    ],
+    "scope": "Finite adapters and whole-module native/PS parity; all eleven qualification jobs pass. This is not complete transformed-corpus or full R2 grammar acceptance.",
+    "actualCompilerDefinitions": 127,
+    "actualCompilerModules": 6,
+    "foundationModules": [
+      {
+        "module": "Init.Prelude",
+        "definitions": 236
+      },
+      {
+        "module": "Init.Core",
+        "definitions": 52
+      },
+      {
+        "module": "Init.Data.Nat.Basic",
+        "definitions": 4
+      },
+      {
+        "module": "Init.Data.Fin.Basic",
+        "definitions": 26
+      }
+    ],
+    "combinedHistoricalActualDefinitions": 445,
+    "combinedHistoricalActualModules": 10,
+    "syntheticFixtures": {
+      "telescopeSignatures": 18,
+      "declarationForms": {
+        "blob": "3761abd09f5c184ed9effb4f4749669bb1ac3039",
+        "definitions": 4,
+        "theorems": 3,
+        "instances": 2,
+        "examples": 2
+      },
+      "doLayout": {
+        "blob": "09c87f1ea65f4907f3b5fbca7c854faabe533933",
+        "definitions": 8
+      }
+    },
+    "changes": [
+      "Native leadingParser and trailingLoop replace precedence probes; only the outer native binary trailing parsers are filtered, preserving leading operands and preventing a raw-success AST leak.",
+      "Native doSeq layout, ID let/bind/assignment parsers, local binder/result/default parsing, nested blocks, doReturn line boundaries and doExpr statement elaboration are reused. Ordinary owned operands lower to native syntax; native syntax data remains fenced.",
+      "Native ellipsis argument nodes are reused with original information; a final positional ellipsis moves across following named arguments for native expandArgs. Native unresolved/nonterminal/repeated ellipsis rejection remains authoritative."
+    ],
+    "artifacts": [
+      {
+        "id": 13655520631,
+        "name": "ps0-external-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "f3b94769d6d70af710a0881f79320ead14e170dc5de90ce97a485244249d9801"
+      },
+      {
+        "id": 13655520424,
+        "name": "ps0-native-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "471501d5a6914fe39d935c4a54228c1504efd5c9a69eba1373338a8ba8b02ae4"
+      },
+      {
+        "id": 13655466602,
+        "name": "ps0-project-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "f96f6803b12e1610efa08f8fff1da7df62dcaf3f3601426d115b4a7a2130c525"
+      },
+      {
+        "id": 13655395951,
+        "name": "ps0-compiler-fixtures-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "f4f4c032bd4638aa7c5c9a96cb074b549229c630ce9684d4297d99970ff279ba"
+      },
+      {
+        "id": 13655361847,
+        "name": "ps0-do-layout-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "ca49d831ea9cb52ad1d257d23c4e285d2641a29390ae2b05686c775d814c3967"
+      },
+      {
+        "id": 13655296057,
+        "name": "ps0-compiler-finbasic-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "9da2799e070a605843fc1a23b41f21794f0deef804bb003f34b546eef9bfe9d5"
+      },
+      {
+        "id": 13655042192,
+        "name": "ps0-compiler-natbasic-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "b614e8063f104ab65ce8bc30ab1d9288391c0595b71f90f0d6821a4e0a31a4a4"
+      },
+      {
+        "id": 13654614837,
+        "name": "ps0-compiler-core-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "a496336445dd4c8ec34b4b5e052d5d9693c0429d490aaeec51005c0d6f1ad062"
+      },
+      {
+        "id": 13654544744,
+        "name": "ps0-compiler-prelude-ec35e2f50009a7b794141fe57c88d990b25f9df3-42575555454",
+        "sha256": "41cabddde4fa841d3f7da346477f94e224e1b679e0a149da3780fea82d9ccbf1"
+      },
+      {
+        "id": 13654369941,
+        "name": "ps0-operator-baseline-42575555454",
+        "sha256": "3ee699ea6f5c5965e04e700081452b81c0429d8575aa6c95d31c10969288b22e"
+      }
+    ],
+    "independent": {
+      "runner": "1daf31e3dbfa9b4e858ee5e3137d0fe4d094a371",
+      "run": 42576671861,
+      "job": 129025824796,
+      "status": "PASS",
+      "workflowConclusion": "failure in other frozen historical inspection jobs; only this exact job is promoted",
+      "artifact": {
+        "id": 13655287803,
+        "sha256": "cb728ac16105a096707b0602c26d95ed6a86197191b17a4d9bfdc54dd635f143"
+      },
+      "actualRehashedOutputFiles": 32,
+      "reports": [
+        {
+          "module": "Lean.Compiler.DeclarationForms",
+          "pinned_blob": "3761abd09f5c184ed9effb4f4749669bb1ac3039",
+          "definitions": 4,
+          "strategies": {
+            "const": 1,
+            "def": 1,
+            "function": 2
+          },
+          "edits": 42,
+          "source_sha256": "a79bce6dfbc24697a420d694507b1f43681db2ebeace76bbf12ab5b1877ebe54",
+          "converted_sha256": "43ec4d661301b8c60140d97a4dd63421f378bfc45d9c588b20396b04acdd91a1",
+          "mapped_census_sha256": "b9a24415669d7d98e122d9562ad2e812cf480312a56ecf1c2b9ca2a50b1a0410",
+          "hashes": {
+            "ir/Lean/Compiler/DeclarationForms.c": "5d7e11adf7656b2daa64d191f23782a4ce5d06f5eb01cba6ec5c6ad2f0f1e159",
+            "lib/lean/Lean/Compiler/DeclarationForms.olean": "2a1f9d698857303ec6d63f36a7ccaa1332ae80d5634cfaa2649db6a41361baf7"
+          }
+        },
+        {
+          "module": "Lean.Compiler.DoLayoutProbe",
+          "pinned_blob": "09c87f1ea65f4907f3b5fbca7c854faabe533933",
+          "definitions": 8,
+          "strategies": {
+            "const": 5,
+            "def": 1,
+            "function": 2
+          },
+          "edits": 50,
+          "source_sha256": "644afda53861fd8b61c38d32168a852933594b3b0196c0e6f383ff593fbbedc4",
+          "converted_sha256": "ee2266490c79e1347eb72566b39b9587e3843cba03c7508a810420bda872ca8a",
+          "mapped_census_sha256": "8798666331f8a8f9978e5734211986f034e5fc94ae307658a256bc0bbdd3bfda",
+          "hashes": {
+            "ir/Lean/Compiler/DoLayoutProbe.c": "d391d37b19052ef8df2399c29ea235b1d61faa78f59f54d3d2ad42afe9ca06ca",
+            "lib/lean/Lean/Compiler/DoLayoutProbe.olean": "33fc5547e1c25f121c708c6131070bcdad029a68816b3ce6be411a2df3553a46"
+          }
+        },
+        {
+          "module": "Init.Data.Fin.Basic",
+          "pinned_blob": "6fee3ab2eaacf1b76de02ea7f7880f29fbac8294",
+          "definitions": 26,
+          "strategies": {
+            "const": 13,
+            "def": 4,
+            "function": 9
+          },
+          "edits": 100,
+          "source_sha256": "bb3d4e46cb40a24f5a09e6e003c76f2b84140a598df81233f0bffe3afe08cbf4",
+          "converted_sha256": "703212ed3421815962922308536832cc2fe1f16b199c62abda1e024667a18a8e",
+          "mapped_census_sha256": "b12f8a0232622e6a7f3cf404ef6712efe7774a7a59f2eb6f161a5667aee29ee0",
+          "hashes": {
+            "ir/Init/Data/Fin/Basic.c": "54d27ad85376bf29c77c6fadd29cf2f2a74491c670afe9215d26fdd575ac5cdc",
+            "lib/lean/Init/Data/Fin/Basic.olean": "8f599a56bbf94a1e62b8403e65742ac650ae7f0555bafd8e9e5ab41f0b124850"
+          }
+        },
+        {
+          "module": "Init.Core",
+          "pinned_blob": "23e784c3806badcabd1e8f19c50946d66bc3c87a",
+          "definitions": 52,
+          "strategies": {
+            "const": 3,
+            "def": 11,
+            "function": 38
+          },
+          "edits": 415,
+          "source_sha256": "264a0b48fedc91fadf55fc5caac8d91003e3908a6e5e42736e2ac8bf1f7cdf99",
+          "converted_sha256": "5b3b1a3fd5999db33cc1c16ea8578b923317b8fce55ba5fca6e7b95637e61a9a",
+          "mapped_census_sha256": "cee040c9fb5664d93385f29c6f524abfabc79c352cf7187daeb01889996266d1",
+          "hashes": {
+            "ir/Init/Core.c": "e62dac2531da1648a0a3c82613e32077f3f815a76eebbcd5fce91287c479cb97",
+            "lib/lean/Init/Core.olean": "701ec5ec5217eaabed28ddd717710d605d516aab274be20c96572600463d7814"
+          }
+        },
+        {
+          "module": "Init.Prelude",
+          "pinned_blob": "58a4c37053f30d37b824190b934e759c16e53d7a",
+          "definitions": 236,
+          "strategies": {
+            "const": 44,
+            "def": 60,
+            "function": 132
+          },
+          "edits": 1159,
+          "source_sha256": "390e6b57ead28cb821a65533b21357f2f02d0a1525602f5a1ce9ee3eeb81fd12",
+          "converted_sha256": "6a526e0231e657f8ba4157c78c78424644478a453a42c21c256577d2a7eb5b27",
+          "mapped_census_sha256": "4b916926f1ae899f5e337b6775e3c4a7bbbe3f93f045266a88a662377555f413",
+          "hashes": {
+            "ir/Init/Prelude.c": "c2dd15475af819d54fe5522abcfe5a8b910df2db100e35627ec0c88ec370df72",
+            "lib/lean/Init/Prelude.olean": "4adc149394f7833f84b2c7f3c96fc9ed4d60f83db84328d68f78a6a037865ffd"
+          }
+        },
+        {
+          "module": "Lean.Compiler.LCNF.Basic",
+          "pinned_blob": "82c8dee0b9d13f09d58a6404dd5d5abf797d236e",
+          "definitions": 110,
+          "strategies": {
+            "const": 20,
+            "def": 6,
+            "function": 84
+          },
+          "edits": 434,
+          "source_sha256": "833cb3c38140ece99ee25149529e568839379193064f5a210f5fb5ffba08df59",
+          "converted_sha256": "fdad2991b72e5e7a63ebaf9dd242f65cde062066eb7d60f0666c64ece79774cc",
+          "mapped_census_sha256": "5a2a3e8e35cde7539a99969bfd0d38e017796590b8bb09feffb021e2d874ef3d",
+          "hashes": {
+            "ir/Lean/Compiler/LCNF/Basic.c": "4576adf24c634cdc34518a3f65ed3ca0ea3dc32027d6633156f6eb0664c95ff2",
+            "lib/lean/Lean/Compiler/LCNF/Basic.olean": "e4fc60bb05756520835af0fc9342f47848b3e3cb2e4444616e8b584432d025f6"
+          }
+        },
+        {
+          "module": "Init.Data.Nat.Basic",
+          "pinned_blob": "9d952894c7d70b881bcb1c82151a1d8889499013",
+          "definitions": 4,
+          "strategies": {
+            "def": 1,
+            "function": 3
+          },
+          "edits": 219,
+          "source_sha256": "e26b5a54eab922f6b650cfe9032fe23172fa8cc0b63c75cff0c8bf99f6175289",
+          "converted_sha256": "1cba45218dbca21c355fb8506d08afe1219d53c4c2afbab671f88d9da24b2a07",
+          "mapped_census_sha256": "c0e203cd74fc03b174d63fd0d82bfc08c0cd5180a94e80de33613a247e1ca409",
+          "hashes": {
+            "ir/Init/Data/Nat/Basic.c": "febabcf79a2653c77d6810ca71320cc53b16c9cfb591bb387f3efd3eca52d1b1",
+            "lib/lean/Init/Data/Nat/Basic.olean": "c37d53a6a956f0e6643439eda339eb8986586d22c7c7f122e8b4bcad34914e5b"
+          }
+        },
+        {
+          "module": "Lean.Compiler.TelescopeProbe",
+          "pinned_blob": "61b472c934e79b57492cf596ede396f7740230db",
+          "definitions": 18,
+          "strategies": {
+            "def": 6,
+            "function": 12
+          },
+          "edits": 29,
+          "source_sha256": "59625e4a509b037e9a4003077e04803f692d098ae28c487a7ba3bb7bda73860c",
+          "converted_sha256": "340d2738edcf91181d3355bac4a2c72107c9b7a6ca7d62e4f9be66c6f03d8e85",
+          "mapped_census_sha256": "cdf721b20c4a9affa4efb10b43ac7bb4cc082db08d418637ef542abaf5333cc6",
+          "hashes": {
+            "ir/Lean/Compiler/TelescopeProbe.c": "6787d16744a58347a1b302b44ee5adf1825095401980b79227f473e6bd844452",
+            "lib/lean/Lean/Compiler/TelescopeProbe.olean": "c3073c1993e616c2e86cdc59cfe4ba9602e88220f8f60308520b6670d3ee56fb"
+          }
+        }
+      ],
+      "doRoles": [
+        {
+          "doElementKinds": [],
+          "doSequenceKind": "missing",
+          "sourceName": "add",
+          "valueRootKind": "PS0.Operators.ownedBinary"
+        },
+        {
+          "doElementKinds": [],
+          "doSequenceKind": "missing",
+          "sourceName": "pureNat",
+          "valueRootKind": "ps0NativeTermBridge"
+        },
+        {
+          "doElementKinds": [],
+          "doSequenceKind": "missing",
+          "sourceName": "observe",
+          "valueRootKind": "ps0HostIf"
+        },
+        {
+          "doElementKinds": [
+            "Lean.Parser.Term.doLet",
+            "Lean.Parser.Term.doLet",
+            "Lean.Parser.Term.doReassign",
+            "Lean.Parser.Term.doLetArrow",
+            "Lean.Parser.Term.doExpr",
+            "Lean.Parser.Term.doReturn"
+          ],
+          "doSequenceKind": "Lean.Parser.Term.doSeqIndent",
+          "sourceName": "layoutValue",
+          "valueRootKind": "ps0HostDo"
+        },
+        {
+          "doElementKinds": [
+            "Lean.Parser.Term.doLetArrow",
+            "Lean.Parser.Term.doReturn"
+          ],
+          "doSequenceKind": "Lean.Parser.Term.doSeqIndent",
+          "sourceName": "nestedValue",
+          "valueRootKind": "ps0HostDo"
+        },
+        {
+          "doElementKinds": [
+            "Lean.Parser.Term.doLet",
+            "Lean.Parser.Term.doReturn"
+          ],
+          "doSequenceKind": "Lean.Parser.Term.doSeqIndent",
+          "sourceName": "localDefault",
+          "valueRootKind": "ps0HostDo"
+        },
+        {
+          "doElementKinds": [
+            "Lean.Parser.Term.doLet",
+            "Lean.Parser.Term.doReturn"
+          ],
+          "doSequenceKind": "Lean.Parser.Term.doSeqIndent",
+          "sourceName": "localShared",
+          "valueRootKind": "ps0HostDo"
+        },
+        {
+          "doElementKinds": [
+            "Lean.Parser.Term.doReturn"
+          ],
+          "doSequenceKind": "Lean.Parser.Term.doSeqIndent",
+          "sourceName": "unitReturn",
+          "valueRootKind": "ps0HostDo"
+        }
+      ],
+      "ellipsis": {
+        "fixture_sha256": "bfe8cbe69009c2819b1685bb4464cac4722b5cf586292178bd05455a21fb4820",
+        "grammar_migration_complete": false,
+        "oracle": "PS0_NATIVE_ELLIPSIS:PASS",
+        "original_native_node_identity": true,
+        "scope": "explicit ellipsis arguments reuse the native argument parser and application elaborator; no new empty-call/default completion rule",
+        "source": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
+        "verified_execution": false
+      },
+      "layout": {
+        "fixture_sha256": "65bf6cac0150fa2b20a40d5c14ace64fd83531e315308dc618c49925c1d1a30c",
+        "grammar_migration_complete": false,
+        "oracle": "PS0_DO_LAYOUT:7:3:3:7",
+        "scope": "native do layout with explicit ordinary let/reassign/bind/return/expression operands; nested native syntax data remains native; not all do/control-flow grammar",
+        "source": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
+        "verified_execution": false
+      },
+      "scope": "Reconstruct source edits, preserve line counts, rehash actual C/public olean bytes, compare standard-family multiplicities and mapped modes, verify owned native do sequence/element kinds, and check retained per-case source hashes/runtime/rejections. Runtime executable bytes are not retained for independent rehash."
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "verifiedPinnedLinuxInputs": {
+    "platform": "Linux x86_64 GitHub Actions",
+    "elan": {
+      "version": "4.2.4",
+      "asset": 529114798,
+      "sha256": "42b94d4244e8353142c456ec0e4ca6528fd898a6c604d4059f494e706e431f63"
+    },
+    "lean": {
+      "version": "4.35.0",
+      "commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "asset": 634574462,
+      "sha256": "7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d"
+    },
+    "method": "Cache compressed release archives, verify SHA-256 on every restore/download, use bounded direct release/API fallback, extract the verified SDK and register it with native elan toolchain link. Verify lean --githash. No input or trust gate is bypassed.",
+    "firstValidatedRunner": "99e0fd21af0fa473e3e23282b0db30a9cbbfacbc",
+    "firstValidatedRun": 42569416393
+  },
+  "nativePrattDoFailureHistory": {
+    "ellipsisFirst": {
+      "source": "c5ef6da24cc32fc813e91e5defca92b4d305d225",
+      "runner": "9b38b87933c326948fa8c9cb07df378dd9166c6e",
+      "run": 42568427758,
+      "fixturesJob": 128999981870,
+      "observed": "Named-argument ellipsis initially failed native expandArgs because ellipsis was not the final native argument. Several other jobs failed before compilation on HTTP 504 dependency downloads."
+    },
+    "layoutBefore": {
+      "source": "1490e1caabadfb01c860f8c8925d73f950036109",
+      "runner": "d6db271f7f555c9ebad301ca6293eca864b8a293",
+      "run": 42567263031,
+      "job": 128996378510,
+      "status": "FAILED"
+    },
+    "layoutFirst": {
+      "source": "46a7edaff7d2c164b320209726d6f6084a7993c1",
+      "runner": "177247236fe1190077941bc09b0c4f5ec3cac83a",
+      "run": 42572407366,
+      "job": 129012537345,
+      "observed": "Native eight-definition DoLayoutProbe parity passed, while the direct PS fixture contained a forbidden spaced Unit call and an incorrectly returned quotation action; the legacy native fixture also had a newly owned call gap. Corrected on later pins."
+    },
+    "inspectionScope": {
+      "source": "c1d813541ac0db3b743a284d531a363d3ae62028",
+      "failedJob": 129005273970,
+      "failedRun": 42570105899,
+      "observed": "24 actual output files were rehashed but the full inspection job failed because per-case ellipsis JSON was not retained. No full job PASS is claimed.",
+      "followup": {
+        "runner": "98a5b9b9b3080b7ea0db23515b3f5b80504c25e2",
+        "run": 42573498441,
+        "job": 129015961796,
+        "status": "PASS",
+        "artifact": {
+          "id": 13653842922,
+          "sha256": "c73b6cdc2cf5377b372a3eb118fd5a4c38f5aec037169ef3d97c6d53d78b0946"
+        },
+        "scope": "24 actual output files plus retained aggregate source pin/runtime/rejection log; no per-case JSON claim. Current ec35 retention corrects that gap."
+      }
+    },
+    "nativeShapeProbe": {
+      "invalidJob": 128997661012,
+      "invalidRun": 42567670097,
+      "reason": "An assertion in a piped shape probe was initially masked; no shape acceptance is taken from that job.",
+      "correctedJob": 129000181208,
+      "correctedRun": 42568490679,
+      "scope": "Actual native AST shapes are printed with pipefail; research evidence only."
+    }
+  },
   "transformedCompilerGraphProgress": {
     "previous": {
       "source": "177212ce1ffc934789b89e6b340b705c4138e079",
@@ -7721,40 +8187,66 @@
       "canonicalFixedPoint": false,
       "grammarMigrationComplete": false
     },
-    "lastFailure": {
-      "source": "b1160cd3a0578c43207fe28084c112df7f09b134",
-      "runner": "8ff569b2787c166cc65941e9164102f13d1ccd37",
-      "run": 42564718574,
-      "job": 128988634710,
-      "status": "FAILED",
-      "moduleCount": 2569,
-      "observed": "Actual transformed Init.Prelude builds. Init.Core.ps:1241:13 and :1245:13 reject spaced parenthesized operands inside projected application heads.",
-      "artifact": {
-        "id": 13651014264,
-        "sha256": "dec10d46f2e0daef5aacfe7ee0978371e336010fa7b9a1a8f60c891812ba71a3"
+    "lastFailures": [
+      {
+        "source": "26f715184f2e307efe8ddaa3682e448e5f44fdd3",
+        "runner": "9eec84b658816cd923b471ace3a5c75d4a5b71f5",
+        "run": 42566045274,
+        "job": 128992665223,
+        "status": "FAILED",
+        "moduleCount": 2569,
+        "observed": "Actual full graph builds transformed Prelude/Core; first error Init.Data.Nat.Basic.ps:1132:46 unexpected '..' in converted call arguments.",
+        "artifact": {
+          "id": 13652290995,
+          "sha256": "299119450ce7ab5ec8bd0c35760605018f0079e20a826f77312d9a726dcee36f"
+        }
       },
-      "grammarMigrationComplete": false
-    },
+      {
+        "source": "c1d813541ac0db3b743a284d531a363d3ae62028",
+        "runner": "c92f156903821841559cf4dcb4df3282459b15f4",
+        "run": 42569993353,
+        "job": 129004914875,
+        "status": "FAILED",
+        "moduleCount": 2569,
+        "observed": "Actual full graph builds transformed Nat.Basic; first error Init.Data.Fin.Basic.ps:256:30 unsupported native binrel/4. Precedence-probe success escaped without a PS bridge when the max-precedence probe rejected a lower-precedence prefix.",
+        "artifact": {
+          "id": 13652999063,
+          "sha256": "6cf89751b78c0a59a0aea59643eec007a8f42adb4298730963d34b4bbc352a45"
+        }
+      }
+    ],
     "current": {
-      "source": "26f715184f2e307efe8ddaa3682e448e5f44fdd3",
-      "runner": "9eec84b658816cd923b471ace3a5c75d4a5b71f5",
-      "run": 42566045274,
+      "source": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
+      "runner": "51fd8ffa5349a819c1ad19bcfb225fd02ea881ed",
+      "run": 42576363997,
+      "job": 129024876695,
       "status": "IN_PROGRESS"
     }
   },
   "currentContinuation": {
     "status": "ACTIVE / NOT COMPLETE",
-    "qualifiedSource": "26f715184f2e307efe8ddaa3682e448e5f44fdd3",
-    "qualifiedRunner": "a106a0553f4a9fc686f9276fd3eb3a63da46332d",
-    "qualifiedRun": 42565478507,
-    "qualifiedJobs": 8,
+    "qualifiedSource": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
+    "qualifiedRunner": "028dd5bb09e20c4e0c9ca321bae4c00b755aa892",
+    "qualifiedRun": 42575555454,
+    "qualifiedJobs": 11,
     "canonicalGraph": {
-      "source": "26f715184f2e307efe8ddaa3682e448e5f44fdd3",
-      "runner": "9eec84b658816cd923b471ace3a5c75d4a5b71f5",
-      "run": 42566045274,
+      "source": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
+      "runner": "51fd8ffa5349a819c1ad19bcfb225fd02ea881ed",
+      "run": 42576363997,
+      "job": 129024876695,
       "status": "IN_PROGRESS"
     },
-    "next": "Inspect the full transformed graph result on qualified source 26f715…; extend the next actual PS operand adapter/planner role without a native-compatible fallback. Complete full graph linking/native parity/canonical fixed point and remaining ordinary grammar/source/IDE fidelity before claiming all-.ps completion.",
+    "next": "Inspect full transformed graph on ec35e2… and fix the next actual role; complete graph build/link/native parity/canonical fixed point and all required ordinary host/source/IDE roles.",
+    "remainingGrammarRoles": [
+      "Control-flow and pattern do operands beyond the qualified ID subset",
+      "Local recursion and remaining local binding roles",
+      "Prefix operators with PS operands and remaining ordinary term roles",
+      "Whitespace applications and all high-postfix contexts",
+      "Nested actions, constructor/record operands and interpolation",
+      "Initializers and other ordinary command operands",
+      "Context-uniform tactic/diagnostic operands",
+      "Original-source diagnostics/IDE fidelity and complete conformance obligations"
+    ],
     "pendingObligations": 240,
     "historicalFinitePass": 2,
     "totalObligations": 242,
