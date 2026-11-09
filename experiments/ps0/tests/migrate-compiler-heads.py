@@ -38,6 +38,25 @@ def original_commands(commands):
         yield from original_commands(command.get('nestedCommands', []))
         previous = command
 
+def owns_postfix(operand):
+    kind, parts = operand['kind'], operand['args']
+    if kind in ['«term__[_]»', "«term__[_]'_»", '«term__[_]_?»', '«term__[_]_!»',
+                'Array.«term__[_:_]»', 'Array.«term__[_:]»', 'Array.«term__[:_]»',
+                'Lean.Parser.Term.pipeProj']:
+        return True
+    if kind == 'Lean.Parser.Term.proj':
+        return owns_postfix(parts[0])
+    if kind == 'Lean.Parser.Term.paren':
+        return owns_postfix(parts[1])
+    if kind == 'Lean.Parser.Term.app':
+        return owns_postfix(parts[0]) or any(owns_postfix(arg) for arg in parts[1]['args'])
+    if kind == 'Lean.Parser.Term.namedArgument':
+        return owns_postfix(parts[3])
+    if operand.get('nativeBinaryOperator', False):
+        return owns_postfix(parts[0]) or owns_postfix(parts[2])
+    return False
+
+
 def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
     # Quotation, DSL and other native syntax remain opaque.
@@ -137,7 +156,7 @@ def single_type_call(operand, role='owned binder type'):
             single_type_call(argument['args'][3], role + ' named argument value')
         else:
             single_type_call(argument, role)
-    if len(edits) == pending and not any(argument['kind'] in [
+    if len(edits) == pending and not owns_postfix(operand) and not any(argument['kind'] in [
             'Lean.Parser.Term.paren', 'Lean.Parser.Term.tuple', 'Lean.Parser.Term.fun',
             'Lean.Parser.Term.do'] for argument in arguments):
         return

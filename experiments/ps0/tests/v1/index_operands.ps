@@ -20,6 +20,8 @@ theorem indexedSignature (l : List Nat) (i : Nat) (h : i < l.length) :
 theorem indexedUnattach {p : Nat → Prop} {l : List { x // p x }}
     (i : Nat) (h : i < l.unattach.length) :
     l.unattach[i] = (l[i]'(by simpa using h)).1 := by exact List.getElem_unattach i h
+theorem optionalIndexedUnattach {p : Nat → Prop} {l : List { x // p x }} (i : Nat) :
+    l.unattach[i]? = l[i]?.map(Subtype.val) := by exact List.getElem?_unattach i
 
 meta partial def originalIndexSyntax? (source : Lean.Syntax) : Option Lean.Syntax :=
   if source.isOfKind `PS0.Operators.ownedPostfix &&

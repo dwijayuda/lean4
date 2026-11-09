@@ -106,7 +106,9 @@ private unsafe def headLeadingImpl : ParserFn :=
 opaque headLeadingFn : ParserFn
 
 @[expose, run_parser_attribute_hooks] def headLeading : Parser :=
-  withFn (fun _ => headLeadingFn) (node headBridgeKind (categoryParser `term maxPrec))
+  checkPrec maxPrec >>
+    withFn (fun _ => headLeadingFn) (node headBridgeKind (categoryParser `term maxPrec)) >>
+    setLhsPrec maxPrec
 
 private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
