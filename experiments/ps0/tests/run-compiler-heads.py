@@ -17,16 +17,20 @@ parser.add_argument('--module', default='Lean.Compiler.ClosedTermCache')
 parser.add_argument('--blob', default='20b7acf5d684789ab52b81dda7def4b19568213c')
 parser.add_argument('--declarations', default='cacheClosedTermName,getClosedTermName?,isClosedTermName')
 parser.add_argument('--owned-value-calls', default='')
+parser.add_argument('--sdk-source', action='store_true')
+parser.add_argument('--roots', default='Lean.Compiler')
+parser.add_argument('--bootstrap', action='store_true')
 args = parser.parse_args()
 work = ROOT / 'build' / ('compiler-heads-' + os.environ['GITHUB_RUN_ID'] + '-' + args.fixture)
 work.mkdir(parents=True, exist_ok=False)
-fixture = ROOT / 'tests/pinned' / (args.fixture + '.lean')
+sysroot = Path(subprocess.check_output(['lean', '--print-prefix'], text=True).strip())
+fixture = (sysroot / 'src/lean' / Path(*args.module.split('.')).with_suffix('.lean')
+           if args.sdk_source else ROOT / 'tests/pinned' / (args.fixture + '.lean'))
 blob = hashlib.sha1(b'blob ' + str(len(fixture.read_bytes())).encode() + b'\0' + fixture.read_bytes()).hexdigest()
 assert blob == args.blob
 module = args.module
 relative_module = Path(*module.split('.'))
 driver = ROOT / '.lake/build/bin/ps0'
-sysroot = Path(subprocess.check_output(['lean', '--print-prefix'], text=True).strip())
 
 def run(args, label, ok=True):
     result = subprocess.run([str(x) for x in args], text=True, stdout=subprocess.PIPE,
@@ -78,11 +82,13 @@ def build(source, directory, grammar=False, ok=True):
         target.parent.mkdir(parents=True, exist_ok=True)
         target.symlink_to(item)
     args = ['lake', '-R', '-f', 'lakefile.project.lean',
-            '-KsourceRoot=' + str(source.parents[len(module.split('.')) - 1]), '-Kroots=Lean.Compiler',
+            '-KsourceRoot=' + str(source.parents[len(module.split('.')) - 1]), '-Kroots=' + args.roots,
             '-KmoduleNames=' + module, '-KrootModule=CompilerHeadProbeMain',
             '-Kdriver=' + str(driver), '-KprojectBuildDir=' + str(directory)]
     if grammar:
         args += ['-KsourceGrammar=true']
+    if args.bootstrap:
+        args += ['-Kbootstrap=true']
     run([*args, 'build', module], directory.name, ok)
 
 baseline, migrated = work / 'baseline', work / 'migrated'

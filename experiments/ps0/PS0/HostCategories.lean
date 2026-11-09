@@ -249,7 +249,11 @@ partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef sou
   | `(psHead| ($body:psTerm)) => do
       return .node (loweringInfo source) ``Lean.Parser.Term.paren
         #[source[0], ← lower `psTerm body.raw, source[2]]
-  | `(psHead| $native:term) => return native.raw
+  | `(psHead| $native:term) => do
+      rejectHostGap native.raw
+      if native.raw.isOfKind ``Lean.Parser.Term.proj then
+        checkProjectionSubject native.raw[0]
+      return native.raw
   | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported postfix head"
 
 partial def lowerCall (head : Lean.Syntax) (args : Array (TSyntax `psCallArg))
