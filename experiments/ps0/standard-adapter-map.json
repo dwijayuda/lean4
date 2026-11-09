@@ -14094,7 +14094,872 @@
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "nativeIndexingFollowup": {
+      "source": "5a5cfe9e35d012c11e735123f941d07a7fdcf85e",
+      "primary": {
+        "runner": "a735f9c84841e83eb2801cd9484f906b0483e3a6",
+        "run": 42630740875,
+        "status": "FAILED",
+        "passed": 30,
+        "total": 32,
+        "jobs": [
+          {
+            "id": 129206063458,
+            "name": "project-build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206063963,
+            "name": "compiler-fixtures",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206063988,
+            "name": "compiler-unless",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064000,
+            "name": "compiler-stream",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064010,
+            "name": "compiler-listattach",
+            "status": "completed",
+            "conclusion": "failure"
+          },
+          {
+            "id": 129206064027,
+            "name": "compiler-extdtreemapbasic",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064031,
+            "name": "compiler-natbasic",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064049,
+            "name": "compiler-grindac",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064074,
+            "name": "compiler-natlinear",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064079,
+            "name": "compiler-prelude",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064099,
+            "name": "compiler-natlemmas",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064152,
+            "name": "compiler-iteratorempty",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064167,
+            "name": "native-build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064171,
+            "name": "compiler-environment",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064175,
+            "name": "compiler-finbasic",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064185,
+            "name": "operator-baseline",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064211,
+            "name": "compiler-persistenthashmap",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064258,
+            "name": "proof-linked",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064264,
+            "name": "compiler-core",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064300,
+            "name": "compiler-options",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064313,
+            "name": "do-layout",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064374,
+            "name": "compiler-signedbitvec",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064376,
+            "name": "host-contract",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064556,
+            "name": "compiler-spredlaws",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064559,
+            "name": "compiler-tzif",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064637,
+            "name": "compiler-nanosecond",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064741,
+            "name": "compiler-associative",
+            "status": "completed",
+            "conclusion": "failure"
+          },
+          {
+            "id": 129206064754,
+            "name": "compiler-arrayperm",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064856,
+            "name": "compiler-initwf",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064913,
+            "name": "compiler-intlinear",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064930,
+            "name": "compiler-rangechar",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129206064943,
+            "name": "compiler-jsonrpc",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ],
+        "artifacts": [
+          {
+            "id": 13682115123,
+            "name": "ps0-external-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 30105,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13682115123",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13682115123/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:07:25Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:07:25Z",
+            "digest": "sha256:fb4274abf3d93e966a67890fdb70ea7325b6d74c9abc9b95f8ed61c811f2001a",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681535031,
+            "name": "ps0-compiler-core-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 1455541,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681535031",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681535031/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:53Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:04:53Z",
+            "digest": "sha256:0b0d6780b9f047a42e773a57f76afc298085360f69b2dfc7b86becf0834c2209",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681490196,
+            "name": "ps0-compiler-fixtures-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 3930442,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681490196",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681490196/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:05:17Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:05:17Z",
+            "digest": "sha256:a5c2a54c6115759ffae38b3d7e373133022dba4e26b0741180e8b43c55161be9",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681407138,
+            "name": "ps0-compiler-associative-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 2980516,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681407138",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681407138/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:15:07Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:15:07Z",
+            "digest": "sha256:f47e2ef54d9aca06b142ddddb5ea3fbb1fcd7c3e9eccd8b3c491c4c0e2cd04ba",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681280046,
+            "name": "ps0-compiler-listattach-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 307747,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681280046",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681280046/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:29Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:29Z",
+            "digest": "sha256:639d806b5a651949fc679270699f7358019544aafe1ebae8d3c07562f8184680",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681225291,
+            "name": "ps0-compiler-initwf-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 275165,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681225291",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681225291/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:54Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:04:54Z",
+            "digest": "sha256:82eda5a96315fd887a3e5e77b826d6ef5e9e08d2e86b106c5ea74484398e2747",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681225208,
+            "name": "ps0-compiler-spredlaws-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 113875,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681225208",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681225208/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:25Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:04:25Z",
+            "digest": "sha256:71193fcc2ac537f175cfc4db4ad83173e1fbe2392155d9f4834d227235971da4",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681121154,
+            "name": "ps0-compiler-jsonrpc-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 632760,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681121154",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681121154/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:41Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:04:41Z",
+            "digest": "sha256:61a4f5c7706ec6a87c47bb0f75d998fccf38fe11df3dbecfb1c6d8c48415e047",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681071549,
+            "name": "ps0-project-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 80915711,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681071549",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681071549/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:06:41Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:06:41Z",
+            "digest": "sha256:3719b100e07a7eef6c98c441fcb2e08101f2f257ee7f263ecdc8aa391b467060",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681021174,
+            "name": "ps0-compiler-prelude-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 2933708,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681021174",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681021174/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:57Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:57Z",
+            "digest": "sha256:f0c7bf1ef6673f8f4be6c3c5ba7dbef2dcbdaebf804611dfc87c544dfed24566",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13681011170,
+            "name": "ps0-compiler-stream-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 119626,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681011170",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681011170/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:22Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:22Z",
+            "digest": "sha256:8d141bfb5a428b99df3d42a6a56117b4a6dbfaad780d3ccb09a37b2c36ebe9ac",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680861270,
+            "name": "ps0-compiler-options-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 370691,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680861270",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680861270/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:01Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:01Z",
+            "digest": "sha256:d3b2999540f3c8910ab35e01b775064b660b00c6447abde1a15f99e5298ac473",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680761714,
+            "name": "ps0-compiler-environment-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 1587644,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680761714",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680761714/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:06:05Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:06:05Z",
+            "digest": "sha256:3800966a994e6ae1e33e7808402358f30775d0afe404bd56b98fb49c14eaa3ae",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680687504,
+            "name": "ps0-compiler-signedbitvec-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 93209,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680687504",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680687504/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:25Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:25Z",
+            "digest": "sha256:1fc4bbd16297f3460063f0dce43a8bda20102464be480e20e0e8a442d30a3f06",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680552845,
+            "name": "ps0-compiler-nanosecond-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 106844,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680552845",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680552845/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:36Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:04:36Z",
+            "digest": "sha256:61900976dd84cf70cf41d7778fce451056ea2a672d19d20a41de28e41dbc8b3a",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680393134,
+            "name": "ps0-compiler-extdtreemapbasic-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 981011,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680393134",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680393134/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:34Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:34Z",
+            "digest": "sha256:233a559e67ffc908558f46d99922e71260f9642b1758c8aa744a013865ba3c27",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680329604,
+            "name": "ps0-compiler-intlinear-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 1335253,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680329604",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680329604/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:06:10Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:06:10Z",
+            "digest": "sha256:db7562f3b5b1e4e45f904b73d968b45771a4a0006c6ef05a7eaef79c14b4aab4",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680329281,
+            "name": "ps0-compiler-natlemmas-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 849986,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680329281",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680329281/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:23Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:04:23Z",
+            "digest": "sha256:acb8b65926439e4cc1ab96ccf50d8df4fc6366e462d2c5ef293b956841aada8e",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680289245,
+            "name": "ps0-compiler-grindac-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 632701,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680289245",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680289245/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:44Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:44Z",
+            "digest": "sha256:33eab70bc6c2e1c6aaf0c9ea342d15a72790f2b3eab6de3c149068890774b75f",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680039856,
+            "name": "ps0-compiler-rangechar-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 41061,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680039856",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680039856/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:55Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:04:55Z",
+            "digest": "sha256:09db5e3583f53a362bf94ff579d018ea8abc967c55ba29175ed213716e149a1e",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13680019658,
+            "name": "ps0-do-layout-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 47923,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680019658",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680019658/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:30Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:30Z",
+            "digest": "sha256:78be8513b3ac9113191bd5cee91bff1bf6624152b26fc952d4fbc60b7994110d",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679979681,
+            "name": "ps0-compiler-finbasic-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 166333,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679979681",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679979681/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:21Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:21Z",
+            "digest": "sha256:49bf9f69143e425bbc7ae7b0af92ce7fdbabe52d0c57431570d677f546298650",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679929223,
+            "name": "ps0-compiler-persistenthashmap-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 509121,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679929223",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679929223/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:12Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:12Z",
+            "digest": "sha256:e7c2cc1e9844b1e8f6db1920d802874b577669fa75901a643e20e0d8621e0a55",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679874897,
+            "name": "ps0-native-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 4134,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679874897",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679874897/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:38Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:38Z",
+            "digest": "sha256:8e622976747b90169c5f9ad939640ce388cb9357bcabcab3212c07bed321e954",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679809751,
+            "name": "ps0-compiler-tzif-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 225160,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679809751",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679809751/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:15Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:15Z",
+            "digest": "sha256:cbfdaae424cc833a0e197dd52927e1562c174f2fdf1cf0a7b913f8c6fe28ead2",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679774843,
+            "name": "ps0-compiler-unless-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 136565,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679774843",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679774843/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:43Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:43Z",
+            "digest": "sha256:6ef7ea13cfd8b461991f3a01b9f181d52a6ab8ad1c65fc12bed960fac62ed28c",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679749862,
+            "name": "ps0-operator-baseline-42630740875",
+            "size_in_bytes": 2299,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679749862",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679749862/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:02:54Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:02:54Z",
+            "digest": "sha256:9f2abe82136348f47d08faa571a6133867f01f1691bcb50e61cc73b8d249431d",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679684470,
+            "name": "ps0-compiler-natbasic-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 495796,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679684470",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679684470/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:23Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:23Z",
+            "digest": "sha256:0147069af5dd3a065995288385afd1cf1ae9d57bb06c57fa4f93f32a5c24615b",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679519586,
+            "name": "ps0-compiler-iteratorempty-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 63919,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679519586",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679519586/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:10Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:10Z",
+            "digest": "sha256:906dc3b5555ef99bca034008a2b8ee9ad42483d28b22d8912cc6dd8fdabaa930",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679424810,
+            "name": "ps0-compiler-arrayperm-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 86623,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679424810",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679424810/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:45Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:04:45Z",
+            "digest": "sha256:3d4b9b2a4e99a0dd07671b0796ea237dc5e08419358175f9a23615564e468693",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          },
+          {
+            "id": 13679424639,
+            "name": "ps0-compiler-natlinear-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+            "size_in_bytes": 444346,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679424639",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679424639/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:03:38Z",
+            "expires_at": "2027-02-07T14:02:05Z",
+            "updated_at": "2026-11-09T14:03:38Z",
+            "digest": "sha256:0496b371ecbe895b778357ea9083709f4b9a00dc1803703cd08ab5a01eccb21c",
+            "workflow_run": {
+              "id": 42630740875,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+            }
+          }
+        ]
+      },
+      "focused": {
+        "runner": "31204d6f348e913a2a9a13a798f21421db2310cf",
+        "run": 42630744978,
+        "job": 129206076588,
+        "status": "PASS",
+        "artifacts": [
+          {
+            "id": 13680986308,
+            "name": "ps0-native-index-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630744978",
+            "size_in_bytes": 10568,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680986308",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680986308/zip",
+            "expired": false,
+            "created_at": "2026-11-09T14:04:30Z",
+            "expires_at": "2027-02-07T14:02:07Z",
+            "updated_at": "2026-11-09T14:04:30Z",
+            "digest": "sha256:9d83383d1de86d16a819127206aa55bdde4da0155c74b879fe5e0425750659d1",
+            "workflow_run": {
+              "id": 42630744978,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-index-operands-20261109",
+              "head_sha": "31204d6f348e913a2a9a13a798f21421db2310cf"
+            }
+          }
+        ],
+        "productionArities": {
+          "«term__[_]»": 4,
+          "«term__[_]'_»": 5,
+          "«term__[_]_?»": 7,
+          "«term__[_]_!»": 7,
+          "Array.«term__[_:_]»": 6,
+          "Array.«term__[_:]»": 5,
+          "Array.«term__[:_]»": 5
+        },
+        "originalTokenRangeAssertions": 7,
+        "oracle": "PS0_INDEX:3:2:3:2:3:2:1:1",
+        "standaloneExecutableBytesRetained": false
+      },
+      "testFirst": {
+        "source": "ec88e67d3d00db8e26d632590edfe79a2361afb8",
+        "runner": "937bcd4b6bbd3648c6afd69ea1320443efa479f2",
+        "run": 42630368802,
+        "job": 129204827514,
+        "status": "FAILED",
+        "reason": "native slice parsers consume bracket continuations before PS indexed access; PS proof/call/slice-bound parsing fails"
+      },
+      "remainingFailures": [
+        {
+          "module": "Init.Data.List.Attach",
+          "job": 129206064010,
+          "line": 696,
+          "reason": "PS0-SOURCE-DECLARATION: standard declaration requires its PS adapter"
+        },
+        {
+          "module": "Std.Data.Internal.List.Associative",
+          "job": 129206064741,
+          "reason": "migrated native Lake build exceeded the 600-second subprocess deadline"
+        }
+      ],
+      "currentCandidate": {
+        "source": "15248108b43b05dc48c5e7e2abc7e1d58a56dbdd",
+        "runner": "50997ed18ac2cc54e7e1d58dbef1d047d1f1add8",
+        "run": 42633626277,
+        "status": "IN_PROGRESS_NOT_QUALIFIED",
+        "changes": "restore native head parsing cache and retain owned declaration failure diagnostic"
+      },
+      "scope": "finite seven-production borrowed native indexing/slicing controls and successful SDK-assisted module targets; failed full primary qualification, no new complete graph or fixed point",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
     "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
@@ -14204,11 +15069,874 @@
     }
   },
   "nativeIndexAdapterCandidate": {
-    "source": "9ca0c09067110fec8efa1702620227eaff393524",
-    "runner": "59694ee53a44d132aca722bfeebf2a6898fdfa68",
-    "run": 42627018468,
-    "status": "PENDING_NOT_QUALIFIED",
-    "scope": "anonymous-section declaration boundary and four borrowed native indexed-access productions with PS subject/index/proof operands",
+    "source": "15248108b43b05dc48c5e7e2abc7e1d58a56dbdd",
+    "runner": "50997ed18ac2cc54e7e1d58dbef1d047d1f1add8",
+    "run": 42633626277,
+    "status": "IN_PROGRESS_NOT_QUALIFIED",
+    "changes": "restore native head parsing cache and retain owned declaration failure diagnostic"
+  },
+  "nativeIndexBracketInterimEvidence": {
+    "source": "5a5cfe9e35d012c11e735123f941d07a7fdcf85e",
+    "primary": {
+      "runner": "a735f9c84841e83eb2801cd9484f906b0483e3a6",
+      "run": 42630740875,
+      "status": "FAILED",
+      "passed": 30,
+      "total": 32,
+      "jobs": [
+        {
+          "id": 129206063458,
+          "name": "project-build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206063963,
+          "name": "compiler-fixtures",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206063988,
+          "name": "compiler-unless",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064000,
+          "name": "compiler-stream",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064010,
+          "name": "compiler-listattach",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 129206064027,
+          "name": "compiler-extdtreemapbasic",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064031,
+          "name": "compiler-natbasic",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064049,
+          "name": "compiler-grindac",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064074,
+          "name": "compiler-natlinear",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064079,
+          "name": "compiler-prelude",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064099,
+          "name": "compiler-natlemmas",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064152,
+          "name": "compiler-iteratorempty",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064167,
+          "name": "native-build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064171,
+          "name": "compiler-environment",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064175,
+          "name": "compiler-finbasic",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064185,
+          "name": "operator-baseline",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064211,
+          "name": "compiler-persistenthashmap",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064258,
+          "name": "proof-linked",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064264,
+          "name": "compiler-core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064300,
+          "name": "compiler-options",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064313,
+          "name": "do-layout",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064374,
+          "name": "compiler-signedbitvec",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064376,
+          "name": "host-contract",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064556,
+          "name": "compiler-spredlaws",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064559,
+          "name": "compiler-tzif",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064637,
+          "name": "compiler-nanosecond",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064741,
+          "name": "compiler-associative",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 129206064754,
+          "name": "compiler-arrayperm",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064856,
+          "name": "compiler-initwf",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064913,
+          "name": "compiler-intlinear",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064930,
+          "name": "compiler-rangechar",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 129206064943,
+          "name": "compiler-jsonrpc",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13682115123,
+          "name": "ps0-external-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 30105,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13682115123",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13682115123/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:07:25Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:07:25Z",
+          "digest": "sha256:fb4274abf3d93e966a67890fdb70ea7325b6d74c9abc9b95f8ed61c811f2001a",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681535031,
+          "name": "ps0-compiler-core-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 1455541,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681535031",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681535031/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:53Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:04:53Z",
+          "digest": "sha256:0b0d6780b9f047a42e773a57f76afc298085360f69b2dfc7b86becf0834c2209",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681490196,
+          "name": "ps0-compiler-fixtures-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 3930442,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681490196",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681490196/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:05:17Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:05:17Z",
+          "digest": "sha256:a5c2a54c6115759ffae38b3d7e373133022dba4e26b0741180e8b43c55161be9",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681407138,
+          "name": "ps0-compiler-associative-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 2980516,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681407138",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681407138/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:15:07Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:15:07Z",
+          "digest": "sha256:f47e2ef54d9aca06b142ddddb5ea3fbb1fcd7c3e9eccd8b3c491c4c0e2cd04ba",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681280046,
+          "name": "ps0-compiler-listattach-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 307747,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681280046",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681280046/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:29Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:29Z",
+          "digest": "sha256:639d806b5a651949fc679270699f7358019544aafe1ebae8d3c07562f8184680",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681225291,
+          "name": "ps0-compiler-initwf-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 275165,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681225291",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681225291/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:54Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:04:54Z",
+          "digest": "sha256:82eda5a96315fd887a3e5e77b826d6ef5e9e08d2e86b106c5ea74484398e2747",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681225208,
+          "name": "ps0-compiler-spredlaws-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 113875,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681225208",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681225208/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:25Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:04:25Z",
+          "digest": "sha256:71193fcc2ac537f175cfc4db4ad83173e1fbe2392155d9f4834d227235971da4",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681121154,
+          "name": "ps0-compiler-jsonrpc-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 632760,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681121154",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681121154/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:41Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:04:41Z",
+          "digest": "sha256:61a4f5c7706ec6a87c47bb0f75d998fccf38fe11df3dbecfb1c6d8c48415e047",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681071549,
+          "name": "ps0-project-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 80915711,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681071549",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681071549/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:06:41Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:06:41Z",
+          "digest": "sha256:3719b100e07a7eef6c98c441fcb2e08101f2f257ee7f263ecdc8aa391b467060",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681021174,
+          "name": "ps0-compiler-prelude-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 2933708,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681021174",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681021174/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:57Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:57Z",
+          "digest": "sha256:f0c7bf1ef6673f8f4be6c3c5ba7dbef2dcbdaebf804611dfc87c544dfed24566",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13681011170,
+          "name": "ps0-compiler-stream-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 119626,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681011170",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13681011170/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:22Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:22Z",
+          "digest": "sha256:8d141bfb5a428b99df3d42a6a56117b4a6dbfaad780d3ccb09a37b2c36ebe9ac",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680861270,
+          "name": "ps0-compiler-options-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 370691,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680861270",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680861270/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:01Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:01Z",
+          "digest": "sha256:d3b2999540f3c8910ab35e01b775064b660b00c6447abde1a15f99e5298ac473",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680761714,
+          "name": "ps0-compiler-environment-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 1587644,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680761714",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680761714/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:06:05Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:06:05Z",
+          "digest": "sha256:3800966a994e6ae1e33e7808402358f30775d0afe404bd56b98fb49c14eaa3ae",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680687504,
+          "name": "ps0-compiler-signedbitvec-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 93209,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680687504",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680687504/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:25Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:25Z",
+          "digest": "sha256:1fc4bbd16297f3460063f0dce43a8bda20102464be480e20e0e8a442d30a3f06",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680552845,
+          "name": "ps0-compiler-nanosecond-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 106844,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680552845",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680552845/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:36Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:04:36Z",
+          "digest": "sha256:61900976dd84cf70cf41d7778fce451056ea2a672d19d20a41de28e41dbc8b3a",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680393134,
+          "name": "ps0-compiler-extdtreemapbasic-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 981011,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680393134",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680393134/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:34Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:34Z",
+          "digest": "sha256:233a559e67ffc908558f46d99922e71260f9642b1758c8aa744a013865ba3c27",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680329604,
+          "name": "ps0-compiler-intlinear-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 1335253,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680329604",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680329604/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:06:10Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:06:10Z",
+          "digest": "sha256:db7562f3b5b1e4e45f904b73d968b45771a4a0006c6ef05a7eaef79c14b4aab4",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680329281,
+          "name": "ps0-compiler-natlemmas-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 849986,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680329281",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680329281/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:23Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:04:23Z",
+          "digest": "sha256:acb8b65926439e4cc1ab96ccf50d8df4fc6366e462d2c5ef293b956841aada8e",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680289245,
+          "name": "ps0-compiler-grindac-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 632701,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680289245",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680289245/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:44Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:44Z",
+          "digest": "sha256:33eab70bc6c2e1c6aaf0c9ea342d15a72790f2b3eab6de3c149068890774b75f",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680039856,
+          "name": "ps0-compiler-rangechar-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 41061,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680039856",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680039856/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:55Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:04:55Z",
+          "digest": "sha256:09db5e3583f53a362bf94ff579d018ea8abc967c55ba29175ed213716e149a1e",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13680019658,
+          "name": "ps0-do-layout-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 47923,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680019658",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680019658/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:30Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:30Z",
+          "digest": "sha256:78be8513b3ac9113191bd5cee91bff1bf6624152b26fc952d4fbc60b7994110d",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679979681,
+          "name": "ps0-compiler-finbasic-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 166333,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679979681",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679979681/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:21Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:21Z",
+          "digest": "sha256:49bf9f69143e425bbc7ae7b0af92ce7fdbabe52d0c57431570d677f546298650",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679929223,
+          "name": "ps0-compiler-persistenthashmap-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 509121,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679929223",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679929223/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:12Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:12Z",
+          "digest": "sha256:e7c2cc1e9844b1e8f6db1920d802874b577669fa75901a643e20e0d8621e0a55",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679874897,
+          "name": "ps0-native-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 4134,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679874897",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679874897/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:38Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:38Z",
+          "digest": "sha256:8e622976747b90169c5f9ad939640ce388cb9357bcabcab3212c07bed321e954",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679809751,
+          "name": "ps0-compiler-tzif-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 225160,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679809751",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679809751/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:15Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:15Z",
+          "digest": "sha256:cbfdaae424cc833a0e197dd52927e1562c174f2fdf1cf0a7b913f8c6fe28ead2",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679774843,
+          "name": "ps0-compiler-unless-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 136565,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679774843",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679774843/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:43Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:43Z",
+          "digest": "sha256:6ef7ea13cfd8b461991f3a01b9f181d52a6ab8ad1c65fc12bed960fac62ed28c",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679749862,
+          "name": "ps0-operator-baseline-42630740875",
+          "size_in_bytes": 2299,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679749862",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679749862/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:02:54Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:02:54Z",
+          "digest": "sha256:9f2abe82136348f47d08faa571a6133867f01f1691bcb50e61cc73b8d249431d",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679684470,
+          "name": "ps0-compiler-natbasic-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 495796,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679684470",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679684470/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:23Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:23Z",
+          "digest": "sha256:0147069af5dd3a065995288385afd1cf1ae9d57bb06c57fa4f93f32a5c24615b",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679519586,
+          "name": "ps0-compiler-iteratorempty-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 63919,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679519586",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679519586/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:10Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:10Z",
+          "digest": "sha256:906dc3b5555ef99bca034008a2b8ee9ad42483d28b22d8912cc6dd8fdabaa930",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679424810,
+          "name": "ps0-compiler-arrayperm-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 86623,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679424810",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679424810/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:45Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:04:45Z",
+          "digest": "sha256:3d4b9b2a4e99a0dd07671b0796ea237dc5e08419358175f9a23615564e468693",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        },
+        {
+          "id": 13679424639,
+          "name": "ps0-compiler-natlinear-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630740875",
+          "size_in_bytes": 444346,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679424639",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13679424639/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:03:38Z",
+          "expires_at": "2027-02-07T14:02:05Z",
+          "updated_at": "2026-11-09T14:03:38Z",
+          "digest": "sha256:0496b371ecbe895b778357ea9083709f4b9a00dc1803703cd08ab5a01eccb21c",
+          "workflow_run": {
+            "id": 42630740875,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-corpus-telescopes-20261109",
+            "head_sha": "a735f9c84841e83eb2801cd9484f906b0483e3a6"
+          }
+        }
+      ]
+    },
+    "focused": {
+      "runner": "31204d6f348e913a2a9a13a798f21421db2310cf",
+      "run": 42630744978,
+      "job": 129206076588,
+      "status": "PASS",
+      "artifacts": [
+        {
+          "id": 13680986308,
+          "name": "ps0-native-index-5a5cfe9e35d012c11e735123f941d07a7fdcf85e-42630744978",
+          "size_in_bytes": 10568,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680986308",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13680986308/zip",
+          "expired": false,
+          "created_at": "2026-11-09T14:04:30Z",
+          "expires_at": "2027-02-07T14:02:07Z",
+          "updated_at": "2026-11-09T14:04:30Z",
+          "digest": "sha256:9d83383d1de86d16a819127206aa55bdde4da0155c74b879fe5e0425750659d1",
+          "workflow_run": {
+            "id": 42630744978,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-index-operands-20261109",
+            "head_sha": "31204d6f348e913a2a9a13a798f21421db2310cf"
+          }
+        }
+      ],
+      "productionArities": {
+        "«term__[_]»": 4,
+        "«term__[_]'_»": 5,
+        "«term__[_]_?»": 7,
+        "«term__[_]_!»": 7,
+        "Array.«term__[_:_]»": 6,
+        "Array.«term__[_:]»": 5,
+        "Array.«term__[:_]»": 5
+      },
+      "originalTokenRangeAssertions": 7,
+      "oracle": "PS0_INDEX:3:2:3:2:3:2:1:1",
+      "standaloneExecutableBytesRetained": false
+    },
+    "testFirst": {
+      "source": "ec88e67d3d00db8e26d632590edfe79a2361afb8",
+      "runner": "937bcd4b6bbd3648c6afd69ea1320443efa479f2",
+      "run": 42630368802,
+      "job": 129204827514,
+      "status": "FAILED",
+      "reason": "native slice parsers consume bracket continuations before PS indexed access; PS proof/call/slice-bound parsing fails"
+    },
+    "remainingFailures": [
+      {
+        "module": "Init.Data.List.Attach",
+        "job": 129206064010,
+        "line": 696,
+        "reason": "PS0-SOURCE-DECLARATION: standard declaration requires its PS adapter"
+      },
+      {
+        "module": "Std.Data.Internal.List.Associative",
+        "job": 129206064741,
+        "reason": "migrated native Lake build exceeded the 600-second subprocess deadline"
+      }
+    ],
+    "currentCandidate": {
+      "source": "15248108b43b05dc48c5e7e2abc7e1d58a56dbdd",
+      "runner": "50997ed18ac2cc54e7e1d58dbef1d047d1f1add8",
+      "run": 42633626277,
+      "status": "IN_PROGRESS_NOT_QUALIFIED",
+      "changes": "restore native head parsing cache and retain owned declaration failure diagnostic"
+    },
+    "scope": "finite seven-production borrowed native indexing/slicing controls and successful SDK-assisted module targets; failed full primary qualification, no new complete graph or fixed point",
     "grammarMigrationComplete": false,
     "verified_execution": false
   }
