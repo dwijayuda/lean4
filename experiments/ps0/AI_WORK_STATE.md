@@ -1,5 +1,14 @@
 # PS0 — AI Work State (9 November 2026)
 
+## 2026-11-09 — full transformed graph eight: four new module boundaries, FAILED
+
+[Run 42576363997 / job 129024876695](https://github.com/dwijayuda/pskernel/actions/runs/42576363997/job/129024876695) is now terminal **FAILED**, at source **ec35e2f50009a7b794141fe57c88d990b25f9df3**, runner **51fd8ffa5349a819c1ad19bcfb225fd02ea881ed**. All **2,569** transformed inputs are prepared; the actual native Lake graph builds **Init.Prelude, Init.Core, Init.Data.Nat.Basic and Init.Data.Fin.Basic**. No complete graph linking/parity/fixed point is claimed. Retained artifact **13656320255**, SHA-256 **4a39e956d3ea706292ff148095baf5718bce05602a575949fbde1a3712350cc7**.
+
+The next primary failures are **Std.Do.SPred.Laws:146:65, 151:64, 156:66** (ordinary curry call gaps); **Init.Data.Nat.Internal.Linear:126:0** and **Init.Grind.AC:70:0** (contextual function alias consumed after an attribute command, followed by missing-definition cascades); and **Std.Data.Iterators.Producers.Monadic.Empty:36:41** (comma in the converted head following an empty structure where block, followed by type/instance cascades). Native source inspection identifies the relevant command and notation boundaries; direct module tests and fixes remain to be done. The contextual-alias boundary explanation is an inference from the original native commands and current diagnostics, not a qualified fix.
+
+Next: inspect the imported SPred binary descriptor/operand ownership and qualify these four exact modules; preserve the R2-owned def form where a native command could absorb a contextual alias, or repair the native boundary adapter while retaining contextual identifiers in DSLs. The **eleven-job finite checkpoint below remains PASS**, and the **32-file independent inspection remains PASS**. The full-graph result is separate. **Goal ACTIVE / NOT COMPLETE; 240 PENDING / two historical finite PASS / 242 obligations.**
+
+
 ## 2026-11-09 — native Pratt, ellipsis and native-layout ID adapters: eleven Linux jobs PASS
 
 Qualified implementation **ec35e2f50009a7b794141fe57c88d990b25f9df3**, runner **028dd5bb09e20c4e0c9ca321bae4c00b755aa892**, [run 42575555454](https://github.com/dwijayuda/pskernel/actions/runs/42575555454): **all eleven jobs PASS** — project **129022350491**, fixtures **129022350489**, layout/local signatures **129022350598**, Fin.Basic **129022350724**, Nat.Basic **129022350591**, Core **129022350658**, Prelude **129022350505**, native build/link/runtime **129022350684**, proof-linked **129022350504**, host **129022350273**, baseline **129022350603**. Native **leadingParser** and **trailingLoop** replace precedence probes; only outer binary trailing parsers are filtered. This fixes a successful raw AST escaping when a max-precedence probe rejected a lower-precedence unary prefix. Original native precedence, leading operands, antiquotations and syntax data remain in native infrastructure; temporary traces are removed.

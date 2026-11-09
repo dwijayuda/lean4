@@ -5774,6 +5774,62 @@
       "status": "IN_PROGRESS"
     }
   },
+  "transformedCompilerGraphEighthAttempt": {
+    "source": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
+    "runner": "51fd8ffa5349a819c1ad19bcfb225fd02ea881ed",
+    "run": 42576363997,
+    "job": 129024876695,
+    "status": "FAILED",
+    "preparedInputs": 2569,
+    "actualObservedBuiltFoundations": [
+      "Init.Prelude",
+      "Init.Core",
+      "Init.Data.Nat.Basic",
+      "Init.Data.Fin.Basic"
+    ],
+    "failures": [
+      {
+        "module": "Std.Do.SPred.Laws",
+        "locations": [
+          "146:65",
+          "151:64",
+          "156:66"
+        ],
+        "error": "PS0V1-CALL-GAP in ordinary SVal.curry operands"
+      },
+      {
+        "module": "Init.Data.Nat.Internal.Linear",
+        "locations": [
+          "126:0",
+          "126:20"
+        ],
+        "error": "Unknown constant function / unexpected '(' after an attribute command; subsequent missing Expr.toPoly errors are cascades"
+      },
+      {
+        "module": "Init.Grind.AC",
+        "locations": [
+          "70:0",
+          "70:20"
+        ],
+        "error": "Unknown constant function / unexpected '(' after an attribute command; subsequent Expr.toSeq' errors are cascades"
+      },
+      {
+        "module": "Std.Data.Iterators.Producers.Monadic.Empty",
+        "locations": [
+          "36:41"
+        ],
+        "error": "Unexpected comma after a converted function head following an empty structure where block; subsequent type/instance errors are cascades"
+      }
+    ],
+    "artifact": {
+      "id": 13656320255,
+      "sha256": "4a39e956d3ea706292ff148095baf5718bce05602a575949fbde1a3712350cc7"
+    },
+    "fullGraphBuild": false,
+    "canonicalFixedPoint": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
   "currentContinuation": {
     "status": "ACTIVE / NOT COMPLETE",
     "qualifiedSource": "ec35e2f50009a7b794141fe57c88d990b25f9df3",
@@ -5785,9 +5841,58 @@
       "runner": "51fd8ffa5349a819c1ad19bcfb225fd02ea881ed",
       "run": 42576363997,
       "job": 129024876695,
-      "status": "IN_PROGRESS"
+      "status": "FAILED",
+      "preparedInputs": 2569,
+      "actualObservedBuiltFoundations": [
+        "Init.Prelude",
+        "Init.Core",
+        "Init.Data.Nat.Basic",
+        "Init.Data.Fin.Basic"
+      ],
+      "failures": [
+        {
+          "module": "Std.Do.SPred.Laws",
+          "locations": [
+            "146:65",
+            "151:64",
+            "156:66"
+          ],
+          "error": "PS0V1-CALL-GAP in ordinary SVal.curry operands"
+        },
+        {
+          "module": "Init.Data.Nat.Internal.Linear",
+          "locations": [
+            "126:0",
+            "126:20"
+          ],
+          "error": "Unknown constant function / unexpected '(' after an attribute command; subsequent missing Expr.toPoly errors are cascades"
+        },
+        {
+          "module": "Init.Grind.AC",
+          "locations": [
+            "70:0",
+            "70:20"
+          ],
+          "error": "Unknown constant function / unexpected '(' after an attribute command; subsequent Expr.toSeq' errors are cascades"
+        },
+        {
+          "module": "Std.Data.Iterators.Producers.Monadic.Empty",
+          "locations": [
+            "36:41"
+          ],
+          "error": "Unexpected comma after a converted function head following an empty structure where block; subsequent type/instance errors are cascades"
+        }
+      ],
+      "artifact": {
+        "id": 13656320255,
+        "sha256": "4a39e956d3ea706292ff148095baf5718bce05602a575949fbde1a3712350cc7"
+      },
+      "fullGraphBuild": false,
+      "canonicalFixedPoint": false,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     },
-    "next": "Inspect full transformed graph on ec35e2… and fix the next actual role; complete graph build/link/native parity/canonical fixed point and all required ordinary host/source/IDE roles.",
+    "next": "Add direct SDK-backed qualification for the four actual failing modules. Inspect imported SPred binary operator ownership; preserve owned def syntax or enforce native command boundaries after greedy attribute/empty-structure commands without reserving contextual alias words inside DSLs. Validate fixes on Linux, then resume full transformed compilation; retain all remaining grammar/source/IDE and canonical fixed-point requirements.",
     "remainingGrammarRoles": [
       "Control-flow and pattern do operands beyond the qualified ID subset",
       "Local recursion and remaining local binding roles",
