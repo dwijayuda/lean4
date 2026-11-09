@@ -34,6 +34,8 @@ prefix = 'function add(x: Nat, y: Nat): Nat := x + y\nabbrev sized (n : Nat) := 
 for name, source, reason in [
     ('body-gap', 'const bad: Nat → Nat := fun (n : Nat) => add (n, 1)', 'PS0V1-CALL-GAP'),
     ('body-order', 'const bad: Nat → Nat := fun (n : Nat) => add(x := n, 1)', 'PS0V1-CALL-ORDER'),
+    ('unicode-body-gap', 'const bad: Nat → Nat := fun n ↦ add (n, 1)', 'PS0V1-CALL-GAP'),
+    ('unicode-body-order', 'const bad: Nat → Nat := λ n ↦ add(x := n, 1)', 'PS0V1-CALL-ORDER'),
     ('type-gap', 'abbrev Small := sized(3)\nconst bad: Small → Nat := fun (n : sized (3)) => n.val', 'PS0V1-CALL-GAP'),
     ('lambda-default', 'const bad: Nat → Nat := fun (n : Nat := 3) => n', None),
     ('projection-subject-gap', 'const bad: Nat := (List.head! ([3])).succ', 'PS0V1-CALL-GAP'),
@@ -45,6 +47,8 @@ for name, source, reason in [
     assert reason is None or reason in diagnostic, (name, reason)
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
+    'fixture_sha256': hashlib.sha256(Path(fixture).read_bytes()).hexdigest(),
+    'original_lambda_and_arrow_token_checks': 2,
     'projection': {
         'source_sha256': hashlib.sha256(Path(projection).read_bytes()).hexdigest(),
         'executable_sha256': hashlib.sha256((work / 'projection-native/SectionProjection').read_bytes()).hexdigest(),

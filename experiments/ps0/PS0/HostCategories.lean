@@ -115,8 +115,9 @@ syntax (name := ps0FunStrict) (priority := high)
 syntax (name := ps0FunInstance) (priority := high)
   "[" Lean.Parser.Term.optIdent psTerm "]" : psFunBinder
 def ps0LambdaToken := Lean.Parser.unicodeSymbol "λ" "fun" (preserveForPP := true)
+def ps0LambdaArrow := Lean.Parser.unicodeSymbol " ↦" " =>" (preserveForPP := true)
 syntax:max (name := ps0HostLambda) (priority := high)
-  ps0LambdaToken psFunBinder+ (":" psTerm)? "=>" psTerm : psTerm
+  ps0LambdaToken psFunBinder+ (":" psTerm)? ps0LambdaArrow psTerm : psTerm
 
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
   ident noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
@@ -224,7 +225,9 @@ partial def lower (category : Name) (source : Lean.Syntax) :
         let binders ← binders.mapM fun binder => lowerFunBinder binder.raw
         let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
         let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
-        return (← `(fun $binders:funBinder* $[: $ty:term]? => $body:term)).raw
+        let native ← `(fun $binders:funBinder* $[: $ty:term]? => $body:term)
+        return .node (loweringInfo source) ``Lean.Parser.Term.fun
+          #[source[0], native.raw[1].setArg 2 source[3]]
     | `(psTerm| by { $[$items:psTactic];* }) => do
         let items ← items.mapM fun item => do
           return (⟨← lower `psTactic item.raw⟩ : TSyntax `tactic)

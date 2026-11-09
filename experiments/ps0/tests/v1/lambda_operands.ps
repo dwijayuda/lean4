@@ -15,6 +15,9 @@ const pairSum: Nat × Nat → Nat := fun (a, b) => add(a, b)
 const unitValue: Unit → Nat := fun () => add(1, 2)
 const annotated: Nat → Nat := fun n : Nat => add(n, 1)
 const unicodeLambda: Nat → Nat := λ (n : Nat) => add(n, 1)
+const unicodeArrow: Nat → Nat := fun n ↦ add(n, 1)
+const bothUnicode: Nat → Nat := λ n ↦ add(n, 1)
+const unicodeHigher: Nat := (fun f ↦ f(2))((fun n ↦ add(n, 1)))
 
 const singleResult: Nat := single(2)
 const groupedResult: Nat := grouped(1, 2)
@@ -34,6 +37,21 @@ example : pairResult = 3 := by rfl
 example : unitResult = 3 := by rfl
 example : annotatedResult = 3 := by rfl
 example : unicodeResult = 3 := by rfl
+example : unicodeArrow(2) = 3 := by rfl
+example : bothUnicode(2) = 3 := by rfl
+example : unicodeHigher = 3 := by rfl
+
+macro "lambdaArrowOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless e.raw.isOfKind ``ps0HostLambda &&
+      lowered.isOfKind ``Lean.Parser.Term.fun &&
+      lowered[1].isOfKind ``Lean.Parser.Term.basicFun &&
+      e.raw.getRange?.isSome && lowered.getRange? == e.raw.getRange? &&
+      lowered[0].eqWithInfo e.raw[0] && lowered[1][2].eqWithInfo e.raw[3] do
+    Lean.Macro.throwError "PS0_LAMBDA_ARROW_ORIGIN"
+  `(True)
+example : lambdaArrowOrigin fun n ↦ add(n, 1) := by trivial
+example : lambdaArrowOrigin λ n => add(n, 1) := by trivial
 
 meta def nativeLambdaQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| fun (n : Nat) => add (n, 1))
