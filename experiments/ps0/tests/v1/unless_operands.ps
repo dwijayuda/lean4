@@ -19,6 +19,13 @@ function early(n: Nat): IO Nat := do
 const termValue: IO Unit := unless below(add(1, 2)) do
   observe(add(1, 2))
 
+function patternValue(n: Nat): IO Nat := do
+  let some value ← pure(if below(n) then some n else none)
+    | return add(n, 1)
+  unless below(add(value, 1)) do
+    return add(value, 10)
+  return add(value, 20)
+
 macro "unlessOrigin " e:psTerm : term => do
   let lowered ← PS0.Syntax.lower `psTerm e.raw
   unless e.raw.isOfKind ``Lean.Parser.Term.termUnless &&
@@ -50,5 +57,8 @@ def main : IO Unit := do
   let low ← early(0)
   let high ← early(3)
   let native ← nativeValue
+  let patternLow ← patternValue(0)
+  let patternNone ← patternValue(3)
+  let patternHigh ← patternValue(2)
   termValue
-  IO.println s!"PS0_UNLESS:{body}:{low}:{high}:{native}"
+  IO.println s!"PS0_UNLESS:{body}:{low}:{high}:{native}:{patternLow}:{patternNone}:{patternHigh}"

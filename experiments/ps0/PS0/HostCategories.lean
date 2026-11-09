@@ -54,6 +54,9 @@ private def letPrefix : Parser :=
   leadingNode ``Lean.Parser.Term.doLetArrow maxPrec <| withPosition <|
     letPrefix >> operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.doIdDecl
 
+@[run_parser_attribute_hooks] def patternBindElem : Parser :=
+  operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doLetArrow
+
 @[run_parser_attribute_hooks] def reassignElem : Parser :=
   leadingNode ``Lean.Parser.Term.doReassign maxPrec <|
     Lean.Parser.Term.notFollowedByRedefinedTermToken >>
@@ -87,6 +90,8 @@ def ps0NativeDoExpression : Lean.Parser.Parser := PS0.DoLayout.expressionElem
 def ps0NativeDoLet : Lean.Parser.Parser := PS0.DoLayout.letElem
 @[psDoElem_parser 20000]
 def ps0NativeDoBind : Lean.Parser.Parser := PS0.DoLayout.bindElem
+@[psDoElem_parser 10000]
+def ps0NativeDoPatternBind : Lean.Parser.Parser := PS0.DoLayout.patternBindElem
 @[psDoElem_parser 20000]
 def ps0NativeDoReassign : Lean.Parser.Parser := PS0.DoLayout.reassignElem
 @[psDoElem_parser 20000]
@@ -276,8 +281,11 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
     unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-ASSIGN: unexpected native ID assignment"
     return source.setArg 0 (← lowerNativeLocalId source[0])
   if source.isOfKind ``Lean.Parser.Term.doLetArrow then
+    unless source.getArgs.size == 4 do Macro.throwError "PS0V1-DO-BIND: unexpected native binding"
     let decl := source[3]
-    unless source.getArgs.size == 4 && decl.isOfKind ``Lean.Parser.Term.doIdDecl && decl.getArgs.size == 4 do
+    if decl.isOfKind ``Lean.Parser.Term.doPatDecl then
+      return source.setArg 3 (← lowerNativePatternBind decl)
+    unless decl.isOfKind ``Lean.Parser.Term.doIdDecl && decl.getArgs.size == 4 do
       Macro.throwError "PS0V1-DO-BIND: unexpected native ID binding"
     let decl := decl.setArg 1 (← lowerNativeOptionalType decl[1])
     return source.setArg 3 (decl.setArg 3 (← lowerDoElem decl[3]))
@@ -331,6 +339,19 @@ partial def lowerNativeDoSequence (native : Lean.Syntax) : MacroM Lean.Syntax :=
       Macro.throwError "PS0V1-DO-LAYOUT: unexpected native sequence item"
     return item.setArg 0 (← lowerDoElem item[0])
   return native.setArg index (native[index].setArgs items)
+
+partial def lowerNativePatternBind (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.getArgs.size == 5 do
+    Macro.throwError "PS0V1-DO-PATTERN-BIND: unexpected native pattern binding"
+  let source := source.setArg 3 (← lowerDoElem source[3])
+  let branches := source[4]
+  if branches.getArgs.isEmpty then return source
+  unless branches.getArgs.size == 3 && branches[2].getArgs.size <= 1 do
+    Macro.throwError "PS0V1-DO-PATTERN-BRANCHES: unexpected native fallback/continuation"
+  let branches := branches.setArg 1 (← lowerNativeDoSequence branches[1])
+  let branches ← if branches[2].getArgs.isEmpty then pure branches else
+    pure <| branches.setArg 2 (branches[2].setArg 0 (← lowerNativeDoSequence branches[2][0]))
+  return source.setArg 4 branches
 
 partial def lowerNativeUnless (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   unless source.getArgs.size == 4 && source[0].isAtom && source[0].getAtomVal == "unless" &&

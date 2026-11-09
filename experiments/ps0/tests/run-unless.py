@@ -24,7 +24,7 @@ def run(args, label, ok=True):
 fixture = Path('tests/v1/unless_operands.ps')
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'UnlessOperands', work / 'native'], 'native')
-oracle = 'PS0_UNLESS:2:20:13:3'
+oracle = 'PS0_UNLESS:2:20:13:3:20:4:12'
 runtime = run([work / 'native/UnlessOperands'], 'runtime')
 assert oracle in runtime and runtime.count('PS0_UNLESS_BODY:3') == 1
 prefix = ('function add(x: Nat, y: Nat): Nat := x + y\n'
@@ -36,6 +36,9 @@ for name, body, reason in [
     ('body-order', '  unless below(3) do\n    return add(x := 1, 2)\n  return 2', 'PS0V1-CALL-ORDER'),
     ('condition-type', '  unless add(1, 2) do\n    observe(1)\n  return 2', None),
     ('empty-body', '  unless below(3) do', None),
+    ('pattern-value-gap', '  let some n ← pure ((some 3 : Option Nat))\n    | return 0\n  return n', 'PS0V1-CALL-GAP'),
+    ('pattern-fallback-gap', '  let some n ← pure((some 3 : Option Nat))\n    | return add (1, 2)\n  return n', 'PS0V1-CALL-GAP'),
+    ('pattern-continuation-gap', '  let some n ← pure((some 3 : Option Nat))\n    | return 0\n  return add (n, 2)', 'PS0V1-CALL-GAP'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + 'const bad: IO Nat := do\n' + body + '\n')
@@ -53,7 +56,7 @@ for name, expression, reason in [
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
     'original_condition_block_token_ranges': True,
     'native_quotation_and_explicit_doSeq_ownership': True,
-    'scope': 'native doUnless and termUnless ordinary condition and sequence operands; native control elaboration, layout and forbidden-do boundary; not all control grammar',
+    'scope': 'native doUnless/termUnless condition and sequence operands and native pattern-binding value/fallback/continuation do elements; pattern and optional native type remain unchanged; not all control/pattern grammar',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_NATIVE_UNLESS: PASS', flush=True)

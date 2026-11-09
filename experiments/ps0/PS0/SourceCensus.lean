@@ -67,6 +67,34 @@ private partial def ownedOperators (source : Syntax) : Array Name := Id.run do
   unless containers.contains source.getKind do return #[]
   return source.getArgs.foldl (fun kinds arg => kinds ++ ownedOperators arg) #[]
 
+private partial def ownedDoNodes (source : Syntax) : Array Syntax := Id.run do
+  if source.isOfKind `ps0HostDo then return ownedDoNodes source[1]
+  if source.isOfKind `ps0NativeLayoutDoSeq then return ownedDoNodes source[0]
+  if source.isOfKind ``Lean.Parser.Term.doSeqItem then return ownedDoNodes source[0]
+  if source.isOfKind ``Lean.Parser.Term.doSeqIndent || source.isOfKind ``Lean.Parser.Term.doSeqBracketed then
+    let index := if source.isOfKind ``Lean.Parser.Term.doSeqIndent then 0 else 1
+    return source[index].getArgs.foldl (fun nodes item => nodes ++ ownedDoNodes item) #[]
+  let known := #[``Lean.Parser.Term.doLet, ``Lean.Parser.Term.doLetArrow,
+    ``Lean.Parser.Term.doReassign, ``Lean.Parser.Term.doReturn, ``Lean.Parser.Term.doExpr,
+    ``Lean.Parser.Term.doNested, ``Lean.Parser.Term.doUnless]
+  unless known.contains source.getKind do return #[]
+  let mut nodes := #[source]
+  if source.isOfKind ``Lean.Parser.Term.doUnless then
+    nodes := nodes ++ ownedDoNodes source[3]
+  else if source.isOfKind ``Lean.Parser.Term.doNested then
+    nodes := nodes ++ ownedDoNodes source[1]
+  else if source.isOfKind ``Lean.Parser.Term.doExpr then
+    nodes := nodes ++ ownedDoNodes source[0]
+  else if source.isOfKind ``Lean.Parser.Term.doLetArrow then
+    let decl := source[3]
+    if decl.isOfKind ``Lean.Parser.Term.doIdDecl || decl.isOfKind ``Lean.Parser.Term.doPatDecl then
+      nodes := nodes ++ ownedDoNodes decl[3]
+    if decl.isOfKind ``Lean.Parser.Term.doPatDecl && !decl[4].getArgs.isEmpty then
+      nodes := nodes ++ ownedDoNodes decl[4][1]
+      if !decl[4][2].getArgs.isEmpty then
+        nodes := nodes ++ ownedDoNodes decl[4][2][0]
+  return nodes
+
 private def declaration (operators : Array Name) (source : Syntax) : Json := Id.run do
   let kind := source.getKind
   let mapped := #[
@@ -90,7 +118,10 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       value[1][0] else Syntax.missing
     let doElements := if doSequence.isOfKind ``Lean.Parser.Term.doSeqIndent then doSequence[0].getArgs
       else if doSequence.isOfKind ``Lean.Parser.Term.doSeqBracketed then doSequence[1].getArgs else #[]
-    let unlessElements := doElements.filter (fun item => item[0].isOfKind ``Lean.Parser.Term.doUnless)
+    let ownedDoElements := ownedDoNodes doSequence
+    let unlessElements := ownedDoElements.filter (·.isOfKind ``Lean.Parser.Term.doUnless)
+    let patternBindings := ownedDoElements.filter fun item => item.isOfKind ``Lean.Parser.Term.doLetArrow &&
+      item[3].isOfKind ``Lean.Parser.Term.doPatDecl
     let tail := if hasTail then declValue.getArgs.back![0] else Syntax.missing
     let equationBodies := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclEqns then
       declValue[0][0].getArgs.map (fun alt => alt[3].getKind.toString) else #[]
@@ -102,8 +133,10 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("valueRootKind", toJson value.getKind.toString),
       ("doSequenceKind", toJson doSequence.getKind.toString),
       ("doElementKinds", toJson (doElements.map (fun item => item[0].getKind.toString))),
-      ("doUnlessConditionKinds", toJson (unlessElements.map (fun item => item[0][1].getKind.toString))),
-      ("doUnlessBlockKinds", toJson (unlessElements.map (fun item => item[0][3].getKind.toString))),
+      ("ownedDoElementKinds", toJson (ownedDoElements.map (fun item => item.getKind.toString))),
+      ("doPatternBindingCount", toJson patternBindings.size),
+      ("doUnlessConditionKinds", toJson (unlessElements.map (fun item => item[1].getKind.toString))),
+      ("doUnlessBlockKinds", toJson (unlessElements.map (fun item => item[3].getKind.toString))),
       ("termUnlessConditionKind", toJson (if value.isOfKind ``Lean.Parser.Term.termUnless then
         value[1].getKind.toString else "")),
       ("ownedValueCall", toJson (value.isOfKind `ps0HostAdjacentCall ||

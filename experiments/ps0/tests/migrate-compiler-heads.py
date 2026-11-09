@@ -186,6 +186,16 @@ def do_element(element):
             assert len(declaration['args']) == 4
             optional_local_type(declaration['args'][1], 'owned binding type')
             do_element(declaration['args'][3])
+        elif declaration['kind'] == 'Lean.Parser.Term.doPatDecl':
+            binding = declaration['args']
+            assert len(binding) == 5
+            do_element(binding[3])
+            branches = binding[4]['args']
+            if branches:
+                assert len(branches) == 3 and len(branches[2]['args']) <= 1
+                do_sequence(branches[1])
+                if branches[2]['args']:
+                    do_sequence(branches[2]['args'][0])
     # Native patterns, registered DSL elements and unsupported control operands
     # retain their independent parser ownership.
 

@@ -188,12 +188,13 @@ if args.fixture == 'DoLayoutProbe':
 if args.fixture in ['UnlessProbe', 'InlineAttrs']:
     name = 'bodyValue' if args.fixture == 'UnlessProbe' else 'isValidMacroInline'
     declaration = next(d for d in declarations if d['sourceName'] == name)
-    assert 'Lean.Parser.Term.doUnless' in declaration['doElementKinds'], declaration
+    assert 'Lean.Parser.Term.doUnless' in declaration['ownedDoElementKinds'], declaration
     if args.fixture == 'UnlessProbe':
         assert declaration['doUnlessConditionKinds'] == ['ps0HostAdjacentCall', 'ps0HostAdjacentCall'], declaration
         assert declaration['doUnlessBlockKinds'] == ['Lean.Parser.Term.doSeqIndent', 'Lean.Parser.Term.doSeqIndent'], declaration
         assert next(d for d in declarations if d['sourceName'] == 'termValue')['valueRootKind'] == 'Lean.Parser.Term.termUnless'
     else:
+        assert declaration['doPatternBindingCount'] == 1, declaration
         assert 'PS0.Operators.ownedBinary' in declaration['doUnlessConditionKinds'], declaration
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
@@ -207,7 +208,7 @@ if args.fixture in ['UnlessProbe', 'InlineAttrs']:
     'owned_value_calls': owned_value_calls,
     'non_definition_source_roles': [{key: d.get(key) for key in ['sourceName', 'production', 'mode', 'declarationValueKind', 'equationBodyKinds', 'whereFieldCount']}
                                     for d in declarations if d['production'] in family_productions.values()],
-    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds', 'doSequenceKind', 'doElementKinds', 'doUnlessConditionKinds', 'doUnlessBlockKinds', 'termUnlessConditionKind']}
+    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds', 'doSequenceKind', 'doElementKinds', 'ownedDoElementKinds', 'doPatternBindingCount', 'doUnlessConditionKinds', 'doUnlessBlockKinds', 'termUnlessConditionKind']}
                             for d in declarations if d['sourceName'] in plan['declarations']],
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',
     'scope': 'real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration',
