@@ -478,78 +478,13 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     if #[``Lean.Parser.Term.tuple, `«term[_]», `«term#[_,]», `termS!_,
         ``Lean.Parser.Term.«forall», `termIfLet].contains source.getKind then
       return ← lowerAggregateValue source
-    if source.isOfKind `termDepIfThenElse then
-      unless source.getArgs.size == 8 do Macro.throwError "PS0V1-DEPENDENT-IF: unexpected native condition"
-      let source := source.setArg 3 (← lower `psTerm source[3])
-      let source := source.setArg 5 (← lower `psTerm source[5])
-      return source.setArg 7 (← lower `psTerm source[7])
-    if source.isOfKind ``Lean.Parser.Term.typeAscription then
-      unless source.getArgs.size == 5 && source[3].getArgs.size <= 1 do
-        Macro.throwError "PS0V1-ASCRIPTION: unexpected native value/type roles"
-      let source := source.setArg 1 (← lower `psTerm source[1])
-      if source[3].getArgs.isEmpty then return source
-      return source.setArg 3 (source[3].setArg 0 (← lower `psTerm source[3][0]))
-    if source.isOfKind ``Lean.Parser.Term.byTactic then
-      unless source.getArgs.size == 2 do Macro.throwError "PS0V1-BY: unexpected native tactic term"
-      return source.setArg 1 (← lowerNativeTacticSequence source[1])
-    if source.isOfKind ``Lean.Parser.Term.structInst then
-      return ← lowerNativeRecord source
-    if source.isOfKind ``Lean.Parser.Term.«match» then
-      return ← lowerNativeMatch source
-    if source.isOfKind ``Lean.Parser.Term.«fun» && source.getArgs.size == 2 &&
-        source[1].isOfKind ``Lean.Parser.Term.matchAlts then
-      return source.setArg 1 (← lowerNativeMatchAlternatives source[1])
-    if source.isOfKind ``Lean.Parser.Term.«let» then
-      unless source.getArgs.size == 5 && source[2].isOfKind ``Lean.Parser.Term.letDecl &&
-          source[2].getArgs.size == 1 do
-        Macro.throwError "PS0V1-LOCAL-LET: unexpected native term shape"
-      let declaration := source[2][0]
-      let declaration ← if declaration.isOfKind ``Lean.Parser.Term.letPatDecl then do
-          unless declaration.getArgs.size == 5 do Macro.throwError "PS0V1-PATTERN-LET: unexpected native pattern/value roles"
-          let declaration := declaration.setArg 2 (← lowerNativeOptionalType declaration[2])
-          pure <| declaration.setArg 4 (← lower `psTerm declaration[4])
-        else lowerNativeLocalId declaration
-      let source := source.setArg 2 (source[2].setArg 0 declaration)
-      return source.setArg 4 (← lower `psTerm source[4])
-    if source.isOfKind ``Lean.Parser.Term.letrec then
-      unless source.getArgs.size == 4 do
-        Macro.throwError "PS0V1-LOCAL-REC: unexpected native term shape"
-      let source := source.setArg 1 (← lowerNativeRecursiveDeclarations source[1])
-      return source.setArg 3 (← lower `psTerm source[3])
-    if source.isOfKind ``Lean.Parser.Term.termUnless then
-      return ← lowerNativeUnless source
-    if source.isOfKind ``ps0NativeTermBridge then
-      let native := source[0]
-      rejectHostGap native
-      if native.isOfKind ``Lean.Parser.Term.proj then
-        checkProjectionSubject native[0]
-      return native
-    if source.isOfKind `PS0.Operators.ownedBinary then
-      let native := source[0]
-      if native.isOfKind choiceKind then
-        let alternatives ← native.getArgs.mapM fun alternative =>
-          lower `psTerm (.node .none `PS0.Operators.ownedBinary #[alternative])
-        return native.setArgs alternatives
-      unless native.getArgs.size == 3 do Macro.throwError "PS0V1-OP-LOWER: invalid owned operator"
-      let lhs ← lower `psTerm native[0]
-      let rhs ← lower `psTerm native[2]
-      return (native.setArg 0 lhs).setArg 2 rhs
-    if source.isOfKind `PS0.Operators.ownedPostfix then
-      let native := source[0]
-      if (PS0.Operators.indexArity? native.getKind).isSome then
-        return ← lowerNativeIndex native false
-      if (PS0.Operators.sliceShape? native.getKind).isSome then
-        return ← lowerNativeSlice native false
-      if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
-        let arguments ← native[4].getArgs.mapM fun argument => do
-          if argument.isOfKind ``Lean.Parser.Term.ellipsis then return argument
-          if argument.isOfKind ``Lean.Parser.Term.namedArgument then
-            return argument.setArg 3 (← lower `psTerm argument[3])
-          return ← lower `psTerm argument
-        return (native.setArg 0 (← lower `psTerm native[0])).setArg 4 (native[4].setArgs arguments)
-      unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
-        Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native projection"
-      return native.setArg 0 (← lower `psTerm native[0])
+    if #[`termDepIfThenElse, ``Lean.Parser.Term.typeAscription,
+        ``Lean.Parser.Term.byTactic, ``Lean.Parser.Term.structInst, ``Lean.Parser.Term.«match»,
+        ``Lean.Parser.Term.«let», ``Lean.Parser.Term.letrec, ``Lean.Parser.Term.termUnless,
+        ``ps0NativeTermBridge, `PS0.Operators.ownedBinary, `PS0.Operators.ownedPostfix].contains source.getKind ||
+        (source.isOfKind ``Lean.Parser.Term.«fun» && source.getArgs.size == 2 &&
+          source[1].isOfKind ``Lean.Parser.Term.matchAlts) then
+      return ← lowerBorrowedTerm source
     match source with
     | `(psTerm| $head:ident($[$args:psCallArg],*)) => lowerCall head.raw args source
     | `(psTerm| $head:psHead) => lowerHead head.raw
@@ -622,6 +557,81 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | `(psDoSeq| $native:doSeq) => return native.raw
     | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoSeq"
   else Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}"
+
+partial def lowerBorrowedTerm (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind `termDepIfThenElse then
+    unless source.getArgs.size == 8 do Macro.throwError "PS0V1-DEPENDENT-IF: unexpected native condition"
+    let source := source.setArg 3 (← lower `psTerm source[3])
+    let source := source.setArg 5 (← lower `psTerm source[5])
+    return source.setArg 7 (← lower `psTerm source[7])
+  if source.isOfKind ``Lean.Parser.Term.typeAscription then
+    unless source.getArgs.size == 5 && source[3].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-ASCRIPTION: unexpected native value/type roles"
+    let source := source.setArg 1 (← lower `psTerm source[1])
+    if source[3].getArgs.isEmpty then return source
+    return source.setArg 3 (source[3].setArg 0 (← lower `psTerm source[3][0]))
+  if source.isOfKind ``Lean.Parser.Term.byTactic then
+    unless source.getArgs.size == 2 do Macro.throwError "PS0V1-BY: unexpected native tactic term"
+    return source.setArg 1 (← lowerNativeTacticSequence source[1])
+  if source.isOfKind ``Lean.Parser.Term.structInst then
+    return ← lowerNativeRecord source
+  if source.isOfKind ``Lean.Parser.Term.«match» then
+    return ← lowerNativeMatch source
+  if source.isOfKind ``Lean.Parser.Term.«fun» && source.getArgs.size == 2 &&
+      source[1].isOfKind ``Lean.Parser.Term.matchAlts then
+    return source.setArg 1 (← lowerNativeMatchAlternatives source[1])
+  if source.isOfKind ``Lean.Parser.Term.«let» then
+    unless source.getArgs.size == 5 && source[2].isOfKind ``Lean.Parser.Term.letDecl &&
+        source[2].getArgs.size == 1 do
+      Macro.throwError "PS0V1-LOCAL-LET: unexpected native term shape"
+    let declaration := source[2][0]
+    let declaration ← if declaration.isOfKind ``Lean.Parser.Term.letPatDecl then do
+        unless declaration.getArgs.size == 5 do Macro.throwError "PS0V1-PATTERN-LET: unexpected native pattern/value roles"
+        let declaration := declaration.setArg 2 (← lowerNativeOptionalType declaration[2])
+        pure <| declaration.setArg 4 (← lower `psTerm declaration[4])
+      else lowerNativeLocalId declaration
+    let source := source.setArg 2 (source[2].setArg 0 declaration)
+    return source.setArg 4 (← lower `psTerm source[4])
+  if source.isOfKind ``Lean.Parser.Term.letrec then
+    unless source.getArgs.size == 4 do
+      Macro.throwError "PS0V1-LOCAL-REC: unexpected native term shape"
+    let source := source.setArg 1 (← lowerNativeRecursiveDeclarations source[1])
+    return source.setArg 3 (← lower `psTerm source[3])
+  if source.isOfKind ``Lean.Parser.Term.termUnless then
+    return ← lowerNativeUnless source
+  if source.isOfKind ``ps0NativeTermBridge then
+    let native := source[0]
+    rejectHostGap native
+    if native.isOfKind ``Lean.Parser.Term.proj then
+      checkProjectionSubject native[0]
+    return native
+  if source.isOfKind `PS0.Operators.ownedBinary then
+    let native := source[0]
+    if native.isOfKind choiceKind then
+      let alternatives ← native.getArgs.mapM fun alternative =>
+        lower `psTerm (.node .none `PS0.Operators.ownedBinary #[alternative])
+      return native.setArgs alternatives
+    unless native.getArgs.size == 3 do Macro.throwError "PS0V1-OP-LOWER: invalid owned operator"
+    let lhs ← lower `psTerm native[0]
+    let rhs ← lower `psTerm native[2]
+    return (native.setArg 0 lhs).setArg 2 rhs
+  if source.isOfKind `PS0.Operators.ownedPostfix then
+    let native := source[0]
+    if (PS0.Operators.indexArity? native.getKind).isSome then
+      return ← lowerNativeIndex native false
+    if (PS0.Operators.sliceShape? native.getKind).isSome then
+      return ← lowerNativeSlice native false
+    if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
+      let arguments ← native[4].getArgs.mapM fun argument => do
+        if argument.isOfKind ``Lean.Parser.Term.ellipsis then return argument
+        if argument.isOfKind ``Lean.Parser.Term.namedArgument then
+          return argument.setArg 3 (← lower `psTerm argument[3])
+        return ← lower `psTerm argument
+      return (native.setArg 0 (← lower `psTerm native[0])).setArg 4 (native[4].setArgs arguments)
+    unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
+      Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native projection"
+    return native.setArg 0 (← lower `psTerm native[0])
+  Macro.throwError "PS0V1-BORROWED-TERM: unexpected owned native root"
 
 partial def lowerAggregateValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if source.isOfKind ``Lean.Parser.Term.tuple then
