@@ -3,7 +3,7 @@
 meta partial def sameHostNode? (source reference : Lean.Syntax) : Option Lean.Syntax :=
   if source.getKind == reference.getKind && source.getRange? == reference.getRange? then
     some source
-  else source.getArgs.findSome? (fun child => sameHostNode? child reference)
+  else source.getArgs.findSome?(fun child => sameHostNode? child reference)
 
 meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat := do
   let kind := before.getKind

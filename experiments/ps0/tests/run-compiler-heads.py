@@ -124,6 +124,17 @@ for path in [Path('ir') / relative_module.with_suffix('.c'), Path('lib/lean') / 
                                                  fromfile='native.c', tofile='ps.c'))
         (work / 'native-c.diff').write_text(difference)
         print(difference[:12000], flush=True)
+        public_olean = Path('lib/lean') / relative_module.with_suffix('.olean')
+        diagnostic = subprocess.run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
+                                     str(baseline / public_olean), str(migrated / public_olean)],
+                                    capture_output=True, text=True, timeout=600)
+        (work / 'c-parity-olean-diagnostic.log').write_text(diagnostic.stdout + diagnostic.stderr)
+        assert diagnostic.returncode == 0, diagnostic.stderr
+        details = json.loads(diagnostic.stdout)
+        print('PS0_C_PARITY_OLEAN_DIAGNOSTIC:' + json.dumps(dict(
+            public_olean_sha256={'native': sha(baseline / public_olean), 'ps': sha(migrated / public_olean)},
+            changed_constants=[{key: row.get(key) for key in ['name', 'typeEqual', 'valueEqual', 'hintsEqual']}
+                               for row in details['changedConstants']])), flush=True)
     if comparisons[path]['native'] != comparisons[path]['ps'] and path.endswith('.olean'):
         run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
              baseline / path, migrated / path], 'olean-diagnostic')
