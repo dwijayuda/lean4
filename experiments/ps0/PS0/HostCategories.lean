@@ -48,7 +48,8 @@ private def letPrefix : Parser :=
 @[run_parser_attribute_hooks] def letElem : Parser :=
   leadingNode ``Lean.Parser.Term.doLet maxPrec <|
     letPrefix >> node ``Lean.Parser.Term.letDecl
-      (operands #[(`term, `psTerm)] Lean.Parser.Term.letIdDecl)
+      (notFollowedBy (nonReservedSymbol "rec") "rec" >>
+        operands #[(`term, `psTerm)] Lean.Parser.Term.letIdDecl)
 
 @[run_parser_attribute_hooks] def bindElem : Parser :=
   leadingNode ``Lean.Parser.Term.doLetArrow maxPrec <| withPosition <|
@@ -198,12 +199,23 @@ partial def lower (category : Name) (source : Lean.Syntax) :
       return native
     if source.isOfKind `PS0.Operators.ownedBinary then
       let native := source[0]
+      if native.isOfKind choiceKind then
+        let alternatives ← native.getArgs.mapM fun alternative =>
+          lower `psTerm (.node .none `PS0.Operators.ownedBinary #[alternative])
+        return native.setArgs alternatives
       unless native.getArgs.size == 3 do Macro.throwError "PS0V1-OP-LOWER: invalid owned operator"
       let lhs ← lower `psTerm native[0]
       let rhs ← lower `psTerm native[2]
       return (native.setArg 0 lhs).setArg 2 rhs
     if source.isOfKind `PS0.Operators.ownedPostfix then
       let native := source[0]
+      if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
+        let arguments ← native[4].getArgs.mapM fun argument => do
+          if argument.isOfKind ``Lean.Parser.Term.ellipsis then return argument
+          if argument.isOfKind ``Lean.Parser.Term.namedArgument then
+            return argument.setArg 3 (← lower `psTerm argument[3])
+          return ← lower `psTerm argument
+        return (native.setArg 0 (← lower `psTerm native[0])).setArg 4 (native[4].setArgs arguments)
       unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
         Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native projection"
       return native.setArg 0 (← lower `psTerm native[0])
@@ -214,7 +226,11 @@ partial def lower (category : Name) (source : Lean.Syntax) :
         return .node (loweringInfo source) ``Lean.Parser.Term.paren
           #[source[0], ← lower `psTerm body.raw, source[2]]
     | `(psTerm| { $body:psTerm }) => do
-        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        let native ← lower `psTerm body.raw
+        if native.isIdent then
+          let field : TSyntax `ident := ⟨native⟩
+          return (← `({ $field:ident })).raw
+        let body : TSyntax `term := ⟨native⟩
         return (← `(($body))).raw
     | `(psTerm| if $cond:psTerm then $yes:psTerm else $no:psTerm) => do
         let cond : TSyntax `term := ⟨← lower `psTerm cond.raw⟩

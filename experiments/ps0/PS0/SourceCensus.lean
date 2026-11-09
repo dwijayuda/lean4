@@ -58,6 +58,9 @@ private def lambdaBodyApplications (native : Syntax) : Array Json := Id.run do
 
 private partial def ownedOperators (source : Syntax) : Array Name := Id.run do
   if source.isOfKind `PS0.Operators.ownedBinary then
+    if source[0].isOfKind choiceKind then
+      return source[0].getArgs.foldl (fun kinds alternative =>
+        kinds ++ #[alternative.getKind] ++ ownedOperators alternative[0] ++ ownedOperators alternative[2]) #[]
     return #[source[0].getKind] ++ ownedOperators source[0][0] ++ ownedOperators source[0][2]
   if source.isOfKind `PS0.Operators.ownedPostfix then
     return ownedOperators source[0][0]
@@ -112,7 +115,11 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       `PS0.StandardAdapters.ps0StandardTheorem, `PS0.StandardAdapters.ps0StandardFunction,
       `PS0.StandardAdapters.ps0StandardConst, `PS0.StandardAdapters.ps0StandardInstance,
       `PS0.StandardAdapters.ps0StandardExample].contains kind
-    let declValue := if hasTail then source.getArgs.back! else Syntax.missing
+    let last := source.getArgs.back!
+    let hasDeriving := last.isOfKind `PS0.StandardAdapters.ps0DefDeriving
+    let declValue := if hasTail then
+      if hasDeriving then source.getArgs[source.getArgs.size - 2]! else last
+      else Syntax.missing
     let value := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclSimple then declValue[1] else Syntax.missing
     let doSequence := if value.isOfKind `ps0HostDo && value[1].isOfKind `ps0NativeLayoutDoSeq then
       value[1][0] else Syntax.missing
@@ -131,6 +138,7 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("keywordRange", sourceRange (if isInstance then source[2] else source[1])), ("nameRange", sourceRange name),
       ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
       ("valueRootKind", toJson value.getKind.toString),
+      ("nativeDefDeriving", toJson (hasDeriving && !last[0].getArgs.isEmpty)),
       ("doSequenceKind", toJson doSequence.getKind.toString),
       ("doElementKinds", toJson (doElements.map (fun item => item[0].getKind.toString))),
       ("ownedDoElementKinds", toJson (ownedDoElements.map (fun item => item.getKind.toString))),

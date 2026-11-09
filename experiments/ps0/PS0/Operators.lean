@@ -42,7 +42,8 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
     | return initial.mkUnexpectedError "PS0V1-OP-CATEGORY: missing native term category"
   let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
   let keep := fun (entry : Parser × Nat) =>
-    !kinds.any ((entry.1.info.collectKinds {}).contains)
+    let collected := entry.1.info.collectKinds {}
+    !kinds.any collected.contains && !collected.contains ``Lean.Parser.Term.pipeProj
   let mut trailingTable : TokenMap (Parser × Nat) := {}
   for (token, parsers) in category.tables.trailingTable do
     for entry in (parsers.filter keep).reverse do
@@ -72,13 +73,21 @@ private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx in
   if state.hasError then return state
   let candidates := (indexedParsers ++ category.tables.trailingParsers).filter fun (parser, _) =>
     let collected := parser.info.collectKinds {}
-    kinds.any collected.contains || collected.contains ``Lean.Parser.Term.proj
+    kinds.any collected.contains || collected.contains ``Lean.Parser.Term.proj ||
+      (!projectionOnly && collected.contains ``Lean.Parser.Term.pipeProj)
   if candidates.isEmpty then return initial.mkUnexpectedError "no owned native binary operator"
   let candidates := candidates.map fun (parser, priority) =>
     (if (parser.info.collectKinds {}).contains ``Lean.Parser.Term.proj then parser else operandParser parser, priority)
   let parsed := longestMatchFn (some initial.stxStack.back) candidates ctx initial.popSyntax
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
+  if native.isOfKind choiceKind then
+    unless !native.getArgs.isEmpty && native.getArgs.all (fun alternative =>
+        kinds.contains alternative.getKind && alternative.getArgs.size == 3) do
+      return parsed.mkUnexpectedError "PS0V1-OP-CHOICE: unsupported native operator alternatives"
+    return parsed.popSyntax.pushSyntax <| .node .none ownedKind #[native]
+  if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
+    return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
   if native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 then
     return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
   unless kinds.contains native.getKind && native.getArgs.size == 3 do

@@ -18,7 +18,7 @@ register_builtin_option ps0.sourceGrammar : Bool := {
 private def categoryNames : Array Name :=
   #[`psTerm, `psCommand, `psTactic, `psDoSeq, `psCallArg, `psHead,
     `psDoElem, `psDoItem, `psBinderParam, `psDeclBinder, `psFunBinder, `psDeclTail, `psDeclValue,
-    `psStructFieldValue, `psStructField]
+    `psStructFieldValue, `psStructField, `psDefDeriving]
 
 private def commandNames : Array Name :=
   #[`PS0.StandardAdapters.ps0StandardDef, `PS0.StandardAdapters.ps0StandardAbbrev,

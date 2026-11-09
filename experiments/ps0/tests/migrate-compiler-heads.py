@@ -41,6 +41,26 @@ def original_commands(commands):
 def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
     # Quotation, DSL and other native syntax remain opaque.
+    if operand['kind'] == 'choice':
+        pending = len(edits)
+        alternatives = []
+        for alternative in operand['args']:
+            del edits[pending:]
+            single_type_call(alternative, role)
+            alternatives.append(edits[pending:].copy())
+        assert alternatives and all(changes == alternatives[0] for changes in alternatives), 'native alternatives require identical source edits'
+        del edits[pending:]
+        edits.extend(alternatives[0])
+        return
+    if operand['kind'] == 'Lean.Parser.Term.pipeProj':
+        assert len(operand['args']) == 5
+        single_type_call(operand['args'][0], role + ' pipeline subject')
+        for argument in operand['args'][4]['args']:
+            if argument['kind'] == 'Lean.Parser.Term.namedArgument':
+                single_type_call(argument['args'][3], role + ' pipeline named argument')
+            else:
+                single_type_call(argument, role + ' pipeline argument')
+        return
     if operand['kind'] == 'Lean.Parser.Term.paren':
         single_type_call(operand['args'][1], role)
         return
