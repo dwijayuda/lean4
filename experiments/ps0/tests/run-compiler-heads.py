@@ -56,7 +56,7 @@ run([driver, 'census-source', original, module, census], 'native-census')
 converted = work / 'converted/src' / relative_module.with_suffix('.ps')
 plan_file = work / 'plan.json'
 run(['python3', 'tests/migrate-compiler-heads.py', census, original, converted,
-     '--plan', plan_file], 'plan')
+     '--plan', plan_file, *(['--allow-empty'] if args.declarations == 'ALL' else [])], 'plan')
 plan = json.loads(plan_file.read_text())
 if args.fixture == 'TelescopeProbe':
     for marker in ['PS0_HEAD_TRIVIA', 'PS0_GROUP_TRIVIA', 'PS0_CALL_TRIVIA',
@@ -109,7 +109,8 @@ def build(source, directory, grammar=False, ok=True):
 
 baseline, migrated = work / 'baseline', work / 'migrated'
 build(original, baseline)
-build(converted, work / 'native-rejects-converted', ok=False)
+shared_surface = original.read_bytes() == converted.read_bytes()
+build(converted, work / 'native-rejects-converted', ok=shared_surface)
 build(converted, migrated, grammar=True)
 sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
 comparisons = {}
@@ -202,6 +203,7 @@ if args.fixture in ['UnlessProbe', 'InlineAttrs']:
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
     'converted_declarations': plan['declarations'], 'unchanged_abbrev_adapters': sorted(unchanged_abbrevs),
+    'native_converted_control': 'identical shared R2 surface accepted natively' if shared_surface else 'changed surface rejected natively',
     'source_strategies': plan.get('strategies', []),
     'contextual_boundary_heads': boundary_heads,
     'scoped_binary_kinds': scoped_binary_kinds,
