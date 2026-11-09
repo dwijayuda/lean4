@@ -4065,9 +4065,86 @@
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
+  "corpusTelescopeContinuation": {
+    "status": "CANDIDATE_PENDING_LINUX_QUALIFICATION",
+    "source": "483ac279f296257bbf2c686e93a96163b7218dd7",
+    "runner": "5db31776e953dbb1ab66e573fcee3fb496817d7d",
+    "run": 42551017700,
+    "sourcePR": "https://github.com/dwijayuda/lean4/pull/20",
+    "runnerPR": "https://github.com/dwijayuda/pskernel/pull/239",
+    "implementation": [
+      "Preserve grouped/inferred/anonymous/bare native telescopes through R2-admitted owned PS def adapters; typed alias-compatible telescopes use function/const",
+      "Reuse native parameterized matchAlts parsing for equation patterns/layout; lower only RHS through psTerm",
+      "Obtain absent termination suffix/where syntax from native declaration quotation",
+      "Plan native named call arguments in PS positional-then-named order; require strict complete-module C/public olean identity",
+      "Require ALL selected definition source productions and mapped abbreviation/theorem/opaque/axiom ownership; retain exact raw target C/public olean outputs"
+    ],
+    "finiteObservation": {
+      "source": "1c75b16e9cbf61f6714fe6804339254ec5f6bfa5",
+      "runner": "886a03ebd12cc1f4361de9e3f3a7ac76d3340e2f",
+      "run": 42550444326,
+      "job": 128944676955,
+      "status": "OVERALL_PROJECT_FAILURE_WITH_FINITE_PARITY_PASSES",
+      "compilerModules": 5,
+      "compilerHeads": 17,
+      "syntheticProbe": "Lean.Compiler.TelescopeProbe",
+      "syntheticSignatures": 13,
+      "syntheticProbeBlob": "df579b62f3482393dd7db4dd6486e37b9c9b69fe",
+      "parity": "strict whole-module native C/public olean byte equality and intended mapped PS source productions",
+      "failures": [
+        "Prelude and relocated/scoped EOF values: Unexpected Termination.suffix syntax: [] of kind null",
+        "LCNF Basic planner rejects named application arguments; target compilation not reached"
+      ],
+      "otherJobs": {
+        "host": 128944677068,
+        "native": 128944676873,
+        "proof": 128944676744,
+        "operatorBaseline": 128944676922
+      },
+      "otherJobsStatus": "PASS",
+      "projectArtifact": {
+        "id": 13645208005,
+        "zip_sha256": "d728af8d50ed4087fe5fd1b4bf17ea7031a4a21ccdbdfa97787b2b6ca0173822"
+      }
+    },
+    "earlierAttempts": [
+      {
+        "source": "81f0bea23d15970408367c7eac7afaf855d01f6b",
+        "runner": "b7524938b2eeeb511188c87307aed9cde76ecbe1",
+        "run": 42549079446,
+        "projectJob": 128940383335,
+        "status": "CANCELLED; no completed functional test-first failure claimed"
+      },
+      {
+        "source": "83814c0df50cfc730de13a036d3d7fd057806aa5",
+        "runner": "07015fdc5b3d5becf0fd4dfe7ade0e6b82c00f72",
+        "run": 42549390930,
+        "projectJob": 128941471582,
+        "status": "FAIL: synthetic module doc before header causes unexpected PS0 import; five real module parity probes pass"
+      },
+      {
+        "source": "0518446b10e421fba9d11a8e9457f8939cb68fc9",
+        "runner": "2c4e5c092fcf0f9b4fa4e4ca9087347a6ce13ada",
+        "run": 42550269784,
+        "projectJob": 128944056212,
+        "status": "CANCELLED; no new acceptance claimed"
+      }
+    ],
+    "corpusPlanning": {
+      "source": "483ac279f296257bbf2c686e93a96163b7218dd7",
+      "runner": "c6dc0baa834965e9a8a1f74bd605f29f4729e0c1",
+      "run": 42551085657,
+      "pr": "https://github.com/dwijayuda/pskernel/pull/240",
+      "modules": 2546,
+      "status": "RUNNING",
+      "scope": "Every pinned SDK Git blob verified before native per-module census/source planning. Per-module gaps retained. Planning is not parsing/build/parity qualification. SDK sibling metadata dependency remains explicit."
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
   "currentContinuation": {
     "status": "ACTIVE_CANONICAL_PS_COMPILER_MIGRATION_INCOMPLETE",
-    "branch": "feat/ps0-declaration-tails-20261109",
+    "branch": "feat/ps0-corpus-telescopes-20261109",
     "goal": "Entire pinned Lean4 compiler corpus builds from .ps using ProofScript syntax and grammars with native Lean4 and Lake; renamed native-only sources do not complete the goal",
     "qualifiedFiniteCheckpoint": {
       "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
@@ -4102,7 +4179,7 @@
       "shapeEligibleDefinitions": 22275,
       "shapeEligibilityIsAcceptance": false
     },
-    "nextPriority": "generalize implicit/grouped/untyped telescope conversion and native automatic-default roles based on actual corpus shapes; validate whole converted modules and preserve strict C/public olean gates",
+    "nextPriority": "Fix observed equation/named-call and EOF regressions; qualify every definition in pinned LCNF Basic, complete all-module source planning, then validate the complete converted graph.",
     "remaining": [
       "complete source conversion for all pinned upstream and PS0 compiler modules",
       "remaining telescope/local/layout/field/constructor/notation/interpolation/tactic roles",
@@ -4122,6 +4199,9 @@
       ]
     },
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "candidate": "483ac279f296257bbf2c686e93a96163b7218dd7",
+    "candidateRunner": "5db31776e953dbb1ab66e573fcee3fb496817d7d",
+    "candidateRun": 42551017700
   }
 }
