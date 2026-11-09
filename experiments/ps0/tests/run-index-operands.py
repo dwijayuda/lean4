@@ -40,6 +40,7 @@ for command in json.loads(census.read_text())['commands']:
 assert len(shapes) == 4
 print('PS0_NATIVE_INDEX_SHAPES:' + json.dumps(shapes, sort_keys=True), flush=True)
 fixture = Path('tests/v1/index_operands.ps')
+run(['lake', 'env', 'lean', 'tests/debug-index-layout.lean'], 'parser-layout')
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'IndexOperands', work / 'native'], 'native')
 oracle = 'PS0_INDEX:3:2:3:2:3'

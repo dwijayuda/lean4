@@ -70,6 +70,7 @@ expected = ({d['sourceName'] for d in original_declarations
 assert set(plan['declarations']) == expected, plan['declarations']
 boundary_kind = {'NatLinear': 'Lean.Parser.Command.attribute',
                  'GrindAC': 'Lean.Parser.Command.attribute',
+                 'JsonRpc': 'Lean.Parser.Command.section',
                  'IteratorEmpty': 'Lean.Parser.Command.structure'}.get(args.fixture)
 boundary_heads = [s for s in plan['strategies']
                   if s.get('reason') == 'preserve reserved R2 head after native identifier/field list']
@@ -170,6 +171,19 @@ for name in owned_value_calls:
     assert any('term_!=_' in kind for kind in declaration['ownedOperatorKinds']), declaration
 if args.fixture == 'EmitUtil':
     assert next(d for d in declarations if d['sourceName'] == 'collectUsedDecls')['nativeWhereTail']
+if args.fixture == 'JsonRpc':
+    strategy = next(s for s in plan['strategies'] if s['sourceName'] == 'readMessage')
+    assert strategy['previousCommandHeadKind'] == 'Lean.Parser.Command.section', strategy
+    assert strategy['targetKeyword'] == 'def', strategy
+    declaration = next(d for d in declarations if d['sourceName'] == 'readMessage')
+    assert declaration['production'] == 'PS0.StandardAdapters.ps0StandardDef', declaration
+if args.fixture == 'Environment':
+    declaration = next(d for d in declarations if d['sourceName'] == 'getModuleIdxFor?')
+    indices = declaration['ownedIndexedAccess']
+    assert len(indices) == 1 and indices[0]['kind'] == '«term__[_]_?»', declaration
+    assert indices[0]['subjectKind'] == 'PS0.Operators.ownedPostfix', indices
+    assert indices[0]['syntax']['args'][0]['args'][0]['kind'] == 'Lean.Parser.Term.pipeProj', indices
+    assert indices[0]['indexKind'] in ['ps0NativeTermBridge', 'ps0HostHeadTerm'], indices
 if args.fixture == 'DeclarationForms':
     assert sum(d['production'] == 'PS0.StandardAdapters.ps0StandardExample' for d in declarations) == 2
     assert next(d for d in declarations if d['sourceName'] == 'make')['whereFieldCount'] == 3
@@ -218,7 +232,7 @@ if args.fixture in ['UnlessProbe', 'InlineAttrs']:
     'owned_value_calls': owned_value_calls,
     'non_definition_source_roles': [{key: d.get(key) for key in ['sourceName', 'production', 'mode', 'declarationValueKind', 'equationBodyKinds', 'whereFieldCount']}
                                     for d in declarations if d['production'] in family_productions.values()],
-    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds', 'doSequenceKind', 'doElementKinds', 'ownedDoElementKinds', 'doPatternBindingCount', 'doUnlessConditionKinds', 'doUnlessBlockKinds', 'termUnlessConditionKind', 'nativeDefDeriving', 'recursiveGroupCount', 'recursiveDeclarationKinds', 'recursiveSimpleValueKinds', 'recursiveEquationValueKinds', 'recursiveTermContinuationKind']}
+    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'ownedIndexedAccess', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds', 'doSequenceKind', 'doElementKinds', 'ownedDoElementKinds', 'doPatternBindingCount', 'doUnlessConditionKinds', 'doUnlessBlockKinds', 'termUnlessConditionKind', 'nativeDefDeriving', 'recursiveGroupCount', 'recursiveDeclarationKinds', 'recursiveSimpleValueKinds', 'recursiveEquationValueKinds', 'recursiveTermContinuationKind']}
                             for d in declarations if d['sourceName'] in plan['declarations']],
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',
     'scope': 'real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration',
