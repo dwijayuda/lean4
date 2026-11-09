@@ -68,6 +68,21 @@ expected = ({d['sourceName'] for d in original_declarations
              if d['production'] == 'Lean.Parser.Command.definition'}
             if args.declarations == 'ALL' else set(args.declarations.split(',')))
 assert set(plan['declarations']) == expected, plan['declarations']
+boundary_kind = {'NatLinear': 'Lean.Parser.Command.attribute',
+                 'GrindAC': 'Lean.Parser.Command.attribute',
+                 'IteratorEmpty': 'Lean.Parser.Command.structure'}.get(args.fixture)
+boundary_heads = [s for s in plan['strategies']
+                  if s.get('reason') == 'preserve reserved R2 head after native identifier/field list']
+if boundary_kind:
+    assert any(s['previousCommandHeadKind'] == boundary_kind and s['targetKeyword'] == 'def'
+               for s in boundary_heads), (args.fixture, boundary_heads)
+scoped_binary_kinds = []
+if args.fixture == 'SPredLaws':
+    for name in ['and_curry', 'or_curry', 'imp_curry']:
+        declaration = next(d for d in original_declarations if d['sourceName'] == name)
+        result = declaration['signatureSyntax']['args'][1]['args'][1]
+        assert result['nativeBinaryOperator'], (name, result)
+        scoped_binary_kinds.append(result['kind'])
 
 def build(source, directory, grammar=False, ok=True):
     # Native module lookup resolves a namespace prefix in one library root. The
@@ -175,6 +190,9 @@ if args.fixture == 'DoLayoutProbe':
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
     'converted_declarations': plan['declarations'], 'unchanged_abbrev_adapters': sorted(unchanged_abbrevs),
     'source_strategies': plan.get('strategies', []),
+    'contextual_boundary_heads': boundary_heads,
+    'scoped_binary_kinds': scoped_binary_kinds,
+    'operator_descriptor_scope': json.loads(census.read_text()).get('operatorDescriptorScope'),
     'equation_definitions': sorted(equation_definitions),
     'owned_value_calls': owned_value_calls,
     'non_definition_source_roles': [{key: d.get(key) for key in ['sourceName', 'production', 'mode', 'declarationValueKind', 'equationBodyKinds', 'whereFieldCount']}

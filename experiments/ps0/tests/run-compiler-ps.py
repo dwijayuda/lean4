@@ -138,6 +138,17 @@ if args.source_plans:
         return any((command['headKind'] in ['Lean.Parser.Command.instance', 'Lean.Parser.Command.example']
                     and command['declaration'] is None)
                    or missing_declaration_view(command.get('nestedCommands', [])) for command in commands)
+    def possible_uncaptured_binary(value):
+        if isinstance(value, list):
+            return any(possible_uncaptured_binary(item) for item in value)
+        if not isinstance(value, dict):
+            return False
+        parts = value.get('args', [])
+        if (value.get('nativeBinaryOperator') is False and len(parts) == 3
+                and parts[1].get('atom') is not None
+                and value['kind'] != 'Lean.Parser.Term.proj'):
+            return True
+        return any(possible_uncaptured_binary(item) for item in value.values())
     refreshed = []
     def refresh_plan(item):
         module = item['module']
@@ -145,7 +156,10 @@ if args.source_plans:
         original, census = cached / 'original.ps', cached / 'native-census.json'
         folder = evidence / 'current-source-plans' / module
         folder.mkdir(parents=True, exist_ok=False)
-        if missing_declaration_view(json.loads(census.read_text())['commands']):
+        captured = json.loads(census.read_text())
+        if (missing_declaration_view(captured['commands']) or
+                (captured.get('operatorDescriptorScope') != 'active-and-captured-kinds/1'
+                 and possible_uncaptured_binary(captured['commands']))):
             census = folder / 'native-census.json'
             run([driver, 'census-source', original, module, census], 'refresh-census-' + module)
             refreshed.append(module)
