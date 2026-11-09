@@ -84,11 +84,22 @@ def single_type_call(operand, role='owned binder type'):
                 if value['atom'] is None:
                     single_type_call(value, role + ' tuple remaining element')
         return
-    if operand['kind'] in ['«term[_]»', '«term#[_,]»']:
+    if operand['kind'] in ['«term[_]»', '«term#[_,]»', 'Lean.Parser.Term.anonymousCtor']:
         assert len(parts) == 3
         for value in parts[1]['args']:
             if value['atom'] is None:
                 single_type_call(value, role + ' collection element')
+        return
+    if operand['kind'] == 'Lean.Parser.Term.show':
+        assert len(parts) == 3
+        single_type_call(parts[1], role + ' show type')
+        rhs = parts[2]
+        if rhs['kind'] == 'Lean.Parser.Term.fromTerm':
+            assert len(rhs['args']) == 2
+            single_type_call(rhs['args'][1], role + ' show value')
+        else:
+            assert rhs['kind'] == 'Lean.Parser.Term.byTactic' and len(rhs['args']) == 2
+            where_tactics(rhs['args'][1])
         return
     if operand['kind'] == 'termS!_':
         assert len(parts) == 2 and parts[1]['kind'] == 'interpolatedStrKind'
@@ -162,7 +173,7 @@ def single_type_call(operand, role='owned binder type'):
         recursive_declarations(operand['args'][1])
         single_type_call(operand['args'][3], role + ' local recursive continuation')
         return
-    if operand['kind'] == 'Lean.Parser.Term.let':
+    if operand['kind'] in ['Lean.Parser.Term.let', 'Lean.Parser.Term.have']:
         parts = operand['args']
         assert len(parts) == 5 and parts[2]['kind'] == 'Lean.Parser.Term.letDecl'
         declaration = parts[2]['args'][0]
@@ -399,7 +410,15 @@ def do_element(element):
             do_sequence(parts[8]['args'][0])
         return
     kind, parts = element['kind'], element['args']
-    if kind == 'Lean.Parser.Term.doFor':
+    if kind == 'Lean.Parser.Term.doWhile':
+        assert len(parts) == 6
+        do_if_role(parts[1])
+        do_sequence(parts[5])
+    elif kind == 'Lean.Parser.Term.doRepeatUntil':
+        assert len(parts) == 6
+        do_sequence(parts[3])
+        single_type_call(parts[5], 'owned repeat-until condition')
+    elif kind == 'Lean.Parser.Term.doFor':
         assert len(parts) == 6
         for declaration in parts[1]['args']:
             if declaration['atom'] is not None:

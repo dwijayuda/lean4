@@ -261,6 +261,48 @@ private theorem patternIfResult : patternIf 2 = 3 := rfl
 '''
 
 
+native += '''def constructorValue (n : Nat) : Nat × Nat := ⟨add n 1, n⟩
+def showValue (n : Nat) : Nat := show Nat from add n 1
+def showType (n : Nat) : Fin (add n 1) := show Fin (add n 1) from ⟨0, Nat.zero_lt_succ n⟩
+def showBy (n : Nat) : Nat := show Nat by exact add n 1
+def pureHave (n : Nat) : Nat := have step (x : Nat := add n 1) : Nat := add x 1; step
+def whileValue (n : Nat) : IO Nat := do
+  let mut result := n
+  while h : result < add n 2 do
+    result := add result 1
+  return result
+def repeatValue (n : Nat) : IO Nat := do
+  let mut result := n
+  repeat
+    result := add result 1
+  until result == add n 2
+  return result
+'''
+ps += '''function constructorValue(n: Nat): Nat × Nat := ⟨add(n, 1), n⟩
+function showValue(n: Nat): Nat := show Nat from add(n, 1)
+function showType(n: Nat): Fin(add(n, 1)) := show Fin(add(n, 1)) from ⟨0, Nat.zero_lt_succ(n)⟩
+function showBy(n: Nat): Nat := show Nat by exact add(n, 1)
+function pureHave(n: Nat): Nat := have step (x: Nat := add(n, 1)): Nat := add(x, 1); step
+function whileValue(n: Nat): IO(Nat) := do
+  let mut result := n
+  while h : result < add(n, 2) do
+    result := add(result, 1)
+  return result
+function repeatValue(n: Nat): IO(Nat) := do
+  let mut result := n
+  repeat
+    result := add(result, 1)
+  until result == add(n, 2)
+  return result
+'''
+guards += '''private theorem constructorValueResult : (constructorValue 2).1 = 3 := rfl
+private theorem showValueResult : showValue 2 = 3 := rfl
+private theorem showTypeResult : (showType 2).val = 0 := rfl
+private theorem showByResult : showBy 2 = 3 := rfl
+private theorem pureHaveResult : pureHave 2 = 4 := rfl
+'''
+
+
 def run(args, label):
     result = subprocess.run([str(x) for x in args], capture_output=True, text=True, timeout=300)
     text = result.stdout + result.stderr
@@ -303,7 +345,7 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
         observed = json.loads(census.read_text())
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
-        assert len(rows) == 79 and all(d['mode'] == 'mapped-ps' for d in rows)
+        assert len(rows) == 91 and all(d['mode'] == 'mapped-ps' for d in rows)
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
@@ -318,12 +360,12 @@ runtime = run([executable], 'runtime-origins')
 assert runtime.strip() == 'PS0_HOST_ORIGINS: PASS'
 shutil.copy2(executable, work / 'OrdinaryHostOrigins')
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    comparisons=comparisons, mapped_definitions=41, mapped_theorems=38, logical_imports=['Init'],
+    comparisons=comparisons, mapped_definitions=48, mapped_theorems=43, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
     source_origin_fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    source_origin_cases=19, independently_owned_native_dsl=True, native_quotation=True,
+    source_origin_cases=28, independently_owned_native_dsl=True, native_quotation=True,
     native_executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
     runtime_oracle='PS0_HOST_ORIGINS: PASS',
-    scope='finite native term/do matches, pattern lambda, record, if/have/for/try, ascriptions and direct tactic operands; loop annotations and deeper ordinary roles remain open',
+    scope='finite native term/do matches, patterns/records/conditions/bindings/loop values, collections/interpolation/forall, ascriptions/direct tactics; loop contracts and deeper ordinary roles remain open',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
 print('PS0_MATCH_HOST_NATIVE_PARITY: PASS', flush=True)
