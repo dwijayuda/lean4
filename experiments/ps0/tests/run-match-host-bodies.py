@@ -135,17 +135,17 @@ def run(args, label):
 
 
 comparisons = {}
-for label, body in [('baseline', native), ('migrated', ps)]:
+for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
     source_root = work / (label + '-source')
     source_root.mkdir()
     source = source_root / 'MatchHostBootstrap.ps'
-    source.write_text(header + body + guards)
+    source.write_text((work / 'planned-source.ps').read_text() if body is None else header + body + guards)
     shutil.copy2(source, work / (label + '-MatchHostBootstrap.ps'))
     directory = work / (label + '-build')
     args = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source_root),
             '-Kroots=MatchHostBootstrap', '-KmoduleNames=MatchHostBootstrap', '-Kbootstrap=true',
             '-Kdriver=' + str(ROOT / '.lake/build/bin/ps0'), '-KprojectBuildDir=' + str(directory)]
-    if label == 'migrated':
+    if label != 'baseline':
         args.append('-KsourceGrammar=true')
     run([*args, 'build', 'MatchHostBootstrap'], label)
     mapping = directory / 'lib/lean/MatchHostBootstrap.ilean.ps0-source-map.json'
@@ -153,18 +153,21 @@ for label, body in [('baseline', native), ('migrated', ps)]:
     assert mapped['source'].encode() == source.read_bytes()
     assert all(segment['kind'] == 'original' for segment in mapped['segments'])
     shutil.copy2(mapping, work / (label + '-source-map.json'))
-    if label == 'migrated':
-        census = directory / 'lib/lean/MatchHostBootstrap.ilean.ps0-source-census.json'
+    census = directory / 'lib/lean/MatchHostBootstrap.ilean.ps0-source-census.json'
+    shutil.copy2(census, work / (label + '-source-census.json'))
+    if label == 'baseline':
+        run(['python3', 'tests/migrate-compiler-heads.py', census, source,
+             work / 'planned-source.ps', '--plan', work / 'planned-edits.json'], 'plan')
+    else:
         observed = json.loads(census.read_text())
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
         assert len(rows) == 34 and all(d['mode'] == 'mapped-ps' for d in rows)
-        shutil.copy2(census, work / 'migrated-source-census.json')
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
         shutil.copy2(file, work / (label + '-MatchHostBootstrap' + file.suffix))
-assert all(pair['baseline'] == pair['migrated'] for pair in comparisons.values())
+assert all(pair['baseline'] == pair['migrated'] == pair['planned'] for pair in comparisons.values())
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
     comparisons=comparisons, mapped_definitions=17, mapped_theorems=17, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,

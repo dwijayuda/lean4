@@ -578,7 +578,7 @@ partial def lowerNativeIfRole (source : Lean.Syntax) : MacroM Lean.Syntax := wit
   if source.isOfKind ``Lean.Parser.Term.doSeqIndent ||
       source.isOfKind ``Lean.Parser.Term.doSeqBracketed then
     return ← lowerNativeDoSequence source
-  if source.isOfKind nullKind then
+  if source.isOfKind nullKind || source.isOfKind `group then
     return source.setArgs (← source.getArgs.mapM lowerNativeIfRole)
   if source.isAtom || source.isOfKind ``Lean.Parser.Term.elseIf then return source
   Macro.throwError s!"PS0V1-DO-IF-ROLE: unexpected native condition/sequence role {source.getKind}"

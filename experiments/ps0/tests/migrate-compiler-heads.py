@@ -404,7 +404,7 @@ def do_if_role(source):
         single_type_call(parts[2]['args'][1], 'owned do-if pattern value')
     elif kind in ['Lean.Parser.Term.doSeqIndent', 'Lean.Parser.Term.doSeqBracketed']:
         do_sequence(source)
-    elif kind == 'null':
+    elif kind in ['null', 'group']:
         for child in parts:
             do_if_role(child)
     else:
