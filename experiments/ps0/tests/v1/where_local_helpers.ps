@@ -1,5 +1,6 @@
 /-! Braced where helpers retain native local recursion, captured scopes and mixed telescopes. -/
 function add(x: Nat, y: Nat): Nat := x + y
+function tacticWords(exact: Nat, apply: Nat, refine: Nat): Nat := add(exact, add(apply, refine))
 structure LocalPoint where
   x : Nat
   y : Nat
@@ -104,10 +105,14 @@ where
 finally
   exact(add(n, 3))
 
+function wordProof(exact: Nat): Nat := ?value
+where { finally { exact exact } }
+
 example : namedProof(4) = 5 := by decide
 example : defaultProof(4) = 6 := by decide
 example : helperProof(4) = 7 := by decide
 example : nativeProof(4) = 7 := by decide
+example : wordProof(4) = 4 := by decide
 
 def main : IO Unit :=
   do
@@ -122,5 +127,8 @@ def main : IO Unit :=
     let i := defaultProof(4)
     let j := helperProof(4)
     let k := nativeProof(4)
+    let l := tacticWords(1, 2, 3)
+    let m := wordProof(4)
     IO.println s!"PS0_WHERE_LOCAL:{a}:{b}:{c}:{d}:{e}"
     IO.println s!"PS0_WHERE_PROOF:{f}:{g}:{h}:{i}:{j}:{k}"
+    IO.println s!"PS0_WHERE_CONTEXTUAL:{l}:{m}"

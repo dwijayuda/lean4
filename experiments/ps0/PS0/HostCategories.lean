@@ -10,7 +10,7 @@ open Lean
 
 declare_syntax_cat psTerm
 declare_syntax_cat psCommand
-declare_syntax_cat psTactic
+declare_syntax_cat psTactic (behavior := both)
 declare_syntax_cat psDoSeq
 declare_syntax_cat psCallArg
 declare_syntax_cat psHead

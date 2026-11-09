@@ -27,9 +27,11 @@ run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'WhereLocal', work / 'native'], 'native')
 oracle = 'PS0_WHERE_LOCAL:7:5:4:4:5'
 proof_oracle = 'PS0_WHERE_PROOF:5:7:5:6:7:7'
+contextual_oracle = 'PS0_WHERE_CONTEXTUAL:6:4'
 runtime = run([work / 'native/WhereLocal'], 'runtime')
-assert oracle in runtime and proof_oracle in runtime
+assert oracle in runtime and proof_oracle in runtime and contextual_oracle in runtime
 baseline = '''def add (x y : Nat) : Nat := x + y
+def tacticWords (exact apply refine : Nat) : Nat := add exact (add apply refine)
 structure LocalPoint where
   x : Nat
   y : Nat
@@ -58,6 +60,7 @@ finally
   exact add n 1
 '''
 migrated = '''function add(x: Nat, y: Nat): Nat := x + y
+function tacticWords(exact: Nat, apply: Nat, refine: Nat): Nat := add(exact, add(apply, refine))
 structure LocalPoint where
   x : Nat
   y : Nat
@@ -114,7 +117,7 @@ for label, text in [('baseline', baseline), ('migrated', migrated)]:
         census_path = directory / 'lib/lean/WhereLocalBootstrap.ilean.ps0-source-census.json'
         census = json.loads(census_path.read_text())
         bootstrap_roles = [row['declaration'] for row in census['commands'] if row['declaration']]
-        assert len(bootstrap_roles) == 7 and all(row['mode'] == 'mapped-ps' for row in bootstrap_roles)
+        assert len(bootstrap_roles) == 8 and all(row['mode'] == 'mapped-ps' for row in bootstrap_roles)
         by_name = {row['sourceName']: row for row in bootstrap_roles}
         assert by_name['forwardHelper']['whereHelperNames'] == ['first', 'second']
         assert by_name['capturedHelper']['whereHelperDocCount'] == 1
@@ -158,11 +161,12 @@ native_diagnostic = run([ROOT / '.lake/build/bin/ps0', 'check', native_sections]
 assert 'does not currently support any named sub-sections' in native_diagnostic
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle, 'proof_oracle': proof_oracle,
+    'contextual_oracle': contextual_oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
     'rejection_cases': 10,
     'origin_cases': 5, 'native_quotation_control': True,
     'prelude_native_parity': bootstrap_comparisons,
-    'prelude_logical_imports': ['Init'], 'prelude_mapped_definitions': 7,
+    'prelude_logical_imports': ['Init'], 'prelude_mapped_definitions': 8,
     'mapped_where_roles': bootstrap_roles,
     'ordinary_named_sections_match_native_rejection': True,
     'scope': 'finite braced/native where helper/default/capture/equation/record/body-wrapper/mutual-visibility and enclosing finally proof cases; not full signature/contract grammar',
