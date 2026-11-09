@@ -78,7 +78,7 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       `PS0.StandardAdapters.ps0StandardConst].contains kind
     let declValue := if hasTail then source.getArgs.back! else Syntax.missing
     let value := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclSimple then declValue[1] else Syntax.missing
-    let tail := declValue.getArgs.back![0]
+    let tail := if hasTail then declValue.getArgs.back![0] else Syntax.missing
     let equationBodies := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclEqns then
       declValue[0][0].getArgs.map (fun alt => alt[3].getKind.toString) else #[]
     return Json.mkObj [

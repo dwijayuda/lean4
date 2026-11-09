@@ -42,6 +42,12 @@ def single_type_call(operand, role='owned binder type'):
     if operand['kind'] == 'Lean.Parser.Term.paren':
         single_type_call(operand['args'][1], role)
         return
+    if operand['kind'] == 'termIfThenElse':
+        parts = operand['args']
+        assert len(parts) == 6 and [parts[i]['atom'] for i in [0, 2, 4]] == ['if', 'then', 'else']
+        for index in [1, 3, 5]:
+            single_type_call(parts[index], role + ' conditional operand')
+        return
     if operand['kind'] == 'Lean.Parser.Term.fun':
         body = operand['args'][1]
         if body['kind'] == 'Lean.Parser.Term.basicFun':
@@ -121,16 +127,20 @@ for command in original_commands(snapshot['commands']):
     decl = command['declaration']
     if decl is None or decl['mode'] != 'native-compatible':
         continue
-    if decl['production'] != 'Lean.Parser.Command.definition':
+    supported = ['Lean.Parser.Command.definition', 'Lean.Parser.Command.abbrev',
+                 'Lean.Parser.Command.theorem', 'Lean.Parser.Command.opaque', 'Lean.Parser.Command.axiom']
+    if decl['production'] not in supported:
         continue
+    is_definition = decl['production'] == 'Lean.Parser.Command.definition'
     signature = decl['signatureSyntax']
-    assert signature['kind'] == 'Lean.Parser.Command.optDeclSig'
+    assert signature['kind'] in ['Lean.Parser.Command.optDeclSig', 'Lean.Parser.Command.declSig']
     binders = signature['args'][0]['args']
-    result_type = signature['args'][1]['args']
+    result_type = ([signature['args'][1]] if signature['kind'] == 'Lean.Parser.Command.declSig'
+                   else signature['args'][1]['args'])
     if result_type:
         assert len(result_type) == 1 and result_type[0]['kind'] == 'Lean.Parser.Term.typeSpec'
         single_type_call(result_type[0]['args'][1], 'owned declaration result type')
-    use_alias = all(alias_binder(binder) for binder in binders)
+    use_alias = is_definition and all(alias_binder(binder) for binder in binders)
     # Native definition syntax preserves shared/inferred/anonymous binder
     # elaboration; it still goes through the owned PS signature/value adapters.
     for binder in binders:
@@ -163,6 +173,13 @@ for command in original_commands(snapshot['commands']):
         start, end = span(binder)
         assert raw[start:start + 1] == b'(' and raw[end - 1:end] == b')'
     kw = decl['keywordRange']
+    if not is_definition:
+        value = decl.get('valueSyntax')
+        if value and value['kind'] == 'null' and value['args']:
+            value = value['args'][0]
+        if value and value['kind'] == 'Lean.Parser.Command.declValSimple':
+            single_type_call(value['args'][1], 'owned non-definition declaration body')
+        continue
     assert raw[kw['start']:kw['end']] == b'def'
     keyword = ('function' if binders else 'const') if use_alias else 'def'
     strategies.append({'sourceName': decl['sourceName'], 'keywordRange': kw,
