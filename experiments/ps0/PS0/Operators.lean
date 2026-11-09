@@ -68,7 +68,7 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
 @[implemented_by leadingImpl]
 opaque leadingFn : ParserFn
 
-@[expose] def leading : Parser :=
+@[expose, run_parser_attribute_hooks] def leading : Parser :=
   withFn (fun _ => leadingFn) (node bridgeKind (categoryParser `term 0))
 
 private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
@@ -92,7 +92,7 @@ private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
 @[implemented_by trailingImpl]
 opaque trailingFn : ParserFn
 
-@[expose] def trailing : TrailingParser :=
+@[expose, run_parser_attribute_hooks] def trailing : TrailingParser :=
   withFn (fun _ => trailingFn) (node ownedKind (categoryParser `term 0))
 
 builtin_initialize
