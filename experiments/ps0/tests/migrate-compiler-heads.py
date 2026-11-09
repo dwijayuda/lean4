@@ -260,6 +260,14 @@ def local_id_value(declaration):
 
 
 def do_element(element):
+    if element['kind'] == 'Lean.Parser.Term.doLetElse':
+        parts = element['args']
+        assert len(parts) == 9 and len(parts[8]['args']) <= 1
+        single_type_call(parts[5], 'owned pattern let value')
+        do_sequence(parts[7])
+        if parts[8]['args']:
+            do_sequence(parts[8]['args'][0])
+        return
     kind, parts = element['kind'], element['args']
     if kind == 'Lean.Parser.Term.doLetRec':
         assert len(parts) == 2

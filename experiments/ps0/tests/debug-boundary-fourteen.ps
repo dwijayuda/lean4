@@ -64,6 +64,8 @@ run_cmd do
     let target ← Lean.importModules (modules.map fun moduleName => {module := moduleName}) {}
     for (label, nativeCategory, psCategory, native, ps) in cases do
       for (mode, category, input) in [("native", nativeCategory, native), ("ps", psCategory, ps)] do
+        let (category, input) := if category == `doSeq then (`term, "do" ++ input)
+          else if category == `psDoSeq then (`psTerm, "do" ++ input) else (category, input)
         match Lean.Parser.runParserCategory target category input with
         | .ok source => Lean.logInfo m!"PS0_BOUNDARY14_OK {context} {label} {mode}: {repr source}"
         | .error error => Lean.logInfo m!"PS0_BOUNDARY14_ERROR {context} {label} {mode}: {error}"

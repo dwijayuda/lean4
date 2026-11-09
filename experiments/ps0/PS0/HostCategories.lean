@@ -105,6 +105,12 @@ def recursivePrefix : Parser :=
 @[run_parser_attribute_hooks] def patternBindElem : Parser :=
   operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doLetArrow
 
+@[run_parser_attribute_hooks] def patternLetElseElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doLetElse leadPrec <| withPosition <|
+    letPrefix >> termParser >> " := " >> categoryParser `psTerm 0 >>
+      (checkColGe >> " | " >> operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doSeqIndent) >>
+      optional (checkColGe >> operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doSeqIndent)
+
 @[run_parser_attribute_hooks] def reassignElem : Parser :=
   leadingNode ``Lean.Parser.Term.doReassign maxPrec <|
     Lean.Parser.Term.notFollowedByRedefinedTermToken >>
@@ -166,6 +172,8 @@ def ps0NativeTermLet : Lean.Parser.Parser := PS0.DoLayout.namedLetTerm
 def ps0NativeDoBind : Lean.Parser.Parser := PS0.DoLayout.bindElem
 @[psDoElem_parser 10000]
 def ps0NativeDoPatternBind : Lean.Parser.Parser := PS0.DoLayout.patternBindElem
+@[psDoElem_parser 30000]
+def ps0NativeDoPatternLetElse : Lean.Parser.Parser := PS0.DoLayout.patternLetElseElem
 @[psDoElem_parser 20000]
 def ps0NativeDoReassign : Lean.Parser.Parser := PS0.DoLayout.reassignElem
 @[psDoElem_parser 20000]
@@ -414,6 +422,13 @@ partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRe
   lower `psTerm source
 
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.doLetElse then
+    unless source.getArgs.size == 9 && source[8].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-DO-PATTERN-LET: unexpected native fallback/continuation"
+    let source := source.setArg 5 (← lower `psTerm source[5])
+    let source := source.setArg 7 (← lowerNativeDoSequence source[7])
+    if source[8].getArgs.isEmpty then return source
+    return source.setArg 8 (source[8].setArg 0 (← lowerNativeDoSequence source[8][0]))
   if source.isOfKind ``Lean.Parser.Term.doLetRec then
     unless source.getArgs.size == 2 do
       Macro.throwError "PS0V1-LOCAL-REC: unexpected native do shape"
