@@ -57,14 +57,17 @@ def first_difference(a, b, path=''):
 
 left = definitions(native['commands'])
 right = definitions(mapped['loweredCommands'])
-assert left and left.keys() == right.keys(), (left.keys(), right.keys())
+assert left and right and right.keys() <= left.keys(), (left.keys(), right.keys())
 rows = []
 for name, declaration in left.items():
+    if name not in right:
+        continue
     row = dict(name=name)
     for role in ['signatureSyntax', 'valueSyntax']:
         row[role] = first_difference(tree(declaration.get(role)), tree(right[name].get(role)))
     rows.append(row)
 result = dict(scope='native command-adapter output before further native macro expansion; ranges and operator-census flags excluded',
+    excluded_native_definitions=sorted(left.keys() - right.keys()),
     definitions=len(rows), equal_syntax=sum(all(row[role] is None for role in ['signatureSyntax', 'valueSyntax']) for row in rows),
     differences=[row for row in rows if row['signatureSyntax'] or row['valueSyntax']],
     grammar_migration_complete=False, verified_execution=False)

@@ -286,6 +286,17 @@ private partial def command (env : Environment) (operators : Array Name) (source
 private partial def syntaxKinds (names : NameSet) (source : Syntax) : NameSet :=
   source.getArgs.foldl syntaxKinds (names.insert source.getKind)
 
+private partial def expandDiagnosticCommand (source : Syntax) : MacroM Syntax := do
+  if source.getKind.toString.startsWith "PS0.StandardAdapters.ps0Standard" then
+    return (← Macro.expandMacro? source).getD source
+  if source.isOfKind `ps0NativeCommandBridge then
+    return ← expandDiagnosticCommand source[0]
+  if source.isOfKind ``Lean.Parser.Command.«in» then
+    return source.setArg 2 (← expandDiagnosticCommand source[2])
+  if source.isOfKind ``Lean.Parser.Command.«mutual» then
+    return source.setArg 1 (source[1].setArgs (← source[1].getArgs.mapM expandDiagnosticCommand))
+  return source
+
 def collect (commands : Array Syntax) : CommandElabM Unit := do
   let output := (← getOptions).get `ps0.sourceCensusPath ("" : String)
   unless output.isEmpty do
@@ -302,10 +313,8 @@ def collect (commands : Array Syntax) : CommandElabM Unit := do
       |>.qsort (· < ·)
     let lowered ← if (← getOptions).getBool `ps0.loweredCensus false then
         commands.mapM fun source => do
-          let expanded ← if source.getKind.toString.startsWith "PS0.StandardAdapters.ps0Standard" then
-              Lean.Elab.liftMacroM <| Macro.expandMacro? source
-            else pure none
-          pure <| command env operators (expanded.getD source)
+          let expanded ← Lean.Elab.liftMacroM <| expandDiagnosticCommand source
+          pure <| command env operators expanded
       else pure #[]
     let data := Json.mkObj [
       ("schema", toJson ("ps0-native-source-census/1" : String)),
