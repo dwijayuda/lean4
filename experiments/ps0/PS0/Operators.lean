@@ -68,7 +68,8 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
 @[implemented_by leadingImpl]
 opaque leadingFn : ParserFn
 
-def leading : Parser := {info := nodeInfo bridgeKind (categoryParser `term 0).info, fn := leadingFn}
+@[expose] def leading : Parser :=
+  withFn (fun _ => leadingFn) (node bridgeKind (categoryParser `term 0))
 
 private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
@@ -91,7 +92,8 @@ private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
 @[implemented_by trailingImpl]
 opaque trailingFn : ParserFn
 
-def trailing : TrailingParser := {info := nodeInfo ownedKind {}, fn := trailingFn}
+@[expose] def trailing : TrailingParser :=
+  withFn (fun _ => trailingFn) (node ownedKind (categoryParser `term 0))
 
 builtin_initialize
   registerBuiltinNodeKind ownedKind
