@@ -32,6 +32,11 @@ meta partial def firstLocalId? (source : Lean.Syntax) : Option Lean.Syntax :=
   if source.isOfKind ``Lean.Parser.Term.letIdDecl then some source
   else source.getArgs.findSome? firstLocalId?
 
+meta def localSpan (source : Lean.Syntax) : String :=
+  match source.getRange? with
+  | some span => s!"{span.start.byteIdx}:{span.stop.byteIdx}"
+  | none => "none"
+
 meta partial def checkLocalBinderOrigin (before : Lean.Syntax)
     (after : Array Lean.Syntax) : Lean.MacroM Unit := do
   if before.isOfKind Lean.choiceKind then
@@ -40,7 +45,7 @@ meta partial def checkLocalBinderOrigin (before : Lean.Syntax)
     let original := before[0]
     unless after.size == 1 && original.getKind == after[0]!.getKind &&
         original.getRange? == after[0]!.getRange? do
-      Lean.Macro.throwError s!"PS0_LOCAL_NATIVE_BINDER_ORIGIN: {original.getKind} {original.getRange?} -> {after.map (fun x => (x.getKind, x.getRange?))}"
+      Lean.Macro.throwError s!"PS0_LOCAL_NATIVE_BINDER_ORIGIN: {original.getKind} {localSpan original} -> {after.map (fun x => (x.getKind, localSpan x))}"
     let lowered := after[0]!
     if original.isIdent || original.isOfKind ``Lean.Parser.Term.hole then
       unless original.eqWithInfo lowered do Lean.Macro.throwError "PS0_LOCAL_IDENT_ORIGIN"
