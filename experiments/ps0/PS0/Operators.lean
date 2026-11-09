@@ -49,8 +49,7 @@ private def ownedOperandContext (ctx : ParserContextCore) : ParserContextCore :=
 private def operandParser (parser : Parser) : Parser :=
   withFn (adaptUncacheableContextFn ownedOperandContext) parser
 
-private unsafe def leadingWith (head : Bool) : ParserFn := fun outer initial => unsafeBaseIO do
-  let ctx := if head then {outer with prec := maxPrec} else outer
+private unsafe def leadingWith (head : Bool) : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
     | return initial.mkUnexpectedError "PS0V1-OP-CATEGORY: missing native term category"
   let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
@@ -90,7 +89,8 @@ opaque leadingFn : ParserFn
 @[expose, run_parser_attribute_hooks] def leading : Parser :=
   withFn (fun _ => leadingFn) (node bridgeKind (categoryParser `term 0))
 
-private unsafe def headLeadingImpl : ParserFn := leadingWith true
+private unsafe def headLeadingImpl : ParserFn :=
+  adaptCacheableContextFn ({ · with prec := maxPrec }) (leadingWith true)
 
 @[implemented_by headLeadingImpl]
 opaque headLeadingFn : ParserFn
