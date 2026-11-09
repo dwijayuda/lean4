@@ -49,8 +49,8 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
     let mut low := prec
     let mut high := maxPrec
     if high <= prec then return parsed
-    let prefix := (categoryParser `term high).fn ctx initial
-    if prefix.hasError || kinds.contains prefix.stxStack.back.getKind then
+    let leadingProbe := (categoryParser `term high).fn ctx initial
+    if leadingProbe.hasError || kinds.contains leadingProbe.stxStack.back.getKind then
       return parsed
     while low + 1 < high do
       let middle := low + (high - low) / 2
