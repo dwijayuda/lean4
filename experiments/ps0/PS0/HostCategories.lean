@@ -166,6 +166,17 @@ private partial def punningIdentifier? (source : Lean.Syntax) : Option Lean.Synt
       source.getArgs.size == 1 then punningIdentifier? source[0]
   else none
 
+private partial def nativeBraceOrigins (source native : Lean.Syntax) : MacroM Lean.Syntax := do
+  if native.isOfKind choiceKind then
+    let alternatives ← native.getArgs.mapM (nativeBraceOrigins source)
+    return .node (loweringInfo source) choiceKind alternatives
+  let args := native.getArgs
+  unless args.size >= 2 && args[0]!.isAtom && args[0]!.getAtomVal == "{" &&
+      args.back!.isAtom && args.back!.getAtomVal == "}" do
+    Macro.throwError s!"PS0V1-NATIVE-BRACES: unexpected native alternative {native.getKind}"
+  let native := (native.setArg 0 source[0]).setArg (args.size - 1) source[2]
+  return .node (loweringInfo source) native.getKind native.getArgs
+
 private def rejectHostGap (source : Lean.Syntax) : MacroM Unit := do
   if let .node (.synthetic ..) _ _ := source then return ()
   if source.isOfKind ``Lean.Parser.Term.app then
@@ -235,8 +246,7 @@ partial def lower (category : Name) (source : Lean.Syntax) :
         if let some identifier := punningIdentifier? body.raw then
           let field : TSyntax `ident := ⟨identifier⟩
           let record ← `({ $field:ident })
-          let native := (record.raw.setArg 0 source[0]).setArg 5 source[2]
-          return .node (loweringInfo source) native.getKind native.getArgs
+          return ← nativeBraceOrigins source record.raw
         let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
         return (← `(($body))).raw
     | `(psTerm| if $cond:psTerm then $yes:psTerm else $no:psTerm) => do

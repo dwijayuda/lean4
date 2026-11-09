@@ -55,12 +55,24 @@ example : lambdaArrowOrigin λ n => add(n, 1) := by trivial
 
 macro "recordPunOrigin " e:psTerm : term => do
   let lowered ← PS0.Syntax.lower `psTerm e.raw
-  unless e.raw.isOfKind ``ps0HostBraces && lowered.isOfKind ``Lean.Parser.Term.structInst &&
-      lowered.getArgs.size == 6 && lowered[0].eqWithInfo e.raw[0] &&
-      lowered[5].eqWithInfo e.raw[2] && lowered.getRange? == e.raw.getRange? do
+  let alternatives := if lowered.isOfKind Lean.choiceKind then lowered.getArgs else #[lowered]
+  unless e.raw.isOfKind ``ps0HostBraces &&
+      alternatives.any (·.isOfKind ``Lean.Parser.Term.structInst) &&
+      alternatives.all (fun alternative => alternative.getArgs.size >= 2 &&
+        alternative[0].eqWithInfo e.raw[0] &&
+        alternative.getArgs.back!.eqWithInfo e.raw[2] &&
+        alternative.getRange? == e.raw.getRange?) && lowered.getRange? == e.raw.getRange? do
     Lean.Macro.throwError s!"PS0_RECORD_PUN_ORIGIN: source={e.raw.getKind}; native={lowered.getKind}/{lowered.getArgs.size}; sourceRange={repr e.raw.getRange?}; nativeRange={repr lowered.getRange?}"
   `(True)
 example : recordPunOrigin { /- original pun -/ root } := by trivial
+
+structure LiteralBag where
+  value : Nat
+instance : Singleton Nat LiteralBag where
+  singleton n := ⟨n⟩
+def singletonAlternative (n : Nat) : Id LiteralBag := do
+  return {n}
+example : (singletonAlternative(3)).value = 3 := by rfl
 
 meta def nativeLambdaQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| fun (n : Nat) => add (n, 1))
