@@ -32,6 +32,8 @@ for name, declaration, reason in [
     ('default-gap', 'let rec step (x: Nat, y: Nat := add (1, 2)): Nat := add(x, y)', 'PS0V1-CALL-GAP'),
     ('default-order', 'let step (x: Nat, y: Nat := add(x := 1, 2)): Nat := add(x, y)', 'PS0V1-CALL-ORDER'),
     ('default-type', 'let step (x: Nat, y: Nat := "bad"): Nat := add(x, y)', 'type mismatch'),
+    ('empty-local', 'let step (): Nat := 1', 'unexpected'),
+    ('instance-spacing', 'let step (x: Nat)[Inhabited(Nat)]: Nat := x', 'space'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + 'const bad: Id(Nat) := do\n  ' + declaration + '\n  return step(4)\n')
@@ -40,6 +42,9 @@ for name, declaration, reason in [
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
+    'origin_cases': 5, 'rejection_cases': 6,
+    'native_quotation_control': True, 'duplicate_partition_coalesced': True,
+    'different_partition_rejected': True,
     'scope': 'finite named do/pure let and let-rec mixed/comma telescopes, native DSL control; not all local/where grammar',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')

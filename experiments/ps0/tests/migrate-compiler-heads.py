@@ -120,6 +120,14 @@ def single_type_call(operand, role='owned binder type'):
         recursive_declarations(operand['args'][1])
         single_type_call(operand['args'][3], role + ' local recursive continuation')
         return
+    if operand['kind'] == 'Lean.Parser.Term.let':
+        parts = operand['args']
+        assert len(parts) == 5 and parts[2]['kind'] == 'Lean.Parser.Term.letDecl'
+        declaration = parts[2]['args'][0]
+        if declaration['kind'] == 'Lean.Parser.Term.letIdDecl':
+            local_id_value(declaration)
+            single_type_call(parts[4], role + ' named local continuation')
+        return
     if operand['kind'] == 'Lean.Parser.Term.termUnless':
         unless_operands(operand)
         return
