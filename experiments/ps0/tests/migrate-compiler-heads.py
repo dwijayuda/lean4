@@ -12,6 +12,7 @@ parser.add_argument('census', type=Path)
 parser.add_argument('source', type=Path)
 parser.add_argument('output', type=Path)
 parser.add_argument('--plan', type=Path, required=True)
+parser.add_argument('--allow-empty', action='store_true')
 args = parser.parse_args()
 snapshot = json.loads(args.census.read_text())
 raw = args.source.read_bytes()
@@ -58,7 +59,39 @@ def single_type_call(operand, role='owned binder type'):
     if not any(argument['kind'] in ['Lean.Parser.Term.paren', 'Lean.Parser.Term.tuple',
                                    'Lean.Parser.Term.fun'] for argument in arguments):
         return
-    assert all(a['kind'] != 'Lean.Parser.Term.namedArgument' for a in arguments)
+    if any(a['kind'] == 'Lean.Parser.Term.namedArgument' for a in arguments):
+        # PS calls put named arguments last. Native elaboration resolves names
+        # independently of their written positions; parity is checked by Lake.
+        pending = len(edits)
+        for argument in arguments:
+            if argument['kind'] == 'Lean.Parser.Term.namedArgument':
+                assert len(argument['args']) == 5
+                single_type_call(argument['args'][3], role + ' named argument value')
+            else:
+                single_type_call(argument, role)
+        nested = sorted(edits[pending:], key=lambda change: change['start'])
+        del edits[pending:]
+        positional, named = [], []
+        previous_end = span(function)[1]
+        for argument in arguments:
+            start, end = span(argument)
+            assert start == previous_end or raw[previous_end:start].isspace(), 'named-call trivia contains comments'
+            previous_end = end
+            is_named = argument['kind'] == 'Lean.Parser.Term.namedArgument'
+            left, right = (start + 1, end - 1) if is_named else (start, end)
+            chunks, cursor = [], left
+            for change in nested:
+                if left <= change['start'] and change['end'] <= right:
+                    assert cursor <= change['start']
+                    chunks += [raw[cursor:change['start']], change['new'].encode()]
+                    cursor = change['end']
+            chunks.append(raw[cursor:right])
+            (named if is_named else positional).append(b''.join(chunks))
+        start, end = span(operand)
+        function_start, function_end = span(function)
+        replacement = raw[function_start:function_end] + b'(' + b', '.join(positional + named) + b')'
+        edit(start, end, replacement.decode(), role + ' call with named arguments last; preserve original argument terms')
+        return
     _, end = span(function)
     start, _ = span(arguments[0])
     assert start == end or raw[end:start].isspace(), 'type-call trivia contains comments; no edit is permitted'
@@ -162,7 +195,7 @@ for command in original_commands(snapshot['commands']):
                 single_type_call(alternative['args'][3], 'owned equation right-hand side')
     declarations.append(decl['sourceName'])
 
-assert declarations, 'no supported native declaration heads'
+assert declarations or args.allow_empty, 'no supported native declaration heads'
 edits.sort(key=lambda e: e['start'])
 assert all(a['end'] <= b['start'] for a, b in zip(edits, edits[1:])), 'overlapping native source edits'
 chunks, cursor = [], 0

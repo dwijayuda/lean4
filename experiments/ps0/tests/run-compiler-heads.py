@@ -117,6 +117,13 @@ for declaration in declarations:
         keyword = strategies.get(declaration['sourceName'], 'function')
         assert declaration['mode'] == 'mapped-ps'
         assert declaration['production'] == productions[keyword], declaration
+equation_definitions = {d['sourceName'] for d in original_declarations
+                        if d['production'] == 'Lean.Parser.Command.definition'
+                        and d.get('valueSyntax', {}).get('kind') == 'Lean.Parser.Command.declValEqns'}
+for declaration in declarations:
+    if declaration['sourceName'] in equation_definitions:
+        assert declaration['declarationValueKind'] == 'PS0.StandardAdapters.ps0DeclEqns', declaration
+        assert declaration['equationBodyKinds'], declaration
 assert observed['imports'] == json.loads(census.read_text())['imports']
 owned_value_calls = [name for name in args.owned_value_calls.split(',') if name]
 for name in owned_value_calls:
@@ -131,8 +138,9 @@ if args.fixture == 'EmitUtil':
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
     'converted_declarations': plan['declarations'], 'unchanged_abbrev_adapters': sorted(unchanged_abbrevs),
     'source_strategies': plan.get('strategies', []),
+    'equation_definitions': sorted(equation_definitions),
     'owned_value_calls': owned_value_calls,
-    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail']}
+    'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds']}
                             for d in declarations if d['sourceName'] in plan['declarations']],
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',
     'scope': 'real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration',

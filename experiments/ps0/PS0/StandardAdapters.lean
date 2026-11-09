@@ -35,8 +35,9 @@ syntax (name := ps0DeclEqns) nativePSMatchAlts (psDeclTail)? : psDeclValue
 private def nativeValue (source : TSyntax `psDeclValue) : MacroM (TSyntax ``Lean.Parser.Command.declVal) := do
   let value := source.raw
   let tail := value.getArgs.back![0]
-  let suffix := if tail.isMissing then mkNullNode #[] else tail[0]
-  let whereDecls := if tail.isMissing then mkNullNode #[] else tail[1]
+  let defaults ← `(Lean.Parser.Command.definition| def __ps0Value := ())
+  let suffix := if tail.isMissing then defaults.raw[3][2] else tail[0]
+  let whereDecls := if tail.isMissing then defaults.raw[3][3] else tail[1]
   if value.isOfKind ``ps0DeclSimple then
     return ⟨mkNode ``Lean.Parser.Command.declValSimple
       #[value[0], ← PS0.Syntax.lower `psTerm value[1], suffix, whereDecls]⟩

@@ -79,6 +79,8 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
     let declValue := if hasTail then source.getArgs.back! else Syntax.missing
     let value := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclSimple then declValue[1] else Syntax.missing
     let tail := declValue.getArgs.back![0]
+    let equationBodies := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclEqns then
+      declValue[0][0].getArgs.map (fun alt => alt[3].getKind.toString) else #[]
     return Json.mkObj [
       ("mode", toJson ("mapped-ps" : String)), ("production", toJson kind.toString),
       ("sourceName", toJson source[2][0].getId.toString),
@@ -89,6 +91,7 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
         (value.isOfKind `ps0HostHeadTerm && value[0].isOfKind `ps0HeadCall))),
       ("ownedOperatorKinds", toJson ((ownedOperators value).map Name.toString)),
       ("declarationValueKind", toJson declValue.getKind.toString),
+      ("equationBodyKinds", toJson equationBodies),
       ("nativeWhereTail", toJson (hasTail && tail[1].getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
   if source.isOfKind ``Lean.Parser.Command.declaration then
     let native := source[1]
