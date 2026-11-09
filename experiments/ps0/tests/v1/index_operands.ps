@@ -37,6 +37,11 @@ meta partial def nativeIndexSyntax? (kind : Lean.Name) (source : Lean.Syntax) : 
   if source.getKind == kind then some source
   else source.getArgs.findSome?(nativeIndexSyntax?(kind))
 
+meta partial def originalProjectionSyntax? (source : Lean.Syntax) : Option Lean.Syntax :=
+  if source.isOfKind `PS0.Operators.ownedPostfix &&
+      source[0].isOfKind ``Lean.Parser.Term.proj then some source[0]
+  else source.getArgs.findSome? originalProjectionSyntax?
+
 macro "indexOrigin " e:psTerm : term => do
   let some original := originalIndexSyntax? e.raw
     | Lean.Macro.throwError "PS0_INDEX_OWNERSHIP"
@@ -69,6 +74,21 @@ example : indexOrigin (#[(1, 2), (3, 4)][chooseIndex(0)]'(bound(0))).1 := by tri
 example : indexOrigin (#[2, 3][1]?).getD(0) := by trivial
 example : indexOrigin (#[2, 3][0:2]).size := by trivial
 example : indexOrigin (#[(1, 2), (3, 4)][0]'(by decide)).1 := by trivial
+
+macro "projectionOrigin " e:psTerm : term => do
+  let some original := originalProjectionSyntax? e.raw
+    | Lean.Macro.throwError "PS0_PROJECTION_OWNERSHIP"
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  let some native := nativeIndexSyntax? ``Lean.Parser.Term.proj lowered
+    | Lean.Macro.throwError "PS0_PROJECTION_NATIVE_KIND"
+  unless original.getRange? == native.getRange? &&
+      original[0].getRange? == native[0].getRange? &&
+      original[1].eqWithInfo native[1] && original[2].eqWithInfo native[2] do
+    Lean.Macro.throwError "PS0_PROJECTION_TOKEN_ORIGIN"
+  `(True)
+example : projectionOrigin (#[2, 3][1]?).getD(0) := by trivial
+example : projectionOrigin (#[2, 3][0:2]).size := by trivial
+example : projectionOrigin (#[(1, 2), (3, 4)][0]'(by decide)).1 := by trivial
 
 meta def nativeIndexQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| #[2, 3][1]?)
