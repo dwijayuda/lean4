@@ -71,10 +71,10 @@ opaque leadingFn : ParserFn
 @[expose, run_parser_attribute_hooks] def leading : Parser :=
   withFn (fun _ => leadingFn) (node bridgeKind (categoryParser `term 0))
 
-private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
+private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
     | return initial.mkUnexpectedError "PS0V1-OP-CATEGORY: missing native term category"
-  let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
+  let kinds := if projectionOnly then #[] else PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
   let (state, indexedParsers) := indexed category.tables.trailingTable ctx initial .default
   if state.hasError then return state
   let candidates := (indexedParsers ++ category.tables.trailingParsers).filter fun (parser, _) =>
@@ -92,10 +92,20 @@ private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
     return parsed.mkUnexpectedError "PS0V1-OP-SHAPE: unexpected native binary operator result"
   return parsed.popSyntax.pushSyntax <| .node .none ownedKind #[native]
 
+private unsafe def trailingImpl : ParserFn := trailingWith false
+
 @[implemented_by trailingImpl]
 opaque trailingFn : ParserFn
 
 @[expose, run_parser_attribute_hooks] def trailing : TrailingParser :=
   withFn (fun _ => trailingFn) (node ownedKind (categoryParser `term 0))
+
+private unsafe def projectionImpl : ParserFn := trailingWith true
+
+@[implemented_by projectionImpl]
+opaque projectionFn : ParserFn
+
+@[expose, run_parser_attribute_hooks] def projection : TrailingParser :=
+  withFn (fun _ => projectionFn) (node ownedPostfixKind (categoryParser `term 0))
 
 end PS0.Operators

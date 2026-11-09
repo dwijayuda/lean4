@@ -66,21 +66,31 @@ def single_type_call(operand, role='owned binder type'):
         return
     function, arguments = operand['args']
     arguments = arguments['args']
-    if not any(argument['kind'] in ['Lean.Parser.Term.paren', 'Lean.Parser.Term.tuple',
-                                   'Lean.Parser.Term.fun'] for argument in arguments):
+    pending = len(edits)
+    single_type_call(function, role + ' call head')
+    for argument in arguments:
+        if argument['kind'] == 'Lean.Parser.Term.namedArgument':
+            assert len(argument['args']) == 5
+            single_type_call(argument['args'][3], role + ' named argument value')
+        else:
+            single_type_call(argument, role)
+    if len(edits) == pending and not any(argument['kind'] in [
+            'Lean.Parser.Term.paren', 'Lean.Parser.Term.tuple', 'Lean.Parser.Term.fun'] for argument in arguments):
         return
     if any(a['kind'] == 'Lean.Parser.Term.namedArgument' for a in arguments):
         # PS calls put named arguments last. Native elaboration resolves names
         # independently of their written positions; parity is checked by Lake.
-        pending = len(edits)
-        for argument in arguments:
-            if argument['kind'] == 'Lean.Parser.Term.namedArgument':
-                assert len(argument['args']) == 5
-                single_type_call(argument['args'][3], role + ' named argument value')
-            else:
-                single_type_call(argument, role)
         nested = sorted(edits[pending:], key=lambda change: change['start'])
         del edits[pending:]
+        def rewritten(left, right):
+            chunks, cursor = [], left
+            for change in nested:
+                if left <= change['start'] and change['end'] <= right:
+                    assert cursor <= change['start']
+                    chunks += [raw[cursor:change['start']], change['new'].encode()]
+                    cursor = change['end']
+            chunks.append(raw[cursor:right])
+            return b''.join(chunks)
         positional, named = [], []
         previous_end = span(function)[1]
         for argument in arguments:
@@ -90,17 +100,10 @@ def single_type_call(operand, role='owned binder type'):
             previous_end = end
             is_named = argument['kind'] == 'Lean.Parser.Term.namedArgument'
             left, right = (start + 1, end - 1) if is_named else (start, end)
-            chunks, cursor = [], left
-            for change in nested:
-                if left <= change['start'] and change['end'] <= right:
-                    assert cursor <= change['start']
-                    chunks += [raw[cursor:change['start']], change['new'].encode()]
-                    cursor = change['end']
-            chunks.append(raw[cursor:right])
-            (named if is_named else positional).append(trivia + b''.join(chunks))
+            (named if is_named else positional).append(trivia + rewritten(left, right))
         start, end = span(operand)
         function_start, function_end = span(function)
-        replacement = raw[function_start:function_end] + b'(' + b','.join(positional + named) + b')'
+        replacement = rewritten(function_start, function_end) + b'(' + b','.join(positional + named) + b')'
         edit(start, end, replacement.decode(), role + ' call with named arguments last; preserve original argument terms')
         return
     _, end = span(function)
@@ -114,8 +117,6 @@ def single_type_call(operand, role='owned binder type'):
         edit(end, start, ',' + raw[end:start].decode(), role + ' call argument separator; preserve original trivia')
     _, argument_end = span(arguments[-1])
     edit(argument_end, argument_end, ')', role + ' call closing delimiter; preserve original argument parentheses')
-    for argument in arguments:
-        single_type_call(argument, role)
 
 
 def alias_binder(binder):

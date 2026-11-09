@@ -47,6 +47,8 @@ syntax:max (name := ps0HostAdjacentCall) (priority := high)
   ident noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
 
 syntax:max (name := ps0NativeHeadBridge) (priority := low) term:max : psHead
+@[psHead_parser]
+def ps0NativeHeadProjectionParser : Lean.Parser.TrailingParser := PS0.Operators.projection
 syntax:max (name := ps0ParenthesizedHead) Lean.Parser.Term.hygienicLParen psTerm ")" : psHead
 syntax:max (name := ps0HeadCall) psHead:max noWs
   "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psHead
@@ -240,6 +242,11 @@ partial def lowerFunBinder (source : Lean.Syntax) :
   Macro.throwError "PS0V1-LAMBDA-BINDER: unsupported owned lambda binder"
 
 partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind `PS0.Operators.ownedPostfix then
+    let native := source[0]
+    unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
+      Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native head projection"
+    return native.setArg 0 (← lowerHead native[0])
   match source with
   | `(psHead| $head:psHead($[$args:psCallArg],*)) =>
       lowerCall (← lowerHead head.raw) args source

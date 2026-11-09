@@ -11,4 +11,7 @@ function nestedSectionProjection(xs : List Nat): List Nat :=
 example : nestedSectionProjection([1, 2]) = [3, 4] := by { rfl }
 const projectionFirst : Nat := (nestedSectionProjection([1, 2])).head!
 example : projectionFirst = 3 := by { rfl }
+function projectedReceiver(n: Nat): Nat := n
+const projectedHeadValue: Nat := (projectedReceiver(2)).add(3)
+example : projectedHeadValue = 5 := by { rfl }
 def main : IO Unit := IO.println s!"PS0_SECTION_PROJECTION:{projectionFirst}"

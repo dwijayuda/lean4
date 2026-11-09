@@ -37,6 +37,7 @@ for name, source, reason in [
     ('type-gap', 'abbrev Small := sized(3)\nconst bad: Small → Nat := fun (n : sized (3)) => n.val', 'PS0V1-CALL-GAP'),
     ('lambda-default', 'const bad: Nat → Nat := fun (n : Nat := 3) => n', None),
     ('projection-subject-gap', 'const bad: Nat := (List.head! ([3])).succ', 'PS0V1-CALL-GAP'),
+    ('projection-call-head-gap', 'const bad: Nat := (List.head! ([3])).add(4)', 'PS0V1-CALL-GAP'),
 ]:
     file = work / (name + '.ps')
     file.write_text(prefix + source + '\n')
