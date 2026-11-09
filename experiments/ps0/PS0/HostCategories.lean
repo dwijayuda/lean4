@@ -19,9 +19,9 @@ declare_syntax_cat psDoElem
 declare_syntax_cat psDoItem
 
 @[psTerm_parser low]
-def ps0NativeTermBridge : Lean.Parser := PS0.Operators.leading
+def ps0NativeTermBridge : Lean.Parser.Parser := PS0.Operators.leading
 @[psTerm_parser]
-def ps0NativeOperatorParser : Lean.TrailingParser := PS0.Operators.trailing
+def ps0NativeOperatorParser : Lean.Parser.TrailingParser := PS0.Operators.trailing
 syntax (name := ps0NativeCommandBridge) command : psCommand
 syntax (name := ps0NativeTacticBridge) (priority := low) tactic : psTactic
 syntax (name := ps0NativeDoBridge) (priority := low) doSeq : psDoSeq
