@@ -46,7 +46,9 @@ transport_source = work / 'NativeTransport.ps'
 transport_source.write_text('module\nprelude\npublic import Lean\npublic section\n'
                             'namespace NativeTransportProbe\n'
                             'theorem transport (n : Nat) : n * 0 = 0 * n :=\n'
-                            '  (Nat.zero_mul n).symm ▸ (Nat.mul_zero n).symm ▸ rfl\n')
+                            '  (Nat.zero_mul n).symm ▸ (Nat.mul_zero n).symm ▸ rfl\n'
+                            'theorem contextTransport (n : Nat) : n = n :=\n'
+                            '  (Eq.refl n).symm.trans (Eq.refl n) ▸ rfl\n')
 transport_census = work / 'transport-census.json'
 run(['lake', 'exe', 'ps0', 'census-source', transport_source, 'NativeTransport', transport_census],
     'native-transport-census')
@@ -57,6 +59,30 @@ assert transport['kind'] == 'Lean.Parser.Term.subst' and len(transport['args']) 
 assert transport['args'][1]['atom'] == '▸' and transport['nativeBinaryOperator'] is True
 transport_shape = dict(kind=transport['kind'], arity=3, token=transport['args'][1]['atom'])
 print('PS0_NATIVE_TRANSPORT_SHAPE:' + json.dumps(transport_shape, sort_keys=True), flush=True)
+legacy_census = json.loads(transport_census.read_text())
+
+
+def legacy_builtin_annotation(node):
+    if isinstance(node, dict):
+        if node.get('kind') == 'Lean.Parser.Term.subst':
+            node['nativeBinaryOperator'] = False
+        for child in node.values():
+            legacy_builtin_annotation(child)
+    elif isinstance(node, list):
+        for child in node:
+            legacy_builtin_annotation(child)
+
+
+legacy_builtin_annotation(legacy_census)
+legacy_path = work / 'legacy-transport-census.json'
+legacy_path.write_text(json.dumps(legacy_census))
+for label, capture in [('current', transport_census), ('legacy', legacy_path)]:
+    run(['python3', 'tests/migrate-compiler-heads.py', capture, transport_source,
+         work / (label + '-transport.ps'), '--plan', work / (label + '-transport-plan.json'),
+         '--allow-empty'], label + '-transport-plan')
+assert (work / 'current-transport.ps').read_bytes() == (work / 'legacy-transport.ps').read_bytes()
+assert any('call opening delimiter' in edit['role']
+           for edit in json.loads((work / 'legacy-transport-plan.json').read_text())['edits'])
 fixture = Path('tests/v1/index_operands.ps')
 assert 'PS0_INDEX_PARSE_ERROR' not in run(
     ['lake', 'env', 'lean', 'tests/debug-index-layout.lean'], 'parser-layout')
@@ -90,6 +116,7 @@ for name, source, reason in [
     'native_syntax_shapes': shapes, 'original_index_tokens_and_ranges': 13,
     'original_projection_tokens_and_ranges': 3,
     'native_transport_shape': transport_shape, 'original_transport_token_and_range': True,
+    'native_builtin_role_annotation_parity': True,
     'projected_oracle': 'PS0_PROJECTED_INDEX:3:2:1',
     'native_projected_index_quotation_ownership': True,
     'scope': 'four pinned native indexed-access and three competing array-slice productions, PS operands beneath parenthesized projected heads and callable heads; thirteen original-token/range assertions, not all postfix/collection grammar',

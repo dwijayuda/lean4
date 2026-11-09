@@ -38,6 +38,11 @@ def original_commands(commands):
         yield from original_commands(command.get('nestedCommands', []))
         previous = command
 
+def binary_operand(operand):
+    return operand.get('nativeBinaryOperator', False) or operand['kind'] in [
+        'Lean.Parser.Term.arrow', 'Lean.Parser.Term.subst']
+
+
 def owns_postfix(operand):
     kind, parts = operand['kind'], operand['args']
     if kind in ['«term__[_]»', "«term__[_]'_»", '«term__[_]_?»', '«term__[_]_!»',
@@ -52,7 +57,7 @@ def owns_postfix(operand):
         return owns_postfix(parts[0]) or any(owns_postfix(arg) for arg in parts[1]['args'])
     if kind == 'Lean.Parser.Term.namedArgument':
         return owns_postfix(parts[3])
-    if operand.get('nativeBinaryOperator', False):
+    if binary_operand(operand):
         return owns_postfix(parts[0]) or owns_postfix(parts[2])
     return False
 
@@ -139,7 +144,7 @@ def single_type_call(operand, role='owned binder type'):
             optional_local_type(body['args'][1], role + ' lambda result type')
             single_type_call(body['args'][3], role + ' lambda body')
         return
-    if operand.get('nativeBinaryOperator', False):
+    if binary_operand(operand):
         assert len(operand['args']) == 3 and operand['args'][1]['atom'] is not None
         single_type_call(operand['args'][0], role)
         single_type_call(operand['args'][2], role)
