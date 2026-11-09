@@ -26,6 +26,9 @@ theorem indexedUnattach {p : Nat → Prop} {l : List { x // p x }}
 theorem optionalIndexedUnattach {p : Nat → Prop} {l : List { x // p x }} (i : Nat) :
     l.unattach[i]? = l[i]?.map(Subtype.val) := by exact List.getElem?_unattach i
 
+theorem projectedTransport (n : Nat) : n * 0 = 0 * n :=
+  (Nat.zero_mul(n)).symm ▸ (Nat.mul_zero(n)).symm ▸ rfl
+
 meta partial def originalIndexSyntax? (source : Lean.Syntax) : Option Lean.Syntax :=
   if source.isOfKind `PS0.Operators.ownedPostfix &&
       #[`«term__[_]», `«term__[_]'_», `«term__[_]_?», `«term__[_]_!»,
