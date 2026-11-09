@@ -132,6 +132,7 @@ def run(args, label):
     (work / (label + '.log')).write_text(text)
     print(text, end='', flush=True)
     assert result.returncode == 0, (label, result.returncode)
+    return text
 
 
 comparisons = {}
@@ -139,7 +140,11 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
     source_root = work / (label + '-source')
     source_root.mkdir()
     source = source_root / 'MatchHostBootstrap.ps'
-    source.write_text((work / 'planned-source.ps').read_text() if body is None else header + body + guards)
+    proof_guards = guards
+    if label == 'migrated':
+        proof_guards = proof_guards.replace('(typedRecord 3).step 2', '((typedRecord(3)).step)(2)')
+        proof_guards = proof_guards.replace('(fieldEqns 3).step 0', '((fieldEqns(3)).step)(0)')
+    source.write_text((work / 'planned-source.ps').read_text() if body is None else header + body + proof_guards)
     shutil.copy2(source, work / (label + '-MatchHostBootstrap.ps'))
     directory = work / (label + '-build')
     args = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source_root),
@@ -168,9 +173,21 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
         shutil.copy2(file, work / (label + '-MatchHostBootstrap' + file.suffix))
 assert all(pair['baseline'] == pair['migrated'] == pair['planned'] for pair in comparisons.values())
+fixture = Path('tests/v1/ordinary_host_origins.ps')
+origin_log = run(['lake', 'exe', 'ps0', 'check', fixture], 'origins')
+assert 'PS0_HOST_NATIVE_QUOTATION: PASS' in origin_log
+run(['lake', 'exe', 'ps0', 'build-native', fixture, 'OrdinaryHostOrigins', work / 'native'], 'native-origins')
+executable = work / 'native/OrdinaryHostOrigins'
+runtime = run([executable], 'runtime-origins')
+assert runtime.strip() == 'PS0_HOST_ORIGINS: PASS'
+shutil.copy2(executable, work / 'OrdinaryHostOrigins')
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
     comparisons=comparisons, mapped_definitions=17, mapped_theorems=17, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
+    source_origin_fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
+    source_origin_cases=4, independently_owned_native_dsl=True, native_quotation=True,
+    native_executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
+    runtime_oracle='PS0_HOST_ORIGINS: PASS',
     scope='finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
 print('PS0_MATCH_HOST_NATIVE_PARITY: PASS', flush=True)

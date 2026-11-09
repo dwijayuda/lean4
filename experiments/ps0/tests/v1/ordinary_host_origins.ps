@@ -1,0 +1,66 @@
+/-! Ordinary host adapters preserve original native nodes, tokens, patterns and binder roles. -/
+
+meta partial def sameHostNode? (source reference : Lean.Syntax) : Option Lean.Syntax :=
+  if source.getKind == reference.getKind && source.getRange? == reference.getRange? then
+    some source
+  else source.getArgs.findSome? (fun child => sameHostNode? child reference)
+
+meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat := do
+  let kind := before.getKind
+  let selected := #[``Lean.Parser.Term.«match», ``Lean.Parser.Term.matchAlt,
+    ``Lean.Parser.Term.structInst, ``Lean.Parser.Term.structInstField,
+    ``Lean.Parser.Term.doIf, ``Lean.Parser.Term.doIfLet, ``Lean.Parser.Term.doIfProp]
+  let mut count := 0
+  if selected.contains kind then
+    let some lowered := sameHostNode? after before
+      | Lean.Macro.throwError s!"PS0_HOST_NODE_ORIGIN: {kind}"
+    let unchanged : Array Nat :=
+      if kind == ``Lean.Parser.Term.«match» then #[0, 1, 4]
+      else if kind == ``Lean.Parser.Term.matchAlt then #[0, 1, 2]
+      else if kind == ``Lean.Parser.Term.structInst then #[0, 3, 5]
+      else if kind == ``Lean.Parser.Term.structInstField then #[0]
+      else if kind == ``Lean.Parser.Term.doIfLet then #[0, 1]
+      else if kind == ``Lean.Parser.Term.doIfProp then #[0]
+      else #[0, 2]
+    for index in unchanged do
+      unless before[index].eqWithInfo lowered[index] do
+        Lean.Macro.throwError s!"PS0_HOST_UNCHANGED_ROLE_ORIGIN: {kind}/{index}"
+    if kind == ``Lean.Parser.Term.structInstField && !before[1].getArgs.isEmpty then
+      unless before[1][0].eqWithInfo lowered[1][0] do
+        Lean.Macro.throwError "PS0_HOST_FIELD_BINDER_ORIGIN"
+    count := count + 1
+  for child in before.getArgs do
+    count := count + (← checkHostOrigins child after)
+  return count
+
+macro "hostOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless (← checkHostOrigins e.raw lowered) > 0 do
+    Lean.Macro.throwError "PS0_HOST_ORIGIN_NO_CASE"
+  `(True)
+
+example : hostOrigin match (generalizing := true) h : n with
+  | some (Nat.succ k) => add(k, 1)
+  | _ => add(1, 2) := by trivial
+example : hostOrigin (fun | some (Nat.succ k) => add(k, 1) | _ => 0) := by trivial
+example : hostOrigin { base with value := add(n, 1), step x := add(x, n) : AdapterCell } := by trivial
+example : hostOrigin do
+  if h : n = 0 then return add(n, 1)
+  else if let some (Nat.succ k) := some n then return add(k, 1)
+  else return 0 := by trivial
+
+macro "nativeMatchBody " e:term : term => pure e
+function pairSum(p: Nat × Nat): Nat := p.1 + p.2
+const independentlyOwnedMatch: Nat := nativeMatchBody
+  match some 0 with | some n => pairSum (n, 1) | none => 0
+example : independentlyOwnedMatch = 1 := by decide
+
+meta def nativeHostQuotation : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| match some 0 with | some n => Nat.add n 1 | none => 0)
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeHostQuotation
+  unless quoted.raw.isOfKind ``Lean.Parser.Term.«match» do
+    throwError "PS0_HOST_NATIVE_QUOTATION"
+  Lean.logInfo "PS0_HOST_NATIVE_QUOTATION: PASS"
+
+def main : IO Unit := IO.println "PS0_HOST_ORIGINS: PASS"
