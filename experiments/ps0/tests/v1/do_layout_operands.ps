@@ -1,7 +1,7 @@
 /-! Native do layout owns supported PS element operands and fences native syntax data. -/
 function add(x: Nat, y: Nat): Nat := x + y
 function pureNat(n: Nat): IO Nat := pure n
-function observe(n: Nat): IO Unit := if n == 99 then pure () else pure ()
+function observe(n: Nat): IO Unit := if n == 99 then pure(()) else pure(())
 
 const layoutValue: IO Nat := do
   let first : Nat := add(1, 1)
@@ -26,7 +26,8 @@ const nativeLayoutValue: IO Nat := nativeLayout
   return ← pureNat (3)
 
 meta def nestedQuote : Lean.MacroM(Lean.TSyntax `term) := do
-  return `(term| do { pure (3) })
+  let quoted ← `(term| do { pure (3) })
+  return quoted
 run_cmd do
   let quoted ← Lean.Elab.liftMacroM nestedQuote
   unless quoted.raw.isOfKind ``Lean.Parser.Term.do do

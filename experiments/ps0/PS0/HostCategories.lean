@@ -217,6 +217,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
         return (← `(do $seq:doSeq)).raw
     | _ => do
         if let some expanded ← Macro.expandMacro? source then
+          if expanded.isOfKind ``Lean.Parser.Term.binrel then
+            dbg_trace s!"PS0_HOST_MACRO_ROLE: {source.getKind} -> {expanded.getKind}; children={source.getArgs.map Syntax.getKind}"
           lower category expanded
         else Macro.throwError s!"PS0V1-HOST-LOWER: unsupported psTerm {source.getKind} / {source.getArgs.size}"
   else if category == `psCommand then
