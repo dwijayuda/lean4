@@ -122,7 +122,7 @@ def namedDeclaration : Parser :=
       sepBy1 (operands #[(`term, `psTerm)] Lean.Parser.Term.matchDiscr) ", " >>
       " with" >> ppDedent (Lean.Parser.Term.matchAlts sequence)
 
-private def forDeclaration : Parser :=
+def forDeclaration : Parser :=
   node ``Lean.Parser.Term.doForDecl <|
     optional (atomic (ident >> " : ")) >> termParser >> " in " >>
       withForbiddens #["do", "invariant", "decreasing"] (categoryParser `psTerm 0)
@@ -132,16 +132,16 @@ private def forDeclaration : Parser :=
     "for " >> sepBy1 forDeclaration ", " >> optional Lean.Parser.Term.doLoopInvariant >>
       optional Lean.Parser.Term.doLoopDecreasing >> " do " >> sequence
 
-private def catchElem : Parser :=
+def catchElem : Parser :=
   node ``Lean.Parser.Term.doCatch <|
     ppDedent ppLine >> atomic ("catch " >> Lean.Parser.Term.binderIdent) >>
-      optional (" : " >> categoryParser `psTerm 0) >> Lean.Parser.Term.darrow >> sequence
+      optional (" : " >> categoryParser `psTerm 0) >> darrow >> sequence
 
-private def catchMatchElem : Parser :=
+def catchMatchElem : Parser :=
   node ``Lean.Parser.Term.doCatchMatch <|
     ppDedent ppLine >> "catch " >> ppDedent (Lean.Parser.Term.matchAlts sequence)
 
-private def finallyElem : Parser :=
+def finallyElem : Parser :=
   node ``Lean.Parser.Term.doFinally <| ppDedent ppLine >> "finally " >> sequence
 
 @[run_parser_attribute_hooks] def tryElem : Parser :=
@@ -386,6 +386,7 @@ private partial def checkProjectionSubject (source : Lean.Syntax) : MacroM Unit 
       checkProjectionSubject
         (if argument.isOfKind ``Lean.Parser.Term.namedArgument then argument[3] else argument)
 
+set_option maxHeartbeats 800000 in
 mutual
 partial def lower (category : Name) (source : Lean.Syntax) :
     MacroM Lean.Syntax := withRef source <| Macro.withIncRecDepth source do
