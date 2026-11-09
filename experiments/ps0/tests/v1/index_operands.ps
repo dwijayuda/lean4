@@ -66,6 +66,9 @@ example : indexOrigin #[2, 3][:chooseIndex(1)] := by trivial
 example : indexOrigin (#[2, 3][chooseIndex(1)]?).getD(0) := by trivial
 example : indexOrigin (#[2, 3][chooseIndex(0):chooseIndex(2)]).size := by trivial
 example : indexOrigin (#[(1, 2), (3, 4)][chooseIndex(0)]'(bound(0))).1 := by trivial
+example : indexOrigin (#[2, 3][1]?).getD(0) := by trivial
+example : indexOrigin (#[2, 3][0:2]).size := by trivial
+example : indexOrigin (#[(1, 2), (3, 4)][0]'(by decide)).1 := by trivial
 
 meta def nativeIndexQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| #[2, 3][1]?)
@@ -84,6 +87,6 @@ const optionalResult: Nat := optionalValue.getD(0)
 const sliceBothSize: Nat := sliceBoth.size
 const sliceLowerSize: Nat := sliceLower.size
 const sliceUpperSize: Nat := sliceUpper.size
-def main : IO Unit :=
+def main : IO Unit := do
   IO.println s!"PS0_INDEX:{optionalResult}:{plainValue}:{panicValue}:{proofValue}:{callableValue}:{sliceBothSize}:{sliceLowerSize}:{sliceUpperSize}"
   IO.println s!"PS0_PROJECTED_INDEX:{projectedOptionalResult}:{projectedSliceSize}:{projectedProofValue}"

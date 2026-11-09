@@ -71,7 +71,7 @@ for name, source, reason in [
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    'native_syntax_shapes': shapes, 'original_index_tokens_and_ranges': 10,
+    'native_syntax_shapes': shapes, 'original_index_tokens_and_ranges': 13,
     'projected_oracle': 'PS0_PROJECTED_INDEX:3:2:1',
     'native_projected_index_quotation_ownership': True,
     'scope': 'four pinned native indexed-access and three competing array-slice productions, PS subject/index/proof/bound operands and callable heads; not all postfix/collection grammar',
