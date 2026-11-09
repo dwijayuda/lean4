@@ -40,6 +40,13 @@ native_pun_diagnostic = run(['lake', 'exe', 'ps0', 'census-source', native_pun,
                             'NativeInvalidPunning', work / 'invalid-punning-census.json'],
                            'native-invalid-punning', ok=False)
 assert 'not a field of structure' in native_pun_diagnostic
+native_coerced_pun = work / 'native-coerced-invalid-punning.ps'
+native_coerced_pun.write_text(native_pun.read_text().replace(
+    'def bad', 'instance : Coe Nat PunningTarget where\n  coe n := ⟨n⟩\ndef bad'))
+native_coerced_diagnostic = run(['lake', 'exe', 'ps0', 'census-source', native_coerced_pun,
+                                'NativeCoercedInvalidPunning', work / 'coerced-invalid-punning-census.json'],
+                               'native-coerced-invalid-punning', ok=False)
+assert 'not a field of structure' in native_coerced_diagnostic
 prefix = 'function add(x: Nat, y: Nat): Nat := x + y\nabbrev sized (n : Nat) := Fin n\n'
 for name, source, reason in [
     ('body-gap', 'const bad: Nat → Nat := fun (n : Nat) => add (n, 1)', 'PS0V1-CALL-GAP'),
@@ -51,6 +58,10 @@ for name, source, reason in [
     ('projection-subject-gap', 'const bad: Nat := (List.head! ([3])).succ', 'PS0V1-CALL-GAP'),
     ('projection-call-head-gap', 'const bad: Nat := (List.head! ([3])).add(4)', 'PS0V1-CALL-GAP'),
     ('invalid-punning', 'structure PunningTarget where\n  value : Nat\n'
+     'const bad: Id(PunningTarget) := do\n  let f : Nat → Nat := Nat.succ\n  let x := 2\n'
+     '  return {\n    f\n    x\n  }', 'not a field of structure'),
+    ('coerced-invalid-punning', 'structure PunningTarget where\n  value : Nat\n'
+     'instance : Coe Nat PunningTarget where\n  coe n := ⟨n⟩\n'
      'const bad: Id(PunningTarget) := do\n  let f : Nat → Nat := Nat.succ\n  let x := 2\n'
      '  return {\n    f\n    x\n  }', 'not a field of structure'),
 ]:
