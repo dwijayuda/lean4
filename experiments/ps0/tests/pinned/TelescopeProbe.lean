@@ -1,7 +1,7 @@
-/-! Native telescope forms admitted by R2 must retain elaboration and output identity. -/
 module
 prelude
 public import Lean
+/-! Native telescope forms admitted by R2 must retain elaboration and output identity. -/
 public section
 namespace Lean.Compiler.TelescopeProbe
 def typed (x : Nat) : Nat := x + 1
