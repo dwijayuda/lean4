@@ -9,12 +9,15 @@ import os
 import shutil
 import subprocess
 import time
+from native_census_cache import NativeCensusCache
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--driver', type=Path)
 parser.add_argument('--compare', type=Path)
 parser.add_argument('--source-plans', type=Path)
 parser.add_argument('--plan-source')
+parser.add_argument('--native-censuses', type=Path)
+parser.add_argument('--census-source')
 args = parser.parse_args()
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
@@ -150,6 +153,9 @@ if args.source_plans:
             return True
         return any(possible_uncaptured_binary(item) for item in value.values())
     refreshed = []
+    reused_censuses = []
+    native_cache = (NativeCensusCache(args.native_censuses, args.census_source, LEAN)
+                    if args.native_censuses else None)
     def refresh_plan(item):
         module = item['module']
         cached = report_path.parent / 'modules' / module
@@ -160,9 +166,15 @@ if args.source_plans:
         if (missing_declaration_view(captured['commands']) or
                 (captured.get('operatorDescriptorScope') != 'active-and-captured-kinds/1'
                  and possible_uncaptured_binary(captured['commands']))):
+            prior = (native_cache.find(module, original.read_bytes(), digest(sdk / entries[module]['sdkPath']))
+                     if native_cache else None)
             census = folder / 'native-census.json'
-            run([driver, 'census-source', original, module, census], 'refresh-census-' + module)
-            refreshed.append(module)
+            if prior is None:
+                run([driver, 'census-source', original, module, census], 'refresh-census-' + module)
+                refreshed.append(module)
+            else:
+                shutil.copy2(prior, census)
+                reused_censuses.append({'module': module, 'census_sha256': digest(census)})
         target = source / Path(*module.split('.')).with_suffix('.ps')
         plan_file = folder / 'plan.json'
         run(['python3', 'tests/migrate-compiler-heads.py', census, original, target,
@@ -208,6 +220,8 @@ if args.source_plans:
     (evidence / 'source-plan-summary.json').write_text(json.dumps({
         'input_census_source': args.plan_source, 'planner_source': os.environ['PS0_SOURCE_SHA'],
         'refreshed_declaration_censuses': sorted(refreshed), 'planner_evidence_sha256': digest(report_path),
+        'reused_native_censuses': sorted(reused_censuses, key=lambda item: item['module']),
+        'native_census_cache': native_cache.provenance if native_cache else None,
         'module_count': len(source_plans), 'source_grammar': True,
         'definitions': sum(len(plan['declarations']) for plan in source_plans.values()),
         'grammar_migration_complete': False, 'verified_execution': False,
