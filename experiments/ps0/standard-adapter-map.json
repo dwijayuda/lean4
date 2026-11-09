@@ -13951,46 +13951,47 @@
     "verified_execution": false
   },
   "currentContinuation": {
-    "qualifiedSource": "323ee9df11a7628985ac258101ccd2e082129b02",
-    "qualifiedRunner": "bdc87d40fdf2f5df393abb05ae5f9b2fd5c9adb2",
-    "run": 42648137484,
+    "qualifiedSource": "59151d0374a77cdc1ded799d21396b186c07958e",
+    "qualifiedRunner": "deb971216df6c279f81f5300cc39d107cc66d03d",
+    "run": 42656789645,
     "linuxJobsPassed": 32,
-    "independentFilesRehashed": 140,
+    "independentFilesRehashed": 144,
     "independentInspection": {
       "status": "PASS",
-      "source": "323ee9df11a7628985ac258101ccd2e082129b02",
-      "checkerSource": "323ee9df11a7628985ac258101ccd2e082129b02",
-      "runner": "41b27765b89166678c3e434b11ef092ebddf5fee",
-      "run": 42649552689,
-      "job": 129271876186,
-      "modules": 35,
-      "actualFilesRehashed": 140,
+      "source": "59151d0374a77cdc1ded799d21396b186c07958e",
+      "checkerSource": "59151d0374a77cdc1ded799d21396b186c07958e",
+      "runner": "e4217372bc4ebc143983ddd0d013d3470e58d926",
+      "run": 42658466406,
+      "job": 129303255269,
+      "modules": 36,
+      "actualFilesRehashed": 144,
+      "compilerMatrixModules": 35,
+      "compilerMatrixActualFilesRehashed": 140,
+      "localPreludeModules": 1,
+      "localPreludeActualFilesRehashed": 4,
       "artifacts": [
         {
-          "id": 13688708531,
-          "name": "ps0-recursive-boundaries-rehash-42649552689",
-          "size_in_bytes": 69130,
-          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13688708531",
-          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13688708531/zip",
+          "id": 13694200215,
+          "name": "ps0-recursive-boundaries-rehash-42658466406",
+          "size_in_bytes": 69774,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13694200215",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13694200215/zip",
           "expired": false,
-          "created_at": "2026-11-09T15:56:16Z",
-          "expires_at": "2027-02-07T15:55:40Z",
-          "updated_at": "2026-11-09T15:56:16Z",
-          "digest": "sha256:4ed3aac80d79262d061d6202e62328daf5e6f792948f201e3e3551d95a8d1946",
+          "created_at": "2026-11-09T16:55:21Z",
+          "expires_at": "2027-02-07T16:48:29Z",
+          "updated_at": "2026-11-09T16:55:21Z",
+          "digest": "sha256:c545158103246b912fcfd8c7cc6708895feca77bd73e6101ad10e4459161d1d9",
           "workflow_run": {
-            "id": 42649552689,
+            "id": 42658466406,
             "repository_id": 1381609925,
             "head_repository_id": 1381609925,
             "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
-            "head_sha": "41b27765b89166678c3e434b11ef092ebddf5fee"
+            "head_sha": "e4217372bc4ebc143983ddd0d013d3470e58d926"
           }
         }
       ],
-      "sourceRuns": {
-        "compilerModules": 42648137484,
-        "indexProjectionTransportEvidence": 42648137484
-      },
-      "scope": "finite actual target C/public olean byte rehash, complete source reconstruction/modes/productions/family multiplicities and retained source-role/runtime/rejection/quotation evidence; standalone executable bytes are not retained"
+      "sourceRun": 42656789645,
+      "scope": "actual native/PS target C/public olean rehash, source/edit reconstruction/modes/productions/family multiplicities and retained local origin/default/ambiguity/runtime/quotation/bootstrap source/import controls; no standalone ELF rehash"
     },
     "finiteRealModules": 31,
     "finiteRealDefinitionHeads": 1140,
@@ -14012,9 +14013,9 @@
       "verified_execution": false
     },
     "nextActions": [
-      "Inspect graph fourteen when terminal, preserving exact successes/failures and its older source identity",
-      "Implement the verified named-local psMixedTelescope gap using native local grammar, existing comma-binder lowering and source-fidelity/quotation controls",
-      "Complete remaining ordinary-role fidelity and require full transformed graph parity/linking/runtime, relocated compiler operation and canonical fixed point"
+      "Inspect graph fourteen when terminal, preserving its older source identity and exact successful/failed modules",
+      "Extend remaining signature contexts and local declaration values, including braced where helpers, with native grammar and source-fidelity controls",
+      "Require the complete transformed compiler graph, fresh native Lake linking/runtime, relocated compiler operation and canonical PS fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -14031,21 +14032,55 @@
       "evidenceKey": "projectedTransportQualification"
     },
     "localMixedBinders": {
-      "status": "PENDING",
-      "requirement": "PS0V1-BIND-MATRIX: native named-local telescope extended by PS explicit comma groups",
-      "source": "53cb6205477602ead12e25a9a59c68094bd312a7",
-      "runner": "63b36e63f36276e5efdac5ca075bee8504788c69",
-      "run": 42645078449,
-      "job": 129256050686,
-      "testFirstStatus": "FAILED",
-      "parseFailures": 5,
-      "fixture": "tests/v1/local_mixed_binders.ps",
-      "harness": "tests/run-local-mixed-binders.py",
+      "status": "QUALIFIED_FINITE",
+      "source": "59151d0374a77cdc1ded799d21396b186c07958e",
+      "evidenceKey": "localMixedBinderQualification"
+    },
+    "additionalLocalPreludeModule": {
+      "modules": 1,
+      "mappedDefinitions": 2,
+      "actualFilesRehashed": 4
+    },
+    "whereLocalHelpers": {
+      "source": "c5a01974b72768ee5b0b2675d6aa7b8684f0b27a",
+      "runner": "31d2aa974156cca8b86aa7567d64d25faf266a33",
+      "fixture": "tests/v1/where_local_helpers.ps",
+      "harness": "tests/run-where-local-helpers.py",
+      "primarySuiteIncludesProbe": false,
       "implementationComplete": false,
-      "primarySuiteIncludesThisProbe": false,
-      "scope": "do let, do let rec, pure let rec, interleaved local native/comma binders and pure named let; native DSL control",
+      "status": "PENDING",
+      "requirement": "PS0V1-BIND-MATRIX and PS0V1-LOCAL-01: braced where mixed local helper values, capture and mutual visibility",
+      "run": 42657489513,
+      "job": 129299791010,
+      "testFirstStatus": "FAILED",
+      "diagnostics": [
+        "tests/v1/where_local_helpers.ps:13:7: error: unexpected token 'def'; expected '_' or identifier",
+        "tests/v1/where_local_helpers.ps:15:0: error: unexpected token '}'; expected command",
+        "tests/v1/where_local_helpers.ps:18:7: error: unexpected token '/--'; expected '_' or identifier",
+        "tests/v1/where_local_helpers.ps:20:16: error: `helper` has already been declared",
+        "tests/v1/where_local_helpers.ps:21:0: error: unexpected token '}'; expected command",
+        "tests/v1/where_local_helpers.ps:24:7: error: unexpected token 'def'; expected '_' or identifier",
+        "tests/v1/where_local_helpers.ps:25:6: error: `helper` has already been declared",
+        "tests/v1/where_local_helpers.ps:28:0: error: unexpected token '}'; expected command",
+        "tests/v1/where_local_helpers.ps:31:7: error: unexpected token 'def'; expected '_' or identifier",
+        "tests/v1/where_local_helpers.ps:32:6: error: `helper` has already been declared",
+        "tests/v1/where_local_helpers.ps:32:39: error: unexpected token '{'; expected command",
+        "tests/v1/where_local_helpers.ps:36:7: error: unexpected token 'def'; expected '_' or identifier",
+        "tests/v1/where_local_helpers.ps:37:28: error(lean.unknownIdentifier): Unknown identifier `second`",
+        "tests/v1/where_local_helpers.ps:39:0: error: unexpected token '}'; expected command"
+      ],
+      "scope": "defaults, captured scope/documentation/inline, equations, local structure value and forward helper visibility",
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "artifacts": [
+        {
+          "id": 13692307821,
+          "sha256": "b5f17dae82c6e3098b2dc1072ce9da4cf60f8f7e5338980fe465de4636ecc54a"
+        }
+      ],
+      "diagnosticCount": 14,
+      "rootBoundarySites": 5,
+      "note": "five intended where boundaries reject def/doc syntax; later unexpected braces, duplicate helper and unresolved second messages are cascades; whole module rejected"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -18549,7 +18584,7 @@
     "verified_execution": false
   },
   "localMixedBinderPendingEvidence": {
-    "status": "PENDING",
+    "status": "HISTORICAL_TEST_FIRST_FAILURE",
     "requirement": "PS0V1-BIND-MATRIX: native named-local telescope extended by PS explicit comma groups",
     "source": "53cb6205477602ead12e25a9a59c68094bd312a7",
     "runner": "63b36e63f36276e5efdac5ca075bee8504788c69",
@@ -18563,6 +18598,1525 @@
     "primarySuiteIncludesThisProbe": false,
     "scope": "do let, do let rec, pure let rec, interleaved local native/comma binders and pure named let; native DSL control",
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "resolvedFiniteScopeBy": "localMixedBinderQualification"
+  },
+  "localMixedBinderQualification": {
+    "source": "59151d0374a77cdc1ded799d21396b186c07958e",
+    "runner": "deb971216df6c279f81f5300cc39d107cc66d03d",
+    "run": 42656789645,
+    "status": "QUALIFIED_FINITE",
+    "jobs": [
+      {
+        "id": 129297288502,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297288940,
+        "name": "compiler-fixtures",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297288977,
+        "name": "operator-baseline",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289020,
+        "name": "do-layout",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289026,
+        "name": "compiler-iteratorempty",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289029,
+        "name": "compiler-nanosecond",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289030,
+        "name": "project-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289032,
+        "name": "compiler-prelude",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289039,
+        "name": "compiler-natbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289056,
+        "name": "compiler-associative",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289075,
+        "name": "compiler-unless",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289103,
+        "name": "compiler-natlemmas",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289111,
+        "name": "compiler-intlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289138,
+        "name": "compiler-initwf",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289171,
+        "name": "compiler-core",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289173,
+        "name": "compiler-signedbitvec",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289194,
+        "name": "compiler-arrayperm",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289196,
+        "name": "compiler-persistenthashmap",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289208,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289214,
+        "name": "compiler-finbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289231,
+        "name": "compiler-extdtreemapbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289262,
+        "name": "proof-linked",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289309,
+        "name": "compiler-listattach",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289345,
+        "name": "compiler-grindac",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289346,
+        "name": "compiler-tzif",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289354,
+        "name": "compiler-spredlaws",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289395,
+        "name": "compiler-natlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289399,
+        "name": "compiler-stream",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289495,
+        "name": "compiler-rangechar",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289617,
+        "name": "compiler-environment",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297289625,
+        "name": "compiler-options",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129297290774,
+        "name": "compiler-jsonrpc",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13693800608,
+        "name": "ps0-compiler-associative-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 4844178,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693800608",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693800608/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:46:23Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:46:23Z",
+        "digest": "sha256:636a4916a348e925b54e1606a327468cc650a4d0fd00783a2d67c0cff383b120",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13693510345,
+        "name": "ps0-compiler-stream-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 119611,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693510345",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693510345/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:40:53Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:40:53Z",
+        "digest": "sha256:af2222e5dbb51ed3c5ca906e2ff5c68f80f42fb050b1495c8648b88f62209b4c",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13693435849,
+        "name": "ps0-do-layout-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 47936,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693435849",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693435849/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:40:22Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:40:22Z",
+        "digest": "sha256:33937b0a079ef952b0de686f6bd873e84270ffaee2eee633ee0d60661d16f493",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13693211454,
+        "name": "ps0-compiler-natlinear-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 444478,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693211454",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693211454/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:20Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:20Z",
+        "digest": "sha256:6e265c7d3f695fafcf9fb17c0628d04a4eb910f9229ca21a86470b0260e8ea2d",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13693126554,
+        "name": "ps0-compiler-natbasic-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 496311,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693126554",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693126554/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:40:41Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:40:41Z",
+        "digest": "sha256:44a8463f9fdfe62ebf62000e6691591390177759493dc9ce3e057fe34fdd0e15",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13693121908,
+        "name": "ps0-external-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 30133,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693121908",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693121908/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:44:17Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:44:17Z",
+        "digest": "sha256:38d9b69f70f63e26cfe2cf85bb4f682f93dcc82954e4312c433326ff879ad77a",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13693036594,
+        "name": "ps0-compiler-jsonrpc-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 632764,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693036594",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13693036594/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:34Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:34Z",
+        "digest": "sha256:7fbdbd3b23212089a8918293f8246726ef998db7da75afcd586613bf97c7ba75",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692986491,
+        "name": "ps0-compiler-prelude-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 2936603,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692986491",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692986491/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:34Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:34Z",
+        "digest": "sha256:b0e5369ec877edf130c9e5861db3f7b107f52b6235914b1ed343af31fbc80761",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692956698,
+        "name": "ps0-compiler-grindac-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 632681,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692956698",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692956698/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:12Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:12Z",
+        "digest": "sha256:95031639dffe942b424086f141f10427b5d262efeedac4be149cc555e7aa5ca1",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692841544,
+        "name": "ps0-compiler-extdtreemapbasic-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 981924,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692841544",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692841544/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:40:02Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:40:02Z",
+        "digest": "sha256:49d04f082f23845817f4c76d59db47d61bf7b2a0fec6b9fd1df8ffda5a233593",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692826999,
+        "name": "ps0-compiler-intlinear-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 1337028,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692826999",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692826999/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:42:07Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:42:07Z",
+        "digest": "sha256:c105c95ea7202075044cd1e04251168ee171450cd1de6300156844cafd898e8a",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692541762,
+        "name": "ps0-compiler-spredlaws-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 113867,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692541762",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692541762/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:48Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:48Z",
+        "digest": "sha256:85661e2e91216903053e944ca87c7a19c43290c518c008a9c9c436594024d6a0",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692492403,
+        "name": "ps0-compiler-core-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 1456086,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692492403",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692492403/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:45Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:45Z",
+        "digest": "sha256:fdc5296b3fe4db58102b2758d1c41b2a1e28349e7b8777dfe35361b018dc4025",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692478377,
+        "name": "ps0-project-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 80916672,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692478377",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692478377/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:45:35Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:45:35Z",
+        "digest": "sha256:4e6eb51f086295f370bb53d29d4d702fdcd6c5b94fcf72b7b4806b3405206bc7",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692458738,
+        "name": "ps0-compiler-fixtures-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 3970524,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692458738",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692458738/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:57Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:57Z",
+        "digest": "sha256:55ff84a1f5c34ad28612c3736ff4050e05d80f03aa1bea8756192005693a5429",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692412481,
+        "name": "ps0-compiler-options-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 370740,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692412481",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692412481/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:40:48Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:40:48Z",
+        "digest": "sha256:e427e8944b92440dc093a3bf4a767628c8d2101074a114e0126e966e7249d42c",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692307035,
+        "name": "ps0-compiler-iteratorempty-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 63926,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692307035",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692307035/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:20Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:20Z",
+        "digest": "sha256:e0a8f9a151c7a2a67b3c0090d3a919ff592e5829a1a07ce2d7da9dbf79752c2a",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692222251,
+        "name": "ps0-compiler-environment-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 1587980,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692222251",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692222251/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:42:25Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:42:25Z",
+        "digest": "sha256:b11fa5b01d7c29daf507e94fe7874bdcabb4685d2dd5a2f94b65ee2030e0a03a",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692202293,
+        "name": "ps0-compiler-unless-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 136564,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692202293",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692202293/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:52Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:52Z",
+        "digest": "sha256:738f4aec07853e3ad3347a309e99859e257052e9af8c6dbe4e48fa47333dcae1",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692042181,
+        "name": "ps0-compiler-nanosecond-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 106844,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692042181",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692042181/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:32Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:32Z",
+        "digest": "sha256:3850b8e66b1fc684019da2e340f3c0b372edb82eaf069ad3919383f8a3c38d31",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13692007366,
+        "name": "ps0-compiler-signedbitvec-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 93202,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692007366",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13692007366/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:35Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:35Z",
+        "digest": "sha256:917584a1820c4802d18c1728db15555791174ec74f05ef0d57621d5653ae44a0",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691882574,
+        "name": "ps0-compiler-arrayperm-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 87011,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691882574",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691882574/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:30Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:30Z",
+        "digest": "sha256:b2de15841a579301ee8fb085225eb9835ec8bb90a9981b8f3b68bcf93a6839b1",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691802923,
+        "name": "ps0-compiler-tzif-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 225265,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691802923",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691802923/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:40:56Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:40:56Z",
+        "digest": "sha256:2f9aae513c13f03454289decc3d77f4c86e6d3f5890d0bc2f1997e7c16930e1f",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691788250,
+        "name": "ps0-compiler-listattach-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 507901,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691788250",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691788250/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:57Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:57Z",
+        "digest": "sha256:2d273dc10c592118a954ed25b5f9bad11d47c2596cfa2daf920c0698da4fdc6a",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691777233,
+        "name": "ps0-operator-baseline-42656789645",
+        "size_in_bytes": 2304,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691777233",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691777233/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:38:53Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:38:53Z",
+        "digest": "sha256:35008798838856b323186e85a55abc0dd870f6c73f424405167646ba0ab9e0a3",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691762529,
+        "name": "ps0-compiler-persistenthashmap-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 509458,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691762529",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691762529/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:13Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:13Z",
+        "digest": "sha256:9bc902a139e8843a39fffab1c8014cefd5a0e88d31b64c13cb35294fd657ba2c",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691683918,
+        "name": "ps0-compiler-rangechar-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 41061,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691683918",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691683918/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:06Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:06Z",
+        "digest": "sha256:137667be9dc39dbf8e21de9afa94c4606d464a9b566fe12e9e2eca98d7009d60",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691649632,
+        "name": "ps0-compiler-finbasic-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 166342,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691649632",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691649632/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:43Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:43Z",
+        "digest": "sha256:70f8418fe8a7c200b1e7841368a43f9628706c7200506bcfa9b2ea5023d86580",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691484741,
+        "name": "ps0-compiler-natlemmas-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 850222,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691484741",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691484741/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:41:38Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:41:38Z",
+        "digest": "sha256:85a5f71a4cc162e19796b57acd5b3743a42f30a2ee5aa9cee65873a4224c2792",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691154722,
+        "name": "ps0-compiler-initwf-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 275461,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691154722",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691154722/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:40:39Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:40:39Z",
+        "digest": "sha256:fb18b171045cd418930801508129727d89d5e21a471833b2815911d7089d9838",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      },
+      {
+        "id": 13691024891,
+        "name": "ps0-native-59151d0374a77cdc1ded799d21396b186c07958e-42656789645",
+        "size_in_bytes": 4139,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691024891",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691024891/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:39:44Z",
+        "expires_at": "2027-02-07T16:38:16Z",
+        "updated_at": "2026-11-09T16:39:44Z",
+        "digest": "sha256:e0d433091faeb047d66e77f5cedbb29d98ee23dda7c68476af0a1f160804b2e5",
+        "workflow_run": {
+          "id": 42656789645,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-corpus-telescopes-20261109",
+          "head_sha": "deb971216df6c279f81f5300cc39d107cc66d03d"
+        }
+      }
+    ],
+    "requirement": "PS0V1-BIND-MATRIX: original native named-local telescope plus PS explicit comma groups",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "normativeReferenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "fixture": "tests/v1/local_mixed_binders.ps",
+    "harness": "tests/run-local-mixed-binders.py",
+    "counts": {
+      "realModules": 31,
+      "realDefinitions": 1140,
+      "syntheticMatrixModules": 4,
+      "syntheticMatrixDefinitions": 37,
+      "additionalLocalPreludeModules": 1,
+      "additionalLocalPreludeMappedDefinitions": 2
+    },
+    "controls": {
+      "originalLocalTokenAndRangeCases": 6,
+      "rejectionCases": 6,
+      "nativeLayoutControls": 6,
+      "duplicateNormalizedPartitionsCoalesce": true,
+      "differentNormalizedPartitionsRejectBeforeTyping": true,
+      "coalescedNativeOriginsPreferred": true,
+      "nativeQuotationAndDslOwnership": true,
+      "defaultsAndAutomaticParameters": true,
+      "dependentDefaults": true,
+      "priorBinderAdjacentInstanceAccepted": true,
+      "nameAdjacentBracketKeepsNativeArrayUpdatePatternRole": true,
+      "arrayUpdateEvidenceScope": "native and PS parser-only shape control; no array-update elaboration/runtime claim",
+      "localEmptyGroupRejection": "native invalid pattern; no hidden Unit insertion",
+      "runtimeOracles": [
+        "PS0_LOCAL_MIXED:7:7:7:8:7:5",
+        "PS0_LOCAL_EQNS:7:7"
+      ],
+      "prelude": {
+        "module": "LocalMixedBootstrap",
+        "logicalImports": [
+          "Init"
+        ],
+        "mappedDefinitions": 2,
+        "unchangedPreparedSource": true,
+        "onlyOriginalSourceMapSegments": true,
+        "nativeCAndPublicOleanParity": true,
+        "retainedNativePsFiles": 4
+      }
+    },
+    "implementation": {
+      "category": "psLocalBinder",
+      "nativeParserOwner": "Lean.Parser.Term.letIdBinder and letId",
+      "commaParserOwner": "PS0.Binders.psCommaBinder",
+      "lowering": "Macro callback reusing existing comma lowering; native group flattening, normalization and source-info preference",
+      "sourceGrammarHost": "category and macro callback copied without target logical PS0 imports",
+      "namedPureLet": "native let/config/semicolon structure with PS binder/type/value/continuation slots",
+      "planner": "named pure let roles traversed explicitly; other native/DSL roles remain opaque"
+    },
+    "testFirst": {
+      "status": "PENDING",
+      "requirement": "PS0V1-BIND-MATRIX: native named-local telescope extended by PS explicit comma groups",
+      "source": "53cb6205477602ead12e25a9a59c68094bd312a7",
+      "runner": "63b36e63f36276e5efdac5ca075bee8504788c69",
+      "run": 42645078449,
+      "job": 129256050686,
+      "testFirstStatus": "FAILED",
+      "parseFailures": 5,
+      "fixture": "tests/v1/local_mixed_binders.ps",
+      "harness": "tests/run-local-mixed-binders.py",
+      "implementationComplete": false,
+      "primarySuiteIncludesThisProbe": false,
+      "scope": "do let, do let rec, pure let rec, interleaved local native/comma binders and pure named let; native DSL control",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "firstRuntime": {
+      "source": "72f800f4fd127f429563814f9e1d16643d3cb956",
+      "runner": "9695c200827e7dc3467e528f2dfa68e1d9756c8b",
+      "run": 42651914324,
+      "indexJob": 129280218251,
+      "natBasicJob": 129280218630,
+      "status": "PASS",
+      "oracle": "PS0_LOCAL_MIXED:7:7:7:8:7:5",
+      "artifacts": [
+        {
+          "id": 13689647384,
+          "sha256": "3d24ea8296adf7a9e1dcdf875e13537f674104c824cddf3871b1d4a18f19ca92"
+        },
+        {
+          "id": 13690926334,
+          "sha256": "417182eab5c397e4133cbe24beba2528b685489f14911dd38d083e15b9dac2ae"
+        }
+      ],
+      "scope": "initial finite runtime and four rejections; excludes later origin/bootstrap probes"
+    },
+    "focusedQualification": {
+      "source": "59151d0374a77cdc1ded799d21396b186c07958e",
+      "runner": "15c35685ccdb213f516684278c6877f925cbeba8",
+      "run": 42656716455,
+      "job": 129297026025,
+      "natBasicJob": 129297026726,
+      "status": "PASS",
+      "artifacts": [
+        {
+          "id": 13693026520,
+          "sha256": "fbfd38c82f41b47f5a5dc3c563d5735837598a0728b0b7a5f136d8609fd739ca"
+        },
+        {
+          "id": 13692437067,
+          "sha256": "ca4f5bb0f99278d9607993263c0b3c23fe82a3e5fc359214dc0de051fa970bea"
+        }
+      ]
+    },
+    "failureHistory": [
+      {
+        "source": "dba1e900188f74ece9c701f1a97678599e1d68f7",
+        "runner": "81997f0bbd1bfee4a40de01c59641266803b6c89",
+        "run": 42652406446,
+        "job": 129281949958,
+        "diagnostic": "PS0_LOCAL_DECLARATION_ORIGIN",
+        "cases": 4,
+        "status": "FAILED",
+        "cause": "lost derived native telescope range after comma expansion"
+      },
+      {
+        "source": "2643ec15f3c7c5449a82723d615a7069026529c3",
+        "runner": "212fce8d1a5bd08fc99ab24296509894542b8e21",
+        "run": 42652918843,
+        "job": 129283730843,
+        "status": "FAILED",
+        "cause": "equivalent native/comma binder coalescing kept comma parameter range; invalid array-update runtime test removed after native parser control"
+      },
+      {
+        "source": "b78b68833b25079cfa9d917c921c041a0ad757a2",
+        "runner": "250c3acc2b80e51c24ba31f022917f70c725f80d",
+        "run": 42652722837,
+        "status": "FAILED",
+        "jobs": [
+          {
+            "id": 129283071948,
+            "name": "compiler-fixtures",
+            "status": "completed",
+            "conclusion": "failure"
+          },
+          {
+            "id": 129283072353,
+            "name": "project-build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072516,
+            "name": "compiler-natlinear",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072520,
+            "name": "compiler-persistenthashmap",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072549,
+            "name": "compiler-iteratorempty",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072579,
+            "name": "host-contract",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072588,
+            "name": "compiler-natbasic",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072613,
+            "name": "compiler-natlemmas",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072614,
+            "name": "compiler-intlinear",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072629,
+            "name": "compiler-grindac",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072667,
+            "name": "compiler-prelude",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072677,
+            "name": "compiler-stream",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072683,
+            "name": "compiler-rangechar",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072699,
+            "name": "compiler-options",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072704,
+            "name": "compiler-associative",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072737,
+            "name": "do-layout",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072744,
+            "name": "compiler-environment",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072757,
+            "name": "compiler-jsonrpc",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072758,
+            "name": "proof-linked",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072759,
+            "name": "compiler-signedbitvec",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072778,
+            "name": "compiler-finbasic",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072808,
+            "name": "compiler-extdtreemapbasic",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072812,
+            "name": "compiler-nanosecond",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072820,
+            "name": "native-build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072834,
+            "name": "compiler-arrayperm",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072838,
+            "name": "compiler-core",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072859,
+            "name": "compiler-listattach",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072863,
+            "name": "compiler-tzif",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072932,
+            "name": "compiler-unless",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072945,
+            "name": "compiler-initwf",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283072950,
+            "name": "operator-baseline",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129283073172,
+            "name": "compiler-spredlaws",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ],
+        "artifacts": [
+          {
+            "id": 13691326016,
+            "name": "ps0-compiler-fixtures-b78b68833b25079cfa9d917c921c041a0ad757a2-42652722837",
+            "size_in_bytes": 3952820,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691326016",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691326016/zip",
+            "expired": false,
+            "created_at": "2026-11-09T16:16:36Z",
+            "expires_at": "2027-02-07T16:14:26Z",
+            "updated_at": "2026-11-09T16:16:36Z",
+            "digest": "sha256:3d1aaf397cfc051ea1e93cb8ff955a44151d58e142a33215fd9dea9d63cb334e",
+            "workflow_run": {
+              "id": 42652722837,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "250c3acc2b80e51c24ba31f022917f70c725f80d"
+            }
+          }
+        ],
+        "counts": {
+          "passed": 31,
+          "failed": 1
+        },
+        "failedJob": 129283071948,
+        "failure": "local origin-range assertions and invalid runtime array-update control; other 31 jobs PASS; not promoted"
+      },
+      {
+        "source": "0d8c900c056cb55c036c2aa86fcc96d793900a2d",
+        "runner": "07466a62cab61b048e1ba16677285f9a4c5992a6",
+        "run": 42655458544,
+        "status": "FAILED",
+        "jobs": [
+          {
+            "id": 129292640073,
+            "name": "compiler-core",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640425,
+            "name": "compiler-fixtures",
+            "status": "completed",
+            "conclusion": "failure"
+          },
+          {
+            "id": 129292640482,
+            "name": "operator-baseline",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640507,
+            "name": "project-build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640569,
+            "name": "compiler-options",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640598,
+            "name": "compiler-environment",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640635,
+            "name": "compiler-stream",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640661,
+            "name": "proof-linked",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640686,
+            "name": "compiler-natlemmas",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640687,
+            "name": "compiler-finbasic",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640692,
+            "name": "host-contract",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640744,
+            "name": "compiler-iteratorempty",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640754,
+            "name": "compiler-listattach",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640897,
+            "name": "native-build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640900,
+            "name": "compiler-unless",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640963,
+            "name": "compiler-spredlaws",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292640994,
+            "name": "compiler-associative",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641025,
+            "name": "compiler-grindac",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641043,
+            "name": "compiler-tzif",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641053,
+            "name": "compiler-signedbitvec",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641064,
+            "name": "compiler-prelude",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641066,
+            "name": "compiler-arrayperm",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641080,
+            "name": "compiler-nanosecond",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641085,
+            "name": "do-layout",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641149,
+            "name": "compiler-extdtreemapbasic",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641193,
+            "name": "compiler-initwf",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641214,
+            "name": "compiler-intlinear",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641330,
+            "name": "compiler-persistenthashmap",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641401,
+            "name": "compiler-natlinear",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641410,
+            "name": "compiler-jsonrpc",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641468,
+            "name": "compiler-rangechar",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 129292641665,
+            "name": "compiler-natbasic",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ],
+        "artifacts": [
+          {
+            "id": 13691554648,
+            "name": "ps0-compiler-fixtures-0d8c900c056cb55c036c2aa86fcc96d793900a2d-42655458544",
+            "size_in_bytes": 3953878,
+            "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691554648",
+            "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13691554648/zip",
+            "expired": false,
+            "created_at": "2026-11-09T16:32:48Z",
+            "expires_at": "2027-02-07T16:30:27Z",
+            "updated_at": "2026-11-09T16:32:48Z",
+            "digest": "sha256:80532aa1a20d8785a3dac6acf309fa5c88182594f7272c1ec41f0d66bd55a55f",
+            "workflow_run": {
+              "id": 42655458544,
+              "repository_id": 1381609925,
+              "head_repository_id": 1381609925,
+              "head_branch": "ci/ps0-corpus-telescopes-20261109",
+              "head_sha": "07466a62cab61b048e1ba16677285f9a4c5992a6"
+            }
+          }
+        ],
+        "counts": {
+          "passed": 31,
+          "failed": 1
+        },
+        "failedJob": 129292640425,
+        "failure": "new test incorrectly compared Id value directly rather than Id.run result; other 31 jobs PASS; not promoted"
+      }
+    ],
+    "nativeLexicalCorrection": {
+      "pinnedSource": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "nativeSource": "src/Lean/Parser/Term/Basic.lean",
+      "instBinderHasWhitespaceGuard": false,
+      "letIdOwnsNameBracketGuard": true,
+      "afterPriorBinderAdjacentInstanceLegal": true,
+      "correctedNegative": "default-forward dependency rejected with Unknown identifier",
+      "source": "111458279d03cfc35348697c825d9439aaf5be36"
+    },
+    "interpolationControl": {
+      "status": "MATCHES_PINNED_NATIVE_GRAMMAR",
+      "source": "59151d0374a77cdc1ded799d21396b186c07958e",
+      "runner": "15c35685ccdb213f516684278c6877f925cbeba8",
+      "run": 42656716455,
+      "job": 129297026025,
+      "observations": [
+        {
+          "input": "s!\"{value}\"",
+          "native": "OK",
+          "ps": "OK"
+        },
+        {
+          "input": "s!\"{Id.run(value)}\"",
+          "native": "expected '}'",
+          "ps": "expected '}'"
+        },
+        {
+          "input": "s!\"{(Id.run value)}\"",
+          "native": "OK",
+          "ps": "OK"
+        }
+      ],
+      "scope": "six direct parser controls; not a claim that all interpolation operand adapters are complete"
+    },
+    "scope": "finite named do/pure let, let-rec simple/equation telescopes and one standalone prelude module; excludes remaining where helpers/signature matrix/full transformed compiler/fixed point",
+    "standaloneElfBytesRehashed": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "independentInspection": {
+      "status": "PASS",
+      "source": "59151d0374a77cdc1ded799d21396b186c07958e",
+      "checkerSource": "59151d0374a77cdc1ded799d21396b186c07958e",
+      "runner": "e4217372bc4ebc143983ddd0d013d3470e58d926",
+      "run": 42658466406,
+      "job": 129303255269,
+      "modules": 36,
+      "actualFilesRehashed": 144,
+      "compilerMatrixModules": 35,
+      "compilerMatrixActualFilesRehashed": 140,
+      "localPreludeModules": 1,
+      "localPreludeActualFilesRehashed": 4,
+      "artifacts": [
+        {
+          "id": 13694200215,
+          "name": "ps0-recursive-boundaries-rehash-42658466406",
+          "size_in_bytes": 69774,
+          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13694200215",
+          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13694200215/zip",
+          "expired": false,
+          "created_at": "2026-11-09T16:55:21Z",
+          "expires_at": "2027-02-07T16:48:29Z",
+          "updated_at": "2026-11-09T16:55:21Z",
+          "digest": "sha256:c545158103246b912fcfd8c7cc6708895feca77bd73e6101ad10e4459161d1d9",
+          "workflow_run": {
+            "id": 42658466406,
+            "repository_id": 1381609925,
+            "head_repository_id": 1381609925,
+            "head_branch": "ci/ps0-transformed-twelve-audit-20261109",
+            "head_sha": "e4217372bc4ebc143983ddd0d013d3470e58d926"
+          }
+        }
+      ],
+      "sourceRun": 42656789645,
+      "scope": "actual native/PS target C/public olean rehash, source/edit reconstruction/modes/productions/family multiplicities and retained local origin/default/ambiguity/runtime/quotation/bootstrap source/import controls; no standalone ELF rehash"
+    },
+    "retainedLocalEvidence": {
+      "array_update_boundary": "native parser only; not an elaboration/runtime claim",
+      "different_partition_rejected": true,
+      "duplicate_partition_coalesced": true,
+      "fixture_sha256": "66099eaf5c5020505fed1f8a9d97c420e60806f0a208b26a54dd8f36be46ae43",
+      "grammar_migration_complete": false,
+      "native_layout_controls": 6,
+      "native_quotation_control": true,
+      "oracle": "PS0_LOCAL_MIXED:7:7:7:8:7:5",
+      "origin_cases": 6,
+      "prelude_logical_imports": [
+        "Init"
+      ],
+      "prelude_mapped_definitions": 2,
+      "prelude_native_parity": {
+        "ir/LocalMixedBootstrap.c": {
+          "baseline": "3b194ff6c07fbe7a4f67d68188f8524ff18e7736dcb8909ff96a7e306bb04297",
+          "migrated": "3b194ff6c07fbe7a4f67d68188f8524ff18e7736dcb8909ff96a7e306bb04297"
+        },
+        "lib/lean/LocalMixedBootstrap.olean": {
+          "baseline": "0642b24a5ee53476c274acd76c589c862f88cab4a4906086b5d97b9c5036ea19",
+          "migrated": "0642b24a5ee53476c274acd76c589c862f88cab4a4906086b5d97b9c5036ea19"
+        }
+      },
+      "recursive_equation_oracle": "PS0_LOCAL_EQNS:7:7",
+      "rejection_cases": 6,
+      "scope": "finite named do/pure let and let-rec mixed/comma telescopes, native DSL control; not all local/where grammar",
+      "source": "59151d0374a77cdc1ded799d21396b186c07958e",
+      "verified_execution": false
+    }
+  },
+  "whereLocalHelperPendingEvidence": {
+    "source": "c5a01974b72768ee5b0b2675d6aa7b8684f0b27a",
+    "runner": "31d2aa974156cca8b86aa7567d64d25faf266a33",
+    "fixture": "tests/v1/where_local_helpers.ps",
+    "harness": "tests/run-where-local-helpers.py",
+    "primarySuiteIncludesProbe": false,
+    "implementationComplete": false,
+    "status": "PENDING",
+    "requirement": "PS0V1-BIND-MATRIX and PS0V1-LOCAL-01: braced where mixed local helper values, capture and mutual visibility",
+    "run": 42657489513,
+    "job": 129299791010,
+    "testFirstStatus": "FAILED",
+    "diagnostics": [
+      "tests/v1/where_local_helpers.ps:13:7: error: unexpected token 'def'; expected '_' or identifier",
+      "tests/v1/where_local_helpers.ps:15:0: error: unexpected token '}'; expected command",
+      "tests/v1/where_local_helpers.ps:18:7: error: unexpected token '/--'; expected '_' or identifier",
+      "tests/v1/where_local_helpers.ps:20:16: error: `helper` has already been declared",
+      "tests/v1/where_local_helpers.ps:21:0: error: unexpected token '}'; expected command",
+      "tests/v1/where_local_helpers.ps:24:7: error: unexpected token 'def'; expected '_' or identifier",
+      "tests/v1/where_local_helpers.ps:25:6: error: `helper` has already been declared",
+      "tests/v1/where_local_helpers.ps:28:0: error: unexpected token '}'; expected command",
+      "tests/v1/where_local_helpers.ps:31:7: error: unexpected token 'def'; expected '_' or identifier",
+      "tests/v1/where_local_helpers.ps:32:6: error: `helper` has already been declared",
+      "tests/v1/where_local_helpers.ps:32:39: error: unexpected token '{'; expected command",
+      "tests/v1/where_local_helpers.ps:36:7: error: unexpected token 'def'; expected '_' or identifier",
+      "tests/v1/where_local_helpers.ps:37:28: error(lean.unknownIdentifier): Unknown identifier `second`",
+      "tests/v1/where_local_helpers.ps:39:0: error: unexpected token '}'; expected command"
+    ],
+    "scope": "defaults, captured scope/documentation/inline, equations, local structure value and forward helper visibility",
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "artifacts": [
+      {
+        "id": 13692307821,
+        "sha256": "b5f17dae82c6e3098b2dc1072ce9da4cf60f8f7e5338980fe465de4636ecc54a"
+      }
+    ],
+    "diagnosticCount": 14,
+    "rootBoundarySites": 5,
+    "note": "five intended where boundaries reject def/doc syntax; later unexpected braces, duplicate helper and unresolved second messages are cascades; whole module rejected"
   }
 }
