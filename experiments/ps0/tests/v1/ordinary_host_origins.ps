@@ -117,7 +117,7 @@ function runtimeTry(n: Nat): IO(Nat) := do
   catch _ => return n + 2
   finally pure(())
 
-function runtimeInterpolation(n: Nat): String := s!"value:{pairSum(n, 1)}"
+function runtimeInterpolation(n: Nat): String := s!"value:{pairSum((n, 1))}"
 
 def main : IO Unit := do
   let mut total := 3
