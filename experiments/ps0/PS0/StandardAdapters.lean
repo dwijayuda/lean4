@@ -14,6 +14,8 @@ open PS0.Binders
 namespace PS0.StandardAdapters
 
 private def nativeTerm (body : TSyntax `psTerm) : MacroM (TSyntax `term) := do
+  if body.raw.getKind == `«term_=_» then
+    dbg_trace s!"PS0_RAW_RELATION_TYPE: {body.raw.getKind}"
   return ⟨← PS0.Syntax.lower `psTerm body.raw⟩
 
 declare_syntax_cat psDeclTail
