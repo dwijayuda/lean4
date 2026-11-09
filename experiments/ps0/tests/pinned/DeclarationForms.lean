@@ -33,4 +33,18 @@ def boolTransform : Transform Bool where
     | true => id (true)
     | false => id (false)
 
+def makeCurried (n : Nat) : Pair where
+  value := Nat.add n 1
+  apply x := Nat.add n x
+  witness := True.intro
+
+def boolDecision (a b : Bool) : Decidable (Eq a b) where
+  decide := a.beq b
+  reflects_decide :=
+    match a, b with
+    | false, false => rfl
+    | false, true => Bool.noConfusion
+    | true, false => Bool.noConfusion
+    | true, true => rfl
+
 end Lean.Compiler.DeclarationForms
