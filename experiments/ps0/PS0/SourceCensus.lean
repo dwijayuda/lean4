@@ -116,10 +116,10 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       `PS0.StandardAdapters.ps0StandardConst, `PS0.StandardAdapters.ps0StandardInstance,
       `PS0.StandardAdapters.ps0StandardExample].contains kind
     let last := source.getArgs.back!
-    let hasDeriving := last.isOfKind `PS0.StandardAdapters.ps0DefDeriving
-    let declValue := if hasTail then
-      if hasDeriving then source.getArgs[source.getArgs.size - 2]! else last
-      else Syntax.missing
+    let hasDerivingSlot := #[`PS0.StandardAdapters.ps0StandardDef,
+      `PS0.StandardAdapters.ps0StandardFunction, `PS0.StandardAdapters.ps0StandardConst].contains kind
+    let declValue := if !hasTail then Syntax.missing else
+      if hasDerivingSlot then source.getArgs[source.getArgs.size - 2]! else last
     let value := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclSimple then declValue[1] else Syntax.missing
     let doSequence := if value.isOfKind `ps0HostDo && value[1].isOfKind `ps0NativeLayoutDoSeq then
       value[1][0] else Syntax.missing
@@ -138,7 +138,8 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("keywordRange", sourceRange (if isInstance then source[2] else source[1])), ("nameRange", sourceRange name),
       ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
       ("valueRootKind", toJson value.getKind.toString),
-      ("nativeDefDeriving", toJson (hasDeriving && !last[0].getArgs.isEmpty)),
+      ("nativeDefDeriving", toJson (hasDerivingSlot && !last.getArgs.isEmpty &&
+        !last[0][0].getArgs.isEmpty)),
       ("doSequenceKind", toJson doSequence.getKind.toString),
       ("doElementKinds", toJson (doElements.map (fun item => item[0].getKind.toString))),
       ("ownedDoElementKinds", toJson (ownedDoElements.map (fun item => item.getKind.toString))),
