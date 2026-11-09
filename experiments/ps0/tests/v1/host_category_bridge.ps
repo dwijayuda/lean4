@@ -10,7 +10,9 @@ macro "ps0Bridge " e:psTerm : term => do
     Lean.Macro.throwError "PS0V1-TEST-NATIVE-IDENTITY: native capture changed"
   return ⟨lowered⟩
 
-def bridgedValue : Nat := ps0Bridge 40 + 2
+-- Binary operators now have their own owned operand adapter.
+-- Keep this identity assertion on an independently captured native application.
+def bridgedValue : Nat := ps0Bridge Nat.succ 41
 example : bridgedValue = 42 := by rfl
 
 -- Native quotations are syntax data in their own category.

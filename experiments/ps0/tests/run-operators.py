@@ -21,6 +21,7 @@ def run(args, label, ok=True):
 
 
 run(['lake', 'env', 'lean', '--run', 'tests/inspect-operators.lean'], 'native-descriptors')
+run(['lake', 'env', 'lean', 'tests/inspect-owned-operators.lean'], 'parse-boundaries')
 fixture = 'tests/v1/operator_operands.ps'
 oracle = 'PS0_OPERATORS:17:6:5:512:8:1:10:10'
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
