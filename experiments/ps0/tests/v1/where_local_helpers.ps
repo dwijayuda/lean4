@@ -44,7 +44,7 @@ where
 
 function namedProof(n: Nat): Nat := ?value
 where {
-  finally { | value => { exact(add(n, 1)) } }
+  finally { exact(add(n, 1)) }
 }
 
 function defaultProof(n: Nat): Nat := ?value
@@ -55,13 +55,13 @@ where {
 function helperProof(n: Nat): Nat := helper(n) + ?value
 where {
   def helper(x: Nat): Nat := add(x, 1)
-  finally { | value => { exact(2) } }
+  finally { exact(2) }
 }
 
 function nativeProof(n: Nat): Nat := ?value
 where
 finally
-| value => exact(add(n, 3))
+  exact(add(n, 3))
 
 example : namedProof(4) = 5 := by decide
 example : defaultProof(4) = 6 := by decide

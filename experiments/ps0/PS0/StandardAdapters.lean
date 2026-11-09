@@ -90,7 +90,7 @@ syntax (name := psWhereFinallySection) "|" ident Lean.Parser.darrow
   nativePSWhereTacticBlock : psWhereFinallySection
 syntax (name := psWhereFinallyBraced) "finally" "{" nativePSWhereDefaultTactics
   psWhereFinallySection* "}" : psWhereFinally
-syntax (name := psWhereFinallyNative) PS0.DoLayout.whereFinally : psWhereFinally
+syntax (name := psWhereFinallyNative) (priority := high) PS0.DoLayout.whereFinally : psWhereFinally
 
 @[run_parser_attribute_hooks] def nativePSWhereDecls : Lean.Parser.Parser :=
   Lean.Parser.leadingNode ``Lean.Parser.Term.whereDecls 0 <|
@@ -194,6 +194,9 @@ private def lowerOptionalFinally (source : Syntax) : MacroM Syntax := do
 private def lowerWhereLocal (source : Syntax) : MacroM Syntax := withRef source do
   unless source.isOfKind ``psWhereLocalDefinition && source.getArgs.size == 8 do
     Macro.throwError "PS0V1-WHERE-LOCAL: unexpected helper declaration"
+  unless source[3].isOfKind ``Lean.Parser.Term.letId && source[3].getArgs.size == 1 &&
+      source[3][0].isIdent do
+    Macro.throwError "PS0V1-WHERE-LOCAL: a braced def helper requires a name"
   let binders ← PS0.Syntax.lowerLocalTelescope source[4].getArgs
   let binders := PS0.Syntax.retainLocalGroup source[4] binders
   let ty ← PS0.Syntax.lowerNativeOptionalType source[5]

@@ -162,6 +162,23 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
     let patternBindings := ownedDoElements.filter fun item => item.isOfKind ``Lean.Parser.Term.doLetArrow &&
       item[3].isOfKind ``Lean.Parser.Term.doPatDecl
     let tail := if hasTail then declValue.getArgs.back![0] else Syntax.missing
+    let whereClause := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclWhere then
+        declValue[2][0]
+      else tail[1][0]
+    let nativeWhere := if whereClause.isOfKind `PS0.StandardAdapters.psWhereNative then
+        whereClause[0]
+      else Syntax.missing
+    let whereHelpers := if whereClause.isOfKind `PS0.StandardAdapters.psWhereBraced then
+        whereClause[2].getArgs.filter (·.isOfKind `PS0.StandardAdapters.psWhereLocalDefinition)
+      else nativeWhere[1].getArgs.filter (·.isOfKind ``Lean.Parser.Term.letRecDecl)
+    let whereFinally := if whereClause.isOfKind `PS0.StandardAdapters.psWhereBraced then
+        whereClause[3][0]
+      else nativeWhere[2][0]
+    let whereProofSections := if whereFinally.isOfKind `PS0.StandardAdapters.psWhereFinallyBraced then
+        whereFinally[3].getArgs
+      else if whereFinally.isOfKind `PS0.StandardAdapters.psWhereFinallyNative then
+        whereFinally[0][2].getArgs
+      else #[]
     let equationBodies := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclEqns then
       declValue[0][0].getArgs.map (fun alt => alt[3].getKind.toString) else #[]
     return Json.mkObj [
@@ -195,9 +212,20 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("equationBodyKinds", toJson equationBodies),
       ("whereFieldCount", toJson (if declValue.isOfKind `PS0.StandardAdapters.ps0DeclWhere then
         declValue[1][0].getSepArgs.size else 0)),
-      ("nativeWhereTail", toJson (hasTail && tail[1].getArgs.any fun item =>
-        item.isOfKind ``Lean.Parser.Term.whereDecls ||
-          item.isOfKind `PS0.StandardAdapters.psWhereNative))]
+      ("nativeWhereTail", toJson (whereClause.isOfKind ``Lean.Parser.Term.whereDecls ||
+        whereClause.isOfKind `PS0.StandardAdapters.psWhereNative)),
+      ("whereClauseKind", toJson whereClause.getKind.toString),
+      ("whereHelperCount", toJson whereHelpers.size),
+      ("whereHelperNames", toJson (whereHelpers.map fun helper =>
+        (if helper.isOfKind `PS0.StandardAdapters.psWhereLocalDefinition then helper[3][0]
+          else helper[2][0][0][0]).getId.toString)),
+      ("whereHelperValueKinds", toJson (whereHelpers.map fun helper =>
+        (if helper.isOfKind `PS0.StandardAdapters.psWhereLocalDefinition then helper[6]
+          else helper[2][0]).getKind.toString)),
+      ("whereHelperDocCount", toJson (whereHelpers.filter (fun helper => !helper[0].getArgs.isEmpty)).size),
+      ("whereHelperAttributeCount", toJson (whereHelpers.filter (fun helper => !helper[1].getArgs.isEmpty)).size),
+      ("whereFinallyKind", toJson whereFinally.getKind.toString),
+      ("whereFinallySectionNames", toJson (whereProofSections.map (fun proofSection => proofSection[1].getId.toString)))]
   if source.isOfKind ``Lean.Parser.Command.declaration then
     let native := source[1]
     let supported := #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,
