@@ -47,7 +47,8 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
     -- Ask for a successful operator-free prefix, then let the owned trailing
     -- parser read the RHS. Failed probes require a tighter binding power.
     let mut low := prec
-    let mut high := maxPrec + 1
+    let mut high := maxPrec
+    if high <= prec then return parsed
     let prefix := (categoryParser `term high).fn ctx initial
     if prefix.hasError || kinds.contains prefix.stxStack.back.getKind then
       return parsed
