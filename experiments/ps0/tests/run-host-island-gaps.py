@@ -34,9 +34,16 @@ for name, native, ps in cases:
                                    capture_output=True, text=True, timeout=300)
     (work / (name + '-native.log')).write_text(native_result.stdout + native_result.stderr)
     assert native_result.returncode == 0, (name, native_result.stdout, native_result.stderr)
-    source = work / (name + '-ps.ps')
+    source_root = work / (name + '-source')
+    source_root.mkdir()
+    source = source_root / 'HostIslandProbe.ps'
     source.write_text(ps_prefix + ps + '\n')
-    result = subprocess.run([str(ROOT / '.lake/build/bin/ps0'), '-Dps0.sourceGrammar=true', str(source)],
+    result = subprocess.run(['lake', '-R', '-f', 'lakefile.project.lean',
+                            '-KsourceRoot=' + str(source_root), '-Kroots=HostIslandProbe',
+                            '-KmoduleNames=HostIslandProbe', '-Kbootstrap=true', '-KsourceGrammar=true',
+                            '-Kdriver=' + str(ROOT / '.lake/build/bin/ps0'),
+                            '-KprojectBuildDir=' + str(work / (name + '-build')),
+                            'build', 'HostIslandProbe'],
                             capture_output=True, text=True, timeout=300)
     diagnostic = result.stdout + result.stderr
     (work / (name + '-ps.log')).write_text(diagnostic)
