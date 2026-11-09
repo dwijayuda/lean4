@@ -1,0 +1,54 @@
+/-! Native unless owns its ordinary condition and block operands. -/
+function add(x: Nat, y: Nat): Nat := x + y
+function below(n: Nat): Bool := n < 3
+function observe(n: Nat): IO Unit := IO.println s!"PS0_UNLESS_BODY:{n}"
+
+const bodyValue: IO Nat := do
+  let mut total := 0
+  unless below(add(1, 2)) do
+    total := add(total, 2)
+  unless below(add(0, 1)) do
+    total := add(total, 100)
+  return total
+
+function early(n: Nat): IO Nat := do
+  unless below(add(n, 1)) do
+    return add(n, 10)
+  return add(n, 20)
+
+const termValue: IO Unit := unless below(add(1, 2)) do
+  observe(add(1, 2))
+
+macro "unlessOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless e.raw.isOfKind ``Lean.Parser.Term.termUnless &&
+      lowered.isOfKind ``Lean.Parser.Term.termUnless &&
+      e.raw.getArgs.size == 4 && lowered.getArgs.size == 4 &&
+      lowered.getRange? == e.raw.getRange? && e.raw.getRange?.isSome &&
+      lowered[1].getRange? == e.raw[1].getRange? &&
+      lowered[3].getRange? == e.raw[3].getRange? &&
+      lowered[0].eqWithInfo e.raw[0] && lowered[2].eqWithInfo e.raw[2] do
+    Lean.Macro.throwError "PS0_UNLESS_ORIGIN"
+  `(True)
+example : unlessOrigin unless below(add(1, 2)) do { observe(add(1, 2)) } := by trivial
+
+macro "nativeUnless " seq:doSeq : term => `(do $seq)
+const nativeValue: IO Nat := nativeUnless
+  unless below (3) do return add (1) (2)
+  return 7
+
+meta def quotedUnless : Lean.MacroM(Lean.TSyntax `term) := do
+  let quoted ← `(term| do { unless below (3) do pure () })
+  return quoted
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM quotedUnless
+  unless quoted.raw.isOfKind ``Lean.Parser.Term.do do
+    Lean.throwError "PS0_UNLESS_NATIVE_QUOTATION"
+
+def main : IO Unit := do
+  let body ← bodyValue
+  let low ← early(0)
+  let high ← early(3)
+  let native ← nativeValue
+  termValue
+  IO.println s!"PS0_UNLESS:{body}:{low}:{high}:{native}"

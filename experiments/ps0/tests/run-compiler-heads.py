@@ -185,6 +185,12 @@ if args.fixture == 'DoLayoutProbe':
     assert layout['doElementKinds'] == [
         'Lean.Parser.Term.doLet', 'Lean.Parser.Term.doLet', 'Lean.Parser.Term.doReassign',
         'Lean.Parser.Term.doLetArrow', 'Lean.Parser.Term.doExpr', 'Lean.Parser.Term.doReturn'], layout
+if args.fixture in ['UnlessProbe', 'InlineAttrs']:
+    name = 'bodyValue' if args.fixture == 'UnlessProbe' else 'isValidMacroInline'
+    declaration = next(d for d in declarations if d['sourceName'] == name)
+    assert 'Lean.Parser.Term.doUnless' in declaration['doElementKinds'], declaration
+    if args.fixture == 'UnlessProbe':
+        assert next(d for d in declarations if d['sourceName'] == 'termValue')['valueRootKind'] == 'Lean.Parser.Term.termUnless'
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
