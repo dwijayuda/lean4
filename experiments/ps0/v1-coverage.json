@@ -16486,10 +16486,10 @@
       "lastObservedUtc": "2026-11-09 19:39:50 UTC"
     },
     "nextActions": [
-      "Inspect punning regression and independently rehash restored SynthInstance artifacts",
-      "Reproduce actual Parser.Types dollar application boundary and fix via native parser roles",
-      "Implement eight confirmed ordinary-role gaps and loop contracts with source-fidelity controls",
-      "Require fresh full canonical PS graph, native linking/runtime, relocated compiler operation and fixed point"
+      "Inspect aggregate clean build and bounded parenthesis probe; qualify nineteen grammar boundaries and native artifact parity",
+      "Inspect Prelude, Int.Linear and Associative migrated timeouts with exact current-source evidence",
+      "Complete corrected dollar fixture kernel-expansion and string-runtime checks",
+      "Require refreshed native census contract, complete canonical PS graph, native linking/runtime, relocated compiler operation and fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -18613,6 +18613,71 @@
         "sha256": "724f35a5cf16eac88d9319b0152f96e0a08792aa944d7e3d3a7a2a891ab04bdd"
       },
       "grammarMigrationComplete": false
+    },
+    "parserTypesDollarQualification": {
+      "source": "64b45401734efee291085fd6b4199c7c5b8d1c98",
+      "status": "QUALIFIED_FINITE",
+      "run": 42711185732,
+      "independentRun": 42712824864
+    },
+    "ordinaryAggregateCandidate": {
+      "source": "79ec94005d79670bcad20b0de695d4aa8a13ae83",
+      "runner": "cd1f6cbd1bd22f50636fa87bfdc2e3d61f7c5332",
+      "run": 42712677273,
+      "status": "PENDING",
+      "plannedDefinitions": 41,
+      "plannedProofGuards": 38,
+      "plannedOriginCases": 19,
+      "plannedInvalidGapRejections": 19,
+      "testCorrectionSource": "eac13dbd1eee2005e129ea4085015a693905176d",
+      "previousRuns": [
+        {
+          "source": "cbabb1069028551fafb61dbd4e4db84587112003",
+          "run": 42710551582,
+          "job": 129478622579,
+          "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
+        },
+        {
+          "run": 42711184598,
+          "job": 129480821526,
+          "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
+        }
+      ],
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "ordinaryHostRestoredBroadMatrix": {
+      "source": "ad3b7d491f19476ec7c87c6521f3fcef1b687dd9",
+      "runner": "ceb8a701689f8b0853e1edfdacf434a3c02d0020",
+      "run": 42709726274,
+      "status": "FAILED_PENDING_FINAL_COUNTS",
+      "passed": 34,
+      "failed": 3,
+      "running": 1,
+      "failures": [
+        {
+          "name": "compiler-prelude",
+          "job": 129475750175
+        },
+        {
+          "name": "compiler-intlinear",
+          "job": 129475750508
+        },
+        {
+          "name": "compiler-associative",
+          "job": 129475750519
+        }
+      ],
+      "failure": "each migrated Lake subprocess timed out at 600 seconds"
+    },
+    "nativeCensusContractUpgrade": {
+      "source": "f89b9857d09ee210f4a66dfebcee44d2b4a7e40c",
+      "runner": "fbc23b05c00e6110e011678cc3fcdecc0d7bd84b",
+      "run": 42711052447,
+      "job": 129480355041,
+      "status": "PASS",
+      "tests": 5,
+      "scope": "versioned native syntax cache identity/invalidation only"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -36316,5 +36381,2702 @@
       "sha256": "724f35a5cf16eac88d9319b0152f96e0a08792aa944d7e3d3a7a2a891ab04bdd"
     },
     "grammarMigrationComplete": false
+  },
+  "parserTypesDollarQualification": {
+    "source": "64b45401734efee291085fd6b4199c7c5b8d1c98",
+    "runner": "815a6dda2967e7140b07449f918783e9ea3b0e63",
+    "run": 42711185732,
+    "job": 129480830685,
+    "status": "QUALIFIED_FINITE",
+    "mappedDefinitions": 70,
+    "producerArtifact": {
+      "id": 13715214002,
+      "sha256": "bf98d573af888e6793fa112e71645c2bf6b1647ebeee092c0a7b86eec585a973"
+    },
+    "independentInspection": {
+      "runner": "927f22ca13a15316ee18bbe4b2ace0cbba3483cb",
+      "run": 42712824864,
+      "job": 129486558072,
+      "status": "PASS",
+      "artifact": {
+        "id": 13716297690,
+        "sha256": "576c270ffe6f8c2cdb88146e83cd8bb97cd574d054bb1072d957c0b8cee3c9bf"
+      },
+      "report": {
+        "actual_compiler_files_rehashed": 4,
+        "evidence": {
+          "comparisons": {
+            "ir/Lean/Parser/Types.c": {
+              "native": "8af04d5974a45ed4aba4ca7be2113ac9e4b26594c00040d24dbf1f642003a787",
+              "ps": "8af04d5974a45ed4aba4ca7be2113ac9e4b26594c00040d24dbf1f642003a787"
+            },
+            "lib/lean/Lean/Parser/Types.olean": {
+              "native": "e47eb47b44316da986e3f15004cbf8d2ab41c0d8d09fe1b79ede38ce76c28dfe",
+              "ps": "e47eb47b44316da986e3f15004cbf8d2ab41c0d8d09fe1b79ede38ce76c28dfe"
+            }
+          },
+          "compiler_pipeline": "native-lake-eager",
+          "contextual_boundary_heads": [
+            {
+              "keywordRange": {
+                "end": 9895,
+                "start": 9892
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.structure",
+              "reason": "preserve reserved R2 head after native identifier/field list",
+              "sourceName": "initCacheForInput",
+              "targetKeyword": "def"
+            }
+          ],
+          "converted_declarations": [
+            "getNext",
+            "maxPrec",
+            "argPrec",
+            "leadPrec",
+            "minPrec",
+            "SyntaxNodeKindSet.insert",
+            "mk",
+            "input",
+            "atEnd",
+            "get",
+            "get'",
+            "next",
+            "next'",
+            "extract",
+            "substring",
+            "getNext",
+            "prev",
+            "ParserContext.setEndPos",
+            "expectedToString",
+            "toString",
+            "merge",
+            "initCacheForInput",
+            "toSubarray",
+            "empty",
+            "size",
+            "isEmpty",
+            "shrink",
+            "push",
+            "pop",
+            "back",
+            "get!",
+            "extract",
+            "hasError",
+            "stackSize",
+            "restore",
+            "setPos",
+            "setCache",
+            "pushSyntax",
+            "popSyntax",
+            "shrinkStack",
+            "next",
+            "next'",
+            "mkNode",
+            "mkTrailingNode",
+            "allErrors",
+            "setError",
+            "mkError",
+            "mkUnexpectedError",
+            "mkEOIError",
+            "mkErrorsAt",
+            "mkErrorAt",
+            "mkUnexpectedTokenErrors",
+            "mkUnexpectedTokenError",
+            "mkUnexpectedErrorAt",
+            "toErrorMsg",
+            "ParserFn",
+            "seq",
+            "toOptional",
+            "merge",
+            "toStr",
+            "withFn",
+            "adaptCacheableContextFn",
+            "adaptCacheableContext",
+            "withStackDrop",
+            "withResetCacheFn",
+            "withResetCache",
+            "adaptUncacheableContextFn",
+            "withCacheFn",
+            "withCache",
+            "ParserFn.run"
+          ],
+          "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+          "equation_definitions": [
+            "expectedToString",
+            "merge",
+            "seq",
+            "toOptional",
+            "toStr"
+          ],
+          "grammar_migration_complete": false,
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "mapped_source_roles": [
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "getNext",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostHeadTerm"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "maxPrec",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "argPrec",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "leadPrec",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "minPrec",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "SyntaxNodeKindSet.insert",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mk",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "missing"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "input",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [
+                "«term_≥_»"
+              ],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "atEnd",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "PS0.Operators.ownedBinary"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "get",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "get'",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "next",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "next'",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "extract",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "substring",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "getNext",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "prev",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "ParserContext.setEndPos",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclEqns",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [
+                "ps0HostHeadTerm",
+                "ps0HostHeadTerm",
+                "PS0.Operators.ownedBinary",
+                "PS0.Operators.ownedBinary"
+              ],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "expectedToString",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "missing"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "toString",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.let"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "merge",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.match"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "initCacheForInput",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "missing"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "toSubarray",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "empty",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "missing"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [
+                "«term_-_»"
+              ],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "size",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "PS0.Operators.ownedBinary"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [
+                "«term_==_»"
+              ],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "isEmpty",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "PS0.Operators.ownedBinary"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "shrink",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "push",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "pop",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostIf"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "back",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostIf"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "get!",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostIf"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [
+                "«term_+_»",
+                "«term_+_»"
+              ],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "extract",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [
+                "«term_!=_»"
+              ],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "hasError",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "PS0.Operators.ownedBinary"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "stackSize",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostHeadTerm"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "restore",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "setPos",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "setCache",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "pushSyntax",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "popSyntax",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "shrinkStack",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "next",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "next'",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkNode",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.match"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkTrailingNode",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.match"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [
+                "«term_++_»"
+              ],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "allErrors",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "PS0.Operators.ownedBinary"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "setError",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.match"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkError",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "PS0.Operators.ownedPostfix"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkUnexpectedError",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.let"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkEOIError",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkErrorsAt",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkErrorAt",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkUnexpectedTokenErrors",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.let"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkUnexpectedTokenError",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "mkUnexpectedErrorAt",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "PS0.Operators.ownedPostfix"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "toErrorMsg",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [
+                "Lean.Parser.Term.arrow",
+                "Lean.Parser.Term.arrow"
+              ],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "ParserFn",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "PS0.Operators.ownedBinary"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclEqns",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [
+                "ps0HostHeadTerm",
+                "ps0HostAdjacentCall",
+                "ps0HostAdjacentCall",
+                "ps0HostHeadTerm",
+                "ps0HostHeadTerm"
+              ],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "seq",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "missing"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclEqns",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [
+                "ps0NativeTermBridge",
+                "ps0HostHeadTerm"
+              ],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "toOptional",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "missing"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclEqns",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [
+                "ps0NativeTermBridge",
+                "ps0NativeTermBridge",
+                "ps0HostAdjacentCall",
+                "ps0HostAdjacentCall",
+                "ps0HostAdjacentCall",
+                "ps0HostAdjacentCall",
+                "ps0HostHeadTerm"
+              ],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "merge",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "missing"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclEqns",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [
+                "ps0HostHeadTerm",
+                "ps0HostHeadTerm",
+                "ps0NativeTermBridge",
+                "PS0.Operators.ownedBinary"
+              ],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "toStr",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "missing"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "withFn",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "Lean.Parser.Term.structInst"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "adaptCacheableContextFn",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostLambda"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "adaptCacheableContext",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "withStackDrop",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostLambda"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "withResetCacheFn",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "withResetCache",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "adaptUncacheableContextFn",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "withCacheFn",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostLambda"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": true,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "withCache",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0HostAdjacentCall"
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "doElementKinds": [],
+              "doPatternBindingCount": 0,
+              "doSequenceKind": "missing",
+              "doUnlessBlockKinds": [],
+              "doUnlessConditionKinds": [],
+              "equationBodyKinds": [],
+              "nativeDefDeriving": false,
+              "nativeWhereTail": false,
+              "ownedDoElementKinds": [],
+              "ownedIndexedAccess": [],
+              "ownedOperatorKinds": [],
+              "ownedValueCall": false,
+              "recursiveDeclarationKinds": [],
+              "recursiveEquationValueKinds": [],
+              "recursiveGroupCount": 0,
+              "recursiveSimpleValueKinds": [],
+              "recursiveTermContinuationKind": "",
+              "sourceName": "ParserFn.run",
+              "termUnlessConditionKind": "",
+              "valueRootKind": "ps0NativeTermBridge"
+            }
+          ],
+          "module": "Lean.Parser.Types",
+          "native_converted_control": "changed surface rejected natively",
+          "non_definition_source_roles": [
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardAbbrev",
+              "sourceName": "mkAtom",
+              "whereFieldCount": 0
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardAbbrev",
+              "sourceName": "mkIdent",
+              "whereFieldCount": 0
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardAbbrev",
+              "sourceName": "Token",
+              "whereFieldCount": 0
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardAbbrev",
+              "sourceName": "TokenTable",
+              "whereFieldCount": 0
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardAbbrev",
+              "sourceName": "SyntaxNodeKindSet",
+              "whereFieldCount": 0
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardInstance",
+              "sourceName": "",
+              "whereFieldCount": 1
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardTheorem",
+              "sourceName": "not_atEnd_inputString",
+              "whereFieldCount": 0
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardInstance",
+              "sourceName": "",
+              "whereFieldCount": 1
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardInstance",
+              "sourceName": "",
+              "whereFieldCount": 0
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardInstance",
+              "sourceName": "",
+              "whereFieldCount": 1
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardInstance",
+              "sourceName": "",
+              "whereFieldCount": 1
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardInstance",
+              "sourceName": "",
+              "whereFieldCount": 1
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardInstance",
+              "sourceName": "",
+              "whereFieldCount": 1
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclWhere",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardInstance",
+              "sourceName": "",
+              "whereFieldCount": 1
+            },
+            {
+              "declarationValueKind": "PS0.StandardAdapters.ps0DeclSimple",
+              "equationBodyKinds": [],
+              "mode": "mapped-ps",
+              "production": "PS0.StandardAdapters.ps0StandardAbbrev",
+              "sourceName": "TrailingParser",
+              "whereFieldCount": 0
+            }
+          ],
+          "operator_descriptor_scope": "active-and-captured-kinds/1",
+          "owned_value_calls": [],
+          "pinned_blob": "83c6647aba46768322afe237e359a3f271e1cf10",
+          "scope": "real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration",
+          "scoped_binary_kinds": [],
+          "source": "64b45401734efee291085fd6b4199c7c5b8d1c98",
+          "source_strategies": [
+            {
+              "keywordRange": {
+                "end": 599,
+                "start": 596
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.abbrev",
+              "reason": "typed alias telescope",
+              "sourceName": "getNext",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 946,
+                "start": 943
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "maxPrec",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 982,
+                "start": 979
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "argPrec",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 1018,
+                "start": 1015
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "leadPrec",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 1055,
+                "start": 1052
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "minPrec",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 1226,
+                "start": 1223
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.abbrev",
+              "reason": "typed alias telescope",
+              "sourceName": "SyntaxNodeKindSet.insert",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 1900,
+                "start": 1897
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.namespace",
+              "reason": "preserve R2 native telescope grouping/inference or original head trivia",
+              "sourceName": "mk",
+              "targetKeyword": "def"
+            },
+            {
+              "keywordRange": {
+                "end": 2380,
+                "start": 2377
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "input",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 2635,
+                "start": 2632
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "atEnd",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 2902,
+                "start": 2899
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "get",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 4041,
+                "start": 4038
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.theorem",
+              "reason": "typed alias telescope",
+              "sourceName": "get'",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 4534,
+                "start": 4531
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "next",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 4860,
+                "start": 4857
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "next'",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 5396,
+                "start": 5393
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "extract",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 5613,
+                "start": 5610
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "preserve R2 native telescope grouping/inference or original head trivia",
+              "sourceName": "substring",
+              "targetKeyword": "def"
+            },
+            {
+              "keywordRange": {
+                "end": 5827,
+                "start": 5824
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "getNext",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 5988,
+                "start": 5985
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "prev",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 7757,
+                "start": 7754
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.instance",
+              "reason": "typed alias telescope",
+              "sourceName": "ParserContext.setEndPos",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 8285,
+                "start": 8282
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.namespace",
+              "reason": "typed alias telescope",
+              "sourceName": "expectedToString",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 8463,
+                "start": 8460
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "toString",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 8889,
+                "start": 8886
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.instance",
+              "reason": "preserve R2 native telescope grouping/inference or original head trivia",
+              "sourceName": "merge",
+              "targetKeyword": "def"
+            },
+            {
+              "keywordRange": {
+                "end": 9895,
+                "start": 9892
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.structure",
+              "reason": "preserve reserved R2 head after native identifier/field list",
+              "sourceName": "initCacheForInput",
+              "targetKeyword": "def"
+            },
+            {
+              "keywordRange": {
+                "end": 10251,
+                "start": 10248
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.namespace",
+              "reason": "typed alias telescope",
+              "sourceName": "toSubarray",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 10344,
+                "start": 10341
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "empty",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 10401,
+                "start": 10398
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "size",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 10472,
+                "start": 10469
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "isEmpty",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 10535,
+                "start": 10532
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "shrink",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 10654,
+                "start": 10651
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "push",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 10757,
+                "start": 10754
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "pop",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 10883,
+                "start": 10880
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "back",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 11034,
+                "start": 11031
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "get!",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 11206,
+                "start": 11203
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "preserve R2 native telescope grouping/inference or original head trivia",
+              "sourceName": "extract",
+              "targetKeyword": "def"
+            },
+            {
+              "keywordRange": {
+                "end": 12089,
+                "start": 12086
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.namespace",
+              "reason": "typed alias telescope",
+              "sourceName": "hasError",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 12152,
+                "start": 12149
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "stackSize",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 12212,
+                "start": 12209
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "restore",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 12402,
+                "start": 12399
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "setPos",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 12496,
+                "start": 12493
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "setCache",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 12595,
+                "start": 12592
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "pushSyntax",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 12702,
+                "start": 12699
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "popSyntax",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 12792,
+                "start": 12789
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "shrinkStack",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 12917,
+                "start": 12914
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "next",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 13036,
+                "start": 13033
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "next'",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 13180,
+                "start": 13177
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkNode",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 14351,
+                "start": 14348
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkTrailingNode",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 14740,
+                "start": 14737
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "allErrors",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 14921,
+                "start": 14918
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "setError",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 15093,
+                "start": 15090
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkError",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 15214,
+                "start": 15211
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "preserve R2 native telescope grouping/inference or original head trivia",
+              "sourceName": "mkUnexpectedError",
+              "targetKeyword": "def"
+            },
+            {
+              "keywordRange": {
+                "end": 15445,
+                "start": 15442
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkEOIError",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 15584,
+                "start": 15581
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkErrorsAt",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 15876,
+                "start": 15873
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkErrorAt",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 16469,
+                "start": 16466
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkUnexpectedTokenErrors",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 17069,
+                "start": 17066
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkUnexpectedTokenError",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 17219,
+                "start": 17216
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "mkUnexpectedErrorAt",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 17357,
+                "start": 17354
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "toErrorMsg",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 17703,
+                "start": 17700
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.end",
+              "reason": "typed alias telescope",
+              "sourceName": "ParserFn",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 18044,
+                "start": 18041
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.namespace",
+              "reason": "typed alias telescope",
+              "sourceName": "seq",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 18340,
+                "start": 18337
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "toOptional",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 18440,
+                "start": 18437
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "merge",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 18886,
+                "start": 18883
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "toStr",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 19571,
+                "start": 19568
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.abbrev",
+              "reason": "typed alias telescope",
+              "sourceName": "withFn",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 19660,
+                "start": 19657
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "adaptCacheableContextFn",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 19859,
+                "start": 19856
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "adaptCacheableContext",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 20010,
+                "start": 20007
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "withStackDrop",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 20310,
+                "start": 20307
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "withResetCacheFn",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 20559,
+                "start": 20556
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "withResetCache",
+              "targetKeyword": "const"
+            },
+            {
+              "keywordRange": {
+                "end": 20730,
+                "start": 20727
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "adaptUncacheableContextFn",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 21450,
+                "start": 21447
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "withCacheFn",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 22302,
+                "start": 22299
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "withCache",
+              "targetKeyword": "function"
+            },
+            {
+              "keywordRange": {
+                "end": 22392,
+                "start": 22389
+              },
+              "previousCommandHeadKind": "Lean.Parser.Command.definition",
+              "reason": "typed alias telescope",
+              "sourceName": "ParserFn.run",
+              "targetKeyword": "function"
+            }
+          ],
+          "unchanged_abbrev_adapters": [
+            "SyntaxNodeKindSet",
+            "Token",
+            "TokenTable",
+            "TrailingParser",
+            "mkAtom",
+            "mkIdent"
+          ],
+          "verified_execution": false
+        },
+        "hashes": {
+          "compiler-heads-42711185732-ParserTypes/baseline/ir/Lean/Parser/Types.c": "8af04d5974a45ed4aba4ca7be2113ac9e4b26594c00040d24dbf1f642003a787",
+          "compiler-heads-42711185732-ParserTypes/baseline/lib/lean/Lean/Parser/Types.olean": "e47eb47b44316da986e3f15004cbf8d2ab41c0d8d09fe1b79ede38ce76c28dfe",
+          "compiler-heads-42711185732-ParserTypes/migrated/ir/Lean/Parser/Types.c": "8af04d5974a45ed4aba4ca7be2113ac9e4b26594c00040d24dbf1f642003a787",
+          "compiler-heads-42711185732-ParserTypes/migrated/lib/lean/Lean/Parser/Types.olean": "e47eb47b44316da986e3f15004cbf8d2ab41c0d8d09fe1b79ede38ce76c28dfe"
+        },
+        "source_edit_reconstruction": true,
+        "status": "PASS_FINITE_NATIVE_C_PUBLIC_OLEAN_PARITY"
+      }
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "nativeCensusContractUpgrade": {
+    "source": "f89b9857d09ee210f4a66dfebcee44d2b4a7e40c",
+    "runner": "fbc23b05c00e6110e011678cc3fcdecc0d7bd84b",
+    "run": 42711052447,
+    "job": 129480355041,
+    "status": "PASS",
+    "tests": 5,
+    "scope": "versioned native syntax cache identity/invalidation only"
+  },
+  "ordinaryHostRestoredBroadMatrix": {
+    "source": "ad3b7d491f19476ec7c87c6521f3fcef1b687dd9",
+    "runner": "ceb8a701689f8b0853e1edfdacf434a3c02d0020",
+    "run": 42709726274,
+    "status": "FAILED_PENDING_FINAL_COUNTS",
+    "passed": 34,
+    "failed": 3,
+    "running": 1,
+    "failures": [
+      {
+        "name": "compiler-prelude",
+        "job": 129475750175
+      },
+      {
+        "name": "compiler-intlinear",
+        "job": 129475750508
+      },
+      {
+        "name": "compiler-associative",
+        "job": 129475750519
+      }
+    ],
+    "failure": "each migrated Lake subprocess timed out at 600 seconds"
+  },
+  "ordinaryAggregateCandidate": {
+    "source": "79ec94005d79670bcad20b0de695d4aa8a13ae83",
+    "runner": "cd1f6cbd1bd22f50636fa87bfdc2e3d61f7c5332",
+    "run": 42712677273,
+    "status": "PENDING",
+    "plannedDefinitions": 41,
+    "plannedProofGuards": 38,
+    "plannedOriginCases": 19,
+    "plannedInvalidGapRejections": 19,
+    "testCorrectionSource": "eac13dbd1eee2005e129ea4085015a693905176d",
+    "previousRuns": [
+      {
+        "source": "cbabb1069028551fafb61dbd4e4db84587112003",
+        "run": 42710551582,
+        "job": 129478622579,
+        "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
+      },
+      {
+        "run": 42711184598,
+        "job": 129480821526,
+        "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
+      }
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }
