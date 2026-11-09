@@ -58,16 +58,26 @@ private def ownedOperandContext (ctx : ParserContextCore) : ParserContextCore :=
 private def operandParser (parser : Parser) : Parser :=
   withFn (adaptUncacheableContextFn ownedOperandContext) parser
 
+private def filterToken (table : TokenMap (Parser × Nat)) (token : Name)
+    (keep : Parser × Nat → Bool) : TokenMap (Parser × Nat) :=
+  match table.get? token with
+  | none => table
+  | some parsers => Std.TreeMap.insert table token (parsers.filter keep)
+
 private unsafe def leadingWith (head : Bool) : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
     | return initial.mkUnexpectedError "PS0V1-OP-CATEGORY: missing native term category"
   let kinds := if head then #[] else PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
   let keepLeading := fun (entry : Parser × Nat) =>
     !(entry.1.info.collectKinds {}).contains `PS0.pscvBracedExpression
-  let mut leadingTable : TokenMap (Parser × Nat) := {}
-  for (token, parsers) in category.tables.leadingTable do
-    for entry in (parsers.filter keepLeading).reverse do
-      leadingTable := leadingTable.insert token entry
+  let mut leadingTable := category.tables.leadingTable
+  if head then
+    leadingTable := filterToken leadingTable `«{» keepLeading
+  else
+    leadingTable := {}
+    for (token, parsers) in category.tables.leadingTable do
+      for entry in (parsers.filter keepLeading).reverse do
+        leadingTable := leadingTable.insert token entry
   let leadingTables := {category.tables with
     leadingTable, leadingParsers := category.tables.leadingParsers.filter keepLeading}
   let keep := fun (entry : Parser × Nat) =>
@@ -75,10 +85,14 @@ private unsafe def leadingWith (head : Bool) : ParserFn := fun ctx initial => un
     !kinds.any collected.contains && !bracketKinds.any collected.contains &&
       !collected.contains ``Lean.Parser.Term.pipeProj &&
       !collected.contains ``Lean.Parser.Term.pipeCompletion
-  let mut trailingTable : TokenMap (Parser × Nat) := {}
-  for (token, parsers) in category.tables.trailingTable do
-    for entry in (parsers.filter keep).reverse do
-      trailingTable := trailingTable.insert token entry
+  let mut trailingTable := category.tables.trailingTable
+  if head then
+    trailingTable := filterToken (filterToken trailingTable `«[» keep) `«|>.» keep
+  else
+    trailingTable := {}
+    for (token, parsers) in category.tables.trailingTable do
+      for entry in (parsers.filter keep).reverse do
+        trailingTable := trailingTable.insert token entry
   let tables := {category.tables with
     trailingTable, trailingParsers := category.tables.trailingParsers.filter keep}
   -- The unrestricted legacy wrapper is not an ordinary PS term production.
