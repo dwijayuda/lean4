@@ -4,6 +4,6 @@ function emptyBoundary(n: Nat): IO Unit := do
   let some k := some(n) | return
   IO.println(s!"PS0_RETURN_BOUNDARY:{k}")
 
-function main(): IO Unit := do
+const main: IO Unit := do
   emptyBoundary(1)
   emptyBoundary(0)

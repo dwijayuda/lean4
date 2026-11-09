@@ -206,7 +206,10 @@ def single_type_call(operand, role='owned binder type'):
             previous_end = end
             is_named = argument['kind'] == 'Lean.Parser.Term.namedArgument'
             left, right = (start + 1, end - 1) if is_named else (start, end)
-            (named if is_named else positional).append(trivia + rewritten(left, right))
+            rewritten_argument = rewritten(left, right)
+            if not is_named and argument['kind'] == 'Lean.Parser.Term.do':
+                rewritten_argument = b'(' + rewritten_argument + b')'
+            (named if is_named else positional).append(trivia + rewritten_argument)
         start, end = span(operand)
         function_start, function_end = span(function)
         head = rewritten(function_start, function_end)
