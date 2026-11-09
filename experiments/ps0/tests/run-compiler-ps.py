@@ -9,7 +9,7 @@ import os
 import shutil
 import subprocess
 import time
-from native_census_cache import NativeCensusCache, needs_head_lexical_refresh
+from native_census_cache import NativeCensusCache, needs_head_lexical_refresh, OPERATOR_SCOPE
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--driver', type=Path)
@@ -146,17 +146,6 @@ if args.source_plans:
         return any((command['headKind'] in ['Lean.Parser.Command.instance', 'Lean.Parser.Command.example']
                     and command['declaration'] is None)
                    or missing_declaration_view(command.get('nestedCommands', [])) for command in commands)
-    def possible_uncaptured_binary(value):
-        if isinstance(value, list):
-            return any(possible_uncaptured_binary(item) for item in value)
-        if not isinstance(value, dict):
-            return False
-        parts = value.get('args', [])
-        if (value.get('nativeBinaryOperator') is False and len(parts) == 3
-                and parts[1].get('atom') is not None
-                and value['kind'] != 'Lean.Parser.Term.proj'):
-            return True
-        return any(possible_uncaptured_binary(item) for item in value.values())
     refreshed = []
     reused_censuses = []
     native_cache = (NativeCensusCache(args.native_censuses, args.census_source, LEAN)
@@ -169,8 +158,7 @@ if args.source_plans:
         folder.mkdir(parents=True, exist_ok=False)
         captured = json.loads(census.read_text())
         if (needs_head_lexical_refresh(captured) or missing_declaration_view(captured['commands']) or
-                (captured.get('operatorDescriptorScope') != 'active-and-captured-kinds/1'
-                 and possible_uncaptured_binary(captured['commands']))):
+                captured.get('operatorDescriptorScope') != OPERATOR_SCOPE):
             prior = (native_cache.find(module, original.read_bytes(), digest(sdk / entries[module]['sdkPath']))
                      if native_cache else None)
             if prior is not None and needs_head_lexical_refresh(json.loads(prior.read_text())):

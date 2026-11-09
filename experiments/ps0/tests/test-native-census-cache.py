@@ -24,7 +24,7 @@ class NativeCacheIdentity(unittest.TestCase):
                           'module_count': 2569, 'stage_driver_sha256': 'c' * 64,
                           'inputs': {'Init.Probe': {'original_sha256': SDK_SHA}}}
         self.snapshot = {'schema': 'ps0-native-source-census/1', 'leanCommit': LEAN,
-                         'operatorDescriptorScope': 'active-and-captured-kinds/1',
+                         'operatorDescriptorScope': 'active-and-captured-kinds/2',
                          'module': 'Init.Probe', 'nativeSource': RAW.decode(),
                          'commands': [{'declaration': {'mode': 'native-compatible'},
                                        'nestedCommands': []}]}
@@ -61,6 +61,11 @@ class NativeCacheIdentity(unittest.TestCase):
                 with self.assertRaises(AssertionError):
                     self.cache().find('Init.Probe', RAW, SDK_SHA)
                 self.snapshot[key] = original
+
+    def test_atomic_whitespace_descriptor_upgrade_requires_fresh_native_capture(self):
+        self.snapshot['operatorDescriptorScope'] = 'active-and-captured-kinds/1'
+        self.write()
+        self.assertIsNone(self.cache().find('Init.Probe', RAW, SDK_SHA))
 
     def test_both_sdk_and_converted_header_bytes_are_required(self):
         cache = self.cache()

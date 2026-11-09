@@ -9,7 +9,7 @@ import re
 
 SCHEMA = 'ps0-native-source-census/1'
 # Native capture role changes require a new contract marker before reuse.
-OPERATOR_SCOPE = 'active-and-captured-kinds/1'
+OPERATOR_SCOPE = 'active-and-captured-kinds/2'
 ADJACENT_HEAD_SCOPE = 'native-environment/1'
 
 
@@ -66,6 +66,8 @@ class NativeCensusCache:
         data = json.loads(path.read_text())
         assert data['schema'] == SCHEMA, module
         assert data['leanCommit'] == self.lean_commit and data['module'] == module, module
+        if data.get('operatorDescriptorScope') == 'active-and-captured-kinds/1':
+            return None
         assert data['operatorDescriptorScope'] == OPERATOR_SCOPE, module
         assert data['nativeSource'].encode() == original, module
         assert all(d['mode'] == 'native-compatible' for d in declarations(data['commands'])), module

@@ -318,7 +318,7 @@ def collect (commands : Array Syntax) : CommandElabM Unit := do
       else pure #[]
     let data := Json.mkObj [
       ("schema", toJson ("ps0-native-source-census/1" : String)),
-      ("operatorDescriptorScope", toJson ("active-and-captured-kinds/1" : String)),
+      ("operatorDescriptorScope", toJson ("active-and-captured-kinds/2" : String)),
       ("adjacentHeadLexicalScope", toJson ("native-environment/1" : String)),
       ("leanCommit", toJson Lean.githash), ("module", toJson (← getMainModule).toString),
       ("file", toJson context.fileName), ("nativeSource", toJson context.fileMap.source),
