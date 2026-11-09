@@ -1,5 +1,6 @@
 module
 public meta import Lean
+public import PS0.Operators
 
 public meta section
 
@@ -17,7 +18,10 @@ declare_syntax_cat psFunBinder
 declare_syntax_cat psDoElem
 declare_syntax_cat psDoItem
 
-syntax (name := ps0NativeTermBridge) (priority := low) term : psTerm
+@[psTerm_parser low]
+def ps0NativeTermBridge : Lean.Parser := PS0.Operators.leading
+@[psTerm_parser]
+def ps0NativeOperatorParser : Lean.TrailingParser := PS0.Operators.trailing
 syntax (name := ps0NativeCommandBridge) command : psCommand
 syntax (name := ps0NativeTacticBridge) (priority := low) tactic : psTactic
 syntax (name := ps0NativeDoBridge) (priority := low) doSeq : psDoSeq
@@ -97,6 +101,12 @@ partial def lower (category : Name) (source : Lean.Syntax) :
       let native := source[0]
       rejectHostGap native
       return native
+    if source.isOfKind `PS0.Operators.ownedBinary then
+      let native := source[0]
+      unless native.getArgs.size == 3 do Macro.throwError "PS0V1-OP-LOWER: invalid owned operator"
+      let lhs ← lower `psTerm native[0]
+      let rhs ← lower `psTerm native[2]
+      return (native.setArg 0 lhs).setArg 2 rhs
     match source with
     | `(psTerm| $head:ident($[$args:psCallArg],*)) => lowerCall head.raw args source
     | `(psTerm| $head:psHead) => lowerHead head.raw

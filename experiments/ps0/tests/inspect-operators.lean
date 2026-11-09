@@ -19,6 +19,7 @@ private partial def view : ParserDescr → Json
 
 unsafe def main : IO Unit := do
   initSearchPath (← findSysroot)
+  enableInitializersExecution
   let env ← importModules #[{module := `Lean, isMeta := true}] {} (leakEnv := true) (loadExts := true)
   let some category := Lean.Parser.getParserCategory? env `term | throw (IO.userError "missing term")
   let names := category.kinds.foldl (fun names name _ => names.push name) (#[] : Array Name)
