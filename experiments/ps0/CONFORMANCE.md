@@ -1,5 +1,33 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## Owned lambda operands and exact compiler output — Linux PASS
+
+Qualified source **7f885fcc1caa9277e3633c849d086bb2614e143e**, runner **be50016de092e47d1df9306aac8a941ef6b49bf4**, [run 42537205963](https://github.com/dwijayuda/pskernel/actions/runs/42537205963): **all four jobs PASS** — project **128904045087**, native **128904044934**, proof-linked **128904044798**, host **128904044594**.
+
+**PS0_LAMBDAS:3:3:3:3:3:3:2:3:3:3:3** and **PS0_LAMBDA_OPERANDS: PASS** cover typed/grouped/untyped, implicit/strict/instance binders, native tuple/Unit patterns, overall type annotation, Unicode lambda spelling and owned lambda type/body calls. Native binder/pattern/lambda elaboration remains Lean's; declaration default/comma rules are not substituted for lambda grammar. Body/type call-gap and argument-order diagnostics pass; native quotations remain native. **psFunBinder** host registration is cloned with the other finite categories for prelude compilation without hidden target PS0 logical imports.
+
+The native source census additionally records **only direct single-body lambda argument roots** of actual source value applications. The planner edits such body calls **only when the containing root call is itself adapted**, preserving unrelated/quoted/DSL data. In pinned **Lean.Compiler.LCNF.DeclHash** (**5f818560cb8fcba0df6f64acb6bdc01c48425189**), **hashAlts** now adapts the actual lambda-body **mixHash** call as well as its containing **foldl** call. The original lambda/pattern elaborator and parenthesized argument nodes are retained.
+
+- **18 byte edits**; original source SHA-256 **b91bd09cd5fbf9f0def82b12c7ef5d2c5c5465f55edfeec8ad59a640f0b5d1d0**; PS SHA-256 **b74e88c4932b629b61d788d5cdab675b6629ef4819360e34a8d3e83a3226c0d6**.
+- Original lambda body application range **742..763**, function **742..749**, arguments **750..751** and **752..763**; ranges come from Lean's actual original frontend syntax.
+- Native/PS C SHA-256 **9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c**; public olean SHA-256 **103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb**. Strict byte comparisons remain unchanged.
+- All **15 converted heads / four actual compiler modules**, registered owned-term macros and relocated SDK-backed host regressions retain PASS.
+
+[Project artifact 13639793140](https://github.com/dwijayuda/pskernel/actions/runs/42537205963/artifacts/13639793140), ZIP SHA-256 **291e677ea6ebf2443116cceb8297eada2598b869a3dc00311c37af4807e3dc5d**. Native artifact **13640081217**, SHA-256 **e16c9661c1cb6673494ced57debca47c67945075941face796b4b3ccd339ff01**; proof artifact **13639599095**, SHA-256 **7a24d76eacd2d9027808f915ac3b025a3f00650a366be34ab4c40ec1604438a0**. [Independent inspection 42537641040](https://github.com/dwijayuda/pskernel/actions/runs/42537641040), runner **7dfe7c6b0fd7e2d8d54dfd8c884585a8fa33cfea**, job **128905384499 PASS**, verifies all four module comparisons, the exact 18-edit plan and original lambda body role.
+
+Test-first run **42536259326 / 128901122247** fails before the adapter; first implementation **42536727424 / 128902548521** retains all compiler parity but its fixture also used unrelated unsupported call-left arrow syntax, legacy reserved **unicode(** spelling and a nonadjacent **MacroM** type application. The revised fixture isolates lambda operands; these broader parser/lexer roles are not promoted to completion. Both failed source/runner/artifact identities remain in the ledgers.
+
+## Fresh .ps-built compiler host — stage one PASS, stage two IN PROGRESS
+
+Separate exact source **2cba0bc26df49c52d653598fd9c791f23209199c**, runner **b83ebb191c21c0985c9dc6df3a4cca11ae31e121**, [run 42532849633](https://github.com/dwijayuda/pskernel/actions/runs/42532849633): prerequisite jobs all PASS, compiler stage one **128891725901 PASS**. **2,567 modules / 5,138 native Lake jobs** build and link the .ps source forest. The resulting executable and **200 host metadata files freshly compiled from that forest** pass the relocated missing-host negative, PS prelude compile/link/runtime, stage-option and no-hidden-import probes.
+
+Driver SHA-256 **4ecf775dbb7b4d275bccd679463cbd805f5d618d9bb350b57c1baa94dcc4a2e9**; raw native-host evidence SHA-256 **1afb8cf6db63bcfb98618e214641bcdf1f75efe66dd82cf4216eba79c3e590f1**; sorted JSON host metadata manifest SHA-256 **6fada1ca81b868b0c5aec19c299a4416e241afb8785e35a573e5f9980d3b4fb6**. [Stage-one artifact 13639457688](https://github.com/dwijayuda/pskernel/actions/runs/42532849633/artifacts/13639457688), ZIP SHA-256 **13f7e3b9c10878b503a7458a158af6e661ece4e4e7c8edb8fd1bab155117ed3b**. [Inspection 42537298767](https://github.com/dwijayuda/pskernel/actions/runs/42537298767), runner **4fc9653592b931653be89036cd614719516e260a**, job **128904326108 PASS**, verifies those identities, 200 metadata pairs and the native-compatible source census.
+
+This earlier forest has **72,797 native-compatible selected rows / zero mapped PS rows**. Stage two **128901327549 IN PROGRESS** will require the same fresh host checks and strict all-module C/public-olean fixed point. It neither completes canonical grammar conversion nor qualifies this newer lambda/macro head. The earlier fixed point at source **28904e5a7ccb19a15e311ecc654541dc0ee639ec** remains separate.
+
+Goal **ACTIVE / NOT COMPLETE**. Remaining owned operator/layout/field/constructor/local-declaration contexts, complete checked source conversion, full current-head bootstrap and diagnostic/IDE fidelity remain open. All 242 broad obligations remain PENDING; no trust/reference pin or exact-output gate is relaxed and no verified-execution certificate is issued. Earlier pending lambda and stage-one notes below are superseded by these exact finite results.
+
+
 ## Registered owned term macros — native Lean dispatch PASS
 
 Qualified source **b6e9671252219e63a4bda7b8df70017b90145ff1**, runner **167f9607a5507f86dc69197db10598739066e6bb**, [Linux run 42534811062](https://github.com/dwijayuda/pskernel/actions/runs/42534811062): **all four jobs PASS** — project **128896644458**, native **128896644569**, proof-linked **128896644297**, host **128896644480**.

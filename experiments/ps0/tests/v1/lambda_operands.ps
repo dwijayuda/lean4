@@ -1,0 +1,46 @@
+/-! Lambda binder contexts and bodies preserve native semantics with owned PS terms. -/
+function add(x: Nat, y: Nat): Nat := x + y
+abbrev sized (n : Nat) := Fin n
+abbrev Small := sized(add(1, 2))
+
+const single: Nat → Nat := fun (n : Nat) => add(n, 1)
+const grouped: Nat → Nat → Nat := fun (left right : Nat) => add(left, right)
+const plain: Nat → Nat → Nat := fun left right => add(left, right)
+const implicitId: ∀ {α : Type}, α → α := fun {α : Type} (x : α) => x
+const strictId: ∀ ⦃α : Type⦄, α → α := fun {{α : Type}} (x : α) => x
+const instanceLambda: ∀ [Inhabited Nat], Nat → Nat :=
+  fun [inst : Inhabited Nat] (x : Nat) => add(x, default)
+const typed: Small → Nat := fun (n : sized(add(1, 2))) => add(n.val, 1)
+const pairSum: Nat × Nat → Nat := fun (a, b) => add(a, b)
+const unitValue: Unit → Nat := fun () => add(1, 2)
+const annotated: Nat → Nat := fun n : Nat => add(n, 1)
+const unicodeLambda: Nat → Nat := λ (n : Nat) => add(n, 1)
+
+const singleResult: Nat := single(2)
+const groupedResult: Nat := grouped(1, 2)
+const plainResult: Nat := plain(1, 2)
+const implicitResult: Nat := implicitId(3)
+const strictResult: Nat := strictId(3)
+const instanceResult: Nat := instanceLambda(3)
+const typedResult: Nat := typed(⟨1, by decide⟩)
+const pairResult: Nat := pairSum((1, 2))
+const unitResult: Nat := unitValue()
+const annotatedResult: Nat := annotated(2)
+const unicodeResult: Nat := unicodeLambda(2)
+example : singleResult = 3 := by rfl
+example : groupedResult = 3 := by rfl
+example : typedResult = 2 := by rfl
+example : pairResult = 3 := by rfl
+example : unitResult = 3 := by rfl
+example : annotatedResult = 3 := by rfl
+example : unicodeResult = 3 := by rfl
+
+meta def nativeLambdaQuote : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| fun (n : Nat) => add (n, 1))
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeLambdaQuote
+  unless quoted.raw.isOfKind ``Lean.Parser.Term.fun do
+    Lean.throwError "PS0_NATIVE_LAMBDA_QUOTATION_KIND"
+
+def main : IO Unit :=
+  IO.println s!"PS0_LAMBDAS:{singleResult}:{groupedResult}:{plainResult}:{implicitResult}:{strictResult}:{instanceResult}:{typedResult}:{pairResult}:{unitResult}:{annotatedResult}:{unicodeResult}"
