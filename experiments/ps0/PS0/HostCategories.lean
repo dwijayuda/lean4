@@ -56,6 +56,9 @@ private def letPrefix : Parser :=
 @[run_parser_attribute_hooks] def whereFinally : Parser :=
   operands #[(`tactic, `psTactic)] Lean.Parser.Term.whereFinally
 
+@[run_parser_attribute_hooks] def argumentValue : Parser :=
+  withoutPosition (categoryParser `psTerm 0)
+
 def namedDeclaration : Parser :=
   node ``Lean.Parser.Term.letDecl <|
     notFollowedBy (nonReservedSymbol "rec") "rec" >>
@@ -184,8 +187,8 @@ def ps0NativeDoUnless : Lean.Parser.Parser := PS0.DoLayout.unlessElem
 def ps0NativeTermUnless : Lean.Parser.Parser := PS0.DoLayout.unlessTerm
 @[psTerm_parser 30000]
 def ps0NativePunningBraces : Lean.Parser.Parser := PS0.DoLayout.punningBraces
-syntax (name := ps0PositionalArg) psTerm : psCallArg
-syntax (name := ps0NamedArg) ident " := " psTerm : psCallArg
+syntax (name := ps0PositionalArg) PS0.DoLayout.argumentValue : psCallArg
+syntax (name := ps0NamedArg) ident " := " PS0.DoLayout.argumentValue : psCallArg
 syntax (name := ps0NativeEllipsisArg) Lean.Parser.Term.ellipsis : psCallArg
 
 syntax (name := ps0NativeFunBinderBridge) (priority := low) Lean.Parser.Term.funBinder : psFunBinder
@@ -215,7 +218,8 @@ syntax:max (name := ps0HeadCall) psHead:max noWs
   "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psHead
 syntax:max (name := ps0HeadEmptyCall) psHead:max noWs "(" ")" : psHead
 syntax (name := ps0HostHeadTerm) psHead : psTerm
-syntax:max (name := ps0HostParens) (priority := high) Lean.Parser.Term.hygienicLParen psTerm ")" : psTerm
+syntax:max (name := ps0HostParens) (priority := high)
+  Lean.Parser.Term.hygienicLParen PS0.DoLayout.argumentValue ")" : psTerm
 syntax:max (name := ps0HostBraces) (priority := high) "{" psTerm "}" : psTerm
 syntax (name := ps0HostIf) (priority := high) "if " psTerm " then " psTerm " else " psTerm : psTerm
 syntax (name := ps0HostExact) (priority := high) "exact " psTerm : psTactic
