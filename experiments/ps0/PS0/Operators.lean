@@ -38,6 +38,8 @@ private def operandParser (parser : Parser) : Parser :=
   withFn (adaptUncacheableContextFn ownedOperandContext) parser
 
 private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
+  let diagnostic := (ctx.fileMap.source.splitOn "exampleWhere").length > 1 ||
+    (ctx.fileMap.source.splitOn "nestedSectionProjection").length > 1
   let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
   let mut prec := ctx.prec
   let mut parsed := (categoryParser `term prec).fn ctx initial
@@ -56,8 +58,11 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
       return parsed.mkUnexpectedError "PS0V1-OP-PRECEDENCE: native operator did not advance binding power"
     prec := high
     parsed := (categoryParser `term prec).fn ctx initial
-  if parsed.hasError then return parsed
+  if parsed.hasError then
+    if diagnostic then dbg_trace s!"PS0_NATIVE_PREFIX_ERROR: pos={initial.pos.byteIdx}; saved={repr ctx.savedPos?}; end={parsed.pos.byteIdx}"
+    return parsed
   let native := parsed.stxStack.back
+  if diagnostic then dbg_trace s!"PS0_NATIVE_PREFIX: pos={initial.pos.byteIdx}; saved={repr ctx.savedPos?}; prec={ctx.prec}; node={repr native}"
   return parsed.popSyntax.pushSyntax <| .node .none bridgeKind #[native]
 
 @[implemented_by leadingImpl]
@@ -75,10 +80,14 @@ private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
   let candidates := (indexedParsers ++ category.tables.trailingParsers).filter fun (parser, _) =>
     let collected := parser.info.collectKinds {}
     kinds.any collected.contains || collected.contains ``Lean.Parser.Term.proj
+  if ctx.get initial.pos == '.' then
+    dbg_trace s!"PS0_NATIVE_PROJECTION: candidates={candidates.length}; lhs={initial.lhsPrec}; prec={ctx.prec}; node={initial.stxStack.back.getKind}"
   if candidates.isEmpty then return initial.mkUnexpectedError "no owned native binary operator"
   let candidates := candidates.map fun (parser, priority) =>
     (if (parser.info.collectKinds {}).contains ``Lean.Parser.Term.proj then parser else operandParser parser, priority)
   let parsed := longestMatchFn (some initial.stxStack.back) candidates ctx initial.popSyntax
+  if ctx.get initial.pos == '.' then
+    dbg_trace s!"PS0_NATIVE_PROJECTION_RESULT: error={parsed.hasError}; pos={parsed.pos.byteIdx}"
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
   if native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 then
