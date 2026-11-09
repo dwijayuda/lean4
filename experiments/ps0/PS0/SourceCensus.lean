@@ -135,9 +135,9 @@ private def adjacentCallSpelling (env : Environment) (name : Syntax) : String :=
     (Lean.Parser.getTokenTable env) (Lean.Parser.mkParserState input)
   if state.allErrors.isEmpty && state.pos.byteIdx == spelling.utf8ByteSize then return spelling
   match identifier.getId with
-  | .str prefix component =>
+  | .str ownerName component =>
       let escaped := "«" ++ component ++ "»"
-      return if prefix.isAnonymous then escaped else prefix.toString ++ "." ++ escaped
+      return if ownerName.isAnonymous then escaped else ownerName.toString ++ "." ++ escaped
   | _ => return spelling
 
 private def declaration (env : Environment) (operators : Array Name) (source : Syntax) : Json := Id.run do
