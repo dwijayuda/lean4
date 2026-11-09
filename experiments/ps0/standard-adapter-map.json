@@ -8532,12 +8532,349 @@
     "finiteSyntheticModules": 4,
     "finiteSyntheticDefinitionHeads": 37
   },
+  "localRecursiveOperandEvidence": {
+    "source": "ef7c98356ce7ecfd36359227a441c4cc2368327a",
+    "runner": "12387a10310e33787fb11f6c13cf3b3f3389b59a",
+    "run": 42606775753,
+    "status": "PASS",
+    "linuxJobsPassed": 25,
+    "jobs": [
+      {
+        "id": 129126815233,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815302,
+        "name": "compiler-listattach",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815327,
+        "name": "compiler-prelude",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815335,
+        "name": "compiler-fixtures",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815377,
+        "name": "compiler-persistenthashmap",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815396,
+        "name": "compiler-natbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815412,
+        "name": "compiler-iteratorempty",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815418,
+        "name": "compiler-natlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815424,
+        "name": "proof-linked",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815472,
+        "name": "compiler-associative",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815492,
+        "name": "compiler-grindac",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815496,
+        "name": "do-layout",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815501,
+        "name": "compiler-finbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815508,
+        "name": "operator-baseline",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815544,
+        "name": "compiler-spredlaws",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815545,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815554,
+        "name": "compiler-nanosecond",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815586,
+        "name": "compiler-arrayperm",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815598,
+        "name": "compiler-intlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815646,
+        "name": "project-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815678,
+        "name": "compiler-stream",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815679,
+        "name": "compiler-unless",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815686,
+        "name": "compiler-natlemmas",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815728,
+        "name": "compiler-initwf",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129126815729,
+        "name": "compiler-core",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13669625550,
+        "name": "ps0-project-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:580a026a287b527d74f53dd0e4e6cbce3f818090c9dd5264bce9aa3f790b4d6c",
+        "size_in_bytes": 80881203
+      },
+      {
+        "id": 13669450046,
+        "name": "ps0-compiler-persistenthashmap-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:b73d1fc54552c8439c63e9ed9ccb46865fedec760c3d0f848ce504bef22e3bd6",
+        "size_in_bytes": 509061
+      },
+      {
+        "id": 13669300499,
+        "name": "ps0-compiler-natlemmas-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:7935bc7fd3b20b07627d0dfb51aee5f04c056cbbd8bdf92e473ed5f3eb556c02",
+        "size_in_bytes": 849837
+      },
+      {
+        "id": 13669240642,
+        "name": "ps0-compiler-nanosecond-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:e0d743cf7f79df5a158677cba743b6d4eb2a2b647c8be8f4fc6d5f56e80b9d92",
+        "size_in_bytes": 106816
+      },
+      {
+        "id": 13669210747,
+        "name": "ps0-compiler-unless-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:b45cded4d19ff25dd519982f49da9bd0216a7d1e10dbc17c060f85266efd06ef",
+        "size_in_bytes": 136528
+      },
+      {
+        "id": 13669200526,
+        "name": "ps0-operator-baseline-42606775753",
+        "digest": "sha256:8c46ac3c7bbf8bc6edea4ceb9927ca7aee46a6ad135baad937b5df9b0d6bb108",
+        "size_in_bytes": 2296
+      },
+      {
+        "id": 13668886541,
+        "name": "ps0-compiler-natlinear-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:79ed5a248335bbe4479b2c9f91fe7fd966819bcdd1a9d314b3f9e05464817b8e",
+        "size_in_bytes": 444300
+      },
+      {
+        "id": 13668881328,
+        "name": "ps0-native-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:d0c76d461bad944bd61446806a6aad250952cff6ab48f3e27e78f4b22234c16b",
+        "size_in_bytes": 4135
+      },
+      {
+        "id": 13668741633,
+        "name": "ps0-compiler-spredlaws-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:a21a1e2ad63c83008cfe652c931c2833c899105b8490e71bdcd212e71e2f52a1",
+        "size_in_bytes": 113833
+      },
+      {
+        "id": 13668666912,
+        "name": "ps0-compiler-initwf-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:ca4703d12ca1f0a82980308634b001d5f35a9bcf1317cdbf4515558c354939e4",
+        "size_in_bytes": 275019
+      },
+      {
+        "id": 13668642055,
+        "name": "ps0-compiler-intlinear-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:b989aa7b7ee7029a2eae3a72f3204fc76e9c81897067c43a9ef5285cd8a6f83e",
+        "size_in_bytes": 1335060
+      },
+      {
+        "id": 13668581975,
+        "name": "ps0-compiler-stream-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:fb32e970f802ead89b60c8256ff444641328a14ca9e397873ec596a8248651a9",
+        "size_in_bytes": 119601
+      },
+      {
+        "id": 13668557028,
+        "name": "ps0-compiler-grindac-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:5e22638c4554e60c33178a7aef99d1b51674a2fea984a34ac0fbc494aef61d69",
+        "size_in_bytes": 632614
+      },
+      {
+        "id": 13668317762,
+        "name": "ps0-compiler-natbasic-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:7160e57aaeb1146c85bb40c347c9825611ba1f2a85f534e9537be1297d02cf6d",
+        "size_in_bytes": 495661
+      },
+      {
+        "id": 13668297900,
+        "name": "ps0-compiler-arrayperm-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:06ff562bd3bf12ba47196faf4108d6d5fc9f8099fada22cbc694073b795cdd2b",
+        "size_in_bytes": 86612
+      },
+      {
+        "id": 13668293572,
+        "name": "ps0-compiler-associative-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:966b6e624b807b922264dd005aea1f19b199fc26ac1b27d21c714835f6917755",
+        "size_in_bytes": 4831675
+      },
+      {
+        "id": 13668232971,
+        "name": "ps0-compiler-core-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:0510eeabf06d16413ce7dc0bfcaea207b1f8a6dc9bc991ae3bbf1faddd9311d0",
+        "size_in_bytes": 1455377
+      },
+      {
+        "id": 13668214304,
+        "name": "ps0-compiler-iteratorempty-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:ef07bd62b100075ef62db257defda627116b3fd057295115678288797b38d6c4",
+        "size_in_bytes": 63901
+      },
+      {
+        "id": 13668103486,
+        "name": "ps0-compiler-finbasic-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:d2d1d5c7918d4b263497599b8deff2ad589457ac7ed734e4d4d4dac20ceaba87",
+        "size_in_bytes": 166278
+      },
+      {
+        "id": 13668079564,
+        "name": "ps0-compiler-listattach-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:075d94ae3d12fd8d25c5c15cd68b839b828e945595745f8594f04693106f3701",
+        "size_in_bytes": 506767
+      },
+      {
+        "id": 13668064638,
+        "name": "ps0-compiler-prelude-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:91573676c1c34b35d25fb36c7dd307ed775fe2c8581f79a6e7864d4021ec5dcb",
+        "size_in_bytes": 2933533
+      },
+      {
+        "id": 13667944698,
+        "name": "ps0-external-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:968ab3e8e20210fac0cac81b47026a6dd1d5454fae81b36c6cb1a72411b59e76",
+        "size_in_bytes": 30131
+      },
+      {
+        "id": 13667934886,
+        "name": "ps0-do-layout-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:9633c53b573facc1d717329b3aebe7a86aeb74ba683d879adce8eda790fd136b",
+        "size_in_bytes": 47898
+      },
+      {
+        "id": 13667684847,
+        "name": "ps0-compiler-fixtures-ef7c98356ce7ecfd36359227a441c4cc2368327a-42606775753",
+        "digest": "sha256:af22193378db83d7286113b47739d916c8be7888b42f9b895823dbc292c3f2f6",
+        "size_in_bytes": 3924897
+      }
+    ],
+    "oracle": "PS0_LOCAL_REC:7:4:5:7:4",
+    "roles": [
+      "Native recursive groups retained, including mixed simple/equation declarations",
+      "PS local binder types/defaults, result types, simple/equation values and pure continuation",
+      "original grouped let/rec, separator and root source ranges",
+      "Native patterns, doc comments, attributes and termination suffixes preserved; ordinary termination/pattern payload completeness not qualified",
+      "Native quotation and explicit doSeq DSL ownership"
+    ],
+    "nativeSyntaxEvidence": {
+      "source": "af7635cd82311bffeca19b4d82fabc984fb7524a",
+      "runner": "a12b8b35c2d67a49e034afca0fb055e52a8e1326",
+      "run": 42606432144,
+      "job": 129123513290,
+      "scope": "native parser shape research; that candidate rejects incorrect assumed group geometry, not acceptance"
+    },
+    "testFirst": {
+      "source": "d54d02122aafe5c0ae496335e8aab51b2ec698f8",
+      "runner": "41cdc1d71c93157c51ba94ec3b53d9f6211b3607",
+      "run": 42604847356,
+      "job": 129119361649,
+      "status": "FAILED",
+      "reason": "PS calls in local recursive signatures and equation bodies remained native payloads"
+    },
+    "independentInspection": {
+      "status": "PENDING",
+      "previousSource": "c31599ff0685581b83e657c4e888dd79023c5407",
+      "previousRun": 42602223686,
+      "previousJob": 129109243439,
+      "previousActualFiles": 112
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
   "transformedCompilerGraphTwelfthAttempt": {
     "source": "c31599ff0685581b83e657c4e888dd79023c5407",
     "runner": "a686edb97b602eb31f172bd8fa9fc6b464bb9b11",
     "run": 42600962764,
     "job": 129105018569,
-    "status": "IN_PROGRESS",
+    "status": "FAILED",
     "nativeCaptureCache": {
       "producerSource": "742c5c180a8ee7314075d63792c220b710e96504",
       "run": 42580512720
@@ -8546,36 +8883,140 @@
     "fullGraphBuild": false,
     "canonicalFixedPoint": false,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "preparedInputs": 2569,
+    "byteIdenticalInputs": 0,
+    "failedModules": [
+      {
+        "path": "Init/Data/Range/Polymorphic/Internal/SignedBitVec",
+        "line": 42,
+        "column": 0,
+        "message": "Unknown constant `function`"
+      },
+      {
+        "path": "Init/Data/Range/Polymorphic/Char",
+        "line": 22,
+        "column": 11,
+        "message": "unexpected token '@['; expected psStructFieldValue"
+      },
+      {
+        "path": "Std/Time/Zoned/Database/TzIf",
+        "line": 279,
+        "column": 6,
+        "message": "Function expected at"
+      },
+      {
+        "path": "Std/Data/ExtDTreeMap/Basic",
+        "line": 944,
+        "column": 115,
+        "message": "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
+      },
+      {
+        "path": "Lean/Data/Options",
+        "line": 132,
+        "column": 19,
+        "message": "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
+      }
+    ],
+    "formerSixBlockersBuiltWithObjectCode": [
+      "Init.Data.Stream",
+      "Init.Data.Int.Linear",
+      "Init.Data.Array.Perm",
+      "Lean.Data.PersistentHashMap",
+      "Std.Time.Time.Unit.Nanosecond",
+      "Std.Data.Internal.List.Associative"
+    ],
+    "artifacts": [
+      {
+        "id": 13667074994,
+        "name": "ps0-transformed-corpus-c31599ff0685581b83e657c4e888dd79023c5407-42600962764",
+        "digest": "sha256:3826e7863104c7bb56bed01b4579bf72b0e6a4368ee3b77573fa03d53a2cee15",
+        "size_in_bytes": 122360218
+      }
+    ]
+  },
+  "transformedCompilerGraphTwelfthModeAudit": {
+    "source": "c31599ff0685581b83e657c4e888dd79023c5407",
+    "runner": "855232512349195acfb4288ebcf8c97eef52692d",
+    "run": 42607861503,
+    "job": 129128309510,
+    "status": "PASS",
+    "summary": {
+      "canonical_fixed_point": false,
+      "censuses_without_successful_lake_job": [],
+      "definition_heads_in_those_observations": 7509,
+      "full_graph_build": false,
+      "fully_mapped_mode_modules": 1022,
+      "grammar_migration_complete": false,
+      "job": 129105018569,
+      "native_compatible_escapes": [],
+      "prepared_inputs": 2569,
+      "production_counts": {
+        "PS0.StandardAdapters.ps0StandardAbbrev": 529,
+        "PS0.StandardAdapters.ps0StandardAxiom": 12,
+        "PS0.StandardAdapters.ps0StandardConst": 1080,
+        "PS0.StandardAdapters.ps0StandardDef": 1091,
+        "PS0.StandardAdapters.ps0StandardExample": 69,
+        "PS0.StandardAdapters.ps0StandardFunction": 5338,
+        "PS0.StandardAdapters.ps0StandardInstance": 3822,
+        "PS0.StandardAdapters.ps0StandardOpaque": 419,
+        "PS0.StandardAdapters.ps0StandardTheorem": 41680
+      },
+      "refreshed_native_censuses": 0,
+      "reused_native_censuses": 1872,
+      "run": 42600962764,
+      "scope": "successful native Lake job log entries plus retained source observations/plan identity; no retained target C/public olean rehash, runtime, full graph or fixed point acceptance",
+      "source": "c31599ff0685581b83e657c4e888dd79023c5407",
+      "successful_lake_modules_with_retained_source_observations": 1022,
+      "verified_execution": false
+    },
+    "artifacts": [
+      {
+        "id": 13669086409,
+        "name": "ps0-transformed-twelve-modes-42607861503",
+        "digest": "sha256:28007bcd1d03e00766b13262cc5321b8fa7e8a1c0d96ab587b93f00bd6f0abda",
+        "size_in_bytes": 105097
+      }
+    ]
+  },
+  "graphTwelveBoundaryCandidate": {
+    "source": "08c850ee6133a30ac48adb119203c91426912b44",
+    "runner": "e5d047629bba7af3108433052a2dd2e9545d489e",
+    "run": 42608527388,
+    "status": "PENDING",
+    "newWholeModuleTargets": [
+      "Init.Data.Range.Polymorphic.Internal.SignedBitVec",
+      "Init.Data.Range.Polymorphic.Char",
+      "Std.Time.Zoned.Database.TzIf",
+      "Std.Data.ExtDTreeMap.Basic",
+      "Lean.Data.Options"
+    ],
+    "qualification": "candidate only; no PASS or whole-graph promotion"
   },
   "currentContinuation": {
-    "qualifiedSource": "c31599ff0685581b83e657c4e888dd79023c5407",
-    "qualifiedRunner": "6ed6fc7af04abcef55dc0431d96e451c560a5de9",
-    "run": 42600424984,
+    "qualifiedSource": "ef7c98356ce7ecfd36359227a441c4cc2368327a",
+    "qualifiedRunner": "12387a10310e33787fb11f6c13cf3b3f3389b59a",
+    "run": 42606775753,
     "linuxJobsPassed": 25,
     "independentInspection": {
-      "status": "PASS",
-      "runner": "f91b53cdf378619b04e97c8eec6988691081e540",
-      "run": 42602223686,
-      "job": 129109243439,
-      "modules": 28,
-      "actualFilesRehashed": 112,
-      "artifact": {
-        "id": 13665793573,
-        "name": "ps0-native-boundaries-rehash-42602223686",
-        "digest": "sha256:d54a2df342603430deaee97c77b579900d22e92a477b86c192a04daa5db23da1",
-        "size_in_bytes": 42718
-      },
-      "scope": "actual native and PS target C/public olean byte equality and independent rehash, exact edit reconstruction/line/import identity, mapped declaration modes and standard family multiplicities; finite SDK-assisted targets only"
+      "status": "PENDING",
+      "previousSource": "c31599ff0685581b83e657c4e888dd79023c5407",
+      "previousRun": 42602223686,
+      "previousJob": 129109243439,
+      "previousActualFiles": 112
     },
-    "previousIndependentlyQualifiedSource": "bdc951bb97131ece1e44dcd853ee0faf5430ef40",
-    "previousIndependentFilesRehashed": 88,
+    "latestIndependentlyQualifiedSource": "c31599ff0685581b83e657c4e888dd79023c5407",
+    "independentFilesRehashed": 112,
+    "finiteRealModules": 24,
+    "finiteRealDefinitionHeads": 748,
+    "finiteSyntheticModules": 4,
+    "finiteSyntheticDefinitionHeads": 37,
     "fullTransformedGraph": {
       "source": "c31599ff0685581b83e657c4e888dd79023c5407",
       "runner": "a686edb97b602eb31f172bd8fa9fc6b464bb9b11",
       "run": 42600962764,
       "job": 129105018569,
-      "status": "IN_PROGRESS",
+      "status": "FAILED",
       "nativeCaptureCache": {
         "producerSource": "742c5c180a8ee7314075d63792c220b710e96504",
         "run": 42580512720
@@ -8584,20 +9025,101 @@
       "fullGraphBuild": false,
       "canonicalFixedPoint": false,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "preparedInputs": 2569,
+      "byteIdenticalInputs": 0,
+      "failedModules": [
+        {
+          "path": "Init/Data/Range/Polymorphic/Internal/SignedBitVec",
+          "line": 42,
+          "column": 0,
+          "message": "Unknown constant `function`"
+        },
+        {
+          "path": "Init/Data/Range/Polymorphic/Char",
+          "line": 22,
+          "column": 11,
+          "message": "unexpected token '@['; expected psStructFieldValue"
+        },
+        {
+          "path": "Std/Time/Zoned/Database/TzIf",
+          "line": 279,
+          "column": 6,
+          "message": "Function expected at"
+        },
+        {
+          "path": "Std/Data/ExtDTreeMap/Basic",
+          "line": 944,
+          "column": 115,
+          "message": "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
+        },
+        {
+          "path": "Lean/Data/Options",
+          "line": 132,
+          "column": 19,
+          "message": "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
+        }
+      ],
+      "formerSixBlockersBuiltWithObjectCode": [
+        "Init.Data.Stream",
+        "Init.Data.Int.Linear",
+        "Init.Data.Array.Perm",
+        "Lean.Data.PersistentHashMap",
+        "Std.Time.Time.Unit.Nanosecond",
+        "Std.Data.Internal.List.Associative"
+      ],
+      "artifacts": [
+        {
+          "id": 13667074994,
+          "name": "ps0-transformed-corpus-c31599ff0685581b83e657c4e888dd79023c5407-42600962764",
+          "digest": "sha256:3826e7863104c7bb56bed01b4579bf72b0e6a4368ee3b77573fa03d53a2cee15",
+          "size_in_bytes": 122360218
+        }
+      ]
     },
     "nextActions": [
-      "Inspect full transformed graph twelve and adapt its first remaining PS grammar failures without native declaration fallback",
-      "After full graph success, qualify native parity, linking, relocated grammar metadata and canonical compiler fixed point"
+      "Validate the five new whole-module boundaries and local recursive source roles on Linux; preserve exact failures",
+      "Independently rehash the next accepted finite outputs and retained source evidence at one exact source pin",
+      "Restart the full transformed dependency graph only after the five focused module checks pass",
+      "Keep remaining ordinary grammar and original-source fidelity roles open until qualified; then require full native parity/linking and canonical compiler fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
     "grammarMigrationComplete": false,
-    "verified_execution": false,
-    "independentFilesRehashed": 112,
-    "finiteRealModules": 24,
-    "finiteRealDefinitionHeads": 748,
-    "finiteSyntheticModules": 4,
-    "finiteSyntheticDefinitionHeads": 37
+    "verified_execution": false
+  },
+  "graphTwelveBoundaryTestFirst": {
+    "source": "ef7c98356ce7ecfd36359227a441c4cc2368327a",
+    "runner": "0d39eb16874047fea707532644e1faeb9f1437aa",
+    "run": 42607950642,
+    "status": "FIVE_NEW_TARGETS_FAILED",
+    "jobs": [
+      {
+        "id": 129130060837,
+        "name": "compiler-signedbitvec",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129130060924,
+        "name": "compiler-rangechar",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129130060941,
+        "name": "compiler-options",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129130060985,
+        "name": "compiler-tzif",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129130061190,
+        "name": "compiler-extdtreemapbasic",
+        "conclusion": "failure"
+      }
+    ],
+    "scope": "target failures reproduced before boundary fixes; entire run status tracked separately"
   }
 }
