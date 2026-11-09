@@ -128,12 +128,13 @@ const doRecursiveEquationValue: Id(Nat) := do
     | 0 => add(x, y)
     | Nat.succ n => step(x, y, n)
   return step(4, 3, 0)
+const doRecursiveEquationResult: Nat := Id.run(doRecursiveEquationValue)
 example : localShapes = 6 := by decide
 example : automaticValue = 4 := by decide
 example : dependentDefault = 9 := by decide
 example : adjacentInstance = 4 := by decide
 example : recursiveEquationValue = 7 := by decide
-example : Id.run(doRecursiveEquationValue) = 7 := by decide
+example : doRecursiveEquationResult = 7 := by decide
 
 meta def nativeLocalQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| let step (x y : Nat) : Nat := Nat.add x y; step 2 3)
@@ -158,4 +159,4 @@ run_cmd do
 def main : IO Unit :=
   do
     IO.println s!"PS0_LOCAL_MIXED:{ordinaryValue}:{recursiveValue}:{pureRecursiveValue}:{mixedValue}:{pureValue}:{nativeValue}"
-    IO.println s!"PS0_LOCAL_EQNS:{recursiveEquationValue}:{Id.run(doRecursiveEquationValue)}"
+    IO.println s!"PS0_LOCAL_EQNS:{recursiveEquationValue}:{doRecursiveEquationResult}"
