@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Compile the pinned Lean/Init/Std/Lake and PS0 source forest from .ps files."""
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import argparse
 import hashlib
 import json
@@ -106,6 +107,7 @@ if args.source_plans:
     assert report['count'] == manifest['count'] == len(report['modules'])
     assert report['status_counts'] == {'planned-unvalidated': manifest['count']}, report['status_counts']
     entries = {entry['module']: entry for entry in manifest['entries']}
+    assert {item['module'] for item in report['modules']} == set(entries)
     for item in report['modules']:
         module = item['module']
         assert item['blob'] == entries[module]['blob']
@@ -132,6 +134,32 @@ if args.source_plans:
         assert hashlib.sha256(converted).hexdigest() == item['converted_sha256'] == plan['result_sha256']
         target.write_bytes(converted)
         source_plans[module] = plan
+    def missing_instance_view(commands):
+        return any((command['headKind'] == 'Lean.Parser.Command.instance' and command['declaration'] is None)
+                   or missing_instance_view(command.get('nestedCommands', [])) for command in commands)
+    refreshed = []
+    def refresh_plan(item):
+        module = item['module']
+        cached = report_path.parent / 'modules' / module
+        original, census = cached / 'original.ps', cached / 'native-census.json'
+        folder = evidence / 'current-source-plans' / module
+        folder.mkdir(parents=True, exist_ok=False)
+        if missing_instance_view(json.loads(census.read_text())['commands']):
+            census = folder / 'native-census.json'
+            run([driver, 'census-source', original, module, census], 'refresh-census-' + module)
+            refreshed.append(module)
+        target = source / Path(*module.split('.')).with_suffix('.ps')
+        plan_file = folder / 'plan.json'
+        run(['python3', 'tests/migrate-compiler-heads.py', census, original, target,
+             '--plan', plan_file, '--allow-empty'], 'refresh-plan-' + module)
+        plan = json.loads(plan_file.read_text())
+        assert digest(target) == plan['result_sha256']
+        return module, plan
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = [pool.submit(refresh_plan, item) for item in report['modules']]
+        for future in as_completed(futures):
+            module, plan = future.result()
+            source_plans[module] = plan
     self_relatives = sorted(set(originals) - {name.replace('.', '/') + '.lean' for name in entries})
     self_modules = [str(Path(relative).with_suffix('')).replace('/', '.') for relative in self_relatives]
     # Converted modern headers require matching modern dependency metadata.
@@ -163,7 +191,8 @@ if args.source_plans:
     assert len(source_plans) == len(originals)
     shutil.copytree(source, evidence / 'transformed-source')
     (evidence / 'source-plan-summary.json').write_text(json.dumps({
-        'planner_source': args.plan_source, 'planner_evidence_sha256': digest(report_path),
+        'input_census_source': args.plan_source, 'planner_source': os.environ['PS0_SOURCE_SHA'],
+        'refreshed_instance_censuses': sorted(refreshed), 'planner_evidence_sha256': digest(report_path),
         'module_count': len(source_plans), 'source_grammar': True,
         'definitions': sum(len(plan['declarations']) for plan in source_plans.values()),
         'grammar_migration_complete': False, 'verified_execution': False,

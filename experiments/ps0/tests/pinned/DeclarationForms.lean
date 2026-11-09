@@ -1,0 +1,36 @@
+module
+prelude
+public import Lean
+/-! Equation theorems, instance signatures and native where-field declarations. -/
+public section
+namespace Lean.Compiler.DeclarationForms
+
+structure Pair where
+  value : Nat
+  apply : Nat → Nat
+  witness : True
+
+def make (n : Nat) : Pair where
+  value := Nat.succ (n)
+  apply x := Nat.add (n) (x)
+  witness := True.intro
+
+theorem boolRefl : (b : Bool) → b = b
+  | true => Eq.refl (true)
+  | false => Eq.refl (false)
+
+class Transform (α : Type) where
+  apply : α → α
+
+instance natTransform : Transform (Nat) where
+  apply x := Nat.succ (x)
+
+instance : Inhabited (Pair) where
+  default := make (0)
+
+def boolTransform : Transform Bool where
+  apply
+    | true => id (true)
+    | false => id (false)
+
+end Lean.Compiler.DeclarationForms

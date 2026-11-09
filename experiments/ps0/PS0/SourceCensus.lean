@@ -71,11 +71,14 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
     `PS0.StandardAdapters.ps0StandardDef, `PS0.StandardAdapters.ps0StandardAbbrev,
     `PS0.StandardAdapters.ps0StandardTheorem, `PS0.StandardAdapters.ps0StandardOpaque,
     `PS0.StandardAdapters.ps0StandardAxiom, `PS0.StandardAdapters.ps0StandardFunction,
-    `PS0.StandardAdapters.ps0StandardConst]
+    `PS0.StandardAdapters.ps0StandardConst, `PS0.StandardAdapters.ps0StandardInstance]
   if mapped.contains kind then
+    let isInstance := kind == `PS0.StandardAdapters.ps0StandardInstance
+    let name := if isInstance then source[4][0] else source[2]
+    let signature := if isInstance then source[5] else source[3]
     let hasTail := #[`PS0.StandardAdapters.ps0StandardDef, `PS0.StandardAdapters.ps0StandardAbbrev,
       `PS0.StandardAdapters.ps0StandardTheorem, `PS0.StandardAdapters.ps0StandardFunction,
-      `PS0.StandardAdapters.ps0StandardConst].contains kind
+      `PS0.StandardAdapters.ps0StandardConst, `PS0.StandardAdapters.ps0StandardInstance].contains kind
     let declValue := if hasTail then source.getArgs.back! else Syntax.missing
     let value := if declValue.isOfKind `PS0.StandardAdapters.ps0DeclSimple then declValue[1] else Syntax.missing
     let tail := if hasTail then declValue.getArgs.back![0] else Syntax.missing
@@ -83,28 +86,34 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       declValue[0][0].getArgs.map (fun alt => alt[3].getKind.toString) else #[]
     return Json.mkObj [
       ("mode", toJson ("mapped-ps" : String)), ("production", toJson kind.toString),
-      ("sourceName", toJson source[2][0].getId.toString),
-      ("keywordRange", sourceRange source[1]), ("nameRange", sourceRange source[2]),
-      ("signatureRange", sourceRange source[3]), ("signatureSyntax", signatureSyntax operators source[3]),
+      ("sourceName", toJson (if name.isMissing then "" else name[0].getId.toString)),
+      ("keywordRange", sourceRange (if isInstance then source[2] else source[1])), ("nameRange", sourceRange name),
+      ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
       ("valueRootKind", toJson value.getKind.toString),
       ("ownedValueCall", toJson (value.isOfKind `ps0HostAdjacentCall ||
         (value.isOfKind `ps0HostHeadTerm && value[0].isOfKind `ps0HeadCall))),
       ("ownedOperatorKinds", toJson ((ownedOperators value).map Name.toString)),
       ("declarationValueKind", toJson declValue.getKind.toString),
       ("equationBodyKinds", toJson equationBodies),
+      ("whereFieldCount", toJson (if declValue.isOfKind `PS0.StandardAdapters.ps0DeclWhere then
+        declValue[1][0].getSepArgs.size else 0)),
       ("nativeWhereTail", toJson (hasTail && tail[1].getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
   if source.isOfKind ``Lean.Parser.Command.declaration then
     let native := source[1]
     let supported := #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,
-      ``Lean.Parser.Command.theorem, ``Lean.Parser.Command.opaque, ``Lean.Parser.Command.axiom]
+      ``Lean.Parser.Command.theorem, ``Lean.Parser.Command.opaque, ``Lean.Parser.Command.axiom,
+      ``Lean.Parser.Command.instance]
     if supported.contains native.getKind then
+      let isInstance := native.isOfKind ``Lean.Parser.Command.instance
+      let name := if isInstance then native[3][0] else native[1]
+      let signature := if isInstance then native[4] else native[2]
       return Json.mkObj [
         ("mode", toJson ("native-compatible" : String)),
         ("production", toJson native.getKind.toString),
-        ("sourceName", toJson native[1][0].getId.toString),
-        ("keywordRange", sourceRange native[0]), ("nameRange", sourceRange native[1]),
-        ("signatureRange", sourceRange native[2]), ("signatureSyntax", signatureSyntax operators native[2]),
-        ("valueSyntax", signatureSyntax operators native[3]),
+        ("sourceName", toJson (if name.isMissing then "" else name[0].getId.toString)),
+        ("keywordRange", sourceRange (if isInstance then native[1] else native[0])), ("nameRange", sourceRange name),
+        ("signatureRange", sourceRange signature), ("signatureSyntax", signatureSyntax operators signature),
+        ("valueSyntax", signatureSyntax operators (if isInstance then native[5] else native[3])),
         ("valueApplication", valueApplication native),
         ("lambdaBodyApplications", toJson (lambdaBodyApplications native))]
   return .null

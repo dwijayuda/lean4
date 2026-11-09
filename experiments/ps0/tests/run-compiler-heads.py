@@ -112,7 +112,8 @@ mapped = {d['sourceName'] for d in declarations if d['mode'] == 'mapped-ps'}
 family_productions = {'Lean.Parser.Command.abbrev': 'PS0.StandardAdapters.ps0StandardAbbrev',
                       'Lean.Parser.Command.theorem': 'PS0.StandardAdapters.ps0StandardTheorem',
                       'Lean.Parser.Command.opaque': 'PS0.StandardAdapters.ps0StandardOpaque',
-                      'Lean.Parser.Command.axiom': 'PS0.StandardAdapters.ps0StandardAxiom'}
+                      'Lean.Parser.Command.axiom': 'PS0.StandardAdapters.ps0StandardAxiom',
+                      'Lean.Parser.Command.instance': 'PS0.StandardAdapters.ps0StandardInstance'}
 expected_other = {d['sourceName']: family_productions[d['production']]
                   for d in original_declarations if d['production'] in family_productions}
 expected_mapped = set(plan['declarations']) | set(expected_other)
@@ -145,6 +146,11 @@ for name in owned_value_calls:
     assert any('term_!=_' in kind for kind in declaration['ownedOperatorKinds']), declaration
 if args.fixture == 'EmitUtil':
     assert next(d for d in declarations if d['sourceName'] == 'collectUsedDecls')['nativeWhereTail']
+if args.fixture == 'DeclarationForms':
+    assert next(d for d in declarations if d['sourceName'] == 'make')['whereFieldCount'] == 3
+    assert next(d for d in declarations if d['sourceName'] == 'boolTransform')['whereFieldCount'] == 1
+    assert next(d for d in declarations if d['sourceName'] == 'natTransform')['whereFieldCount'] == 1
+    assert next(d for d in declarations if d['sourceName'] == 'boolRefl')['equationBodyKinds']
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
@@ -152,6 +158,8 @@ if args.fixture == 'EmitUtil':
     'source_strategies': plan.get('strategies', []),
     'equation_definitions': sorted(equation_definitions),
     'owned_value_calls': owned_value_calls,
+    'non_definition_source_roles': [{key: d.get(key) for key in ['sourceName', 'production', 'mode', 'declarationValueKind', 'equationBodyKinds', 'whereFieldCount']}
+                                    for d in declarations if d['sourceName'] in expected_other],
     'mapped_source_roles': [{key: d.get(key) for key in ['sourceName', 'valueRootKind', 'ownedValueCall', 'ownedOperatorKinds', 'nativeWhereTail', 'declarationValueKind', 'equationBodyKinds']}
                             for d in declarations if d['sourceName'] in plan['declarations']],
     'dependencies': 'pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake',

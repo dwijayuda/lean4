@@ -124,12 +124,84 @@ def alias_binder(binder):
             and len(parts[2]['args']) == 2)
 
 
+def declaration_value(value):
+    if value is None:
+        return
+    if value['kind'] == 'null':
+        if value['args']:
+            declaration_value(value['args'][0])
+    elif value['kind'] == 'Lean.Parser.Command.declValSimple':
+        single_type_call(value['args'][1], 'owned declaration body')
+    elif value['kind'] == 'Lean.Parser.Command.declValEqns':
+        equation_values(value['args'][0]['args'][0])
+    elif value['kind'] == 'Lean.Parser.Command.whereStructInst':
+        fields = value['args'][1]['args'][0]['args']
+        for field in fields:
+            if field['kind'] != 'Lean.Parser.Term.structInstField':
+                continue
+            body = field['args'][1]['args']
+            if not body:
+                continue
+            assert len(body) == 3
+            # Field binders retain their native grouping. Type/default roles are
+            # handled by the same telescope traversal as declaration signatures.
+            telescope(body[0]['args'])
+            if body[1]['args']:
+                single_type_call(body[1]['args'][0]['args'][1], 'owned field result type')
+            rhs = body[2]
+            if rhs['kind'] == 'Lean.Parser.Term.structInstFieldDef':
+                single_type_call(rhs['args'][2], 'owned field value')
+            else:
+                assert rhs['kind'] == 'Lean.Parser.Term.structInstFieldEqns'
+                equation_values(rhs['args'][1])
+
+
+def equation_values(alternatives):
+    for alternative in alternatives['args'][0]['args']:
+        assert alternative['kind'] == 'Lean.Parser.Term.matchAlt'
+        assert len(alternative['args']) == 4
+        single_type_call(alternative['args'][3], 'owned equation right-hand side')
+
+
+def telescope(binders):
+    for binder in binders:
+        parts = binder['args']
+        if binder['kind'] in ['ident', 'Lean.Parser.Term.hole']:
+            continue
+        if binder['kind'] == 'Lean.Parser.Term.instBinder':
+            assert len(parts) == 4
+            single_type_call(parts[2])
+            continue
+        if binder['kind'] in ['Lean.Parser.Term.implicitBinder', 'Lean.Parser.Term.strictImplicitBinder']:
+            assert len(parts) == 4
+            if parts[2]['args']:
+                assert len(parts[2]['args']) == 2
+                single_type_call(parts[2]['args'][1])
+            continue
+        assert binder['kind'] == 'Lean.Parser.Term.explicitBinder', binder
+        assert len(parts) == 5 and parts[1]['args']
+        assert len(parts[2]['args']) in [0, 2]
+        if parts[2]['args']:
+            single_type_call(parts[2]['args'][1])
+        suffix = parts[3]['args']
+        if suffix:
+            assert len(suffix) == 1
+            if suffix[0]['kind'] == 'Lean.Parser.Term.binderTactic':
+                continue
+            assert suffix[0]['kind'] == 'Lean.Parser.Term.binderDefault'
+            assert len(suffix[0]['args']) == 2
+            single_type_call(suffix[0]['args'][1], 'owned binder default')
+        start, end = span(binder)
+        assert raw[start:start + 1] == b'(' and raw[end - 1:end] == b')'
+
+
 for command in original_commands(snapshot['commands']):
     decl = command['declaration']
     if decl is None or decl['mode'] != 'native-compatible':
         continue
     supported = ['Lean.Parser.Command.definition', 'Lean.Parser.Command.abbrev',
-                 'Lean.Parser.Command.theorem', 'Lean.Parser.Command.opaque', 'Lean.Parser.Command.axiom']
+                 'Lean.Parser.Command.theorem', 'Lean.Parser.Command.opaque', 'Lean.Parser.Command.axiom',
+                 'Lean.Parser.Command.instance']
     if decl['production'] not in supported:
         continue
     is_definition = decl['production'] == 'Lean.Parser.Command.definition'
@@ -180,11 +252,7 @@ for command in original_commands(snapshot['commands']):
         assert raw[start:start + 1] == b'(' and raw[end - 1:end] == b')'
     kw = decl['keywordRange']
     if not is_definition:
-        value = decl.get('valueSyntax')
-        if value and value['kind'] == 'null' and value['args']:
-            value = value['args'][0]
-        if value and value['kind'] == 'Lean.Parser.Command.declValSimple':
-            single_type_call(value['args'][1], 'owned non-definition declaration body')
+        declaration_value(decl.get('valueSyntax'))
         continue
     assert raw[kw['start']:kw['end']] == b'def'
     keyword = ('function' if binders else 'const') if use_alias else 'def'
@@ -207,16 +275,7 @@ for command in original_commands(snapshot['commands']):
         assert end <= start
         edit(end - 1, start + 1, ',' + raw[end:start].decode(),
              'merge consecutive typed groups; preserve original intervening whitespace and line breaks')
-    value = decl.get('valueSyntax')
-    if value is not None:
-        if value['kind'] == 'Lean.Parser.Command.declValSimple':
-            single_type_call(value['args'][1], 'owned declaration body')
-        elif value['kind'] == 'Lean.Parser.Command.declValEqns':
-            alternatives = value['args'][0]['args'][0]['args'][0]['args']
-            for alternative in alternatives:
-                assert alternative['kind'] == 'Lean.Parser.Term.matchAlt'
-                assert len(alternative['args']) == 4
-                single_type_call(alternative['args'][3], 'owned equation right-hand side')
+    declaration_value(decl.get('valueSyntax'))
     declarations.append(decl['sourceName'])
 
 assert declarations or args.allow_empty, 'no supported native declaration heads'
