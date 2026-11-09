@@ -28,7 +28,7 @@ oracle = 'PS0_DO_LAYOUT:7:3:3:7'
 assert oracle in run([work / 'native/DoLayout'], 'runtime')
 prefix = ('function add(x: Nat, y: Nat): Nat := x + y\n'
           'function pureNat(n: Nat): IO Nat := pure n\n'
-          'function observe(n: Nat): IO Unit := pure ()\n')
+          'function observe(n: Nat): IO Unit := pure(())\n')
 for name, body, reason in [
     ('return-gap', '  return add (1, 2)', 'PS0V1-CALL-GAP'),
     ('let-gap', '  let n := add (1, 2)\n  return n', 'PS0V1-CALL-GAP'),

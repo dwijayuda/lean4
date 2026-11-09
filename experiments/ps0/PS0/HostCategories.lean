@@ -180,8 +180,6 @@ partial def lower (category : Name) (source : Lean.Syntax) :
       return native
     if source.isOfKind `PS0.Operators.ownedBinary then
       let native := source[0]
-      if native[0].getKind == `«term_=_» || native[2].getKind == `«term_=_» then
-        dbg_trace s!"PS0_RAW_RELATION_OPERAND: parent={native.getKind}; lhs={native[0].getKind}; rhs={native[2].getKind}"
       unless native.getArgs.size == 3 do Macro.throwError "PS0V1-OP-LOWER: invalid owned operator"
       let lhs ← lower `psTerm native[0]
       let rhs ← lower `psTerm native[2]
@@ -195,7 +193,6 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | `(psTerm| $head:ident($[$args:psCallArg],*)) => lowerCall head.raw args source
     | `(psTerm| $head:psHead) => lowerHead head.raw
     | `(psTerm| ($body:psTerm)) => do
-        if body.raw.getKind == `«term_=_» then dbg_trace "PS0_RAW_RELATION_PARENS"
         return .node (loweringInfo source) ``Lean.Parser.Term.paren
           #[source[0], ← lower `psTerm body.raw, source[2]]
     | `(psTerm| { $body:psTerm }) => do
@@ -220,8 +217,6 @@ partial def lower (category : Name) (source : Lean.Syntax) :
         return (← `(do $seq:doSeq)).raw
     | _ => do
         if let some expanded ← Macro.expandMacro? source then
-          if expanded.isOfKind ``Lean.Parser.Term.binrel then
-            dbg_trace s!"PS0_HOST_MACRO_ROLE: {source.getKind} -> {expanded.getKind}; children={source.getArgs.map Syntax.getKind}"
           lower category expanded
         else Macro.throwError s!"PS0V1-HOST-LOWER: unsupported psTerm {source.getKind} / {source.getArgs.size}"
   else if category == `psCommand then
@@ -386,7 +381,6 @@ partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef sou
       return .node (loweringInfo source) `PS0.pscvEmptyCall
         #[← lowerHead head.raw, mkAtom "(", mkAtom ")"]
   | `(psHead| ($body:psTerm)) => do
-      if body.raw.getKind == `«term_=_» then dbg_trace "PS0_RAW_RELATION_HEAD_PARENS"
       return .node (loweringInfo source) ``Lean.Parser.Term.paren
         #[source[0], ← lower `psTerm body.raw, source[2]]
   | `(psHead| $native:term) => do

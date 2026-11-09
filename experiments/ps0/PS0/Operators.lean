@@ -38,33 +38,26 @@ private def operandParser (parser : Parser) : Parser :=
   withFn (adaptUncacheableContextFn ownedOperandContext) parser
 
 private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
+  let some category := getParserCategory? ctx.env `term
+    | return initial.mkUnexpectedError "PS0V1-OP-CATEGORY: missing native term category"
   let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
-  let mut prec := ctx.prec
-  let mut parsed := (categoryParser `term prec).fn ctx initial
-  while parsed.hasError || kinds.contains parsed.stxStack.back.getKind do
-    -- Builtin parsers may return max lhsPrec while checking a lower binding power.
-    -- A native operator's RHS can also fail on PS syntax before we get its node.
-    -- Ask for a successful operator-free prefix, then let the owned trailing
-    -- parser read the RHS. Failed probes require a tighter binding power.
-    let mut low := prec
-    let mut high := maxPrec
-    if high <= prec then return parsed
-    let leadingProbe := (categoryParser `term high).fn ctx initial
-    if leadingProbe.hasError || kinds.contains leadingProbe.stxStack.back.getKind then
-      return parsed
-    while low + 1 < high do
-      let middle := low + (high - low) / 2
-      let probe := (categoryParser `term middle).fn ctx initial
-      if !probe.hasError && !kinds.contains probe.stxStack.back.getKind then
-        high := middle
-      else low := middle
-    if high <= prec then
-      return parsed.mkUnexpectedError "PS0V1-OP-PRECEDENCE: native operator did not advance binding power"
-    prec := high
-    parsed := (categoryParser `term prec).fn ctx initial
+  let keep := fun (entry : Parser × Nat) =>
+    !kinds.any ((entry.1.info.collectKinds {}).contains)
+  let mut trailingTable : TokenMap (Parser × Nat) := {}
+  for (token, parsers) in category.tables.trailingTable do
+    for entry in (parsers.filter keep).reverse do
+      trailingTable := trailingTable.insert token entry
+  let tables := {category.tables with
+    trailingTable, trailingParsers := category.tables.trailingParsers.filter keep}
+  -- Only the outer trailing loop changes. Native leading operands retain their
+  -- original parser context, precedence, antiquotations and syntax data.
+  let parsed := leadingParser `term category.tables category.behavior
+    (mkCategoryAntiquotParser `term).fn ctx initial
+  if parsed.hasError then return parsed
+  let parsed := trailingLoop tables ctx parsed
+  if parsed.hasError then return parsed
   let native := parsed.stxStack.back
   return parsed.popSyntax.pushSyntax <| .node .none bridgeKind #[native]
-
 @[implemented_by leadingImpl]
 opaque leadingFn : ParserFn
 
