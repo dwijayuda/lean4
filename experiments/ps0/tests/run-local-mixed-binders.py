@@ -42,7 +42,7 @@ for name, declaration, reason in [
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    'origin_cases': 5, 'rejection_cases': 6,
+    'origin_cases': 6, 'rejection_cases': 6,
     'native_quotation_control': True, 'duplicate_partition_coalesced': True,
     'different_partition_rejected': True,
     'scope': 'finite named do/pure let and let-rec mixed/comma telescopes, native DSL control; not all local/where grammar',

@@ -49,8 +49,13 @@ meta partial def checkLocalBinderOrigin (before : Lean.Syntax)
           original.getArgs.back!.eqWithInfo lowered.getArgs.back! do
         Lean.Macro.throwError "PS0_LOCAL_BRACKET_ORIGIN"
       if original.isOfKind ``Lean.Parser.Term.explicitBinder then
-        unless original[3].eqWithInfo lowered[3] do
+        unless original[3].getArgs.size == lowered[3].getArgs.size do
           Lean.Macro.throwError "PS0_LOCAL_NATIVE_SUFFIX_ORIGIN"
+        if !original[3].getArgs.isEmpty then
+          unless original[3][0].getKind == lowered[3][0].getKind &&
+              original[3][0][0].eqWithInfo lowered[3][0][0] &&
+              original[3][0][1].getRange? == lowered[3][0][1].getRange? do
+            Lean.Macro.throwError "PS0_LOCAL_NATIVE_DEFAULT_ORIGIN"
   else if before.isOfKind `ps0LocalCommaBinder then
     let parameters := before[0][1].getSepArgs
     unless parameters.size == after.size do Lean.Macro.throwError "PS0_LOCAL_COMMA_ARITY"
@@ -88,6 +93,7 @@ example : localOrigin let rec step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, 
 example : localOrigin do { let step {α: Type} [Inhabited(α)] (x y: Nat): Nat := add(x, y); return step(2, 3) } := by trivial
 example : localOrigin let step (x: Nat): Nat := x; step(4) := by trivial
 example : localOrigin let step (x: Nat, h: x = x := by rfl): Nat := x; step(4) := by trivial
+example : localOrigin let step (x y: Nat := add(1, 2)): Nat := add(x, y); step() := by trivial
 
 const localShapes: Nat :=
   let step {α: Type} ⦃β: Type⦄ [Inhabited(α)] (x y: Nat) z: Nat := add(add(x, y), z)
@@ -98,9 +104,14 @@ const automaticValue: Nat :=
 const dependentDefault: Nat :=
   let step (x: Nat, y: Nat := add(x, 1)): Nat := add(x, y)
   step(4)
+const arrayUpdateValue: Array(Nat) :=
+  let xs := #[1]
+  let xs[0] := 2
+  xs
 example : localShapes = 6 := by decide
 example : automaticValue = 4 := by decide
 example : dependentDefault = 9 := by decide
+example : arrayUpdateValue = #[2] := by decide
 
 meta def nativeLocalQuote : Lean.MacroM(Lean.TSyntax `term) :=
   `(term| let step (x y : Nat) : Nat := Nat.add x y; step 2 3)
