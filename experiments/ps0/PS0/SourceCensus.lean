@@ -86,7 +86,7 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("ownedValueCall", toJson (value.isOfKind `ps0HostAdjacentCall ||
         (value.isOfKind `ps0HostHeadTerm && value[0].isOfKind `ps0HeadCall))),
       ("ownedOperatorKinds", toJson ((ownedOperators value).map Name.toString)),
-      ("nativeWhereTail", toJson (hasTail && source.getArgs.back![1].getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
+      ("nativeWhereTail", toJson (hasTail && source.getArgs.back![0][1].getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
   if source.isOfKind ``Lean.Parser.Command.declaration then
     let native := source[1]
     let supported := #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,

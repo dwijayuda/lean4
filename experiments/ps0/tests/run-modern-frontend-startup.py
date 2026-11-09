@@ -19,7 +19,9 @@ def run(args, label):
     print(result.stdout, end='', flush=True)
     assert result.returncode == 0, (label, result.returncode)
 
-run([driver, 'convert-native', ROOT / 'PS0/SourceCensus.lean', source / 'PS0/SourceCensus.ps'], 'convert')
+for module in ['OperatorDescriptors', 'SourceCensus']:
+    run([driver, 'convert-native', ROOT / ('PS0/' + module + '.lean'),
+         source / ('PS0/' + module + '.ps')], 'convert-' + module)
 (source / 'StartupProbe/Main.ps').write_text('''module
 prelude
 public import Lean
@@ -40,7 +42,7 @@ def main (arguments : List String) : IO Unit := do
 ''')
 build = work / 'native'
 run(['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
-     '-Kroots=PS0,StartupProbe', '-KmoduleNames=PS0.SourceCensus,StartupProbe.Main',
+     '-Kroots=PS0,StartupProbe', '-KmoduleNames=PS0.OperatorDescriptors,PS0.SourceCensus,StartupProbe.Main',
      '-KrootModule=StartupProbe.Main', '-Kdriver=' + str(driver),
      '-KprojectBuildDir=' + str(build), 'build', 'ps0project'], 'build')
 output = work / 'actual-census.json'

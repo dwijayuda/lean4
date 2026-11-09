@@ -23,7 +23,7 @@ where
   localStep (x : Nat) : Nat := x + 2
 
 example : withWhere(3) = 4 := by rfl
-example : countdown(3) = 3 := by rfl
+example : countdown(3) = 3 := by simp [countdown]
 example : withConstWhere = 7 := by rfl
 example : withDefault() = 5 := by rfl
 
