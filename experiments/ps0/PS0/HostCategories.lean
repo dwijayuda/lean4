@@ -292,6 +292,13 @@ partial def lowerCall (head : Lean.Syntax) (args : Array (TSyntax `psCallArg))
           withRef arg do Macro.throwError "PS0V1-CALL-ORDER: positional argument after named argument"
         nativeArgs := nativeArgs.push (← lower `psTerm value.raw)
     | _ => Macro.throwError "PS0V1-HOST-LOWER: malformed psCallArg"
+  -- Native expandArgs reads a final ellipsis before separating named arguments.
+  -- Keep PS named arguments last on the surface and preserve all native nodes.
+  if let some index := nativeArgs.findIdx? (·.isOfKind ``Lean.Parser.Term.namedArgument) then
+    if index > 0 && nativeArgs[index - 1]!.isOfKind ``Lean.Parser.Term.ellipsis then
+      let completion := nativeArgs[index - 1]!
+      nativeArgs := nativeArgs.extract 0 (index - 1) ++
+        nativeArgs.extract index nativeArgs.size ++ #[completion]
   return .node (loweringInfo source) ``Lean.Parser.Term.app #[head, mkNullNode nativeArgs]
 end
 end PS0.Syntax
