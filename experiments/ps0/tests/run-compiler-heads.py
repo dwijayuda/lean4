@@ -106,6 +106,8 @@ def build(source, directory, grammar=False, ok=True):
         build_args += ['-KsourceGrammar=true']
     if args.bootstrap:
         build_args += ['-Kbootstrap=true']
+    if args.fixture == 'SynthInstance14':
+        build_args += ['-KloweredCensus=true']
     run([*build_args, 'build', module], directory.name, ok)
 
 baseline, migrated = work / 'baseline', work / 'migrated'

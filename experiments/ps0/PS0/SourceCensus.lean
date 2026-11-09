@@ -17,6 +17,11 @@ register_builtin_option ps0.sourceCensusPath : String := {
   descr := "write actual native frontend source-command census evidence"
 }
 
+register_builtin_option ps0.loweredCensus : Bool := {
+  defValue := false
+  descr := "retain diagnostic native syntax after the PS declaration adapter"
+}
+
 private def sourceRange (source : Syntax) : Json :=
   match source.getRange? with
   | none => .null
@@ -295,6 +300,13 @@ def collect (commands : Array Syntax) : CommandElabM Unit := do
     let imports := env.header.imports.map (fun (i : Import) => i.module.toString)
     let names := locals.map (fun (c : AsyncConstantInfo) => c.toConstantInfo.name.toString)
       |>.qsort (· < ·)
+    let lowered ← if (← getOptions).getBool `ps0.loweredCensus false then
+        commands.mapM fun source => do
+          let expanded ← if source.getKind.toString.startsWith "PS0.StandardAdapters.ps0Standard" then
+              Lean.Elab.liftMacroM <| Macro.expandMacro? source
+            else pure none
+          pure <| command env operators (expanded.getD source)
+      else pure #[]
     let data := Json.mkObj [
       ("schema", toJson ("ps0-native-source-census/1" : String)),
       ("operatorDescriptorScope", toJson ("active-and-captured-kinds/1" : String)),
@@ -302,6 +314,7 @@ def collect (commands : Array Syntax) : CommandElabM Unit := do
       ("leanCommit", toJson Lean.githash), ("module", toJson (← getMainModule).toString),
       ("file", toJson context.fileName), ("nativeSource", toJson context.fileMap.source),
       ("commands", toJson (commands.map (command env operators))),
+      ("loweredCommands", toJson lowered),
       ("imports", toJson imports),
       ("environmentDeclNames", toJson names),
       ("grammarMigrationComplete", toJson false)]
