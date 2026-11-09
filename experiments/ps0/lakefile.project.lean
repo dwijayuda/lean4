@@ -16,7 +16,8 @@ package ps0 where
     #[⟨`interpreter.prefer_native, false⟩] ++
       (if (get_config? sourceGrammar).isSome then #[⟨`ps0.sourceGrammar, true⟩] else #[])
     else if (get_config? sourceGrammar).isSome then #[⟨`ps0.sourceGrammar, true⟩] else #[]) ++
-      (if (get_config? loweredCensus).isSome then #[⟨`ps0.loweredCensus, true⟩] else #[])
+      (if (get_config? loweredCensus).isSome then #[⟨`ps0.loweredCensus, true⟩] else #[]) ++
+      (if (get_config? separateCompiler).isSome then #[⟨`compiler.postponeCompile, true⟩] else #[])
   buildDir := FilePath.mk ((get_config? projectBuildDir).getD ".lake/project")
 
 def projectSource : FilePath := FilePath.mk ((get_config? sourceRoot).getD "tests/project")

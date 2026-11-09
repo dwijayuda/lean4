@@ -69,10 +69,9 @@ example : hostOrigin do
   for (a, b) in pairs(n) do
     result := add(a, b)
   return result := by trivial
-example : hostOrigin do
-  try return add(n, 1)
-  catch e : IO.Error => return add(n, 2)
-  finally pure(()) := by trivial
+example : hostOrigin do { try { return add(n, 1) }
+  catch e : IO.Error => { return add(n, 2) }
+  finally { pure(()) } } := by trivial
 
 macro "nativeMatchBody " e:term : term => pure e
 function pairSum(p: Nat × Nat): Nat := p.1 + p.2

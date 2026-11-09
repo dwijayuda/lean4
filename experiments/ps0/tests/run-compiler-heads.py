@@ -21,6 +21,7 @@ parser.add_argument('--owned-value-calls', default='')
 parser.add_argument('--sdk-source', action='store_true')
 parser.add_argument('--roots', default='Lean.Compiler')
 parser.add_argument('--bootstrap', action='store_true')
+parser.add_argument('--separate-compiler', action='store_true')
 args = parser.parse_args()
 work = ROOT / 'build' / ('compiler-heads-' + os.environ['GITHUB_RUN_ID'] + '-' + args.fixture)
 work.mkdir(parents=True, exist_ok=False)
@@ -106,6 +107,8 @@ def build(source, directory, grammar=False, ok=True):
         build_args += ['-KsourceGrammar=true']
     if args.bootstrap:
         build_args += ['-Kbootstrap=true']
+    if args.separate_compiler:
+        build_args += ['-KseparateCompiler=true']
     if args.fixture == 'SynthInstance14':
         build_args += ['-KloweredCensus=true']
     run([*build_args, 'build', module], directory.name, ok)
@@ -247,6 +250,7 @@ if args.fixture in ['UnlessProbe', 'InlineAttrs']:
         assert 'PS0.Operators.ownedBinary' in declaration['doUnlessConditionKinds'], declaration
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'lean_commit': observed['leanCommit'],
+    'compiler_pipeline': 'native-lake-separate-leanir' if args.separate_compiler else 'native-lake-eager',
     'pinned_blob': blob, 'module': module, 'comparisons': comparisons,
     'converted_declarations': plan['declarations'], 'unchanged_abbrev_adapters': sorted(unchanged_abbrevs),
     'native_converted_control': 'identical shared R2 surface accepted natively' if shared_surface else 'changed surface rejected natively',
