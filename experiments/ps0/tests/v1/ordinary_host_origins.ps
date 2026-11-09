@@ -96,6 +96,9 @@ function runtimeTry(n: Nat): IO(Nat) := do
   finally pure(())
 
 def main : IO Unit := do
+  let mut total := 3
+  for k in [0:2] do total := total + k
+  unless total == 4 do throw(IO.userError("PS0_HOST_RANGE_RUNTIME"))
   let a ← runtimeTry(0)
   let b ← runtimeTry(2)
   unless a == 2 && b == 3 do throw(IO.userError("PS0_HOST_TRY_RUNTIME"))

@@ -199,8 +199,7 @@ function catchMatchValue(n: Nat): IO(Nat) := do
   try return add(n, 1)
   catch | _ => return add(n, 2)
 '''
-guards += '''private theorem forValueResult : forValue 3 = 4 := rfl
-private theorem forPairsResult : forPairs 3 = 13 := rfl
+guards += '''private theorem forPairsResult : forPairs 3 = 13 := rfl
 '''
 
 
@@ -245,7 +244,7 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
         observed = json.loads(census.read_text())
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
-        assert len(rows) == 48 and all(d['mode'] == 'mapped-ps' for d in rows)
+        assert len(rows) == 47 and all(d['mode'] == 'mapped-ps' for d in rows)
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
@@ -260,7 +259,7 @@ runtime = run([executable], 'runtime-origins')
 assert runtime.strip() == 'PS0_HOST_ORIGINS: PASS'
 shutil.copy2(executable, work / 'OrdinaryHostOrigins')
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    comparisons=comparisons, mapped_definitions=25, mapped_theorems=23, logical_imports=['Init'],
+    comparisons=comparisons, mapped_definitions=25, mapped_theorems=22, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
     source_origin_fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
     source_origin_cases=8, independently_owned_native_dsl=True, native_quotation=True,
