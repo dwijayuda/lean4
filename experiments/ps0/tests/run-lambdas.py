@@ -25,12 +25,17 @@ oracle = 'PS0_LAMBDAS:3:3:3:3:3:3:2:3:3:3:3'
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'LambdaOperands', work / 'native'], 'native')
 assert oracle in run([work / 'native/LambdaOperands'], 'runtime')
+projection = 'tests/v1/pending_section_projection.ps'
+run(['lake', 'exe', 'ps0', 'check', projection], 'projection-check')
+run(['lake', 'exe', 'ps0', 'build-native', projection, 'SectionProjection', work / 'projection-native'], 'projection-native')
+assert 'PS0_SECTION_PROJECTION:3' in run([work / 'projection-native/SectionProjection'], 'projection-runtime')
 prefix = 'function add(x: Nat, y: Nat): Nat := x + y\nabbrev sized (n : Nat) := Fin n\n'
 for name, source, reason in [
     ('body-gap', 'const bad: Nat → Nat := fun (n : Nat) => add (n, 1)', 'PS0V1-CALL-GAP'),
     ('body-order', 'const bad: Nat → Nat := fun (n : Nat) => add(x := n, 1)', 'PS0V1-CALL-ORDER'),
     ('type-gap', 'abbrev Small := sized(3)\nconst bad: Small → Nat := fun (n : sized (3)) => n.val', 'PS0V1-CALL-GAP'),
     ('lambda-default', 'const bad: Nat → Nat := fun (n : Nat := 3) => n', None),
+    ('projection-subject-gap', 'const bad: Nat := (List.head! ([3])).succ', 'PS0V1-CALL-GAP'),
 ]:
     file = work / (name + '.ps')
     file.write_text(prefix + source + '\n')

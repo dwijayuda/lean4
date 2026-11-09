@@ -42,6 +42,10 @@ def single_type_call(operand, role='owned binder type'):
     if operand['kind'] == 'Lean.Parser.Term.paren':
         single_type_call(operand['args'][1], role)
         return
+    if operand['kind'] == 'Lean.Parser.Term.proj':
+        assert len(operand['args']) == 3
+        single_type_call(operand['args'][0], role + ' projection subject')
+        return
     if operand['kind'] == 'termIfThenElse':
         parts = operand['args']
         assert len(parts) == 6 and [parts[i]['atom'] for i in [0, 2, 4]] == ['if', 'then', 'else']

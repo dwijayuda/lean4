@@ -59,6 +59,8 @@ private def lambdaBodyApplications (native : Syntax) : Array Json := Id.run do
 private partial def ownedOperators (source : Syntax) : Array Name := Id.run do
   if source.isOfKind `PS0.Operators.ownedBinary then
     return #[source[0].getKind] ++ ownedOperators source[0][0] ++ ownedOperators source[0][2]
+  if source.isOfKind `PS0.Operators.ownedPostfix then
+    return ownedOperators source[0][0]
   let containers := #[`null, `ps0HostAdjacentCall, `ps0HostHeadTerm, `ps0HeadCall,
     `ps0HeadEmptyCall, `ps0ParenthesizedHead, `ps0HostParens, `ps0HostBraces,
     `ps0PositionalArg, `ps0NamedArg, `ps0HostLambda]

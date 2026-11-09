@@ -91,6 +91,22 @@ private def rejectHostGap (source : Lean.Syntax) : MacroM Unit := do
             if stop < start then
               withRef arg do Macro.throwError "PS0V1-CALL-GAP: parenthesized host arguments require adjacency"
 
+private partial def checkProjectionSubject (operators : Array Name) (source : Lean.Syntax) : MacroM Unit := do
+  if let .node (.synthetic ..) _ _ := source then return ()
+  rejectHostGap source
+  if source.isOfKind ``Lean.Parser.Term.paren then
+    checkProjectionSubject operators source[1]
+  else if source.isOfKind ``Lean.Parser.Term.proj then
+    checkProjectionSubject operators source[0]
+  else if source.isOfKind ``Lean.Parser.Term.app then
+    checkProjectionSubject operators source[0]
+    for argument in source[1].getArgs do
+      checkProjectionSubject operators
+        (if argument.isOfKind ``Lean.Parser.Term.namedArgument then argument[3] else argument)
+  else if operators.contains source.getKind && source.getArgs.size == 3 then
+    checkProjectionSubject operators source[0]
+    checkProjectionSubject operators source[2]
+
 mutual
 partial def lower (category : Name) (source : Lean.Syntax) :
     MacroM Lean.Syntax := withRef source <| Macro.withIncRecDepth source do
@@ -100,6 +116,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     if source.isOfKind ``ps0NativeTermBridge then
       let native := source[0]
       rejectHostGap native
+      if native.isOfKind ``Lean.Parser.Term.proj then
+        checkProjectionSubject (PS0.OperatorDescriptors.binaryKinds (← getEnv) (← getOptions)) native[0]
       return native
     if source.isOfKind `PS0.Operators.ownedBinary then
       let native := source[0]
@@ -107,6 +125,11 @@ partial def lower (category : Name) (source : Lean.Syntax) :
       let lhs ← lower `psTerm native[0]
       let rhs ← lower `psTerm native[2]
       return (native.setArg 0 lhs).setArg 2 rhs
+    if source.isOfKind `PS0.Operators.ownedPostfix then
+      let native := source[0]
+      unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
+        Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native projection"
+      return native.setArg 0 (← lower `psTerm native[0])
     match source with
     | `(psTerm| $head:ident($[$args:psCallArg],*)) => lowerCall head.raw args source
     | `(psTerm| $head:psHead) => lowerHead head.raw

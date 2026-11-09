@@ -13,14 +13,16 @@ open Lean Lean.Parser
 namespace PS0.Operators
 
 def ownedKind : Name := `PS0.Operators.ownedBinary
+def ownedPostfixKind : Name := `PS0.Operators.ownedPostfix
 def bridgeKind : Name := `ps0NativeTermBridge
 
 builtin_initialize
   registerBuiltinNodeKind ownedKind
+  registerBuiltinNodeKind ownedPostfixKind
   registerBuiltinNodeKind bridgeKind
 
 run_cmd do
-  modifyEnv fun env => addSyntaxNodeKind (addSyntaxNodeKind env ownedKind) bridgeKind
+  modifyEnv fun env => addSyntaxNodeKind (addSyntaxNodeKind (addSyntaxNodeKind env ownedKind) ownedPostfixKind) bridgeKind
 
 private def ownedOperandContext (ctx : ParserContextCore) : ParserContextCore := Id.run do
   let native := categoryParserFnExtension.getState ctx.env
@@ -72,12 +74,15 @@ private unsafe def trailingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
   if state.hasError then return state
   let candidates := (indexedParsers ++ category.tables.trailingParsers).filter fun (parser, _) =>
     let collected := parser.info.collectKinds {}
-    kinds.any collected.contains
+    kinds.any collected.contains || collected.contains ``Lean.Parser.Term.proj
   if candidates.isEmpty then return initial.mkUnexpectedError "no owned native binary operator"
-  let candidates := candidates.map fun (parser, priority) => (operandParser parser, priority)
+  let candidates := candidates.map fun (parser, priority) =>
+    (if (parser.info.collectKinds {}).contains ``Lean.Parser.Term.proj then parser else operandParser parser, priority)
   let parsed := longestMatchFn (some initial.stxStack.back) candidates ctx initial.popSyntax
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
+  if native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 then
+    return parsed.popSyntax.pushSyntax <| .node native.getHeadInfo ownedPostfixKind #[native]
   unless kinds.contains native.getKind && native.getArgs.size == 3 do
     return parsed.mkUnexpectedError "PS0V1-OP-SHAPE: unexpected native binary operator result"
   return parsed.popSyntax.pushSyntax <| .node native.getHeadInfo ownedKind #[native]

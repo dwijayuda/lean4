@@ -1,4 +1,7 @@
-/-! Pending grouped field projection with nested owned calls; this is not an acceptance witness. -/
+/-! Grouped field projection retains native projection and nested section semantics. -/
 function nestedSectionProjection(xs : List Nat): List Nat :=
   xs.map((· + (List.map((· + 1), [1])).head!))
 example : nestedSectionProjection([1, 2]) = [3, 4] := by { rfl }
+const projectionFirst : Nat := (nestedSectionProjection([1, 2])).head!
+example : projectionFirst = 3 := by { rfl }
+def main : IO Unit := IO.println s!"PS0_SECTION_PROJECTION:{projectionFirst}"
