@@ -122,6 +122,32 @@ def namedDeclaration : Parser :=
       sepBy1 (operands #[(`term, `psTerm)] Lean.Parser.Term.matchDiscr) ", " >>
       " with" >> ppDedent (Lean.Parser.Term.matchAlts sequence)
 
+private def forDeclaration : Parser :=
+  node ``Lean.Parser.Term.doForDecl <|
+    optional (atomic (ident >> " : ")) >> termParser >> " in " >>
+      withForbiddens #["do", "invariant", "decreasing"] (categoryParser `psTerm 0)
+
+@[run_parser_attribute_hooks] def forElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doFor maxPrec <|
+    "for " >> sepBy1 forDeclaration ", " >> optional Lean.Parser.Term.doLoopInvariant >>
+      optional Lean.Parser.Term.doLoopDecreasing >> " do " >> sequence
+
+private def catchElem : Parser :=
+  node ``Lean.Parser.Term.doCatch <|
+    ppDedent ppLine >> atomic ("catch " >> Lean.Parser.Term.binderIdent) >>
+      optional (" : " >> categoryParser `psTerm 0) >> Lean.Parser.Term.darrow >> sequence
+
+private def catchMatchElem : Parser :=
+  node ``Lean.Parser.Term.doCatchMatch <|
+    ppDedent ppLine >> "catch " >> ppDedent (Lean.Parser.Term.matchAlts sequence)
+
+private def finallyElem : Parser :=
+  node ``Lean.Parser.Term.doFinally <| ppDedent ppLine >> "finally " >> sequence
+
+@[run_parser_attribute_hooks] def tryElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doTry maxPrec <|
+    "try " >> sequence >> many (catchElem <|> catchMatchElem) >> optional finallyElem
+
 @[run_parser_attribute_hooks] def namedLetTerm : Parser :=
   leadingNode ``Lean.Parser.Term.«let» leadPrec <|
     withPosition ("let" >> Lean.Parser.Term.letConfig >> namedDeclaration) >>
@@ -222,6 +248,10 @@ def ps0NativeDoLet : Lean.Parser.Parser := PS0.DoLayout.letElem
 def ps0NativeDoHave : Lean.Parser.Parser := PS0.DoLayout.haveElem
 @[psDoElem_parser 20000]
 def ps0NativeDoMatch : Lean.Parser.Parser := PS0.DoLayout.matchElem
+@[psDoElem_parser 20000]
+def ps0NativeDoFor : Lean.Parser.Parser := PS0.DoLayout.forElem
+@[psDoElem_parser 20000]
+def ps0NativeDoTry : Lean.Parser.Parser := PS0.DoLayout.tryElem
 @[psDoElem_parser 20000]
 def ps0NativeDoLetRec : Lean.Parser.Parser := PS0.DoLayout.recursiveElem
 @[psTerm_parser 20000]
@@ -501,6 +531,18 @@ partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRe
   lower `psTerm source
 
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.doFor then
+    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-DO-FOR: unexpected native loop"
+    let declarations ← source[1].getArgs.mapM fun declaration => do
+      if declaration.isAtom then return declaration
+      unless declaration.isOfKind ``Lean.Parser.Term.doForDecl && declaration.getArgs.size == 4 do
+        Macro.throwError "PS0V1-DO-FOR: unexpected native pattern/collection roles"
+      return declaration.setArg 3 (← lower `psTerm declaration[3])
+    -- Loop contract annotations retain their native grammar in this finite stage.
+    return (source.setArg 1 (source[1].setArgs declarations)).setArg 5
+      (← lowerNativeDoSequence source[5])
+  if source.isOfKind ``Lean.Parser.Term.doTry then
+    return ← lowerNativeTry source
   if source.isOfKind ``Lean.Parser.Term.doMatch then
     unless source.getArgs.size == 7 do
       Macro.throwError "PS0V1-DO-MATCH: unexpected native match shape"
@@ -610,6 +652,27 @@ partial def lowerNativeIfRole (source : Lean.Syntax) : MacroM Lean.Syntax := wit
     return source.setArgs (← source.getArgs.mapM lowerNativeIfRole)
   if source.isAtom || source.isOfKind ``Lean.Parser.Term.elseIf then return source
   Macro.throwError s!"PS0V1-DO-IF-ROLE: unexpected native condition/sequence role {source.getKind}"
+
+partial def lowerNativeTry (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  unless source.getArgs.size == 4 && source[3].getArgs.size <= 1 do
+    Macro.throwError "PS0V1-DO-TRY: unexpected native try/catch/finally"
+  let source := source.setArg 1 (← lowerNativeDoSequence source[1])
+  let catches ← source[2].getArgs.mapM fun branch => do
+    if branch.isOfKind ``Lean.Parser.Term.doCatchMatch && branch.getArgs.size == 2 then
+      return branch.setArg 1 (← lowerNativeMatchAlternatives branch[1] true)
+    unless branch.isOfKind ``Lean.Parser.Term.doCatch && branch.getArgs.size == 5 do
+      Macro.throwError "PS0V1-DO-CATCH: unexpected native catch"
+    let branch ← if branch[2].getArgs.isEmpty then pure branch else do
+      unless branch[2].getArgs.size == 2 do Macro.throwError "PS0V1-DO-CATCH: unexpected exception type"
+      pure <| branch.setArg 2 (branch[2].setArg 1 (← lower `psTerm branch[2][1]))
+    return branch.setArg 4 (← lowerNativeDoSequence branch[4])
+  let source := source.setArg 2 (source[2].setArgs catches)
+  if source[3].getArgs.isEmpty then return source
+  let finalizer := source[3][0]
+  unless finalizer.isOfKind ``Lean.Parser.Term.doFinally && finalizer.getArgs.size == 2 do
+    Macro.throwError "PS0V1-DO-FINALLY: unexpected native finalizer"
+  return source.setArg 3 (source[3].setArg 0
+    (finalizer.setArg 1 (← lowerNativeDoSequence finalizer[1])))
 
 partial def lowerNativeRecordField (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   unless source.isOfKind ``Lean.Parser.Term.structInstField && source.getArgs.size == 2 do

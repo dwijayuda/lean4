@@ -345,7 +345,33 @@ def do_element(element):
             do_sequence(parts[8]['args'][0])
         return
     kind, parts = element['kind'], element['args']
-    if kind == 'Lean.Parser.Term.doMatch':
+    if kind == 'Lean.Parser.Term.doFor':
+        assert len(parts) == 6
+        for declaration in parts[1]['args']:
+            if declaration['atom'] is not None:
+                continue
+            assert declaration['kind'] == 'Lean.Parser.Term.doForDecl' and len(declaration['args']) == 4
+            single_type_call(declaration['args'][3], 'owned for collection')
+        do_sequence(parts[5])
+    elif kind == 'Lean.Parser.Term.doTry':
+        assert len(parts) == 4 and len(parts[3]['args']) <= 1
+        do_sequence(parts[1])
+        for branch in parts[2]['args']:
+            body = branch['args']
+            if branch['kind'] == 'Lean.Parser.Term.doCatchMatch':
+                assert len(body) == 2
+                match_alternatives(body[1], 'owned catch alternative', sequence=True)
+            else:
+                assert branch['kind'] == 'Lean.Parser.Term.doCatch' and len(body) == 5
+                if body[2]['args']:
+                    assert len(body[2]['args']) == 2
+                    single_type_call(body[2]['args'][1], 'owned exception type')
+                do_sequence(body[4])
+        if parts[3]['args']:
+            finalizer = parts[3]['args'][0]
+            assert finalizer['kind'] == 'Lean.Parser.Term.doFinally' and len(finalizer['args']) == 2
+            do_sequence(finalizer['args'][1])
+    elif kind == 'Lean.Parser.Term.doMatch':
         assert len(parts) == 7 and len(parts[3]['args']) <= 1
         if parts[3]['args']:
             motive = parts[3]['args'][0]

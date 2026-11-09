@@ -159,6 +159,49 @@ private theorem doMatchPairResult : doMatchPair 2 3 = 5 := rfl
 private theorem haveValueResult : haveValue 3 = 4 := rfl
 private theorem haveDefaultResult : haveDefault 3 = 5 := rfl
 '''
+native += '''def forValue (n : Nat) : Id Nat := do
+  let mut result := n
+  for k in [0:2] do
+    result := add result k
+  return result
+def forPairs (n : Nat) : Id Nat := do
+  let mut result := n
+  for (a, b) in [(1, 2), (3, 4)] do
+    result := add result (add a b)
+  return result
+def tryValue (n : Nat) : IO Nat := do
+  try
+    if n == 0 then throw (IO.userError "zero")
+    return add n 1
+  catch e : IO.Error => return add n 2
+  finally pure ()
+def catchMatchValue (n : Nat) : IO Nat := do
+  try return add n 1
+  catch | _ => return add n 2
+'''
+ps += '''function forValue(n: Nat): Id(Nat) := do
+  let mut result := n
+  for k in [0:2] do
+    result := add(result, k)
+  return result
+function forPairs(n: Nat): Id(Nat) := do
+  let mut result := n
+  for (a, b) in [(1, 2), (3, 4)] do
+    result := add(result, add(a, b))
+  return result
+function tryValue(n: Nat): IO(Nat) := do
+  try
+    if n == 0 then throw(IO.userError("zero"))
+    return add(n, 1)
+  catch e : IO.Error => return add(n, 2)
+  finally pure(())
+function catchMatchValue(n: Nat): IO(Nat) := do
+  try return add(n, 1)
+  catch | _ => return add(n, 2)
+'''
+guards += '''private theorem forValueResult : forValue 3 = 4 := rfl
+private theorem forPairsResult : forPairs 3 = 13 := rfl
+'''
 
 
 def run(args, label):
@@ -202,7 +245,7 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
         observed = json.loads(census.read_text())
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
-        assert len(rows) == 42 and all(d['mode'] == 'mapped-ps' for d in rows)
+        assert len(rows) == 48 and all(d['mode'] == 'mapped-ps' for d in rows)
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
@@ -217,10 +260,10 @@ runtime = run([executable], 'runtime-origins')
 assert runtime.strip() == 'PS0_HOST_ORIGINS: PASS'
 shutil.copy2(executable, work / 'OrdinaryHostOrigins')
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    comparisons=comparisons, mapped_definitions=21, mapped_theorems=21, logical_imports=['Init'],
+    comparisons=comparisons, mapped_definitions=25, mapped_theorems=23, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
     source_origin_fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    source_origin_cases=6, independently_owned_native_dsl=True, native_quotation=True,
+    source_origin_cases=8, independently_owned_native_dsl=True, native_quotation=True,
     native_executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
     runtime_oracle='PS0_HOST_ORIGINS: PASS',
     scope='finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders',

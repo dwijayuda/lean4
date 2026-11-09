@@ -126,6 +126,10 @@ for path in [Path('ir') / relative_module.with_suffix('.c'), Path('lib/lean') / 
                                                  fromfile='native.c', tofile='ps.c'))
         (work / 'native-c.diff').write_text(difference)
         print(difference[:12000], flush=True)
+        if args.fixture == 'SynthInstance14':
+            run(['python3', 'tests/compare-lowered-native-syntax.py', census,
+                 migrated / 'lib/lean' / relative_module.with_suffix('.ilean.ps0-source-census.json'),
+                 work / 'lowered-syntax-differences.json'], 'lowered-syntax-differences')
         public_olean = Path('lib/lean') / relative_module.with_suffix('.olean')
         diagnostic = subprocess.run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
                                      str(baseline / public_olean), str(migrated / public_olean), '--all-parts'],
@@ -140,11 +144,12 @@ for path in [Path('ir') / relative_module.with_suffix('.c'), Path('lib/lean') / 
                           for suffix in ['', '.server', '.private']},
             changed_constants=[{key: row.get(key) for key in ['name', 'typeEqual', 'valueEqual', 'hintsEqual']}
                                for row in details['changedConstants']])), flush=True)
-        build(original, work / 'native-repeat')
-        build(converted, work / 'ps-repeat', grammar=True)
-        print('PS0_C_PARITY_REPEAT_DIAGNOSTIC:' + json.dumps(dict(
-            native=[sha(baseline / path), sha(work / 'native-repeat' / path)],
-            ps=[sha(migrated / path), sha(work / 'ps-repeat' / path)])), flush=True)
+        if os.environ.get('PS0_REPEAT_C_DIAG') == '1':
+            build(original, work / 'native-repeat')
+            build(converted, work / 'ps-repeat', grammar=True)
+            print('PS0_C_PARITY_REPEAT_DIAGNOSTIC:' + json.dumps(dict(
+                native=[sha(baseline / path), sha(work / 'native-repeat' / path)],
+                ps=[sha(migrated / path), sha(work / 'ps-repeat' / path)])), flush=True)
     if comparisons[path]['native'] != comparisons[path]['ps'] and path.endswith('.olean'):
         run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
              baseline / path, migrated / path], 'olean-diagnostic')
