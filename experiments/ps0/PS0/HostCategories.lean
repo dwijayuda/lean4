@@ -65,6 +65,8 @@ private def letPrefix : Parser :=
   withoutPosition (categoryParser `psTerm 0)
 
 @[run_parser_attribute_hooks] def ascriptionTerm : Parser :=
+  -- These overlapping native grouping productions must share category caches.
+  -- Their value callbacks enter PS directly with native position/hygiene rules.
   withCache `PS0.DoLayout.ascriptionTerm <|
     leadingNode ``Lean.Parser.Term.typeAscription maxPrec <|
       Lean.Parser.Term.hygienicLParen >>
