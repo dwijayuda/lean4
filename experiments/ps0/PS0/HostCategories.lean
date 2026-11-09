@@ -68,7 +68,7 @@ private def letPrefix : Parser :=
 
 @[run_parser_attribute_hooks] def dependentIfTerm : Parser :=
   leadingNode `termDepIfThenElse leadPrec <|
-    ppRealGroup (ppRealFill (ppIndent ("if " >> Lean.Parser.Term.binderIdent >> " : " >>
+    ppRealGroup (ppRealFill (ppIndent ("if " >> node `Lean.binderIdent Lean.Parser.Term.binderIdent >> " : " >>
       categoryParser `psTerm 0 >> " then") >> ppSpace >> categoryParser `psTerm 0) >>
       ppDedent ppSpace >> ppRealFill ("else " >> categoryParser `psTerm 0))
 

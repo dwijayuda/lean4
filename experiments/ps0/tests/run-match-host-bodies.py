@@ -242,6 +242,7 @@ def run(args, label):
 
 
 comparisons = {}
+run(['lake', 'env', 'lean', 'tests/debug-native-dependent-if.lean'], 'native-dependent-if')
 for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
     source_root = work / (label + '-source')
     source_root.mkdir()
@@ -294,6 +295,6 @@ shutil.copy2(executable, work / 'OrdinaryHostOrigins')
     source_origin_cases=11, independently_owned_native_dsl=True, native_quotation=True,
     native_executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
     runtime_oracle='PS0_HOST_ORIGINS: PASS',
-    scope='finite match/pattern-lambda/record/do-if ordinary values with native patterns and field binders',
+    scope='finite native term/do matches, pattern lambda, record, if/have/for/try, ascriptions and direct tactic operands; loop annotations and deeper ordinary roles remain open',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
 print('PS0_MATCH_HOST_NATIVE_PARITY: PASS', flush=True)
