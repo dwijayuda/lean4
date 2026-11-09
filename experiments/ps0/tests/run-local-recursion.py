@@ -92,11 +92,14 @@ for name, body, reason in [
     ('body-gap', '  let rec step (n : Nat) := add (n, 1)\n  return step(1)', 'PS0V1-CALL-GAP'),
     ('equation-gap', '  let rec step : Nat → Nat\n    | n => add (n, 1)\n  return step(1)', 'PS0V1-CALL-GAP'),
     ('body-order', '  let rec step (n : Nat) := add(x := n, 1)\n  return step(1)', 'PS0V1-CALL-ORDER'),
-    ('default-type', '  let rec step (n : Nat := "wrong") := n\n  return step(1)', 'Nat'),
+    ('default-type', '  let rec step (n : Nat := "wrong") := n\n  return step(1)', 'Type mismatch'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + 'const bad: Id(Nat) := do\n' + body + '\n')
-    assert reason in run(['lake', 'exe', 'ps0', 'check', path], name, ok=False)
+    diagnostic = run(['lake', 'exe', 'ps0', 'check', path], name, ok=False)
+    assert reason in diagnostic
+    if name == 'default-type':
+        assert 'String' in diagnostic and 'Nat' in diagnostic
 (work / 'evidence.json').write_text(json.dumps({
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),

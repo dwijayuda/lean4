@@ -30,6 +30,16 @@ projection = 'tests/v1/pending_section_projection.ps'
 run(['lake', 'exe', 'ps0', 'check', projection], 'projection-check')
 run(['lake', 'exe', 'ps0', 'build-native', projection, 'SectionProjection', work / 'projection-native'], 'projection-native')
 assert 'PS0_SECTION_PROJECTION:3' in run([work / 'projection-native/SectionProjection'], 'projection-runtime')
+native_pun = work / 'native-invalid-punning.ps'
+native_pun.write_text('module\nprelude\npublic import Lean\npublic section\n'
+                     'structure PunningTarget where\n  value : Nat\n'
+                     'def bad : Id PunningTarget := do\n'
+                     '  let f : Nat → Nat := Nat.succ\n  let x := 2\n'
+                     '  return {\n    f\n    x\n  }\n')
+native_pun_diagnostic = run(['lake', 'exe', 'ps0', 'census-source', native_pun,
+                            'NativeInvalidPunning', work / 'invalid-punning-census.json'],
+                           'native-invalid-punning', ok=False)
+assert 'not a field of structure' in native_pun_diagnostic
 prefix = 'function add(x: Nat, y: Nat): Nat := x + y\nabbrev sized (n : Nat) := Fin n\n'
 for name, source, reason in [
     ('body-gap', 'const bad: Nat → Nat := fun (n : Nat) => add (n, 1)', 'PS0V1-CALL-GAP'),
@@ -40,6 +50,9 @@ for name, source, reason in [
     ('lambda-default', 'const bad: Nat → Nat := fun (n : Nat := 3) => n', None),
     ('projection-subject-gap', 'const bad: Nat := (List.head! ([3])).succ', 'PS0V1-CALL-GAP'),
     ('projection-call-head-gap', 'const bad: Nat := (List.head! ([3])).add(4)', 'PS0V1-CALL-GAP'),
+    ('invalid-punning', 'structure PunningTarget where\n  value : Nat\n'
+     'const bad: Id(PunningTarget) := do\n  let f : Nat → Nat := Nat.succ\n  let x := 2\n'
+     '  return {\n    f\n    x\n  }', 'not a field of structure'),
 ]:
     file = work / (name + '.ps')
     file.write_text(prefix + source + '\n')
@@ -49,6 +62,7 @@ for name, source, reason in [
     'source': os.environ['PS0_SOURCE_SHA'], 'oracle': oracle,
     'fixture_sha256': hashlib.sha256(Path(fixture).read_bytes()).hexdigest(),
     'original_lambda_and_arrow_token_checks': 2,
+    'native_and_ps_invalid_multi_pun_rejection': 'not a field of structure',
     'projection': {
         'source_sha256': hashlib.sha256(Path(projection).read_bytes()).hexdigest(),
         'executable_sha256': hashlib.sha256((work / 'projection-native/SectionProjection').read_bytes()).hexdigest(),

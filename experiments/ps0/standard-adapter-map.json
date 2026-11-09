@@ -8885,7 +8885,6 @@
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "preparedInputs": 2569,
-    "byteIdenticalInputs": 0,
     "failedModules": [
       {
         "path": "Init/Data/Range/Polymorphic/Internal/SignedBitVec",
@@ -8933,7 +8932,9 @@
         "digest": "sha256:3826e7863104c7bb56bed01b4579bf72b0e6a4368ee3b77573fa03d53a2cee15",
         "size_in_bytes": 122360218
       }
-    ]
+    ],
+    "reportedByteIdenticalModeInputs": 0,
+    "inputModeScope": "all inputs are planned-ps-grammar; the reported mode count does not assert every prepared file changes bytes"
   },
   "transformedCompilerGraphTwelfthModeAudit": {
     "source": "c31599ff0685581b83e657c4e888dd79023c5407",
@@ -9027,7 +9028,6 @@
       "grammarMigrationComplete": false,
       "verified_execution": false,
       "preparedInputs": 2569,
-      "byteIdenticalInputs": 0,
       "failedModules": [
         {
           "path": "Init/Data/Range/Polymorphic/Internal/SignedBitVec",
@@ -9075,7 +9075,9 @@
           "digest": "sha256:3826e7863104c7bb56bed01b4579bf72b0e6a4368ee3b77573fa03d53a2cee15",
           "size_in_bytes": 122360218
         }
-      ]
+      ],
+      "reportedByteIdenticalModeInputs": 0,
+      "inputModeScope": "all inputs are planned-ps-grammar; the reported mode count does not assert every prepared file changes bytes"
     },
     "nextActions": [
       "Validate the five new whole-module boundaries and local recursive source roles on Linux; preserve exact failures",
