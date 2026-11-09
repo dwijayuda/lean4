@@ -16172,8 +16172,8 @@
       "independentRun": 42712824864
     },
     "ordinaryAggregateCandidate": {
-      "source": "67bd1dcd1b183c013a4be941326b1978962d633b",
-      "runner": "7e9c2b3f6b7a4c9eae3db9cff4ecdd1a21f2ed47",
+      "source": "a90b971b9f7424225869b2d463501ed202a92788",
+      "runner": "fd744b7ff893a52f0e001829af4dfd533eff8d44",
       "positiveRun": 42723160821,
       "negativeRun": 42723160297,
       "status": "PENDING",
@@ -16197,6 +16197,15 @@
         "negativeJob": 129517235109,
         "heartbeatBound": 800000,
         "phase": "clean implementation elaboration",
+        "grammarTestsReached": false
+      },
+      "priorWalkerFailure": {
+        "source": "67bd1dcd1b183c013a4be941326b1978962d633b",
+        "positiveRun": 42723160821,
+        "positiveJob": 129521941436,
+        "negativeRun": 42723160297,
+        "negativeJob": 129521939528,
+        "heartbeatBound": 800000,
         "grammarTestsReached": false
       }
     },
@@ -36977,8 +36986,8 @@
     }
   },
   "ordinaryAggregateCandidate": {
-    "source": "67bd1dcd1b183c013a4be941326b1978962d633b",
-    "runner": "7e9c2b3f6b7a4c9eae3db9cff4ecdd1a21f2ed47",
+    "source": "a90b971b9f7424225869b2d463501ed202a92788",
+    "runner": "fd744b7ff893a52f0e001829af4dfd533eff8d44",
     "positiveRun": 42723160821,
     "negativeRun": 42723160297,
     "status": "PENDING",
@@ -37002,6 +37011,15 @@
       "negativeJob": 129517235109,
       "heartbeatBound": 800000,
       "phase": "clean implementation elaboration",
+      "grammarTestsReached": false
+    },
+    "priorWalkerFailure": {
+      "source": "67bd1dcd1b183c013a4be941326b1978962d633b",
+      "positiveRun": 42723160821,
+      "positiveJob": 129521941436,
+      "negativeRun": 42723160297,
+      "negativeJob": 129521939528,
+      "heartbeatBound": 800000,
       "grammarTestsReached": false
     }
   },
