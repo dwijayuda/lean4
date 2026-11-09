@@ -175,7 +175,8 @@ syntax:max (name := ps0HostLambda) (priority := high)
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
   ident noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
 
-syntax:max (name := ps0NativeHeadBridge) (priority := low) term:max : psHead
+@[psHead_parser low]
+def ps0NativeHeadBridge : Lean.Parser.Parser := PS0.Operators.headLeading
 @[psHead_parser]
 def ps0NativeHeadProjectionParser : Lean.Parser.TrailingParser := PS0.Operators.projection
 syntax:max (name := ps0ParenthesizedHead) Lean.Parser.Term.hygienicLParen psTerm ")" : psHead

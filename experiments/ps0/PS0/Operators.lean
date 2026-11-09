@@ -15,6 +15,7 @@ namespace PS0.Operators
 def ownedKind : Name := `PS0.Operators.ownedBinary
 def ownedPostfixKind : Name := `PS0.Operators.ownedPostfix
 def bridgeKind : Name := `ps0NativeTermBridge
+def headBridgeKind : Name := `ps0NativeHeadBridge
 
 def indexArity? (kind : Name) : Option Nat :=
   if kind == `«term__[_]» then some 4
@@ -29,9 +30,11 @@ builtin_initialize
   registerBuiltinNodeKind ownedKind
   registerBuiltinNodeKind ownedPostfixKind
   registerBuiltinNodeKind bridgeKind
+  registerBuiltinNodeKind headBridgeKind
 
 run_cmd do
-  modifyEnv fun env => addSyntaxNodeKind (addSyntaxNodeKind (addSyntaxNodeKind env ownedKind) ownedPostfixKind) bridgeKind
+  modifyEnv fun env => addSyntaxNodeKind
+    (addSyntaxNodeKind (addSyntaxNodeKind (addSyntaxNodeKind env ownedKind) ownedPostfixKind) bridgeKind) headBridgeKind
 
 private def ownedOperandContext (ctx : ParserContextCore) : ParserContextCore := Id.run do
   let native := categoryParserFnExtension.getState ctx.env
@@ -46,7 +49,8 @@ private def ownedOperandContext (ctx : ParserContextCore) : ParserContextCore :=
 private def operandParser (parser : Parser) : Parser :=
   withFn (adaptUncacheableContextFn ownedOperandContext) parser
 
-private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
+private unsafe def leadingWith (head : Bool) : ParserFn := fun outer initial => unsafeBaseIO do
+  let ctx := if head then {outer with prec := maxPrec} else outer
   let some category := getParserCategory? ctx.env `term
     | return initial.mkUnexpectedError "PS0V1-OP-CATEGORY: missing native term category"
   let kinds := PS0.OperatorDescriptors.binaryKinds ctx.env ctx.options
@@ -77,12 +81,22 @@ private unsafe def leadingImpl : ParserFn := fun ctx initial => unsafeBaseIO do
   let parsed := trailingLoop tables ctx parsed
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
-  return parsed.popSyntax.pushSyntax <| .node .none bridgeKind #[native]
+  return parsed.popSyntax.pushSyntax <| .node .none (if head then headBridgeKind else bridgeKind) #[native]
+
+private unsafe def leadingImpl : ParserFn := leadingWith false
 @[implemented_by leadingImpl]
 opaque leadingFn : ParserFn
 
 @[expose, run_parser_attribute_hooks] def leading : Parser :=
   withFn (fun _ => leadingFn) (node bridgeKind (categoryParser `term 0))
+
+private unsafe def headLeadingImpl : ParserFn := leadingWith true
+
+@[implemented_by headLeadingImpl]
+opaque headLeadingFn : ParserFn
+
+@[expose, run_parser_attribute_hooks] def headLeading : Parser :=
+  withFn (fun _ => headLeadingFn) (node headBridgeKind (categoryParser `term maxPrec))
 
 private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
