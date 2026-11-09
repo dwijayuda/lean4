@@ -44,3 +44,8 @@ run_cmd do
 
 def main : IO Unit :=
   IO.println s!"PS0_LAMBDAS:{singleResult}:{groupedResult}:{plainResult}:{implicitResult}:{strictResult}:{instanceResult}:{typedResult}:{pairResult}:{unitResult}:{annotatedResult}:{unicodeResult}"
+/-! Parenthesized sections retain the native delimiter's hygiene scope. -/
+function sectionMap(xs : List Nat): List Nat := xs.map((· + 1))
+function nestedSections(xs : List Nat): List Nat := xs.map((· + (List.map((· + 1), [1])).head!))
+example : sectionMap([1, 2]) = [2, 3] := by { rfl }
+example : nestedSections([1, 2]) = [3, 4] := by { rfl }

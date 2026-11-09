@@ -47,12 +47,12 @@ syntax:max (name := ps0HostAdjacentCall) (priority := high)
   ident noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
 
 syntax:max (name := ps0NativeHeadBridge) (priority := low) term:max : psHead
-syntax:max (name := ps0ParenthesizedHead) "(" psTerm ")" : psHead
+syntax:max (name := ps0ParenthesizedHead) Lean.Parser.Term.hygienicLParen psTerm ")" : psHead
 syntax:max (name := ps0HeadCall) psHead:max noWs
   "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psHead
 syntax:max (name := ps0HeadEmptyCall) psHead:max noWs "(" ")" : psHead
 syntax (name := ps0HostHeadTerm) psHead : psTerm
-syntax:max (name := ps0HostParens) (priority := high) "(" psTerm ")" : psTerm
+syntax:max (name := ps0HostParens) (priority := high) Lean.Parser.Term.hygienicLParen psTerm ")" : psTerm
 syntax:max (name := ps0HostBraces) (priority := high) "{" psTerm "}" : psTerm
 syntax (name := ps0HostIf) (priority := high) "if " psTerm " then " psTerm " else " psTerm : psTerm
 syntax (name := ps0HostExact) (priority := high) "exact " psTerm : psTactic
@@ -111,8 +111,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     | `(psTerm| $head:ident($[$args:psCallArg],*)) => lowerCall head.raw args source
     | `(psTerm| $head:psHead) => lowerHead head.raw
     | `(psTerm| ($body:psTerm)) => do
-        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
-        return (← `(($body))).raw
+        return .node (loweringInfo source) ``Lean.Parser.Term.paren
+          #[source[0], ← lower `psTerm body.raw, source[2]]
     | `(psTerm| { $body:psTerm }) => do
         let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
         return (← `(($body))).raw
@@ -227,8 +227,8 @@ partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef sou
       return .node (loweringInfo source) `PS0.pscvEmptyCall
         #[← lowerHead head.raw, mkAtom "(", mkAtom ")"]
   | `(psHead| ($body:psTerm)) => do
-      let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
-      return (← `(($body))).raw
+      return .node (loweringInfo source) ``Lean.Parser.Term.paren
+        #[source[0], ← lower `psTerm body.raw, source[2]]
   | `(psHead| $native:term) => return native.raw
   | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported postfix head"
 

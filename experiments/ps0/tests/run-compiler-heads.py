@@ -2,6 +2,7 @@
 """Compile real pinned compiler declaration heads through the native PS grammar."""
 from pathlib import Path
 import argparse
+import difflib
 import hashlib
 import json
 import os
@@ -88,6 +89,12 @@ comparisons = {}
 for path in [Path('ir') / relative_module.with_suffix('.c'), Path('lib/lean') / relative_module.with_suffix('.olean')]:
     path = str(path)
     comparisons[path] = {'native': sha(baseline / path), 'ps': sha(migrated / path)}
+    if comparisons[path]['native'] != comparisons[path]['ps'] and path.endswith('.c'):
+        difference = ''.join(difflib.unified_diff((baseline / path).read_text().splitlines(True),
+                                                 (migrated / path).read_text().splitlines(True),
+                                                 fromfile='native.c', tofile='ps.c'))
+        (work / 'native-c.diff').write_text(difference)
+        print(difference[:12000], flush=True)
     if comparisons[path]['native'] != comparisons[path]['ps'] and path.endswith('.olean'):
         run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
              baseline / path, migrated / path], 'olean-diagnostic')

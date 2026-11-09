@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (c) 2026 Dwijayuda. All rights reserved.
 # Released under Apache 2.0 license as described in LICENSE.
-"""Plan finite typed declaration-head edits from actual native frontend syntax."""
+"""Plan ProofScript declaration operand edits from actual native frontend syntax."""
 from pathlib import Path
 import argparse
 import hashlib
@@ -227,7 +227,7 @@ args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
     'strategies': strategies,
-    'scope': 'R2 alias or native definition telescopes with owned type/default/result and root-call roles; native grouping/inference, original argument nodes and independently owned syntax retained',
+    'scope': 'R2 alias/native telescopes, standard family signatures, equation RHS and explicit owned type/default/result/call/conditional roles; native grouping/inference and independently owned syntax retained',
     'grammar_migration_complete': False, 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_COMPILER_HEAD_MIGRATION: planned ' + str(len(declarations)), flush=True)
