@@ -108,12 +108,36 @@ private partial def ownedDoNodes (source : Syntax) : Array Syntax := Id.run do
   if source.isOfKind ``Lean.Parser.Term.doSeqIndent || source.isOfKind ``Lean.Parser.Term.doSeqBracketed then
     let index := if source.isOfKind ``Lean.Parser.Term.doSeqIndent then 0 else 1
     return source[index].getArgs.foldl (fun nodes item => nodes ++ ownedDoNodes item) #[]
+  if source.isOfKind nullKind || source.isOfKind `group then
+    return source.getArgs.foldl (fun nodes item => nodes ++ ownedDoNodes item) #[]
+  if source.isOfKind ``Lean.Parser.Term.matchAlts then
+    return source[0].getArgs.foldl (fun nodes alternative => nodes ++ ownedDoNodes alternative[3]) #[]
+  if source.isOfKind ``Lean.Parser.Term.doCatch then return ownedDoNodes source[4]
+  if source.isOfKind ``Lean.Parser.Term.doCatchMatch || source.isOfKind ``Lean.Parser.Term.doFinally then
+    return ownedDoNodes source[1]
   let known := #[``Lean.Parser.Term.doLet, ``Lean.Parser.Term.doLetArrow,
     ``Lean.Parser.Term.doReassign, ``Lean.Parser.Term.doReturn, ``Lean.Parser.Term.doExpr,
-    ``Lean.Parser.Term.doNested, ``Lean.Parser.Term.doUnless, ``Lean.Parser.Term.doLetRec]
+    ``Lean.Parser.Term.doNested, ``Lean.Parser.Term.doUnless, ``Lean.Parser.Term.doLetRec,
+    ``Lean.Parser.Term.doIf, ``Lean.Parser.Term.doMatch, ``Lean.Parser.Term.doHave,
+    ``Lean.Parser.Term.doFor, ``Lean.Parser.Term.doTry, ``Lean.Parser.Term.doWhile,
+    ``Lean.Parser.Term.doRepeatUntil]
   unless known.contains source.getKind do return #[]
   let mut nodes := #[source]
-  if source.isOfKind ``Lean.Parser.Term.doUnless then
+  if source.isOfKind ``Lean.Parser.Term.doIf then
+    nodes := nodes ++ ownedDoNodes source[3] ++ ownedDoNodes source[4] ++ ownedDoNodes source[5]
+  else if source.isOfKind ``Lean.Parser.Term.doMatch then
+    nodes := nodes ++ ownedDoNodes source[6]
+  else if source.isOfKind ``Lean.Parser.Term.doFor || source.isOfKind ``Lean.Parser.Term.doWhile then
+    nodes := nodes ++ ownedDoNodes source[5]
+  else if source.isOfKind ``Lean.Parser.Term.doRepeatUntil then
+    nodes := nodes ++ ownedDoNodes source[3]
+  else if source.isOfKind ``Lean.Parser.Term.doTry then
+    nodes := nodes ++ ownedDoNodes source[1] ++ ownedDoNodes source[2] ++ ownedDoNodes source[3]
+  else if source.isOfKind ``Lean.Parser.Term.doHave then
+    let declaration := source[2][0]
+    if declaration.isOfKind ``Lean.Parser.Term.letIdDecl then
+      nodes := nodes ++ ownedDoNodes declaration[4]
+  else if source.isOfKind ``Lean.Parser.Term.doUnless then
     nodes := nodes ++ ownedDoNodes source[3]
   else if source.isOfKind ``Lean.Parser.Term.doNested then
     nodes := nodes ++ ownedDoNodes source[1]

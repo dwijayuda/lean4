@@ -346,6 +346,9 @@ for label, body in [('baseline', native), ('migrated', ps), ('planned', None)]:
         rows = [c['declaration'] for c in observed['commands'] if c['declaration']]
         assert observed['imports'] == ['Init']
         assert len(rows) == 91 and all(d['mode'] == 'mapped-ps' for d in rows)
+        by_name = {row['sourceName']: row for row in rows}
+        assert 'Lean.Parser.Term.doWhile' in by_name['whileValue']['ownedDoElementKinds']
+        assert 'Lean.Parser.Term.doRepeatUntil' in by_name['repeatValue']['ownedDoElementKinds']
     for relative in ['ir/MatchHostBootstrap.c', 'lib/lean/MatchHostBootstrap.olean']:
         file = directory / relative
         comparisons.setdefault(relative, {})[label] = hashlib.sha256(file.read_bytes()).hexdigest()
