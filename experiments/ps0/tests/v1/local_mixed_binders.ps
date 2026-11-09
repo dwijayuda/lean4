@@ -1,0 +1,32 @@
+/-! Named local telescopes compose native binders and PS comma groups in their original order. -/
+abbrev Box (α : Type) : Type := α
+function add(x: Nat, y: Nat): Nat := x + y
+
+const ordinaryValue: Id(Nat) := do
+  let step (x: Box(Nat), y: Nat := add(1, 2)): Nat := add(x, y)
+  return step(4)
+
+const recursiveValue: Id(Nat) := do
+  let rec step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+  return step(4)
+
+const pureRecursiveValue: Nat :=
+  let rec step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+  step(4)
+
+const mixedValue: Id(Nat) := do
+  let step {α: Type} [Inhabited(α)] (x: Nat, y: Nat := add(1, 2))
+      (z: Nat := 1): Nat := add(add(x, y), z)
+  return step(α := Nat, x := 4)
+
+const pureValue: Nat :=
+  let step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+  step(4)
+
+macro "nativeLocal " seq:doSeq : term => `(do $seq)
+const nativeValue: Id(Nat) := nativeLocal
+  let step (x y : Nat) : Nat := Nat.add x y
+  return step 2 3
+
+def main : IO Unit :=
+  IO.println s!"PS0_LOCAL_MIXED:{ordinaryValue}:{recursiveValue}:{pureRecursiveValue}:{mixedValue}:{pureValue}:{nativeValue}"
