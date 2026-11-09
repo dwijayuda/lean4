@@ -5805,9 +5805,34 @@
       ],
       "scope": "one proposed next actual compiler function; not implemented or qualified"
     },
-    "broadObligationsPending": 242,
     "grammarMigrationComplete": false,
     "verified_execution": false,
-    "history": "Prior recursive project continuation is retained as historicalRecursiveProjectContinuation in v1-coverage.json; immutable earlier evidence records remain source-pinned."
+    "history": "Prior recursive project continuation is retained as historicalRecursiveProjectContinuation in v1-coverage.json; immutable earlier evidence records remain source-pinned.",
+    "statusTotals": {
+      "historicalPassCases": [
+        "PS0-P-CALL-01",
+        "PS0-N-MOD-04"
+      ],
+      "PENDING": 240,
+      "featureFamiliesPending": 100,
+      "boundaryWitnessesPending": 31,
+      "acceptanceCasesPending": 109,
+      "note": "No case status is changed by the native operator checkpoint. Historical finite PASS cases remain source-pinned.",
+      "PASS": 2,
+      "total": 242
+    }
+  },
+  "statusTotals": {
+    "historicalPassCases": [
+      "PS0-P-CALL-01",
+      "PS0-N-MOD-04"
+    ],
+    "PENDING": 240,
+    "featureFamiliesPending": 100,
+    "boundaryWitnessesPending": 31,
+    "acceptanceCasesPending": 109,
+    "note": "No case status is changed by the native operator checkpoint. Historical finite PASS cases remain source-pinned.",
+    "PASS": 2,
+    "total": 242
   }
 }
