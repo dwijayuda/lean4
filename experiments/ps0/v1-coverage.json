@@ -18621,9 +18621,8 @@
       "independentRun": 42712824864
     },
     "ordinaryAggregateCandidate": {
-      "source": "79ec94005d79670bcad20b0de695d4aa8a13ae83",
-      "runner": "cd1f6cbd1bd22f50636fa87bfdc2e3d61f7c5332",
-      "run": 42712677273,
+      "source": "b5bf32cbc610bb07883c7b2881f189a35807980e",
+      "runner": "b159789e06e75863110f0c0c2aecff0433543f2b",
       "status": "PENDING",
       "plannedDefinitions": 41,
       "plannedProofGuards": 38,
@@ -18644,16 +18643,17 @@
         }
       ],
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "scope": "split native-root and aggregate lowering; nineteen planned boundaries, parenthesis budget and three timed-out modules"
     },
     "ordinaryHostRestoredBroadMatrix": {
       "source": "ad3b7d491f19476ec7c87c6521f3fcef1b687dd9",
       "runner": "ceb8a701689f8b0853e1edfdacf434a3c02d0020",
       "run": 42709726274,
-      "status": "FAILED_PENDING_FINAL_COUNTS",
-      "passed": 34,
+      "status": "FAILED",
+      "passed": 35,
       "failed": 3,
-      "running": 1,
+      "running": 0,
       "failures": [
         {
           "name": "compiler-prelude",
@@ -18668,7 +18668,12 @@
           "job": 129475750519
         }
       ],
-      "failure": "each migrated Lake subprocess timed out at 600 seconds"
+      "failure": "each migrated Lake subprocess timed out at 600 seconds",
+      "total": 38,
+      "proofLinked": {
+        "job": 129475750163,
+        "status": "PASS"
+      }
     },
     "nativeCensusContractUpgrade": {
       "source": "f89b9857d09ee210f4a66dfebcee44d2b4a7e40c",
@@ -39033,10 +39038,10 @@
     "source": "ad3b7d491f19476ec7c87c6521f3fcef1b687dd9",
     "runner": "ceb8a701689f8b0853e1edfdacf434a3c02d0020",
     "run": 42709726274,
-    "status": "FAILED_PENDING_FINAL_COUNTS",
-    "passed": 34,
+    "status": "FAILED",
+    "passed": 35,
     "failed": 3,
-    "running": 1,
+    "running": 0,
     "failures": [
       {
         "name": "compiler-prelude",
@@ -39051,12 +39056,16 @@
         "job": 129475750519
       }
     ],
-    "failure": "each migrated Lake subprocess timed out at 600 seconds"
+    "failure": "each migrated Lake subprocess timed out at 600 seconds",
+    "total": 38,
+    "proofLinked": {
+      "job": 129475750163,
+      "status": "PASS"
+    }
   },
   "ordinaryAggregateCandidate": {
-    "source": "79ec94005d79670bcad20b0de695d4aa8a13ae83",
-    "runner": "cd1f6cbd1bd22f50636fa87bfdc2e3d61f7c5332",
-    "run": 42712677273,
+    "source": "b5bf32cbc610bb07883c7b2881f189a35807980e",
+    "runner": "b159789e06e75863110f0c0c2aecff0433543f2b",
     "status": "PENDING",
     "plannedDefinitions": 41,
     "plannedProofGuards": 38,
@@ -39077,6 +39086,43 @@
       }
     ],
     "grammarMigrationComplete": false,
-    "verified_execution": false
-  }
+    "verified_execution": false,
+    "scope": "split native-root and aggregate lowering; nineteen planned boundaries, parenthesis budget and three timed-out modules"
+  },
+  "ordinaryAggregateCandidateHistory": [
+    {
+      "source": "79ec94005d79670bcad20b0de695d4aa8a13ae83",
+      "runner": "cd1f6cbd1bd22f50636fa87bfdc2e3d61f7c5332",
+      "run": 42712677273,
+      "status": "FAILED_CLEAN_BUILD",
+      "plannedDefinitions": 41,
+      "plannedProofGuards": 38,
+      "plannedOriginCases": 19,
+      "plannedInvalidGapRejections": 19,
+      "testCorrectionSource": "eac13dbd1eee2005e129ea4085015a693905176d",
+      "previousRuns": [
+        {
+          "source": "cbabb1069028551fafb61dbd4e4db84587112003",
+          "run": 42710551582,
+          "job": 129478622579,
+          "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
+        },
+        {
+          "run": 42711184598,
+          "job": 129480821526,
+          "status": "FAILED_RUNNER_SHUTDOWN_EXIT_143"
+        }
+      ],
+      "grammarMigrationComplete": false,
+      "verified_execution": false,
+      "failure": {
+        "file": "PS0/HostCategories.lean",
+        "line": 474,
+        "column": 73,
+        "operation": "isDefEq",
+        "scopedHeartbeatBound": 800000,
+        "grammarTestsReached": false
+      }
+    }
+  ]
 }
