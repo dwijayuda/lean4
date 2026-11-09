@@ -7411,37 +7411,478 @@
     "runner": "28d914c39ba2a356525fdaeba089da11504f90b4",
     "run": 42586922686,
     "job": 129059008065,
+    "status": "FAILED",
+    "fullGraphBuild": false,
+    "canonicalFixedPoint": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "preparedInputs": 2569,
+    "failedModules": [
+      "Init.Data.Stream",
+      "Init.Data.Int.Linear",
+      "Init.Data.Array.Perm",
+      "Lean.Data.PersistentHashMap",
+      "Std.Time.Time.Unit.Nanosecond",
+      "Std.Data.Internal.List.Associative"
+    ],
+    "artifact": {
+      "id": 13662590232,
+      "sha256": "186032bc901f7be6f4016984cbcb075096ce2cc8e19790184d0fafb06d659a19",
+      "bytes": 109397262
+    }
+  },
+  "transformedCompilerGraphEleventhModeAudit": {
+    "source": "bdc951bb97131ece1e44dcd853ee0faf5430ef40",
+    "runner": "92b4d34a9a178ff88a47d12db718b51365b17627",
+    "run": 42599372489,
+    "job": 129099761023,
+    "status": "PASS",
+    "summary": {
+      "canonical_fixed_point": false,
+      "censuses_without_successful_lake_job": [],
+      "definition_heads_in_those_observations": 4126,
+      "full_graph_build": false,
+      "fully_mapped_mode_modules": 570,
+      "grammar_migration_complete": false,
+      "job": 129059008065,
+      "native_compatible_escapes": [],
+      "prepared_inputs": 2569,
+      "production_counts": {
+        "PS0.StandardAdapters.ps0StandardAbbrev": 375,
+        "PS0.StandardAdapters.ps0StandardAxiom": 12,
+        "PS0.StandardAdapters.ps0StandardConst": 524,
+        "PS0.StandardAdapters.ps0StandardDef": 719,
+        "PS0.StandardAdapters.ps0StandardExample": 33,
+        "PS0.StandardAdapters.ps0StandardFunction": 2883,
+        "PS0.StandardAdapters.ps0StandardInstance": 2052,
+        "PS0.StandardAdapters.ps0StandardOpaque": 96,
+        "PS0.StandardAdapters.ps0StandardTheorem": 16103
+      },
+      "refreshed_native_censuses": 1872,
+      "run": 42586922686,
+      "scope": "successful native Lake job log entries plus retained source observations/plan identity; no retained target C/public olean rehash, runtime, full graph or fixed point acceptance",
+      "source": "bdc951bb97131ece1e44dcd853ee0faf5430ef40",
+      "successful_lake_modules_with_retained_source_observations": 570,
+      "verified_execution": false
+    },
+    "artifact": [
+      {
+        "id": 13664937090,
+        "name": "ps0-transformed-eleven-modes-42599372489",
+        "digest": "sha256:ed279195c2fa68051e684d86e14b7aed58c00a93cd78a88783e5444b25bbe9f8",
+        "size_in_bytes": 54755
+      }
+    ],
+    "scope": "successful native Lake log entries and retained PS observations only; no retained target C/public olean rehash or whole-graph acceptance"
+  },
+  "nativeCensusCachePreparationEvidence": {
+    "source": "06b185b45f2509f8fedc2f2121cf3727d3d9379d",
+    "runner": "8ab42b8d6ef4cdfd5910dcae779e0d8af4e36ee7",
+    "run": 42594800432,
+    "job": 129084731820,
+    "status": "PASS",
+    "referenceUncachedSource": "bdc951bb97131ece1e44dcd853ee0faf5430ef40",
+    "reusedNativeCaptures": 1872,
+    "equalNativeCapturesExcludingFilePath": 1872,
+    "equalPreparedSources": 2569,
+    "equalPlans": 2569,
+    "freshUpstreamCaptures": 0,
+    "compiledGraph": false,
+    "artifact": {
+      "id": 13662913601,
+      "sha256": "188b42d40566d60d796a3c75a35be402fd80d0e0d896578484ef25a1d37d362a"
+    },
+    "identityReader": {
+      "source": "f024317810b08a0af99faa906defe2261289dee5",
+      "runner": "9e6b57c9597b2e15b80bc46a27b25279736f78e8",
+      "run": 42592369062,
+      "job": 129076805048,
+      "validatedCaptures": 1872,
+      "unitTests": 4,
+      "status": "PASS"
+    },
+    "sampleCaptureEquality": {
+      "runner": "f23aeb5424665ccfb824ccc44f35a8fb6b21cf6b",
+      "run": 42591006902,
+      "job": 129072317602,
+      "modules": 9,
+      "status": "PASS"
+    },
+    "scope": "native AST preparation only; current source planning and all target native Lake compilation/linking remain mandatory",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "nativeBoundaryAdapterEvidence": {
+    "source": "c31599ff0685581b83e657c4e888dd79023c5407",
+    "runner": "6ed6fc7af04abcef55dc0431d96e451c560a5de9",
+    "run": 42600424984,
+    "status": "PASS",
+    "linuxJobsPassed": 25,
+    "jobs": [
+      {
+        "id": 129103522882,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523122,
+        "name": "compiler-natlemmas",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523197,
+        "name": "project-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523263,
+        "name": "compiler-grindac",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523283,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523295,
+        "name": "do-layout",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523310,
+        "name": "proof-linked",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523311,
+        "name": "operator-baseline",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523322,
+        "name": "compiler-initwf",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523324,
+        "name": "compiler-arrayperm",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523349,
+        "name": "compiler-prelude",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523350,
+        "name": "compiler-stream",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523387,
+        "name": "compiler-nanosecond",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523401,
+        "name": "compiler-unless",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523416,
+        "name": "compiler-persistenthashmap",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523419,
+        "name": "compiler-natlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523455,
+        "name": "compiler-intlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523516,
+        "name": "compiler-iteratorempty",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523523,
+        "name": "compiler-fixtures",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523548,
+        "name": "compiler-listattach",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523549,
+        "name": "compiler-natbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523614,
+        "name": "compiler-finbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523623,
+        "name": "compiler-core",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523761,
+        "name": "compiler-spredlaws",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 129103523821,
+        "name": "compiler-associative",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13666105902,
+        "name": "ps0-external-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:6217abf635c6595400d728487a0c8e446156a953886cfad7e00a3d103adcfc86",
+        "size_in_bytes": 30118
+      },
+      {
+        "id": 13666105561,
+        "name": "ps0-compiler-listattach-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:ad9d362643da79c8bfec42bb0eb013bb12043d4a9ada73b364b5cdc76475e9ba",
+        "size_in_bytes": 506275
+      },
+      {
+        "id": 13666101118,
+        "name": "ps0-compiler-finbasic-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:83450f1ed3559bf79d68fcedaffb840cd24c4109b2592e70f016c35093333583",
+        "size_in_bytes": 166050
+      },
+      {
+        "id": 13666041270,
+        "name": "ps0-compiler-persistenthashmap-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:f627306b31d7a49d7b7cedae605f0a9b49c97a1ce7fb31313a03e65e44a17ba7",
+        "size_in_bytes": 508720
+      },
+      {
+        "id": 13665901753,
+        "name": "ps0-compiler-unless-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:95b0f2a45a00bcc54f8b54d660da6c52ed3d75e40d503d91c8d6ca8666c74eaa",
+        "size_in_bytes": 136240
+      },
+      {
+        "id": 13665818352,
+        "name": "ps0-project-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:b42babc3b3cdebe017f6ad2008b422af0ac8611a0371bd0c87e0a0bbc7f32fdf",
+        "size_in_bytes": 80818752
+      },
+      {
+        "id": 13665707478,
+        "name": "ps0-compiler-grindac-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:357e78e90be194b653e3c7b1db37d9ae1e96eac0acecf6d1964424b0f2d959d0",
+        "size_in_bytes": 632084
+      },
+      {
+        "id": 13665682168,
+        "name": "ps0-compiler-nanosecond-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:be9f35d1db3ec1cfdf71c5464bcc224cd758d4736cd8373fa79f5d6356b569e6",
+        "size_in_bytes": 106601
+      },
+      {
+        "id": 13665563035,
+        "name": "ps0-compiler-fixtures-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:02d4d59180fbcf654186fe1bcd0f31c2da42a4fb21202c5e00466a11ee488fa7",
+        "size_in_bytes": 3924020
+      },
+      {
+        "id": 13665138754,
+        "name": "ps0-compiler-prelude-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:70182d0612feabe3625817c9d8910334f4045ac8c98f9dcd1971898e2ac7b062",
+        "size_in_bytes": 2931716
+      },
+      {
+        "id": 13665109187,
+        "name": "ps0-compiler-natbasic-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:0e0a0dd226580361d02e79ab7a258d4e16a0a5fd157b4f6cd039227bdeba16c2",
+        "size_in_bytes": 495007
+      },
+      {
+        "id": 13665048929,
+        "name": "ps0-compiler-intlinear-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:fb34ad0b2901611145312115b3708afe7a04337f4a2e0d21a32d44e4bead655b",
+        "size_in_bytes": 1334093
+      },
+      {
+        "id": 13665038003,
+        "name": "ps0-do-layout-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:cdc1f60b72ee26c65bec69d859f5627fc30f0d7ab6d57aff5f99ee660184774a",
+        "size_in_bytes": 34443
+      },
+      {
+        "id": 13664963111,
+        "name": "ps0-compiler-iteratorempty-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:c1ec1d24d5faf3e4459e1d6abf372c0a75b7555bb73d341a2712abaf5796d23a",
+        "size_in_bytes": 63794
+      },
+      {
+        "id": 13664919179,
+        "name": "ps0-compiler-natlinear-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:56819ef6de88daa52945807bddff88aca7ad5f48e95031dcf5c1cafe26a5c6b9",
+        "size_in_bytes": 444021
+      },
+      {
+        "id": 13664913971,
+        "name": "ps0-compiler-initwf-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:61820340542368e3b153af37774df13a29c5914dd02788503bb81dbc39b18a8e",
+        "size_in_bytes": 274348
+      },
+      {
+        "id": 13664889034,
+        "name": "ps0-native-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:c3e33460f7c3859d4b8bd80673ea385b80b8e749c2713173685e61678454f506",
+        "size_in_bytes": 4133
+      },
+      {
+        "id": 13664884352,
+        "name": "ps0-compiler-associative-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:450601858ddbf0605f942e769281f1068b8f07f72fbb83f2e02d06b59c2c5fd5",
+        "size_in_bytes": 4825770
+      },
+      {
+        "id": 13664869267,
+        "name": "ps0-operator-baseline-42600424984",
+        "digest": "sha256:3017ad526099961e8f436a602bbcb64df9eaa7434898adabe61db656d8f76220",
+        "size_in_bytes": 2294
+      },
+      {
+        "id": 13664834396,
+        "name": "ps0-compiler-core-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:bb7f9837d53aa78279e494e10ad1d06251a1a40460c34c76df9aacfac62e8c38",
+        "size_in_bytes": 1454552
+      },
+      {
+        "id": 13664738955,
+        "name": "ps0-compiler-spredlaws-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:cfb24d8779766a1943670e0f7139acb073ec4d45cbecb95a52a2a76325471edd",
+        "size_in_bytes": 113654
+      },
+      {
+        "id": 13664689049,
+        "name": "ps0-compiler-natlemmas-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:3cd754314ee6e1f7a0d6779b4127306773ab055275660d22c961bdfeb35c92b0",
+        "size_in_bytes": 848463
+      },
+      {
+        "id": 13664688875,
+        "name": "ps0-compiler-stream-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:43537fe976665381eeefe1c9ee607a07a2af39a93aff56633f212cddd5a0fb77",
+        "size_in_bytes": 119444
+      },
+      {
+        "id": 13664519725,
+        "name": "ps0-compiler-arrayperm-c31599ff0685581b83e657c4e888dd79023c5407-42600424984",
+        "digest": "sha256:8edd9b51d66aa9cd4427db536bf8b44cf2796bd4061c250486d560431819c279",
+        "size_in_bytes": 86523
+      }
+    ],
+    "newWholeModules": [
+      "Init.Data.Stream",
+      "Init.Data.Int.Linear",
+      "Init.Data.Array.Perm",
+      "Lean.Data.PersistentHashMap",
+      "Std.Time.Time.Unit.Nanosecond",
+      "Std.Data.Internal.List.Associative"
+    ],
+    "independentInspection": {
+      "status": "PENDING",
+      "runner": "8f574f0b805236ae513694972156df79a79416a9",
+      "expectedModules": 28,
+      "expectedActualFiles": 112
+    },
+    "qualification": "finite SDK-assisted native Lake target C/public olean parity, native declaration family multiplicities, exact source reconstruction and owned source-token/range assertions; full transformed dependency graph remains separate",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "transformedCompilerGraphTwelfthAttempt": {
+    "source": "c31599ff0685581b83e657c4e888dd79023c5407",
+    "runner": "a686edb97b602eb31f172bd8fa9fc6b464bb9b11",
+    "run": 42600962764,
+    "job": 129105018569,
     "status": "IN_PROGRESS",
+    "nativeCaptureCache": {
+      "producerSource": "742c5c180a8ee7314075d63792c220b710e96504",
+      "run": 42580512720
+    },
+    "freshNativeLakeTargetBuild": true,
     "fullGraphBuild": false,
     "canonicalFixedPoint": false,
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
   "currentContinuation": {
-    "qualifiedSource": "bdc951bb97131ece1e44dcd853ee0faf5430ef40",
-    "qualifiedRunner": "724e206754d23d6df32203e543ff2e8bd1d1e3f0",
-    "run": 42586577949,
-    "linuxJobsPassed": 19,
-    "independentFilesRehashed": 88,
-    "finiteRealModules": 18,
-    "finiteRealDefinitionHeads": 549,
-    "finiteSyntheticModules": 4,
-    "finiteSyntheticDefinitionHeads": 37,
+    "qualifiedSource": "c31599ff0685581b83e657c4e888dd79023c5407",
+    "qualifiedRunner": "6ed6fc7af04abcef55dc0431d96e451c560a5de9",
+    "run": 42600424984,
+    "linuxJobsPassed": 25,
+    "independentInspection": {
+      "status": "PENDING",
+      "runner": "8f574f0b805236ae513694972156df79a79416a9",
+      "expectedModules": 28,
+      "expectedActualFiles": 112
+    },
+    "previousIndependentlyQualifiedSource": "bdc951bb97131ece1e44dcd853ee0faf5430ef40",
+    "previousIndependentFilesRehashed": 88,
     "fullTransformedGraph": {
-      "source": "bdc951bb97131ece1e44dcd853ee0faf5430ef40",
-      "runner": "28d914c39ba2a356525fdaeba089da11504f90b4",
-      "run": 42586922686,
-      "job": 129059008065,
+      "source": "c31599ff0685581b83e657c4e888dd79023c5407",
+      "runner": "a686edb97b602eb31f172bd8fa9fc6b464bb9b11",
+      "run": 42600962764,
+      "job": 129105018569,
       "status": "IN_PROGRESS",
+      "nativeCaptureCache": {
+        "producerSource": "742c5c180a8ee7314075d63792c220b710e96504",
+        "run": 42580512720
+      },
+      "freshNativeLakeTargetBuild": true,
       "fullGraphBuild": false,
       "canonicalFixedPoint": false,
       "grammarMigrationComplete": false,
       "verified_execution": false
     },
     "nextActions": [
-      "Wait for strict transformed graph eleven; qualify or fix its first failures without native-only standard declaration fallback",
-      "Extend remaining ordinary PS grammar and original-source fidelity roles through actual pinned compiler modules",
-      "After complete graph success, qualify full native parity, linking, relocated host metadata and canonical compiler fixed point; keep finite SDK-assisted evidence distinct"
+      "Independently rehash all retained finite target C/public olean bytes and exact source/mode/family evidence",
+      "Inspect full transformed graph twelve and adapt its first remaining PS grammar failures without native declaration fallback",
+      "After full graph success, qualify native parity, linking, relocated grammar metadata and canonical compiler fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
