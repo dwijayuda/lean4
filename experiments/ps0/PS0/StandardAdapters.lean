@@ -17,11 +17,16 @@ private def nativeTerm (body : TSyntax `psTerm) : MacroM (TSyntax `term) := do
   return ⟨← PS0.Syntax.lower `psTerm body.raw⟩
 
 declare_syntax_cat psDeclTail
+declare_syntax_cat psWhereClause
+declare_syntax_cat psWhereLocalValue
+declare_syntax_cat psWhereLocalDecl
+declare_syntax_cat psWhereFinally
+declare_syntax_cat psWhereFinallySection
 
 @[run_parser_attribute_hooks] def nativeDeclTail : Lean.Parser.Parser :=
   -- Empty tails must also be tried when no hint keyword is the next token.
   Lean.Parser.withoutInfo (Lean.Parser.Termination.suffix >>
-    Lean.Parser.optional Lean.Parser.Term.whereDecls)
+    Lean.Parser.optional (Lean.Parser.categoryParser `psWhereClause 0))
 syntax (name := ps0DeclTail) nativeDeclTail : psDeclTail
 
 declare_syntax_cat psDeclValue
@@ -57,7 +62,54 @@ syntax (name := ps0StructField) Lean.Parser.Term.structInstLVal
     (Lean.Parser.sepByIndent (Lean.Parser.categoryParser `psStructField 0) "; " (allowTrailingSep := true))
 
 syntax (name := ps0DeclWhere) "where" nativePSStructFields
-  (Lean.Parser.Term.whereDecls)? : psDeclValue
+  (psWhereClause)? : psDeclValue
+
+syntax (name := psWhereLocalSimple) ":=" psTerm : psWhereLocalValue
+syntax (name := psWhereLocalEquations) nativePSMatchAlts : psWhereLocalValue
+syntax (name := psWhereLocalRecord) "where" "{" nativePSStructFields "}" : psWhereLocalValue
+syntax (name := psWhereLocalDefinition) (Lean.Parser.Command.docComment)?
+  (Lean.Parser.Term.attributes)? "def" PS0.DoLayout.localLhs psWhereLocalValue
+  Lean.Parser.Termination.suffix : psWhereLocalDecl
+
+@[run_parser_attribute_hooks] def nativePSWhereLocals : Lean.Parser.Parser :=
+  Lean.Parser.sepByIndent (Lean.Parser.categoryParser `psWhereLocalDecl 0) "; "
+    (allowTrailingSep := true)
+
+@[run_parser_attribute_hooks] def nativePSWhereDefaultTactics : Lean.Parser.Parser :=
+  Lean.Parser.node ``Lean.Parser.Tactic.tacticSeq <|
+    Lean.Parser.node ``Lean.Parser.Tactic.tacticSeq1Indented <|
+      Lean.Parser.sepByIndent (Lean.Parser.categoryParser `psTactic 0) "; " (allowTrailingSep := true)
+
+@[run_parser_attribute_hooks] def nativePSWhereTacticBlock : Lean.Parser.Parser :=
+  Lean.Parser.node ``Lean.Parser.Tactic.tacticSeq <|
+    Lean.Parser.node ``Lean.Parser.Tactic.tacticSeqBracketed <|
+      "{" >> Lean.Parser.sepByIndent (Lean.Parser.categoryParser `psTactic 0) "; "
+        (allowTrailingSep := true) >> "}"
+
+syntax (name := psWhereFinallySection) "|" ident Lean.Parser.Term.darrow
+  nativePSWhereTacticBlock : psWhereFinallySection
+syntax (name := psWhereFinallyBraced) "finally" "{" nativePSWhereDefaultTactics
+  psWhereFinallySection* "}" : psWhereFinally
+syntax (name := psWhereFinallyNative) PS0.DoLayout.whereFinally : psWhereFinally
+
+@[run_parser_attribute_hooks] def nativePSWhereDecls : Lean.Parser.Parser :=
+  Lean.Parser.leadingNode ``Lean.Parser.Term.whereDecls 0 <|
+    Lean.Parser.ppDedent Lean.Parser.ppLine >> "where" >>
+      Lean.Parser.sepByIndent (Lean.Parser.ppGroup PS0.DoLayout.recursiveDeclaration) "; "
+        (allowTrailingSep := true) >>
+      Lean.Parser.optional (Lean.Parser.categoryParser `psWhereFinally 0)
+
+@[run_parser_attribute_hooks] def finallyAfterHelpers : Lean.Parser.Parser :=
+  Lean.Parser.withFn (fun parse ctx state =>
+    let previous := state.stxStack.back
+    if previous.getArgs.isEmpty || previous.getArgs.back!.getAtomVal == ";" ||
+        Lean.Parser.checkTailLinebreak previous then parse ctx state
+    else state.mkError "PS0V1-LOCAL-TAIL: enclosing finally requires a helper separator")
+    (Lean.Parser.categoryParser `psWhereFinally 0)
+
+syntax (name := psWhereNative) nativePSWhereDecls : psWhereClause
+syntax (name := psWhereBraced) "where" "{" nativePSWhereLocals
+  (finallyAfterHelpers)? "}" : psWhereClause
 
 private def lowerAlts (alts : Syntax) : MacroM Syntax := do
   let lowered ← alts[0].getArgs.mapM fun alt => do
@@ -85,18 +137,112 @@ private def lowerField (field : Syntax) : MacroM Syntax := do
   return mkNode ``Lean.Parser.Term.structInstField
     #[field[0], mkNullNode #[mkNullNode binders, ty, value]]
 
+private def sourceOrigin (source : Syntax) : SourceInfo :=
+  match source.getRange? with
+  | some span => .synthetic span.start span.stop false
+  | none => .none
+
+private def lowerFields (source : Syntax) (asRecord := false) : MacroM Syntax := do
+  let fields ← source[0].getArgs.mapM fun field => do
+    if field.isOfKind ``ps0StructField then return ← lowerField field
+    if asRecord && field.isAtom && field.getAtomVal == ";" then
+      return .atom (sourceOrigin field) ","
+    return field
+  return source.setArg 0 (source[0].setArgs fields)
+
+private def lowerWhereTactics (source : Syntax) : MacroM Syntax := do
+  unless source.isOfKind ``Lean.Parser.Tactic.tacticSeq && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-WHERE-FINALLY: unexpected native tactic sequence"
+  let inner := source[0]
+  let index ← if inner.isOfKind ``Lean.Parser.Tactic.tacticSeqBracketed && inner.getArgs.size == 3 then
+      pure 1
+    else if inner.isOfKind ``Lean.Parser.Tactic.tacticSeq1Indented && inner.getArgs.size == 1 then
+      pure 0
+    else Macro.throwError "PS0V1-WHERE-FINALLY: unexpected native tactic layout"
+  let items ← inner[index].getArgs.mapM fun item => do
+    if item.isAtom || item.isMissing || item.isOfKind nullKind then return item
+    return ← PS0.Syntax.lower `psTactic item
+  return source.setArg 0 (inner.setArg index (inner[index].setArgs items))
+
+private def lowerFinally (source : Syntax) : MacroM Syntax := do
+  if source.isOfKind ``psWhereFinallyBraced then
+    unless source.getArgs.size == 5 do Macro.throwError "PS0V1-WHERE-FINALLY: invalid braced tail"
+    let sections ← source[3].getArgs.mapM fun section => do
+      unless section.isOfKind ``psWhereFinallySection && section.getArgs.size == 4 do
+        Macro.throwError "PS0V1-WHERE-FINALLY: invalid subsection"
+      return .node (sourceOrigin section) ``Lean.Parser.Term.whereFinallySubsection
+        #[section[0], section[1], section[2], ← lowerWhereTactics section[3]]
+    return .node (sourceOrigin source) ``Lean.Parser.Term.whereFinally
+      #[source[0], mkNullNode #[← lowerWhereTactics source[2]], mkNullNode sections]
+  unless source.isOfKind ``psWhereFinallyNative && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-WHERE-FINALLY: unsupported tail"
+  let native := source[0]
+  unless native.isOfKind ``Lean.Parser.Term.whereFinally && native.getArgs.size == 3 do
+    Macro.throwError "PS0V1-WHERE-FINALLY: unexpected native tail"
+  let default ← if native[1].getArgs.isEmpty then pure native[1] else
+    pure <| native[1].setArg 0 (← lowerWhereTactics native[1][0])
+  let sections ← native[2].getArgs.mapM fun section => do
+    unless section.isOfKind ``Lean.Parser.Term.whereFinallySubsection && section.getArgs.size == 4 do
+      Macro.throwError "PS0V1-WHERE-FINALLY: unexpected native subsection"
+    return section.setArg 3 (← lowerWhereTactics section[3])
+  return (native.setArg 1 default).setArg 2 (native[2].setArgs sections)
+
+private def lowerOptionalFinally (source : Syntax) : MacroM Syntax := do
+  if source.getArgs.isEmpty then return source
+  return source.setArg 0 (← lowerFinally source[0])
+
+private def lowerWhereLocal (source : Syntax) : MacroM Syntax := withRef source do
+  unless source.isOfKind ``psWhereLocalDefinition && source.getArgs.size == 8 do
+    Macro.throwError "PS0V1-WHERE-LOCAL: unexpected helper declaration"
+  let binders ← PS0.Syntax.lowerLocalTelescope source[4].getArgs
+  let binders := PS0.Syntax.retainLocalGroup source[4] binders
+  let ty ← PS0.Syntax.lowerNativeOptionalType source[5]
+  let value := source[6]
+  let declaration : Syntax ← if value.isOfKind ``psWhereLocalSimple && value.getArgs.size == 2 then do
+      pure <| .node (sourceOrigin source) ``Lean.Parser.Term.letIdDecl
+        #[source[3], binders, ty, value[0], ← PS0.Syntax.lowerBodyValue value[1]]
+    else if value.isOfKind ``psWhereLocalEquations && value.getArgs.size == 1 then do
+      pure <| .node (sourceOrigin source) ``Lean.Parser.Term.letEqnsDecl
+        #[source[3], binders, ty, ← lowerAlts value[0]]
+    else if value.isOfKind ``psWhereLocalRecord && value.getArgs.size == 4 then do
+      let recordValue : Syntax := .node (sourceOrigin value) ``Lean.Parser.Term.structInst
+        #[value[1], mkNullNode #[], ← lowerFields value[2] true,
+          mkNode ``Lean.Parser.Term.optEllipsis #[mkNullNode #[]], mkNullNode #[], value[3]]
+      pure <| .node (sourceOrigin source) ``Lean.Parser.Term.letIdDecl
+        #[source[3], binders, ty, .atom (sourceOrigin value[0]) ":=", recordValue]
+    else Macro.throwError "PS0V1-WHERE-LOCAL: unsupported local value"
+  return .node (sourceOrigin source) ``Lean.Parser.Term.letRecDecl
+    #[source[0], source[1], mkNode ``Lean.Parser.Term.letDecl #[declaration], source[7]]
+
+private def lowerWhere (source : Syntax) : MacroM Syntax := do
+  if source.isOfKind ``psWhereBraced && source.getArgs.size == 5 then
+    let helpers ← source[2].getArgs.mapM fun helper => do
+      if helper.isAtom then return helper
+      return ← lowerWhereLocal helper
+    return .node (sourceOrigin source) ``Lean.Parser.Term.whereDecls
+      #[source[0], source[2].setArgs helpers, ← lowerOptionalFinally source[3]]
+  unless source.isOfKind ``psWhereNative && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-WHERE-LOCAL: unexpected where clause"
+  let native := source[0]
+  unless native.isOfKind ``Lean.Parser.Term.whereDecls && native.getArgs.size == 3 do
+    Macro.throwError "PS0V1-WHERE-LOCAL: unexpected native where clause"
+  let declarations := mkNode ``Lean.Parser.Term.letRecDecls #[native[1]]
+  let declarations ← PS0.Syntax.lowerNativeRecursiveDeclarations declarations
+  return (native.setArg 1 declarations[0]).setArg 2 (← lowerOptionalFinally native[2])
+
+private def lowerOptionalWhere (source : Syntax) : MacroM Syntax := do
+  if source.getArgs.isEmpty then return source
+  return source.setArg 0 (← lowerWhere source[0])
+
 private def nativeValue (source : TSyntax `psDeclValue) : MacroM (TSyntax ``Lean.Parser.Command.declVal) := do
   let value := source.raw
   if value.isOfKind ``ps0DeclWhere then
-    let fields := value[1]
-    let lowered ← fields[0].getArgs.mapM fun field => do
-      if field.isOfKind ``ps0StructField then lowerField field else pure field
     return ⟨mkNode ``Lean.Parser.Command.whereStructInst
-      #[value[0], fields.setArg 0 (fields[0].setArgs lowered), value[2]]⟩
+      #[value[0], ← lowerFields value[1], ← lowerOptionalWhere value[2]]⟩
   let tail := value.getArgs.back![0]
   let defaults ← `(Lean.Parser.Command.definition| def __ps0Value := ())
   let suffix := if tail.isMissing then defaults.raw[3][2] else tail[0]
-  let whereDecls := if tail.isMissing then defaults.raw[3][3] else tail[1]
+  let whereDecls ← if tail.isMissing then pure defaults.raw[3][3] else lowerOptionalWhere tail[1]
   if value.isOfKind ``ps0DeclSimple then
     return ⟨mkNode ``Lean.Parser.Command.declValSimple
       #[value[0], ← PS0.Syntax.lowerBodyValue value[1], suffix, whereDecls]⟩

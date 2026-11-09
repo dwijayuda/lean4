@@ -195,7 +195,9 @@ private def declaration (operators : Array Name) (source : Syntax) : Json := Id.
       ("equationBodyKinds", toJson equationBodies),
       ("whereFieldCount", toJson (if declValue.isOfKind `PS0.StandardAdapters.ps0DeclWhere then
         declValue[1][0].getSepArgs.size else 0)),
-      ("nativeWhereTail", toJson (hasTail && tail[1].getArgs.any (·.isOfKind ``Lean.Parser.Term.whereDecls)))]
+      ("nativeWhereTail", toJson (hasTail && tail[1].getArgs.any fun item =>
+        item.isOfKind ``Lean.Parser.Term.whereDecls ||
+          item.isOfKind `PS0.StandardAdapters.psWhereNative))]
   if source.isOfKind ``Lean.Parser.Command.declaration then
     let native := source[1]
     let supported := #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,

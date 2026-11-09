@@ -333,8 +333,10 @@ def declaration_value(value):
             declaration_value(value['args'][0])
     elif value['kind'] == 'Lean.Parser.Command.declValSimple':
         single_type_call(value['args'][1], 'owned declaration body')
+        where_declarations(value['args'][3])
     elif value['kind'] == 'Lean.Parser.Command.declValEqns':
         equation_values(value['args'][0]['args'][0])
+        where_declarations(value['args'][0]['args'][2])
     elif value['kind'] == 'Lean.Parser.Command.whereStructInst':
         fields = value['args'][1]['args'][0]['args']
         for field in fields:
@@ -355,6 +357,38 @@ def declaration_value(value):
             else:
                 assert rhs['kind'] == 'Lean.Parser.Term.structInstFieldEqns'
                 equation_values(rhs['args'][1])
+        where_declarations(value['args'][2])
+
+
+def where_declarations(optional):
+    if not optional['args']:
+        return
+    assert len(optional['args']) == 1
+    clause = optional['args'][0]
+    assert clause['kind'] == 'Lean.Parser.Term.whereDecls' and len(clause['args']) == 3
+    recursive_declarations({'kind': 'Lean.Parser.Term.letRecDecls', 'args': [clause['args'][1]]})
+    if clause['args'][2]['args']:
+        tail = clause['args'][2]['args'][0]
+        assert tail['kind'] == 'Lean.Parser.Term.whereFinally' and len(tail['args']) == 3
+        if tail['args'][1]['args']:
+            where_tactics(tail['args'][1]['args'][0])
+        for section in tail['args'][2]['args']:
+            assert section['kind'] == 'Lean.Parser.Term.whereFinallySubsection'
+            where_tactics(section['args'][3])
+
+
+def where_tactics(sequence):
+    assert sequence['kind'] == 'Lean.Parser.Tactic.tacticSeq' and len(sequence['args']) == 1
+    inner = sequence['args'][0]
+    if inner['kind'] == 'Lean.Parser.Tactic.tacticSeqBracketed':
+        assert len(inner['args']) == 3
+        group = inner['args'][1]
+    else:
+        assert inner['kind'] == 'Lean.Parser.Tactic.tacticSeq1Indented' and len(inner['args']) == 1
+        group = inner['args'][0]
+    for item in group['args']:
+        if item['kind'] in ['Lean.Parser.Tactic.exact', 'Lean.Parser.Tactic.apply', 'Lean.Parser.Tactic.refine'] and len(item['args']) == 2:
+            single_type_call(item['args'][1], 'owned where-finally tactic operand')
 
 
 def equation_values(alternatives):

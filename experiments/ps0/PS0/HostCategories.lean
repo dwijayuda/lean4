@@ -49,9 +49,12 @@ private def letPrefix : Parser :=
 @[run_parser_attribute_hooks] def localBinder : Parser :=
   operands #[(`term, `psTerm)] Lean.Parser.Term.letIdBinder
 
-def localLhs : Parser :=
+@[run_parser_attribute_hooks] def localLhs : Parser :=
   Lean.Parser.Term.letId >> many (ppSpace >> categoryParser `psLocalBinder 0) >>
     operands #[(`term, `psTerm)] Lean.Parser.Term.optType
+
+@[run_parser_attribute_hooks] def whereFinally : Parser :=
+  operands #[(`tactic, `psTactic)] Lean.Parser.Term.whereFinally
 
 def namedDeclaration : Parser :=
   node ``Lean.Parser.Term.letDecl <|
