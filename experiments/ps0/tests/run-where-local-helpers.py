@@ -23,6 +23,12 @@ def run(args, label, ok=True):
 
 
 fixture = Path('tests/v1/where_local_helpers.ps')
+layouts = run(['lake', 'env', 'lean', 'tests/debug-where-local-layout.lean'], 'native-layouts')
+assert layouts.count('PS0_NATIVE_WHERE_LOCAL_LAYOUT ') == 5
+source_host = run(['lake', 'exe', 'ps0', 'check', 'tests/debug-source-where.ps'], 'source-host-layouts')
+assert source_host.count('PS0_SOURCE_WHERE_PARSE_OK ') == 5
+assert 'PS0_SOURCE_WHERE_PARSE_ERROR' not in source_host
+assert 'LeadingIdentBehavior.both' in source_host
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'WhereLocal', work / 'native'], 'native')
 oracle = 'PS0_WHERE_LOCAL:7:5:4:4:5'
@@ -165,6 +171,8 @@ assert 'does not currently support any named sub-sections' in native_diagnostic
     'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
     'rejection_cases': 10,
     'origin_cases': 8, 'native_quotation_control': True,
+    'native_layout_controls': 5, 'source_host_parser_controls': 5,
+    'native_tactic_identifier_behavior': 'both',
     'prelude_native_parity': bootstrap_comparisons,
     'prelude_logical_imports': ['Init'], 'prelude_mapped_definitions': 8,
     'mapped_where_roles': bootstrap_roles,
