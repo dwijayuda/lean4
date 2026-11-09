@@ -99,7 +99,8 @@ opaque leadingFn : ParserFn
   withFn (fun _ => leadingFn) (node bridgeKind (categoryParser `term 0))
 
 private unsafe def headLeadingImpl : ParserFn :=
-  adaptCacheableContextFn ({ · with prec := maxPrec }) (leadingWith true)
+  adaptCacheableContextFn ({ · with prec := maxPrec })
+    (withCacheFn headBridgeKind (leadingWith true))
 
 @[implemented_by headLeadingImpl]
 opaque headLeadingFn : ParserFn
