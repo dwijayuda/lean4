@@ -1,5 +1,5 @@
 /-! Local recursive signatures and values use PS operands; native recursion remains Lean's. -/
-function Box(α: Type): Type := α
+abbrev Box (α : Type) : Type := α
 function add(x: Nat, y: Nat): Nat := x + y
 
 const simpleValue: Id(Nat) := do
@@ -31,7 +31,7 @@ macro "localRecOrigin " e:psTerm : term => do
       lowered.getRange? == e.raw.getRange? do
     Lean.Macro.throwError "PS0_LOCAL_REC_ORIGIN"
   `(True)
-example : localRecOrigin (let rec /- keep rec trivia -/ step (n : Nat) : Nat := add(n, 1); step(2)) := by trivial
+example : localRecOrigin let rec /- keep rec trivia -/ step (n : Nat) : Nat := add(n, 1); step(2) := by trivial
 
 macro "nativeRecursive " seq:doSeq : term => `(do $seq)
 const nativeValue: Id(Nat) := nativeRecursive

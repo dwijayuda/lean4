@@ -22,7 +22,7 @@ def run(args, label, ok=True):
 
 
 native = work / 'NativeRec.ps'
-native.write_text('''def box (α : Type) : Type := α
+native.write_text('''abbrev box (α : Type) : Type := α
 def add (x y : Nat) : Nat := x + y
 def simple : Id Nat := do
   let rec step (n : box Nat) (bias : Nat := add 1 2) : box Nat := add n bias
@@ -61,7 +61,7 @@ run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'LocalRec', work / 'native'], 'native')
 oracle = 'PS0_LOCAL_REC:7:4:5:7:4'
 assert oracle in run([work / 'native/LocalRec'], 'runtime')
-prefix = 'function Box(α: Type): Type := α\nfunction add(x: Nat, y: Nat): Nat := x + y\n'
+prefix = 'abbrev Box (α : Type) : Type := α\nfunction add(x: Nat, y: Nat): Nat := x + y\n'
 for name, body, reason in [
     ('binder-gap', '  let rec step (n : Box (Nat)) := n\n  return step(1)', 'PS0V1-CALL-GAP'),
     ('default-gap', '  let rec step (n : Nat := add (1, 2)) := n\n  return step(1)', 'PS0V1-CALL-GAP'),
