@@ -3314,65 +3314,6 @@
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
-  "currentContinuation": {
-    "status": "ACTIVE_CANONICAL_PS_COMPILER_MIGRATION_INCOMPLETE",
-    "branch": "feat/ps0-native-operators-20261109",
-    "goal": "Entire pinned Lean4 compiler corpus in .ps using ProofScript syntax and grammars, reusing Lean4 and Lake end to end; renamed native-only sources do not complete the goal",
-    "qualifiedFiniteCheckpoint": {
-      "source": "90e32a5ec5ce258e0310c1084512e076d283d682",
-      "runner": "7345a50e7cd811f2f46dab12afb8c2eb491c187d",
-      "run": 42542351315,
-      "evidence": "nativeOperatorQualifiedEvidence",
-      "convertedCompilerHeads": 15,
-      "compilerModules": 4
-    },
-    "qualifiedNativeCompatibleFullCompiler": {
-      "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
-      "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
-      "run": 42532849633,
-      "evidence": "psBuiltGrammarHostFixedPointQualifiedEvidence",
-      "modules": 2567,
-      "nativeCompatibleSelectedRows": 72797,
-      "mappedPsSelectedRows": 0
-    },
-    "remaining": [
-      "complete canonical PS grammar/source conversion of all 2546 upstream modules",
-      "remaining native notation/layout/field/constructor/local-declaration roles",
-      "current-head full compiler bootstrap and fixed point",
-      "automatic original-source diagnostic/IDE presentation and full fidelity"
-    ],
-    "nextActualCompilerCandidate": {
-      "path": "src/Lean/Compiler/LCNF/EmitUtil.lean",
-      "blob": "a1283439481c82fe7835b7b2d743e5e57bfd1111",
-      "declaration": "usesModuleFrom",
-      "sourcePin": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
-      "rationale": "actual root native application env.header.modules.any with direct unparenthesized lambda; body != and && operators exercise finite owned operators through owned lambda",
-      "needed": [
-        "write source-conformance test first",
-        "allow explicit planner declaration selection without hiding unconverted collectUsedDecls",
-        "record mapped PS valueRootKind from actual original source callback",
-        "adapt finite direct lambda argument root calls without arbitrary subtree traversal",
-        "strict native C/public olean equality and wholemodule scope boundaries"
-      ],
-      "scope": "one proposed next actual compiler function; not implemented or qualified"
-    },
-    "grammarMigrationComplete": false,
-    "verified_execution": false,
-    "history": "Prior recursive project continuation is retained as historicalRecursiveProjectContinuation in v1-coverage.json; immutable earlier evidence records remain source-pinned.",
-    "statusTotals": {
-      "historicalPassCases": [
-        "PS0-P-CALL-01",
-        "PS0-N-MOD-04"
-      ],
-      "PENDING": 240,
-      "featureFamiliesPending": 100,
-      "boundaryWitnessesPending": 31,
-      "acceptanceCasesPending": 109,
-      "note": "No case status is changed by the native operator checkpoint. Historical finite PASS cases remain source-pinned.",
-      "PASS": 2,
-      "total": 242
-    }
-  },
   "statusTotals": {
     "historicalPassCases": [
       "PS0-P-CALL-01",
@@ -3385,5 +3326,802 @@
     "note": "No case status is changed by the native operator checkpoint. Historical finite PASS cases remain source-pinned.",
     "PASS": 2,
     "total": 242
+  },
+  "declarationTailsQualifiedEvidence": {
+    "status": "PASS_FINITE_DECLARATION_TAILS_AND_COMPILER_SOURCE_ROLES",
+    "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+    "runner": "5797b39ee0af5b5fd8e65381a4039a5923fb5e41",
+    "run": 42547214639,
+    "jobs": [
+      {
+        "id": 128934691452,
+        "name": "project-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128934691579,
+        "name": "operator-baseline",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128934691672,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128934691680,
+        "name": "proof-linked",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128934691726,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13644210281,
+        "name": "ps0-operator-baseline-42547214639",
+        "digest": "sha256:528c6bd9fac943eef318370541bb74f092c011a5456f812e368f8b09d8fc16c0"
+      },
+      {
+        "id": 13644067197,
+        "name": "ps0-project-3b23a3520c270bb892462f0600abb8b7eed25c2c-42547214639",
+        "digest": "sha256:098419bcac3ba8455126d18b3f85f5d9522d63580dc935f015e53cf37fab602d"
+      },
+      {
+        "id": 13643773640,
+        "name": "ps0-external-3b23a3520c270bb892462f0600abb8b7eed25c2c-42547214639",
+        "digest": "sha256:6b0d243dd5071f5edd117bd92653a559249dcd9f65871c2ce966135958dd6489"
+      },
+      {
+        "id": 13643404487,
+        "name": "ps0-native-3b23a3520c270bb892462f0600abb8b7eed25c2c-42547214639",
+        "digest": "sha256:88958d6e6cc96303f6cc2c1ce5f2b160fd9149d1948c73997a6af42cf5ed150c"
+      }
+    ],
+    "inspection": {
+      "runner": "564f6dbba47b4876b1b51dbb603ed7de46f77653",
+      "run": 42546844253,
+      "job": 128933566965,
+      "status": "PASS"
+    },
+    "modules": [
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/ClosedTermCache.c": {
+            "native": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2",
+            "ps": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2"
+          },
+          "lib/lean/Lean/Compiler/ClosedTermCache.olean": {
+            "native": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e",
+            "ps": "f772b02fde1d5ebc4117d53d6bd7aeeb15e5131c53329adf0b3b7ea623f4467e"
+          }
+        },
+        "converted_declarations": [
+          "cacheClosedTermName",
+          "getClosedTermName?",
+          "isClosedTermName"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "mapped_source_roles": [
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": true,
+            "sourceName": "cacheClosedTermName",
+            "valueRootKind": "ps0HostAdjacentCall"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "getClosedTermName?",
+            "valueRootKind": "ps0NativeTermBridge"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "isClosedTermName",
+            "valueRootKind": "ps0NativeTermBridge"
+          }
+        ],
+        "module": "Lean.Compiler.ClosedTermCache",
+        "owned_value_calls": [],
+        "pinned_blob": "20b7acf5d684789ab52b81dda7def4b19568213c",
+        "scope": "real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration",
+        "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+        "unchanged_abbrev_adapters": [],
+        "verified_execution": false
+      },
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/LCNF/DeclHash.c": {
+            "native": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c",
+            "ps": "9611a2b34cb41baebe563bfc8ceee525819636d71ec7228d7f0c552184055d4c"
+          },
+          "lib/lean/Lean/Compiler/LCNF/DeclHash.olean": {
+            "native": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb",
+            "ps": "103a0395c4808e7a0b2cbe5fa9e9bbd27392d18312c2a25235d1a9470a9308fb"
+          }
+        },
+        "converted_declarations": [
+          "hashParams",
+          "hashAlt",
+          "hashAlts",
+          "hashCode"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "mapped_source_roles": [
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "hashParams",
+            "valueRootKind": "ps0NativeTermBridge"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "hashAlt",
+            "valueRootKind": "ps0NativeTermBridge"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": true,
+            "sourceName": "hashAlts",
+            "valueRootKind": "ps0HostAdjacentCall"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "hashCode",
+            "valueRootKind": "ps0NativeTermBridge"
+          }
+        ],
+        "module": "Lean.Compiler.LCNF.DeclHash",
+        "owned_value_calls": [],
+        "pinned_blob": "5f818560cb8fcba0df6f64acb6bdc01c48425189",
+        "scope": "real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration",
+        "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+        "unchanged_abbrev_adapters": [],
+        "verified_execution": false
+      },
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/LCNF/EmitUtil.c": {
+            "native": "ab93c952e9ed62b7c7ca780f12a0f671db8c3308b5a601926fcf36d7d0408d16",
+            "ps": "ab93c952e9ed62b7c7ca780f12a0f671db8c3308b5a601926fcf36d7d0408d16"
+          },
+          "lib/lean/Lean/Compiler/LCNF/EmitUtil.olean": {
+            "native": "5be3a7804a7288819fb630226673d7a1454043658fe2a4ddb25a3b6a45280553",
+            "ps": "5be3a7804a7288819fb630226673d7a1454043658fe2a4ddb25a3b6a45280553"
+          }
+        },
+        "converted_declarations": [
+          "collectUsedDecls",
+          "usesModuleFrom"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "mapped_source_roles": [
+          {
+            "nativeWhereTail": true,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "collectUsedDecls",
+            "valueRootKind": "ps0HostDo"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [
+              "«term_&&_»",
+              "«term_!=_»"
+            ],
+            "ownedValueCall": true,
+            "sourceName": "usesModuleFrom",
+            "valueRootKind": "ps0HostAdjacentCall"
+          }
+        ],
+        "module": "Lean.Compiler.LCNF.EmitUtil",
+        "owned_value_calls": [
+          "usesModuleFrom"
+        ],
+        "pinned_blob": "a1283439481c82fe7835b7b2d743e5e57bfd1111",
+        "scope": "real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration",
+        "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+        "unchanged_abbrev_adapters": [],
+        "verified_execution": false
+      },
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/LCNF/OtherDecl.c": {
+            "native": "a7374e6b1908187a18e4343b31c0d53a2dc4dec852b99b63e7770fe7074cdc3b",
+            "ps": "a7374e6b1908187a18e4343b31c0d53a2dc4dec852b99b63e7770fe7074cdc3b"
+          },
+          "lib/lean/Lean/Compiler/LCNF/OtherDecl.olean": {
+            "native": "5ef05c49d8b84529d1e37e70b4d5c3f52f26ddbe27a97a71c402ff341a408f5b",
+            "ps": "5ef05c49d8b84529d1e37e70b4d5c3f52f26ddbe27a97a71c402ff341a408f5b"
+          }
+        },
+        "converted_declarations": [
+          "getOtherDeclType"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "mapped_source_roles": [
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "getOtherDeclType",
+            "valueRootKind": "ps0HostDo"
+          }
+        ],
+        "module": "Lean.Compiler.LCNF.OtherDecl",
+        "owned_value_calls": [],
+        "pinned_blob": "a09e23d6f39bb7e87e7a5b10c2f0fc7556575cd4",
+        "scope": "real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration",
+        "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+        "unchanged_abbrev_adapters": [],
+        "verified_execution": false
+      },
+      {
+        "comparisons": {
+          "ir/Lean/Compiler/LCNF/ScopeM.c": {
+            "native": "0a149b683a22ff893a4631811a531bb483b19ef7845b036be8e7dbdd5be0de39",
+            "ps": "0a149b683a22ff893a4631811a531bb483b19ef7845b036be8e7dbdd5be0de39"
+          },
+          "lib/lean/Lean/Compiler/LCNF/ScopeM.olean": {
+            "native": "5e79495ce517159a2850bf5b9cb0ea1f530fca39f568672584a881dcb7ad36b7",
+            "ps": "5e79495ce517159a2850bf5b9cb0ea1f530fca39f568672584a881dcb7ad36b7"
+          }
+        },
+        "converted_declarations": [
+          "getScope",
+          "setScope",
+          "clearScope",
+          "withBackTrackingScope",
+          "withNewScope",
+          "isInScope",
+          "addToScope"
+        ],
+        "dependencies": "pinned SDK sibling olean/IR metadata; target artifacts are built afresh by native Lake",
+        "grammar_migration_complete": false,
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "mapped_source_roles": [
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "getScope",
+            "valueRootKind": "ps0HostHeadTerm"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "setScope",
+            "valueRootKind": "ps0NativeTermBridge"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "clearScope",
+            "valueRootKind": "ps0NativeTermBridge"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "withBackTrackingScope",
+            "valueRootKind": "ps0HostDo"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "withNewScope",
+            "valueRootKind": "ps0HostDo"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": false,
+            "sourceName": "isInScope",
+            "valueRootKind": "ps0HostDo"
+          },
+          {
+            "nativeWhereTail": false,
+            "ownedOperatorKinds": [],
+            "ownedValueCall": true,
+            "sourceName": "addToScope",
+            "valueRootKind": "ps0HostAdjacentCall"
+          }
+        ],
+        "module": "Lean.Compiler.LCNF.ScopeM",
+        "owned_value_calls": [],
+        "pinned_blob": "5bc78059af7e9f16d980688c88c3eaeecae3ab1a",
+        "scope": "real typed compiler declaration heads and explicit owned type/body roles; unselected local/quoted/DSL syntax retained; not whole grammar migration",
+        "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+        "unchanged_abbrev_adapters": [
+          "ScopeM"
+        ],
+        "verified_execution": false
+      }
+    ],
+    "plan": {
+      "declarations": [
+        "collectUsedDecls",
+        "usesModuleFrom"
+      ],
+      "edits": [
+        {
+          "end": 678,
+          "new": "function",
+          "old": "def",
+          "role": "owned PS declaration keyword",
+          "start": 675
+        },
+        {
+          "end": 696,
+          "new": "",
+          "old": " ",
+          "role": "PS head adjacency",
+          "start": 695
+        },
+        {
+          "end": 729,
+          "new": "(",
+          "old": " ",
+          "role": "owned declaration result type call opening delimiter; preserve original argument parentheses",
+          "start": 728
+        },
+        {
+          "end": 736,
+          "new": "(",
+          "old": " ",
+          "role": "owned declaration result type call opening delimiter; preserve original argument parentheses",
+          "start": 735
+        },
+        {
+          "end": 750,
+          "new": ")",
+          "old": "",
+          "role": "owned declaration result type call closing delimiter; preserve original argument parentheses",
+          "start": 750
+        },
+        {
+          "end": 760,
+          "new": "(",
+          "old": " ",
+          "role": "owned declaration result type call opening delimiter; preserve original argument parentheses",
+          "start": 759
+        },
+        {
+          "end": 779,
+          "new": ")",
+          "old": "",
+          "role": "owned declaration result type call closing delimiter; preserve original argument parentheses",
+          "start": 779
+        },
+        {
+          "end": 780,
+          "new": ")",
+          "old": "",
+          "role": "owned declaration result type call closing delimiter; preserve original argument parentheses",
+          "start": 780
+        },
+        {
+          "end": 1974,
+          "new": "function",
+          "old": "def",
+          "role": "owned PS declaration keyword",
+          "start": 1971
+        },
+        {
+          "end": 1990,
+          "new": "",
+          "old": " ",
+          "role": "PS head adjacency",
+          "start": 1989
+        },
+        {
+          "end": 2011,
+          "new": ", ",
+          "old": ") (",
+          "role": "merge consecutive typed groups in source order",
+          "start": 2008
+        },
+        {
+          "end": 2067,
+          "new": "(",
+          "old": " ",
+          "role": "owned value root application opening delimiter",
+          "start": 2066
+        },
+        {
+          "end": 2141,
+          "new": ")",
+          "old": "",
+          "role": "owned value root application closing delimiter",
+          "start": 2141
+        }
+      ],
+      "grammar_migration_complete": false,
+      "result_sha256": "18d8653d97fe62cebb7ce835b79f1241e0dbb55ba0e29cd7a1c6ad2a36289ae9",
+      "schema": "ps0-compiler-head-migration/1",
+      "scope": "typed explicit/default/instance telescopes and named values in explicit source declaration slots, single type/default-call adjacency, and owned root value calls plus direct lambda-body call roots within their arguments; original argument nodes, quotations and unrelated native commands preserved",
+      "source_sha256": "a940bfa697130609453846c9af49f426cb644a03f3fa4974f3ca947c3798436e",
+      "verified_execution": false
+    },
+    "runtime": {
+      "oracle": "PS0_DECLARATION_TAILS:4:3:7:5",
+      "scope": "native where binding and termination suffixes on owned declaration values; not complete local declaration conversion",
+      "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+      "verified_execution": false
+    },
+    "host": {
+      "driver_sha256": "b1a95c08d057301144c6c830cb229bd92bc843a15fb444768e8f070610070e54",
+      "metadata_files": 118,
+      "raw_evidence_sha256": "1037148efaff82cd2084c93126bf877a528f3d89ac29e0a0f4c66499a2a57e3a",
+      "sorted_metadata_sha256": "f1580fa05f42f19f926c90ebde7fe6dd7694cddb55add365b49f08470401b718",
+      "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+      "evidenceContext": {
+        "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+        "runner": "31db0b0c78ba591e1c4d0ada372a233ff9dcd5ed",
+        "run": 42545863274,
+        "inspection": {
+          "runner": "564f6dbba47b4876b1b51dbb603ed7de46f77653",
+          "run": 42546844253,
+          "job": 128933566965,
+          "status": "PASS"
+        }
+      }
+    },
+    "implementation": [
+      "shared native descriptor validator used by parser and source observer",
+      "native termination suffix and where parsers wrapped by owned psDeclTail; optional category for EOF",
+      "native declValSimple tail fields attached without separate where/termination elaboration",
+      "owned result-type application, parenthesis and validated binary roles; original argument parentheses retained",
+      "direct unparenthesized lambda arguments adapted as PS calls",
+      "mapped source role observations fence independently owned native/quoted syntax"
+    ],
+    "scope": "both EmitUtil source definition heads, richer result types and lambda/operator source ownership, 17 heads in five actual modules with strict native C/public olean equality; native where locals are retained, and complete local/body/corpus grammar conversion is not established",
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "failedCandidates": [
+      {
+        "source": "baf668e13a7396d2d7a077980ef8fd8c2c13472e",
+        "runner": "edd376f06814000cffa3a60f6b6ceda4f0450deb",
+        "run": 42544085075,
+        "job": 128925201623,
+        "observed": "test first: unknown where locals/unconsumed where and EmitUtil owned CoreM result-type call gap; other four jobs PASS; interpolation fixture initially used unrelated unsupported PS calls inside native interpolation"
+      },
+      {
+        "source": "2181a0725f68b361cd821c6a533191078125466f",
+        "runner": "bac45fbf4188cca3bd443d9af266cf01a74ff741",
+        "run": 42544611159,
+        "job": 128926775773,
+        "observed": "clean build failure: shared runtime descriptor helper needs meta import at meta parser stage; Array.back proof obligation in source observer"
+      },
+      {
+        "source": "523638bcaf79b1ad165d6bb1ad1e986908443ca8",
+        "runner": "aa67620fdadd9d72031a64b2fcbbe51d033b65b6",
+        "run": 42544853650,
+        "job": 128927511293,
+        "observed": "clean build failure: native suffix parser does not accept the attempted suffix antiquotation; replaced by an owned category capture"
+      },
+      {
+        "source": "9a55c4672fee1b1da92e71d8db278fced8278b9b",
+        "runner": "2e4362b209b0d2d9d53036fe9f50673d16baf4ec",
+        "run": 42545194189,
+        "job": 128928552934,
+        "observed": "all five real module C/public olean comparisons and owned EmitUtil roles PASS; EOF empty category, modern-startup missing new helper, and well-founded rfl fixture fail; fixed with optional tail, actual .ps helper dependency build, and native equation simplification"
+      }
+    ],
+    "previousQualification": {
+      "runner": "31db0b0c78ba591e1c4d0ada372a233ff9dcd5ed",
+      "run": 42545863274,
+      "jobs": [
+        {
+          "id": 128930640443,
+          "name": "host-contract",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128930640470,
+          "name": "operator-baseline",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128930640602,
+          "name": "project-build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128930640636,
+          "name": "native-build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128930640653,
+          "name": "proof-linked",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13643910676,
+          "name": "ps0-project-3b23a3520c270bb892462f0600abb8b7eed25c2c-42545863274",
+          "digest": "sha256:b5a7ab523ee86b21b0763c129b5049d5273125429787ec436116e89ea668938e"
+        },
+        {
+          "id": 13643895388,
+          "name": "ps0-native-3b23a3520c270bb892462f0600abb8b7eed25c2c-42545863274",
+          "digest": "sha256:2bfc0fb38fac344d5820cc02aab4225586716fffc235808d393e9fcdaaba5236"
+        },
+        {
+          "id": 13643721413,
+          "name": "ps0-external-3b23a3520c270bb892462f0600abb8b7eed25c2c-42545863274",
+          "digest": "sha256:69f4f417160d1ef6e4e4b070370b0902cf9cc61a71e1a17ccf008a39e9a8e771"
+        },
+        {
+          "id": 13642668915,
+          "name": "ps0-operator-baseline-42545863274",
+          "digest": "sha256:faefad7ee24c4426ed278ecb9549420db60cdc73d535b6e53a93c8e57a5e76d1"
+        }
+      ]
+    },
+    "rawOutputInspection": {
+      "runner": "2e79bf2066f97479fccdef9b47f20b4254d77ee3",
+      "run": 42547657922,
+      "job": 128936051911,
+      "status": "PASS",
+      "modules": 5,
+      "convertedHeads": 17,
+      "rawFilesRehashed": 20
+    }
+  },
+  "fullCompilerConversionObligationAudit": {
+    "runner": "4d93f26d889c21f5d0bc18b0ff29176205299533",
+    "branch": "ci/ps0-census-summary-20261109",
+    "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
+    "inventorySource": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+    "run": 42546175457,
+    "job": 128931568421,
+    "status": "PASS_CORPUS_OBLIGATION_AUDIT",
+    "summary": {
+      "artifact_source": "2cba0bc26df49c52d653598fd9c791f23209199c",
+      "declaration_productions": {
+        "Lean.Parser.Command.abbrev": 1584,
+        "Lean.Parser.Command.axiom": 13,
+        "Lean.Parser.Command.definition": 26328,
+        "Lean.Parser.Command.opaque": 642,
+        "Lean.Parser.Command.theorem": 45156
+      },
+      "definition_binder_kinds": {
+        "Lean.Parser.Term.explicitBinder": 38387,
+        "Lean.Parser.Term.implicitBinder": 2207,
+        "Lean.Parser.Term.instBinder": 5291,
+        "ident": 35
+      },
+      "definition_count": 26328,
+      "definition_patterns": {
+        "definition_signature_within_current_planner_shape": 22275,
+        "explicit_names:1": 36457,
+        "explicit_names:10": 2,
+        "explicit_names:11": 2,
+        "explicit_names:12": 1,
+        "explicit_names:2": 1693,
+        "explicit_names:3": 143,
+        "explicit_names:4": 42,
+        "explicit_names:5": 17,
+        "explicit_names:6": 9,
+        "explicit_names:7": 7,
+        "explicit_names:8": 6,
+        "explicit_names:9": 8
+      },
+      "definition_shape_blockers": {
+        "binder_kind:Lean.Parser.Term.implicitBinder": 1500,
+        "binder_kind:ident": 18,
+        "grouped_or_empty_explicit_identifiers": 1854,
+        "nonordinary_default_suffix": 136,
+        "untyped_explicit_binder": 745
+      },
+      "grammarMigrationComplete": false,
+      "inventory_sha256": "3ecc4676c7ba1589a34afd28001a76a0b5ed2bbfeb5f45ef3c18d11d70d686f1",
+      "inventory_source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+      "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "original_blob_matches": 2541,
+      "original_blob_mismatches": [
+        {
+          "captured_blob": "74ad0aa03c45ed514c29fc9b38fe07c004957b92",
+          "expected_blob": "db1d56fbd201eae72ad393ad94929d0602e80fa2",
+          "module": "Lean"
+        },
+        {
+          "captured_blob": "698b027bd27c178e950f1c8a26cffc7390cda8cd",
+          "expected_blob": "aa69c77767cfab76fdb95a7cafb170d36b9950c2",
+          "module": "LeanChecker"
+        },
+        {
+          "captured_blob": "a1b9b24189c18c7543415a9f70d7d4c127417448",
+          "expected_blob": "a21cc37c1a84d89026aba45daf61a7bc05be5f00",
+          "module": "LeanExport"
+        },
+        {
+          "captured_blob": "c67e33aa9b57ad8821983abe289296690432b4ae",
+          "expected_blob": "a95112b90e8b54756112e01a10e865971d6ac986",
+          "module": "LeanIR"
+        },
+        {
+          "captured_blob": "a75f10396c7ea5ec7fca1fb473f8d5fa251e1757",
+          "expected_blob": "da517a3bf8a1dd6b0c1770deae367be40725b6bf",
+          "module": "Leanc"
+        }
+      ],
+      "root_application_roles": {
+        "direct_lambda_argument": 776,
+        "native_root_applications": 6178,
+        "parenthesized_argument": 1741
+      },
+      "schema": "ps0-full-compiler-conversion-obligations/1",
+      "scope": "original native-compatible corpus audit, not conversion acceptance or grammar completion; shape eligibility does not prove successful conversion",
+      "signature_kinds": {
+        "Lean.Parser.Command.declSig": 45811,
+        "Lean.Parser.Command.optDeclSig": 27912
+      },
+      "upstream_modules": 2546,
+      "verified_execution": false
+    },
+    "artifact": {
+      "id": 13643093976,
+      "name": "ps0-full-compiler-conversion-obligations-42546175457",
+      "digest": "sha256:62958b7cbb5147633dab408c8e2874dfeb2fc4592c981b42037bd628c5c0693a"
+    },
+    "headerAccounting": {
+      "runner": "564f6dbba47b4876b1b51dbb603ed7de46f77653",
+      "run": 42546844253,
+      "job": 128933567021,
+      "status": "PASS",
+      "records": [
+        {
+          "body_mode": "native-header-adapter",
+          "converted_sha256": "412ca91135fe18e4c5abde9057a12e57950f6103be2e5fa1325658aac5db1722",
+          "module": "Lean",
+          "original_blob": "db1d56fbd201eae72ad393ad94929d0602e80fa2",
+          "original_sha256": "b5c1c5190efdd590cc2e7464acd39b2e926a8ebd816377bf7c5b48dc85e73b28",
+          "unchanged_suffix_bytes": 1353
+        },
+        {
+          "body_mode": "native-header-adapter",
+          "converted_sha256": "5280991e4cc6e413981be80d2b4430d97b769872eb4c6287cb8566bc76e92c8d",
+          "module": "LeanChecker",
+          "original_blob": "aa69c77767cfab76fdb95a7cafb170d36b9950c2",
+          "original_sha256": "4a406b8ed95da0377206600b7b00a03bedc05102c0fadad641ffe0bfdb95122f",
+          "unchanged_suffix_bytes": 6417
+        },
+        {
+          "body_mode": "native-header-adapter",
+          "converted_sha256": "f1d18f54ff2158aaaead9beb0548dbad8bf70178f0502c24d36a5c06bebb63f8",
+          "module": "LeanExport",
+          "original_blob": "a21cc37c1a84d89026aba45daf61a7bc05be5f00",
+          "original_sha256": "ec95c53d108c5b014e7a53d6b88a4dbe41dc75c2e55102b2f8211268fcb94cf5",
+          "unchanged_suffix_bytes": 524
+        },
+        {
+          "body_mode": "native-header-adapter",
+          "converted_sha256": "bdf8fdc6964f98fe31b345a46b054c65b7b631dbc4b45fedb7097c6de180957e",
+          "module": "LeanIR",
+          "original_blob": "a95112b90e8b54756112e01a10e865971d6ac986",
+          "original_sha256": "cb0e362fc299ab84ead24874efacc462e25c8c43aaa9d24276518a9ef538dee2",
+          "unchanged_suffix_bytes": 7101
+        },
+        {
+          "body_mode": "native-header-adapter",
+          "converted_sha256": "56cc3062bd91d68185967294b8ff439fb792224ca82ab367d8ca81f763da6cf3",
+          "module": "Leanc",
+          "original_blob": "da517a3bf8a1dd6b0c1770deae367be40725b6bf",
+          "original_sha256": "4ba1b13a9a58b9a7917ca8aeae6a4929cd292411c771e1cca989a7d8a2fbf7bc",
+          "unchanged_suffix_bytes": 2573
+        }
+      ],
+      "artifact": {
+        "id": 13643712667,
+        "name": "ps0-native-header-adapter-evidence-42546844253",
+        "digest": "sha256:451ff706a9e6446c1c074da1008a345cbb1595ea3a0b92d967ec078f9011ce8e"
+      },
+      "failedInspection": {
+        "runner": "1222f0d78366c45d141ef0e384d8b352e9beac5d",
+        "run": 42546601105,
+        "job": 128932831404,
+        "reason": "inspector used current fork src/Lean.lean (blob 5b804039acf03a5adfdc3e9a3ebfdf59fb1e187e), not pinned SDK upstream src/Lean.lean (db1d56fbd201eae72ad393ad94929d0602e80fa2); no compiler/header defect inferred"
+      }
+    },
+    "nextPriority": "generalize implicit/grouped/untyped telescope conversion and native automatic-default roles based on actual corpus shapes; validate whole converted modules and preserve strict C/public olean gates",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "currentContinuation": {
+    "status": "ACTIVE_CANONICAL_PS_COMPILER_MIGRATION_INCOMPLETE",
+    "branch": "feat/ps0-declaration-tails-20261109",
+    "goal": "Entire pinned Lean4 compiler corpus builds from .ps using ProofScript syntax and grammars with native Lean4 and Lake; renamed native-only sources do not complete the goal",
+    "qualifiedFiniteCheckpoint": {
+      "source": "3b23a3520c270bb892462f0600abb8b7eed25c2c",
+      "runner": "5797b39ee0af5b5fd8e65381a4039a5923fb5e41",
+      "run": 42547214639,
+      "evidence": "declarationTailsQualifiedEvidence",
+      "convertedCompilerHeads": 17,
+      "compilerModules": 5,
+      "rawArtifactInspection": {
+        "runner": "2e79bf2066f97479fccdef9b47f20b4254d77ee3",
+        "run": 42547657922,
+        "job": 128936051911,
+        "status": "PASS",
+        "modules": 5,
+        "convertedHeads": 17,
+        "rawFilesRehashed": 20
+      }
+    },
+    "qualifiedNativeCompatibleFullCompiler": {
+      "source": "2cba0bc26df49c52d653598fd9c791f23209199c",
+      "runner": "b83ebb191c21c0985c9dc6df3a4cca11ae31e121",
+      "run": 42532849633,
+      "evidence": "psBuiltGrammarHostFixedPointQualifiedEvidence",
+      "modules": 2567,
+      "nativeCompatibleSelectedRows": 72797,
+      "mappedPsSelectedRows": 0
+    },
+    "corpusObligationAudit": {
+      "evidence": "fullCompilerConversionObligationAudit",
+      "modules": 2546,
+      "definitionCount": 26328,
+      "shapeEligibleDefinitions": 22275,
+      "shapeEligibilityIsAcceptance": false
+    },
+    "nextPriority": "generalize implicit/grouped/untyped telescope conversion and native automatic-default roles based on actual corpus shapes; validate whole converted modules and preserve strict C/public olean gates",
+    "remaining": [
+      "complete source conversion for all pinned upstream and PS0 compiler modules",
+      "remaining telescope/local/layout/field/constructor/notation/interpolation/tactic roles",
+      "current-head full compiler bootstrap and fixed point",
+      "full source-fidelity and automatic original-source diagnostic/IDE presentation"
+    ],
+    "statusTotals": {
+      "total": 242,
+      "PENDING": 240,
+      "PASS": 2,
+      "featureFamiliesPending": 100,
+      "acceptanceCasesPending": 109,
+      "boundaryWitnessesPending": 31,
+      "historicalPassCases": [
+        "PS0-P-CALL-01",
+        "PS0-N-MOD-04"
+      ]
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }
