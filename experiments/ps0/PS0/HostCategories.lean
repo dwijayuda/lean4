@@ -331,13 +331,14 @@ def ps0NativeHeadBridge : Lean.Parser.Parser := PS0.Operators.headLeading
 @[psHead_parser]
 def ps0NativeHeadProjectionParser : Lean.Parser.TrailingParser := PS0.Operators.projection
 syntax:max (name := ps0ParenthesizedHead) Lean.Parser.Term.hygienicLParen psTerm ")" : psHead
+syntax:max (name := ps0AscribedHead) (priority := 20000) PS0.DoLayout.ascriptionTerm : psHead
 syntax:max (name := ps0HeadCall) psHead:max noWs
   "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psHead
 syntax:max (name := ps0HeadEmptyCall) psHead:max noWs "(" ")" : psHead
 syntax (name := ps0HostHeadTerm) psHead : psTerm
 syntax:max (name := ps0HostParens) (priority := high)
   Lean.Parser.Term.hygienicLParen PS0.DoLayout.argumentValue ")" : psTerm
-syntax:max (name := ps0HostBraces) (priority := high) "{" psTerm "}" : psTerm
+syntax:max (name := ps0HostBraces) (priority := 30001) "{" psTerm "}" : psTerm
 syntax (name := ps0HostIf) (priority := high) "if " psTerm " then " psTerm " else " psTerm : psTerm
 syntax (name := ps0HostExact) (priority := high) "exact " psTerm : psTactic
 syntax (name := ps0HostApply) (priority := high) "apply " psTerm : psTactic
@@ -936,6 +937,8 @@ partial def lowerFunBinder (source : Lean.Syntax) :
   Macro.throwError "PS0V1-LAMBDA-BINDER: unsupported owned lambda binder"
 
 partial def lowerHead (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``ps0AscribedHead then
+    return ← lower `psTerm source[0]
   if source.isOfKind `PS0.Operators.ownedPostfix then
     let native := source[0]
     if (PS0.Operators.indexArity? native.getKind).isSome then
