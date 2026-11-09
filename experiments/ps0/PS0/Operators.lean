@@ -99,16 +99,16 @@ opaque leadingFn : ParserFn
   withFn (fun _ => leadingFn) (node bridgeKind (categoryParser `term 0))
 
 private unsafe def headLeadingImpl : ParserFn :=
-  adaptCacheableContextFn ({ · with prec := maxPrec })
-    (withCacheFn headBridgeKind (leadingWith true))
+  andthenFn (checkPrecFn maxPrec) <|
+    andthenFn (adaptCacheableContextFn ({ · with prec := maxPrec })
+      (withCacheFn headBridgeKind (leadingWith true))) (setLhsPrecFn maxPrec)
 
 @[implemented_by headLeadingImpl]
 opaque headLeadingFn : ParserFn
 
 @[expose, run_parser_attribute_hooks] def headLeading : Parser :=
-  checkPrec maxPrec >>
-    withFn (fun _ => headLeadingFn) (node headBridgeKind (categoryParser `term maxPrec)) >>
-    setLhsPrec maxPrec
+  withFn (fun _ => headLeadingFn)
+    (leadingNode headBridgeKind maxPrec (categoryParser `term maxPrec))
 
 private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx initial => unsafeBaseIO do
   let some category := getParserCategory? ctx.env `term
