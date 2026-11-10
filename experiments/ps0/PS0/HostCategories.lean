@@ -846,6 +846,118 @@ private def lowerLoopAnnotationWith
   return source.setArg 0 (clause.setArg 1 payload)
 
 set_option maxHeartbeats 800000 in
+private def lowerDoElemWith
+    (lowerTerm lowerIf lowerAnnotation lowerSequence lowerTry lowerId lowerRec lowerUnless
+      lowerPatternBind lowerType lowerElement lowerBody : Lean.Syntax → MacroM Lean.Syntax)
+    (lowerMatch : Lean.Syntax → Bool → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.doWhile then
+    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-WHILE: unexpected native loop"
+    let source := source.setArg 1 (← lowerIf source[1])
+    let source := source.setArg 2 (← lowerAnnotation source[2])
+    let source := source.setArg 3 (← lowerAnnotation source[3])
+    return source.setArg 5 (← lowerSequence source[5])
+  if source.isOfKind ``Lean.Parser.Term.doRepeatUntil then
+    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-REPEAT: unexpected native loop"
+    let source := source.setArg 1 (← lowerAnnotation source[1])
+    let source := source.setArg 2 (← lowerAnnotation source[2])
+    let source := source.setArg 3 (← lowerSequence source[3])
+    return source.setArg 5 (← lowerTerm source[5])
+  if source.isOfKind ``Lean.Parser.Term.doFor then
+    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-DO-FOR: unexpected native loop"
+    let declarations ← source[1].getArgs.mapM fun declaration => do
+      if declaration.isAtom then return declaration
+      unless declaration.isOfKind ``Lean.Parser.Term.doForDecl && declaration.getArgs.size == 4 do
+        Macro.throwError "PS0V1-DO-FOR: unexpected native pattern/collection roles"
+      return declaration.setArg 3 (← lowerTerm declaration[3])
+    let source := source.setArg 1 (source[1].setArgs declarations)
+    let source := source.setArg 2 (← lowerAnnotation source[2])
+    let source := source.setArg 3 (← lowerAnnotation source[3])
+    return source.setArg 5
+      (← lowerSequence source[5])
+  if source.isOfKind ``Lean.Parser.Term.doTry then
+    return ← lowerTry source
+  if source.isOfKind ``Lean.Parser.Term.doMatch then
+    unless source.getArgs.size == 7 do
+      Macro.throwError "PS0V1-DO-MATCH: unexpected native match shape"
+    let view := source.setArgs #[source[0], source[2], source[3], source[4], source[5], source[6]]
+    let lowered ← lowerMatch view true
+    return source.setArgs #[lowered[0], source[1], lowered[1], lowered[2], lowered[3], lowered[4], lowered[5]]
+  if source.isOfKind ``Lean.Parser.Term.doHave then
+    unless source.getArgs.size == 3 && source[2].isOfKind ``Lean.Parser.Term.letDecl &&
+        source[2].getArgs.size == 1 do
+      Macro.throwError "PS0V1-DO-HAVE: unexpected native named declaration"
+    return source.setArg 2 (source[2].setArg 0 (← lowerId source[2][0]))
+  if source.isOfKind ``Lean.Parser.Term.doIf then
+    unless source.getArgs.size == 6 do
+      Macro.throwError "PS0V1-DO-IF: unexpected native branch shape"
+    return source.setArgs (← source.getArgs.mapM lowerIf)
+  if source.isOfKind ``Lean.Parser.Term.doLetElse then
+    unless source.getArgs.size == 9 && source[8].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-DO-PATTERN-LET: unexpected native fallback/continuation"
+    let source := source.setArg 5 (← lowerTerm source[5])
+    let source := source.setArg 7 (← lowerSequence source[7])
+    if source[8].getArgs.isEmpty then return source
+    return source.setArg 8 (source[8].setArg 0 (← lowerSequence source[8][0]))
+  if source.isOfKind ``Lean.Parser.Term.doLetRec then
+    unless source.getArgs.size == 2 do
+      Macro.throwError "PS0V1-LOCAL-REC: unexpected native do shape"
+    return source.setArg 1 (← lowerRec source[1])
+  if source.isOfKind ``Lean.Parser.Term.doUnless then
+    return ← lowerUnless source
+  if source.isOfKind ``Lean.Parser.Term.doLet then
+    unless source.getArgs.size == 4 && source[3].isOfKind ``Lean.Parser.Term.letDecl &&
+        source[3].getArgs.size == 1 do
+      Macro.throwError "PS0V1-DO-LET: unexpected native ID declaration"
+    return source.setArg 3 (source[3].setArg 0 (← lowerId source[3][0]))
+  if source.isOfKind ``Lean.Parser.Term.doReassign then
+    unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-ASSIGN: unexpected native ID assignment"
+    return source.setArg 0 (← lowerId source[0])
+  if source.isOfKind ``Lean.Parser.Term.doLetArrow then
+    unless source.getArgs.size == 4 do Macro.throwError "PS0V1-DO-BIND: unexpected native binding"
+    let decl := source[3]
+    if decl.isOfKind ``Lean.Parser.Term.doPatDecl then
+      return source.setArg 3 (← lowerPatternBind decl)
+    unless decl.isOfKind ``Lean.Parser.Term.doIdDecl && decl.getArgs.size == 4 do
+      Macro.throwError "PS0V1-DO-BIND: unexpected native ID binding"
+    let decl := decl.setArg 1 (← lowerType decl[1])
+    return source.setArg 3 (decl.setArg 3 (← lowerElement decl[3]))
+  if source.isOfKind ``Lean.Parser.Term.doNested then
+    unless source.getArgs.size == 2 do Macro.throwError "PS0V1-DO-NESTED: unexpected native block"
+    return source.setArg 1 (← lowerSequence source[1])
+  if source.isOfKind ``Lean.Parser.Term.doReturn then
+    unless source.getArgs.size == 2 && source[1].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-DO-RETURN: unexpected native return"
+    if source[1].getArgs.isEmpty then return source
+    return source.setArg 1 (source[1].setArg 0 (← lowerTerm source[1][0]))
+  if source.isOfKind ``Lean.Parser.Term.doExpr then
+    unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-EXPRESSION: unexpected native expression"
+    return source.setArg 0 (← lowerTerm source[0])
+  match source with
+  | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
+      let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)
+      let value : TSyntax `term := ⟨← lowerBody value.raw⟩
+      return (← `(doElem| let mut $name:ident $[: $ty:term]? := $value)).raw
+  | `(psDoElem| let $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
+      let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)
+      let value : TSyntax `term := ⟨← lowerBody value.raw⟩
+      return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
+  | `(psDoElem| let $name:ident ← $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+      let action : TSyntax `doElem := ⟨.node (loweringInfo source)
+        ``Lean.Parser.Term.doExpr #[value.raw]⟩
+      return (← `(doElem| let $name:ident ← $action:doElem)).raw
+  | `(psDoElem| $name:ident := $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+      return (← `(doElem| $name:ident := $value:term)).raw
+  | `(psDoElem| $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+      return (← `(doElem| $value:term)).raw
+  | `(psDoElem| $native:doElem) => return native.raw
+  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
+
+
+set_option maxHeartbeats 800000 in
 mutual
 partial def lower (category : Name) (source : Lean.Syntax) :
     MacroM Lean.Syntax := withRef source <| Macro.withIncRecDepth source do
@@ -956,111 +1068,11 @@ partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRe
       #[opening, body.raw, .atom (loweringInfo source[2]) ")"]
   lower `psTerm source
 
-partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
-  if source.isOfKind ``Lean.Parser.Term.doWhile then
-    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-WHILE: unexpected native loop"
-    let source := source.setArg 1 (← lowerNativeIfRole source[1])
-    let source := source.setArg 2 (← lowerNativeLoopAnnotation source[2])
-    let source := source.setArg 3 (← lowerNativeLoopAnnotation source[3])
-    return source.setArg 5 (← lowerNativeDoSequence source[5])
-  if source.isOfKind ``Lean.Parser.Term.doRepeatUntil then
-    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-REPEAT: unexpected native loop"
-    let source := source.setArg 1 (← lowerNativeLoopAnnotation source[1])
-    let source := source.setArg 2 (← lowerNativeLoopAnnotation source[2])
-    let source := source.setArg 3 (← lowerNativeDoSequence source[3])
-    return source.setArg 5 (← lower `psTerm source[5])
-  if source.isOfKind ``Lean.Parser.Term.doFor then
-    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-DO-FOR: unexpected native loop"
-    let declarations ← source[1].getArgs.mapM fun declaration => do
-      if declaration.isAtom then return declaration
-      unless declaration.isOfKind ``Lean.Parser.Term.doForDecl && declaration.getArgs.size == 4 do
-        Macro.throwError "PS0V1-DO-FOR: unexpected native pattern/collection roles"
-      return declaration.setArg 3 (← lower `psTerm declaration[3])
-    let source := source.setArg 1 (source[1].setArgs declarations)
-    let source := source.setArg 2 (← lowerNativeLoopAnnotation source[2])
-    let source := source.setArg 3 (← lowerNativeLoopAnnotation source[3])
-    return source.setArg 5
-      (← lowerNativeDoSequence source[5])
-  if source.isOfKind ``Lean.Parser.Term.doTry then
-    return ← lowerNativeTry source
-  if source.isOfKind ``Lean.Parser.Term.doMatch then
-    unless source.getArgs.size == 7 do
-      Macro.throwError "PS0V1-DO-MATCH: unexpected native match shape"
-    let view := source.setArgs #[source[0], source[2], source[3], source[4], source[5], source[6]]
-    let lowered ← lowerNativeMatch view true
-    return source.setArgs #[lowered[0], source[1], lowered[1], lowered[2], lowered[3], lowered[4], lowered[5]]
-  if source.isOfKind ``Lean.Parser.Term.doHave then
-    unless source.getArgs.size == 3 && source[2].isOfKind ``Lean.Parser.Term.letDecl &&
-        source[2].getArgs.size == 1 do
-      Macro.throwError "PS0V1-DO-HAVE: unexpected native named declaration"
-    return source.setArg 2 (source[2].setArg 0 (← lowerNativeLocalId source[2][0]))
-  if source.isOfKind ``Lean.Parser.Term.doIf then
-    unless source.getArgs.size == 6 do
-      Macro.throwError "PS0V1-DO-IF: unexpected native branch shape"
-    return source.setArgs (← source.getArgs.mapM lowerNativeIfRole)
-  if source.isOfKind ``Lean.Parser.Term.doLetElse then
-    unless source.getArgs.size == 9 && source[8].getArgs.size <= 1 do
-      Macro.throwError "PS0V1-DO-PATTERN-LET: unexpected native fallback/continuation"
-    let source := source.setArg 5 (← lower `psTerm source[5])
-    let source := source.setArg 7 (← lowerNativeDoSequence source[7])
-    if source[8].getArgs.isEmpty then return source
-    return source.setArg 8 (source[8].setArg 0 (← lowerNativeDoSequence source[8][0]))
-  if source.isOfKind ``Lean.Parser.Term.doLetRec then
-    unless source.getArgs.size == 2 do
-      Macro.throwError "PS0V1-LOCAL-REC: unexpected native do shape"
-    return source.setArg 1 (← lowerNativeRecursiveDeclarations source[1])
-  if source.isOfKind ``Lean.Parser.Term.doUnless then
-    return ← lowerNativeUnless source
-  if source.isOfKind ``Lean.Parser.Term.doLet then
-    unless source.getArgs.size == 4 && source[3].isOfKind ``Lean.Parser.Term.letDecl &&
-        source[3].getArgs.size == 1 do
-      Macro.throwError "PS0V1-DO-LET: unexpected native ID declaration"
-    return source.setArg 3 (source[3].setArg 0 (← lowerNativeLocalId source[3][0]))
-  if source.isOfKind ``Lean.Parser.Term.doReassign then
-    unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-ASSIGN: unexpected native ID assignment"
-    return source.setArg 0 (← lowerNativeLocalId source[0])
-  if source.isOfKind ``Lean.Parser.Term.doLetArrow then
-    unless source.getArgs.size == 4 do Macro.throwError "PS0V1-DO-BIND: unexpected native binding"
-    let decl := source[3]
-    if decl.isOfKind ``Lean.Parser.Term.doPatDecl then
-      return source.setArg 3 (← lowerNativePatternBind decl)
-    unless decl.isOfKind ``Lean.Parser.Term.doIdDecl && decl.getArgs.size == 4 do
-      Macro.throwError "PS0V1-DO-BIND: unexpected native ID binding"
-    let decl := decl.setArg 1 (← lowerNativeOptionalType decl[1])
-    return source.setArg 3 (decl.setArg 3 (← lowerDoElem decl[3]))
-  if source.isOfKind ``Lean.Parser.Term.doNested then
-    unless source.getArgs.size == 2 do Macro.throwError "PS0V1-DO-NESTED: unexpected native block"
-    return source.setArg 1 (← lowerNativeDoSequence source[1])
-  if source.isOfKind ``Lean.Parser.Term.doReturn then
-    unless source.getArgs.size == 2 && source[1].getArgs.size <= 1 do
-      Macro.throwError "PS0V1-DO-RETURN: unexpected native return"
-    if source[1].getArgs.isEmpty then return source
-    return source.setArg 1 (source[1].setArg 0 (← lower `psTerm source[1][0]))
-  if source.isOfKind ``Lean.Parser.Term.doExpr then
-    unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-EXPRESSION: unexpected native expression"
-    return source.setArg 0 (← lower `psTerm source[0])
-  match source with
-  | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
-      let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
-      let value : TSyntax `term := ⟨← lowerBodyValue value.raw⟩
-      return (← `(doElem| let mut $name:ident $[: $ty:term]? := $value)).raw
-  | `(psDoElem| let $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
-      let ty ← ty.mapM fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term)
-      let value : TSyntax `term := ⟨← lowerBodyValue value.raw⟩
-      return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
-  | `(psDoElem| let $name:ident ← $value:psTerm) => do
-      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
-      let action : TSyntax `doElem := ⟨.node (loweringInfo source)
-        ``Lean.Parser.Term.doExpr #[value.raw]⟩
-      return (← `(doElem| let $name:ident ← $action:doElem)).raw
-  | `(psDoElem| $name:ident := $value:psTerm) => do
-      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
-      return (← `(doElem| $name:ident := $value:term)).raw
-  | `(psDoElem| $value:psTerm) => do
-      let value : TSyntax `term := ⟨← lower `psTerm value.raw⟩
-      return (← `(doElem| $value:term)).raw
-  | `(psDoElem| $native:doElem) => return native.raw
-  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
+partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerDoElemWith (lower `psTerm) lowerNativeIfRole lowerNativeLoopAnnotation
+    lowerNativeDoSequence lowerNativeTry lowerNativeLocalId lowerNativeRecursiveDeclarations
+    lowerNativeUnless lowerNativePatternBind lowerNativeOptionalType lowerDoElem lowerBodyValue
+    (fun value mode => lowerNativeMatch value mode) source
 
 partial def lowerNativeLoopAnnotation (source : Lean.Syntax) : MacroM Lean.Syntax :=
   lowerLoopAnnotationWith (lower `psTerm) lowerNativeOptionalType
