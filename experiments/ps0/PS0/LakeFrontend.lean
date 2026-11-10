@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 import Lean
 import Lean.Elab.Frontend
 import Lean.Elab.Import
+import Lean.Linter.PersistentLintLog
 import Lean.Compiler.LCNF.EmitC
 import PS0.SourceCensus
 import PS0.SourceGrammar
