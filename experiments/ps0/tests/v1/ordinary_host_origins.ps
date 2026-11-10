@@ -20,7 +20,9 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
     ``Lean.Parser.Term.fromTerm, ``Lean.Parser.Term.«have»,
     ``Lean.Parser.Term.«suffices», ``Lean.Parser.Term.sufficesDecl,
     ``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil, ``Lean.Parser.Term.byTactic',
-    ``Lean.Parser.Term.doLoopInvariant, ``Lean.Parser.Term.doLoopDecreasing, ``Lean.Parser.Term.basicFun]
+    ``Lean.Parser.Term.doLoopInvariant, ``Lean.Parser.Term.doLoopDecreasing, ``Lean.Parser.Term.basicFun,
+    ``Lean.Parser.Term.nestedAction, ``Lean.Parser.Term.termReturn,
+    ``Lean.Parser.Term.termTry, ``Lean.Parser.Term.termFor]
   let mut count := 0
   if selected.contains kind then
     let some lowered := sameHostNode? after before
@@ -53,6 +55,9 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
       else if kind == ``Lean.Parser.Term.doWhile || kind == ``Lean.Parser.Term.doRepeatUntil then #[0, 4]
       else if kind == ``Lean.Parser.Term.doLoopInvariant || kind == ``Lean.Parser.Term.doLoopDecreasing then #[0]
       else if kind == ``Lean.Parser.Term.basicFun then #[2]
+      else if kind == ``Lean.Parser.Term.nestedAction || kind == ``Lean.Parser.Term.termReturn ||
+          kind == ``Lean.Parser.Term.termTry then #[0]
+      else if kind == ``Lean.Parser.Term.termFor then #[0, 4]
       else #[0, 2]
     for index in unchanged do
       unless before[index].eqWithInfo lowered[index] do
@@ -96,6 +101,10 @@ example : hostOrigin ⟨add(n, 1), n⟩ := by trivial
 example : hostOrigin show Nat from add(n, 1) := by trivial
 example : hostOrigin show Fin(add(n, 1)) from value(n) := by trivial
 example : hostOrigin show Nat by { exact add(n, 1) } := by trivial
+example : hostOrigin (← action(n, 1)) := by trivial
+example : hostOrigin return add(n, 1) := by trivial
+example : hostOrigin try { return add(n, 1) } catch _ => { return n } := by trivial
+example : hostOrigin for k in values(n) do { action(k, 1) } := by trivial
 example : hostOrigin suffices h : Nat from add(h, 1); n := by trivial
 example : hostOrigin suffices h : Fin(add(n, 1)) from h; value(n) := by trivial
 example : hostOrigin suffices h : Nat from h; add(n, 1) := by trivial
