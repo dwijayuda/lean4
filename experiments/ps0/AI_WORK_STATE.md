@@ -1,5 +1,11 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-10 — original CLI diagnostic coordinates: four controlled mismatches; adapter pending
+
+Test-first source **9a7b425c5c52a3eea47b915569e16e9e64cf3f18**, runner **24c4e721dd8a868cbdbd1a6985907087f19e58a8**, [42733692152 / 129557663384](https://github.com/dwijayuda/pskernel/actions/runs/42733692152/job/129557663384) reaches all four native controls. Legacy LF/CRLF reports native **3:41** versus PS **8:41**; modern LF/CRLF reports native **4:41** versus PS **7:41**. Thus the retained generated headers add **five / three lines**, while the column after Unicode π/😀 remains **41**. This confirms current-file CLI check diagnostic offsets with aligned native source spellings and native Lake environments. Artifact **13725243765 / sha256:1c279c7e030a40786cd6fc88c595d6e3634196ee6a204efc4a4fb7351ec9a4b8**.
+
+Candidate **9c9a416ce7cfc5ac21c9d50f01ca27523800dad2**, runner **d19a4ca2ee8f761523b0a786ec2e44cfefe908da**, is **PENDING**. PS0 check uses Lean's public **Language.Lean.process** pipeline, preserves trust level zero and native command state, and reports a message-only original-position mapping through native **SnapshotTree.runAndReport**. Native FileMap conversion and retained original segments map current-file start/end positions; parser/elaborator/compiler syntax and source ranges are untouched. Native module compilation/build diagnostics and broader related-location/end-range cases remain open; this is not an end-to-end diagnostic fidelity qualification. Existing native Lake compile/build paths retain their own frontend machinery.
+
 ## 2026-11-10 — qualified grammar continuation: full matrix and original diagnostic controls pending
 
 A new complete 38-job Linux matrix is pending at source **9ed6422e674437e1e2d7cd6dce190b2f7043462f**, runner **e07cd73d97503bdce969ebe540faa6810052a59e**, [42733594998](https://github.com/dwijayuda/pskernel/actions/runs/42733594998), following the independently qualified 61-definition finite checkpoint. The previous **5bd3b367 / 42726667178 / 38 PASS / independent 172-file** result retains its own source.

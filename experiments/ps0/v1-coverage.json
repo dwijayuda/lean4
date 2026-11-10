@@ -19581,7 +19581,7 @@
       "source": "9a7b425c5c52a3eea47b915569e16e9e64cf3f18",
       "runner": "24c4e721dd8a868cbdbd1a6985907087f19e58a8",
       "run": 42733692152,
-      "status": "PENDING_NATIVE_CONTROLLED_TEST_FIRST"
+      "status": "FOUR_NATIVE_CONTROLS_PASS_FOUR_PS_COORDINATE_MISMATCHES"
     },
     "sufficesBroaderMatrixCandidate": {
       "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
@@ -19600,6 +19600,88 @@
         "id": 13725433160,
         "digest": "sha256:2c9e93a09f77f0a76a182e9ec99f9479715559dc0c0843c79b1cea8c04c64fb2"
       }
+    },
+    "diagnosticOriginsTestFirstEvidence": {
+      "source": "9a7b425c5c52a3eea47b915569e16e9e64cf3f18",
+      "runner": "24c4e721dd8a868cbdbd1a6985907087f19e58a8",
+      "run": 42733692152,
+      "job": 129557663384,
+      "status": "FOUR_NATIVE_CONTROLS_PASS_FOUR_PS_COORDINATE_MISMATCHES",
+      "observations": [
+        {
+          "case": "legacy-lf",
+          "original_coordinates_match": false,
+          "positions": {
+            "native": [
+              3,
+              41
+            ],
+            "ps": [
+              8,
+              41
+            ]
+          }
+        },
+        {
+          "case": "legacy-crlf",
+          "original_coordinates_match": false,
+          "positions": {
+            "native": [
+              3,
+              41
+            ],
+            "ps": [
+              8,
+              41
+            ]
+          }
+        },
+        {
+          "case": "modern-lf",
+          "original_coordinates_match": false,
+          "positions": {
+            "native": [
+              4,
+              41
+            ],
+            "ps": [
+              7,
+              41
+            ]
+          }
+        },
+        {
+          "case": "modern-crlf",
+          "original_coordinates_match": false,
+          "positions": {
+            "native": [
+              4,
+              41
+            ],
+            "ps": [
+              7,
+              41
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": 13725243765,
+        "digest": "sha256:1c279c7e030a40786cd6fc88c595d6e3634196ee6a204efc4a4fb7351ec9a4b8"
+      }
+    },
+    "diagnosticOriginsCandidate": {
+      "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+      "runner": "d19a4ca2ee8f761523b0a786ec2e44cfefe908da",
+      "status": "PENDING_LINUX_CHECK_DIAGNOSTICS_ONLY",
+      "scope": "Map current-file check diagnostics onto original raw source through Lean FileMap and PreparedSource segments; run Lean Language.Lean.process and SnapshotTree.runAndReport; leave parser/elaborator/compiler/source AST untouched",
+      "remainingPaths": [
+        "LakeFrontend.compile prepared-source diagnostics",
+        "PS0Main direct build frontend diagnostics",
+        "related diagnostic locations and broader source-fidelity controls"
+      ],
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -79481,9 +79563,89 @@
     "error": "HostCategories.lean:853:66 deterministic isDefEq timeout at unchanged 800000 in extracted do builder; downstream unknown helper is consequent; no target tests ran"
   },
   "sourceFidelityLegacyDiagnosticGap": {
-    "status": "OPEN",
-    "owner": "PS0Main.checkSourceEnvironment / Elab.runFrontend",
-    "reason": "Prepared source header injection shifts CLI diagnostic positions; retained Lake origin maps are a separate interface",
+    "status": "IMPLEMENTED_PENDING_LINUX_CHECK_ONLY",
+    "testFirst": {
+      "source": "9a7b425c5c52a3eea47b915569e16e9e64cf3f18",
+      "runner": "24c4e721dd8a868cbdbd1a6985907087f19e58a8",
+      "run": 42733692152,
+      "job": 129557663384,
+      "status": "FOUR_NATIVE_CONTROLS_PASS_FOUR_PS_COORDINATE_MISMATCHES",
+      "observations": [
+        {
+          "case": "legacy-lf",
+          "original_coordinates_match": false,
+          "positions": {
+            "native": [
+              3,
+              41
+            ],
+            "ps": [
+              8,
+              41
+            ]
+          }
+        },
+        {
+          "case": "legacy-crlf",
+          "original_coordinates_match": false,
+          "positions": {
+            "native": [
+              3,
+              41
+            ],
+            "ps": [
+              8,
+              41
+            ]
+          }
+        },
+        {
+          "case": "modern-lf",
+          "original_coordinates_match": false,
+          "positions": {
+            "native": [
+              4,
+              41
+            ],
+            "ps": [
+              7,
+              41
+            ]
+          }
+        },
+        {
+          "case": "modern-crlf",
+          "original_coordinates_match": false,
+          "positions": {
+            "native": [
+              4,
+              41
+            ],
+            "ps": [
+              7,
+              41
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": 13725243765,
+        "digest": "sha256:1c279c7e030a40786cd6fc88c595d6e3634196ee6a204efc4a4fb7351ec9a4b8"
+      }
+    },
+    "candidate": {
+      "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+      "runner": "d19a4ca2ee8f761523b0a786ec2e44cfefe908da",
+      "status": "PENDING_LINUX_CHECK_DIAGNOSTICS_ONLY",
+      "scope": "Map current-file check diagnostics onto original raw source through Lean FileMap and PreparedSource segments; run Lean Language.Lean.process and SnapshotTree.runAndReport; leave parser/elaborator/compiler/source AST untouched",
+      "remainingPaths": [
+        "LakeFrontend.compile prepared-source diagnostics",
+        "PS0Main direct build frontend diagnostics",
+        "related diagnostic locations and broader source-fidelity controls"
+      ],
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
     "grammarMigrationComplete": false
   },
   "loop48MatrixArtifactQualification": {
@@ -80208,7 +80370,7 @@
     "source": "9a7b425c5c52a3eea47b915569e16e9e64cf3f18",
     "runner": "24c4e721dd8a868cbdbd1a6985907087f19e58a8",
     "run": 42733692152,
-    "status": "PENDING_NATIVE_CONTROLLED_TEST_FIRST"
+    "status": "FOUR_NATIVE_CONTROLS_PASS_FOUR_PS_COORDINATE_MISMATCHES"
   },
   "sufficesBroaderMatrixCandidate": {
     "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
@@ -80227,5 +80389,87 @@
       "id": 13725433160,
       "digest": "sha256:2c9e93a09f77f0a76a182e9ec99f9479715559dc0c0843c79b1cea8c04c64fb2"
     }
+  },
+  "diagnosticOriginsTestFirstEvidence": {
+    "source": "9a7b425c5c52a3eea47b915569e16e9e64cf3f18",
+    "runner": "24c4e721dd8a868cbdbd1a6985907087f19e58a8",
+    "run": 42733692152,
+    "job": 129557663384,
+    "status": "FOUR_NATIVE_CONTROLS_PASS_FOUR_PS_COORDINATE_MISMATCHES",
+    "observations": [
+      {
+        "case": "legacy-lf",
+        "original_coordinates_match": false,
+        "positions": {
+          "native": [
+            3,
+            41
+          ],
+          "ps": [
+            8,
+            41
+          ]
+        }
+      },
+      {
+        "case": "legacy-crlf",
+        "original_coordinates_match": false,
+        "positions": {
+          "native": [
+            3,
+            41
+          ],
+          "ps": [
+            8,
+            41
+          ]
+        }
+      },
+      {
+        "case": "modern-lf",
+        "original_coordinates_match": false,
+        "positions": {
+          "native": [
+            4,
+            41
+          ],
+          "ps": [
+            7,
+            41
+          ]
+        }
+      },
+      {
+        "case": "modern-crlf",
+        "original_coordinates_match": false,
+        "positions": {
+          "native": [
+            4,
+            41
+          ],
+          "ps": [
+            7,
+            41
+          ]
+        }
+      }
+    ],
+    "artifact": {
+      "id": 13725243765,
+      "digest": "sha256:1c279c7e030a40786cd6fc88c595d6e3634196ee6a204efc4a4fb7351ec9a4b8"
+    }
+  },
+  "diagnosticOriginsCandidate": {
+    "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+    "runner": "d19a4ca2ee8f761523b0a786ec2e44cfefe908da",
+    "status": "PENDING_LINUX_CHECK_DIAGNOSTICS_ONLY",
+    "scope": "Map current-file check diagnostics onto original raw source through Lean FileMap and PreparedSource segments; run Lean Language.Lean.process and SnapshotTree.runAndReport; leave parser/elaborator/compiler/source AST untouched",
+    "remainingPaths": [
+      "LakeFrontend.compile prepared-source diagnostics",
+      "PS0Main direct build frontend diagnostics",
+      "related diagnostic locations and broader source-fidelity controls"
+    ],
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }
