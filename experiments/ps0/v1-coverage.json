@@ -21453,6 +21453,13 @@
       "status": "CANCELLED",
       "reason": "Stage-two source planning would still perform SDK-assisted PS0 metadata preparation; no stage-two or fixed-point qualification. Explicit correction-driven supersession, not timeout-driven restart.",
       "evidenceField": "supersededCompletePSCompilerFixedPointCandidate"
+    },
+    "compilerFixedPointArtifactAuditQualification": {
+      "source": "dd33df36f3955a54a9f674c877ab48e680bb91bb",
+      "run": 42764553762,
+      "status": "PASS",
+      "actualCompilerArtifactAuditStatus": "PENDING_PRODUCER_COMPLETION",
+      "evidenceField": "compilerFixedPointArtifactAuditQualification"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -84648,5 +84655,36 @@
     },
     "wholeGraphQualified": false,
     "fixedPointQualified": false
+  },
+  "compilerFixedPointArtifactAuditQualification": {
+    "source": "dd33df36f3955a54a9f674c877ab48e680bb91bb",
+    "runner": "042236e6fc4025000f0e89c0ee5875a528240d93",
+    "run": 42764553762,
+    "job": 129657856007,
+    "status": "PASS",
+    "cleanPS0Build": true,
+    "prefixContractTests": 13,
+    "fixedPointAuditContractTests": 8,
+    "artifact": {
+      "id": 13738513630,
+      "name": "ps0-compiler-prefix-dd33df36f3955a54a9f674c877ab48e680bb91bb-42764553762",
+      "size_in_bytes": 2428,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738513630",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738513630/zip",
+      "expired": false,
+      "created_at": "2026-11-10T05:51:44Z",
+      "expires_at": "2027-02-08T05:49:50Z",
+      "updated_at": "2026-11-10T05:51:44Z",
+      "digest": "sha256:409d8b2420e8ce6e2d14e5b8a99755451caef7fcd7ff8c1a9c66e09b220589cd",
+      "workflow_run": {
+        "id": 42764553762,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "head_sha": "042236e6fc4025000f0e89c0ee5875a528240d93"
+      }
+    },
+    "actualCompilerArtifactAuditStatus": "PENDING_PRODUCER_COMPLETION",
+    "scope": "synthetic infrastructure contracts only; no fixture executable runs or full-compiler qualification"
   }
 }
