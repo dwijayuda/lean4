@@ -5,12 +5,9 @@ import PS0.StandardAdapters
 open Lean
 open scoped PS0.StandardAdapters
 
-private partial def shape (source : Syntax) : Json :=
-  Json.mkObj [
-    ("kind", toJson source.getKind.toString),
-    ("ident", if source.isIdent then toJson source.getId.toString else .null),
-    ("atom", if source.isAtom then toJson source.getAtomVal else .null),
-    ("args", toJson (if source.isOfKind `hygieneInfo then #[] else source.getArgs.map shape))]
+private partial def findIdent (source : Syntax) (name : Name) : Option Syntax :=
+  if source.isIdent && source.getId == name then some source
+  else source.getArgs.findSome? (fun child => findIdent child name)
 
 private partial def firstDifference (native ps : Syntax) (path : List Nat := []) : Option String := Id.run do
   let here := s!"{path.reverse}: native={native.getKind} ps={ps.getKind}"
@@ -55,6 +52,21 @@ run_cmd do
           failures := failures + 1
         else
           logInfo m!"GRAPH17_TERM_SHAPE {label}: PASS"
+        if lowered.isOfKind PS0.Operators.matchesKind then
+          unless source.isOfKind `PS0.Operators.ownedPostfix &&
+              source[0][1].eqWithInfo lowered[1] && source[0][2].eqWithInfo lowered[2] do
+            throwError "GRAPH17_MATCHES_ORIGINS: {label}"
+          logInfo m!"GRAPH17_MATCHES_ORIGINS {label}: PASS"
+        if label == "sepBy-callee" || label == "sepBy1-callee" then
+          let some before := findIdent source lowered[0].getId
+            | throwError "GRAPH17_CALLEE_ORIGINS: {label}"
+          unless before.eqWithInfo lowered[0] do throwError "GRAPH17_CALLEE_ORIGINS: {label}"
+          logInfo m!"GRAPH17_CALLEE_ORIGINS {label}: PASS"
   unless failures == 0 do
     throwError "GRAPH17_TERM_SHAPES: {failures} failures"
+  for text in #["if(true)", "then(x)", "else(x)", "fun(x)", "match(x)"] do
+    match Parser.runParserCategory (← getEnv) `psTerm text with
+    | .error _ => pure ()
+    | .ok _ => throwError "GRAPH17_RESERVED_CALLEE_ADMITTED: {text}"
   logInfo "GRAPH17_TERM_SHAPES: PASS 10 cases"
+  logInfo "GRAPH17_RESERVED_CALLEE_GUARDS: PASS 5 cases"

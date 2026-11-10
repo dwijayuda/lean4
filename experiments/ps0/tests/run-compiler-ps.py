@@ -294,7 +294,7 @@ build_command = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + 
      '-KlinkMap=' + str(evidence / 'compiler-link.map'),
      '-KprojectBuildDir=' + str(build), 'build', 'PS0Project:static', 'ps0project']
 try:
-    run(build_command, 'compiler-build')
+    run(build_command, 'compiler-build', timeout=19800)
 except Exception:
     completed = []
     for module in inputs:
@@ -365,6 +365,7 @@ result = {
     'lean_commit': LEAN, 'module_count': len(inputs), 'inputs': inputs, 'outputs': outputs,
     'driver_sha256': digest(migrated), 'verified_execution': False,
     'bootstrap_package_identity': None,
+    'compiler_build_timeout_seconds': 19800,
     'stage_lean_options': {'interpreter.prefer_native': False,
                            **({'ps0.sourceGrammar': True} if args.source_plans else {})},
     'runtime_smoke': 'PENDING',
