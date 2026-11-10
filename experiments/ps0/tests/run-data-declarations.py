@@ -111,11 +111,28 @@ for label, body in [('baseline', native + native_main), ('migrated', ps + ps_mai
         executable = build / 'bin/ps0project'
         assert run([executable], 'runtime').strip() == 'PS0_DATA_DECLARATIONS: PASS'
         shutil.copy2(executable, work / 'DataDeclarationsRuntime')
-assert all(value['baseline'] == value['migrated'] == value['planned'] for value in comparisons.values())
+public_constants = {}
+for label in ['migrated', 'planned']:
+    native_olean = work / 'baseline-build/lib/lean' / (module + '.olean')
+    ps_olean = work / (label + '-build/lib/lean') / (module + '.olean')
+    comparison = json.loads(run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
+                                 native_olean, ps_olean], label + '-public-constants'))
+    # The native reader compares all matching public ConstantInfo values and
+    # their exact type/value representations. Require the complete name/import
+    # and extension-count summaries too; do not infer extension payload parity.
+    assert comparison['changedConstants'] == []
+    assert comparison['native'] == comparison['ps']
+    public_constants[label] = dict(all_public_constants_equal=True,
+                                  module_summary=comparison['native'],
+                                  extension_payloads_compared=False)
+assert len(set(comparisons['ir/' + module + '.c'].values())) == 1
+assert comparisons['lib/lean/' + module + '.olean']['baseline'] == comparisons['lib/lean/' + module + '.olean']['planned']
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
     logical_imports=['Init'], mapped_definitions=5, mapped_theorems=3, mapped_data_declarations=3, comparisons=comparisons,
+    public_constant_comparisons=public_constants,
+    handwritten_public_olean_byte_equal=comparisons['lib/lean/' + module + '.olean']['baseline'] == comparisons['lib/lean/' + module + '.olean']['migrated'],
     native_executable_sha256=hashlib.sha256((work / 'DataDeclarationsRuntime').read_bytes()).hexdigest(),
     runtime='PS0_DATA_DECLARATIONS: PASS', private_rfl_guards=3,
-    scope='finite native structure/class/inductive field/default/telescope/constructor expression roles',
+    scope='finite data operands: exact C and planned public olean; exact public constants and summaries for handwritten PS; serialized extension payload parity remains unclaimed',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
-print('PS0_DATA_DECLARATIONS_NATIVE_PARITY: PASS', flush=True)
+print('PS0_DATA_DECLARATIONS_C_AND_PUBLIC_CONSTANTS: PASS', flush=True)
