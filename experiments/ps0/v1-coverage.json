@@ -21674,7 +21674,7 @@
       "job": 130154095736,
       "status": "IN_PROGRESS",
       "phase": "stage-one-compiler",
-      "observedAt": "2026-11-10T21:55:23Z",
+      "observedAt": "2026-11-10 21:58:08 UTC",
       "pr": 255,
       "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification",
       "basePhase": {
@@ -87127,7 +87127,7 @@
       "job": 130154095736,
       "status": "IN_PROGRESS",
       "phase": "stage-one-compiler",
-      "observedAt": "2026-11-10T21:55:23Z",
+      "observedAt": "2026-11-10 21:58:08 UTC",
       "pr": 255,
       "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification",
       "basePhase": {
