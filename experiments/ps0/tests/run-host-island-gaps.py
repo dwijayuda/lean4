@@ -20,6 +20,12 @@ ps_prefix = ('module\nprelude\npublic import Init\npublic section\n'
              'function pairSum(p: Nat × Nat): Nat := p.1 + p.2\n'
              'structure IslandCell where\n  value : Nat\n')
 cases = [
+    ('suffices-body', 'def bad (n : Nat) : Nat := suffices h : Nat from pairSum (h, 1); n',
+     'function bad(n: Nat): Nat := suffices h : Nat from pairSum (h, 1); n'),
+    ('suffices-type', 'def bad (n : Nat) : Nat := suffices h : (fun (_ : Nat) => Nat) (pairSum (n, 1)) from h; n',
+     'function bad(n: Nat): Nat := suffices h : (fun (_ : Nat) => Nat) (pairSum (n, 1)) from h; n'),
+    ('suffices-continuation', 'def bad (n : Nat) : Nat := suffices h : Nat from h; pairSum (n, 1)',
+     'function bad(n: Nat): Nat := suffices h : Nat from h; pairSum (n, 1)'),
     ('match', 'def bad (n : Nat) : Nat := match n with | 0 => pairSum (1, 2) | k => k',
      'function bad(n: Nat): Nat := match n with | 0 => pairSum (1, 2) | k => k'),
     ('pattern-lambda', 'def bad (n : Nat) : Nat := (fun | 0 => pairSum (1, 2) | k => k) n',
