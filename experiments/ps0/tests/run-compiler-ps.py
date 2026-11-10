@@ -220,6 +220,8 @@ if args.source_plans:
         'native_census_cache': native_cache.provenance if native_cache else None,
         'module_count': len(source_plans), 'source_grammar': True,
         'definitions': sum(len(plan['declarations']) for plan in source_plans.values()),
+        'data_declarations': sum(plan.get('data_declarations', 0) for plan in source_plans.values()),
+        'initialization_commands': sum(plan.get('initialization_commands', 0) for plan in source_plans.values()),
         'grammar_migration_complete': False, 'verified_execution': False,
     }, indent=2) + '\n')
 
@@ -315,6 +317,19 @@ for module, data in inputs.items():
             assert declaration['mode'] == 'mapped-ps'
             assert declaration['production'] == productions[strategy['targetKeyword']], declaration
         assert not any(declaration['mode'] == 'native-compatible' for declaration in mapped), (module, mapped)
+        def operand_captures(commands, field):
+            for command in commands:
+                if command.get(field) is not None:
+                    yield command[field]
+                yield from operand_captures(command.get('nestedCommands', []), field)
+        for field, counter in [('dataDeclaration', 'data_declarations'),
+                               ('initialization', 'initialization_commands')]:
+            captures = list(operand_captures(observed['commands'], field))
+            assert len(captures) == source_plans[module].get(counter, 0), (module, field)
+            assert all(capture['mode'] == 'mapped-ps' for capture in captures), (module, field)
+        retained = evidence / 'source-census' / rel.with_suffix('.json')
+        retained.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(census_file, retained)
     olean = build / 'lib/lean' / rel.with_suffix('.olean')
     cfile = build / 'ir' / rel.with_suffix('.c')
     assert olean.is_file() and cfile.is_file(), module
