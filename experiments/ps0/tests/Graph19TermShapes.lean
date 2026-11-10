@@ -14,6 +14,10 @@ private partial def difference (native ps : Syntax) : Option String := Id.run do
     if let some d := difference native[i] ps[i] then return some s!"{i}/{d}"
   return none
 
+private partial def shape (source : Syntax) (depth : Nat) : String :=
+  if depth == 0 then source.getKind.toString
+  else s!"{source.getKind}[{String.intercalate "," (source.getArgs.toList.map (fun child => shape child (depth - 1)))}]"
+
 open scoped PS0.StandardAdapters
 
 run_cmd do
@@ -30,6 +34,8 @@ run_cmd do
       "fun vars body => do←\n  unless vars.size = args.size do\n    return (.rfl, inst)\n  mkLambdaFVars vars p"),
     ("inline-do-call", "withLocalDeclD `_a α fun a => do isDefEq (← inferType (eAbst.instantiate1 a)) eType",
       "withLocalDeclD(`_a, α, fun a => do isDefEq((← inferType((eAbst.instantiate1 a))), eType))"),
+    ("unless-inline-do-call", "do\n  unless (← withLocalDeclD `_a α fun a => do isDefEq (← inferType (eAbst.instantiate1 a)) eType) do\n    pure ()",
+      "do\n  unless (← withLocalDeclD(`_a, α, fun a => do isDefEq((← inferType((eAbst.instantiate1 a))), eType))) do\n    pure ()"),
     ("inline-do-pattern", "do let ⟨mvar', fvars⟩ ← nCasesProd n mv h\n       let mvar'' ← mvar'.tryClear fvars.getLast!\n       pure ⟨mvar'', fvars⟩",
       "do let ⟨mvar', fvars⟩ ← nCasesProd n mv h\n       let mvar'' ← mvar'.tryClear fvars.getLast!\n       pure ⟨mvar'', fvars⟩"),
     ("nested-do-condition", "do\n  while (← do\n    let fullName := (← getCurrNamespace) ++ name\n    hasConst fullName <||> (withoutExporting <| hasConst (mkPrivateName (← getEnv) fullName))) do\n    pure ()",
@@ -43,8 +49,9 @@ run_cmd do
       let source ← match Parser.runParserCategory (← getEnv) `psTerm psText with
         | .ok stx => pure stx
         | .error message => throwError "PS parse: {message}"
+      logInfo m!"GRAPH19_PARSED {label}: {shape source 5}"
       let lowered ← Elab.liftMacroM <| PS0.Syntax.lower `psTerm source
-      if label != "inline-do-call" && label != "nested-do-condition" then
+      if label != "inline-do-call" && label != "unless-inline-do-call" && label != "nested-do-condition" then
         if let some d := difference native lowered then throwError "native syntax differs: {d}"
       logInfo m!"GRAPH19_TERM {label}: PASS"
     catch error =>
@@ -59,4 +66,4 @@ run_cmd do
         logInfo m!"GRAPH19_COMMAND {label}: FAIL {message}"
         failures := failures + 1
   unless failures == 0 do throwError "GRAPH19_REGRESSIONS: {failures} failures"
-  logInfo "GRAPH19_REGRESSIONS: PASS 10 cases"
+  logInfo "GRAPH19_REGRESSIONS: PASS 11 cases"
