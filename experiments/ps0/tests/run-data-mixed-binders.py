@@ -41,9 +41,27 @@ cases = [
     ('dependent-parameter-defaults',
      'structure Mixed (left : Nat := 1) (right : Nat := left + 1) where\n  value : Nat := left + right',
      'structure Mixed (left: Nat := 1, right: Nat := left + 1) where\n  value : Nat := left + right'),
+    ('ordered-mixed-parameters',
+     'structure Mixed {α : Type} (left : α) (middle : α) [Inhabited α] (right : α := middle) where\n  value : α := right',
+     'structure Mixed {α : Type} (left: α, middle: α) [Inhabited α] (right: α := middle) where\n  value : α := right'),
+    ('shared-and-anonymous-parameters',
+     'structure Mixed (_ : Nat) (left right : Nat) (last : Nat) (extra : Nat) where\n  value : Nat := left + right + last + extra',
+     'structure Mixed (_ : Nat) (left right : Nat) (last: Nat, extra: Nat) where\n  value : Nat := left + right + last + extra'),
+    ('automatic-and-term-defaults',
+     'structure Mixed where\n  value (n : Nat := by exact 1) (k : Nat := (by exact n + 1)) : Nat := n + k',
+     'structure Mixed where\n  value (n: Nat := by exact 1, k: Nat := (by exact n + 1)) : Nat := n + k'),
+]
+negative_cases = [
+    ('empty-data-parameter', 'structure Mixed () where\n  value : Nat',
+     'structure Mixed () where\n  value : Nat', False, False),
+    ('grouped-field-is-not-method-telescope', 'structure Mixed where\n  (left right : Nat)',
+     'structure Mixed where\n  (left: Nat, right: Nat)', True, False),
+    ('typed-constructor-override-is-invalid',
+     'structure Mixed (α : Type) (β : Type) where\n  mk (α : Type) (β : Type) ::\n  left : α\n  right : β',
+     'structure Mixed (α : Type) (β : Type) where\n  mk (α: Type, β: Type) ::\n  left : α\n  right : β', False, False),
 ]
 observations = []
-for name, native, ps in cases:
+for name, native, ps, expected_native, expected_ps in [(*case, True, True) for case in cases] + negative_cases:
     header = 'module\nprelude\npublic import ' + ('Lean' if name.startswith('coinductive') else 'Init') + '\npublic section\n'
     baseline = work / (name + '-native.ps')
     baseline.write_text(header + native + '\n')
@@ -71,6 +89,7 @@ for name, native, ps in cases:
             file = build / relative
             shutil.copy2(file, work / (name + file.suffix))
     row = dict(case=name, native_baseline_passed=result.returncode == 0,
+               expected_native_pass=expected_native, expected_ps_pass=expected_ps,
                native_exit=result.returncode, ps_exit=mapped.returncode,
                mapped_passed=mapped.returncode == 0,
                native_diagnostics=(result.stdout + result.stderr).splitlines()[:6],
@@ -78,7 +97,9 @@ for name, native, ps in cases:
     observations.append(row)
     print('PS0_DATA_MIXED_OBSERVATION:' + json.dumps(row, sort_keys=True), flush=True)
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    observations=observations, scope='nine native-controlled data mixed-telescope admission cases',
+    observations=observations, positive_cases=len(cases), negative_cases=len(negative_cases),
+    scope='native-controlled mixed data telescope admission and native constraint preservation',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
-assert all(row['native_baseline_passed'] and row['mapped_passed'] for row in observations)
+assert all(row['native_baseline_passed'] == row['expected_native_pass'] and
+           row['mapped_passed'] == row['expected_ps_pass'] for row in observations)
 print('PS0_DATA_MIXED_BINDERS: PASS', flush=True)

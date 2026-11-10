@@ -18,14 +18,14 @@ work.mkdir(parents=True, exist_ok=False)
 module = 'DataDeclarationsBootstrap'
 header = 'module\nprelude\npublic import Init\npublic section\n'
 native = '''def pairSum (p : Nat × Nat) : Nat := p.1 + p.2
-structure DataPacket (limit : Nat := pairSum (1, 2)) where
+structure DataPacket (limit : Nat := pairSum (1, 2)) (unused : Nat := 0) where
   value : Fin (pairSum (limit, 1))
   count : Nat := pairSum (limit, 2)
-  method (n : Nat := pairSum (limit, 3)) : Nat := pairSum (n, limit)
-class DataClass where
+  method (n : Nat := pairSum (limit, 3)) (extra : Nat := 0) : Nat := pairSum (n, limit) + extra
+class DataClass (left : Nat := 0) (right : Nat := left) where
   value : Nat := pairSum (1, 2)
-inductive DataBox (limit : Nat := pairSum (1, 2)) where
-  | mk (value : Fin (pairSum (limit, 1))) : DataBox limit
+inductive DataBox (limit : Nat := pairSum (1, 2)) (unused : Nat := 0) where
+  | mk (value : Fin (pairSum (limit, 1))) (tag : Nat := 0) : DataBox limit unused
 def packet : DataPacket := { value := ⟨1, by decide⟩ }
 def classValue : DataClass := {}
 def box : DataBox := .mk ⟨1, by decide⟩
@@ -34,14 +34,14 @@ private theorem packetMethod : packet.method = 9 := rfl
 private theorem classDefault : classValue.value = 3 := rfl
 '''
 ps = '''function pairSum(p: Nat × Nat): Nat := p.1 + p.2
-structure DataPacket (limit : Nat := pairSum((1, 2))) where
+structure DataPacket (limit: Nat := pairSum((1, 2)), unused: Nat := 0) where
   value : Fin(pairSum((limit, 1)))
   count : Nat := pairSum((limit, 2))
-  method (n : Nat := pairSum((limit, 3))) : Nat := pairSum((n, limit))
-class DataClass where
+  method (n: Nat := pairSum((limit, 3)), extra: Nat := 0) : Nat := pairSum((n, limit)) + extra
+class DataClass (left: Nat := 0, right: Nat := left) where
   value : Nat := pairSum((1, 2))
-inductive DataBox (limit : Nat := pairSum((1, 2))) where
-  | mk (value : Fin(pairSum((limit, 1)))) : DataBox(limit)
+inductive DataBox (limit: Nat := pairSum((1, 2)), unused: Nat := 0) where
+  | mk (value: Fin(pairSum((limit, 1))), tag: Nat := 0) : DataBox(limit, unused)
 def packet : DataPacket := { value := ⟨1, by decide⟩ }
 def classValue : DataClass := {}
 def box : DataBox := .mk ⟨1, by decide⟩
