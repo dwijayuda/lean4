@@ -19250,24 +19250,44 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Monitor exact native Lake sliced compiler run 42885813901 without repinning for ledger-only changes; require final full graph/census/link/runtime, actual PS-built second stage and independent complete-artifact audit",
+    "nextAction": "Monitor stage-one-compiler job 130154095736 in exact full candidate 42885813901; preserve remaining full graph/link/runtime/census, actual PS-built second stage and complete audit gates",
     "currentPSCompilerCandidate": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
       "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
       "run": 42885813901,
       "qualificationJob": 130073735643,
-      "job": 130075349238,
+      "job": 130154095736,
       "status": "IN_PROGRESS",
-      "phase": "stage-one-base",
-      "observedAt": "2026-11-10 19:33:37 UTC",
+      "phase": "stage-one-compiler",
+      "observedAt": "2026-11-10T21:55:23Z",
       "pr": 255,
-      "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification"
+      "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification",
+      "basePhase": {
+        "job": 130075349238,
+        "status": "PASS",
+        "targets": 1147,
+        "checkpointFiles": 38949,
+        "artifact": 13806062082,
+        "auditRun": 42909326507,
+        "auditJob": 130155498486,
+        "evidenceField": "nativeLakeBasePhase"
+      }
     },
     "nativeLakeCheckpointQualification": {
       "run": 42885800377,
       "status": "PASS",
       "scope": "Actual library dependency .ps/C/export-object/public-olean transported across fresh Linux jobs; every retained file rehashed; native Lake reused dependency for both warm module build and complete final library/executable build with bytes AND nanosecond mtimes unchanged, then linked executable ran. Not full compiler qualification.",
       "evidenceField": "nativeLakeCheckpointQualification"
+    },
+    "nativeLakeBasePhase": {
+      "run": 42885813901,
+      "job": 130075349238,
+      "status": "PASS_BASE_PHASE_ONLY",
+      "targets": 1147,
+      "auditRun": 42909326507,
+      "auditJob": 130155498486,
+      "actualTargetOutputFilesRehashed": 3441,
+      "evidenceField": "nativeLakeBasePhase"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -84708,12 +84728,22 @@
       "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
       "run": 42885813901,
       "qualificationJob": 130073735643,
-      "job": 130075349238,
+      "job": 130154095736,
       "status": "IN_PROGRESS",
-      "phase": "stage-one-base",
-      "observedAt": "2026-11-10 19:33:37 UTC",
+      "phase": "stage-one-compiler",
+      "observedAt": "2026-11-10T21:55:23Z",
       "pr": 255,
-      "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification"
+      "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification",
+      "basePhase": {
+        "job": 130075349238,
+        "status": "PASS",
+        "targets": 1147,
+        "checkpointFiles": 38949,
+        "artifact": 13806062082,
+        "auditRun": 42909326507,
+        "auditJob": 130155498486,
+        "evidenceField": "nativeLakeBasePhase"
+      }
     },
     "previousGatedRun": {
       "runner": "393041005464aaa83430eed6a5981dd6237af028",
@@ -84729,7 +84759,71 @@
     ],
     "goalStatus": "ACTIVE",
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "basePhase": {
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
+      "run": 42885813901,
+      "job": 130075349238,
+      "phase": "stage-one-base",
+      "status": "PASS",
+      "nativeLakeJobs": 2296,
+      "moduleObjectTargets": 1147,
+      "checkpointFiles": 38949,
+      "preparedPSFiles": 2569,
+      "actualByteEqualSources": 402,
+      "artifacts": [
+        {
+          "id": 13806062082,
+          "name": "ps0-compiler-checkpoint-1-base-b75a583592dc8bbe9046fd6e93784d8ef0365580-42885813901",
+          "size_in_bytes": 679040785,
+          "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4"
+        },
+        {
+          "id": 13805912397,
+          "name": "ps0-compiler-slice-evidence-1-base-b75a583592dc8bbe9046fd6e93784d8ef0365580-42885813901",
+          "size_in_bytes": 107808912,
+          "digest": "sha256:6c8bcec319562eabc493a835b456c065749be65bf074b74a83b822f7c8481a49"
+        }
+      ],
+      "audit": {
+        "actual_target_output_files_rehashed": 3441,
+        "checkpoint_files_rehashed": 38949,
+        "compiled_target_modules": 1147,
+        "grammar_migration_complete": false,
+        "mapped_censuses_rehashed": 1147,
+        "prepared_ps_files_rehashed": 2569,
+        "producer_artifact": 13806062082,
+        "producer_job": 130075349238,
+        "producer_run": 42885813901,
+        "schema": "ps0-independent-native-lake-base-checkpoint-audit/1",
+        "scope": "Actual retained base sources/C/export-object/public-olean files and mapped censuses independently rehashed; base phase only, no full compiler graph/link/runtime/second-stage/fixed-point or native-SDK byte-parity qualification",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "status": "PASS",
+        "totals": {
+          "data_declarations": 1015,
+          "definitions": 8145,
+          "initialization_commands": 1
+        },
+        "verified_execution": false,
+        "runner": "631454ed1b56d692abaaa40c9cb32d27299528f3",
+        "run": 42909326507,
+        "job": 130155498486,
+        "artifacts": [
+          {
+            "id": 13806317589,
+            "name": "ps0-base-checkpoint-independent-audit-b75a583592dc8bbe9046fd6e93784d8ef0365580-42909326507",
+            "digest": "sha256:3526d9274a52bf1f3e13834b9b0c3885b5be838fe3825ac551efa14fc55ea462"
+          }
+        ]
+      },
+      "nextPhase": {
+        "name": "stage-one-compiler",
+        "job": 130154095736,
+        "status": "IN_PROGRESS"
+      },
+      "scope": "1147 actual Init/Std native module object targets and independently rehashed retained outputs/censuses only; no complete compiler graph/link/runtime/PS-built second-stage/fixed-point qualification"
+    }
   },
   "timedCompilerGraphCurrentPartialAudit": {
     "actual_byte_equal_to_original_sources": 402,
@@ -84781,5 +84875,69 @@
         "digest": "sha256:4dd300cd7988ed93aee644d237e43d97bb84f02c290904c01ded48d8ad7e8abe"
       }
     ]
+  },
+  "nativeLakeBasePhase": {
+    "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+    "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
+    "run": 42885813901,
+    "job": 130075349238,
+    "phase": "stage-one-base",
+    "status": "PASS",
+    "nativeLakeJobs": 2296,
+    "moduleObjectTargets": 1147,
+    "checkpointFiles": 38949,
+    "preparedPSFiles": 2569,
+    "actualByteEqualSources": 402,
+    "artifacts": [
+      {
+        "id": 13806062082,
+        "name": "ps0-compiler-checkpoint-1-base-b75a583592dc8bbe9046fd6e93784d8ef0365580-42885813901",
+        "size_in_bytes": 679040785,
+        "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4"
+      },
+      {
+        "id": 13805912397,
+        "name": "ps0-compiler-slice-evidence-1-base-b75a583592dc8bbe9046fd6e93784d8ef0365580-42885813901",
+        "size_in_bytes": 107808912,
+        "digest": "sha256:6c8bcec319562eabc493a835b456c065749be65bf074b74a83b822f7c8481a49"
+      }
+    ],
+    "audit": {
+      "actual_target_output_files_rehashed": 3441,
+      "checkpoint_files_rehashed": 38949,
+      "compiled_target_modules": 1147,
+      "grammar_migration_complete": false,
+      "mapped_censuses_rehashed": 1147,
+      "prepared_ps_files_rehashed": 2569,
+      "producer_artifact": 13806062082,
+      "producer_job": 130075349238,
+      "producer_run": 42885813901,
+      "schema": "ps0-independent-native-lake-base-checkpoint-audit/1",
+      "scope": "Actual retained base sources/C/export-object/public-olean files and mapped censuses independently rehashed; base phase only, no full compiler graph/link/runtime/second-stage/fixed-point or native-SDK byte-parity qualification",
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "status": "PASS",
+      "totals": {
+        "data_declarations": 1015,
+        "definitions": 8145,
+        "initialization_commands": 1
+      },
+      "verified_execution": false,
+      "runner": "631454ed1b56d692abaaa40c9cb32d27299528f3",
+      "run": 42909326507,
+      "job": 130155498486,
+      "artifacts": [
+        {
+          "id": 13806317589,
+          "name": "ps0-base-checkpoint-independent-audit-b75a583592dc8bbe9046fd6e93784d8ef0365580-42909326507",
+          "digest": "sha256:3526d9274a52bf1f3e13834b9b0c3885b5be838fe3825ac551efa14fc55ea462"
+        }
+      ]
+    },
+    "nextPhase": {
+      "name": "stage-one-compiler",
+      "job": 130154095736,
+      "status": "IN_PROGRESS"
+    },
+    "scope": "1147 actual Init/Std native module object targets and independently rehashed retained outputs/censuses only; no complete compiler graph/link/runtime/PS-built second-stage/fixed-point qualification"
   }
 }
