@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import time
 from native_census_cache import NativeCensusCache, needs_head_lexical_refresh, needs_initializer_refresh, needs_data_refresh, OPERATOR_SCOPE
+from native_compiler_prefix import verify_compiler_prefix
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--driver', type=Path)
@@ -19,16 +20,29 @@ parser.add_argument('--plan-source')
 parser.add_argument('--native-censuses', type=Path)
 parser.add_argument('--census-source')
 parser.add_argument('--prepare-only', action='store_true')
+parser.add_argument('--stage-artifact', type=Path)
+parser.add_argument('--stage-source')
 args = parser.parse_args()
 if bool(args.native_censuses) != bool(args.census_source):
     parser.error('--native-censuses and --census-source must be supplied together')
 if (args.native_censuses or args.prepare_only) and not args.source_plans:
     parser.error('native census reuse and preparation-only require --source-plans')
+if bool(args.stage_artifact) != bool(args.stage_source):
+    parser.error('--stage-artifact and --stage-source must be supplied together')
+if args.stage_artifact and (args.driver or args.compare or args.prepare_only or not args.source_plans):
+    parser.error('verified stage artifact requires full PS grammar build without separate driver/compare/prepare-only options')
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
+stage = verify_compiler_prefix(args.stage_artifact, args.stage_source) if args.stage_artifact else None
+if stage:
+    args.driver, args.compare = Path(stage['driver']), Path(stage['migration'])
 driver = (args.driver or ROOT / '.lake/build/bin/ps0').resolve()
 evidence = ROOT / 'build/compiler-evidence'
 evidence.mkdir(parents=True, exist_ok=True)
+if stage:
+    (evidence / 'stage-prefix-verification.json').write_text(json.dumps(stage, indent=2) + '\n')
+    # GitHub artifact extraction does not preserve executable permission bits.
+    driver.chmod(driver.stat().st_mode | 0o100)
 work = ROOT / 'build' / ('compiler-ps-' + os.environ.get('GITHUB_RUN_ID', str(os.getpid())))
 source = work / 'src'
 source.mkdir(parents=True, exist_ok=False)
@@ -390,7 +404,7 @@ result['compiler_prefix'] = {
     'dependencies': 'explicit pinned Lean SDK; PS0 metadata is the actual all-PS graph output',
 }
 (prefix / 'compiler-prefix.json').write_text(json.dumps({
-    'source_commit': result['source_commit'], 'lean_commit': LEAN,
+    'schema': 'ps0-compiler-prefix/1', 'source_commit': result['source_commit'], 'lean_commit': LEAN,
     **result['compiler_prefix'], 'verified_execution': False,
 }, indent=2) + '\n')
 print('PS0_PS_BUILT_COMPILER_GRAMMAR_HOST: PASS; metadata_files=' + str(len(host['host_metadata'])), flush=True)
