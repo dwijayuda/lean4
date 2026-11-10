@@ -846,10 +846,8 @@ private def lowerLoopAnnotationWith
   return source.setArg 0 (clause.setArg 1 payload)
 
 set_option maxHeartbeats 800000 in
-private def lowerDoElemWith
-    (lowerTerm lowerIf lowerAnnotation lowerSequence lowerTry lowerId lowerRec lowerUnless
-      lowerPatternBind lowerType lowerElement lowerBody : Lean.Syntax → MacroM Lean.Syntax)
-    (lowerMatch : Lean.Syntax → Bool → MacroM Lean.Syntax)
+private def lowerDoLoopWith
+    (lowerTerm lowerIf lowerAnnotation lowerSequence : Lean.Syntax → MacroM Lean.Syntax)
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if source.isOfKind ``Lean.Parser.Term.doWhile then
     unless source.getArgs.size == 6 do Macro.throwError "PS0V1-WHILE: unexpected native loop"
@@ -875,6 +873,45 @@ private def lowerDoElemWith
     let source := source.setArg 3 (← lowerAnnotation source[3])
     return source.setArg 5
       (← lowerSequence source[5])
+  Macro.throwError "PS0V1-DO-LOOP: unsupported native loop"
+
+set_option maxHeartbeats 800000 in
+private def lowerDoQuotedWith
+    (lowerTerm lowerBody : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  match source with
+  | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
+      let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)
+      let value : TSyntax `term := ⟨← lowerBody value.raw⟩
+      return (← `(doElem| let mut $name:ident $[: $ty:term]? := $value)).raw
+  | `(psDoElem| let $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
+      let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)
+      let value : TSyntax `term := ⟨← lowerBody value.raw⟩
+      return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
+  | `(psDoElem| let $name:ident ← $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+      let action : TSyntax `doElem := ⟨.node (loweringInfo source)
+        ``Lean.Parser.Term.doExpr #[value.raw]⟩
+      return (← `(doElem| let $name:ident ← $action:doElem)).raw
+  | `(psDoElem| $name:ident := $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+      return (← `(doElem| $name:ident := $value:term)).raw
+  | `(psDoElem| $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+      return (← `(doElem| $value:term)).raw
+  | `(psDoElem| $native:doElem) => return native.raw
+  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
+
+
+set_option maxHeartbeats 800000 in
+private def lowerDoElemWith
+    (lowerTerm lowerIf lowerAnnotation lowerSequence lowerTry lowerId lowerRec lowerUnless
+      lowerPatternBind lowerType lowerElement lowerLoop lowerQuoted : Lean.Syntax → MacroM Lean.Syntax)
+    (lowerMatch : Lean.Syntax → Bool → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if #[``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil,
+      ``Lean.Parser.Term.doFor].contains source.getKind then
+    return ← lowerLoop source
   if source.isOfKind ``Lean.Parser.Term.doTry then
     return ← lowerTry source
   if source.isOfKind ``Lean.Parser.Term.doMatch then
@@ -933,28 +970,7 @@ private def lowerDoElemWith
   if source.isOfKind ``Lean.Parser.Term.doExpr then
     unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-EXPRESSION: unexpected native expression"
     return source.setArg 0 (← lowerTerm source[0])
-  match source with
-  | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
-      let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)
-      let value : TSyntax `term := ⟨← lowerBody value.raw⟩
-      return (← `(doElem| let mut $name:ident $[: $ty:term]? := $value)).raw
-  | `(psDoElem| let $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
-      let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)
-      let value : TSyntax `term := ⟨← lowerBody value.raw⟩
-      return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
-  | `(psDoElem| let $name:ident ← $value:psTerm) => do
-      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
-      let action : TSyntax `doElem := ⟨.node (loweringInfo source)
-        ``Lean.Parser.Term.doExpr #[value.raw]⟩
-      return (← `(doElem| let $name:ident ← $action:doElem)).raw
-  | `(psDoElem| $name:ident := $value:psTerm) => do
-      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
-      return (← `(doElem| $name:ident := $value:term)).raw
-  | `(psDoElem| $value:psTerm) => do
-      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
-      return (← `(doElem| $value:term)).raw
-  | `(psDoElem| $native:doElem) => return native.raw
-  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
+  lowerQuoted source
 
 
 set_option maxHeartbeats 800000 in
@@ -1071,7 +1087,9 @@ partial def lowerBodyValue (source : Lean.Syntax) : MacroM Lean.Syntax := withRe
 partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax :=
   lowerDoElemWith (lower `psTerm) lowerNativeIfRole lowerNativeLoopAnnotation
     lowerNativeDoSequence lowerNativeTry lowerNativeLocalId lowerNativeRecursiveDeclarations
-    lowerNativeUnless lowerNativePatternBind lowerNativeOptionalType lowerDoElem lowerBodyValue
+    lowerNativeUnless lowerNativePatternBind lowerNativeOptionalType lowerDoElem
+    (lowerDoLoopWith (lower `psTerm) lowerNativeIfRole lowerNativeLoopAnnotation lowerNativeDoSequence)
+    (lowerDoQuotedWith (lower `psTerm) lowerBodyValue)
     (fun value mode => lowerNativeMatch value mode) source
 
 partial def lowerNativeLoopAnnotation (source : Lean.Syntax) : MacroM Lean.Syntax :=
