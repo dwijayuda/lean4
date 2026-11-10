@@ -18892,10 +18892,28 @@
       }
     },
     "loopAnnotationCandidate": {
+      "source": "bcdafe40978431f0a3cb44d66dc8e4a063c4724d",
+      "runner": "89dd699acdad22f7a4aaf60957fb8bed30481665",
+      "status": "PENDING_LINUX",
+      "scope": "loop annotation pattern/type/body/measure roles; Std.WP parity module and explicit source origins",
+      "positiveRun": 42729122233,
+      "negativeRun": 42729122239,
+      "plannedOriginCases": 32,
+      "plannedInvalidGapRejections": 31,
+      "plannedLoopContractDefinitions": 6,
+      "grammarMigrationComplete": false,
+      "verified_execution": false,
+      "structuralContinuation": "Native do-element structural builder moved outside the mutual lowering command using explicit callbacks. Per-command scoped heartbeat limit remains 800000; target trust/checker options unchanged."
+    },
+    "loopAnnotationBuildFailure": {
       "source": "7ef09e02786d4fd0c32c4a5cc935cfdc91647de7",
       "runner": "3a59ebb124e8952d48f0b874b29d817862e610ec",
-      "status": "PENDING",
-      "scope": "loop annotation pattern/type/body/measure roles; Std.WP parity module and explicit source origins"
+      "positiveRun": 42727743945,
+      "positiveJob": 129537626414,
+      "negativeRun": 42727744081,
+      "negativeJob": 129537626786,
+      "status": "CLEAN_ADAPTER_BUILD_FAILED_NO_TARGET_TESTS",
+      "error": "HostCategories.lean:959:86 deterministic isDefEq timeout, 800000; clean adapter build failed; no target tests ran"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -78753,9 +78771,33 @@
     }
   },
   "loopAnnotationCandidate": {
+    "source": "bcdafe40978431f0a3cb44d66dc8e4a063c4724d",
+    "runner": "89dd699acdad22f7a4aaf60957fb8bed30481665",
+    "status": "PENDING_LINUX",
+    "scope": "loop annotation pattern/type/body/measure roles; Std.WP parity module and explicit source origins",
+    "positiveRun": 42729122233,
+    "negativeRun": 42729122239,
+    "plannedOriginCases": 32,
+    "plannedInvalidGapRejections": 31,
+    "plannedLoopContractDefinitions": 6,
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "structuralContinuation": "Native do-element structural builder moved outside the mutual lowering command using explicit callbacks. Per-command scoped heartbeat limit remains 800000; target trust/checker options unchanged."
+  },
+  "loopAnnotationBuildFailure": {
     "source": "7ef09e02786d4fd0c32c4a5cc935cfdc91647de7",
     "runner": "3a59ebb124e8952d48f0b874b29d817862e610ec",
-    "status": "PENDING",
-    "scope": "loop annotation pattern/type/body/measure roles; Std.WP parity module and explicit source origins"
+    "positiveRun": 42727743945,
+    "positiveJob": 129537626414,
+    "negativeRun": 42727744081,
+    "negativeJob": 129537626786,
+    "status": "CLEAN_ADAPTER_BUILD_FAILED_NO_TARGET_TESTS",
+    "error": "HostCategories.lean:959:86 deterministic isDefEq timeout, 800000; clean adapter build failed; no target tests ran"
+  },
+  "sourceFidelityLegacyDiagnosticGap": {
+    "status": "OPEN",
+    "owner": "PS0Main.checkSourceEnvironment / Elab.runFrontend",
+    "reason": "Prepared source header injection shifts CLI diagnostic positions; retained Lake origin maps are a separate interface",
+    "grammarMigrationComplete": false
   }
 }

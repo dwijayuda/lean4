@@ -1,5 +1,13 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-10 — loop annotation adapter build failure and structural continuation
+
+Source **7ef09e02786d4fd0c32c4a5cc935cfdc91647de7**, runner **3a59ebb124e8952d48f0b874b29d817862e610ec**, failed both clean Linux adapter builds: [42727743945 / 129537626414](https://github.com/dwijayuda/pskernel/actions/runs/42727743945/job/129537626414) and [42727744081 / 129537626786](https://github.com/dwijayuda/pskernel/actions/runs/42727744081/job/129537626786). **HostCategories.lean:959:86 deterministic isDefEq timeout, 800000; clean adapter build failed; no target tests ran**. No annotation target tests ran; planned counts are not qualified.
+
+Native do-element structural builder moved outside the mutual lowering command using explicit callbacks. Per-command scoped heartbeat limit remains 800000; target trust/checker options unchanged. Candidate **bcdafe40978431f0a3cb44d66dc8e4a063c4724d**, runner **89dd699acdad22f7a4aaf60957fb8bed30481665**, is pending: [positive 42729122233](https://github.com/dwijayuda/pskernel/actions/runs/42729122233) and [boundary 42729122239](https://github.com/dwijayuda/pskernel/actions/runs/42729122239). The existing 48-definition / 28-origin / 27-rejection qualified checkpoint remains separate.
+
+Source fidelity remains incomplete: the legacy check command directly reports Lean positions in prepared source after generated header injection. Lake's retained origin maps do not by themselves correct that CLI diagnostic. No all-source grammar or fixed-point completion is claimed.
+
 ## 2026-11-10 — constructor/show/have/while/repeat finite stage and independent artifacts PASS
 
 **Finite stage PASS**, source **b1e17376da88660afbe16d313a2a31dd209c280e**, runner **f34697e024d118a467ebc7a282f62bc456902352**, [42725142448 / 129528726782](https://github.com/dwijayuda/pskernel/actions/runs/42725142448/job/129528726782): **48 mapped definitions / 43 private proof guards / 28 origin cases / 27 invalid PS gap rejections**, plus the bounded native/PS parenthesis probe. New thin adapters cover anonymous constructor values, show type/from/by values, named pure have including a local default, and while/repeat conditions and bodies. Native patterns, proof binders, control tokens, source nodes, direct tactic sequences and native loop structure remain intact. Lean deliberately uses **Lean.Parser.Term.byTactic'** for show-by; both planner and lowering preserve that prime node. Nonrecursive structural builders now use explicit callbacks in separate elaboration commands. The maximum remains **800000 per scoped implementation command**, with target checker/trust options unchanged.
