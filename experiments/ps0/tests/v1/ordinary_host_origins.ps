@@ -18,7 +18,7 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
     ``Lean.Parser.Term.«forall», `termIfLet, ``Lean.Parser.Term.letPatDecl,
     `interpolatedStrLitKind, ``Lean.Parser.Term.anonymousCtor, ``Lean.Parser.Term.«show»,
     ``Lean.Parser.Term.fromTerm, ``Lean.Parser.Term.«have»,
-    ``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil]
+    ``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil, ``Lean.Parser.Term.byTactic']
   let mut count := 0
   if selected.contains kind then
     let some lowered := sameHostNode? after before
@@ -39,7 +39,7 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
       else if kind == ``Lean.Parser.Term.doCatchMatch || kind == ``Lean.Parser.Term.doFinally then #[0]
       else if kind == `termDepIfThenElse then #[0, 1, 2, 4, 6]
       else if kind == ``Lean.Parser.Term.typeAscription then #[0, 2, 4]
-      else if kind == ``Lean.Parser.Term.byTactic then #[0]
+      else if kind == ``Lean.Parser.Term.byTactic || kind == ``Lean.Parser.Term.byTactic' then #[0]
       else if kind == `termS!_ || kind == `interpolatedStrLitKind then #[0]
       else if kind == ``Lean.Parser.Term.«forall» then #[0, 3]
       else if kind == `termIfLet then #[0, 1, 2, 3, 5, 7]

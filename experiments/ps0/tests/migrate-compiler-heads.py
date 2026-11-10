@@ -98,7 +98,7 @@ def single_type_call(operand, role='owned binder type'):
             assert len(rhs['args']) == 2
             single_type_call(rhs['args'][1], role + ' show value')
         else:
-            assert rhs['kind'] == 'Lean.Parser.Term.byTactic' and len(rhs['args']) == 2
+            assert rhs['kind'] == "Lean.Parser.Term.byTactic'" and len(rhs['args']) == 2
             where_tactics(rhs['args'][1])
         return
     if operand['kind'] == 'termS!_':

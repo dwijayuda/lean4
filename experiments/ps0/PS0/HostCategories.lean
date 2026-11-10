@@ -511,7 +511,7 @@ private partial def checkProjectionSubject (source : Lean.Syntax) : MacroM Unit 
         (if argument.isOfKind ``Lean.Parser.Term.namedArgument then argument[3] else argument)
 
 private def lowerAggregateValue
-    (lowerTerm lowerBinder lowerOptionalType : Lean.Syntax → MacroM Lean.Syntax)
+    (lowerTerm lowerBinder lowerOptionalType lowerTactics : Lean.Syntax → MacroM Lean.Syntax)
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if source.isOfKind ``Lean.Parser.Term.«show» then
     unless source.getArgs.size == 3 do Macro.throwError "PS0V1-SHOW: unexpected native type/value roles"
@@ -519,8 +519,8 @@ private def lowerAggregateValue
     let rhs := source[2]
     if rhs.isOfKind ``Lean.Parser.Term.fromTerm && rhs.getArgs.size == 2 then
       return source.setArg 2 (rhs.setArg 1 (← lowerTerm rhs[1]))
-    if rhs.isOfKind ``Lean.Parser.Term.byTactic then
-      return source.setArg 2 (← lowerTerm rhs)
+    if rhs.isOfKind ``Lean.Parser.Term.byTactic' && rhs.getArgs.size == 2 then
+      return source.setArg 2 (rhs.setArg 1 (← lowerTactics rhs[1]))
     Macro.throwError "PS0V1-SHOW-RHS: unexpected native value/tactic grammar"
   if source.isOfKind ``Lean.Parser.Term.tuple then
     unless source.getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native delimiters"
@@ -776,7 +776,8 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     if #[``Lean.Parser.Term.tuple, ``Lean.Parser.Term.anonymousCtor, ``Lean.Parser.Term.«show»,
         `«term[_]», `«term#[_,]», `termS!_,
         ``Lean.Parser.Term.«forall», `termIfLet].contains source.getKind then
-      return ← lowerAggregateValue (lower `psTerm) lowerNativeLocalBinder lowerNativeOptionalType source
+      return ← lowerAggregateValue (lower `psTerm) lowerNativeLocalBinder lowerNativeOptionalType
+        lowerNativeTacticSequence source
     if #[`termDepIfThenElse, ``Lean.Parser.Term.typeAscription,
         ``Lean.Parser.Term.byTactic, ``Lean.Parser.Term.structInst, ``Lean.Parser.Term.«match»,
         ``Lean.Parser.Term.«let», ``Lean.Parser.Term.«have», ``Lean.Parser.Term.letrec, ``Lean.Parser.Term.termUnless,
