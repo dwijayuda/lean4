@@ -16647,28 +16647,30 @@
       }
     },
     "loopAnnotationCandidate": {
-      "source": "bcdafe40978431f0a3cb44d66dc8e4a063c4724d",
-      "runner": "89dd699acdad22f7a4aaf60957fb8bed30481665",
-      "status": "PENDING_LINUX",
+      "source": "69b59de262563d8b45385774462f52e828182544",
+      "runner": "82e488a7ecc6569651f9f9155efe6a2c06063827",
+      "status": "PENDING_TARGET_TESTS_CLEAN_BUILD_PASSED",
       "scope": "loop annotation pattern/type/body/measure roles; Std.WP parity module and explicit source origins",
-      "positiveRun": 42729122233,
-      "negativeRun": 42729122239,
+      "positiveRun": 42730074884,
+      "negativeRun": 42730075142,
       "plannedOriginCases": 32,
       "plannedInvalidGapRejections": 31,
       "plannedLoopContractDefinitions": 6,
       "grammarMigrationComplete": false,
       "verified_execution": false,
-      "structuralContinuation": "Native do-element structural builder moved outside the mutual lowering command using explicit callbacks. Per-command scoped heartbeat limit remains 800000; target trust/checker options unchanged."
+      "structuralContinuation": "Separate native loop, native do-element and PS do-quotation callback builders; unchanged 800000 per scoped command",
+      "positiveJob": 129545553233,
+      "negativeJob": 129545560351
     },
     "loopAnnotationBuildFailure": {
-      "source": "7ef09e02786d4fd0c32c4a5cc935cfdc91647de7",
-      "runner": "3a59ebb124e8952d48f0b874b29d817862e610ec",
-      "positiveRun": 42727743945,
-      "positiveJob": 129537626414,
-      "negativeRun": 42727744081,
-      "negativeJob": 129537626786,
+      "source": "bcdafe40978431f0a3cb44d66dc8e4a063c4724d",
+      "runner": "89dd699acdad22f7a4aaf60957fb8bed30481665",
+      "positiveRun": 42729122233,
+      "positiveJob": 129542315705,
+      "negativeRun": 42729122239,
+      "negativeJob": 129542315507,
       "status": "CLEAN_ADAPTER_BUILD_FAILED_NO_TARGET_TESTS",
-      "error": "HostCategories.lean:959:86 deterministic isDefEq timeout, 800000; clean adapter build failed; no target tests ran"
+      "error": "HostCategories.lean:853:66 deterministic isDefEq timeout at unchanged 800000 in extracted do builder; downstream unknown helper is consequent; no target tests ran"
     },
     "loop48MatrixArtifactQualification": {
       "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
@@ -16873,6 +16875,18 @@
       "fullGraphBuild": false,
       "grammarMigrationComplete": false,
       "verified_execution": false
+    },
+    "sufficesTestFirstCandidate": {
+      "source": "69b59de262563d8b45385774462f52e828182544",
+      "runner": "82e488a7ecc6569651f9f9155efe6a2c06063827",
+      "run": 42730075500,
+      "job": 129545560050,
+      "status": "PENDING_TEST_FIRST",
+      "cases": [
+        "suffices-body",
+        "suffices-type",
+        "suffices-continuation"
+      ]
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -76934,28 +76948,30 @@
     }
   },
   "loopAnnotationCandidate": {
-    "source": "bcdafe40978431f0a3cb44d66dc8e4a063c4724d",
-    "runner": "89dd699acdad22f7a4aaf60957fb8bed30481665",
-    "status": "PENDING_LINUX",
+    "source": "69b59de262563d8b45385774462f52e828182544",
+    "runner": "82e488a7ecc6569651f9f9155efe6a2c06063827",
+    "status": "PENDING_TARGET_TESTS_CLEAN_BUILD_PASSED",
     "scope": "loop annotation pattern/type/body/measure roles; Std.WP parity module and explicit source origins",
-    "positiveRun": 42729122233,
-    "negativeRun": 42729122239,
+    "positiveRun": 42730074884,
+    "negativeRun": 42730075142,
     "plannedOriginCases": 32,
     "plannedInvalidGapRejections": 31,
     "plannedLoopContractDefinitions": 6,
     "grammarMigrationComplete": false,
     "verified_execution": false,
-    "structuralContinuation": "Native do-element structural builder moved outside the mutual lowering command using explicit callbacks. Per-command scoped heartbeat limit remains 800000; target trust/checker options unchanged."
+    "structuralContinuation": "Separate native loop, native do-element and PS do-quotation callback builders; unchanged 800000 per scoped command",
+    "positiveJob": 129545553233,
+    "negativeJob": 129545560351
   },
   "loopAnnotationBuildFailure": {
-    "source": "7ef09e02786d4fd0c32c4a5cc935cfdc91647de7",
-    "runner": "3a59ebb124e8952d48f0b874b29d817862e610ec",
-    "positiveRun": 42727743945,
-    "positiveJob": 129537626414,
-    "negativeRun": 42727744081,
-    "negativeJob": 129537626786,
+    "source": "bcdafe40978431f0a3cb44d66dc8e4a063c4724d",
+    "runner": "89dd699acdad22f7a4aaf60957fb8bed30481665",
+    "positiveRun": 42729122233,
+    "positiveJob": 129542315705,
+    "negativeRun": 42729122239,
+    "negativeJob": 129542315507,
     "status": "CLEAN_ADAPTER_BUILD_FAILED_NO_TARGET_TESTS",
-    "error": "HostCategories.lean:959:86 deterministic isDefEq timeout, 800000; clean adapter build failed; no target tests ran"
+    "error": "HostCategories.lean:853:66 deterministic isDefEq timeout at unchanged 800000 in extracted do builder; downstream unknown helper is consequent; no target tests ran"
   },
   "sourceFidelityLegacyDiagnosticGap": {
     "status": "OPEN",
@@ -77166,5 +77182,29 @@
     "fullGraphBuild": false,
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "loopAnnotationBuildFailureHistory": [
+    {
+      "source": "7ef09e02786d4fd0c32c4a5cc935cfdc91647de7",
+      "runner": "3a59ebb124e8952d48f0b874b29d817862e610ec",
+      "positiveRun": 42727743945,
+      "positiveJob": 129537626414,
+      "negativeRun": 42727744081,
+      "negativeJob": 129537626786,
+      "status": "CLEAN_ADAPTER_BUILD_FAILED_NO_TARGET_TESTS",
+      "error": "HostCategories.lean:959:86 deterministic isDefEq timeout, 800000; clean adapter build failed; no target tests ran"
+    }
+  ],
+  "sufficesTestFirstCandidate": {
+    "source": "69b59de262563d8b45385774462f52e828182544",
+    "runner": "82e488a7ecc6569651f9f9155efe6a2c06063827",
+    "run": 42730075500,
+    "job": 129545560050,
+    "status": "PENDING_TEST_FIRST",
+    "cases": [
+      "suffices-body",
+      "suffices-type",
+      "suffices-continuation"
+    ]
   }
 }
