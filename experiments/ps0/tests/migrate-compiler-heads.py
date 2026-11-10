@@ -76,6 +76,20 @@ def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
     # Quotation, DSL and other native syntax remain opaque.
     parts = operand['args']
+    if operand['kind'] == 'Lean.Parser.Term.nestedAction':
+        assert len(parts) == 2
+        do_element(parts[1])
+        return
+    if operand['kind'] == 'Lean.Parser.Term.termReturn':
+        assert len(parts) == 2 and len(parts[1]['args']) <= 1
+        if parts[1]['args']:
+            single_type_call(parts[1]['args'][0], role + ' term return value')
+        return
+    if operand['kind'] in ['Lean.Parser.Term.termFor', 'Lean.Parser.Term.termTry']:
+        native_kind = {'Lean.Parser.Term.termFor': 'Lean.Parser.Term.doFor',
+                       'Lean.Parser.Term.termTry': 'Lean.Parser.Term.doTry'}[operand['kind']]
+        do_element({**operand, 'kind': native_kind})
+        return
     if operand['kind'] == 'Lean.Parser.Term.tuple':
         assert len(parts) == 3 and len(parts[1]['args']) in [0, 3]
         if parts[1]['args']:

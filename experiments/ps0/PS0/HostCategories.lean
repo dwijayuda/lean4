@@ -46,6 +46,12 @@ private def operands (roles : Array (Name × Name)) (parser : Parser) : Parser :
 @[run_parser_attribute_hooks] def returnElem : Parser :=
   operands #[(`term, `psTerm)] Lean.Parser.Term.doReturn
 
+@[run_parser_attribute_hooks] def nestedActionTerm : Parser :=
+  operands #[(`doElem, `psDoElem)] Lean.Parser.Term.nestedAction
+
+@[run_parser_attribute_hooks] def returnTerm : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.termReturn
+
 @[run_parser_attribute_hooks] def expressionElem : Parser :=
   operands #[(`term, `psTerm)] Lean.Parser.Term.doExpr
 
@@ -263,6 +269,11 @@ def forDeclaration : Parser :=
     "for " >> sepBy1 forDeclaration ", " >> optional loopInvariant >>
       optional loopDecreasing >> " do " >> sequence
 
+@[run_parser_attribute_hooks] def forTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.termFor leadPrec <|
+    "for " >> sepBy1 forDeclaration ", " >> optional loopInvariant >>
+      optional loopDecreasing >> " do " >> sequence
+
 def catchElem : Parser :=
   node ``Lean.Parser.Term.doCatch <|
     ppDedent ppLine >> atomic ("catch " >> Lean.Parser.Term.binderIdent) >>
@@ -277,6 +288,10 @@ def finallyElem : Parser :=
 
 @[run_parser_attribute_hooks] def tryElem : Parser :=
   leadingNode ``Lean.Parser.Term.doTry maxPrec <|
+    "try " >> sequence >> many (catchElem <|> catchMatchElem) >> optional finallyElem
+
+@[run_parser_attribute_hooks] def tryTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.termTry leadPrec <|
     "try " >> sequence >> many (catchElem <|> catchMatchElem) >> optional finallyElem
 
 @[run_parser_attribute_hooks] def namedLetTerm : Parser :=
@@ -385,6 +400,14 @@ def ps0LoopInstanceBinder : Lean.Parser.Parser := PS0.DoLayout.loopInstanceBinde
 syntax (name := ps0NativeDoElemBridge) (priority := low) PS0.DoLayout.nativeDoOperand : psDoElem
 @[psDoElem_parser 20000]
 def ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
+@[psTerm_parser 20000]
+def ps0NativeNestedAction : Lean.Parser.Parser := PS0.DoLayout.nestedActionTerm
+@[psTerm_parser 20000]
+def ps0NativeTermReturn : Lean.Parser.Parser := PS0.DoLayout.returnTerm
+@[psTerm_parser 20000]
+def ps0NativeTermFor : Lean.Parser.Parser := PS0.DoLayout.forTerm
+@[psTerm_parser 20000]
+def ps0NativeTermTry : Lean.Parser.Parser := PS0.DoLayout.tryTerm
 @[psDoElem_parser 20000]
 def ps0NativeDoExpression : Lean.Parser.Parser := PS0.DoLayout.expressionElem
 @[psDoElem_parser 20000]
@@ -885,7 +908,7 @@ private def lowerDoLoopWith
     let source := source.setArg 2 (← lowerAnnotation source[2])
     let source := source.setArg 3 (← lowerSequence source[3])
     return source.setArg 5 (← lowerTerm source[5])
-  if source.isOfKind ``Lean.Parser.Term.doFor then
+  if source.isOfKind ``Lean.Parser.Term.doFor || source.isOfKind ``Lean.Parser.Term.termFor then
     unless source.getArgs.size == 6 do Macro.throwError "PS0V1-DO-FOR: unexpected native loop"
     let declarations ← source[1].getArgs.mapM fun declaration => do
       if declaration.isAtom then return declaration
@@ -934,9 +957,9 @@ private def lowerDoElemWith
     (lowerMatch : Lean.Syntax → Bool → MacroM Lean.Syntax)
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if #[``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil,
-      ``Lean.Parser.Term.doFor].contains source.getKind then
+      ``Lean.Parser.Term.doFor, ``Lean.Parser.Term.termFor].contains source.getKind then
     return ← lowerLoop source
-  if source.isOfKind ``Lean.Parser.Term.doTry then
+  if source.isOfKind ``Lean.Parser.Term.doTry || source.isOfKind ``Lean.Parser.Term.termTry then
     return ← lowerTry source
   if source.isOfKind ``Lean.Parser.Term.doMatch then
     unless source.getArgs.size == 7 do
@@ -986,7 +1009,7 @@ private def lowerDoElemWith
   if source.isOfKind ``Lean.Parser.Term.doNested then
     unless source.getArgs.size == 2 do Macro.throwError "PS0V1-DO-NESTED: unexpected native block"
     return source.setArg 1 (← lowerSequence source[1])
-  if source.isOfKind ``Lean.Parser.Term.doReturn then
+  if source.isOfKind ``Lean.Parser.Term.doReturn || source.isOfKind ``Lean.Parser.Term.termReturn then
     unless source.getArgs.size == 2 && source[1].getArgs.size <= 1 do
       Macro.throwError "PS0V1-DO-RETURN: unexpected native return"
     if source[1].getArgs.isEmpty then return source
@@ -1004,6 +1027,12 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind ``Lean.Parser.Term.nestedAction then
+      unless source.getArgs.size == 2 do Macro.throwError "PS0V1-NESTED-ACTION: unexpected native action"
+      return source.setArg 1 (← lowerDoElem source[1])
+    if #[``Lean.Parser.Term.termReturn, ``Lean.Parser.Term.termFor,
+        ``Lean.Parser.Term.termTry].contains source.getKind then
+      return ← lowerDoElem source
     if #[``Lean.Parser.Term.tuple, ``Lean.Parser.Term.anonymousCtor, ``Lean.Parser.Term.«show»,
         ``Lean.Parser.Term.«suffices»,
         `«term[_]», `«term#[_,]», `termS!_,
