@@ -3,7 +3,6 @@ import PS0.StandardAdapters
 /-! Native syntax and source-origin controls for the four terminal graph-seventeen failures. -/
 
 open Lean
-open scoped PS0.StandardAdapters
 
 private partial def findIdent (source : Syntax) (name : Name) : Option Syntax :=
   if source.isIdent && source.getId == name then some source
@@ -20,6 +19,8 @@ private partial def firstDifference (native ps : Syntax) (path : List Nat := [])
   for i in [:native.getArgs.size] do
     if let some difference := firstDifference native[i] ps[i] (i :: path) then return some difference
   return none
+
+open scoped PS0.StandardAdapters
 
 run_cmd do
   let cases := #[
