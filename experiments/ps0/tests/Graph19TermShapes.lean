@@ -6,7 +6,11 @@ open Lean
 
 private partial def difference (native ps : Syntax) : Option String := Id.run do
   if native.isOfKind choiceKind && !ps.isOfKind choiceKind then
-    for alternative in native.getArgs do
+    -- Importing the PS host also registers its legacy native-category body sugar.
+    -- That PS-only branch is not a native Lean collection alternative.
+    let alternatives := native.getArgs.filter (! ·.isOfKind `PS0.pscvBracedExpression)
+    if alternatives.isEmpty then return some "no native control alternative"
+    for alternative in alternatives do
       if let some d := difference alternative ps then return some d
     return none
   if native.getKind != ps.getKind then return some s!"kind {native.getKind}/{ps.getKind}"

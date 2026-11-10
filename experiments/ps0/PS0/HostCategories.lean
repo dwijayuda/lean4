@@ -963,6 +963,14 @@ private def lowerCallWith (lowerTerm : Lean.Syntax → MacroM Lean.Syntax)
       let completion := nativeArgs[index - 1]!
       nativeArgs := nativeArgs.extract 0 (index - 1) ++
         nativeArgs.extract index nativeArgs.size ++ #[completion]
+    else if index > 0 then
+      let positionalApp : TSyntax `term := ⟨.node (loweringInfo source)
+        ``Lean.Parser.Term.app #[head, mkNullNode (nativeArgs.extract 0 index)]⟩
+      -- Native do-forwarding recognizes the final argument before named-argument elaboration.
+      if (Lean.Elab.Do.Forward.matchApp? positionalApp).isSome then
+        let forwarding := nativeArgs[index - 1]!
+        nativeArgs := nativeArgs.extract 0 (index - 1) ++
+          nativeArgs.extract index nativeArgs.size ++ #[forwarding]
   return .node (loweringInfo source) ``Lean.Parser.Term.app #[head, mkNullNode nativeArgs]
 
 private def lowerLoopBinderWith
@@ -1037,6 +1045,13 @@ set_option maxHeartbeats 800000 in
 private def lowerDoQuotedWith
     (lowerTerm lowerBody : Lean.Syntax → MacroM Lean.Syntax)
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``ps0HostDoBind then
+    unless source.getArgs.size == 4 do Macro.throwError "PS0V1-DO-BIND: unexpected owned binding"
+    let name : TSyntax `ident := ⟨source[1]⟩
+    let value ← lowerTerm source[3]
+    let action : TSyntax `doElem := ⟨.node (loweringInfo source)
+      ``Lean.Parser.Term.doExpr #[value]⟩
+    return (← `(doElem| let $name:ident ← $action:doElem)).raw
   match source with
   | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
       let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)

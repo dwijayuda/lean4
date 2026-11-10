@@ -434,7 +434,17 @@ def local_id_value(declaration):
     assert len(parts) == 5
     telescope(parts[1]['args'])
     optional_local_type(parts[2], 'owned local result type')
-    single_type_call(parts[4], 'owned local value')
+    declaration_body_value(parts[4], 'owned local value')
+
+
+def declaration_body_value(value, role):
+    single_type_call(value, role)
+    # R2 direct := braces own body grouping. Keep native collection notation
+    # inside an ordinary parenthesis term before entering that body slot.
+    if value['kind'] == '«term{_}»':
+        start, end = span(value)
+        edit(start, start, '(', role + ' protect native collection from direct body wrapper')
+        edit(end, end, ')', role + ' close native collection protection')
 
 
 def do_element(element):
@@ -641,7 +651,7 @@ def declaration_value(value):
         if value['args']:
             declaration_value(value['args'][0])
     elif value['kind'] == 'Lean.Parser.Command.declValSimple':
-        single_type_call(value['args'][1], 'owned declaration body')
+        declaration_body_value(value['args'][1], 'owned declaration body')
         where_declarations(value['args'][3])
     elif value['kind'] == 'Lean.Parser.Command.declValEqns':
         equation_values(value['args'][0]['args'][0])
