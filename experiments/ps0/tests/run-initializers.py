@@ -72,6 +72,8 @@ def run(args, name):
 
 comparisons, executables = {}, {}
 for label, bodies in [('baseline', [header + native_base, main_header + native_main]),
+                      ('native-trivia', [header + native_base.replace('IO.mkRef []', 'IO.mkRef  []'),
+                                         main_header + native_main.replace('ordinaryLog.modify ', 'ordinaryLog.modify  ')]),
                       ('migrated', [header + ps_base, main_header + ps_main]),
                       ('planned', None)]:
     source_root = work / (label + '-source')
@@ -86,7 +88,7 @@ for label, bodies in [('baseline', [header + native_base, main_header + native_m
             '-Kroots=' + ','.join(modules), '-KmoduleNames=' + ','.join(modules),
             '-KrootModule=InitializerMain', '-Kdriver=' + str(ROOT / '.lake/build/bin/ps0'),
             '-KprojectBuildDir=' + str(build)]
-    if label != 'baseline':
+    if label in ['migrated', 'planned']:
         args.append('-KsourceGrammar=true')
     run([*args, 'build', 'ps0project'], label)
     for module in modules:
@@ -100,7 +102,7 @@ for label, bodies in [('baseline', [header + native_base, main_header + native_m
         assert all(segment['kind'] == 'original' for segment in mapped['segments'])
         rows = [row['initialization'] for row in observed['commands'] if row['initialization']]
         assert len(rows) == (5 if module == 'InitializerBase' else 1)
-        assert all(row['mode'] == ('native-compatible' if label == 'baseline' else 'mapped-ps')
+        assert all(row['mode'] == ('mapped-ps' if label in ['migrated', 'planned'] else 'native-compatible')
                    for row in rows)
         for row in rows:
             syntax = row['syntax']
@@ -119,10 +121,20 @@ for label, bodies in [('baseline', [header + native_base, main_header + native_m
     assert run([executable], label + '-runtime').strip() == 'PS0_INITIALIZERS: PASS'
     executables[label] = hashlib.sha256(executable.read_bytes()).hexdigest()
     shutil.copy2(executable, work / (label + '-InitializerRuntime'))
-assert all(value['baseline'] == value['migrated'] == value['planned'] for value in comparisons.values())
+raw_equal = {path: len({row[label] for label in ['baseline', 'migrated', 'planned']}) == 1
+             for path, row in comparisons.items()}
+# Native command quotation contexts hash original command text. A whitespace-only
+# native control must exhibit that sensitivity before accepting distinct private
+# initializer identities as an evidence boundary, rather than claiming byte parity.
+native_trivia_changes = {path: row['baseline'] != row['native-trivia']
+                        for path, row in comparisons.items()}
+assert native_trivia_changes['ir/InitializerBase.c']
+assert native_trivia_changes['ir/InitializerMain.c']
+assert raw_equal['lib/lean/InitializerMain.olean']
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
     modules=modules, initialization_commands=6, comparisons=comparisons, executables=executables,
+    raw_native_ps_artifact_equal=raw_equal, native_trivia_changes=native_trivia_changes,
     runtime='PS0_INITIALIZERS: PASS', builtin_values=[3], ordinary_values=[4, 6, 8],
-    scope='finite native builtin/ordinary named/unnamed startup phases and cross-module order',
+    scope='finite native builtin/ordinary named/unnamed startup phases and cross-module order; private source-dependent initializer identities differ; no whole-module byte parity claim',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
-print('PS0_INITIALIZERS_NATIVE_PARITY: PASS', flush=True)
+print('PS0_INITIALIZERS_STARTUP_AND_PUBLIC_CONSUMER: PASS', flush=True)
