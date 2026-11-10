@@ -1,6 +1,28 @@
 import Lean
 
+/-! Inspect native module constants while reporting generated bound-name differences separately. -/
+
 open Lean
+
+private partial def anonymousBinders : Expr → Expr
+  | .forallE _ type body info => .forallE .anonymous (anonymousBinders type) (anonymousBinders body) info
+  | .lam _ type body info => .lam .anonymous (anonymousBinders type) (anonymousBinders body) info
+  | .letE _ type value body nondep =>
+    .letE .anonymous (anonymousBinders type) (anonymousBinders value) (anonymousBinders body) nondep
+  | .app fn arg => .app (anonymousBinders fn) (anonymousBinders arg)
+  | .mdata metadata body => .mdata metadata (anonymousBinders body)
+  | .proj name index body => .proj name index (anonymousBinders body)
+  | other => other
+
+private def constantKind : ConstantInfo → Nat
+  | .axiomInfo _ => 0
+  | .defnInfo _ => 1
+  | .thmInfo _ => 2
+  | .opaqueInfo _ => 3
+  | .quotInfo _ => 4
+  | .inductInfo _ => 5
+  | .ctorInfo _ => 6
+  | .recInfo _ => 7
 
 private def summary (data : ModuleData) : Json := Json.mkObj [
   ("isModule", toJson data.isModule),
@@ -47,8 +69,11 @@ unsafe def main (args : List String) : IO Unit := do
         reprStr (a.value? true) == reprStr (b.value? true) do
       let mut fields := [
         ("name", toJson a.name.toString),
+        ("kindEqual", toJson (constantKind a == constantKind b)),
         ("typeEqual", toJson (a.type == b.type)),
         ("valueEqual", toJson (a.value? true == b.value? true)),
+        ("typeReprEqualIgnoringBinderNames", toJson (reprStr (anonymousBinders a.type) == reprStr (anonymousBinders b.type))),
+        ("valueReprEqualIgnoringBinderNames", toJson (reprStr ((a.value? true).map anonymousBinders) == reprStr ((b.value? true).map anonymousBinders))),
         ("nativeLevels", toJson (a.levelParams.map Name.toString)),
         ("psLevels", toJson (b.levelParams.map Name.toString))]
       if reprStr a.type != reprStr b.type then

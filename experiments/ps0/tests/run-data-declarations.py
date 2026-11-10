@@ -117,12 +117,19 @@ for label in ['migrated', 'planned']:
     ps_olean = work / (label + '-build/lib/lean') / (module + '.olean')
     comparison = json.loads(run(['lake', 'env', 'lean', '--run', 'tests/compare-compiler-olean.lean',
                                  native_olean, ps_olean], label + '-public-constants'))
-    # The native reader compares all matching public ConstantInfo values and
-    # their exact type/value representations. Require the complete name/import
-    # and extension-count summaries too; do not infer extension payload parity.
-    assert comparison['changedConstants'] == []
+    # Native datatype generation chooses fresh bound names. Compare exact
+    # representations after changing only forall/lambda/let bound names; keep
+    # metadata, constant references, binder kinds, universe levels and values.
+    for row in comparison['changedConstants']:
+        assert all(row[key] for key in ['kindEqual', 'typeEqual', 'valueEqual',
+            'typeReprEqualIgnoringBinderNames', 'valueReprEqualIgnoringBinderNames'])
+        assert row['nativeLevels'] == row['psLevels']
+        assert row.get('hintsEqual', True)
+        assert row.get('nativeMutual') == row.get('psMutual')
     assert comparison['native'] == comparison['ps']
     public_constants[label] = dict(all_public_constants_equal=True,
+                                  equality='exact native expression representations modulo bound forall/lambda/let names only',
+                                  changed_generated_binder_constants=[row['name'] for row in comparison['changedConstants']],
                                   module_summary=comparison['native'],
                                   extension_payloads_compared=False)
 assert len(set(comparisons['ir/' + module + '.c'].values())) == 1
