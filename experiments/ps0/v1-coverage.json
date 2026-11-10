@@ -21627,8 +21627,24 @@
     },
     "timedCompilerGraphProjectRegressions": {
       "run": 42826588007,
-      "status": "IN_PROGRESS",
+      "status": "FAIL",
+      "passedJobs": 6,
+      "failedJobs": 1,
       "evidenceField": "timedCompilerGraphProjectRegressions"
+    },
+    "timedCompilerGraphCombinedRegressions": {
+      "source": "298395dde05464d06dca208fec5d0b74012297e4",
+      "runs": [
+        42824866927,
+        42826588007
+      ],
+      "jobs": 43,
+      "jobTemplates": 41,
+      "PASS": 35,
+      "FAIL": 8,
+      "strictCFailures": 7,
+      "strictPublicOleanFailures": 1,
+      "evidenceField": "timedCompilerGraphCombinedRegressions"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -86338,14 +86354,14 @@
     "source": "298395dde05464d06dca208fec5d0b74012297e4",
     "runner": "bf95dd79d0d0e830c146e20cee28ec36956612d5",
     "run": 42826588007,
-    "status": "IN_PROGRESS",
+    "status": "FAIL",
     "observedAt": "2026-11-10 13:41:45 UTC",
     "jobs": [
       {
         "job": 129865407598,
         "name": "project-build",
-        "status": "in_progress",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "failure"
       },
       {
         "job": 129865407715,
@@ -86356,26 +86372,26 @@
       {
         "job": 129865407723,
         "name": "term-monadic-qualified",
-        "status": "in_progress",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "job": 129865407791,
         "name": "initializer-qualified",
-        "status": "in_progress",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "job": 129865407797,
         "name": "proof-linked",
-        "status": "in_progress",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "job": 129865407941,
         "name": "do-layout",
-        "status": "in_progress",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "job": 129865408352,
@@ -86384,7 +86400,56 @@
         "conclusion": "success"
       }
     ],
-    "jobTemplates": 7
+    "jobTemplates": 7,
+    "PASS": 6,
+    "FAIL": 1,
+    "artifacts": [
+      {
+        "id": 13769557883,
+        "name": "ps0-external-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+        "digest": "sha256:af18511bba172cc4f27e8676d5cf4596d24650589ee59b0541692e55e307eb11"
+      },
+      {
+        "id": 13769552156,
+        "name": "ps0-initializer-boundaries-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+        "digest": "sha256:e9b94f95aacd130b07258699d74df85236fed233ab4581af3d45abd155f0d9fc"
+      },
+      {
+        "id": 13769217530,
+        "name": "ps0-operator-baseline-42826588007",
+        "digest": "sha256:f3b8e06b4024882bbb515d9b575fd4366ecf18bee265bd3e9a8cea1127818a8f"
+      },
+      {
+        "id": 13768848566,
+        "name": "ps0-do-layout-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+        "digest": "sha256:8834250d66cd166db5286847210d44c3ab3c2eb2295a7d0c94aa26ab7f354a91"
+      },
+      {
+        "id": 13768708704,
+        "name": "ps0-host-operand-parity-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+        "digest": "sha256:dd060d57c3aec18ec773e2f4d58f679a5d61c5e195e470f8148ad4889cffb1c8"
+      },
+      {
+        "id": 13768663720,
+        "name": "ps0-project-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+        "digest": "sha256:67cb0a32c15db306f53d730e7522fed134ee546eea838610ca2fed508a242637"
+      }
+    ],
+    "projectStepMarkers": [
+      "PS0_PROJECT_SOURCE_ORIGINS",
+      "PS0_PROJECT_SAME_FRONTEND_CENSUS",
+      "PS0_PROJECT_RECURSIVE_META_AND_WARM",
+      "PS0_PROJECT_SOURCE_ORIGIN_CACHE_RECOVERY",
+      "PS0_PROJECT_DRIVER_INVALIDATION",
+      "PS0_PROJECT_TRANSITIVE_INVALIDATION",
+      "PS0_PROJECT_PRELUDE_NO_HIDDEN_IMPORTS",
+      "PS0_PROJECT_LOCAL_ENTRY",
+      "PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY",
+      "PS0_MODERN_FRONTEND_HOOKS",
+      "PS0_SCOPED_MUTUAL_COMMAND_OPERANDS",
+      "PS0_SOURCE_FIDELITY_MAP"
+    ],
+    "projectJobStatus": "FAIL despite separately successful recursive/project/source-fidelity steps"
   },
   "priorCompletePSCompilerFixedPointCandidates": [
     {
@@ -86442,5 +86507,460 @@
     "stageTwoRequiresActualPrefix": true,
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "timedCompilerGraphCombinedRegressions": {
+    "source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "combined": {
+      "jobs": 43,
+      "jobTemplates": 41,
+      "PASS": 35,
+      "FAIL": 8,
+      "strictCFailures": 7,
+      "strictPublicOleanFailures": 1
+    },
+    "broad": {
+      "runner": "0831781ee63594cc37f9e9771f429e5d0c0ae47c",
+      "run": 42824866927,
+      "PASS": 29,
+      "FAIL": 7,
+      "jobs": [
+        {
+          "job": 129859444852,
+          "name": "compiler-core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445173,
+          "name": "compiler-natbasic",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445212,
+          "name": "native-build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445306,
+          "name": "compiler-natlinear",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445402,
+          "name": "compiler-fixtures",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "job": 129859445418,
+          "name": "compiler-prelude",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445487,
+          "name": "compiler-finbasic",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445575,
+          "name": "compiler-iteratorempty",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445588,
+          "name": "compiler-natlemmas",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445658,
+          "name": "compiler-unless",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "job": 129859445682,
+          "name": "compiler-intlinear",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445689,
+          "name": "compiler-initwf",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445720,
+          "name": "compiler-options",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "job": 129859445738,
+          "name": "compiler-compilerm14",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445767,
+          "name": "compiler-ambiguousopen14",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445775,
+          "name": "compiler-stream",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445781,
+          "name": "compiler-grindac",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445782,
+          "name": "compiler-environment",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "job": 129859445803,
+          "name": "compiler-associative",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445808,
+          "name": "compiler-listattach",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445818,
+          "name": "compiler-arrayperm",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445826,
+          "name": "compiler-spredlaws",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445830,
+          "name": "compiler-nanosecond",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445874,
+          "name": "compiler-tzif",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445894,
+          "name": "compiler-parserbasic14",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "job": 129859445897,
+          "name": "compiler-setoption14",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859445966,
+          "name": "compiler-extdtreemapbasic",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859446014,
+          "name": "compiler-jsonrpc",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859446031,
+          "name": "compiler-synthinstance14",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "job": 129859446038,
+          "name": "compiler-signedbitvec",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859446064,
+          "name": "compiler-rangechar",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859446070,
+          "name": "compiler-persistenthashmap",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859446178,
+          "name": "compiler-bound-if-URIParser",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859446240,
+          "name": "compiler-bound-if-DiscrTreeMain",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859446304,
+          "name": "compiler-bound-if-AbstractMVars",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129859446486,
+          "name": "compiler-defeqattrib14",
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    "project": {
+      "runner": "bf95dd79d0d0e830c146e20cee28ec36956612d5",
+      "run": 42826588007,
+      "PASS": 6,
+      "FAIL": 1,
+      "jobs": [
+        {
+          "job": 129865407598,
+          "name": "project-build",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "job": 129865407715,
+          "name": "operator-baseline",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129865407723,
+          "name": "term-monadic-qualified",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129865407791,
+          "name": "initializer-qualified",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129865407797,
+          "name": "proof-linked",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129865407941,
+          "name": "do-layout",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "job": 129865408352,
+          "name": "host-contract",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13769557883,
+          "name": "ps0-external-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+          "digest": "sha256:af18511bba172cc4f27e8676d5cf4596d24650589ee59b0541692e55e307eb11"
+        },
+        {
+          "id": 13769552156,
+          "name": "ps0-initializer-boundaries-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+          "digest": "sha256:e9b94f95aacd130b07258699d74df85236fed233ab4581af3d45abd155f0d9fc"
+        },
+        {
+          "id": 13769217530,
+          "name": "ps0-operator-baseline-42826588007",
+          "digest": "sha256:f3b8e06b4024882bbb515d9b575fd4366ecf18bee265bd3e9a8cea1127818a8f"
+        },
+        {
+          "id": 13768848566,
+          "name": "ps0-do-layout-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+          "digest": "sha256:8834250d66cd166db5286847210d44c3ab3c2eb2295a7d0c94aa26ab7f354a91"
+        },
+        {
+          "id": 13768708704,
+          "name": "ps0-host-operand-parity-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+          "digest": "sha256:dd060d57c3aec18ec773e2f4d58f679a5d61c5e195e470f8148ad4889cffb1c8"
+        },
+        {
+          "id": 13768663720,
+          "name": "ps0-project-298395dde05464d06dca208fec5d0b74012297e4-42826588007",
+          "digest": "sha256:67cb0a32c15db306f53d730e7522fed134ee546eea838610ca2fed508a242637"
+        }
+      ],
+      "projectStepMarkers": [
+        "PS0_PROJECT_SOURCE_ORIGINS",
+        "PS0_PROJECT_SAME_FRONTEND_CENSUS",
+        "PS0_PROJECT_RECURSIVE_META_AND_WARM",
+        "PS0_PROJECT_SOURCE_ORIGIN_CACHE_RECOVERY",
+        "PS0_PROJECT_DRIVER_INVALIDATION",
+        "PS0_PROJECT_TRANSITIVE_INVALIDATION",
+        "PS0_PROJECT_PRELUDE_NO_HIDDEN_IMPORTS",
+        "PS0_PROJECT_LOCAL_ENTRY",
+        "PS0_PROJECT_COLLISION_CYCLE_AND_VISIBILITY",
+        "PS0_MODERN_FRONTEND_HOOKS",
+        "PS0_SCOPED_MUTUAL_COMMAND_OPERANDS",
+        "PS0_SOURCE_FIDELITY_MAP"
+      ],
+      "projectJobStatus": "FAIL despite separately successful recursive/project/source-fidelity steps"
+    },
+    "failures": [
+      {
+        "job": 129859445402,
+        "name": "compiler-fixtures",
+        "targetCompiled": true,
+        "assertionFile": "lib/lean/Lean/Compiler/LCNF/Basic.olean",
+        "receiptHashes": {
+          "native": "e4fc60bb05756520835af0fc9342f47848b3e3cb2e4444616e8b584432d025f6",
+          "ps": "d603c530d5cca1332cf6208a4382a7b5696f7f8615408fcfeb433d0c5a40e37c"
+        },
+        "scope": "strict public-olean-byte FAIL; target C bytes equal",
+        "artifact": {
+          "id": 13768987051,
+          "digest": "sha256:c9168d635a83775cd894799ac126225414108c660eaec13a27042e55d931c041"
+        }
+      },
+      {
+        "job": 129859445658,
+        "name": "compiler-unless",
+        "targetCompiled": true,
+        "assertionFile": "ir/Lean/Compiler/InlineAttrs.c",
+        "receiptHashes": {
+          "native": "20b77c4be84aa67c3159150a1d6b61e0ab20daad861078ed1de1f16abfd5b4e9",
+          "ps": "23271fa184e3b8d10f790ad6014da9d5cd43a22063b8a970251beb0bf9b741aa"
+        },
+        "scope": "strict C-byte FAIL",
+        "artifact": {
+          "id": 13768119324,
+          "digest": "sha256:54e22f4b9b246c70e6f3511b3fe5e9196fd2a6bb4a956e277f0e939ee4c3fb0e"
+        }
+      },
+      {
+        "job": 129859445720,
+        "name": "compiler-options",
+        "targetCompiled": true,
+        "assertionFile": "ir/Lean/Data/Options.c",
+        "receiptHashes": {
+          "native": "a2fcbdf86bf69db3390c805f8f01cb18bd9043c94ad160ec25f904b80576dc13",
+          "ps": "10cb2b3d7c4a5a3e70e488a333fb35b3989d9ff1713fdbeabda4397a98d81753"
+        },
+        "scope": "strict C-byte FAIL",
+        "artifact": {
+          "id": 13770050862,
+          "digest": "sha256:df2a4467ecfab77870acc687488be3941930bb74d4dea367d12b35b87d869f0b"
+        }
+      },
+      {
+        "job": 129859445782,
+        "name": "compiler-environment",
+        "targetCompiled": true,
+        "assertionFile": "ir/Lean/Environment.c",
+        "receiptHashes": {
+          "native": "d5446a5131d2943469b557409dd64eeb5eb0d0afd0f6d8dbd57e3efb966e80cd",
+          "ps": "f3f8fc06214d464d97cf65b24c622b465d3fb2b536fc6ec1722e115b9fbf3103"
+        },
+        "scope": "strict C-byte FAIL",
+        "artifact": {
+          "id": 13768352317,
+          "digest": "sha256:b8b148972e7505e88d274e5584c3ffe77d3bd510c039d5bf0d4e5821fbf70b7f"
+        }
+      },
+      {
+        "job": 129859445894,
+        "name": "compiler-parserbasic14",
+        "targetCompiled": true,
+        "assertionFile": "ir/Lean/Parser/Basic.c",
+        "receiptHashes": {
+          "native": "dc0d3c7ed77f0abc145179998d2124a662a4487fff47df86cf289cd5420bfaed",
+          "ps": "1a61f999a963fe52212b743baef099141d2cc440e47d4e46b9bc076c0fc925ed"
+        },
+        "scope": "strict C-byte FAIL",
+        "artifact": {
+          "id": 13768367018,
+          "digest": "sha256:a609f33ba7b477f219a32d9829f5094a48ba0b6f533df949f5a683e033911ac1"
+        }
+      },
+      {
+        "job": 129859446031,
+        "name": "compiler-synthinstance14",
+        "targetCompiled": true,
+        "assertionFile": "ir/Lean/Meta/SynthInstance.c",
+        "receiptHashes": {
+          "native": "a3699eadba9c9e6d9d589aa2910360652599b5efbd3345c6735ab4c69367a7fb",
+          "ps": "fc4e3d8bef0ed9b476cdc11956b13fbd58ffcd2d7563d8d743978fc7a27054df"
+        },
+        "scope": "strict C-byte FAIL",
+        "artifact": {
+          "id": 13768962082,
+          "digest": "sha256:4edba2a2ef9fe74278cf4d696ea222f804a15b91cd022e60c1f964a8f190be54"
+        }
+      },
+      {
+        "job": 129859446486,
+        "name": "compiler-defeqattrib14",
+        "targetCompiled": true,
+        "assertionFile": "ir/Lean/DefEqAttrib.c",
+        "receiptHashes": {
+          "native": "0ef3baaf2ef760e86139cd6051ccfff2c37ee760032908748ffdb68f6d89f804",
+          "ps": "6365aaee34387688466bd065236bf5d611ba193cd4302c1b00344cbf3281ebcd"
+        },
+        "scope": "strict C-byte FAIL",
+        "artifact": {
+          "id": 13770225091,
+          "digest": "sha256:10a6a685867b70ff2e58623fe2c6419b4bc7a99bd875b6633264b45aa9399087"
+        }
+      },
+      {
+        "job": 129865407598,
+        "name": "project-build",
+        "targetCompiled": true,
+        "assertionFile": "ir/Lean/Compiler/ClosedTermCache.c",
+        "receiptHashes": {
+          "native": "7d54fb41d97e4be6bd11497a5919f5ee35f87643befc481a135d2cf6365494d2",
+          "ps": "b1d5a1e98c0f28a0b2a823800f23dfe2224300954d14618dfa6f4fb2971284c2"
+        },
+        "scope": "strict C-byte FAIL",
+        "artifact": {
+          "id": 13768663720,
+          "digest": "sha256:67cb0a32c15db306f53d730e7522fed134ee546eea838610ca2fed508a242637"
+        }
+      }
+    ],
+    "scope": "All original jobs retained and all failed assertions remain FAIL; finite accepted compilation/runtime/source-fidelity steps do not prove full compiler or normative language completeness"
   }
 }
