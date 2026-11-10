@@ -20,6 +20,14 @@ ps_prefix = ('module\nprelude\npublic import Init\npublic section\n'
              'function pairSum(p: Nat × Nat): Nat := p.1 + p.2\n'
              'structure IslandCell where\n  value : Nat\n')
 cases = [
+    ('nested-action', 'def pairSumM (p : Nat × Nat) : Id Nat := pure (pairSum p)\ndef bad (n : Nat) : Id Nat := do\n  let result := (← pairSumM (n, 1))\n  return result',
+     'function pairSumM(p: Nat × Nat): Id(Nat) := pure(pairSum(p))\nfunction bad(n: Nat): Id(Nat) := do\n  let result := (← pairSumM (n, 1))\n  return result'),
+    ('term-return', 'def bad (n : Nat) : Id Nat := return pairSum (n, 1)',
+     'function bad(n: Nat): Id(Nat) := return pairSum (n, 1)'),
+    ('term-try', 'def bad (n : Nat) : IO Nat := try\n  return pairSum (n, 1)\ncatch _ =>\n  return n',
+     'function bad(n: Nat): IO(Nat) := try\n  return pairSum (n, 1)\ncatch _ =>\n  return n'),
+    ('term-for', 'def bad (n : Nat) : IO Unit := for _ in [0:1] do\n  IO.println (pairSum (n, 1))',
+     'function bad(n: Nat): IO(Unit) := for _ in [0:1] do\n  IO.println (pairSum (n, 1))'),
     ('bound-if-then', 'def bad (n : Nat) : Id Nat := do\n  let result ← if n == 0 then\n    pure <| pairSum (n, 1)\n  else\n    pure n\n  return result',
      'function bad(n: Nat): Id(Nat) := do\n  let result ← if n == 0 then\n    pure <| pairSum (n, 1)\n  else\n    pure n\n  return result'),
     ('bound-if-else', 'def bad (n : Nat) : Id Nat := do\n  let result ← if n == 0 then\n    pure n\n  else\n    pure <| pairSum (n, 1)\n  return result',
