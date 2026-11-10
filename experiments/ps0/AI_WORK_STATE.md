@@ -1,5 +1,11 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-10 — suffices workflow correction: partial green producer is not qualification
+
+Source **4667e4c5a1c6de61fd7532d6d4cbd8952e02b555**, runner **c281e5594202d0977d97fcb51ac35f5cca6afd34**, [42731612463 / 129550761421](https://github.com/dwijayuda/pskernel/actions/runs/42731612463/job/129550761421) is green but **only partially exercises the intended suite**. YAML folded the suffices command into ignored arguments to the loop script. The ordinary 48-definition and loop six-definition modules, 43 guards, 37 origins and 34 rejection cases ran; the additional **seven suffices definitions / five guards / suffices executable did not run**. This candidate is not qualified for those checks. [Independent 42732217640 / 129552792972](https://github.com/dwijayuda/pskernel/actions/runs/42732217640/job/129552792972), runner **a98c90735c2308cc8c81db6f7d07536bec1b3f83**, correctly **FAILS** because the required suffices artifact is absent.
+
+The separate [three-gap job 42731612494 / 129550761566](https://github.com/dwijayuda/pskernel/actions/runs/42731612494/job/129550761566) **PASS** is genuine and retains its exact source. Candidate **cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b**, runner **3192aee60f078483faecbe09236d876bf36602ca**, [42732341309](https://github.com/dwijayuda/pskernel/actions/runs/42732341309), fixes the YAML literal command block and rejects unexpected arguments in both scripts. It is **PENDING**, with no 61-definition qualification claimed. Earlier independently qualified loop annotation and 38-job matrix checkpoints retain their own sources.
+
 ## 2026-11-10 — updated full matrix 38/38 and independent 172-file audit PASS
 
 **All 38 Linux jobs PASS**, source **5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e**, runner **e52cce59fdd1838a82422c0230f9c09d675f5a4b**, [42726667178](https://github.com/dwijayuda/pskernel/actions/runs/42726667178), including proof-linked **129533935537**, recursive project **129533935568**, compiler fixtures **129533935755**, associative **129533935512** and integer-linear **129533936204**. The final proof-linked artifact is **13725066567 / sha256:2a5fa6a89464bde18236aa14edf96673000ea45d5c0f0e6b76908fbaa007c560**. Both JSON ledgers retain **all 38 job IDs/conclusions and all 37 producer artifact IDs/digests**.

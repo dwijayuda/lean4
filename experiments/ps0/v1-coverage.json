@@ -19435,11 +19435,10 @@
       }
     },
     "sufficesCandidate": {
-      "source": "4667e4c5a1c6de61fd7532d6d4cbd8952e02b555",
-      "runner": "c281e5594202d0977d97fcb51ac35f5cca6afd34",
-      "positiveRun": 42731612463,
-      "negativeRun": 42731612494,
-      "status": "PENDING_LINUX",
+      "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+      "runner": "3192aee60f078483faecbe09236d876bf36602ca",
+      "positiveRun": 42732341309,
+      "status": "PENDING_LINUX_CORRECTED_COMMAND_BLOCK",
       "plannedDefinitions": 61,
       "plannedPrivateProofGuards": 48,
       "plannedSourceOrigins": 37,
@@ -19459,6 +19458,27 @@
       "evidenceField": "loop48MatrixArtifactQualification",
       "grammarMigrationComplete": false,
       "verified_execution": false
+    },
+    "sufficesPartialProducerEvidence": {
+      "source": "4667e4c5a1c6de61fd7532d6d4cbd8952e02b555",
+      "runner": "c281e5594202d0977d97fcb51ac35f5cca6afd34",
+      "run": 42731612463,
+      "job": 129550761421,
+      "status": "PASS_ONLY_PARTIAL_SUITE_SUFFICES_SCRIPT_NOT_EXECUTED",
+      "reason": "YAML plain scalar folded second command into ignored argv to loop script; 48+6 definitions/43guards/37origins/34gaps pass, seven suffices definitions/five guards/runtime not run",
+      "independentInspection": {
+        "runner": "a98c90735c2308cc8c81db6f7d07536bec1b3f83",
+        "run": 42732217640,
+        "job": 129552792972,
+        "status": "FAIL_EXPECTED_SUFFICES_ARTIFACT_MISSING"
+      }
+    },
+    "sufficesNegativeQualification": {
+      "source": "4667e4c5a1c6de61fd7532d6d4cbd8952e02b555",
+      "runner": "c281e5594202d0977d97fcb51ac35f5cca6afd34",
+      "run": 42731612494,
+      "job": 129550761566,
+      "status": "PASS_THREE_NATIVE_BASELINES_THREE_PS_GAP_REJECTIONS"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -79895,11 +79915,10 @@
     }
   },
   "sufficesCandidate": {
-    "source": "4667e4c5a1c6de61fd7532d6d4cbd8952e02b555",
-    "runner": "c281e5594202d0977d97fcb51ac35f5cca6afd34",
-    "positiveRun": 42731612463,
-    "negativeRun": 42731612494,
-    "status": "PENDING_LINUX",
+    "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+    "runner": "3192aee60f078483faecbe09236d876bf36602ca",
+    "positiveRun": 42732341309,
+    "status": "PENDING_LINUX_CORRECTED_COMMAND_BLOCK",
     "plannedDefinitions": 61,
     "plannedPrivateProofGuards": 48,
     "plannedSourceOrigins": 37,
@@ -79919,5 +79938,26 @@
     "evidenceField": "loop48MatrixArtifactQualification",
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "sufficesPartialProducerEvidence": {
+    "source": "4667e4c5a1c6de61fd7532d6d4cbd8952e02b555",
+    "runner": "c281e5594202d0977d97fcb51ac35f5cca6afd34",
+    "run": 42731612463,
+    "job": 129550761421,
+    "status": "PASS_ONLY_PARTIAL_SUITE_SUFFICES_SCRIPT_NOT_EXECUTED",
+    "reason": "YAML plain scalar folded second command into ignored argv to loop script; 48+6 definitions/43guards/37origins/34gaps pass, seven suffices definitions/five guards/runtime not run",
+    "independentInspection": {
+      "runner": "a98c90735c2308cc8c81db6f7d07536bec1b3f83",
+      "run": 42732217640,
+      "job": 129552792972,
+      "status": "FAIL_EXPECTED_SUFFICES_ARTIFACT_MISSING"
+    }
+  },
+  "sufficesNegativeQualification": {
+    "source": "4667e4c5a1c6de61fd7532d6d4cbd8952e02b555",
+    "runner": "c281e5594202d0977d97fcb51ac35f5cca6afd34",
+    "run": 42731612494,
+    "job": 129550761566,
+    "status": "PASS_THREE_NATIVE_BASELINES_THREE_PS_GAP_REJECTIONS"
   }
 }
