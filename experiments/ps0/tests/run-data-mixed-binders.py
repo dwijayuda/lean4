@@ -3,6 +3,7 @@
 from pathlib import Path
 import json
 import os
+import shutil
 import subprocess
 import sys
 
@@ -59,6 +60,16 @@ for name, native, ps in cases:
         '-KprojectBuildDir=' + str(work / (name + '-build')), 'build', 'DataMixedProbe'],
         capture_output=True, text=True, timeout=300)
     (work / (name + '-ps.log')).write_text(mapped.stdout + mapped.stderr)
+    if mapped.returncode == 0:
+        build = work / (name + '-build')
+        census = build / 'lib/lean/DataMixedProbe.ilean.ps0-source-census.json'
+        data = json.loads(census.read_text())
+        captures = [row['dataDeclaration'] for row in data['commands'] if row.get('dataDeclaration')]
+        assert len(captures) == 1 and captures[0]['mode'] == 'mapped-ps'
+        shutil.copy2(census, work / (name + '-ps-census.json'))
+        for relative in ['ir/DataMixedProbe.c', 'lib/lean/DataMixedProbe.olean']:
+            file = build / relative
+            shutil.copy2(file, work / (name + file.suffix))
     row = dict(case=name, native_baseline_passed=result.returncode == 0,
                native_exit=result.returncode, ps_exit=mapped.returncode,
                mapped_passed=mapped.returncode == 0,

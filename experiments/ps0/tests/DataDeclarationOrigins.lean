@@ -6,6 +6,11 @@ open Lean
 open scoped PS0.StandardAdapters
 
 private partial def checkNativeRoles (before after : Syntax) : Elab.Command.CommandElabM Unit := do
+  if before.isOfKind `PS0.StandardAdapters.psDataNativeBinder then
+    return ← checkNativeRoles before[0] after
+  if before.isOfKind choiceKind then
+    if let some native := before.getArgs.find? (·.isOfKind `PS0.StandardAdapters.psDataNativeBinder) then
+      return ← checkNativeRoles native[0] after
   if before.isOfKind `PS0.StandardAdapters.psDataTerm ||
       before.isOfKind `PS0.StandardAdapters.psDataTactic then return
   unless before.getKind == after.getKind && before.getRange? == after.getRange? &&
