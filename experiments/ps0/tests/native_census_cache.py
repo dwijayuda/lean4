@@ -11,6 +11,28 @@ SCHEMA = 'ps0-native-source-census/1'
 # Native capture role changes require a new contract marker before reuse.
 OPERATOR_SCOPE = 'active-and-captured-kinds/2'
 ADJACENT_HEAD_SCOPE = 'native-environment/1'
+INITIALIZER_SCOPE = 'native-initializer-operands/1'
+
+
+def initialization_commands(commands):
+    for command in commands:
+        if command.get('headKind') == 'Lean.Parser.Command.initialize':
+            yield command
+        yield from initialization_commands(command.get('nestedCommands', []))
+
+
+def needs_initializer_refresh(snapshot):
+    commands = list(initialization_commands(snapshot['commands']))
+    scope = snapshot.get('initializerOperandScope')
+    assert scope in [None, INITIALIZER_SCOPE], scope
+    for command in commands:
+        capture = command.get('initialization')
+        if scope is None or capture is None or 'syntax' not in capture:
+            return True
+        assert capture['mode'] == 'native-compatible', capture['mode']
+        syntax = capture['syntax']
+        assert syntax['kind'] == 'Lean.Parser.Command.initialize' and len(syntax['args']) == 4
+    return False
 
 
 def declarations(commands):
@@ -71,4 +93,6 @@ class NativeCensusCache:
         assert data['operatorDescriptorScope'] == OPERATOR_SCOPE, module
         assert data['nativeSource'].encode() == original, module
         assert all(d['mode'] == 'native-compatible' for d in declarations(data['commands'])), module
+        if needs_initializer_refresh(data):
+            return None
         return path

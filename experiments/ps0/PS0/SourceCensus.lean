@@ -298,6 +298,12 @@ private def declaration (env : Environment) (operators : Array Name) (source : S
 
 private partial def command (env : Environment) (operators : Array Name) (source : Syntax) : Json :=
   let viewed := if source.isOfKind `ps0NativeCommandBridge then source[0] else source
+  let initialized := if viewed.isOfKind `PS0.StandardAdapters.ps0StandardInitialize then viewed[0] else viewed
+  let initialization := if initialized.isOfKind ``Lean.Parser.Command.«initialize» &&
+      initialized.getArgs.size == 4 then Json.mkObj [
+    ("mode", toJson (if viewed.isOfKind `PS0.StandardAdapters.ps0StandardInitialize then
+      "mapped-ps" else "native-compatible")),
+    ("syntax", signatureSyntax operators initialized)] else Json.null
   let nested := if viewed.isOfKind ``Lean.Parser.Command.«in» then #[viewed[2]] else
     if viewed.isOfKind ``Lean.Parser.Command.«mutual» then viewed[1].getArgs else #[]
   Json.mkObj [
@@ -305,6 +311,7 @@ private partial def command (env : Environment) (operators : Array Name) (source
     ("headKind", toJson (if viewed.isOfKind ``Lean.Parser.Command.declaration then
       viewed[1].getKind.toString else viewed.getKind.toString)),
     ("declaration", declaration env operators viewed),
+    ("initialization", initialization),
     ("nestedCommands", toJson (nested.map (command env operators)))]
 
 private partial def syntaxKinds (names : NameSet) (source : Syntax) : NameSet :=
@@ -347,6 +354,7 @@ def collect (commands : Array Syntax) : CommandElabM Unit := do
       ("leanCommit", toJson Lean.githash), ("module", toJson (← getMainModule).toString),
       ("file", toJson context.fileName), ("nativeSource", toJson context.fileMap.source),
       ("commands", toJson (commands.map (command env operators))),
+      ("initializerOperandScope", toJson ("native-initializer-operands/1" : String)),
       ("loweredCommands", toJson lowered),
       ("imports", toJson imports),
       ("environmentDeclNames", toJson names),

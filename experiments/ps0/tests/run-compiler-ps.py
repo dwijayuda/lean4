@@ -9,7 +9,7 @@ import os
 import shutil
 import subprocess
 import time
-from native_census_cache import NativeCensusCache, needs_head_lexical_refresh, OPERATOR_SCOPE
+from native_census_cache import NativeCensusCache, needs_head_lexical_refresh, needs_initializer_refresh, OPERATOR_SCOPE
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--driver', type=Path)
@@ -157,7 +157,8 @@ if args.source_plans:
         folder = evidence / 'current-source-plans' / module
         folder.mkdir(parents=True, exist_ok=False)
         captured = json.loads(census.read_text())
-        if (needs_head_lexical_refresh(captured) or missing_declaration_view(captured['commands']) or
+        if (needs_head_lexical_refresh(captured) or needs_initializer_refresh(captured) or
+                missing_declaration_view(captured['commands']) or
                 captured.get('operatorDescriptorScope') != OPERATOR_SCOPE):
             prior = (native_cache.find(module, original.read_bytes(), digest(sdk / entries[module]['sdkPath']))
                      if native_cache else None)

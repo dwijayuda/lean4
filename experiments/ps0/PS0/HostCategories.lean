@@ -294,6 +294,12 @@ def finallyElem : Parser :=
   leadingNode ``Lean.Parser.Term.termTry leadPrec <|
     "try " >> sequence >> many (catchElem <|> catchMatchElem) >> optional finallyElem
 
+@[run_parser_attribute_hooks] def initializeCommand : Parser :=
+  leadingNode ``Lean.Parser.Command.«initialize» leadPrec <|
+    Lean.Parser.Command.declModifiers false >> Lean.Parser.Command.initializeKeyword >>
+      optional (atomic (ident >> operands #[(`term, `psTerm)] Lean.Parser.Term.typeSpec >>
+        ppSpace >> Lean.Parser.Term.leftArrow)) >> sequence
+
 @[run_parser_attribute_hooks] def namedLetTerm : Parser :=
   leadingNode ``Lean.Parser.Term.«let» leadPrec <|
     withPosition ("let" >> Lean.Parser.Term.letConfig >> namedDeclaration) >>

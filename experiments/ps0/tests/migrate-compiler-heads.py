@@ -18,6 +18,7 @@ snapshot = json.loads(args.census.read_text())
 raw = args.source.read_bytes()
 assert snapshot['nativeSource'].encode() == raw, 'planner requires exact captured native source bytes'
 edits, declarations, strategies = [], [], []
+initialization_commands = 0
 
 def span(node):
     value = node['range']
@@ -731,6 +732,22 @@ def telescope(binders):
 
 
 for previous_command, command in original_commands(snapshot['commands']):
+    if command['headKind'] == 'Lean.Parser.Command.initialize':
+        assert snapshot.get('initializerOperandScope') == 'native-initializer-operands/1', \
+            'fresh native initializer operand capture required'
+        capture = command['initialization']
+        assert capture['mode'] == 'native-compatible'
+        initialized = capture['syntax']
+        assert initialized['kind'] == 'Lean.Parser.Command.initialize'
+        parts = initialized['args']
+        assert len(parts) == 4 and len(parts[2]['args']) in [0, 3]
+        if parts[2]['args']:
+            type_spec = parts[2]['args'][1]
+            assert type_spec['kind'] == 'Lean.Parser.Term.typeSpec' and len(type_spec['args']) == 2
+            single_type_call(type_spec['args'][1], 'owned initializer result type')
+        do_sequence(parts[3])
+        initialization_commands += 1
+        continue
     decl = command['declaration']
     if decl is None or decl['mode'] != 'native-compatible':
         continue
@@ -836,7 +853,7 @@ for previous_command, command in original_commands(snapshot['commands']):
     declaration_value(decl.get('valueSyntax'))
     declarations.append(decl['sourceName'])
 
-assert declarations or args.allow_empty, 'no supported native declaration heads'
+assert declarations or initialization_commands or args.allow_empty, 'no supported native declaration heads or initializers'
 edits.sort(key=lambda e: e['start'])
 assert all(a['end'] <= b['start'] for a, b in zip(edits, edits[1:])), 'overlapping native source edits'
 assert all(change['old'].count('\n') == change['new'].count('\n') for change in edits), 'source edits must preserve original line breaks'
@@ -851,7 +868,7 @@ args.output.write_bytes(converted)
 args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
-    'strategies': strategies,
+    'strategies': strategies, 'initialization_commands': initialization_commands,
     'line_count_preserved': raw.count(b'\n') == converted.count(b'\n'),
     'scope': 'R2 alias/native telescopes, standard family signatures, equation RHS and explicit owned type/default/result/call/conditional roles; native grouping/inference and independently owned syntax retained',
     'grammar_migration_complete': False, 'verified_execution': False,

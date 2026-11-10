@@ -13,6 +13,22 @@ open Lean Lean.Parser.Command Lean.Parser.Term
 open PS0.Binders
 namespace PS0.StandardAdapters
 
+scoped syntax (name := ps0StandardInitialize) (priority := 20000)
+  PS0.DoLayout.initializeCommand : command
+
+@[macro ps0StandardInitialize] def lowerInitialize : Macro := fun source => withRef source do
+  let native := source[0]
+  unless native.isOfKind ``Lean.Parser.Command.«initialize» && native.getArgs.size == 4 &&
+      (native[2].getArgs.isEmpty || native[2].getArgs.size == 3) do
+    Macro.throwError "PS0V1-INITIALIZE: unexpected native named/type/sequence roles"
+  let native ← if native[2].getArgs.isEmpty then pure native else do
+    let typeSpec := native[2][1]
+    unless typeSpec.isOfKind ``Lean.Parser.Term.typeSpec && typeSpec.getArgs.size == 2 do
+      Macro.throwError "PS0V1-INITIALIZE: unexpected native result type"
+    let typeSpec := typeSpec.setArg 1 (← PS0.Syntax.lower `psTerm typeSpec[1])
+    pure <| native.setArg 2 (native[2].setArg 1 typeSpec)
+  return native.setArg 3 (← PS0.Syntax.lowerNativeDoSequence native[3])
+
 private def nativeTerm (body : TSyntax `psTerm) : MacroM (TSyntax `term) := do
   return ⟨← PS0.Syntax.lower `psTerm body.raw⟩
 

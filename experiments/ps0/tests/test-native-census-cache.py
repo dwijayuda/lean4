@@ -5,7 +5,7 @@ import hashlib
 import json
 import tempfile
 import unittest
-from native_census_cache import NativeCensusCache
+from native_census_cache import NativeCensusCache, INITIALIZER_SCOPE, needs_initializer_refresh
 
 SOURCE = 'a' * 40
 LEAN = 'b' * 40
@@ -84,6 +84,31 @@ class NativeCacheIdentity(unittest.TestCase):
         self.write()
         with self.assertRaises(AssertionError):
             self.cache()
+
+    def test_nested_initializers_require_current_native_operand_captures(self):
+        command = {'headKind': 'Lean.Parser.Command.initialize', 'declaration': None,
+                   'nestedCommands': []}
+        self.snapshot['commands'][0]['nestedCommands'] = [command]
+        self.assertTrue(needs_initializer_refresh(self.snapshot))
+        self.write()
+        self.assertIsNone(self.cache().find('Init.Probe', RAW, SDK_SHA))
+        self.snapshot['initializerOperandScope'] = INITIALIZER_SCOPE
+        self.assertTrue(needs_initializer_refresh(self.snapshot))
+        command['initialization'] = {'mode': 'native-compatible', 'syntax': {
+            'kind': 'Lean.Parser.Command.initialize', 'args': [{}, {}, {}, {}]}}
+        self.assertFalse(needs_initializer_refresh(self.snapshot))
+        self.write()
+        self.assertEqual(self.cache().find('Init.Probe', RAW, SDK_SHA), self.path)
+        command['initialization']['mode'] = 'mapped-ps'
+        self.write()
+        with self.assertRaises(AssertionError):
+            self.cache().find('Init.Probe', RAW, SDK_SHA)
+
+    def test_unknown_initializer_capture_scope_is_rejected(self):
+        self.snapshot['initializerOperandScope'] = 'native-initializer-operands/unknown'
+        self.write()
+        with self.assertRaises(AssertionError):
+            self.cache().find('Init.Probe', RAW, SDK_SHA)
 
 
 if __name__ == '__main__':
