@@ -19012,7 +19012,7 @@
       "stageOneJob": 129858509851,
       "job": 129858509851,
       "stageTwoJob": null,
-      "status": "IN_PROGRESS",
+      "status": "FAIL_NATIVE_LAKE_TIMEOUT",
       "observedAt": "2026-11-10 13:41:45 UTC",
       "pr": 248,
       "branch": "ci/ps0-selfhost-fixed-point-20261110",
@@ -19024,7 +19024,10 @@
       "selfCensusMetadataMode": "retained-ps-built-prefix",
       "stageTwoRequiresActualPrefix": true,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "historicalObservationStatus": "IN_PROGRESS",
+      "terminalAt": "2026-11-10T19:03:49Z",
+      "terminalEvidenceField": "timedCompilerGraphCurrentTimeout"
     },
     "compilerPrefixRetentionCandidate": {
       "source": "6709a18ec07694ca9946faa1193ab5f57b226596",
@@ -19045,7 +19048,7 @@
       "stageOneJob": 129858509851,
       "job": 129858509851,
       "stageTwoJob": null,
-      "status": "IN_PROGRESS",
+      "status": "FAIL_NATIVE_LAKE_TIMEOUT",
       "observedAt": "2026-11-10 13:41:45 UTC",
       "pr": 248,
       "branch": "ci/ps0-selfhost-fixed-point-20261110",
@@ -19057,7 +19060,10 @@
       "selfCensusMetadataMode": "retained-ps-built-prefix",
       "stageTwoRequiresActualPrefix": true,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "historicalObservationStatus": "IN_PROGRESS",
+      "terminalAt": "2026-11-10T19:03:49Z",
+      "terminalEvidenceField": "timedCompilerGraphCurrentTimeout"
     },
     "supersededCompletePSCompilerFixedPointCandidate": {
       "run": 42762560779,
@@ -19145,7 +19151,7 @@
       "stageOneJob": 129858509851,
       "job": 129858509851,
       "stageTwoJob": null,
-      "status": "IN_PROGRESS",
+      "status": "FAIL_NATIVE_LAKE_TIMEOUT",
       "observedAt": "2026-11-10 13:41:45 UTC",
       "pr": 248,
       "branch": "ci/ps0-selfhost-fixed-point-20261110",
@@ -19157,7 +19163,10 @@
       "selfCensusMetadataMode": "retained-ps-built-prefix",
       "stageTwoRequiresActualPrefix": true,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "historicalObservationStatus": "IN_PROGRESS",
+      "terminalAt": "2026-11-10T19:03:49Z",
+      "terminalEvidenceField": "timedCompilerGraphCurrentTimeout"
     },
     "priorCompletePSCompilerFixedPointCandidates": [
       {
@@ -19241,7 +19250,25 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Verified native Lake build checkpoints across Linux jobs, then full graph/link/runtime/census and PS-built second stage"
+    "nextAction": "Monitor exact native Lake sliced compiler run 42885813901 without repinning for ledger-only changes; require final full graph/census/link/runtime, actual PS-built second stage and independent complete-artifact audit",
+    "currentPSCompilerCandidate": {
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
+      "run": 42885813901,
+      "qualificationJob": 130073735643,
+      "job": 130075349238,
+      "status": "IN_PROGRESS",
+      "phase": "stage-one-base",
+      "observedAt": "2026-11-10 19:33:37 UTC",
+      "pr": 255,
+      "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification"
+    },
+    "nativeLakeCheckpointQualification": {
+      "run": 42885800377,
+      "status": "PASS",
+      "scope": "Actual library dependency .ps/C/export-object/public-olean transported across fresh Linux jobs; every retained file rehashed; native Lake reused dependency for both warm module build and complete final library/executable build with bytes AND nanosecond mtimes unchanged, then linked executable ran. Not full compiler qualification.",
+      "evidenceField": "nativeLakeCheckpointQualification"
+    }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
     "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
@@ -82333,7 +82360,7 @@
     "stageOneJob": 129858509851,
     "job": 129858509851,
     "stageTwoJob": null,
-    "status": "IN_PROGRESS",
+    "status": "FAIL_NATIVE_LAKE_TIMEOUT",
     "observedAt": "2026-11-10 13:41:45 UTC",
     "pr": 248,
     "branch": "ci/ps0-selfhost-fixed-point-20261110",
@@ -82345,7 +82372,10 @@
     "selfCensusMetadataMode": "retained-ps-built-prefix",
     "stageTwoRequiresActualPrefix": true,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "historicalObservationStatus": "IN_PROGRESS",
+    "terminalAt": "2026-11-10T19:03:49Z",
+    "terminalEvidenceField": "timedCompilerGraphCurrentTimeout"
   },
   "legacyMappedBridgeInventory": {
     "source": "ac75f82a9b916e870cd4cbf590b5f79410427553",
@@ -82405,7 +82435,7 @@
     "stageOneJob": 129858509851,
     "job": 129858509851,
     "stageTwoJob": null,
-    "status": "IN_PROGRESS",
+    "status": "FAIL_NATIVE_LAKE_TIMEOUT",
     "observedAt": "2026-11-10 13:41:45 UTC",
     "pr": 248,
     "branch": "ci/ps0-selfhost-fixed-point-20261110",
@@ -82417,7 +82447,10 @@
     "selfCensusMetadataMode": "retained-ps-built-prefix",
     "stageTwoRequiresActualPrefix": true,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "historicalObservationStatus": "IN_PROGRESS",
+    "terminalAt": "2026-11-10T19:03:49Z",
+    "terminalEvidenceField": "timedCompilerGraphCurrentTimeout"
   },
   "initialCompilerPrefixContractQualification": {
     "source": "6c71f6ef3f86815c179284c55177112e8af6014f",
@@ -83531,8 +83564,11 @@
       "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
       "run": 42824602117,
       "stageOneJob": 129858509851,
-      "status": "IN_PROGRESS",
-      "observedAt": "2026-11-10 13:32:32 UTC"
+      "status": "FAIL_NATIVE_LAKE_TIMEOUT",
+      "observedAt": "2026-11-10 13:32:32 UTC",
+      "historicalObservationStatus": "IN_PROGRESS",
+      "terminalAt": "2026-11-10T19:03:49Z",
+      "terminalEvidenceField": "timedCompilerGraphCurrentTimeout"
     },
     "broad": {
       "source": "298395dde05464d06dca208fec5d0b74012297e4",
@@ -84109,7 +84145,7 @@
     "stageOneJob": 129858509851,
     "job": 129858509851,
     "stageTwoJob": null,
-    "status": "IN_PROGRESS",
+    "status": "FAIL_NATIVE_LAKE_TIMEOUT",
     "observedAt": "2026-11-10 13:41:45 UTC",
     "pr": 248,
     "branch": "ci/ps0-selfhost-fixed-point-20261110",
@@ -84121,7 +84157,10 @@
     "selfCensusMetadataMode": "retained-ps-built-prefix",
     "stageTwoRequiresActualPrefix": true,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "historicalObservationStatus": "IN_PROGRESS",
+    "terminalAt": "2026-11-10T19:03:49Z",
+    "terminalEvidenceField": "timedCompilerGraphCurrentTimeout"
   },
   "timedCompilerGraphCombinedRegressions": {
     "source": "298395dde05464d06dca208fec5d0b74012297e4",
@@ -84611,5 +84650,136 @@
       }
     },
     "scope": "Partial build only; no completed full-graph/link/runtime/prefix/fixed-point qualification"
+  },
+  "nativeLakeCheckpointProgress": {
+    "partialAudit": {
+      "actual_byte_equal_to_original_sources": 402,
+      "captured_frontend_modules": 2263,
+      "grammar_migration_complete": false,
+      "native_only_body_mode_count": 0,
+      "prepared_ps_files_rehashed": 2569,
+      "producer_run": 42824602117,
+      "schema": "ps0-data-graph-partial-source-audit/1",
+      "scope": "actual raw frontend capture/source/plan fidelity only; producer graph FAILED; no claim that uncaptured dependents, all C targets, native linking or fixed point passed",
+      "source": "298395dde05464d06dca208fec5d0b74012297e4",
+      "status": "PASS",
+      "totals": {
+        "data_declarations": 2753,
+        "definitions": 23060,
+        "initialization_commands": 638
+      },
+      "verified_execution": false,
+      "runner": "261f2c298bb749be9f40591c2024dbf30e73c846",
+      "run": 42883994269,
+      "job": 130067390579,
+      "artifacts": [
+        {
+          "id": 13795621214,
+          "digest": "sha256:8b6e92fe0340751564ddea491325562b9c6e254ca8fe8710a7721ad266fe670c"
+        }
+      ]
+    },
+    "checkpointQualification": {
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "runner": "ac11813c43a505b018d3643cbbc912a0deb99f6a",
+      "run": 42885800377,
+      "jobs": {
+        "producer": 130073687604,
+        "consumer": 130074747528
+      },
+      "contracts": 11,
+      "status": "PASS",
+      "scope": "Actual library dependency .ps/C/export-object/public-olean transported across fresh Linux jobs; every retained file rehashed; native Lake reused dependency for both warm module build and complete final library/executable build with bytes AND nanosecond mtimes unchanged, then linked executable ran. Not full compiler qualification.",
+      "artifacts": [
+        {
+          "id": 13795767873,
+          "name": "ps0-native-lake-checkpoint-b75a583592dc8bbe9046fd6e93784d8ef0365580-42885800377",
+          "digest": "sha256:199f9b74f2203a046b3e84e52d6ecbfb19e9a45262dfbd8346625488287df194"
+        },
+        {
+          "id": 13795527985,
+          "name": "ps0-native-lake-checkpoint-consumer-b75a583592dc8bbe9046fd6e93784d8ef0365580-42885800377",
+          "digest": "sha256:4dd300cd7988ed93aee644d237e43d97bb84f02c290904c01ded48d8ad7e8abe"
+        }
+      ]
+    },
+    "candidate": {
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
+      "run": 42885813901,
+      "qualificationJob": 130073735643,
+      "job": 130075349238,
+      "status": "IN_PROGRESS",
+      "phase": "stage-one-base",
+      "observedAt": "2026-11-10 19:33:37 UTC",
+      "pr": 255,
+      "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification"
+    },
+    "previousGatedRun": {
+      "runner": "393041005464aaa83430eed6a5981dd6237af028",
+      "run": 42885081278,
+      "job": 130071160944,
+      "status": "FAIL",
+      "reason": "Executable-entry checkpoint probe changed retained output mtimes during final build; all six compiler jobs skipped; superseded by library-dependency checkpoint probe matching the actual slices"
+    },
+    "changedFiles": [
+      "tests/compiler_build_checkpoint.py",
+      "tests/test-compiler-build-checkpoint.py",
+      "tests/run-compiler-ps.py"
+    ],
+    "goalStatus": "ACTIVE",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "timedCompilerGraphCurrentPartialAudit": {
+    "actual_byte_equal_to_original_sources": 402,
+    "captured_frontend_modules": 2263,
+    "grammar_migration_complete": false,
+    "native_only_body_mode_count": 0,
+    "prepared_ps_files_rehashed": 2569,
+    "producer_run": 42824602117,
+    "schema": "ps0-data-graph-partial-source-audit/1",
+    "scope": "actual raw frontend capture/source/plan fidelity only; producer graph FAILED; no claim that uncaptured dependents, all C targets, native linking or fixed point passed",
+    "source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "status": "PASS",
+    "totals": {
+      "data_declarations": 2753,
+      "definitions": 23060,
+      "initialization_commands": 638
+    },
+    "verified_execution": false,
+    "runner": "261f2c298bb749be9f40591c2024dbf30e73c846",
+    "run": 42883994269,
+    "job": 130067390579,
+    "artifacts": [
+      {
+        "id": 13795621214,
+        "digest": "sha256:8b6e92fe0340751564ddea491325562b9c6e254ca8fe8710a7721ad266fe670c"
+      }
+    ]
+  },
+  "nativeLakeCheckpointQualification": {
+    "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+    "runner": "ac11813c43a505b018d3643cbbc912a0deb99f6a",
+    "run": 42885800377,
+    "jobs": {
+      "producer": 130073687604,
+      "consumer": 130074747528
+    },
+    "contracts": 11,
+    "status": "PASS",
+    "scope": "Actual library dependency .ps/C/export-object/public-olean transported across fresh Linux jobs; every retained file rehashed; native Lake reused dependency for both warm module build and complete final library/executable build with bytes AND nanosecond mtimes unchanged, then linked executable ran. Not full compiler qualification.",
+    "artifacts": [
+      {
+        "id": 13795767873,
+        "name": "ps0-native-lake-checkpoint-b75a583592dc8bbe9046fd6e93784d8ef0365580-42885800377",
+        "digest": "sha256:199f9b74f2203a046b3e84e52d6ecbfb19e9a45262dfbd8346625488287df194"
+      },
+      {
+        "id": 13795527985,
+        "name": "ps0-native-lake-checkpoint-consumer-b75a583592dc8bbe9046fd6e93784d8ef0365580-42885800377",
+        "digest": "sha256:4dd300cd7988ed93aee644d237e43d97bb84f02c290904c01ded48d8ad7e8abe"
+      }
+    ]
   }
 }
