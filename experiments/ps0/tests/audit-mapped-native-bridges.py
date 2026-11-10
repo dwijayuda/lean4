@@ -49,12 +49,17 @@ for file in files:
     census = json.loads(raw_file)
     assert census['schema'] == 'ps0-native-source-census/1'
     assert census['leanCommit'] == 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc'
+    rows = list(commands(census['commands']))
+    if not any(capture is not None and capture.get('mode') == 'mapped-ps'
+               for row in rows for capture in [row.get('declaration'), row.get('initialization'),
+                                               row.get('dataDeclaration')]):
+        continue
     module = census['module']
     assert module not in seen, ('duplicate capture module', module)
     seen.add(module)
     captures.append(dict(module=module, sha256=hashlib.sha256(raw_file).hexdigest()))
     source = census['nativeSource'].encode()
-    for index, command in enumerate(commands(census['commands'])):
+    for index, command in enumerate(rows):
         selections = []
         declaration = command.get('declaration')
         if declaration is not None:
