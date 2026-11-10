@@ -16449,53 +16449,22 @@
     "finiteSyntheticModules": 4,
     "finiteSyntheticDefinitionHeads": 37,
     "fullTransformedGraph": {
-      "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
-      "runner": "5b50bc70b9788efaa585d1c5522a38731a64fef2",
-      "run": 42719483426,
-      "job": 129509484457,
-      "status": "FAIL_THREE_COMPILER_MODULES",
-      "observedInputs": 2569,
-      "observedByteIdenticalInputs": 0,
-      "failures": [
-        {
-          "module": "Std.Http.Data.URI.Parser",
-          "line": 97,
-          "diagnostic": "takeWhileAtMost function and argument tuple treated as separate parser do expressions"
-        },
-        {
-          "module": "Lean.Meta.AbstractMVars",
-          "line": 102,
-          "diagnostic": "pure applied to appendIndexAfter function; following argument treated as separate monadic expression"
-        },
-        {
-          "module": "Lean.Meta.DiscrTree.Main",
-          "line": 278,
-          "diagnostic": "pushArgsAux function and argument tuple treated as separate MetaM do expressions"
-        }
-      ],
-      "artifact": {
-        "id": 13726028378,
-        "digest": "sha256:bfcdf20b1c73eb6dd73bdf7fa9c101b2479dcbf8ef820ad1ff910a84307890e7"
-      },
-      "parserTypesBuiltInLog": true,
-      "wholeCompilerBuilt": false,
-      "relocatedCompilerVerified": false,
-      "fixedPointVerified": false,
+      "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
+      "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
+      "status": "PENDING_FRESH_NATIVE_LAKE_GRAPH",
+      "nativeCacheSource": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+      "nativeCacheRun": 42719483426,
+      "nativeCacheScope": "hash-validated native AST only; every plan regenerated; no converted source or target objects reused",
+      "fixedPointRequested": false,
       "grammarMigrationComplete": false,
       "verified_execution": false,
-      "finiteModuleResolution": {
-        "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
-        "run": 42740049293,
-        "independentRun": 42741650847,
-        "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
-        "wholeGraphRevalidated": false
-      }
+      "run": 42743328824
     },
     "nextActions": [
-      "Launch a fresh complete graph with current planner and hash-validated native AST reuse only",
-      "Expand complete matrix to retain the three real compiler regressions with narrow artifacts",
-      "Require whole PS compiler linking, relocated operation and fixed point",
-      "Continue remaining PS grammar and original-source diagnostic roles"
+      "Inspect immutable graph seventeen and expanded 41-job matrix without polling-driven restart",
+      "Independently rehash the expanded matrix when all jobs/artifacts are complete",
+      "Continue remaining PS grammar and original-source fidelity roles",
+      "Require complete canonical compiler, relocated operation and fixed point before completion"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -20570,6 +20539,41 @@
       "run": 42739356451,
       "job": 129576310277,
       "status": "OWNED_PARSE_SUCCEEDS_WITH_NATIVE_FALLBACK_EXCLUDED_NORMAL_OWNERSHIP_FAILS"
+    },
+    "canonicalGraphSeventeenthCandidate": {
+      "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
+      "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
+      "status": "PENDING_FRESH_NATIVE_LAKE_GRAPH",
+      "nativeCacheSource": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+      "nativeCacheRun": 42719483426,
+      "nativeCacheScope": "hash-validated native AST only; every plan regenerated; no converted source or target objects reused",
+      "fixedPointRequested": false,
+      "grammarMigrationComplete": false,
+      "verified_execution": false,
+      "run": 42743328824
+    },
+    "expandedCompilerMatrixCandidate": {
+      "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
+      "runner": "a439e514956ec118802f5eaa9a00d3a29d83b585",
+      "status": "PENDING_41_JOB_LINUX_MATRIX",
+      "additionalModules": [
+        {
+          "module": "Std.Http.Data.URI.Parser",
+          "blob": "d51844ce35afe12c4c815dd41f617891f3a62980"
+        },
+        {
+          "module": "Lean.Meta.AbstractMVars",
+          "blob": "175738e203ab7cbd59798431b0fb0133dd41ca5a"
+        },
+        {
+          "module": "Lean.Meta.DiscrTree.Main",
+          "blob": "bdfbcdff9d7ae3dcc369b2d637a4dec8cfe1f14a"
+        }
+      ],
+      "expectedJobs": 41,
+      "grammarMigrationComplete": false,
+      "verified_execution": false,
+      "run": 42743438881
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -82249,5 +82253,40 @@
     "run": 42739356451,
     "job": 129576310277,
     "status": "OWNED_PARSE_SUCCEEDS_WITH_NATIVE_FALLBACK_EXCLUDED_NORMAL_OWNERSHIP_FAILS"
+  },
+  "canonicalGraphSeventeenthCandidate": {
+    "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
+    "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
+    "status": "PENDING_FRESH_NATIVE_LAKE_GRAPH",
+    "nativeCacheSource": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+    "nativeCacheRun": 42719483426,
+    "nativeCacheScope": "hash-validated native AST only; every plan regenerated; no converted source or target objects reused",
+    "fixedPointRequested": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "run": 42743328824
+  },
+  "expandedCompilerMatrixCandidate": {
+    "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
+    "runner": "a439e514956ec118802f5eaa9a00d3a29d83b585",
+    "status": "PENDING_41_JOB_LINUX_MATRIX",
+    "additionalModules": [
+      {
+        "module": "Std.Http.Data.URI.Parser",
+        "blob": "d51844ce35afe12c4c815dd41f617891f3a62980"
+      },
+      {
+        "module": "Lean.Meta.AbstractMVars",
+        "blob": "175738e203ab7cbd59798431b0fb0133dd41ca5a"
+      },
+      {
+        "module": "Lean.Meta.DiscrTree.Main",
+        "blob": "bdfbcdff9d7ae3dcc369b2d637a4dec8cfe1f14a"
+      }
+    ],
+    "expectedJobs": 41,
+    "grammarMigrationComplete": false,
+    "verified_execution": false,
+    "run": 42743438881
   }
 }
