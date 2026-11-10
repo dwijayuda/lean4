@@ -66,14 +66,14 @@ function measuredWhile(n: Nat): Id(Nat) := do
   return result
 '''
 native_main = '''def main : IO Unit := do
-  unless annotatedFor 2 == 3 && annotatedType 2 == 2 &&
-      annotatedWhile 2 == 2 && measuredWhile 2 == 2 do
+  unless Id.run (annotatedFor 2) == 3 && Id.run (annotatedType 2) == 2 &&
+      Id.run (annotatedWhile 2) == 2 && Id.run (measuredWhile 2) == 2 do
     throw (IO.userError "PS0_LOOP_CONTRACT_RUNTIME")
   IO.println "PS0_LOOP_CONTRACTS: PASS"
 '''
 ps_main = '''def main : IO Unit := do
-  unless annotatedFor(2) == 3 && annotatedType(2) == 2 &&
-      annotatedWhile(2) == 2 && measuredWhile(2) == 2 do
+  unless Id.run(annotatedFor(2)) == 3 && Id.run(annotatedType(2)) == 2 &&
+      Id.run(annotatedWhile(2)) == 2 && Id.run(measuredWhile(2)) == 2 do
     throw(IO.userError("PS0_LOOP_CONTRACT_RUNTIME"))
   IO.println "PS0_LOOP_CONTRACTS: PASS"
 '''
