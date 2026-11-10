@@ -47,6 +47,9 @@ seen = set()
 for file in files:
     raw_file = file.read_bytes()
     census = json.loads(raw_file)
+    if census.get('schema') == 'ps0-compiler-source-census/1':
+        assert file.name == 'summary.json', file
+        continue
     assert census['schema'] == 'ps0-native-source-census/1'
     assert census['leanCommit'] == 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc'
     rows = list(commands(census['commands']))
