@@ -16461,10 +16461,10 @@
       "run": 42743328824
     },
     "nextActions": [
-      "Inspect immutable full-graph terminal results without timeout-driven restarts",
-      "Resolve actual compiler failures using complete mapped command captures",
-      "Require actual retained PS-built prefix for the automatic second compiler stage",
-      "Require complete corpus, native linking/relocation and exact C/public-olean fixed point before completion"
+      "Inspect current complete connected graph without timeout-driven restart",
+      "Resolve actual new module failures using complete mapped captures",
+      "After both stages succeed retarget and execute the independent full fixed-point artifact audit",
+      "Require current complete PS source graph, native linking/relocation and exact per-module C/public-olean fixed point before completion"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -20263,46 +20263,37 @@
       }
     },
     "latestFullGraphEvidence": {
-      "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
-      "runner": "5b50bc70b9788efaa585d1c5522a38731a64fef2",
-      "run": 42719483426,
-      "job": 129509484457,
-      "status": "FAIL_THREE_COMPILER_MODULES",
-      "observedInputs": 2569,
-      "observedByteIdenticalInputs": 0,
+      "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
+      "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
+      "run": 42743328824,
+      "job": 129589453547,
+      "status": "FAIL_FOUR_COMPILER_MODULES",
+      "modules": 2569,
+      "byteIdenticalInputs": 0,
       "failures": [
-        {
-          "module": "Std.Http.Data.URI.Parser",
-          "line": 97,
-          "diagnostic": "takeWhileAtMost function and argument tuple treated as separate parser do expressions"
-        },
-        {
-          "module": "Lean.Meta.AbstractMVars",
-          "line": 102,
-          "diagnostic": "pure applied to appendIndexAfter function; following argument treated as separate monadic expression"
-        },
-        {
-          "module": "Lean.Meta.DiscrTree.Main",
-          "line": 278,
-          "diagnostic": "pushArgsAux function and argument tuple treated as separate MetaM do expressions"
-        }
+        "Lean.Data.FuzzyMatching:160 HAdd/function application",
+        "Lean.Parser.Extra:210/214 sepBy/sepBy1 compound token",
+        "Lean.Compiler.LCNF.MonoTypes:116 matches subject",
+        "Lean.Meta.CongrTheorems:131 indexed matches"
       ],
       "artifact": {
-        "id": 13726028378,
-        "digest": "sha256:bfcdf20b1c73eb6dd73bdf7fa9c101b2479dcbf8ef820ad1ff910a84307890e7"
-      },
-      "parserTypesBuiltInLog": true,
-      "wholeCompilerBuilt": false,
-      "relocatedCompilerVerified": false,
-      "fixedPointVerified": false,
-      "grammarMigrationComplete": false,
-      "verified_execution": false,
-      "finiteModuleResolution": {
-        "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
-        "run": 42740049293,
-        "independentRun": 42741650847,
-        "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
-        "wholeGraphRevalidated": false
+        "id": 13738989917,
+        "name": "ps0-transformed-corpus-9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c-42743328824",
+        "size_in_bytes": 135820113,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:03:44Z",
+        "expires_at": "2027-02-08T02:31:18Z",
+        "updated_at": "2026-11-10T06:03:44Z",
+        "digest": "sha256:c1d534cbfba58ab0425de2c2499fa633d880832aa2a8e7a5aa064213d022c86a",
+        "workflow_run": {
+          "id": 42743328824,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-transformed-corpus-20261109",
+          "head_sha": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945"
+        }
       }
     },
     "graphSixteenthSdkReproduction": {
@@ -21432,21 +21423,24 @@
       "evidenceField": "compilerPrefixContractQualification"
     },
     "completePSCompilerFixedPointCandidate": {
-      "source": "25a5bc2ad119c509f622ba97f90ca0d7e85bae73",
-      "runner": "f420d1321b44c6c483735a1016d1ba721a902b30",
-      "run": 42763555762,
-      "stageOneJob": 129654923413,
+      "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+      "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
+      "run": 42770353333,
+      "stageOneJob": 129676437006,
       "stageTwoJob": null,
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-10T05:41:50Z",
+      "observedAt": "2026-11-10T06:46:18Z",
       "pr": 248,
       "branch": "ci/ps0-selfhost-fixed-point-20261110",
       "moduleCount": 2569,
+      "wallClockMinutesPerStage": 360,
+      "compilerBuildTimeoutSeconds": 19800,
+      "sourceGrammar": true,
+      "interpreterPreferNative": false,
       "selfCensusMetadataMode": "retained-ps-built-prefix",
-      "sdkAssistedPS0PreparationInStageTwo": false,
-      "stageInputVerification": true,
-      "grammarMigrationComplete": false,
-      "verified_execution": false
+      "stageTwoRequiresActualPrefix": true,
+      "verified_execution": false,
+      "grammarMigrationComplete": false
     },
     "supersededCompletePSCompilerFixedPointCandidate": {
       "run": 42762560779,
@@ -21460,6 +21454,21 @@
       "status": "PASS",
       "actualCompilerArtifactAuditStatus": "PENDING_PRODUCER_COMPLETION",
       "evidenceField": "compilerFixedPointArtifactAuditQualification"
+    },
+    "terminalCompilerTermAdapterRecovery": {
+      "source": "811e4b8f5587838cb57fbca942172d9b6ef49ed8",
+      "run": 42768692837,
+      "compiledTargets": 4,
+      "strictParityPass": 1,
+      "strictParityFail": 3,
+      "independentRun": 42770631576,
+      "evidenceField": "terminalCompilerTermAdapterRecovery"
+    },
+    "terminalCompilerTermSourceFidelity": {
+      "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+      "run": 42770059238,
+      "status": "PASS",
+      "evidenceField": "terminalCompilerTermSourceFidelity"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -82863,46 +82872,37 @@
     }
   },
   "latestFullGraphEvidence": {
-    "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
-    "runner": "5b50bc70b9788efaa585d1c5522a38731a64fef2",
-    "run": 42719483426,
-    "job": 129509484457,
-    "status": "FAIL_THREE_COMPILER_MODULES",
-    "observedInputs": 2569,
-    "observedByteIdenticalInputs": 0,
+    "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
+    "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
+    "run": 42743328824,
+    "job": 129589453547,
+    "status": "FAIL_FOUR_COMPILER_MODULES",
+    "modules": 2569,
+    "byteIdenticalInputs": 0,
     "failures": [
-      {
-        "module": "Std.Http.Data.URI.Parser",
-        "line": 97,
-        "diagnostic": "takeWhileAtMost function and argument tuple treated as separate parser do expressions"
-      },
-      {
-        "module": "Lean.Meta.AbstractMVars",
-        "line": 102,
-        "diagnostic": "pure applied to appendIndexAfter function; following argument treated as separate monadic expression"
-      },
-      {
-        "module": "Lean.Meta.DiscrTree.Main",
-        "line": 278,
-        "diagnostic": "pushArgsAux function and argument tuple treated as separate MetaM do expressions"
-      }
+      "Lean.Data.FuzzyMatching:160 HAdd/function application",
+      "Lean.Parser.Extra:210/214 sepBy/sepBy1 compound token",
+      "Lean.Compiler.LCNF.MonoTypes:116 matches subject",
+      "Lean.Meta.CongrTheorems:131 indexed matches"
     ],
     "artifact": {
-      "id": 13726028378,
-      "digest": "sha256:bfcdf20b1c73eb6dd73bdf7fa9c101b2479dcbf8ef820ad1ff910a84307890e7"
-    },
-    "parserTypesBuiltInLog": true,
-    "wholeCompilerBuilt": false,
-    "relocatedCompilerVerified": false,
-    "fixedPointVerified": false,
-    "grammarMigrationComplete": false,
-    "verified_execution": false,
-    "finiteModuleResolution": {
-      "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
-      "run": 42740049293,
-      "independentRun": 42741650847,
-      "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
-      "wholeGraphRevalidated": false
+      "id": 13738989917,
+      "name": "ps0-transformed-corpus-9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c-42743328824",
+      "size_in_bytes": 135820113,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917/zip",
+      "expired": false,
+      "created_at": "2026-11-10T06:03:44Z",
+      "expires_at": "2027-02-08T02:31:18Z",
+      "updated_at": "2026-11-10T06:03:44Z",
+      "digest": "sha256:c1d534cbfba58ab0425de2c2499fa633d880832aa2a8e7a5aa064213d022c86a",
+      "workflow_run": {
+        "id": 42743328824,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-transformed-corpus-20261109",
+        "head_sha": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945"
+      }
     }
   },
   "graphSixteenthSdkReproduction": {
@@ -84596,21 +84596,24 @@
     }
   },
   "completePSCompilerFixedPointCandidate": {
-    "source": "25a5bc2ad119c509f622ba97f90ca0d7e85bae73",
-    "runner": "f420d1321b44c6c483735a1016d1ba721a902b30",
-    "run": 42763555762,
-    "stageOneJob": 129654923413,
+    "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+    "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
+    "run": 42770353333,
+    "stageOneJob": 129676437006,
     "stageTwoJob": null,
     "status": "IN_PROGRESS",
-    "observedAt": "2026-11-10T05:41:50Z",
+    "observedAt": "2026-11-10T06:46:18Z",
     "pr": 248,
     "branch": "ci/ps0-selfhost-fixed-point-20261110",
     "moduleCount": 2569,
+    "wallClockMinutesPerStage": 360,
+    "compilerBuildTimeoutSeconds": 19800,
+    "sourceGrammar": true,
+    "interpreterPreferNative": false,
     "selfCensusMetadataMode": "retained-ps-built-prefix",
-    "sdkAssistedPS0PreparationInStageTwo": false,
-    "stageInputVerification": true,
-    "grammarMigrationComplete": false,
-    "verified_execution": false
+    "stageTwoRequiresActualPrefix": true,
+    "verified_execution": false,
+    "grammarMigrationComplete": false
   },
   "initialCompilerPrefixContractQualification": {
     "source": "6c71f6ef3f86815c179284c55177112e8af6014f",
@@ -84686,5 +84689,418 @@
     },
     "actualCompilerArtifactAuditStatus": "PENDING_PRODUCER_COMPLETION",
     "scope": "synthetic infrastructure contracts only; no fixture executable runs or full-compiler qualification"
+  },
+  "canonicalGraphSeventeenthTerminalEvidence": {
+    "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
+    "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
+    "run": 42743328824,
+    "job": 129589453547,
+    "status": "FAIL_FOUR_COMPILER_MODULES",
+    "modules": 2569,
+    "byteIdenticalInputs": 0,
+    "failures": [
+      "Lean.Data.FuzzyMatching:160 HAdd/function application",
+      "Lean.Parser.Extra:210/214 sepBy/sepBy1 compound token",
+      "Lean.Compiler.LCNF.MonoTypes:116 matches subject",
+      "Lean.Meta.CongrTheorems:131 indexed matches"
+    ],
+    "artifact": {
+      "id": 13738989917,
+      "name": "ps0-transformed-corpus-9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c-42743328824",
+      "size_in_bytes": 135820113,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917/zip",
+      "expired": false,
+      "created_at": "2026-11-10T06:03:44Z",
+      "expires_at": "2027-02-08T02:31:18Z",
+      "updated_at": "2026-11-10T06:03:44Z",
+      "digest": "sha256:c1d534cbfba58ab0425de2c2499fa633d880832aa2a8e7a5aa064213d022c86a",
+      "workflow_run": {
+        "id": 42743328824,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-transformed-corpus-20261109",
+        "head_sha": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945"
+      }
+    }
+  },
+  "terminalCompilerTermAdapterRecovery": {
+    "source": "811e4b8f5587838cb57fbca942172d9b6ef49ed8",
+    "runner": "b79530a3e081f25799beb69e2500a1c72ab05a7b",
+    "run": 42768692837,
+    "jobs": [
+      {
+        "id": 129671156015,
+        "name": "reproduce (MonoTypes17, Lean.Compiler.LCNF.MonoTypes, 068b22fc1ef7d7fec282673d2223fb8e590f6818, L...",
+        "status": "failure"
+      },
+      {
+        "id": 129671156020,
+        "name": "reproduce (CongrTheorems17, Lean.Meta.CongrTheorems, 2b0f7de86c99ab7a804854faf9d97370d0007f8c, Le...",
+        "status": "failure"
+      },
+      {
+        "id": 129671156044,
+        "name": "reproduce (FuzzyMatching17, Lean.Data.FuzzyMatching, 3227c14d58d907195bccb2f10c7adb80fb99a634, Le...",
+        "status": "success"
+      },
+      {
+        "id": 129671156126,
+        "name": "reproduce (ParserExtra17, Lean.Parser.Extra, b41124fb0f5d9b594350ae901eeed2b767b82f54, Lean.Parser)",
+        "status": "failure"
+      }
+    ],
+    "targetCompilations": 4,
+    "strictParityPass": 1,
+    "strictParityFail": 3,
+    "artifacts": [
+      {
+        "id": 13741151497,
+        "name": "ps0-graph17-recovery-MonoTypes17-811e4b8f5587838cb57fbca942172d9b6ef49ed8-42768692837",
+        "size_in_bytes": 65404,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13741151497",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13741151497/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:29:54Z",
+        "expires_at": "2027-02-08T06:28:05Z",
+        "updated_at": "2026-11-10T06:29:54Z",
+        "digest": "sha256:2b88f20b249aad53d7180cd5be138fb907d67667fb3a7d92e342ea446672dabf",
+        "workflow_run": {
+          "id": 42768692837,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "b79530a3e081f25799beb69e2500a1c72ab05a7b"
+        }
+      },
+      {
+        "id": 13741037217,
+        "name": "ps0-graph17-recovery-FuzzyMatching17-811e4b8f5587838cb57fbca942172d9b6ef49ed8-42768692837",
+        "size_in_bytes": 95404,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13741037217",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13741037217/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:30:09Z",
+        "expires_at": "2027-02-08T06:28:05Z",
+        "updated_at": "2026-11-10T06:30:09Z",
+        "digest": "sha256:7e8d95d754724663bde181e75f9b8d474addb70dde0a041b682cc4fc41e8c4c3",
+        "workflow_run": {
+          "id": 42768692837,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "b79530a3e081f25799beb69e2500a1c72ab05a7b"
+        }
+      },
+      {
+        "id": 13739994215,
+        "name": "ps0-graph17-recovery-ParserExtra17-811e4b8f5587838cb57fbca942172d9b6ef49ed8-42768692837",
+        "size_in_bytes": 208342,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739994215",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739994215/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:29:48Z",
+        "expires_at": "2027-02-08T06:28:05Z",
+        "updated_at": "2026-11-10T06:29:48Z",
+        "digest": "sha256:429be09a4ad68ef9539611099f93ec54b94ae01d15ddec26a2a81433bf79e351",
+        "workflow_run": {
+          "id": 42768692837,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "b79530a3e081f25799beb69e2500a1c72ab05a7b"
+        }
+      },
+      {
+        "id": 13739934568,
+        "name": "ps0-graph17-recovery-CongrTheorems17-811e4b8f5587838cb57fbca942172d9b6ef49ed8-42768692837",
+        "size_in_bytes": 270536,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739934568",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739934568/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:31:16Z",
+        "expires_at": "2027-02-08T06:28:05Z",
+        "updated_at": "2026-11-10T06:31:16Z",
+        "digest": "sha256:0e9dff9dd2a928999ae892dbc43607e94822f60aac64b9d00691d6fde3c442b7",
+        "workflow_run": {
+          "id": 42768692837,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "b79530a3e081f25799beb69e2500a1c72ab05a7b"
+        }
+      }
+    ],
+    "independent": {
+      "run": 42770631576,
+      "job": 129677327259,
+      "runner": "d96ae0de59266f14f42c8621493f0e08adf2bbff",
+      "artifact": {
+        "id": 13741916277,
+        "name": "ps0-terminal-recovery-independent-42770631576",
+        "size_in_bytes": 2413,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13741916277",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13741916277/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:45:25Z",
+        "expires_at": "2027-02-08T06:45:19Z",
+        "updated_at": "2026-11-10T06:45:25Z",
+        "digest": "sha256:336f430317a7f8bc1d2c05d29defb902e18ba9c58ebc470f353513cdf9697cdb",
+        "workflow_run": {
+          "id": 42770631576,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "d96ae0de59266f14f42c8621493f0e08adf2bbff"
+        }
+      },
+      "report": {
+        "actual_c_files_rehashed": 8,
+        "grammar_migration_complete": false,
+        "producer_run": 42768692837,
+        "producer_source": "811e4b8f5587838cb57fbca942172d9b6ef49ed8",
+        "rows": [
+          {
+            "actual_c_sha256": {
+              "native": "b8d1f614b2135379812ec2bab115b1b9e72d68d7e4567e243a4956554a3f5a2d",
+              "ps": "d5fab25228fda7d7ae918d65a526d2be14ef625d4e2c081965c27b6e3235968b"
+            },
+            "compiled": true,
+            "definitions": 6,
+            "module": "Lean.Compiler.LCNF.MonoTypes",
+            "pinned_blob": "068b22fc1ef7d7fec282673d2223fb8e590f6818",
+            "qualification": "target compiled; strict byte parity FAIL remains; no broad semantic-equivalence claim",
+            "reader_changed_constants": 0,
+            "reader_summary": {}
+          },
+          {
+            "actual_c_sha256": {
+              "native": "bd47b99477809deed537131c98261d9f87bb3657b41c3e9fc6f096b67994c3bf",
+              "ps": "81433930ba94f90ec433be6e1bc33bfed979b87b8b3b0bbf05cb594ebeebd29a"
+            },
+            "compiled": true,
+            "definitions": 42,
+            "module": "Lean.Parser.Extra",
+            "pinned_blob": "b41124fb0f5d9b594350ae901eeed2b767b82f54",
+            "qualification": "target compiled; strict byte parity FAIL remains; no broad semantic-equivalence claim",
+            "reader_changed_constants": 0,
+            "reader_summary": {}
+          },
+          {
+            "actual_c_sha256": {
+              "native": "0e4049faa1ced258badc44d6d2d3aafc3359612fdac12dc1987f6ea75d37ac84",
+              "ps": "0e4049faa1ced258badc44d6d2d3aafc3359612fdac12dc1987f6ea75d37ac84"
+            },
+            "compiled": true,
+            "definitions": 16,
+            "module": "Lean.Data.FuzzyMatching",
+            "pinned_blob": "3227c14d58d907195bccb2f10c7adb80fb99a634",
+            "public_olean_receipt_sha256": {
+              "native": "5f58c19ea1214170d48f822375eb2c1df9f311d723475a8bd5530b4972e7f834",
+              "ps": "5f58c19ea1214170d48f822375eb2c1df9f311d723475a8bd5530b4972e7f834"
+            },
+            "qualification": "producer strict C/public olean PASS; independent actual C rehash"
+          },
+          {
+            "actual_c_sha256": {
+              "native": "2c3106ca885a4131838aaab8d8106c1df5d00da3a646695dd05e31c91a156919",
+              "ps": "911d214c7b589a0bf733b2e17b3b705af51c76b9c2c04feea5468b92244f700c"
+            },
+            "compiled": true,
+            "definitions": 21,
+            "module": "Lean.Meta.CongrTheorems",
+            "pinned_blob": "2b0f7de86c99ab7a804854faf9d97370d0007f8c",
+            "qualification": "target compiled; strict byte parity FAIL remains; no broad semantic-equivalence claim",
+            "reader_changed_constants": 0,
+            "reader_summary": {}
+          }
+        ],
+        "schema": "ps0-terminal-recovery-artifact-audit/1",
+        "scope": "artifact fidelity and exact phase distinctions only; actual target public olean files were not retained and are not independently rehashed; no whole-compiler or fixed-point result",
+        "source_plans_reconstructed": 4,
+        "status": "PASS",
+        "verified_execution": false
+      }
+    }
+  },
+  "terminalCompilerTermAdapterReproduction": {
+    "source": "d2ce50b0a5d70bda8a4371833f59646d736b7ba7",
+    "runner": "39fa088c2ea2d830b7d0afdfea0d3ceea0559667",
+    "run": 42766301456,
+    "jobs": [
+      {
+        "id": 129663485263,
+        "name": "reproduce (MonoTypes17, Lean.Compiler.LCNF.MonoTypes, 068b22fc1ef7d7fec282673d2223fb8e590f6818, L...",
+        "status": "failure"
+      },
+      {
+        "id": 129663485553,
+        "name": "reproduce (CongrTheorems17, Lean.Meta.CongrTheorems, 2b0f7de86c99ab7a804854faf9d97370d0007f8c, Le...",
+        "status": "failure"
+      },
+      {
+        "id": 129663485611,
+        "name": "reproduce (FuzzyMatching17, Lean.Data.FuzzyMatching, 3227c14d58d907195bccb2f10c7adb80fb99a634, Le...",
+        "status": "failure"
+      },
+      {
+        "id": 129663485644,
+        "name": "reproduce (ParserExtra17, Lean.Parser.Extra, b41124fb0f5d9b594350ae901eeed2b767b82f54, Lean.Parser)",
+        "status": "failure"
+      }
+    ],
+    "status": "FAIL_FOUR_MIGRATED_TARGETS_WITH_NATIVE_BASELINES_PASS",
+    "artifacts": [
+      {
+        "id": 13740385326,
+        "name": "ps0-graph17-reproduction-ParserExtra17-d2ce50b0a5d70bda8a4371833f59646d736b7ba7-42766301456",
+        "size_in_bytes": 116310,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13740385326",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13740385326/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:08:30Z",
+        "expires_at": "2027-02-08T06:06:38Z",
+        "updated_at": "2026-11-10T06:08:30Z",
+        "digest": "sha256:e8f30a2acd89e497318a5fd4760764e862419b895129c5dc6ef7ede6acd1509b",
+        "workflow_run": {
+          "id": 42766301456,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "39fa088c2ea2d830b7d0afdfea0d3ceea0559667"
+        }
+      },
+      {
+        "id": 13739762932,
+        "name": "ps0-graph17-reproduction-MonoTypes17-d2ce50b0a5d70bda8a4371833f59646d736b7ba7-42766301456",
+        "size_in_bytes": 40758,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739762932",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739762932/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:08:12Z",
+        "expires_at": "2027-02-08T06:06:38Z",
+        "updated_at": "2026-11-10T06:08:12Z",
+        "digest": "sha256:67cd9e9e319b263810e3ab34d58278bf9c4f806f62b041fddf8bfd7587c161dc",
+        "workflow_run": {
+          "id": 42766301456,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "39fa088c2ea2d830b7d0afdfea0d3ceea0559667"
+        }
+      },
+      {
+        "id": 13739474532,
+        "name": "ps0-graph17-reproduction-CongrTheorems17-d2ce50b0a5d70bda8a4371833f59646d736b7ba7-42766301456",
+        "size_in_bytes": 169401,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739474532",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739474532/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:08:42Z",
+        "expires_at": "2027-02-08T06:06:38Z",
+        "updated_at": "2026-11-10T06:08:42Z",
+        "digest": "sha256:b7da12741aa66e9822438eba91d9c86d2c137451123f34d3455cdc00834e2831",
+        "workflow_run": {
+          "id": 42766301456,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "39fa088c2ea2d830b7d0afdfea0d3ceea0559667"
+        }
+      },
+      {
+        "id": 13739054692,
+        "name": "ps0-graph17-reproduction-FuzzyMatching17-d2ce50b0a5d70bda8a4371833f59646d736b7ba7-42766301456",
+        "size_in_bytes": 70474,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739054692",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13739054692/zip",
+        "expired": false,
+        "created_at": "2026-11-10T06:08:36Z",
+        "expires_at": "2027-02-08T06:06:38Z",
+        "updated_at": "2026-11-10T06:08:36Z",
+        "digest": "sha256:f6463b4e4f09b6d19a94494e84e0946b7b4cd96a880bf7d070ff0d667e1dc57f",
+        "workflow_run": {
+          "id": 42766301456,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "39fa088c2ea2d830b7d0afdfea0d3ceea0559667"
+        }
+      }
+    ]
+  },
+  "terminalCompilerTermSourceFidelity": {
+    "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+    "runner": "0aeabbf67b4bd6923ec8edfef687e1ec4753590d",
+    "run": 42770059238,
+    "job": 129675496736,
+    "status": "PASS",
+    "syntaxShapes": 10,
+    "matchesPatternOrigins": 3,
+    "calleeOrigins": 2,
+    "reservedCalleeGuards": 5,
+    "artifact": {
+      "id": 13740949719,
+      "name": "ps0-terminal-term-shapes-cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575-42770059238",
+      "size_in_bytes": 1837,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13740949719",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13740949719/zip",
+      "expired": false,
+      "created_at": "2026-11-10T06:41:53Z",
+      "expires_at": "2027-02-08T06:40:13Z",
+      "updated_at": "2026-11-10T06:41:53Z",
+      "digest": "sha256:e01f4c00749b60814743aa9c3e8817a17f2bccb777cc8b8db2adfaa3b2f08c8b",
+      "workflow_run": {
+        "id": 42770059238,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "head_sha": "0aeabbf67b4bd6923ec8edfef687e1ec4753590d"
+      }
+    }
+  },
+  "terminalCompilerTermHelperFailures": [
+    {
+      "source": "b0e9b64b5c064ee45872706e013a67ade1647806",
+      "run": 42767556329,
+      "job": 129667503090,
+      "status": "FAIL_TEST_HELPER_NAT_INFERENCE",
+      "reason": "Unannotated failures counter inferred MessageData; no term cases executed. Projection control also corrected to preserve native nested-action syntax rather than introduce an empty-call semantic difference."
+    },
+    {
+      "source": "903805a7c29e2da9b79ec88f263660ce130b0146",
+      "run": 42769530216,
+      "job": 129673800666,
+      "status": "FAIL_TEST_HELPER_PS_SCOPE",
+      "reason": "Native findIdent helper was defined inside the PS syntax scope, triggering existing call-gap guard. Helpers moved before open scoped. No fidelity cases executed."
+    }
+  ],
+  "preMatchesFixedPointCandidateSupersession": {
+    "source": "25a5bc2ad119c509f622ba97f90ca0d7e85bae73",
+    "runner": "f420d1321b44c6c483735a1016d1ba721a902b30",
+    "run": 42763555762,
+    "status": "CANCELLED_KNOWN_REPRODUCED_GRAMMAR_FAILURES",
+    "jobs": [
+      {
+        "id": 129654923413,
+        "name": "stage-one",
+        "status": "cancelled"
+      },
+      {
+        "id": 129674985084,
+        "name": "stage-two",
+        "status": "cancelled"
+      }
+    ],
+    "reason": "All four terminal graph17 grammar/type errors independently reproduced on the same current compiler core, then repaired and all four target modules compiled. Supersede known bad grammar candidate, not timeout restart."
+  },
+  "matchesFixedPointPrerequisiteFailure": {
+    "source": "903805a7c29e2da9b79ec88f263660ce130b0146",
+    "runner": "97c980927a0b65ebf59ad1c947639504c1354144",
+    "run": 42769766684,
+    "stageOneJob": 129674985902,
+    "stageTwoJob": 129675580055,
+    "status": "FAIL_TEST_HELPER_PREREQUISITE",
+    "scope": "No complete corpus build was started; stage two skipped. Correct native findIdent helper scope qualified in42770059238."
   }
 }
