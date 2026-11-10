@@ -20,6 +20,10 @@ ps_prefix = ('module\nprelude\npublic import Init\npublic section\n'
              'function pairSum(p: Nat × Nat): Nat := p.1 + p.2\n'
              'structure IslandCell where\n  value : Nat\n')
 cases = [
+    ('initialize-value', 'initialize initialValue : Nat ← pure (pairSum (1, 2))',
+     'initialize initialValue : Nat ← pure <| pairSum (1, 2)'),
+    ('builtin-initialize-value', 'builtin_initialize initialValue : Nat ← pure (pairSum (1, 2))',
+     'builtin_initialize initialValue : Nat ← pure <| pairSum (1, 2)'),
     ('nested-action', 'def pairSumM (p : Nat × Nat) : Id Nat := pure (pairSum p)\ndef bad (n : Nat) : Id Nat := do\n  let result := (← pairSumM (n, 1))\n  return result',
      'function pairSumM(p: Nat × Nat): Id(Nat) := pure(pairSum(p))\nfunction bad(n: Nat): Id(Nat) := do\n  let result := (← pairSumM (n, 1))\n  return result'),
     ('term-return', 'def bad (n : Nat) : Id Nat := return pairSum (n, 1)',
