@@ -202,6 +202,27 @@
       "qualificationRun": 42750071234,
       "independentRun": 42750373437,
       "grammarMigrationComplete": false
+    },
+    {
+      "nativeKinds": [
+        "Lean.Parser.Command.structure",
+        "Lean.Parser.Command.inductive",
+        "Lean.Parser.Command.coinductive",
+        "Lean.Parser.Command.classInductive"
+      ],
+      "slots": [
+        "native telescope type/default operands",
+        "field type/default and method signature operands",
+        "parent types",
+        "constructor signatures",
+        "computed-field type and RHS",
+        "monotonicity tactic category operands"
+      ],
+      "adapter": "PS0.StandardAdapters.ps0StandardData",
+      "status": "finite syntax/source-origin and runtime scopes only; full data grammar remains pending",
+      "qualificationRun": 42753219078,
+      "actualParserTypesRun": 42752130115,
+      "grammarMigrationComplete": false
     }
   ],
   "remaining": [
@@ -14024,10 +14045,10 @@
       "run": 42743328824
     },
     "nextActions": [
-      "Inspect data adapter boundary run; finish explicit data census/cache and planner roles",
-      "Preserve strict parity matrix failures and classify remaining terminal results",
-      "Keep immutable graph seventeen running",
-      "Require complete canonical compiler, relocated operation and fixed point"
+      "Inspect isolated 2569-input data/initializer preparation",
+      "Preserve immutable graph seventeen while it compiles",
+      "Run current complete graph with mapped data/initializer census assertions",
+      "Require relocated operation, fixed point and remaining ownership/source-fidelity evidence"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -18873,12 +18894,82 @@
       "runner": "a21d9614fa2089a1c50ca23adf9bb76040639e36",
       "expectedJobs": 43,
       "run": 42750428957,
-      "status": "IN_PROGRESS_WITH_BYTE_PARITY_FAILURES",
-      "failedKnownJobs": [
-        129612480498,
-        129612480548,
-        129612480590
+      "status": "FAIL",
+      "passedJobs": 36,
+      "failedJobs": 7,
+      "failedJobEvidence": [
+        {
+          "id": 129612480498,
+          "name": "compiler-unless",
+          "conclusion": "failure",
+          "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+        },
+        {
+          "id": 129612480541,
+          "name": "compiler-synthinstance14",
+          "conclusion": "failure",
+          "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+        },
+        {
+          "id": 129612480548,
+          "name": "compiler-defeqattrib14",
+          "conclusion": "failure",
+          "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+        },
+        {
+          "id": 129612480590,
+          "name": "compiler-options",
+          "conclusion": "failure",
+          "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+        },
+        {
+          "id": 129612480663,
+          "name": "project-build",
+          "conclusion": "failure",
+          "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+        },
+        {
+          "id": 129612480838,
+          "name": "compiler-parserbasic14",
+          "conclusion": "failure",
+          "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+        },
+        {
+          "id": 129612480891,
+          "name": "compiler-environment",
+          "conclusion": "failure",
+          "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+        }
       ]
+    },
+    "dataDeclarationQualification": {
+      "source": "4b274eed49979526acf6de8671d3811e50e43a1e",
+      "run": 42753219078,
+      "independentRun": 42753645231,
+      "status": "PASS_FINITE_C_AND_PUBLIC_CONSTANTS",
+      "evidenceField": "dataDeclarationQualification"
+    },
+    "dataParserTypesQualification": {
+      "source": "4471a585933c6260449fab38642641bc6f2e8b25",
+      "run": 42752130115,
+      "independentRun": 42752609409,
+      "dataDeclarations": 15,
+      "definitions": 70,
+      "status": "PASS",
+      "evidenceField": "dataParserTypesQualification"
+    },
+    "dataCorpusPreparationCandidate": {
+      "source": "4471a585933c6260449fab38642641bc6f2e8b25",
+      "runner": "434d93fe2a3aa4f2da6e1154f414ce5690e7f636",
+      "branch": "ci/ps0-data-preparation-isolated-20261110",
+      "run": 42753352309,
+      "job": 129621894476,
+      "status": "IN_PROGRESS",
+      "draftPR": 246,
+      "cancelInProgress": false,
+      "retiredVolatileRun": 42752417487,
+      "retiredVolatileConclusion": "CANCELLED",
+      "scope": "Preparation only, no target graph compilation claimed"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -81448,11 +81539,196 @@
     "runner": "a21d9614fa2089a1c50ca23adf9bb76040639e36",
     "expectedJobs": 43,
     "run": 42750428957,
-    "status": "IN_PROGRESS_WITH_BYTE_PARITY_FAILURES",
-    "failedKnownJobs": [
-      129612480498,
-      129612480548,
-      129612480590
+    "status": "FAIL",
+    "passedJobs": 36,
+    "failedJobs": 7,
+    "failedJobEvidence": [
+      {
+        "id": 129612480498,
+        "name": "compiler-unless",
+        "conclusion": "failure",
+        "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+      },
+      {
+        "id": 129612480541,
+        "name": "compiler-synthinstance14",
+        "conclusion": "failure",
+        "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+      },
+      {
+        "id": 129612480548,
+        "name": "compiler-defeqattrib14",
+        "conclusion": "failure",
+        "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+      },
+      {
+        "id": 129612480590,
+        "name": "compiler-options",
+        "conclusion": "failure",
+        "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+      },
+      {
+        "id": 129612480663,
+        "name": "project-build",
+        "conclusion": "failure",
+        "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+      },
+      {
+        "id": 129612480838,
+        "name": "compiler-parserbasic14",
+        "conclusion": "failure",
+        "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+      },
+      {
+        "id": 129612480891,
+        "name": "compiler-environment",
+        "conclusion": "failure",
+        "scope": "migrated target compiled; strict raw C-byte-parity assertion failed"
+      }
     ]
+  },
+  "dataDeclarationQualification": {
+    "source": "4b274eed49979526acf6de8671d3811e50e43a1e",
+    "runner": "9d1a79f4b714f9aed61a2c4d54ea463c3520e3b5",
+    "run": 42753219078,
+    "job": 129621466658,
+    "status": "PASS_FINITE_C_AND_PUBLIC_CONSTANTS",
+    "mappedDefinitions": 5,
+    "privateRflGuards": 3,
+    "dataDeclarations": 3,
+    "sourceOriginCases": 5,
+    "nativeControlledGapRejections": 6,
+    "cacheChecks": 9,
+    "producerArtifact": {
+      "id": 13733389305,
+      "digest": "sha256:7084b2d31570b1ac0022a4409edcac9bc7023b754422951cd3adc22fb3e5353a",
+      "name": "ps0-data-boundaries-4b274eed49979526acf6de8671d3811e50e43a1e-42753219078",
+      "size": 4074870
+    },
+    "comparisons": {
+      "ir/DataDeclarationsBootstrap.c": {
+        "baseline": "098043301b2dfff2c3c65e41dcdb4b16af520759cb739083cc262abb46411796",
+        "migrated": "098043301b2dfff2c3c65e41dcdb4b16af520759cb739083cc262abb46411796",
+        "planned": "098043301b2dfff2c3c65e41dcdb4b16af520759cb739083cc262abb46411796"
+      },
+      "lib/lean/DataDeclarationsBootstrap.olean": {
+        "baseline": "d8c75c65192d0643e6c05adea2d3c81b2d734feb665dec1c0e10e3146dc14665",
+        "migrated": "323d7cdcada5bfa33dc8953abad521d96c71af4ac8d97912fde448801195689f",
+        "planned": "d8c75c65192d0643e6c05adea2d3c81b2d734feb665dec1c0e10e3146dc14665"
+      }
+    },
+    "nativeExecutableSha256": "364fc31afa18f6decf5696a1f4efc2001c506b6cbc866393ae1dc9816de7d77b",
+    "publicConstantEquality": "exact native expression representations modulo forall/lambda/let bound names only; metadata and constant references retained",
+    "changedGeneratedBinderConstants": [
+      "DataBox.ctorIdx",
+      "DataBox.mk.inj",
+      "DataPacket.noConfusionType",
+      "DataPacket.mk.inj",
+      "DataBox.noConfusionType",
+      "DataPacket.ctorIdx"
+    ],
+    "handwrittenPublicOleanByteEqual": false,
+    "extensionPayloadsCompared": false,
+    "independent": {
+      "runner": "8e8ccf8026d498997a7fdb295063bf5b53796693",
+      "run": 42753645231,
+      "job": 129622842992,
+      "status": "PASS",
+      "actualCompilerFilesRehashed": 6,
+      "actualNativeElfFilesRehashed": 1,
+      "nativePublicComparisonsRepeated": 2,
+      "artifact": {
+        "id": 13734990420,
+        "digest": "sha256:339857764886eb569b997c631396935743a930a11c958a4fd1a76e653b933726",
+        "name": "ps0-data-positive-inspection-42753645231",
+        "size": 6853
+      }
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "dataParserTypesQualification": {
+    "source": "4471a585933c6260449fab38642641bc6f2e8b25",
+    "runner": "5df77600ac92c30aca6cfb9df01d55b1358152f3",
+    "run": 42752130115,
+    "job": 129617957451,
+    "status": "PASS",
+    "producerArtifact": {
+      "id": 13733657501,
+      "digest": "sha256:f08fcef2b6769b5393abdc6797246ff7ade7bd69c114b641f8434a394a9251e6",
+      "name": "ps0-data-parser-types-4471a585933c6260449fab38642641bc6f2e8b25-42752130115",
+      "size": 552220
+    },
+    "independent": {
+      "runner": "81565811e528a37dd51f686ade7c1618ee9bb444",
+      "run": 42752609409,
+      "job": 129619490263,
+      "status": "PASS",
+      "artifact": {
+        "id": 13734386439,
+        "digest": "sha256:25e4e4e723f9afcf76be50b3ec21812518f27724a67e68c3ed56a071b98dd7de",
+        "name": "ps0-data-types-inspection-42752609409",
+        "size": 5068
+      },
+      "report": {
+        "actual_compiler_files_rehashed": 4,
+        "data_declarations": 15,
+        "grammar_migration_complete": false,
+        "modules": [
+          {
+            "converted_sha256": "6efec8d8ae8c3dff1b939ab0a38a59f3e7c8e443227613651bc5ff9d4ffce453",
+            "definitions": 70,
+            "hashes": {
+              "ir/Lean/Parser/Types.c": "8af04d5974a45ed4aba4ca7be2113ac9e4b26594c00040d24dbf1f642003a787",
+              "lib/lean/Lean/Parser/Types.olean": "e47eb47b44316da986e3f15004cbf8d2ab41c0d8d09fe1b79ede38ce76c28dfe"
+            },
+            "line_count_preserved": true,
+            "module": "Lean.Parser.Types",
+            "pinned_blob": "83c6647aba46768322afe237e359a3f271e1cf10",
+            "source_sha256": "a43c015d7e858f805d4eb20a904799daf7d2a224fb26c8b6e43129f5f217fe90",
+            "strategies": {
+              "const": 12,
+              "def": 6,
+              "function": 52
+            }
+          }
+        ],
+        "producer_job": 129617957451,
+        "producer_run": 42752130115,
+        "scope": "Actual pinned parser type module, 70 function heads and native data operands; no complete corpus claim",
+        "source": "4471a585933c6260449fab38642641bc6f2e8b25",
+        "status": "PASS",
+        "verified_execution": false
+      }
+    }
+  },
+  "dataBoundaryQualification": {
+    "source": "1d0bcdae5f97086355d861b7429e119df5e2e70f",
+    "runner": "bf7d6998ed701fb2ad4cf19c79d6e92f23fea36b",
+    "run": 42751536318,
+    "job": 129616047403,
+    "status": "PASS",
+    "nativeBaselines": 6,
+    "invalidPsRejected": 6,
+    "cacheChecks": 9,
+    "artifact": {
+      "id": 13734280812,
+      "digest": "sha256:4524104c3c22283bdf94980e941137c077232756997eb3dbb2f6448730d2d39c",
+      "name": "ps0-data-boundaries-1d0bcdae5f97086355d861b7429e119df5e2e70f-42751536318",
+      "size": 26070
+    }
+  },
+  "dataCorpusPreparationCandidate": {
+    "source": "4471a585933c6260449fab38642641bc6f2e8b25",
+    "runner": "434d93fe2a3aa4f2da6e1154f414ce5690e7f636",
+    "branch": "ci/ps0-data-preparation-isolated-20261110",
+    "run": 42753352309,
+    "job": 129621894476,
+    "status": "IN_PROGRESS",
+    "draftPR": 246,
+    "cancelInProgress": false,
+    "retiredVolatileRun": 42752417487,
+    "retiredVolatileConclusion": "CANCELLED",
+    "scope": "Preparation only, no target graph compilation claimed"
   }
 }
