@@ -199,14 +199,19 @@ if args.source_plans:
             source_plans[module] = plan
     self_relatives = sorted(set(originals) - {name.replace('.', '/') + '.lean' for name in entries})
     self_modules = [str(Path(relative).with_suffix('')).replace('/', '.') for relative in self_relatives]
-    # Converted modern headers require matching modern dependency metadata.
-    # This SDK-assisted preparation does not enter the final graph's build directory.
-    self_metadata = work / 'self-native-metadata'
-    run(['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
-         '-Kbootstrap=true', '-Kroots=PS0,PS0Main', '-KrootModule=PS0Main',
-         '-Kdriver=' + str(driver), '-KmoduleNames=' + ','.join(self_modules),
-         '-KprojectBuildDir=' + str(self_metadata), 'build', 'PS0Project'], 'self-native-metadata')
-    self_env = {**os.environ, 'LEAN_PATH': str(self_metadata / 'lib/lean')}
+    if stage:
+        # Every PS0 import during next-stage planning uses the verified PS-built host.
+        self_metadata = Path(stage['metadata'])
+    else:
+        # Converted modern headers require matching modern dependency metadata.
+        # This isolated stage-one preparation never enters the final graph directory.
+        native_metadata = work / 'self-native-metadata'
+        run(['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
+             '-Kbootstrap=true', '-Kroots=PS0,PS0Main', '-KrootModule=PS0Main',
+             '-Kdriver=' + str(driver), '-KmoduleNames=' + ','.join(self_modules),
+             '-KprojectBuildDir=' + str(native_metadata), 'build', 'PS0Project'], 'self-native-metadata')
+        self_metadata = native_metadata / 'lib/lean'
+    self_env = {**os.environ, 'LEAN_PATH': str(self_metadata)}
     # The compiler's own modules must also enter the transformed graph.
     # Use their original native syntax and the same source planner, not a fallback.
     for relative in self_relatives:
@@ -233,6 +238,11 @@ if args.source_plans:
         'reused_native_censuses': sorted(reused_censuses, key=lambda item: item['module']),
         'native_census_cache': native_cache.provenance if native_cache else None,
         'module_count': len(source_plans), 'source_grammar': True,
+        'self_census_metadata': {
+            'mode': 'retained-ps-built-prefix' if stage else 'isolated-sdk-assisted-preparation',
+            'path': str(self_metadata), 'driver_sha256': digest(driver),
+            'stage_source': stage['source'] if stage else None,
+        },
         'definitions': sum(len(plan['declarations']) for plan in source_plans.values()),
         'data_declarations': sum(plan.get('data_declarations', 0) for plan in source_plans.values()),
         'initialization_commands': sum(plan.get('initialization_commands', 0) for plan in source_plans.values()),

@@ -66,6 +66,7 @@ class CompilerPrefixIdentity(unittest.TestCase):
         report = self.verify()
         self.assertEqual(report['ps_sources_rehashed'], 2569)
         self.assertEqual(report['metadata_files'], 4)
+        self.assertEqual(Path(report['metadata']), self.root / 'compiler-prefix/lib/lean')
         self.assertFalse(report['verified_execution'])
         self.assertFalse(report['grammar_migration_complete'])
 

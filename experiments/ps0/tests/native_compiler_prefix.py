@@ -73,7 +73,7 @@ def verify_compiler_prefix(root, expected_source):
     assert not list(transformed.rglob('*.lean'))
     assert len(list(transformed.rglob('*.ps'))) == 2569
     return dict(schema='ps0-verified-stage-prefix/1', source=expected_source,
-        driver=str(driver), migration=str(root / 'migration.json'), driver_sha256=sha(driver),
+        driver=str(driver), metadata=str(metadata), migration=str(root / 'migration.json'), driver_sha256=sha(driver),
         metadata_files=len(expected), ps_sources_rehashed=2569,
         scope='Artifact identity and retained stage prerequisites only; no new compilation or fixed-point result',
         grammar_migration_complete=False, verified_execution=False)
