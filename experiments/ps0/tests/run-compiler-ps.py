@@ -374,6 +374,25 @@ result['runtime_grammar_host'] = {
     'evidence_sha256': digest(host_file), 'metadata_files': len(host['host_metadata']),
     'provenance': 'fresh all-.ps compiler output metadata; explicit pinned Lean SDK dependencies',
 }
+# A subsequent compiler stage needs the actual PS-built host metadata beside
+# this exact executable. Retain the already exercised native prefix, rather
+# than replacing its metadata with an SDK-assisted rebuild in another runner.
+prefix = evidence / 'compiler-prefix'
+shutil.copytree(host_file.parent / 'prefix', prefix)
+assert digest(prefix / 'bin/ps0') == result['driver_sha256']
+for relative, hashes in host['host_metadata'].items():
+    assert digest(prefix / 'lib/lean' / relative) == hashes['source_sha256']
+result['compiler_prefix'] = {
+    'driver': 'compiler-prefix/bin/ps0', 'metadata': 'compiler-prefix/lib/lean',
+    'driver_sha256': result['driver_sha256'],
+    'metadata_sha256': {relative: hashes['source_sha256']
+                        for relative, hashes in host['host_metadata'].items()},
+    'dependencies': 'explicit pinned Lean SDK; PS0 metadata is the actual all-PS graph output',
+}
+(prefix / 'compiler-prefix.json').write_text(json.dumps({
+    'source_commit': result['source_commit'], 'lean_commit': LEAN,
+    **result['compiler_prefix'], 'verified_execution': False,
+}, indent=2) + '\n')
 print('PS0_PS_BUILT_COMPILER_GRAMMAR_HOST: PASS; metadata_files=' + str(len(host['host_metadata'])), flush=True)
 if baseline:
     changed_c = [m for m in outputs if outputs[m]['c_sha256'] != baseline['outputs'][m]['c_sha256']]
