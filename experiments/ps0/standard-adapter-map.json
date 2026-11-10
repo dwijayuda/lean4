@@ -17848,36 +17848,38 @@
       }
     },
     "latestFullGraphEvidence": {
-      "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
-      "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
-      "run": 42743328824,
-      "job": 129589453547,
+      "source": "92b22875cf81199f10413661b633e50df4671fb6",
+      "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
+      "run": 42756129015,
+      "job": 129630835886,
       "status": "FAIL_FOUR_COMPILER_MODULES",
       "modules": 2569,
-      "byteIdenticalInputs": 0,
       "failures": [
-        "Lean.Data.FuzzyMatching:160 HAdd/function application",
-        "Lean.Parser.Extra:210/214 sepBy/sepBy1 compound token",
-        "Lean.Compiler.LCNF.MonoTypes:116 matches subject",
-        "Lean.Meta.CongrTheorems:131 indexed matches"
+        "Lean.Data.FuzzyMatching:160",
+        "Lean.Parser.Extension:291/307",
+        "Lean.Compiler.LCNF.MonoTypes:116",
+        "Lean.Meta.CongrTheorems:131"
       ],
+      "reportedByteIdenticalModeInputs": 0,
+      "actualSourceHashesEqualOriginal": 402,
+      "counterMeaning": "historical byte_identical=0 was a body-mode label count, not a count of equal original/PS source bytes",
       "artifact": {
-        "id": 13738989917,
-        "name": "ps0-transformed-corpus-9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c-42743328824",
-        "size_in_bytes": 135820113,
-        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917",
-        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917/zip",
+        "id": 13744141845,
+        "name": "ps0-transformed-data-92b22875cf81199f10413661b633e50df4671fb6-42756129015",
+        "size_in_bytes": 214481753,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845/zip",
         "expired": false,
-        "created_at": "2026-11-10T06:03:44Z",
-        "expires_at": "2027-02-08T02:31:18Z",
-        "updated_at": "2026-11-10T06:03:44Z",
-        "digest": "sha256:c1d534cbfba58ab0425de2c2499fa633d880832aa2a8e7a5aa064213d022c86a",
+        "created_at": "2026-11-10T07:36:15Z",
+        "expires_at": "2027-02-08T04:28:53Z",
+        "updated_at": "2026-11-10T07:36:15Z",
+        "digest": "sha256:8593721daa17da3bce2273811645fcb87d5e15e3aa62bf2e9b12b5dd1987f211",
         "workflow_run": {
-          "id": 42743328824,
+          "id": 42756129015,
           "repository_id": 1381609925,
           "head_repository_id": 1381609925,
-          "head_branch": "ci/ps0-transformed-corpus-20261109",
-          "head_sha": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945"
+          "head_branch": "ci/ps0-transformed-data-20261110",
+          "head_sha": "57aee6aebef51dda1e2adbecf450a5c1916dcac7"
         }
       }
     },
@@ -19054,6 +19056,37 @@
       "run": 42770059238,
       "status": "PASS",
       "evidenceField": "terminalCompilerTermSourceFidelity"
+    },
+    "dataGraphPartialSourceFidelityAudit": {
+      "run": 42778879122,
+      "status": "PASS",
+      "capturedFrontendModules": 1652,
+      "compiledGraph": false,
+      "evidenceField": "dataGraphPartialSourceFidelityAudit"
+    },
+    "parserExtensionCurrentSourceEvidence": {
+      "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+      "run": 42776664478,
+      "definitions": 81,
+      "targetCompiled": true,
+      "strictByteParity": "FAIL",
+      "evidenceField": "parserExtensionCurrentSourceEvidence"
+    },
+    "sourceByteCounterCorrection": {
+      "source": "92b22875cf81199f10413661b633e50df4671fb6",
+      "incorrectEarlierInterpretation": "zero actual byte-identical renamed source files",
+      "correctedSourceHashEqualCount": 402,
+      "reportedBodyModeLabelCount": 0,
+      "validation": "all2569actualpreparedPSfilesrehashed; equal-original count from recorded original/PS SHA256 equality; 1652actualfrontend captures checkedagainstPSbytes/plans/ownedmodes",
+      "scope": "Byte changes and mode labels alone do not prove PS grammar migration; valid shared syntax must still use required PS grammar/capture gates; complete current graph remains pending"
+    },
+    "sourceIdentityReportingQualification": {
+      "source": "4d7e6bebbfa9cc00c4107dd7523bb45485436f91",
+      "run": 42780211151,
+      "status": "PASS",
+      "prefixContracts": 15,
+      "fixedPointContracts": 9,
+      "evidenceField": "sourceIdentityReportingQualification"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -80457,36 +80490,38 @@
     }
   },
   "latestFullGraphEvidence": {
-    "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
-    "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
-    "run": 42743328824,
-    "job": 129589453547,
+    "source": "92b22875cf81199f10413661b633e50df4671fb6",
+    "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
+    "run": 42756129015,
+    "job": 129630835886,
     "status": "FAIL_FOUR_COMPILER_MODULES",
     "modules": 2569,
-    "byteIdenticalInputs": 0,
     "failures": [
-      "Lean.Data.FuzzyMatching:160 HAdd/function application",
-      "Lean.Parser.Extra:210/214 sepBy/sepBy1 compound token",
-      "Lean.Compiler.LCNF.MonoTypes:116 matches subject",
-      "Lean.Meta.CongrTheorems:131 indexed matches"
+      "Lean.Data.FuzzyMatching:160",
+      "Lean.Parser.Extension:291/307",
+      "Lean.Compiler.LCNF.MonoTypes:116",
+      "Lean.Meta.CongrTheorems:131"
     ],
+    "reportedByteIdenticalModeInputs": 0,
+    "actualSourceHashesEqualOriginal": 402,
+    "counterMeaning": "historical byte_identical=0 was a body-mode label count, not a count of equal original/PS source bytes",
     "artifact": {
-      "id": 13738989917,
-      "name": "ps0-transformed-corpus-9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c-42743328824",
-      "size_in_bytes": 135820113,
-      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917",
-      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738989917/zip",
+      "id": 13744141845,
+      "name": "ps0-transformed-data-92b22875cf81199f10413661b633e50df4671fb6-42756129015",
+      "size_in_bytes": 214481753,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845/zip",
       "expired": false,
-      "created_at": "2026-11-10T06:03:44Z",
-      "expires_at": "2027-02-08T02:31:18Z",
-      "updated_at": "2026-11-10T06:03:44Z",
-      "digest": "sha256:c1d534cbfba58ab0425de2c2499fa633d880832aa2a8e7a5aa064213d022c86a",
+      "created_at": "2026-11-10T07:36:15Z",
+      "expires_at": "2027-02-08T04:28:53Z",
+      "updated_at": "2026-11-10T07:36:15Z",
+      "digest": "sha256:8593721daa17da3bce2273811645fcb87d5e15e3aa62bf2e9b12b5dd1987f211",
       "workflow_run": {
-        "id": 42743328824,
+        "id": 42756129015,
         "repository_id": 1381609925,
         "head_repository_id": 1381609925,
-        "head_branch": "ci/ps0-transformed-corpus-20261109",
-        "head_sha": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945"
+        "head_branch": "ci/ps0-transformed-data-20261110",
+        "head_sha": "57aee6aebef51dda1e2adbecf450a5c1916dcac7"
       }
     }
   },
@@ -82282,7 +82317,6 @@
     "job": 129589453547,
     "status": "FAIL_FOUR_COMPILER_MODULES",
     "modules": 2569,
-    "byteIdenticalInputs": 0,
     "failures": [
       "Lean.Data.FuzzyMatching:160 HAdd/function application",
       "Lean.Parser.Extra:210/214 sepBy/sepBy1 compound token",
@@ -82307,7 +82341,10 @@
         "head_branch": "ci/ps0-transformed-corpus-20261109",
         "head_sha": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945"
       }
-    }
+    },
+    "reportedByteIdenticalModeInputs": 0,
+    "actualSourceHashEqualCount": null,
+    "counterMeaning": "historical mode-label counter; actual original/PS byte equality was not measured by that field"
   },
   "terminalCompilerTermAdapterRecovery": {
     "source": "811e4b8f5587838cb57fbca942172d9b6ef49ed8",
@@ -82706,5 +82743,210 @@
       "reservedAndForbiddenKeywords": "rejected",
       "unitInsertion": false
     }
+  },
+  "canonicalDataGraphTerminalEvidence": {
+    "source": "92b22875cf81199f10413661b633e50df4671fb6",
+    "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
+    "run": 42756129015,
+    "job": 129630835886,
+    "status": "FAIL_FOUR_COMPILER_MODULES",
+    "modules": 2569,
+    "failures": [
+      "Lean.Data.FuzzyMatching:160",
+      "Lean.Parser.Extension:291/307",
+      "Lean.Compiler.LCNF.MonoTypes:116",
+      "Lean.Meta.CongrTheorems:131"
+    ],
+    "reportedByteIdenticalModeInputs": 0,
+    "actualSourceHashesEqualOriginal": 402,
+    "counterMeaning": "historical byte_identical=0 was a body-mode label count, not a count of equal original/PS source bytes",
+    "artifact": {
+      "id": 13744141845,
+      "name": "ps0-transformed-data-92b22875cf81199f10413661b633e50df4671fb6-42756129015",
+      "size_in_bytes": 214481753,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845/zip",
+      "expired": false,
+      "created_at": "2026-11-10T07:36:15Z",
+      "expires_at": "2027-02-08T04:28:53Z",
+      "updated_at": "2026-11-10T07:36:15Z",
+      "digest": "sha256:8593721daa17da3bce2273811645fcb87d5e15e3aa62bf2e9b12b5dd1987f211",
+      "workflow_run": {
+        "id": 42756129015,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-transformed-data-20261110",
+        "head_sha": "57aee6aebef51dda1e2adbecf450a5c1916dcac7"
+      }
+    }
+  },
+  "dataGraphPartialSourceFidelityAudit": {
+    "run": 42778879122,
+    "job": 129703804908,
+    "runner": "662688d5d23ee66ec1dc1b895d288af54170e3fa",
+    "artifact": {
+      "id": 13745216552,
+      "name": "ps0-data-partial-source-audit-42778879122",
+      "size_in_bytes": 144745,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13745216552",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13745216552/zip",
+      "expired": false,
+      "created_at": "2026-11-10T07:57:44Z",
+      "expires_at": "2027-02-08T07:56:57Z",
+      "updated_at": "2026-11-10T07:57:44Z",
+      "digest": "sha256:ccc5729da373eefdfc0534b2f04cf85878ab3d67eac24fdf89f480f7d3cc4eb2",
+      "workflow_run": {
+        "id": 42778879122,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "head_sha": "662688d5d23ee66ec1dc1b895d288af54170e3fa"
+      }
+    },
+    "report": {
+      "actual_byte_equal_to_original_sources": 402,
+      "captured_frontend_modules": 1652,
+      "grammar_migration_complete": false,
+      "native_only_body_mode_count": 0,
+      "prepared_ps_files_rehashed": 2569,
+      "producer_run": 42756129015,
+      "schema": "ps0-data-graph-partial-source-audit/1",
+      "scope": "actual admitted frontend capture/source/plan fidelity only; producer graph FAILED; no claim that uncaptured dependents, all C targets, native linking or fixed point passed",
+      "source": "92b22875cf81199f10413661b633e50df4671fb6",
+      "status": "PASS",
+      "totals": {
+        "data_declarations": 2061,
+        "definitions": 15227,
+        "initialization_commands": 220
+      },
+      "verified_execution": false
+    }
+  },
+  "parserExtensionCurrentSourceEvidence": {
+    "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+    "runner": "ef2d9226bbc147cf66c833008db6f9fb48bdfb4f",
+    "run": 42776664478,
+    "job": 129696643861,
+    "status": "COMPILED_STRICT_BYTE_PARITY_FAIL",
+    "definitions": 81,
+    "pinnedBlob": "c981ad03186e2eda5fcc0f1ee3fc844af5f794cd",
+    "artifact": {
+      "id": 13744520712,
+      "name": "ps0-graph17-recovery-ParserExtension18-cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575-42776664478",
+      "size_in_bytes": 381282,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744520712",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744520712/zip",
+      "expired": false,
+      "created_at": "2026-11-10T07:39:48Z",
+      "expires_at": "2027-02-08T07:38:09Z",
+      "updated_at": "2026-11-10T07:39:48Z",
+      "digest": "sha256:4dd9be11e14d9c779be27eccb97b429b01beb22937c0b58271dae5e6644f462b",
+      "workflow_run": {
+        "id": 42776664478,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "head_sha": "ef2d9226bbc147cf66c833008db6f9fb48bdfb4f"
+      }
+    },
+    "actualC": {
+      "native": "f01af612094c0e61a40d971a463dc10d99b738ba567756a71c7d1088a2d784dd",
+      "ps": "7302c591d088f2526ebeefde214efbf5ab70ed5ca684489089f5fc3cedc995f1"
+    },
+    "inspection": {
+      "run": 42777702553,
+      "job": 129699993309,
+      "runner": "4d1b09f6141998beb400ea9d973de399d65bb0b4",
+      "artifact": {
+        "id": 13744228623,
+        "name": "ps0-extension-value-inspection-42777702553",
+        "size_in_bytes": 30365,
+        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744228623",
+        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744228623/zip",
+        "expired": false,
+        "created_at": "2026-11-10T07:47:18Z",
+        "expires_at": "2027-02-08T07:47:02Z",
+        "updated_at": "2026-11-10T07:47:18Z",
+        "digest": "sha256:63a81cf139aa73cceb5373895bb94a12a75968e612a415a0b409b61b0477029f",
+        "workflow_run": {
+          "id": 42777702553,
+          "repository_id": 1381609925,
+          "head_repository_id": 1381609925,
+          "head_branch": "ci/ps0-ordinary-hosts-20261110",
+          "head_sha": "4d1b09f6141998beb400ea9d973de399d65bb0b4"
+        }
+      },
+      "nativeConstantCount": 387,
+      "psConstantCount": 387,
+      "privateNamesOnlyEach": 22,
+      "publicNamesEqual": true,
+      "importsEqual": true,
+      "extensionEntryCountsEqual": true,
+      "changedCommonConstants": [
+        {
+          "first_value_difference": 4381,
+          "hintsEqual": true,
+          "kindEqual": true,
+          "name": "_private.Lean.Parser.Extension.0.Lean.Parser.resolveParserNameCore.match_6",
+          "native_value_context": "mkStr (Lean.Name.mkStr (Lean.Name.mkNum `_private.Lean.Parser.Extension 0) \"Lean\") \"Parser\") \"initFn\") \"_sparseCasesOn_3\") \"_@\") \"Lean\") \"Parser\") \"Extension\") 3896994716) \"_hygCtx\") \"_hyg\") 2)\n                          [Lean.Level.param `u_1, Lean.Level.zero])\n                        (Lean.Expr.const `String []))\n                      (Lean.Expr.lam\n                        `x\n                        (Lean.Expr.app (",
+          "ps_value_context": "mkStr (Lean.Name.mkStr (Lean.Name.mkNum `_private.Lean.Parser.Extension 0) \"Lean\") \"Parser\") \"initFn\") \"_sparseCasesOn_3\") \"_@\") \"Lean\") \"Parser\") \"Extension\") 1866887813) \"_hygCtx\") \"_hyg\") 4)\n                          [Lean.Level.param `u_1, Lean.Level.zero])\n                        (Lean.Expr.const `String []))\n                      (Lean.Expr.lam\n                        `x\n                        (Lean.Expr.app (",
+          "typeEqual": true,
+          "typeReprEqualIgnoringBinderNames": true,
+          "valueEqual": false,
+          "valueReprEqualIgnoringBinderNames": false
+        },
+        {
+          "first_value_difference": 3046,
+          "hintsEqual": true,
+          "kindEqual": true,
+          "name": "_private.Lean.Parser.Extension.0.Lean.Parser.resolveParserNameCore.match_3",
+          "native_value_context": "mkStr (Lean.Name.mkStr (Lean.Name.mkNum `_private.Lean.Parser.Extension 0) \"Lean\") \"Parser\") \"initFn\") \"_sparseCasesOn_3\") \"_@\") \"Lean\") \"Parser\") \"Extension\") 3896994716) \"_hygCtx\") \"_hyg\") 2)\n                            [Lean.Level.param `u_1, Lean.Level.zero])\n                          (Lean.Expr.const `String []))\n                        (Lean.Expr.lam\n                          `x\n                          (Lean.",
+          "ps_value_context": "mkStr (Lean.Name.mkStr (Lean.Name.mkNum `_private.Lean.Parser.Extension 0) \"Lean\") \"Parser\") \"initFn\") \"_sparseCasesOn_3\") \"_@\") \"Lean\") \"Parser\") \"Extension\") 1866887813) \"_hygCtx\") \"_hyg\") 4)\n                            [Lean.Level.param `u_1, Lean.Level.zero])\n                          (Lean.Expr.const `String []))\n                        (Lean.Expr.lam\n                          `x\n                          (Lean.",
+          "typeEqual": true,
+          "typeReprEqualIgnoringBinderNames": true,
+          "valueEqual": false,
+          "valueReprEqualIgnoringBinderNames": false
+        }
+      ],
+      "qualification": "first expression differences reference private initializer helper quotation-context names; full body equivalence/renaming proof unclaimed; byte failure remains"
+    }
+  },
+  "sourceByteCounterCorrection": {
+    "source": "92b22875cf81199f10413661b633e50df4671fb6",
+    "incorrectEarlierInterpretation": "zero actual byte-identical renamed source files",
+    "correctedSourceHashEqualCount": 402,
+    "reportedBodyModeLabelCount": 0,
+    "validation": "all2569actualpreparedPSfilesrehashed; equal-original count from recorded original/PS SHA256 equality; 1652actualfrontend captures checkedagainstPSbytes/plans/ownedmodes",
+    "scope": "Byte changes and mode labels alone do not prove PS grammar migration; valid shared syntax must still use required PS grammar/capture gates; complete current graph remains pending"
+  },
+  "sourceIdentityReportingQualification": {
+    "source": "4d7e6bebbfa9cc00c4107dd7523bb45485436f91",
+    "runner": "bba3f1d4121f92ca7f59846b17d991b64e0036f7",
+    "run": 42780211151,
+    "job": 129708157849,
+    "status": "PASS",
+    "prefixContracts": 15,
+    "fixedPointContracts": 9,
+    "cleanPS0Build": true,
+    "artifact": {
+      "id": 13745712527,
+      "name": "ps0-compiler-prefix-4d7e6bebbfa9cc00c4107dd7523bb45485436f91-42780211151",
+      "size_in_bytes": 2492,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13745712527",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13745712527/zip",
+      "expired": false,
+      "created_at": "2026-11-10T08:09:28Z",
+      "expires_at": "2027-02-08T08:07:43Z",
+      "updated_at": "2026-11-10T08:09:28Z",
+      "digest": "sha256:8e74d535cbe9531418e0ea4e315e642e2b4e7829e4b4f94bc12acac56edb996a",
+      "workflow_run": {
+        "id": 42780211151,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "head_sha": "bba3f1d4121f92ca7f59846b17d991b64e0036f7"
+      }
+    },
+    "scope": "synthetic identity/auditor contracts only; no new compiler graph qualification"
   }
 }
