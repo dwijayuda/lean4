@@ -16461,10 +16461,10 @@
       "run": 42743328824
     },
     "nextActions": [
-      "Inspect native-controlled initializer value probes before implementation",
-      "Keep immutable graph seventeen running without polling-driven restart",
-      "Broaden current-source compiler qualification for newly owned monadic operands",
-      "Require canonical complete compiler, relocated operation and fixed point"
+      "Inspect positive initializer startup/artifact and source-origin run",
+      "Keep immutable graph seventeen running",
+      "Qualify current source on actual compiler modules and complete canonical graph",
+      "Require relocated operation and self-host fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -21239,6 +21239,44 @@
       "runner": "6d4a91e6b892c85b8d3d2eb9e108e9ac28a1ec54",
       "run": 42746963472,
       "status": "PENDING_NATIVE_CONTROLLED_TEST_FIRST"
+    },
+    "initializerOperandCheckpoint": {
+      "testFirst": {
+        "source": "526498bcadb50714b722ba37c79fa00bb17398ea",
+        "runner": "6d4a91e6b892c85b8d3d2eb9e108e9ac28a1ec54",
+        "run": 42746963472,
+        "job": 129601264569,
+        "status": "FAIL_INVALID_PS_ADMITTED",
+        "nativeBaselinesPassed": 2,
+        "invalidPsAdmitted": 2,
+        "artifact": {
+          "id": 13731374150,
+          "digest": "sha256:7fc78d2f636dfa4255f4b5c871c87ce6e0ed33bde5c176ce98770691029fe362"
+        }
+      },
+      "boundary": {
+        "source": "152801eebcd8f8424f986d04fe183158af4f2ef5",
+        "runner": "b82b10b6857ff28a33b1d172b570042af7b9e950",
+        "run": 42749114955,
+        "job": 129608245566,
+        "status": "PASS",
+        "nativeBaselinesPassed": 2,
+        "invalidPsRejected": 2,
+        "cacheTests": 7,
+        "artifact": {
+          "id": 13731714638,
+          "digest": "sha256:dcc554ed1ddd3caad7fe5bbbea1c96ce72b531855d6b6af4643075274b36cf3e"
+        }
+      },
+      "positiveCandidate": {
+        "source": "797608d688cd95be1571b1ad9e85e10a539f9484",
+        "runner": "30671ba1e14050a99a17ad2e285f46db2e9a127d",
+        "run": 42749371573,
+        "status": "IN_PROGRESS",
+        "scope": "Native/handwritten PS/planned PS two-module startup, exact C/public olean, three Lake-linked executables and four initializer source-origin cases; no result claimed"
+      },
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -83618,5 +83656,43 @@
     "runner": "6d4a91e6b892c85b8d3d2eb9e108e9ac28a1ec54",
     "run": 42746963472,
     "status": "PENDING_NATIVE_CONTROLLED_TEST_FIRST"
+  },
+  "initializerOperandCheckpoint": {
+    "testFirst": {
+      "source": "526498bcadb50714b722ba37c79fa00bb17398ea",
+      "runner": "6d4a91e6b892c85b8d3d2eb9e108e9ac28a1ec54",
+      "run": 42746963472,
+      "job": 129601264569,
+      "status": "FAIL_INVALID_PS_ADMITTED",
+      "nativeBaselinesPassed": 2,
+      "invalidPsAdmitted": 2,
+      "artifact": {
+        "id": 13731374150,
+        "digest": "sha256:7fc78d2f636dfa4255f4b5c871c87ce6e0ed33bde5c176ce98770691029fe362"
+      }
+    },
+    "boundary": {
+      "source": "152801eebcd8f8424f986d04fe183158af4f2ef5",
+      "runner": "b82b10b6857ff28a33b1d172b570042af7b9e950",
+      "run": 42749114955,
+      "job": 129608245566,
+      "status": "PASS",
+      "nativeBaselinesPassed": 2,
+      "invalidPsRejected": 2,
+      "cacheTests": 7,
+      "artifact": {
+        "id": 13731714638,
+        "digest": "sha256:dcc554ed1ddd3caad7fe5bbbea1c96ce72b531855d6b6af4643075274b36cf3e"
+      }
+    },
+    "positiveCandidate": {
+      "source": "797608d688cd95be1571b1ad9e85e10a539f9484",
+      "runner": "30671ba1e14050a99a17ad2e285f46db2e9a127d",
+      "run": 42749371573,
+      "status": "IN_PROGRESS",
+      "scope": "Native/handwritten PS/planned PS two-module startup, exact C/public olean, three Lake-linked executables and four initializer source-origin cases; no result claimed"
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }
