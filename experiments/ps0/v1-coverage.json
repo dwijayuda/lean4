@@ -16486,10 +16486,10 @@
       "lastObservedUtc": "2026-11-09 19:39:50 UTC"
     },
     "nextActions": [
-      "Inspect new constructor/show/have/while/repeat candidates before promoting their planned counts",
-      "Track immutable graph sixteen without restarting it on polling limits",
-      "Qualify loop-contract and other remaining ordinary grammar roles with native controls and source fidelity",
-      "Require fresh canonical PS graph, native linking/runtime, relocated compiler operation and fixed point"
+      "Inspect Std.WP loop annotation binder/value/measure tests before any qualification",
+      "Inspect current full compiler matrix and immutable graph sixteen without polling-driven restart",
+      "Continue remaining PS-specific ordinary grammar and exact source fidelity adapters",
+      "Require complete canonical PS graph, fresh native linking/runtime, relocated compiler operation and fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -16606,10 +16606,11 @@
       "verified_execution": false
     },
     "ordinaryHostRoleQualification": {
-      "source": "f89de60f6081cdce5853f001f5e7104860133cfb",
-      "run": 42716920746,
+      "source": "b1e17376da88660afbe16d313a2a31dd209c280e",
+      "runner": "f34697e024d118a467ebc7a282f62bc456902352",
+      "run": 42725142448,
       "status": "QUALIFIED_FINITE",
-      "independentRun": 42718198152
+      "independentRun": 42726228592
     },
     "ordinaryHostRoleCompilerRegression": {
       "source": "96cc1e06eb77953c1aafd1aa76c325b668a99af8",
@@ -18810,6 +18811,90 @@
         "id": 13719990278,
         "sha256": "e863be86fed57ccd31e173ca015808c2cc00b0c758f05987aa4ef665f8d15d6d"
       }
+    },
+    "loop48BroaderMatrixCandidate": {
+      "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
+      "runner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
+      "run": 42726667178,
+      "status": "PENDING"
+    },
+    "loopAnnotationTestFirstEvidence": {
+      "source": "4956ce392ce70c8d03b11ef5cc46e75f38c15710",
+      "runner": "a4823d70881f255382f3971ec6a616c1a9b69d18",
+      "run": 42725259086,
+      "job": 129529133972,
+      "status": "FAILED_CONFIRMED_ADMISSIONS",
+      "observations": [
+        {
+          "case": "loop-for-invariant",
+          "diagnostic_excerpt": [
+            "⚠ [3/3] Built HostIslandProbe (1.4s)",
+            "warning: build/host-island-gaps-42725259086/loop-for-invariant-source/HostIslandProbe.ps:11:2: The `invariant` clause is part of the experimental intrinsic verification syntax; `set_option experimental.intrinsic true` acknowledges its experimental status and silences this warning.",
+            "warning: build/host-island-gaps-42725259086/loop-for-invariant-source/HostIslandProbe.ps:11:12: Variable name `pref` is not explicitly referenced.",
+            "",
+            "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:",
+            "  [apply] _pref",
+            "",
+            "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+          ],
+          "invalid_host_gap_rejected": false,
+          "native_baseline_passed": true,
+          "ps_exit_code": 0
+        },
+        {
+          "case": "loop-invariant-type",
+          "diagnostic_excerpt": [
+            "⚠ [3/3] Built HostIslandProbe (1.4s)",
+            "warning: build/host-island-gaps-42725259086/loop-invariant-type-source/HostIslandProbe.ps:11:2: The `invariant` clause is part of the experimental intrinsic verification syntax; `set_option experimental.intrinsic true` acknowledges its experimental status and silences this warning.",
+            "warning: build/host-island-gaps-42725259086/loop-invariant-type-source/HostIslandProbe.ps:11:13: Variable name `pref` is not explicitly referenced.",
+            "",
+            "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:",
+            "  [apply] _pref",
+            "",
+            "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+          ],
+          "invalid_host_gap_rejected": false,
+          "native_baseline_passed": true,
+          "ps_exit_code": 0
+        },
+        {
+          "case": "loop-while-invariant",
+          "diagnostic_excerpt": [
+            "⚠ [3/3] Built HostIslandProbe (1.4s)",
+            "warning: build/host-island-gaps-42725259086/loop-while-invariant-source/HostIslandProbe.ps:11:2: The `invariant` clause is part of the experimental intrinsic verification syntax; `set_option experimental.intrinsic true` acknowledges its experimental status and silences this warning.",
+            "warning: build/host-island-gaps-42725259086/loop-while-invariant-source/HostIslandProbe.ps:11:12: Variable name `exit` is not explicitly referenced.",
+            "",
+            "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:",
+            "  [apply] _exit",
+            "",
+            "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+          ],
+          "invalid_host_gap_rejected": false,
+          "native_baseline_passed": true,
+          "ps_exit_code": 0
+        },
+        {
+          "case": "loop-while-measure",
+          "diagnostic_excerpt": [
+            "⚠ [3/3] Built HostIslandProbe (1.4s)",
+            "warning: build/host-island-gaps-42725259086/loop-while-measure-source/HostIslandProbe.ps:11:2: The `decreasing` clause is part of the experimental intrinsic verification syntax; `set_option experimental.intrinsic true` acknowledges its experimental status and silences this warning.",
+            "Build completed successfully (3 jobs)."
+          ],
+          "invalid_host_gap_rejected": false,
+          "native_baseline_passed": true,
+          "ps_exit_code": 0
+        }
+      ],
+      "artifact": {
+        "id": 13722476493,
+        "sha256": "dceabfffc5709b8dc66111cb00686b9843f726894e4153b64365f49ba1f3a50a"
+      }
+    },
+    "loopAnnotationCandidate": {
+      "source": "7ef09e02786d4fd0c32c4a5cc935cfdc91647de7",
+      "runner": "3a59ebb124e8952d48f0b874b29d817862e610ec",
+      "status": "PENDING",
+      "scope": "loop annotation pattern/type/body/measure roles; Std.WP parity module and explicit source origins"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -32484,55 +32569,54 @@
     }
   },
   "ordinaryHostRoleQualification": {
-    "source": "f89de60f6081cdce5853f001f5e7104860133cfb",
-    "runner": "e384f90ece977398aec11b1aa2a3f56eb269d1bf",
-    "run": 42716920746,
-    "job": 129500737314,
+    "source": "b1e17376da88660afbe16d313a2a31dd209c280e",
+    "runner": "f34697e024d118a467ebc7a282f62bc456902352",
+    "run": 42725142448,
+    "job": 129528726782,
     "status": "QUALIFIED_FINITE",
-    "mappedDefinitions": 41,
-    "proofGuards": 38,
-    "sourceOriginCases": 19,
-    "invalidNativeGapAdmissionsResolved": 19,
-    "producerJobConclusion": "PASS",
+    "mappedDefinitions": 48,
+    "proofGuards": 43,
+    "sourceOriginCases": 28,
+    "invalidNativeGapAdmissionsResolved": 27,
     "producerArtifact": {
-      "id": 13718357661,
-      "sha256": "5efd4bccb72b71cec22e366d79d973bfa8c549788d5ed575e018c1888bd4ee38"
+      "id": 13722796496,
+      "sha256": "83653623e0ca50374d6d5cbc81fb4102402ec9d15d9651d6a3f837657a0038f1"
     },
     "independentInspection": {
-      "runner": "0868aac705ecd49aae6883d32a5ffb2de0234851",
-      "run": 42718198152,
-      "job": 129505080411,
+      "runner": "c9707b4d215aa35bd6b2e87902d46098f2fc310d",
+      "run": 42726228592,
+      "job": 129532432107,
       "status": "PASS",
       "artifact": {
-        "id": 13717979108,
-        "sha256": "b50d2cf9260839545f766fd9a32bfb5b6e1fd634044689e5f06cb7d79394e2dc"
+        "id": 13723371049,
+        "sha256": "172fd171d47c0a7771e991bdbbed66b251534b702a97f1bbda76746d179d81a5"
       },
       "report": {
         "actual_compiler_files_rehashed": 6,
         "actual_native_elf_files_rehashed": 1,
         "comparisons": {
           "ir/MatchHostBootstrap.c": {
-            "baseline": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
-            "migrated": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
-            "planned": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607"
+            "baseline": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+            "migrated": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+            "planned": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df"
           },
           "lib/lean/MatchHostBootstrap.olean": {
-            "baseline": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
-            "migrated": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
-            "planned": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
+            "baseline": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+            "migrated": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+            "planned": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62"
           }
         },
         "evidence": {
           "comparisons": {
             "ir/MatchHostBootstrap.c": {
-              "baseline": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
-              "migrated": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
-              "planned": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607"
+              "baseline": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+              "migrated": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+              "planned": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df"
             },
             "lib/lean/MatchHostBootstrap.olean": {
-              "baseline": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
-              "migrated": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
-              "planned": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
+              "baseline": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+              "migrated": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+              "planned": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62"
             }
           },
           "grammar_migration_complete": false,
@@ -32540,64 +32624,42 @@
           "logical_imports": [
             "Init"
           ],
-          "mapped_definitions": 41,
-          "mapped_theorems": 38,
-          "native_executable_sha256": "22ccd65b41c9b7be8a087d91b4e61b98dc28f979c82835a41e9bf96be6a3e058",
+          "mapped_definitions": 48,
+          "mapped_theorems": 43,
+          "native_executable_sha256": "e6f77fef266ca5c075639d2ac79711ca59fb1c408f23368ffe718ab556f0bbc3",
           "native_patterns_preserved": true,
           "native_quotation": true,
           "prepared_source_identity": true,
           "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
-          "scope": "finite native term/do matches, pattern lambda, record, if/have/for/try, ascriptions and direct tactic operands; loop annotations and deeper ordinary roles remain open",
-          "source": "f89de60f6081cdce5853f001f5e7104860133cfb",
-          "source_origin_cases": 19,
-          "source_origin_fixture_sha256": "148e9beff6c46d4784c582b15461621056c30d2be4d225c9ccebd5dddcafe2a7",
+          "scope": "finite native term/do matches, patterns/records/conditions/bindings/loop values, collections/interpolation/forall, ascriptions/direct tactics; loop contracts and deeper ordinary roles remain open",
+          "source": "b1e17376da88660afbe16d313a2a31dd209c280e",
+          "source_origin_cases": 28,
+          "source_origin_fixture_sha256": "bf90a20349552995ddabdff8ce5b532df7dc0635e2a9c8d843d5c906bde0bc48",
           "verified_execution": false
         },
         "grammar_migration_complete": false,
         "hashes": {
-          "match-host-42716920746/OrdinaryHostOrigins": "22ccd65b41c9b7be8a087d91b4e61b98dc28f979c82835a41e9bf96be6a3e058",
-          "match-host-42716920746/baseline-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
-          "match-host-42716920746/baseline-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
-          "match-host-42716920746/migrated-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
-          "match-host-42716920746/migrated-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
-          "match-host-42716920746/planned-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
-          "match-host-42716920746/planned-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
+          "match-host-42725142448/OrdinaryHostOrigins": "e6f77fef266ca5c075639d2ac79711ca59fb1c408f23368ffe718ab556f0bbc3",
+          "match-host-42725142448/baseline-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+          "match-host-42725142448/baseline-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+          "match-host-42725142448/migrated-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+          "match-host-42725142448/migrated-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+          "match-host-42725142448/planned-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+          "match-host-42725142448/planned-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62"
         },
-        "invalid_host_gaps_rejected": 19,
-        "mapped_definitions": 41,
-        "mapped_theorems": 38,
+        "invalid_host_gaps_rejected": 27,
+        "mapped_definitions": 48,
+        "mapped_theorems": 43,
         "producer_job_status": "SUCCESS",
-        "producer_run": 42716920746,
-        "producer_runner": "e384f90ece977398aec11b1aa2a3f56eb269d1bf",
-        "producer_source": "f89de60f6081cdce5853f001f5e7104860133cfb",
-        "scope": "finite nineteen ordinary host boundaries including tuple/list/array/interpolation, forall domain/body and pure pattern values; loop annotations and complete compiler qualification remain open",
+        "producer_run": 42725142448,
+        "producer_runner": "f34697e024d118a467ebc7a282f62bc456902352",
+        "producer_source": "b1e17376da88660afbe16d313a2a31dd209c280e",
+        "scope": "finite twenty-seven ordinary boundaries including native constructor/show/named-have/while/repeat values; loop contracts and whole compiler qualification remain open",
         "separate_parser_probe": "PASS in producer log: native and PS complete parses at depths 4,8,12,16; timings are producer evidence",
-        "source_origin_cases": 19,
+        "source_origin_cases": 28,
         "status": "PASS",
         "verified_execution": false
       }
-    },
-    "parserProbe": {
-      "status": "PASS_PRODUCER",
-      "depths": [
-        4,
-        8,
-        12,
-        16
-      ],
-      "nativeMilliseconds": [
-        0,
-        0,
-        1,
-        0
-      ],
-      "psMilliseconds": [
-        46,
-        75,
-        104,
-        134
-      ],
-      "scope": "one complete-category parse per case; not an asymptotic proof or compiler runtime benchmark"
     },
     "grammarMigrationComplete": false,
     "verified_execution": false,
@@ -32617,7 +32679,12 @@
       "string interpolation values",
       "forall domains and bodies",
       "pure pattern-if values",
-      "pure pattern-let types/values/continuations"
+      "pure pattern-let types/values/continuations",
+      "anonymous constructor values",
+      "show type/from/by-prime values",
+      "named pure have types/defaults/values",
+      "while conditions and bodies",
+      "repeat-until bodies and conditions"
     ],
     "nativeRolesRetained": [
       "match and if-let patterns",
@@ -34570,6 +34637,150 @@
           "status": "PASS",
           "verified_execution": false
         }
+      },
+      "grammarMigrationComplete": false,
+      "verified_execution": false,
+      "roles": [
+        "match motive, discriminants and arm bodies",
+        "pattern-lambda arm bodies",
+        "record sources, fields, field equations and type",
+        "do-if propositions, let values and branch sequences",
+        "do-match discriminants and branch sequences",
+        "named have types, defaults and values",
+        "for collections and bodies (native loop annotations pending)",
+        "try/catch/finally sequences and exception types",
+        "proof-bound pure if values",
+        "type-ascribed values and types",
+        "direct exact/apply/refine tactic operands",
+        "tuple/list/array elements",
+        "string interpolation values",
+        "forall domains and bodies",
+        "pure pattern-if values",
+        "pure pattern-let types/values/continuations"
+      ],
+      "nativeRolesRetained": [
+        "match and if-let patterns",
+        "match discriminant proof binders",
+        "record field binders and lvalues",
+        "native layout groups, tokens and source information",
+        "quotations and independent DSL categories"
+      ]
+    },
+    {
+      "source": "f89de60f6081cdce5853f001f5e7104860133cfb",
+      "runner": "e384f90ece977398aec11b1aa2a3f56eb269d1bf",
+      "run": 42716920746,
+      "job": 129500737314,
+      "status": "QUALIFIED_FINITE",
+      "mappedDefinitions": 41,
+      "proofGuards": 38,
+      "sourceOriginCases": 19,
+      "invalidNativeGapAdmissionsResolved": 19,
+      "producerJobConclusion": "PASS",
+      "producerArtifact": {
+        "id": 13718357661,
+        "sha256": "5efd4bccb72b71cec22e366d79d973bfa8c549788d5ed575e018c1888bd4ee38"
+      },
+      "independentInspection": {
+        "runner": "0868aac705ecd49aae6883d32a5ffb2de0234851",
+        "run": 42718198152,
+        "job": 129505080411,
+        "status": "PASS",
+        "artifact": {
+          "id": 13717979108,
+          "sha256": "b50d2cf9260839545f766fd9a32bfb5b6e1fd634044689e5f06cb7d79394e2dc"
+        },
+        "report": {
+          "actual_compiler_files_rehashed": 6,
+          "actual_native_elf_files_rehashed": 1,
+          "comparisons": {
+            "ir/MatchHostBootstrap.c": {
+              "baseline": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+              "migrated": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+              "planned": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607"
+            },
+            "lib/lean/MatchHostBootstrap.olean": {
+              "baseline": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+              "migrated": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+              "planned": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
+            }
+          },
+          "evidence": {
+            "comparisons": {
+              "ir/MatchHostBootstrap.c": {
+                "baseline": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+                "migrated": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+                "planned": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607"
+              },
+              "lib/lean/MatchHostBootstrap.olean": {
+                "baseline": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+                "migrated": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+                "planned": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
+              }
+            },
+            "grammar_migration_complete": false,
+            "independently_owned_native_dsl": true,
+            "logical_imports": [
+              "Init"
+            ],
+            "mapped_definitions": 41,
+            "mapped_theorems": 38,
+            "native_executable_sha256": "22ccd65b41c9b7be8a087d91b4e61b98dc28f979c82835a41e9bf96be6a3e058",
+            "native_patterns_preserved": true,
+            "native_quotation": true,
+            "prepared_source_identity": true,
+            "runtime_oracle": "PS0_HOST_ORIGINS: PASS",
+            "scope": "finite native term/do matches, pattern lambda, record, if/have/for/try, ascriptions and direct tactic operands; loop annotations and deeper ordinary roles remain open",
+            "source": "f89de60f6081cdce5853f001f5e7104860133cfb",
+            "source_origin_cases": 19,
+            "source_origin_fixture_sha256": "148e9beff6c46d4784c582b15461621056c30d2be4d225c9ccebd5dddcafe2a7",
+            "verified_execution": false
+          },
+          "grammar_migration_complete": false,
+          "hashes": {
+            "match-host-42716920746/OrdinaryHostOrigins": "22ccd65b41c9b7be8a087d91b4e61b98dc28f979c82835a41e9bf96be6a3e058",
+            "match-host-42716920746/baseline-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+            "match-host-42716920746/baseline-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+            "match-host-42716920746/migrated-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+            "match-host-42716920746/migrated-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c",
+            "match-host-42716920746/planned-MatchHostBootstrap.c": "c3043cce0e5b0dc663ff2fb694906ddb84d6bb553495a60caf24e8056cdd5607",
+            "match-host-42716920746/planned-MatchHostBootstrap.olean": "6bf3d814d3f6b22bae5c71eedb596bb930f94c8aa9273c532784c2e03b0fb92c"
+          },
+          "invalid_host_gaps_rejected": 19,
+          "mapped_definitions": 41,
+          "mapped_theorems": 38,
+          "producer_job_status": "SUCCESS",
+          "producer_run": 42716920746,
+          "producer_runner": "e384f90ece977398aec11b1aa2a3f56eb269d1bf",
+          "producer_source": "f89de60f6081cdce5853f001f5e7104860133cfb",
+          "scope": "finite nineteen ordinary host boundaries including tuple/list/array/interpolation, forall domain/body and pure pattern values; loop annotations and complete compiler qualification remain open",
+          "separate_parser_probe": "PASS in producer log: native and PS complete parses at depths 4,8,12,16; timings are producer evidence",
+          "source_origin_cases": 19,
+          "status": "PASS",
+          "verified_execution": false
+        }
+      },
+      "parserProbe": {
+        "status": "PASS_PRODUCER",
+        "depths": [
+          4,
+          8,
+          12,
+          16
+        ],
+        "nativeMilliseconds": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "psMilliseconds": [
+          46,
+          75,
+          104,
+          134
+        ],
+        "scope": "one complete-category parse per case; not an asymptotic proof or compiler runtime benchmark"
       },
       "grammarMigrationComplete": false,
       "verified_execution": false,
@@ -78455,5 +78666,89 @@
     "imports": [
       "Std.WP"
     ]
+  },
+  "loop48BroaderMatrixCandidate": {
+    "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
+    "runner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
+    "run": 42726667178,
+    "status": "PENDING"
+  },
+  "loopAnnotationTestFirstEvidence": {
+    "source": "4956ce392ce70c8d03b11ef5cc46e75f38c15710",
+    "runner": "a4823d70881f255382f3971ec6a616c1a9b69d18",
+    "run": 42725259086,
+    "job": 129529133972,
+    "status": "FAILED_CONFIRMED_ADMISSIONS",
+    "observations": [
+      {
+        "case": "loop-for-invariant",
+        "diagnostic_excerpt": [
+          "⚠ [3/3] Built HostIslandProbe (1.4s)",
+          "warning: build/host-island-gaps-42725259086/loop-for-invariant-source/HostIslandProbe.ps:11:2: The `invariant` clause is part of the experimental intrinsic verification syntax; `set_option experimental.intrinsic true` acknowledges its experimental status and silences this warning.",
+          "warning: build/host-island-gaps-42725259086/loop-for-invariant-source/HostIslandProbe.ps:11:12: Variable name `pref` is not explicitly referenced.",
+          "",
+          "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:",
+          "  [apply] _pref",
+          "",
+          "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "loop-invariant-type",
+        "diagnostic_excerpt": [
+          "⚠ [3/3] Built HostIslandProbe (1.4s)",
+          "warning: build/host-island-gaps-42725259086/loop-invariant-type-source/HostIslandProbe.ps:11:2: The `invariant` clause is part of the experimental intrinsic verification syntax; `set_option experimental.intrinsic true` acknowledges its experimental status and silences this warning.",
+          "warning: build/host-island-gaps-42725259086/loop-invariant-type-source/HostIslandProbe.ps:11:13: Variable name `pref` is not explicitly referenced.",
+          "",
+          "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:",
+          "  [apply] _pref",
+          "",
+          "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "loop-while-invariant",
+        "diagnostic_excerpt": [
+          "⚠ [3/3] Built HostIslandProbe (1.4s)",
+          "warning: build/host-island-gaps-42725259086/loop-while-invariant-source/HostIslandProbe.ps:11:2: The `invariant` clause is part of the experimental intrinsic verification syntax; `set_option experimental.intrinsic true` acknowledges its experimental status and silences this warning.",
+          "warning: build/host-island-gaps-42725259086/loop-while-invariant-source/HostIslandProbe.ps:11:12: Variable name `exit` is not explicitly referenced.",
+          "",
+          "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:",
+          "  [apply] _exit",
+          "",
+          "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      },
+      {
+        "case": "loop-while-measure",
+        "diagnostic_excerpt": [
+          "⚠ [3/3] Built HostIslandProbe (1.4s)",
+          "warning: build/host-island-gaps-42725259086/loop-while-measure-source/HostIslandProbe.ps:11:2: The `decreasing` clause is part of the experimental intrinsic verification syntax; `set_option experimental.intrinsic true` acknowledges its experimental status and silences this warning.",
+          "Build completed successfully (3 jobs)."
+        ],
+        "invalid_host_gap_rejected": false,
+        "native_baseline_passed": true,
+        "ps_exit_code": 0
+      }
+    ],
+    "artifact": {
+      "id": 13722476493,
+      "sha256": "dceabfffc5709b8dc66111cb00686b9843f726894e4153b64365f49ba1f3a50a"
+    }
+  },
+  "loopAnnotationCandidate": {
+    "source": "7ef09e02786d4fd0c32c4a5cc935cfdc91647de7",
+    "runner": "3a59ebb124e8952d48f0b874b29d817862e610ec",
+    "status": "PENDING",
+    "scope": "loop annotation pattern/type/body/measure roles; Std.WP parity module and explicit source origins"
   }
 }
