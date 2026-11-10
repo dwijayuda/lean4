@@ -11,6 +11,7 @@ import json
 parser = argparse.ArgumentParser()
 parser.add_argument('root', type=Path)
 parser.add_argument('output', type=Path)
+parser.add_argument('--expected-captures', type=int, default=2087)
 args = parser.parse_args()
 counts = Counter()
 modules = defaultdict(set)
@@ -56,7 +57,7 @@ for file in sorted(args.root.rglob('native-census.json')):
                     examples[key].append(dict(module=module, declaration=declaration.get('sourceName'),
                         ancestry=ancestry, range=span,
                         source=raw[span['start']:span['end']].decode()[:320]))
-assert len(captures) == 2087, len(captures)
+assert len(captures) == args.expected_captures, len(captures)
 result = dict(schema='ps0-native-host-role-inventory/1', retained_captures=len(captures),
     captures=captures, observations=[dict(role_kind=key, occurrences=counts[key],
         module_count=len(modules[key]), examples=examples[key]) for key in sorted(counts)],
