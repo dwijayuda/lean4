@@ -18626,7 +18626,7 @@
       "runner": "f34697e024d118a467ebc7a282f62bc456902352",
       "positiveRun": 42723160821,
       "negativeRun": 42723160297,
-      "status": "PENDING",
+      "status": "QUALIFIED_FINITE",
       "plannedDefinitions": 48,
       "plannedProofGuards": 43,
       "plannedOriginCases": 28,
@@ -18679,7 +18679,8 @@
         "imports": [
           "Std.WP"
         ]
-      }
+      },
+      "qualificationReference": "ordinaryHostRoleQualification"
     },
     "ordinaryHostRestoredBroadMatrix": {
       "source": "ad3b7d491f19476ec7c87c6521f3fcef1b687dd9",
@@ -39672,7 +39673,7 @@
     "runner": "f34697e024d118a467ebc7a282f62bc456902352",
     "positiveRun": 42723160821,
     "negativeRun": 42723160297,
-    "status": "PENDING",
+    "status": "QUALIFIED_FINITE",
     "plannedDefinitions": 48,
     "plannedProofGuards": 43,
     "plannedOriginCases": 28,
@@ -39725,7 +39726,8 @@
       "imports": [
         "Std.WP"
       ]
-    }
+    },
+    "qualificationReference": "ordinaryHostRoleQualification"
   },
   "ordinaryAggregateCandidateHistory": [
     {
@@ -78657,6 +78659,11 @@
     "artifact": {
       "id": 13719990278,
       "sha256": "e863be86fed57ccd31e173ca015808c2cc00b0c758f05987aa4ef665f8d15d6d"
+    },
+    "resolvedBy": {
+      "source": "b1e17376da88660afbe16d313a2a31dd209c280e",
+      "run": 42725142448,
+      "scope": "finite tested ordinary roles only"
     }
   },
   "loopAnnotationTestFirstCandidate": {
