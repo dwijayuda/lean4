@@ -18,10 +18,14 @@ open scoped PS0.StandardAdapters
 
 run_cmd do
   let cases := #[
-    ("singleton-local-value", "do\n  let singleton : FVarIdSet := { params[targetParamIdx]!.fvarId }\n  pure singleton",
+    ("direct-local-body-wrapper", "do\n  let singleton : FVarIdSet := (params[targetParamIdx]!.fvarId)\n  pure singleton",
       "do\n  let singleton : FVarIdSet := { params[targetParamIdx]!.fvarId }\n  pure singleton"),
-    ("singleton-mut-local-value", "do\n  let mut singleton : FVarIdSet := { params[targetParamIdx]!.fvarId }\n  pure singleton",
+    ("direct-mut-local-body-wrapper", "do\n  let mut singleton : FVarIdSet := (params[targetParamIdx]!.fvarId)\n  pure singleton",
       "do\n  let mut singleton : FVarIdSet := { params[targetParamIdx]!.fvarId }\n  pure singleton"),
+    ("protected-singleton-local-value", "do\n  let singleton : FVarIdSet := ({ params[targetParamIdx]!.fvarId })\n  pure singleton",
+      "do\n  let singleton : FVarIdSet := ({ params[targetParamIdx]!.fvarId })\n  pure singleton"),
+    ("protected-singleton-mut-local-value", "do\n  let mut singleton : FVarIdSet := ({ params[targetParamIdx]!.fvarId })\n  pure singleton",
+      "do\n  let mut singleton : FVarIdSet := ({ params[targetParamIdx]!.fvarId })\n  pure singleton"),
     ("do-arrow", "fun vars body => do←\n  unless vars.size = args.size do\n    return (.rfl, inst)\n  mkLambdaFVars vars p",
       "fun vars body => do←\n  unless vars.size = args.size do\n    return (.rfl, inst)\n  mkLambdaFVars vars p"),
     ("inline-do-call", "withLocalDeclD `_a α fun a => do isDefEq (← inferType (eAbst.instantiate1 a)) eType",
@@ -40,8 +44,7 @@ run_cmd do
         | .ok stx => pure stx
         | .error message => throwError "PS parse: {message}"
       let lowered ← Elab.liftMacroM <| PS0.Syntax.lower `psTerm source
-      if label == "singleton-local-value" || label == "singleton-mut-local-value" ||
-          label == "do-arrow" || label == "inline-do-pattern" then
+      if label != "inline-do-call" && label != "nested-do-condition" then
         if let some d := difference native lowered then throwError "native syntax differs: {d}"
       logInfo m!"GRAPH19_TERM {label}: PASS"
     catch error =>
@@ -56,4 +59,4 @@ run_cmd do
         logInfo m!"GRAPH19_COMMAND {label}: FAIL {message}"
         failures := failures + 1
   unless failures == 0 do throwError "GRAPH19_REGRESSIONS: {failures} failures"
-  logInfo "GRAPH19_REGRESSIONS: PASS 8 cases"
+  logInfo "GRAPH19_REGRESSIONS: PASS 10 cases"
