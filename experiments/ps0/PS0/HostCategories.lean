@@ -80,7 +80,14 @@ private def letPrefix : Parser :=
   operands #[(`tactic, `psTactic)] Lean.Parser.Term.whereFinally
 
 @[run_parser_attribute_hooks] def argumentValue : Parser :=
-  withoutPosition (categoryParser `psTerm 0)
+  withoutPosition (withoutForbidden (categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] def forwardTerm : Parser :=
+  operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doForward
+
+@[run_parser_attribute_hooks] def ownedBindElem : Parser :=
+  leadingNode `ps0HostDoBind maxPrec <| withPosition <|
+    symbol "let " >> ident >> symbol "←" >> categoryParser `psTerm 0
 
 @[run_parser_attribute_hooks] def ascriptionTerm : Parser :=
   -- These overlapping native grouping productions must share category caches.
@@ -512,6 +519,10 @@ def ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
 @[psTerm_parser 20000]
 def ps0NativeNestedAction : Lean.Parser.Parser := PS0.DoLayout.nestedActionTerm
 @[psTerm_parser 20000]
+def ps0NativeDoForward : Lean.Parser.Parser := PS0.DoLayout.forwardTerm
+@[psDoElem_parser 20001]
+def ps0PositionedDoBind : Lean.Parser.Parser := PS0.DoLayout.ownedBindElem
+@[psTerm_parser 20000]
 def ps0NativeTermReturn : Lean.Parser.Parser := PS0.DoLayout.returnTerm
 @[psTerm_parser 20000]
 def ps0NativeTermFor : Lean.Parser.Parser := PS0.DoLayout.forTerm
@@ -621,7 +632,7 @@ syntax:max (name := ps0HostAdjacentCall) (priority := high)
 def ps0NativeHeadBridge : Lean.Parser.Parser := PS0.Operators.headLeading
 @[psHead_parser]
 def ps0NativeHeadProjectionParser : Lean.Parser.TrailingParser := PS0.Operators.projection
-syntax:max (name := ps0ParenthesizedHead) Lean.Parser.Term.hygienicLParen psTerm ")" : psHead
+syntax:max (name := ps0ParenthesizedHead) Lean.Parser.Term.hygienicLParen PS0.DoLayout.argumentValue ")" : psHead
 syntax:max (name := ps0AscribedHead) (priority := 20000) PS0.DoLayout.ascriptionTerm : psHead
 syntax:max (name := ps0HeadCall) psHead:max noWs
   "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psHead
@@ -1153,6 +1164,9 @@ partial def lower (category : Name) (source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if source.isOfKind ``Lean.Parser.Term.doForward then
+      unless source.getArgs.size == 3 do Macro.throwError "PS0V1-DO-FORWARD: unexpected native marker"
+      return source.setArg 2 (← lowerNativeDoSequence source[2])
     if source.isOfKind ``Lean.Parser.Term.nestedAction then
       unless source.getArgs.size == 2 do Macro.throwError "PS0V1-NESTED-ACTION: unexpected native action"
       return source.setArg 1 (← lowerDoElem source[1])

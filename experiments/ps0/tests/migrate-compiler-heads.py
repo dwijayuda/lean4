@@ -205,6 +205,10 @@ def single_type_call(operand, role='owned binder type'):
         assert len(operand['args']) == 2
         do_sequence(operand['args'][1])
         return
+    if operand['kind'] == 'Lean.Parser.Term.doForward':
+        assert len(parts) == 3
+        do_sequence(parts[2])
+        return
     if operand['kind'] == 'Lean.Parser.Term.letrec':
         assert len(operand['args']) == 4
         recursive_declarations(operand['args'][1])
@@ -847,6 +851,12 @@ for previous_command, command in original_commands(snapshot['commands']):
         'Lean.Parser.commandSeal__',
         'Lean.Parser.Command.section',
     }
+    if previous_command is not None and command['range'] and previous_command['range']:
+        def column(offset):
+            return offset - (raw.rfind(b'\n', 0, offset) + 1)
+        # A contextual alias at a deeper command column can be consumed as a
+        # continuation of the preceding term. The reserved R2 head ends it.
+        boundary_hazard = boundary_hazard or column(command['range']['start']) > column(previous_command['range']['start'])
     if boundary_hazard:
         use_alias = False
     if use_alias and binders and binders[0]['kind'] == 'Lean.Parser.Term.explicitBinder':
