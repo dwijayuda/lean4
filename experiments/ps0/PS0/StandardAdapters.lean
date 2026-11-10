@@ -13,6 +13,25 @@ open Lean Lean.Parser.Command Lean.Parser.Term
 open PS0.Binders
 namespace PS0.StandardAdapters
 
+syntax (name := psDataTerm) psTerm : psDataOperand
+syntax (name := psDataTactic) psTactic : psDataTacticOperand
+
+scoped syntax (name := ps0StandardData) (priority := 20000)
+  PS0.DoLayout.dataCommand : command
+
+private partial def lowerDataOperands (source : Syntax) : MacroM Syntax := withRef source do
+  if source.isOfKind ``psDataTerm then return ← PS0.Syntax.lower `psTerm source[0]
+  if source.isOfKind ``psDataTactic then return ← PS0.Syntax.lower `psTactic source[0]
+  return source.setArgs (← source.getArgs.mapM lowerDataOperands)
+
+@[macro ps0StandardData] def lowerData : Macro := fun source => withRef source do
+  let native := source[0]
+  unless native.isOfKind ``Lean.Parser.Command.declaration && native.getArgs.size == 2 &&
+      #[``Lean.Parser.Command.«inductive», ``Lean.Parser.Command.«coinductive»,
+        ``Lean.Parser.Command.classInductive, ``Lean.Parser.Command.«structure»].contains native[1].getKind do
+    Macro.throwError "PS0V1-DATA: unexpected native declaration roles"
+  lowerDataOperands native
+
 scoped syntax (name := ps0StandardInitialize) (priority := 20000)
   PS0.DoLayout.initializeCommand : command
 

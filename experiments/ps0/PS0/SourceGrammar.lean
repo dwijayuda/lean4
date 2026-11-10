@@ -17,7 +17,8 @@ register_builtin_option ps0.sourceGrammar : Bool := {
 
 private def categoryNames : Array Name :=
   #[`psTerm, `psCommand, `psTactic, `psDoSeq, `psCallArg, `psHead,
-    `psDoElem, `psDoItem, `psLocalBinder, `psStructInstFieldDecl, `psLoopBinder, `psBinderParam, `psDeclBinder, `psFunBinder, `psDeclTail, `psDeclValue,
+    `psDoElem, `psDoItem, `psLocalBinder, `psStructInstFieldDecl, `psLoopBinder, `psDataOperand,
+    `psDataTacticOperand, `psBinderParam, `psDeclBinder, `psFunBinder, `psDeclTail, `psDeclValue,
     `psStructFieldValue, `psStructField, `psDefDeriving, `psWhereClause,
     `psWhereLocalValue, `psWhereLocalDecl, `psWhereFinally, `psWhereFinallySection]
 
@@ -26,7 +27,8 @@ private def commandNames : Array Name :=
     `PS0.StandardAdapters.ps0StandardTheorem, `PS0.StandardAdapters.ps0StandardExample,
     `PS0.StandardAdapters.ps0StandardFunction, `PS0.StandardAdapters.ps0StandardOpaque,
     `PS0.StandardAdapters.ps0StandardAxiom, `PS0.StandardAdapters.ps0StandardConst,
-    `PS0.StandardAdapters.ps0StandardInstance, `PS0.StandardAdapters.ps0StandardInitialize]
+    `PS0.StandardAdapters.ps0StandardInstance, `PS0.StandardAdapters.ps0StandardInitialize,
+    `PS0.StandardAdapters.ps0StandardData]
 
 -- Contextual alias words must remain ordinary identifiers in native DSL syntax.
 private partial def contextualAliases : ParserDescr → ParserDescr
@@ -69,7 +71,7 @@ private def commandOperands (parser : Parser) : Parser :=
 
 private def ownedCommandWords : Array String :=
   #["set_option", "open", "attribute", "variable", "include", "omit", "mutual",
-    "initialize", "builtin_initialize"]
+    "initialize", "builtin_initialize", "inductive", "coinductive", "structure", "class"]
 
 private def escapedDeclaration (source : Syntax) : Bool :=
   let native := if source.isOfKind `ps0NativeCommandBridge then source[0] else source
@@ -78,7 +80,9 @@ private def escapedDeclaration (source : Syntax) : Bool :=
     #[``Lean.Parser.Command.definition, ``Lean.Parser.Command.abbrev,
       ``Lean.Parser.Command.theorem, ``Lean.Parser.Command.example,
       ``Lean.Parser.Command.opaque, ``Lean.Parser.Command.axiom,
-      ``Lean.Parser.Command.instance].contains native[1].getKind)
+      ``Lean.Parser.Command.instance, ``Lean.Parser.Command.«inductive»,
+      ``Lean.Parser.Command.«coinductive», ``Lean.Parser.Command.classInductive,
+      ``Lean.Parser.Command.«structure»].contains native[1].getKind)
 
 private def declarationDiagnostic (ctx : ParserContext) (state : ParserState) : String := Id.run do
   let some category := getParserCategory? ctx.env `psCommand
