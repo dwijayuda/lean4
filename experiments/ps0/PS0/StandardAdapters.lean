@@ -15,14 +15,52 @@ namespace PS0.StandardAdapters
 
 syntax (name := psDataTerm) psTerm : psDataOperand
 syntax (name := psDataTactic) psTactic : psDataTacticOperand
+syntax (name := psDataCommaBinder) PS0.Binders.psCommaBinder : psDataBinder
+syntax (name := psDataNativeBinder) PS0.DoLayout.dataNativeBinder : psDataBinder
 
 scoped syntax (name := ps0StandardData) (priority := 20000)
   PS0.DoLayout.dataCommand : command
 
+private partial def dataSameShape (left right : Syntax) : Bool :=
+  match left, right with
+  | .missing, .missing => true
+  | .atom _ a, .atom _ b => a == b
+  | .ident _ _ a _, .ident _ _ b _ => a == b
+  | .node _ k xs, .node _ j ys =>
+    k == j && xs.size == ys.size && (xs.zip ys).all (fun (a, b) => dataSameShape a b)
+  | _, _ => false
+
+private partial def isDataBinder (source : Syntax) : Bool :=
+  source.isOfKind ``psDataNativeBinder || source.isOfKind ``psDataCommaBinder ||
+    (source.isOfKind choiceKind && !source.getArgs.isEmpty && source.getArgs.all isDataBinder)
+
+mutual
 private partial def lowerDataOperands (source : Syntax) : MacroM Syntax := withRef source do
   if source.isOfKind ``psDataTerm then return ← PS0.Syntax.lower `psTerm source[0]
   if source.isOfKind ``psDataTactic then return ← PS0.Syntax.lower `psTactic source[0]
-  return source.setArgs (← source.getArgs.mapM lowerDataOperands)
+  let mut children := #[]
+  for child in source.getArgs do
+    if isDataBinder child then children := children ++ (← lowerDataBinder child)
+    else children := children.push (← lowerDataOperands child)
+  return source.setArgs children
+
+private partial def lowerDataBinder (source : Syntax) : MacroM (Array Syntax) := withRef source do
+  if source.isOfKind ``psDataNativeBinder then return #[← lowerDataOperands source[0]]
+  if source.isOfKind ``psDataCommaBinder then return ← PS0.Binders.lowerOne source[0]
+  unless source.isOfKind choiceKind && !source.getArgs.isEmpty do
+    Macro.throwError "PS0V1-DATA-BINDER: unexpected native/comma binder role"
+  let branches := source.getArgs.filter (·.isOfKind ``psDataNativeBinder) ++
+    source.getArgs.filter (fun branch => !branch.isOfKind ``psDataNativeBinder)
+  let mut result? : Option (Array Syntax) := none
+  for branch in branches do
+    let candidate ← lowerDataBinder branch
+    if let some previous := result? then
+      unless previous.size == candidate.size &&
+          (previous.zip candidate).all (fun (a, b) => dataSameShape a b) do
+        Macro.throwError "PS0V1-BINDER-AMBIGUITY: different successful data binder partitions"
+    else result? := some candidate
+  return result?.getD #[]
+end
 
 @[macro ps0StandardData] def lowerData : Macro := fun source => withRef source do
   let native := source[0]

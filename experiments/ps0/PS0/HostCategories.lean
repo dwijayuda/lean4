@@ -26,6 +26,7 @@ declare_syntax_cat psStructInstFieldDecl
 declare_syntax_cat psLoopBinder
 declare_syntax_cat psDataOperand
 declare_syntax_cat psDataTacticOperand
+declare_syntax_cat psDataBinder
 
 namespace PS0.DoLayout
 open Lean.Parser
@@ -303,7 +304,53 @@ def finallyElem : Parser :=
         ppSpace >> Lean.Parser.Term.leftArrow)) >> sequence
 
 def dataSignature : Parser :=
-  operands #[(`term, `psDataOperand)] Lean.Parser.Command.optDeclSig
+  node ``Lean.Parser.Command.optDeclSig <|
+    withForbiddens #["given", "requires", "ensures"]
+      (many (ppSpace >> (Lean.Parser.Term.binderIdent <|> categoryParser `psDataBinder 0))) >>
+    optional (operands #[(`term, `psDataOperand)] Lean.Parser.Command.defTypeSpec)
+
+def dataRequiredSignature : Parser :=
+  node ``Lean.Parser.Command.declSig <|
+    many (ppSpace >> (Lean.Parser.Term.binderIdent <|> categoryParser `psDataBinder 0)) >>
+      operands #[(`term, `psDataOperand)] Lean.Parser.Term.typeSpec
+
+@[run_parser_attribute_hooks] def dataNativeBinder : Parser :=
+  operands #[(`term, `psDataOperand)] Lean.Parser.Term.bracketedBinder
+
+def dataBinderSuffix : Parser :=
+  Lean.Parser.Term.binderTactic <|>
+    operands #[(`term, `psDataOperand)] Lean.Parser.Term.binderDefault
+
+def dataStructExplicitBinder : Parser :=
+  node ``Lean.Parser.Command.structExplicitBinder <|
+    atomic (Lean.Parser.Command.declModifiers true >> "(") >>
+      withoutPosition (many1 ident >> ppIndent dataSignature >> optional dataBinderSuffix) >> ")"
+
+def dataStructImplicitBinder : Parser :=
+  node ``Lean.Parser.Command.structImplicitBinder <|
+    atomic (Lean.Parser.Command.declModifiers true >> "{") >>
+      withoutPosition (many1 ident >> dataRequiredSignature) >> "}"
+
+def dataStructInstBinder : Parser :=
+  node ``Lean.Parser.Command.structInstBinder <|
+    atomic (Lean.Parser.Command.declModifiers true >> "[") >>
+      withoutPosition (many1 ident >> dataRequiredSignature) >> "]"
+
+def dataStructSimpleBinder : Parser :=
+  node ``Lean.Parser.Command.structSimpleBinder <|
+    atomic (Lean.Parser.Command.declModifiers true >> ident) >>
+      dataSignature >> optional dataBinderSuffix
+
+def dataStructFields : Parser :=
+  node ``Lean.Parser.Command.structFields <|
+    manyIndent (ppLine >> checkColGe >> ppGroup
+      (dataStructExplicitBinder <|> dataStructImplicitBinder <|>
+        dataStructInstBinder <|> dataStructSimpleBinder))
+
+def dataStructCtor : Parser :=
+  node ``Lean.Parser.Command.structCtor <|
+    atomic (ppIndent (Lean.Parser.Command.declModifiers true >> ident >>
+      many (ppSpace >> categoryParser `psDataBinder 0) >> " :: "))
 
 def dataComputedField : Parser :=
   node ``Lean.Parser.Command.computedField <|
@@ -346,8 +393,7 @@ def dataStructure : Parser :=
     (Lean.Parser.Command.structureTk <|> Lean.Parser.Command.classTk) >> Lean.Parser.Command.declId >>
       ppIndent (dataSignature >> optional dataExtends) >>
       optional ((symbol " := " <|> " where ") >>
-        optional (operands #[(`term, `psDataOperand)] Lean.Parser.Command.structCtor) >>
-        operands #[(`term, `psDataOperand)] Lean.Parser.Command.structFields) >>
+        optional dataStructCtor >> dataStructFields) >>
       Lean.Parser.Command.optDeriving
 
 @[run_parser_attribute_hooks] def dataCommand : Parser :=
