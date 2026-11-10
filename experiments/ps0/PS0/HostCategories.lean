@@ -652,7 +652,7 @@ namespace PS0.DoLayout
 open Lean.Parser
 @[run_parser_attribute_hooks] def ownedBindElem : Parser :=
   leadingNode ``ps0HostDoBind maxPrec <| withPosition <|
-    symbol "let " >> ident >> leftArrow >> categoryParser `psDoElem 0
+    symbol "let " >> ident >> Lean.Parser.Term.leftArrow >> categoryParser `psDoElem 0
 end PS0.DoLayout
 
 @[psDoElem_parser 20001]
