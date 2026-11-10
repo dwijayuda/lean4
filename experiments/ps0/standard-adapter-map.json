@@ -19104,6 +19104,14 @@
       "prefixContracts": 15,
       "fixedPointContracts": 9,
       "evidenceField": "sourceIdentityReportingQualification"
+    },
+    "timedCompilerGraphFocusedEvidence": {
+      "partialAudit": 42815436835,
+      "rawCapturedModules": 2316,
+      "reproduction": 42815258848,
+      "migratedFailures": 6,
+      "probe": 42816376776,
+      "evidenceField": "timedCompilerGraphFocusedEvidence"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -83035,5 +83043,108 @@
     "runtimeChecks": false,
     "fixedPoint": false,
     "sourceCounterMeaning": "historical mode-label counter; actual original/PS hash equality requires retained input inventory inspection"
+  },
+  "timedCompilerGraphFocusedEvidence": {
+    "partial": {
+      "actual_byte_equal_to_original_sources": 402,
+      "captured_frontend_modules": 2316,
+      "grammar_migration_complete": false,
+      "native_only_body_mode_count": 0,
+      "prepared_ps_files_rehashed": 2569,
+      "producer_run": 42770353333,
+      "schema": "ps0-data-graph-partial-source-audit/1",
+      "scope": "retained raw frontend captures and source/plan fidelity; not successful elaboration or C outputs",
+      "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+      "status": "PASS",
+      "totals": {
+        "data_declarations": 2890,
+        "definitions": 23604,
+        "initialization_commands": 636
+      },
+      "verified_execution": false,
+      "run": 42815436835,
+      "job": 129827209254,
+      "runner": "9a0560d0a03a109b8603dc9f128d7d69bc4d507f",
+      "artifact": {
+        "id": 13764054419,
+        "digest": "sha256:c9e01433b99e212f90a39447805dccf9b732c1d0ee618dd74bc7be9af53956e9"
+      }
+    },
+    "reproduction": {
+      "source": "64e3730de513fc8815aa3ac5a2a2aff4b2441a48",
+      "runner": "ed7e40b80eceb39a09ed233a8784d0508fc545b1",
+      "run": 42815258848,
+      "jobs": [
+        {
+          "job": 129826607293,
+          "name": "reproduce (MkIffInductive19, Lean.Meta.MkIffOfInductiveProp, 6826af10a3ea2f461432d2eb45e1b6c83188...",
+          "status": "MIGRATED_COMPILE_FAIL"
+        },
+        {
+          "job": 129826607643,
+          "name": "reproduce (Watchdog19, Lean.Server.Watchdog, dedb28154c483633b49a12d1689938209c1531c4, Lean.Server)",
+          "status": "MIGRATED_COMPILE_FAIL"
+        },
+        {
+          "job": 129826607739,
+          "name": "reproduce (ElabSyntax19, Lean.Elab.Syntax, 7b11aaf4830c83cc828eb77f40de308c06307053, Lean.Elab)",
+          "status": "MIGRATED_COMPILE_FAIL"
+        },
+        {
+          "job": 129826607788,
+          "name": "reproduce (JpCases19, Lean.Compiler.LCNF.Simp.JpCases, 80eb3b4f7b3c69da0c50c58d8860b5e65c709d2c, ...",
+          "status": "MIGRATED_COMPILE_FAIL"
+        },
+        {
+          "job": 129826607874,
+          "name": "reproduce (Rewrite19, Lean.Meta.Tactic.Rewrite, f616c869ab7dd86e771fc22918303ab8b7aa2998, Lean.Meta)",
+          "status": "MIGRATED_COMPILE_FAIL"
+        },
+        {
+          "job": 129826607979,
+          "name": "reproduce (CbvControlFlow19, Lean.Meta.Tactic.Cbv.ControlFlow, 8fe30cc1f35b60a43cceac1c13c2f61524...",
+          "status": "MIGRATED_COMPILE_FAIL"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13764415646,
+          "name": "ps0-graph17-recovery-JpCases19-64e3730de513fc8815aa3ac5a2a2aff4b2441a48-42815258848",
+          "digest": "sha256:ce927fa10f9ee3ffafbf03ee180041c0daee383d98c34ce88f428630f9950395"
+        },
+        {
+          "id": 13763734528,
+          "name": "ps0-graph17-recovery-CbvControlFlow19-64e3730de513fc8815aa3ac5a2a2aff4b2441a48-42815258848",
+          "digest": "sha256:bd1d6c440f34d0aa31c9f98c354d30258d5f268b6e01f3fc6717c63de363161b"
+        },
+        {
+          "id": 13763634701,
+          "name": "ps0-graph17-recovery-ElabSyntax19-64e3730de513fc8815aa3ac5a2a2aff4b2441a48-42815258848",
+          "digest": "sha256:800c064879622cb74390f7c28ea4a191b4a6398b412936ec4bebd640b69835a0"
+        },
+        {
+          "id": 13763544880,
+          "name": "ps0-graph17-recovery-Watchdog19-64e3730de513fc8815aa3ac5a2a2aff4b2441a48-42815258848",
+          "digest": "sha256:fce105f0d6d17ccbbf4858f1fcdecf9ccd8e0d139f859382427c6bebe7de18eb"
+        },
+        {
+          "id": 13763359819,
+          "name": "ps0-graph17-recovery-MkIffInductive19-64e3730de513fc8815aa3ac5a2a2aff4b2441a48-42815258848",
+          "digest": "sha256:983a410a70321b60a17023d3919404b39017b1416b2c3336e8ce0333fd2cdf22"
+        },
+        {
+          "id": 13763359677,
+          "name": "ps0-graph17-recovery-Rewrite19-64e3730de513fc8815aa3ac5a2a2aff4b2441a48-42815258848",
+          "digest": "sha256:a7dd5e373052d1b9a5d4eafae87c2eebe1bd97aa1ae7d39f628def100a7b801a"
+        }
+      ],
+      "status": "6 MIGRATED COMPILE FAIL / native baselines passed"
+    },
+    "probe": {
+      "source": "c4c10632de03d436ca53bf34798a5cc83f7efbc0",
+      "runner": "2977372d53c55b108f816164f97168268a0907a2",
+      "run": 42816376776,
+      "status": "PENDING"
+    }
   }
 }
