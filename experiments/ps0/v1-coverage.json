@@ -16461,10 +16461,10 @@
       "run": 42743328824
     },
     "nextActions": [
-      "Inspect the immutable complete graph jobs without timeout-driven restart",
-      "Resolve actual graph failures using captured full mapped syntax",
-      "Retain actual PS-built prefix metadata for the independent next compiler stage",
-      "Require complete graph, relocated operation and exact fixed point before claiming completion"
+      "Inspect immutable full-graph terminal results without timeout-driven restarts",
+      "Resolve actual compiler failures using complete mapped command captures",
+      "Require actual retained PS-built prefix for the automatic second compiler stage",
+      "Require complete corpus, native linking/relocation and exact C/public-olean fixed point before completion"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -21423,6 +21423,30 @@
       "source": "6709a18ec07694ca9946faa1193ab5f57b226596",
       "status": "PENDING_FULL_GRAPH",
       "inLiveGraphs": false
+    },
+    "compilerPrefixContractQualification": {
+      "source": "6c71f6ef3f86815c179284c55177112e8af6014f",
+      "run": 42762230959,
+      "status": "PASS",
+      "scope": "synthetic artifact identity/rejection contracts only; fixtures never executed and not compiler qualification",
+      "evidenceField": "compilerPrefixContractQualification"
+    },
+    "completePSCompilerFixedPointCandidate": {
+      "source": "6c71f6ef3f86815c179284c55177112e8af6014f",
+      "runner": "d05a73c5150ef761257b3b40df1373764dda6b6c",
+      "run": 42762560779,
+      "stageOneJob": 129651479206,
+      "stageTwoJob": null,
+      "branch": "ci/ps0-selfhost-fixed-point-20261110",
+      "pr": 248,
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-10T05:31:07Z",
+      "moduleCount": 2569,
+      "stageTwoRequiresActualPSBuiltPrefix": true,
+      "sourceGrammar": true,
+      "interpreterPreferNative": false,
+      "fixedPointScope": "all module C and public olean hashes; no bit-identical final ELF claim",
+      "artifact": null
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -84528,5 +84552,51 @@
     "source": "6709a18ec07694ca9946faa1193ab5f57b226596",
     "status": "PENDING_FULL_GRAPH",
     "inLiveGraphs": false
+  },
+  "compilerPrefixContractQualification": {
+    "source": "6c71f6ef3f86815c179284c55177112e8af6014f",
+    "runner": "7e4d156787deee61d611beeaf9bd7035ae00a716",
+    "run": 42762230959,
+    "job": 129650387900,
+    "status": "PASS",
+    "contractTests": 13,
+    "cleanPS0Build": true,
+    "fixtureScope": "synthetic artifact identity/rejection contracts only; fixtures never executed and not compiler qualification",
+    "artifact": {
+      "id": 13738167960,
+      "name": "ps0-compiler-prefix-6c71f6ef3f86815c179284c55177112e8af6014f-42762230959",
+      "size_in_bytes": 2006,
+      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738167960",
+      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13738167960/zip",
+      "expired": false,
+      "created_at": "2026-11-10T05:28:49Z",
+      "expires_at": "2027-02-08T05:27:20Z",
+      "updated_at": "2026-11-10T05:28:49Z",
+      "digest": "sha256:676086749b474d5bebd4e54295ee848784da00a87a4f52b9379ea61ec2002303",
+      "workflow_run": {
+        "id": 42762230959,
+        "repository_id": 1381609925,
+        "head_repository_id": 1381609925,
+        "head_branch": "ci/ps0-ordinary-hosts-20261110",
+        "head_sha": "7e4d156787deee61d611beeaf9bd7035ae00a716"
+      }
+    }
+  },
+  "completePSCompilerFixedPointCandidate": {
+    "source": "6c71f6ef3f86815c179284c55177112e8af6014f",
+    "runner": "d05a73c5150ef761257b3b40df1373764dda6b6c",
+    "run": 42762560779,
+    "stageOneJob": 129651479206,
+    "stageTwoJob": null,
+    "branch": "ci/ps0-selfhost-fixed-point-20261110",
+    "pr": 248,
+    "status": "IN_PROGRESS",
+    "observedAt": "2026-11-10T05:31:07Z",
+    "moduleCount": 2569,
+    "stageTwoRequiresActualPSBuiltPrefix": true,
+    "sourceGrammar": true,
+    "interpreterPreferNative": false,
+    "fixedPointScope": "all module C and public olean hashes; no bit-identical final ELF claim",
+    "artifact": null
   }
 }
