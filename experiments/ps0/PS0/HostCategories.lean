@@ -23,6 +23,7 @@ declare_syntax_cat psDoElem
 declare_syntax_cat psDoItem
 declare_syntax_cat psLocalBinder
 declare_syntax_cat psStructInstFieldDecl
+declare_syntax_cat psLoopBinder
 
 namespace PS0.DoLayout
 open Lean.Parser
@@ -75,6 +76,37 @@ private def letPrefix : Parser :=
 
 @[run_parser_attribute_hooks] def byTerm : Parser :=
   operands #[(`tactic, `psTactic)] Lean.Parser.Term.byTactic
+
+@[run_parser_attribute_hooks] def loopTypedBinder : Parser :=
+  leadingNode ``Lean.Parser.Term.typeAscription maxPrec <|
+    Lean.Parser.Term.hygienicLParen >> withoutPosition (withoutForbidden
+      (termParser >> " :" >> optional (ppSpace >> categoryParser `psTerm 0))) >> ")"
+
+@[run_parser_attribute_hooks] def loopImplicitBinder : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.funImplicitBinder
+
+@[run_parser_attribute_hooks] def loopStrictBinder : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.funStrictImplicitBinder
+
+@[run_parser_attribute_hooks] def loopInstanceBinder : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.instBinder
+
+def loopBasicFun : Parser :=
+  node ``Lean.Parser.Term.basicFun <|
+    ppGroup (many1 (ppSpace >> categoryParser `psLoopBinder 0) >>
+      operands #[(`term, `psTerm)] Lean.Parser.Term.optType >>
+      unicodeSymbol " ↦" " =>" (preserveForPP := true)) >>
+      ppSpace >> categoryParser `psTerm 0
+
+@[run_parser_attribute_hooks] def loopInvariant : Parser :=
+  node ``Lean.Parser.Term.doLoopInvariant <|
+    ppIndent (ppLine >> nonReservedSymbol "invariant" >>
+      withForbiddens #["do", "decreasing"] loopBasicFun)
+
+@[run_parser_attribute_hooks] def loopDecreasing : Parser :=
+  node ``Lean.Parser.Term.doLoopDecreasing <|
+    ppIndent (ppLine >> nonReservedSymbol "decreasing" >>
+      withForbidden "do" (atomic loopBasicFun <|> (ppSpace >> categoryParser `psTerm 0)))
 
 @[run_parser_attribute_hooks] def tupleTerm : Parser :=
   leadingNode ``Lean.Parser.Term.tuple maxPrec <|
@@ -180,12 +212,12 @@ private def ifCondition : Parser :=
 @[run_parser_attribute_hooks] def whileElem : Parser :=
   leadingNode ``Lean.Parser.Term.doWhile maxPrec <|
     "while " >> withForbiddens #["do", "invariant", "decreasing"] ifCondition >>
-      optional Lean.Parser.Term.doLoopInvariant >> optional Lean.Parser.Term.doLoopDecreasing >>
+      optional loopInvariant >> optional loopDecreasing >>
       " do " >> sequence
 
 @[run_parser_attribute_hooks] def repeatElem : Parser :=
   leadingNode ``Lean.Parser.Term.doRepeatUntil maxPrec <|
-    "repeat " >> optional Lean.Parser.Term.doLoopInvariant >> optional Lean.Parser.Term.doLoopDecreasing >>
+    "repeat " >> optional loopInvariant >> optional loopDecreasing >>
       sequence >> ppDedent ppLine >> "until " >> categoryParser `psTerm 0
 
 def namedDeclaration : Parser :=
@@ -217,8 +249,8 @@ def forDeclaration : Parser :=
 
 @[run_parser_attribute_hooks] def forElem : Parser :=
   leadingNode ``Lean.Parser.Term.doFor maxPrec <|
-    "for " >> sepBy1 forDeclaration ", " >> optional Lean.Parser.Term.doLoopInvariant >>
-      optional Lean.Parser.Term.doLoopDecreasing >> " do " >> sequence
+    "for " >> sepBy1 forDeclaration ", " >> optional loopInvariant >>
+      optional loopDecreasing >> " do " >> sequence
 
 def catchElem : Parser :=
   node ``Lean.Parser.Term.doCatch <|
@@ -330,6 +362,15 @@ syntax (name := ps0NativeTacticBridge) (priority := low) tactic : psTactic
 syntax (name := ps0NativeDoBridge) (priority := low) doSeq : psDoSeq
 syntax (name := ps0NativeLayoutDoSeq) PS0.DoLayout.sequence : psDoSeq
 syntax (name := ps0NativeLocalBinder) PS0.DoLayout.localBinder : psLocalBinder
+syntax (name := ps0LoopNativeBinderBridge) (priority := low) Lean.Parser.Term.funBinder : psLoopBinder
+@[psLoopBinder_parser 20000]
+def ps0LoopTypedBinder : Lean.Parser.Parser := PS0.DoLayout.loopTypedBinder
+@[psLoopBinder_parser 20000]
+def ps0LoopImplicitBinder : Lean.Parser.Parser := PS0.DoLayout.loopImplicitBinder
+@[psLoopBinder_parser 20000]
+def ps0LoopStrictBinder : Lean.Parser.Parser := PS0.DoLayout.loopStrictBinder
+@[psLoopBinder_parser 20000]
+def ps0LoopInstanceBinder : Lean.Parser.Parser := PS0.DoLayout.loopInstanceBinder
 syntax (name := ps0NativeDoElemBridge) (priority := low) doElem : psDoElem
 @[psDoElem_parser 20000]
 def ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
@@ -766,6 +807,44 @@ private def lowerCallWith (lowerTerm : Lean.Syntax → MacroM Lean.Syntax)
         nativeArgs.extract index nativeArgs.size ++ #[completion]
   return .node (loweringInfo source) ``Lean.Parser.Term.app #[head, mkNullNode nativeArgs]
 
+private def lowerLoopBinderWith
+    (lowerTerm lowerLocalBinder : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``ps0LoopNativeBinderBridge then return source[0]
+  if source.isOfKind ``Lean.Parser.Term.typeAscription then
+    unless source.getArgs.size == 5 && source[3].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-LOOP-BINDER: unexpected native pattern/type roles"
+    if source[3].getArgs.isEmpty then return source
+    return source.setArg 3 (source[3].setArg 0 (← lowerTerm source[3][0]))
+  if source.isOfKind ``Lean.Parser.Term.implicitBinder ||
+      source.isOfKind ``Lean.Parser.Term.strictImplicitBinder ||
+      source.isOfKind ``Lean.Parser.Term.instBinder then
+    return ← lowerLocalBinder source
+  Macro.throwError "PS0V1-LOOP-BINDER: unsupported native binder"
+
+private def lowerLoopAnnotationWith
+    (lowerTerm lowerType lowerBinder : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.getArgs.isEmpty then return source
+  unless source.getArgs.size == 1 && source[0].getArgs.size == 2 &&
+      (source[0].isOfKind ``Lean.Parser.Term.doLoopInvariant ||
+        source[0].isOfKind ``Lean.Parser.Term.doLoopDecreasing) do
+    Macro.throwError "PS0V1-LOOP-ANNOTATION: unexpected native clause"
+  let clause := source[0]
+  let payload := clause[1]
+  let payload ← if payload.isOfKind ``Lean.Parser.Term.basicFun then do
+      unless payload.getArgs.size == 4 do
+        Macro.throwError "PS0V1-LOOP-FUN: unexpected native binder/body roles"
+      let binders ← payload[0].getArgs.mapM lowerBinder
+      let payload := payload.setArg 0 (payload[0].setArgs binders)
+      let payload := payload.setArg 1 (← lowerType payload[1])
+      pure <| payload.setArg 3 (← lowerTerm payload[3])
+    else do
+      unless clause.isOfKind ``Lean.Parser.Term.doLoopDecreasing do
+        Macro.throwError "PS0V1-LOOP-INVARIANT: expected native basicFun"
+      lowerTerm payload
+  return source.setArg 0 (clause.setArg 1 payload)
+
 set_option maxHeartbeats 800000 in
 mutual
 partial def lower (category : Name) (source : Lean.Syntax) :
@@ -881,9 +960,13 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
   if source.isOfKind ``Lean.Parser.Term.doWhile then
     unless source.getArgs.size == 6 do Macro.throwError "PS0V1-WHILE: unexpected native loop"
     let source := source.setArg 1 (← lowerNativeIfRole source[1])
+    let source := source.setArg 2 (← lowerNativeLoopAnnotation source[2])
+    let source := source.setArg 3 (← lowerNativeLoopAnnotation source[3])
     return source.setArg 5 (← lowerNativeDoSequence source[5])
   if source.isOfKind ``Lean.Parser.Term.doRepeatUntil then
     unless source.getArgs.size == 6 do Macro.throwError "PS0V1-REPEAT: unexpected native loop"
+    let source := source.setArg 1 (← lowerNativeLoopAnnotation source[1])
+    let source := source.setArg 2 (← lowerNativeLoopAnnotation source[2])
     let source := source.setArg 3 (← lowerNativeDoSequence source[3])
     return source.setArg 5 (← lower `psTerm source[5])
   if source.isOfKind ``Lean.Parser.Term.doFor then
@@ -893,8 +976,10 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
       unless declaration.isOfKind ``Lean.Parser.Term.doForDecl && declaration.getArgs.size == 4 do
         Macro.throwError "PS0V1-DO-FOR: unexpected native pattern/collection roles"
       return declaration.setArg 3 (← lower `psTerm declaration[3])
-    -- Loop contract annotations retain their native grammar in this finite stage.
-    return (source.setArg 1 (source[1].setArgs declarations)).setArg 5
+    let source := source.setArg 1 (source[1].setArgs declarations)
+    let source := source.setArg 2 (← lowerNativeLoopAnnotation source[2])
+    let source := source.setArg 3 (← lowerNativeLoopAnnotation source[3])
+    return source.setArg 5
       (← lowerNativeDoSequence source[5])
   if source.isOfKind ``Lean.Parser.Term.doTry then
     return ← lowerNativeTry source
@@ -976,6 +1061,10 @@ partial def lowerDoElem (source : Lean.Syntax) : MacroM Lean.Syntax := withRef s
       return (← `(doElem| $value:term)).raw
   | `(psDoElem| $native:doElem) => return native.raw
   | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem"
+
+partial def lowerNativeLoopAnnotation (source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerLoopAnnotationWith (lower `psTerm) lowerNativeOptionalType
+    (lowerLoopBinderWith (lower `psTerm) lowerNativeLocalBinder) source
 
 partial def lowerFunType (optionalType : Lean.Syntax) : MacroM Lean.Syntax := do
   if optionalType.getArgs.isEmpty then return optionalType

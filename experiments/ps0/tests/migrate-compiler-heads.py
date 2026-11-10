@@ -413,9 +413,13 @@ def do_element(element):
     if kind == 'Lean.Parser.Term.doWhile':
         assert len(parts) == 6
         do_if_role(parts[1])
+        loop_annotation(parts[2])
+        loop_annotation(parts[3])
         do_sequence(parts[5])
     elif kind == 'Lean.Parser.Term.doRepeatUntil':
         assert len(parts) == 6
+        loop_annotation(parts[1])
+        loop_annotation(parts[2])
         do_sequence(parts[3])
         single_type_call(parts[5], 'owned repeat-until condition')
     elif kind == 'Lean.Parser.Term.doFor':
@@ -425,6 +429,8 @@ def do_element(element):
                 continue
             assert declaration['kind'] == 'Lean.Parser.Term.doForDecl' and len(declaration['args']) == 4
             single_type_call(declaration['args'][3], 'owned for collection')
+        loop_annotation(parts[2])
+        loop_annotation(parts[3])
         do_sequence(parts[5])
     elif kind == 'Lean.Parser.Term.doTry':
         assert len(parts) == 4 and len(parts[3]['args']) <= 1
@@ -528,6 +534,31 @@ def do_if_role(source):
             do_if_role(child)
     else:
         assert source['atom'] is not None or kind == 'Lean.Parser.Term.elseIf', kind
+
+
+def loop_annotation(optional):
+    if not optional['args']:
+        return
+    assert len(optional['args']) == 1
+    clause = optional['args'][0]
+    assert clause['kind'] in ['Lean.Parser.Term.doLoopInvariant', 'Lean.Parser.Term.doLoopDecreasing']
+    assert len(clause['args']) == 2
+    payload = clause['args'][1]
+    if payload['kind'] != 'Lean.Parser.Term.basicFun':
+        assert clause['kind'] == 'Lean.Parser.Term.doLoopDecreasing'
+        single_type_call(payload, 'owned loop measure')
+        return
+    assert len(payload['args']) == 4
+    for binder in payload['args'][0]['args']:
+        if binder['kind'] == 'Lean.Parser.Term.typeAscription':
+            assert len(binder['args']) == 5 and len(binder['args'][3]['args']) <= 1
+            if binder['args'][3]['args']:
+                single_type_call(binder['args'][3]['args'][0], 'owned loop binder type')
+        elif binder['kind'] in ['Lean.Parser.Term.implicitBinder', 'Lean.Parser.Term.strictImplicitBinder',
+                                'Lean.Parser.Term.instBinder']:
+            telescope([binder])
+    optional_local_type(payload['args'][1], 'owned loop annotation result type')
+    single_type_call(payload['args'][3], 'owned loop annotation body')
 
 
 def recursive_declarations(group):

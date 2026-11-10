@@ -366,7 +366,7 @@ shutil.copy2(executable, work / 'OrdinaryHostOrigins')
     comparisons=comparisons, mapped_definitions=48, mapped_theorems=43, logical_imports=['Init'],
     native_patterns_preserved=True, prepared_source_identity=True,
     source_origin_fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
-    source_origin_cases=28, independently_owned_native_dsl=True, native_quotation=True,
+    source_origin_cases=32, independently_owned_native_dsl=True, native_quotation=True,
     native_executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
     runtime_oracle='PS0_HOST_ORIGINS: PASS',
     scope='finite native term/do matches, patterns/records/conditions/bindings/loop values, collections/interpolation/forall, ascriptions/direct tactics; loop contracts and deeper ordinary roles remain open',
