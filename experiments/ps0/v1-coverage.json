@@ -16461,10 +16461,10 @@
       "run": 42743328824
     },
     "nextActions": [
-      "Inspect positive initializer startup/artifact and source-origin run",
+      "Inspect data adapter boundary run; finish explicit data census/cache and planner roles",
+      "Preserve strict parity matrix failures and classify remaining terminal results",
       "Keep immutable graph seventeen running",
-      "Qualify current source on actual compiler modules and complete canonical graph",
-      "Require relocated operation and self-host fixed point"
+      "Require complete canonical compiler, relocated operation and fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -21277,6 +21277,45 @@
       },
       "grammarMigrationComplete": false,
       "verified_execution": false
+    },
+    "initializerStartupQualification": {
+      "source": "685688968525cc5a4bd994f24c497c4ff2512c1a",
+      "run": 42750071234,
+      "independentRun": 42750373437,
+      "status": "PASS_FINITE_STARTUP_AND_PUBLIC_CONSUMER",
+      "evidenceField": "initializerStartupQualification",
+      "rawByteParity": false
+    },
+    "dataOperandTestFirstEvidence": {
+      "source": "4169621d07a0d674a705c87d5c3e4b3d392a8d06",
+      "runner": "ec737bfb1ddf2b292a0a46bd07a93db053eb6c94",
+      "run": 42750245624,
+      "job": 129611900181,
+      "status": "FAIL_INVALID_PS_ADMITTED",
+      "nativeBaselinesPassed": 6,
+      "invalidPsAdmitted": 6,
+      "artifact": {
+        "id": 13733570380,
+        "digest": "sha256:4b5a86e6792a443e849a182a89f074993b1f0ec6269b131c5c55297b4b9d3435"
+      },
+      "candidate": {
+        "source": "ab1613c5ca31dcb92b6e2297837aacdd6bc39bd1",
+        "runner": "3f5aae87df26604ec57c84e92beb3d1f38ea4c0b",
+        "run": 42750759315,
+        "status": "QUEUED"
+      }
+    },
+    "currentExpandedMatrixCandidate": {
+      "source": "4169621d07a0d674a705c87d5c3e4b3d392a8d06",
+      "runner": "a21d9614fa2089a1c50ca23adf9bb76040639e36",
+      "expectedJobs": 43,
+      "run": 42750428957,
+      "status": "IN_PROGRESS_WITH_BYTE_PARITY_FAILURES",
+      "failedKnownJobs": [
+        129612480498,
+        129612480548,
+        129612480590
+      ]
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -83694,5 +83733,163 @@
     },
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "initializerStartupQualification": {
+    "source": "685688968525cc5a4bd994f24c497c4ff2512c1a",
+    "runner": "f947ad12604b54d40e213b3f5250afa40118d70b",
+    "run": 42750071234,
+    "job": 129611336184,
+    "status": "PASS_FINITE_STARTUP_AND_PUBLIC_CONSUMER",
+    "nativeBaselinesPassed": 2,
+    "invalidPsCallsRejected": 2,
+    "cacheTests": 7,
+    "sourceOriginCases": 4,
+    "initializers": 6,
+    "variants": 4,
+    "producerArtifact": {
+      "id": 13732858667,
+      "digest": "sha256:f3cb366f248bdeaa01678f7ca3c11fd1f58981fe0dbb30f2264cf408d7c577fa"
+    },
+    "independent": {
+      "runner": "54099d8eed6d2078096dd2c384cf3ca068ca4c6f",
+      "run": 42750373437,
+      "job": 129612305429,
+      "status": "PASS",
+      "artifact": {
+        "id": 13733225686,
+        "digest": "sha256:693119d49450b69204e3d3ad994962b3dbdf0a74b88b1d501e4968b6d0a3dfe3"
+      },
+      "report": {
+        "actual_compiler_files_rehashed": 16,
+        "actual_native_elf_files_rehashed": 4,
+        "evidence": {
+          "builtin_values": [
+            3
+          ],
+          "comparisons": {
+            "ir/InitializerBase.c": {
+              "baseline": "c6ee9dbc50427153bf8ef8c3827b8d98d3d438c31f63c267a0781c3655f50812",
+              "migrated": "32d0b3954aaf08d3e6d216d7cadfd8df4d7aae3d0d167bfbf36a4c90d02e6d19",
+              "native-trivia": "890752b1c5b5bf7209081b0109e0f061536a260e065bfd4657cb07eec17edc59",
+              "planned": "a0d3a315ba338b76803b8c65be92aabe2872621f0b79ab780a9ff73c123b3e1d"
+            },
+            "ir/InitializerMain.c": {
+              "baseline": "8855defb34e8283dcb6a20343fc3ef65a73508e9a91e28e38d8d4099f3922c89",
+              "migrated": "0e5e3946968d3a4b7c4a5492494d18739fb7cd4d6e6a8713d6435b2dfca61352",
+              "native-trivia": "92c75721b18b64140c524724fda0940a5501eaf05817b0af2eafd2bbe13d3f00",
+              "planned": "db30d3e149ff59f4ad5b180b6ffd5d5c784658affcd63f651d7b6218619bcb24"
+            },
+            "lib/lean/InitializerBase.olean": {
+              "baseline": "327b78081fd77004d643986def6faa913da64b5fd4c5b536d9772e3895a6c97f",
+              "migrated": "18a3e3f1aeb15161b9c0601a459b89ab1782be50527c86747bb08d9d4fe16ca9",
+              "native-trivia": "42a99ff6baf3a45ddbfebea9d5bea5399b76fb4a85d77e573c0c33668465a0f6",
+              "planned": "8a77fe7a137cc8285c292d27ebf5243bc2451dfe97f41775afaf4943789bbbb2"
+            },
+            "lib/lean/InitializerMain.olean": {
+              "baseline": "ae1b468d0595d33bbe299e6d1c3ccb8bd486c762a02d0d984a1a33773de549b2",
+              "migrated": "ae1b468d0595d33bbe299e6d1c3ccb8bd486c762a02d0d984a1a33773de549b2",
+              "native-trivia": "ae1b468d0595d33bbe299e6d1c3ccb8bd486c762a02d0d984a1a33773de549b2",
+              "planned": "ae1b468d0595d33bbe299e6d1c3ccb8bd486c762a02d0d984a1a33773de549b2"
+            }
+          },
+          "executables": {
+            "baseline": "ad6d0c2889c23fb0b22096c21501356373352587d3709f83b0defd06a0116547",
+            "migrated": "897567186f21449c868dd56afe0b3ea93b161984e104a21f5e041923374d27fd",
+            "native-trivia": "1439c2e997fc1a1ffcb90d2c1480ee9dc6a35b67f8caa739be38155384b9346e",
+            "planned": "680d8ffd1d89e969196f9ed182962fb3c7b3033dce827206c30db9394ca051eb"
+          },
+          "grammar_migration_complete": false,
+          "initialization_commands": 6,
+          "modules": [
+            "InitializerBase",
+            "InitializerMain"
+          ],
+          "native_trivia_changes": {
+            "ir/InitializerBase.c": true,
+            "ir/InitializerMain.c": true,
+            "lib/lean/InitializerBase.olean": true,
+            "lib/lean/InitializerMain.olean": false
+          },
+          "ordinary_values": [
+            4,
+            6,
+            8
+          ],
+          "raw_native_ps_artifact_equal": {
+            "ir/InitializerBase.c": false,
+            "ir/InitializerMain.c": false,
+            "lib/lean/InitializerBase.olean": false,
+            "lib/lean/InitializerMain.olean": true
+          },
+          "runtime": "PS0_INITIALIZERS: PASS",
+          "scope": "finite native builtin/ordinary named/unnamed startup phases and cross-module order; private source-dependent initializer identities differ; no whole-module byte parity claim",
+          "source": "685688968525cc5a4bd994f24c497c4ff2512c1a",
+          "verified_execution": false
+        },
+        "grammar_migration_complete": false,
+        "hashes": {
+          "baseline-InitializerBase.c": "c6ee9dbc50427153bf8ef8c3827b8d98d3d438c31f63c267a0781c3655f50812",
+          "baseline-InitializerBase.olean": "327b78081fd77004d643986def6faa913da64b5fd4c5b536d9772e3895a6c97f",
+          "baseline-InitializerMain.c": "8855defb34e8283dcb6a20343fc3ef65a73508e9a91e28e38d8d4099f3922c89",
+          "baseline-InitializerMain.olean": "ae1b468d0595d33bbe299e6d1c3ccb8bd486c762a02d0d984a1a33773de549b2",
+          "baseline-InitializerRuntime": "ad6d0c2889c23fb0b22096c21501356373352587d3709f83b0defd06a0116547",
+          "migrated-InitializerBase.c": "32d0b3954aaf08d3e6d216d7cadfd8df4d7aae3d0d167bfbf36a4c90d02e6d19",
+          "migrated-InitializerBase.olean": "18a3e3f1aeb15161b9c0601a459b89ab1782be50527c86747bb08d9d4fe16ca9",
+          "migrated-InitializerMain.c": "0e5e3946968d3a4b7c4a5492494d18739fb7cd4d6e6a8713d6435b2dfca61352",
+          "migrated-InitializerMain.olean": "ae1b468d0595d33bbe299e6d1c3ccb8bd486c762a02d0d984a1a33773de549b2",
+          "migrated-InitializerRuntime": "897567186f21449c868dd56afe0b3ea93b161984e104a21f5e041923374d27fd",
+          "native-trivia-InitializerBase.c": "890752b1c5b5bf7209081b0109e0f061536a260e065bfd4657cb07eec17edc59",
+          "native-trivia-InitializerBase.olean": "42a99ff6baf3a45ddbfebea9d5bea5399b76fb4a85d77e573c0c33668465a0f6",
+          "native-trivia-InitializerMain.c": "92c75721b18b64140c524724fda0940a5501eaf05817b0af2eafd2bbe13d3f00",
+          "native-trivia-InitializerMain.olean": "ae1b468d0595d33bbe299e6d1c3ccb8bd486c762a02d0d984a1a33773de549b2",
+          "native-trivia-InitializerRuntime": "1439c2e997fc1a1ffcb90d2c1480ee9dc6a35b67f8caa739be38155384b9346e",
+          "planned-InitializerBase.c": "a0d3a315ba338b76803b8c65be92aabe2872621f0b79ab780a9ff73c123b3e1d",
+          "planned-InitializerBase.olean": "8a77fe7a137cc8285c292d27ebf5243bc2451dfe97f41775afaf4943789bbbb2",
+          "planned-InitializerMain.c": "db30d3e149ff59f4ad5b180b6ffd5d5c784658affcd63f651d7b6218619bcb24",
+          "planned-InitializerMain.olean": "ae1b468d0595d33bbe299e6d1c3ccb8bd486c762a02d0d984a1a33773de549b2",
+          "planned-InitializerRuntime": "680d8ffd1d89e969196f9ed182962fb3c7b3033dce827206c30db9394ca051eb"
+        },
+        "producer_job": 129611336184,
+        "producer_run": 42750071234,
+        "scope": "Finite startup/order, actual file integrity and public consumer byte parity; initializer private identities differ, including native-only whitespace control",
+        "source": "685688968525cc5a4bd994f24c497c4ff2512c1a",
+        "status": "PASS",
+        "verified_execution": false
+      }
+    },
+    "rawByteParity": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "dataOperandTestFirstEvidence": {
+    "source": "4169621d07a0d674a705c87d5c3e4b3d392a8d06",
+    "runner": "ec737bfb1ddf2b292a0a46bd07a93db053eb6c94",
+    "run": 42750245624,
+    "job": 129611900181,
+    "status": "FAIL_INVALID_PS_ADMITTED",
+    "nativeBaselinesPassed": 6,
+    "invalidPsAdmitted": 6,
+    "artifact": {
+      "id": 13733570380,
+      "digest": "sha256:4b5a86e6792a443e849a182a89f074993b1f0ec6269b131c5c55297b4b9d3435"
+    },
+    "candidate": {
+      "source": "ab1613c5ca31dcb92b6e2297837aacdd6bc39bd1",
+      "runner": "3f5aae87df26604ec57c84e92beb3d1f38ea4c0b",
+      "run": 42750759315,
+      "status": "QUEUED"
+    }
+  },
+  "currentExpandedMatrixCandidate": {
+    "source": "4169621d07a0d674a705c87d5c3e4b3d392a8d06",
+    "runner": "a21d9614fa2089a1c50ca23adf9bb76040639e36",
+    "expectedJobs": 43,
+    "run": 42750428957,
+    "status": "IN_PROGRESS_WITH_BYTE_PARITY_FAILURES",
+    "failedKnownJobs": [
+      129612480498,
+      129612480548,
+      129612480590
+    ]
   }
 }
