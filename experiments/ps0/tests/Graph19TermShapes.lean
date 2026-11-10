@@ -75,6 +75,9 @@ run_cmd do
       logInfo m!"GRAPH19_TERM {label}: PASS"
     catch error =>
       logInfo m!"GRAPH19_TERM {label}: FAIL {error.toMessageData}"
+      match error with
+      | .error ref _ => logInfo m!"GRAPH19_ERROR_SOURCE {label}: {ref.getKind}: {ref.reprint}"
+      | _ => pure ()
       failures := failures + 1
   for (label, text) in #[
       ("instance-prefix-comma-signature", "function modifyReferencesM [Monad m] (rd : ReferenceData, f : References → m References) : m ReferenceData := do return rd"),

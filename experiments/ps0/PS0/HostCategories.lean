@@ -646,13 +646,13 @@ syntax (name := ps0HostDoLet) (priority := high)
 syntax (name := ps0HostDoLetMut) (priority := high)
   "let " "mut " ident (":" psTerm)? ":=" psTerm : psDoElem
 syntax (name := ps0HostDoBind) (priority := high)
-  "let " ident "←" psTerm : psDoElem
+  "let " ident "←" psDoElem : psDoElem
 
 namespace PS0.DoLayout
 open Lean.Parser
 @[run_parser_attribute_hooks] def ownedBindElem : Parser :=
   leadingNode ``ps0HostDoBind maxPrec <| withPosition <|
-    symbol "let " >> ident >> symbol "←" >> categoryParser `psTerm 0
+    symbol "let " >> ident >> leftArrow >> categoryParser `psDoElem 0
 end PS0.DoLayout
 
 @[psDoElem_parser 20001]
@@ -1061,13 +1061,6 @@ set_option maxHeartbeats 800000 in
 private def lowerDoQuotedWith
     (lowerTerm lowerBody : Lean.Syntax → MacroM Lean.Syntax)
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
-  if source.isOfKind ``ps0HostDoBind then
-    unless source.getArgs.size == 4 do Macro.throwError "PS0V1-DO-BIND: unexpected owned binding"
-    let name : TSyntax `ident := ⟨source[1]⟩
-    let value ← lowerTerm source[3]
-    let action : TSyntax `doElem := ⟨.node (loweringInfo source)
-      ``Lean.Parser.Term.doExpr #[value]⟩
-    return (← `(doElem| let $name:ident ← $action:doElem)).raw
   match source with
   | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
       let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)
@@ -1077,11 +1070,6 @@ private def lowerDoQuotedWith
       let ty ← ty.mapM fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term)
       let value : TSyntax `term := ⟨← lowerBody value.raw⟩
       return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
-  | `(psDoElem| let $name:ident ← $value:psTerm) => do
-      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
-      let action : TSyntax `doElem := ⟨.node (loweringInfo source)
-        ``Lean.Parser.Term.doExpr #[value.raw]⟩
-      return (← `(doElem| let $name:ident ← $action:doElem)).raw
   | `(psDoElem| $name:ident := $value:psTerm) => do
       let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
       return (← `(doElem| $name:ident := $value:term)).raw
@@ -1098,6 +1086,11 @@ private def lowerDoElemWith
       lowerPatternBind lowerType lowerElement lowerLoop lowerQuoted : Lean.Syntax → MacroM Lean.Syntax)
     (lowerMatch : Lean.Syntax → Bool → MacroM Lean.Syntax)
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``ps0HostDoBind then
+    unless source.getArgs.size == 4 do Macro.throwError "PS0V1-DO-BIND: unexpected owned binding"
+    let name : TSyntax `ident := ⟨source[1]⟩
+    let action : TSyntax `doElem := ⟨← lowerElement source[3]⟩
+    return (← `(doElem| let $name:ident ← $action:doElem)).raw
   if #[``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil,
       ``Lean.Parser.Term.doFor, ``Lean.Parser.Term.termFor].contains source.getKind then
     return ← lowerLoop source
