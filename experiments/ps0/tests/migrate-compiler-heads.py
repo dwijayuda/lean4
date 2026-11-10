@@ -6,6 +6,7 @@ from pathlib import Path
 import argparse
 import hashlib
 import json
+from native_census_cache import DATA_KINDS, DATA_SCOPE
 
 parser = argparse.ArgumentParser()
 parser.add_argument('census', type=Path)
@@ -19,6 +20,7 @@ raw = args.source.read_bytes()
 assert snapshot['nativeSource'].encode() == raw, 'planner requires exact captured native source bytes'
 edits, declarations, strategies = [], [], []
 initialization_commands = 0
+data_declarations = 0
 
 def span(node):
     value = node['range']
@@ -731,7 +733,61 @@ def telescope(binders):
         assert raw[start:start + 1] == b'(' and raw[end - 1:end] == b')'
 
 
+def data_operands(source):
+    kind, parts = source['kind'], source['args']
+    if kind in ['Lean.Parser.Command.optDeclSig', 'Lean.Parser.Command.declSig']:
+        assert len(parts) == 2
+        telescope(parts[0]['args'])
+        types = [parts[1]] if kind == 'Lean.Parser.Command.declSig' else parts[1]['args']
+        for spec in types:
+            assert spec['kind'] == 'Lean.Parser.Term.typeSpec' and len(spec['args']) == 2
+            single_type_call(spec['args'][1], 'owned data declaration result/field type')
+        return
+    if kind in ['Lean.Parser.Term.explicitBinder', 'Lean.Parser.Term.implicitBinder',
+                'Lean.Parser.Term.strictImplicitBinder', 'Lean.Parser.Term.instBinder']:
+        telescope([source])
+        return
+    if kind == 'Lean.Parser.Term.typeSpec':
+        assert len(parts) == 2
+        single_type_call(parts[1], 'owned data parent result type')
+        return
+    if kind == 'Lean.Parser.Term.binderDefault':
+        assert len(parts) == 2
+        single_type_call(parts[1], 'owned data field default')
+        return
+    if kind == 'Lean.Parser.Command.structParent':
+        assert len(parts) == 2
+        single_type_call(parts[1], 'owned structure parent type')
+        return
+    if kind == 'Lean.Parser.Command.computedField':
+        assert len(parts) == 5
+        single_type_call(parts[3], 'owned computed field type')
+        match_alternatives(parts[4], 'owned computed field')
+        return
+    if kind == 'Lean.Parser.Command.monotonicityBy':
+        assert len(parts) == 2
+        where_tactics(parts[1])
+        return
+    containers = DATA_KINDS | {'null', 'Lean.Parser.Command.declaration',
+        'Lean.Parser.Command.ctor', 'Lean.Parser.Command.computedFields',
+        'Lean.Parser.Command.structFields', 'Lean.Parser.Command.structCtor',
+        'Lean.Parser.Command.structExplicitBinder', 'Lean.Parser.Command.structImplicitBinder',
+        'Lean.Parser.Command.structInstBinder', 'Lean.Parser.Command.structSimpleBinder',
+        'Lean.Parser.Command.extends'}
+    if kind in containers:
+        for child in parts:
+            data_operands(child)
+
+
 for previous_command, command in original_commands(snapshot['commands']):
+    if command['headKind'] in DATA_KINDS:
+        assert snapshot.get('dataDeclarationOperandScope') == DATA_SCOPE, \
+            'fresh native data declaration operand capture required'
+        capture = command['dataDeclaration']
+        assert capture['mode'] == 'native-compatible'
+        data_operands(capture['syntax'])
+        data_declarations += 1
+        continue
     if command['headKind'] == 'Lean.Parser.Command.initialize':
         assert snapshot.get('initializerOperandScope') == 'native-initializer-operands/1', \
             'fresh native initializer operand capture required'
@@ -853,7 +909,7 @@ for previous_command, command in original_commands(snapshot['commands']):
     declaration_value(decl.get('valueSyntax'))
     declarations.append(decl['sourceName'])
 
-assert declarations or initialization_commands or args.allow_empty, 'no supported native declaration heads or initializers'
+assert declarations or initialization_commands or data_declarations or args.allow_empty, 'no supported native declaration heads or initializers'
 edits.sort(key=lambda e: e['start'])
 assert all(a['end'] <= b['start'] for a, b in zip(edits, edits[1:])), 'overlapping native source edits'
 assert all(change['old'].count('\n') == change['new'].count('\n') for change in edits), 'source edits must preserve original line breaks'
@@ -869,6 +925,7 @@ args.plan.write_text(json.dumps({
     'schema': 'ps0-compiler-head-migration/1', 'source_sha256': hashlib.sha256(raw).hexdigest(),
     'result_sha256': hashlib.sha256(converted).hexdigest(), 'declarations': declarations, 'edits': edits,
     'strategies': strategies, 'initialization_commands': initialization_commands,
+    'data_declarations': data_declarations,
     'line_count_preserved': raw.count(b'\n') == converted.count(b'\n'),
     'scope': 'R2 alias/native telescopes, standard family signatures, equation RHS and explicit owned type/default/result/call/conditional roles; native grouping/inference and independently owned syntax retained',
     'grammar_migration_complete': False, 'verified_execution': False,

@@ -299,6 +299,14 @@ private def declaration (env : Environment) (operators : Array Name) (source : S
 private partial def command (env : Environment) (operators : Array Name) (source : Syntax) : Json :=
   let viewed := if source.isOfKind `ps0NativeCommandBridge then source[0] else source
   let initialized := if viewed.isOfKind `PS0.StandardAdapters.ps0StandardInitialize then viewed[0] else viewed
+  let dataRoot := if viewed.isOfKind `PS0.StandardAdapters.ps0StandardData then viewed[0] else viewed
+  let dataDeclaration := if dataRoot.isOfKind ``Lean.Parser.Command.declaration &&
+      dataRoot.getArgs.size == 2 &&
+      #[``Lean.Parser.Command.«inductive», ``Lean.Parser.Command.«coinductive»,
+        ``Lean.Parser.Command.classInductive, ``Lean.Parser.Command.«structure»].contains dataRoot[1].getKind then
+    Json.mkObj [
+      ("mode", toJson (if viewed.isOfKind `PS0.StandardAdapters.ps0StandardData then "mapped-ps" else "native-compatible")),
+      ("syntax", signatureSyntax operators dataRoot)] else Json.null
   let initialization := if initialized.isOfKind ``Lean.Parser.Command.«initialize» &&
       initialized.getArgs.size == 4 then Json.mkObj [
     ("mode", toJson (if viewed.isOfKind `PS0.StandardAdapters.ps0StandardInitialize then
@@ -312,6 +320,7 @@ private partial def command (env : Environment) (operators : Array Name) (source
       viewed[1].getKind.toString else viewed.getKind.toString)),
     ("declaration", declaration env operators viewed),
     ("initialization", initialization),
+    ("dataDeclaration", dataDeclaration),
     ("nestedCommands", toJson (nested.map (command env operators)))]
 
 private partial def syntaxKinds (names : NameSet) (source : Syntax) : NameSet :=
@@ -355,6 +364,7 @@ def collect (commands : Array Syntax) : CommandElabM Unit := do
       ("file", toJson context.fileName), ("nativeSource", toJson context.fileMap.source),
       ("commands", toJson (commands.map (command env operators))),
       ("initializerOperandScope", toJson ("native-initializer-operands/1" : String)),
+      ("dataDeclarationOperandScope", toJson ("native-data-declaration-operands/1" : String)),
       ("loweredCommands", toJson lowered),
       ("imports", toJson imports),
       ("environmentDeclNames", toJson names),

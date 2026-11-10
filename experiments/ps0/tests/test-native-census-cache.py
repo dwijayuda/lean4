@@ -5,7 +5,7 @@ import hashlib
 import json
 import tempfile
 import unittest
-from native_census_cache import NativeCensusCache, INITIALIZER_SCOPE, needs_initializer_refresh
+from native_census_cache import NativeCensusCache, INITIALIZER_SCOPE, needs_initializer_refresh, DATA_SCOPE, needs_data_refresh
 
 SOURCE = 'a' * 40
 LEAN = 'b' * 40
@@ -106,6 +106,31 @@ class NativeCacheIdentity(unittest.TestCase):
 
     def test_unknown_initializer_capture_scope_is_rejected(self):
         self.snapshot['initializerOperandScope'] = 'native-initializer-operands/unknown'
+        self.write()
+        with self.assertRaises(AssertionError):
+            self.cache().find('Init.Probe', RAW, SDK_SHA)
+
+    def test_nested_data_declarations_require_current_native_operand_captures(self):
+        command = {'headKind': 'Lean.Parser.Command.structure', 'declaration': None,
+                   'nestedCommands': []}
+        self.snapshot['commands'][0]['nestedCommands'] = [command]
+        self.assertTrue(needs_data_refresh(self.snapshot))
+        self.write()
+        self.assertIsNone(self.cache().find('Init.Probe', RAW, SDK_SHA))
+        self.snapshot['dataDeclarationOperandScope'] = DATA_SCOPE
+        self.assertTrue(needs_data_refresh(self.snapshot))
+        command['dataDeclaration'] = {'mode': 'native-compatible', 'syntax': {
+            'kind': 'Lean.Parser.Command.declaration', 'args': [{}, {'kind': 'Lean.Parser.Command.structure'}]}}
+        self.assertFalse(needs_data_refresh(self.snapshot))
+        self.write()
+        self.assertEqual(self.cache().find('Init.Probe', RAW, SDK_SHA), self.path)
+        command['dataDeclaration']['mode'] = 'mapped-ps'
+        self.write()
+        with self.assertRaises(AssertionError):
+            self.cache().find('Init.Probe', RAW, SDK_SHA)
+
+    def test_unknown_data_capture_scope_is_rejected(self):
+        self.snapshot['dataDeclarationOperandScope'] = 'native-data-declaration-operands/unknown'
         self.write()
         with self.assertRaises(AssertionError):
             self.cache().find('Init.Probe', RAW, SDK_SHA)

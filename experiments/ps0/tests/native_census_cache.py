@@ -12,6 +12,30 @@ SCHEMA = 'ps0-native-source-census/1'
 OPERATOR_SCOPE = 'active-and-captured-kinds/2'
 ADJACENT_HEAD_SCOPE = 'native-environment/1'
 INITIALIZER_SCOPE = 'native-initializer-operands/1'
+DATA_SCOPE = 'native-data-declaration-operands/1'
+DATA_KINDS = {'Lean.Parser.Command.structure', 'Lean.Parser.Command.inductive',
+              'Lean.Parser.Command.coinductive', 'Lean.Parser.Command.classInductive'}
+
+
+def data_commands(commands):
+    for command in commands:
+        if command.get('headKind') in DATA_KINDS:
+            yield command
+        yield from data_commands(command.get('nestedCommands', []))
+
+
+def needs_data_refresh(snapshot):
+    scope = snapshot.get('dataDeclarationOperandScope')
+    assert scope in [None, DATA_SCOPE], scope
+    for command in data_commands(snapshot['commands']):
+        capture = command.get('dataDeclaration')
+        if scope is None or capture is None or 'syntax' not in capture:
+            return True
+        assert capture['mode'] == 'native-compatible', capture['mode']
+        syntax = capture['syntax']
+        assert syntax['kind'] == 'Lean.Parser.Command.declaration' and len(syntax['args']) == 2
+        assert syntax['args'][1]['kind'] in DATA_KINDS
+    return False
 
 
 def initialization_commands(commands):
@@ -93,6 +117,6 @@ class NativeCensusCache:
         assert data['operatorDescriptorScope'] == OPERATOR_SCOPE, module
         assert data['nativeSource'].encode() == original, module
         assert all(d['mode'] == 'native-compatible' for d in declarations(data['commands'])), module
-        if needs_initializer_refresh(data):
+        if needs_initializer_refresh(data) or needs_data_refresh(data):
             return None
         return path

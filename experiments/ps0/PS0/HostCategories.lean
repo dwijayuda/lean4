@@ -319,8 +319,10 @@ def dataConstructor : Parser :=
     atomic (optional Lean.Parser.Command.docComment >> "\n| ") >>
       ppGroup (Lean.Parser.Command.declModifiers true >> rawIdent >> dataSignature)
 
-def dataDeclRecovery : Parser :=
-  skipUntil fun c => c.isWhitespace || c == '(' || c == '{' || c == '[' || c == ':'
+def dataDeclRecovery : Parser where
+  fn := andthenFn
+    (takeUntilFn fun c => c.isWhitespace || c == '(' || c == ')' || c == ':' || c == '{' || c == '}' || c == '|')
+    (takeWhileFn Char.isWhitespace)
 
 def dataInductive (kind : Name) (keyword : String) : Parser :=
   node kind <| symbol keyword >> recover Lean.Parser.Command.declId dataDeclRecovery >>
