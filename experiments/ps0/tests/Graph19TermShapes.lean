@@ -49,11 +49,11 @@ run_cmd do
     ("inline-do-call", "withLocalDeclD `_a α fun a => do isDefEq (← inferType (eAbst.instantiate1 a)) eType",
       "withLocalDeclD(`_a, α, fun a => do isDefEq((← inferType((eAbst.instantiate1 a))), eType))"),
     ("unless-inline-do-call", "do\n  unless (← withLocalDeclD `_a α fun a => do isDefEq (← inferType (eAbst.instantiate1 a)) eType) do\n    pure ()",
-      "do\n  unless (← withLocalDeclD(`_a, α, fun a => do isDefEq((← inferType((eAbst.instantiate1 a))), eType))) do\n    pure ()"),
+      "do\n  unless (← withLocalDeclD(`_a, α, fun a => do isDefEq((← inferType((eAbst.instantiate1 a))), eType))) do\n    pure(())"),
     ("inline-do-pattern", "do let ⟨mvar', fvars⟩ ← nCasesProd n mv h\n       let mvar'' ← mvar'.tryClear fvars.getLast!\n       pure ⟨mvar'', fvars⟩",
       "do let ⟨mvar', fvars⟩ ← nCasesProd n mv h\n       let mvar'' ← mvar'.tryClear fvars.getLast!\n       pure ⟨mvar'', fvars⟩"),
     ("nested-do-condition", "do\n  while (← do\n    let fullName := (← getCurrNamespace) ++ name\n    hasConst fullName <||> (withoutExporting <| hasConst (mkPrivateName (← getEnv) fullName))) do\n    pure ()",
-      "do\n  while (← do\n    let fullName := (← getCurrNamespace) ++ name\n    hasConst fullName <||> (withoutExporting <| hasConst((mkPrivateName((← getEnv), fullName))))) do\n    pure ()")]
+      "do\n  while (← do\n    let fullName := (← getCurrNamespace) ++ name\n    hasConst fullName <||> (withoutExporting <| hasConst((mkPrivateName((← getEnv), fullName))))) do\n    pure(())")]
   let mut failures : Nat := 0
   for (label, nativeText, psText) in cases do
     try

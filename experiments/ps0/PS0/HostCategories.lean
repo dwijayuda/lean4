@@ -645,19 +645,6 @@ syntax (name := ps0HostDoLet) (priority := high)
   "let " ident (":" psTerm)? ":=" psTerm : psDoElem
 syntax (name := ps0HostDoLetMut) (priority := high)
   "let " "mut " ident (":" psTerm)? ":=" psTerm : psDoElem
-syntax (name := ps0HostDoBind) (priority := high)
-  "let " ident "←" psDoElem : psDoElem
-
-namespace PS0.DoLayout
-open Lean.Parser
-@[run_parser_attribute_hooks] def ownedBindElem : Parser :=
-  leadingNode ``ps0HostDoBind maxPrec <| withPosition <|
-    symbol "let " >> ident >> Lean.Parser.Term.leftArrow >> categoryParser `psDoElem 0
-end PS0.DoLayout
-
-@[psDoElem_parser 20001]
-def ps0PositionedDoBind : Lean.Parser.Parser := PS0.DoLayout.ownedBindElem
-
 syntax (name := ps0HostDoReassign) (priority := high) ident ":=" psTerm : psDoElem
 syntax (name := ps0HostDoExpr) (priority := high)
   Lean.Parser.Term.notFollowedByRedefinedTermToken psTerm : psDoElem
@@ -1086,11 +1073,6 @@ private def lowerDoElemWith
       lowerPatternBind lowerType lowerElement lowerLoop lowerQuoted : Lean.Syntax → MacroM Lean.Syntax)
     (lowerMatch : Lean.Syntax → Bool → MacroM Lean.Syntax)
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
-  if source.isOfKind ``ps0HostDoBind then
-    unless source.getArgs.size == 4 do Macro.throwError "PS0V1-DO-BIND: unexpected owned binding"
-    let name : TSyntax `ident := ⟨source[1]⟩
-    let action : TSyntax `doElem := ⟨← lowerElement source[3]⟩
-    return (← `(doElem| let $name:ident ← $action:doElem)).raw
   if #[``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil,
       ``Lean.Parser.Term.doFor, ``Lean.Parser.Term.termFor].contains source.getKind then
     return ← lowerLoop source
