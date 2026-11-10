@@ -74,6 +74,14 @@ cases = [
      'function bad(n: Nat): IO(Nat) := do\n  let mut result := n\n  repeat\n    result := pairSum (result, 1)\n  until true\n  return result'),
     ('repeat-condition', 'def bad (n : Nat) : IO Nat := do\n  repeat\n    pure Unit.unit\n  until pairSum (n, 1) == 0\n  return n',
      'function bad(n: Nat): IO(Nat) := do\n  repeat\n    pure Unit.unit\n  until pairSum (n, 1) == 0\n  return n'),
+    ('loop-for-invariant', 'def bad (n : Nat) : Id Nat := do\n  let mut result := n\n  for k in [n]\n  invariant pref suff => pairSum (n, 1) = n + 1\n  do result := k\n  return result',
+     'function bad(n: Nat): Id(Nat) := do\n  let mut result := n\n  for k in [n]\n  invariant pref suff => pairSum (n, 1) = n + 1\n  do result := k\n  return result'),
+    ('loop-invariant-type', 'def bad (n : Nat) : Id Nat := do\n  let mut result := n\n  for k in [n]\n  invariant (pref : (fun (_ : Nat) => List Nat) (pairSum (n, 1))) suff => True\n  do result := k\n  return result',
+     'function bad(n: Nat): Id(Nat) := do\n  let mut result := n\n  for k in [n]\n  invariant (pref : (fun (_ : Nat) => List Nat) (pairSum (n, 1))) suff => True\n  do result := k\n  return result'),
+    ('loop-while-invariant', 'def bad (n : Nat) : Id Nat := do\n  let mut result := n\n  while false\n  invariant exit => pairSum (n, 1) = n + 1\n  do result := n\n  return result',
+     'function bad(n: Nat): Id(Nat) := do\n  let mut result := n\n  while false\n  invariant exit => pairSum (n, 1) = n + 1\n  do result := n\n  return result'),
+    ('loop-while-measure', 'def bad (n : Nat) : Id Nat := do\n  let mut result := n\n  while false\n  decreasing pairSum (n, 1)\n  do result := n\n  return result',
+     'function bad(n: Nat): Id(Nat) := do\n  let mut result := n\n  while false\n  decreasing pairSum (n, 1)\n  do result := n\n  return result'),
 ]
 observations = []
 assert selected and selected <= {name for name, _, _ in cases}, selected
@@ -81,16 +89,24 @@ for name, native, ps in cases:
     if name not in selected:
         continue
     baseline = work / (name + '-native.ps')
-    baseline.write_text(native_prefix + native + '\n')
+    native_header = native_prefix.replace('public import Init', 'public import Std.WP') if name.startswith('loop-') else native_prefix
+    ps_header = ps_prefix.replace('public import Init', 'public import Std.WP') if name.startswith('loop-') else ps_prefix
+    baseline.write_text(native_header + native + '\n')
     native_result = subprocess.run([str(ROOT / '.lake/build/bin/ps0'), 'census-source', str(baseline),
                                     'HostIslandBaseline', str(work / (name + '-native-census.json'))],
                                    capture_output=True, text=True, timeout=300)
     (work / (name + '-native.log')).write_text(native_result.stdout + native_result.stderr)
-    assert native_result.returncode == 0, (name, native_result.stdout, native_result.stderr)
+    if native_result.returncode != 0:
+        observations.append(dict(case=name, native_baseline_passed=False,
+                                 native_exit_code=native_result.returncode, ps_exit_code=None,
+                                 diagnostic_excerpt=(native_result.stdout + native_result.stderr).splitlines()[:8],
+                                 invalid_host_gap_rejected=False))
+        print('PS0_HOST_ISLAND_OBSERVATION:' + json.dumps(observations[-1], sort_keys=True), flush=True)
+        continue
     source_root = work / (name + '-source')
     source_root.mkdir()
     source = source_root / 'HostIslandProbe.ps'
-    source.write_text(ps_prefix + ps + '\n')
+    source.write_text(ps_header + ps + '\n')
     result = subprocess.run(['lake', '-R', '-f', 'lakefile.project.lean',
                             '-KsourceRoot=' + str(source_root), '-Kroots=HostIslandProbe',
                             '-KmoduleNames=HostIslandProbe', '-Kbootstrap=true', '-KsourceGrammar=true',
@@ -106,7 +122,7 @@ for name, native, ps in cases:
                              invalid_host_gap_rejected=result.returncode != 0 and 'PS0V1-CALL-GAP' in diagnostic))
     print('PS0_HOST_ISLAND_OBSERVATION:' + json.dumps(observations[-1], sort_keys=True), flush=True)
 (work / 'evidence.json').write_text(json.dumps(dict(source=os.environ['PS0_SOURCE_SHA'],
-    observations=observations, scope='selected ordinary host operands beneath native syntax; native baselines typecheck',
+    observations=observations, scope='selected ordinary host operands; native baseline failures recorded separately',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
 assert all(row['invalid_host_gap_rejected'] for row in observations), 'ordinary host bodies must not silently accept native-only parenthesized application'
 print('PS0_HOST_ISLAND_GAPS: PASS', flush=True)
