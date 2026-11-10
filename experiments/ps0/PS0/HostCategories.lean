@@ -49,6 +49,14 @@ private def operands (roles : Array (Name × Name)) (parser : Parser) : Parser :
 @[run_parser_attribute_hooks] def expressionElem : Parser :=
   operands #[(`term, `psTerm)] Lean.Parser.Term.doExpr
 
+@[run_parser_attribute_hooks] def nativeDoOperand : Parser :=
+  withFn (fun parse ctx initial =>
+    let parsed := parse ctx initial
+    if parsed.hasError then parsed
+    else if parsed.stxStack.back.isOfKind ``Lean.Parser.Term.doIf then
+      initial.mkUnexpectedError "PS0V1-DO-OWNERSHIP: if uses its PS operand adapter"
+    else parsed) (categoryParser `doElem 0)
+
 private def letPrefix : Parser :=
   symbol "let " >> optional (symbol "mut ") >> Lean.Parser.Term.letConfig
 
@@ -374,7 +382,7 @@ def ps0LoopImplicitBinder : Lean.Parser.Parser := PS0.DoLayout.loopImplicitBinde
 def ps0LoopStrictBinder : Lean.Parser.Parser := PS0.DoLayout.loopStrictBinder
 @[psLoopBinder_parser 20000]
 def ps0LoopInstanceBinder : Lean.Parser.Parser := PS0.DoLayout.loopInstanceBinder
-syntax (name := ps0NativeDoElemBridge) (priority := low) doElem : psDoElem
+syntax (name := ps0NativeDoElemBridge) (priority := low) PS0.DoLayout.nativeDoOperand : psDoElem
 @[psDoElem_parser 20000]
 def ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
 @[psDoElem_parser 20000]
