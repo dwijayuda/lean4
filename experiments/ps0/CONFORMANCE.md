@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-10 — updated compiler matrix: independent 172-file artifact scope PASS
+
+[Independent inspection 42729489333 / 129543583692](https://github.com/dwijayuda/pskernel/actions/runs/42729489333/job/129543583692), runner **078a67ed543ebb9f7656953a29f404484082bb60**, **PASS** for source **5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e**, producer runner **e52cce59fdd1838a82422c0230f9c09d675f5a4b**, [42726667178](https://github.com/dwijayuda/pskernel/actions/runs/42726667178). **172 actual C/public olean files / 43 modules** were rehashed: 164 files / 41 matrix modules plus eight files from local mixed-default and where bootstrap modules. The inspector reconstructed planner edits and retained source maps, native lexer/pipeline/index roles and return-boundary runtime evidence. All 34 required same-source download names were checked against producer artifacts before dispatch. Audit artifact **13723234268 / sha256:e4ba59a3d896b5baebdf178e481f53dea3ebd426cc7c06ac36364c46d67a413c**. Exact available producer artifact IDs/digests are recorded in both JSON ledgers.
+
+At this checkpoint the producer matrix has **37 successful jobs and one proof-linked job still running**. The finite artifact audit does not imply that final job passed, does not requalify the newer annotation adapter, and does not establish the full canonical PS graph or fixed point.
+
 ## 2026-11-10 — loop annotation adapter build failure and structural continuation
 
 Source **7ef09e02786d4fd0c32c4a5cc935cfdc91647de7**, runner **3a59ebb124e8952d48f0b874b29d817862e610ec**, failed both clean Linux adapter builds: [42727743945 / 129537626414](https://github.com/dwijayuda/pskernel/actions/runs/42727743945/job/129537626414) and [42727744081 / 129537626786](https://github.com/dwijayuda/pskernel/actions/runs/42727744081/job/129537626786). **HostCategories.lean:959:86 deterministic isDefEq timeout, 800000; clean adapter build failed; no target tests ran**. No annotation target tests ran; planned counts are not qualified.
