@@ -20263,40 +20263,57 @@
       }
     },
     "latestFullGraphEvidence": {
-      "source": "92b22875cf81199f10413661b633e50df4671fb6",
-      "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
-      "run": 42756129015,
-      "job": 129630835886,
-      "status": "FAIL_FOUR_COMPILER_MODULES",
-      "modules": 2569,
-      "failures": [
-        "Lean.Data.FuzzyMatching:160",
-        "Lean.Parser.Extension:291/307",
-        "Lean.Compiler.LCNF.MonoTypes:116",
-        "Lean.Meta.CongrTheorems:131"
-      ],
-      "reportedByteIdenticalModeInputs": 0,
-      "actualSourceHashesEqualOriginal": 402,
-      "counterMeaning": "historical byte_identical=0 was a body-mode label count, not a count of equal original/PS source bytes",
+      "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+      "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
+      "run": 42770353333,
+      "job": 129676437006,
+      "status": "FAIL",
+      "reason": "compiler-build TimeoutError at 19800 seconds after six module build failures",
+      "lastReportedLakeBuildTask": "4794/5142",
+      "lastReportedSuccessfulModule": "Lean.Meta.Tactic.BVDecide.Normalize.Enums",
+      "stageTwoJob": 129825598431,
+      "stageTwoStatus": "SKIPPED",
       "artifact": {
-        "id": 13744141845,
-        "name": "ps0-transformed-data-92b22875cf81199f10413661b633e50df4671fb6-42756129015",
-        "size_in_bytes": 214481753,
-        "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845",
-        "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845/zip",
-        "expired": false,
-        "created_at": "2026-11-10T07:36:15Z",
-        "expires_at": "2027-02-08T04:28:53Z",
-        "updated_at": "2026-11-10T07:36:15Z",
-        "digest": "sha256:8593721daa17da3bce2273811645fcb87d5e15e3aa62bf2e9b12b5dd1987f211",
-        "workflow_run": {
-          "id": 42756129015,
-          "repository_id": 1381609925,
-          "head_repository_id": 1381609925,
-          "head_branch": "ci/ps0-transformed-data-20261110",
-          "head_sha": "57aee6aebef51dda1e2adbecf450a5c1916dcac7"
+        "id": 13763129003,
+        "digest": "sha256:024ef1334f62ecc893521e3ba920e769fddd16862b2de753584605fb0d89ef3a",
+        "bytes": 238734354
+      },
+      "failures": [
+        {
+          "module": "Lean.Compiler.LCNF.Simp.JpCases",
+          "blob": "80eb3b4f7b3c69da0c50c58d8860b5e65c709d2c",
+          "firstErrorLine": 126
+        },
+        {
+          "module": "Lean.Meta.Tactic.Cbv.ControlFlow",
+          "blob": "8fe30cc1f35b60a43cceac1c13c2f61524b5d92e",
+          "firstErrorLine": 73
+        },
+        {
+          "module": "Lean.Meta.Tactic.Rewrite",
+          "blob": "f616c869ab7dd86e771fc22918303ab8b7aa2998",
+          "firstErrorLine": 73
+        },
+        {
+          "module": "Lean.Meta.MkIffOfInductiveProp",
+          "blob": "6826af10a3ea2f461432d2eb45e1b6c831883e27",
+          "firstErrorLine": 291
+        },
+        {
+          "module": "Lean.Elab.Syntax",
+          "blob": "7b11aaf4830c83cc828eb77f40de308c06307053",
+          "firstErrorLine": 428
+        },
+        {
+          "module": "Lean.Server.Watchdog",
+          "blob": "dedb28154c483633b49a12d1689938209c1531c4",
+          "firstErrorLine": 361
         }
-      }
+      ],
+      "nativeLinking": false,
+      "runtimeChecks": false,
+      "fixedPoint": false,
+      "sourceCounterMeaning": "historical mode-label counter; actual original/PS hash equality requires retained input inventory inspection"
     },
     "graphSixteenthSdkReproduction": {
       "runner": "b1e246933a308214fcc8e12f6c2539d077073d1f",
@@ -82905,40 +82922,57 @@
     }
   },
   "latestFullGraphEvidence": {
-    "source": "92b22875cf81199f10413661b633e50df4671fb6",
-    "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
-    "run": 42756129015,
-    "job": 129630835886,
-    "status": "FAIL_FOUR_COMPILER_MODULES",
-    "modules": 2569,
-    "failures": [
-      "Lean.Data.FuzzyMatching:160",
-      "Lean.Parser.Extension:291/307",
-      "Lean.Compiler.LCNF.MonoTypes:116",
-      "Lean.Meta.CongrTheorems:131"
-    ],
-    "reportedByteIdenticalModeInputs": 0,
-    "actualSourceHashesEqualOriginal": 402,
-    "counterMeaning": "historical byte_identical=0 was a body-mode label count, not a count of equal original/PS source bytes",
+    "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+    "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
+    "run": 42770353333,
+    "job": 129676437006,
+    "status": "FAIL",
+    "reason": "compiler-build TimeoutError at 19800 seconds after six module build failures",
+    "lastReportedLakeBuildTask": "4794/5142",
+    "lastReportedSuccessfulModule": "Lean.Meta.Tactic.BVDecide.Normalize.Enums",
+    "stageTwoJob": 129825598431,
+    "stageTwoStatus": "SKIPPED",
     "artifact": {
-      "id": 13744141845,
-      "name": "ps0-transformed-data-92b22875cf81199f10413661b633e50df4671fb6-42756129015",
-      "size_in_bytes": 214481753,
-      "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845",
-      "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13744141845/zip",
-      "expired": false,
-      "created_at": "2026-11-10T07:36:15Z",
-      "expires_at": "2027-02-08T04:28:53Z",
-      "updated_at": "2026-11-10T07:36:15Z",
-      "digest": "sha256:8593721daa17da3bce2273811645fcb87d5e15e3aa62bf2e9b12b5dd1987f211",
-      "workflow_run": {
-        "id": 42756129015,
-        "repository_id": 1381609925,
-        "head_repository_id": 1381609925,
-        "head_branch": "ci/ps0-transformed-data-20261110",
-        "head_sha": "57aee6aebef51dda1e2adbecf450a5c1916dcac7"
+      "id": 13763129003,
+      "digest": "sha256:024ef1334f62ecc893521e3ba920e769fddd16862b2de753584605fb0d89ef3a",
+      "bytes": 238734354
+    },
+    "failures": [
+      {
+        "module": "Lean.Compiler.LCNF.Simp.JpCases",
+        "blob": "80eb3b4f7b3c69da0c50c58d8860b5e65c709d2c",
+        "firstErrorLine": 126
+      },
+      {
+        "module": "Lean.Meta.Tactic.Cbv.ControlFlow",
+        "blob": "8fe30cc1f35b60a43cceac1c13c2f61524b5d92e",
+        "firstErrorLine": 73
+      },
+      {
+        "module": "Lean.Meta.Tactic.Rewrite",
+        "blob": "f616c869ab7dd86e771fc22918303ab8b7aa2998",
+        "firstErrorLine": 73
+      },
+      {
+        "module": "Lean.Meta.MkIffOfInductiveProp",
+        "blob": "6826af10a3ea2f461432d2eb45e1b6c831883e27",
+        "firstErrorLine": 291
+      },
+      {
+        "module": "Lean.Elab.Syntax",
+        "blob": "7b11aaf4830c83cc828eb77f40de308c06307053",
+        "firstErrorLine": 428
+      },
+      {
+        "module": "Lean.Server.Watchdog",
+        "blob": "dedb28154c483633b49a12d1689938209c1531c4",
+        "firstErrorLine": 361
       }
-    }
+    ],
+    "nativeLinking": false,
+    "runtimeChecks": false,
+    "fixedPoint": false,
+    "sourceCounterMeaning": "historical mode-label counter; actual original/PS hash equality requires retained input inventory inspection"
   },
   "graphSixteenthSdkReproduction": {
     "runner": "b1e246933a308214fcc8e12f6c2539d077073d1f",
@@ -85344,5 +85378,58 @@
       }
     },
     "scope": "synthetic identity/auditor contracts only; no new compiler graph qualification"
+  },
+  "canonicalSelfhostTimedGraphTerminalEvidence": {
+    "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+    "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
+    "run": 42770353333,
+    "job": 129676437006,
+    "status": "FAIL",
+    "reason": "compiler-build TimeoutError at 19800 seconds after six module build failures",
+    "lastReportedLakeBuildTask": "4794/5142",
+    "lastReportedSuccessfulModule": "Lean.Meta.Tactic.BVDecide.Normalize.Enums",
+    "stageTwoJob": 129825598431,
+    "stageTwoStatus": "SKIPPED",
+    "artifact": {
+      "id": 13763129003,
+      "digest": "sha256:024ef1334f62ecc893521e3ba920e769fddd16862b2de753584605fb0d89ef3a",
+      "bytes": 238734354
+    },
+    "failures": [
+      {
+        "module": "Lean.Compiler.LCNF.Simp.JpCases",
+        "blob": "80eb3b4f7b3c69da0c50c58d8860b5e65c709d2c",
+        "firstErrorLine": 126
+      },
+      {
+        "module": "Lean.Meta.Tactic.Cbv.ControlFlow",
+        "blob": "8fe30cc1f35b60a43cceac1c13c2f61524b5d92e",
+        "firstErrorLine": 73
+      },
+      {
+        "module": "Lean.Meta.Tactic.Rewrite",
+        "blob": "f616c869ab7dd86e771fc22918303ab8b7aa2998",
+        "firstErrorLine": 73
+      },
+      {
+        "module": "Lean.Meta.MkIffOfInductiveProp",
+        "blob": "6826af10a3ea2f461432d2eb45e1b6c831883e27",
+        "firstErrorLine": 291
+      },
+      {
+        "module": "Lean.Elab.Syntax",
+        "blob": "7b11aaf4830c83cc828eb77f40de308c06307053",
+        "firstErrorLine": 428
+      },
+      {
+        "module": "Lean.Server.Watchdog",
+        "blob": "dedb28154c483633b49a12d1689938209c1531c4",
+        "firstErrorLine": 361
+      }
+    ],
+    "nativeLinking": false,
+    "runtimeChecks": false,
+    "fixedPoint": false,
+    "sourceCounterMeaning": "historical mode-label counter; actual original/PS hash equality requires retained input inventory inspection"
   }
 }
