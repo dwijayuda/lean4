@@ -615,7 +615,7 @@ syntax:max (name := ps0HostLambda) (priority := high)
   ps0LambdaToken psFunBinder+ (":" psTerm)? ps0LambdaArrow psTerm : psTerm
 
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
-  ident noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
+  PS0.Operators.adjacentIdentifier noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
 
 @[psHead_parser low]
 def ps0NativeHeadBridge : Lean.Parser.Parser := PS0.Operators.headLeading
@@ -907,6 +907,8 @@ private def lowerBorrowedTermWith
     return (native.setArg 0 lhs).setArg 2 rhs
   if source.isOfKind `PS0.Operators.ownedPostfix then
     let native := source[0]
+    if native.isOfKind PS0.Operators.matchesKind && native.getArgs.size == 3 then
+      return native.setArg 0 (← lowerTerm native[0])
     if (PS0.Operators.indexArity? native.getKind).isSome then
       return ← lowerIndex native false
     if (PS0.Operators.sliceShape? native.getKind).isSome then

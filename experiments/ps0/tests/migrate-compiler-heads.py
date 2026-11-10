@@ -48,6 +48,8 @@ def binary_operand(operand):
 
 def owns_postfix(operand):
     kind, parts = operand['kind'], operand['args']
+    if kind == 'Lean.«term_Matches_|»':
+        return owns_postfix(parts[0])
     if kind in ['«term__[_]»', "«term__[_]'_»", '«term__[_]_?»', '«term__[_]_!»',
                 'Array.«term__[_:_]»', 'Array.«term__[_:]»', 'Array.«term__[:_]»',
                 'Lean.Parser.Term.pipeProj']:
@@ -79,6 +81,10 @@ def single_type_call(operand, role='owned binder type'):
     # Follow only the native roles which the owned parser recursively adapts.
     # Quotation, DSL and other native syntax remain opaque.
     parts = operand['args']
+    if operand['kind'] == 'Lean.«term_Matches_|»':
+        assert len(parts) == 3 and parts[2]['args']
+        single_type_call(parts[0], role + ' matches subject; preserve native patterns')
+        return
     if operand['kind'] == 'Lean.Parser.Term.nestedAction':
         assert len(parts) == 2
         do_element(parts[1])

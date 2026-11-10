@@ -17,6 +17,8 @@ def ownedPostfixKind : Name := `PS0.Operators.ownedPostfix
 def bridgeKind : Name := `ps0NativeTermBridge
 def headBridgeKind : Name := `ps0NativeHeadBridge
 
+def matchesKind : Name := `Lean.«term_Matches_|»
+
 def indexArity? (kind : Name) : Option Nat :=
   if kind == `«term__[_]» then some 4
   else if kind == `«term__[_]'_» then some 5
@@ -34,6 +36,27 @@ def sliceShape? (kind : Name) : Option (Nat × Array Nat) :=
 
 def bracketKinds : Array Name :=
   indexKinds ++ #[`Array.«term__[_:_]», `Array.«term__[_:]», `Array.«term__[:_]»]
+
+private def adjacentIdentifierFn : ParserFn := fun ctx initial => Id.run do
+  let ordinary := ident.fn ctx initial
+  if !ordinary.hasError then return ordinary
+  let parsed := (rawIdentFn (includeWhitespace := false)) ctx initial
+  if parsed.hasError || ctx.atEnd parsed.pos then return ordinary
+  unless ctx.get parsed.pos == '(' do return ordinary
+  let .ident _ raw _ _ := parsed.stxStack.back | return ordinary
+  let spelling := raw.toString
+  if ctx.forbiddenTks.contains spelling then return ordinary
+  -- A compound token in another category may reserve `name(`, while `name`
+  -- remains a native identifier. Validate that isolated spelling natively.
+  let context := mkInputContext spelling "<PS-adjacent-call-head>"
+  let checked := identFn.run context {env := ctx.env, options := ctx.options}
+    ctx.tokens (mkParserState spelling)
+  unless checked.allErrors.isEmpty && checked.pos.byteIdx == spelling.utf8ByteSize do
+    return ordinary
+  return parsed
+
+@[run_parser_attribute_hooks] def adjacentIdentifier : Parser :=
+  withFn (fun _ => adjacentIdentifierFn) ident
 
 builtin_initialize
   registerBuiltinNodeKind ownedKind
@@ -86,7 +109,8 @@ private unsafe def leadingWith (head : Bool) : ParserFn := fun ctx initial => un
       !collected.contains ``Lean.Parser.Term.pipeProj &&
       !collected.contains ``Lean.Parser.Term.pipeCompletion &&
       !collected.contains ``Lean.Parser.Term.proj &&
-      !collected.contains ``Lean.Parser.Term.completion
+      !collected.contains ``Lean.Parser.Term.completion &&
+      !collected.contains matchesKind
   let mut trailingTable := category.tables.trailingTable
   if head then
     trailingTable := filterToken (filterToken trailingTable `«[» keep) `«|>.» keep
@@ -102,7 +126,12 @@ private unsafe def leadingWith (head : Bool) : ParserFn := fun ctx initial => un
   -- Native operands keep their context, precedence, antiquotations and syntax data.
   let parsed := leadingParser `term leadingTables category.behavior
     (mkCategoryAntiquotParser `term).fn ctx initial
-  if parsed.hasError then return parsed
+  if parsed.hasError then
+    if head then
+      let recovered := adjacentIdentifierFn ctx initial
+      if !recovered.hasError then
+        return recovered.popSyntax.pushSyntax <| .node .none headBridgeKind #[recovered.stxStack.back]
+    return parsed
   let parsed := trailingLoop tables ctx parsed
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
@@ -137,10 +166,11 @@ private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx in
     let collected := parser.info.collectKinds {}
     kinds.any collected.contains || bracketKinds.any collected.contains ||
       collected.contains ``Lean.Parser.Term.proj ||
-      (!projectionOnly && collected.contains ``Lean.Parser.Term.pipeProj)
+      (!projectionOnly && (collected.contains ``Lean.Parser.Term.pipeProj || collected.contains matchesKind))
   if candidates.isEmpty then return initial.mkUnexpectedError "no owned native binary operator"
   let candidates := candidates.map fun (parser, priority) =>
-    (if (parser.info.collectKinds {}).contains ``Lean.Parser.Term.proj then parser else operandParser parser, priority)
+    (if (parser.info.collectKinds {}).contains ``Lean.Parser.Term.proj ||
+        (parser.info.collectKinds {}).contains matchesKind then parser else operandParser parser, priority)
   let parsed := longestMatchFn (some initial.stxStack.back) candidates ctx initial.popSyntax
   if parsed.hasError then return parsed
   let native := parsed.stxStack.back
@@ -150,6 +180,8 @@ private unsafe def trailingWith (projectionOnly : Bool) : ParserFn := fun ctx in
       return parsed.mkUnexpectedError "PS0V1-OP-CHOICE: unsupported native operator alternatives"
     return parsed.popSyntax.pushSyntax <| .node .none ownedKind #[native]
   if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
+    return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
+  if native.isOfKind matchesKind && native.getArgs.size == 3 && !native[2].getArgs.isEmpty then
     return parsed.popSyntax.pushSyntax <| .node .none ownedPostfixKind #[native]
   if let some arity := indexArity? native.getKind then
     unless native.getArgs.size == arity do
