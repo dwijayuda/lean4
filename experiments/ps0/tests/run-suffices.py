@@ -109,4 +109,4 @@ assert all(value['baseline'] == value['migrated'] == value['planned'] for value 
     runtime='PS0_SUFFICES: PASS', private_rfl_guards=5,
     scope='finite suffices type/from/by/continuation roles with native named and anonymous binder nodes',
     grammar_migration_complete=False, verified_execution=False), indent=2) + '\n')
-print('PS0_LOOP_CONTRACT_NATIVE_PARITY: PASS', flush=True)
+print('PS0_SUFFICES_NATIVE_PARITY: PASS', flush=True)
