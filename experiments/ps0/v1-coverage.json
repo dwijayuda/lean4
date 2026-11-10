@@ -16486,10 +16486,10 @@
       "lastObservedUtc": "2026-11-09 19:39:50 UTC"
     },
     "nextActions": [
-      "Inspect suffices native/PS/planner, source-origin and negative boundary results",
-      "Inspect proof-linked final matrix job and immutable full graph without polling-driven restart",
-      "Continue ordinary grammar and exact original source diagnostic fidelity",
-      "Require canonical PS compiler graph, relocated operation and fixed point"
+      "Inspect original CLI diagnostic coordinate controls before implementation",
+      "Start a new complete matrix from the finite-qualified implementation",
+      "Inspect immutable full graph without polling-driven restart",
+      "Continue remaining ordinary grammar and require canonical PS compiler graph, relocated operation and fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -19437,12 +19437,13 @@
     "sufficesCandidate": {
       "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
       "runner": "3192aee60f078483faecbe09236d876bf36602ca",
-      "positiveRun": 42732341309,
-      "status": "PENDING_LINUX_CORRECTED_COMMAND_BLOCK",
-      "plannedDefinitions": 61,
-      "plannedPrivateProofGuards": 48,
-      "plannedSourceOrigins": 37,
-      "plannedGapRejections": 34,
+      "run": 42732341309,
+      "status": "QUALIFIED_FINITE",
+      "independentRun": 42733189207,
+      "mappedDefinitions": 61,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 34,
       "grammarMigrationComplete": false,
       "verified_execution": false
     },
@@ -19479,6 +19480,114 @@
       "run": 42731612494,
       "job": 129550761566,
       "status": "PASS_THREE_NATIVE_BASELINES_THREE_PS_GAP_REJECTIONS"
+    },
+    "sufficesQualification": {
+      "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+      "runner": "3192aee60f078483faecbe09236d876bf36602ca",
+      "run": 42732341309,
+      "job": 129553211536,
+      "status": "QUALIFIED_FINITE",
+      "mappedDefinitions": 61,
+      "ordinaryDefinitions": 48,
+      "loopDefinitions": 6,
+      "sufficesDefinitions": 7,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 34,
+      "actualCompilerFiles": 18,
+      "actualNativeElfs": 3,
+      "hashes": {
+        "loop-contracts-42732341309/LoopContracts": "f7ac9b0b70a0418e0d32f402f0fac7c2e2133a95e3854071d0026028ef5ebde5",
+        "loop-contracts-42732341309/baseline.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42732341309/baseline.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "loop-contracts-42732341309/migrated.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42732341309/migrated.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "loop-contracts-42732341309/planned.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42732341309/planned.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "match-host-42732341309/OrdinaryHostOrigins": "b57857e639d59951923bcc264dfe33de67d5753b898f9d44d9be47415ae1bb39",
+        "match-host-42732341309/baseline-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42732341309/baseline-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "match-host-42732341309/migrated-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42732341309/migrated-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "match-host-42732341309/planned-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42732341309/planned-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "suffices-42732341309/SufficesRuntime": "fc8b3c241b168ac1748f523dfd512bce71ab8a84c1848ef7045739b9644c19a9",
+        "suffices-42732341309/baseline.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42732341309/baseline.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+        "suffices-42732341309/migrated.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42732341309/migrated.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+        "suffices-42732341309/planned.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42732341309/planned.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461"
+      },
+      "sufficesEvidence": {
+        "comparisons": {
+          "ir/SufficesBootstrap.c": {
+            "baseline": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+            "migrated": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+            "planned": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791"
+          },
+          "lib/lean/SufficesBootstrap.olean": {
+            "baseline": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+            "migrated": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+            "planned": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461"
+          }
+        },
+        "grammar_migration_complete": false,
+        "logical_imports": [
+          "Init"
+        ],
+        "mapped_definitions": 7,
+        "mapped_theorems": 5,
+        "native_executable_sha256": "fc8b3c241b168ac1748f523dfd512bce71ab8a84c1848ef7045739b9644c19a9",
+        "private_rfl_guards": 5,
+        "runtime": "PS0_SUFFICES: PASS",
+        "scope": "finite suffices type/from/by/continuation roles with native named and anonymous binder nodes",
+        "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+        "verified_execution": false
+      },
+      "producerArtifact": {
+        "id": 13724873844,
+        "digest": "sha256:75181813f9f8ef8e390936694ae121d569d36874435f6ad963071fa53b51e544"
+      },
+      "independentInspection": {
+        "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+        "runner": "39cb94df10f16b0487d7f6f1799205bb0e6a0444",
+        "run": 42733189207,
+        "job": 129556004927,
+        "status": "PASS",
+        "artifact": {
+          "id": 13726505079,
+          "digest": "sha256:d7d36778dc16bdb4c5693e4b1287940cdd5cfe07a93e03ff3ff5f81a89d3f677"
+        }
+      },
+      "scope": "Three finite native/handwritten/planner modules including loop annotations and suffices type/from/by-prime/continuation, preserved named/anonymous binders and native Lake linking/runtime; not whole canonical compiler or loop invariant certification",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "latestFiniteGrammarQualification": {
+      "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+      "runner": "3192aee60f078483faecbe09236d876bf36602ca",
+      "run": 42732341309,
+      "status": "QUALIFIED_FINITE",
+      "independentRun": 42733189207,
+      "mappedDefinitions": 61,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 34,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "diagnosticOriginsTestFirstCandidate": {
+      "source": "e5e2d27d8264bb0fa46d7b9b91a88338e6bb3ce9",
+      "runner": "3c08d300992d52fd1788b70b875355061ac2134c",
+      "run": 42733276428,
+      "status": "PENDING_TEST_FIRST",
+      "cases": [
+        "legacy-lf",
+        "legacy-crlf",
+        "modern-lf",
+        "modern-crlf"
+      ]
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -79912,17 +80021,31 @@
       "run": 42730733339,
       "job": 129547738620,
       "status": "PASS_NATIVE_SHAPE_OBSERVATION"
+    },
+    "resolvedBy": {
+      "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+      "runner": "3192aee60f078483faecbe09236d876bf36602ca",
+      "run": 42732341309,
+      "status": "QUALIFIED_FINITE",
+      "independentRun": 42733189207,
+      "mappedDefinitions": 61,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 34,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     }
   },
   "sufficesCandidate": {
     "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
     "runner": "3192aee60f078483faecbe09236d876bf36602ca",
-    "positiveRun": 42732341309,
-    "status": "PENDING_LINUX_CORRECTED_COMMAND_BLOCK",
-    "plannedDefinitions": 61,
-    "plannedPrivateProofGuards": 48,
-    "plannedSourceOrigins": 37,
-    "plannedGapRejections": 34,
+    "run": 42732341309,
+    "status": "QUALIFIED_FINITE",
+    "independentRun": 42733189207,
+    "mappedDefinitions": 61,
+    "privateProofGuards": 48,
+    "sourceOriginCases": 37,
+    "invalidGapRejections": 34,
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
@@ -79951,6 +80074,19 @@
       "run": 42732217640,
       "job": 129552792972,
       "status": "FAIL_EXPECTED_SUFFICES_ARTIFACT_MISSING"
+    },
+    "supersededBy": {
+      "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+      "runner": "3192aee60f078483faecbe09236d876bf36602ca",
+      "run": 42732341309,
+      "status": "QUALIFIED_FINITE",
+      "independentRun": 42733189207,
+      "mappedDefinitions": 61,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 34,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     }
   },
   "sufficesNegativeQualification": {
@@ -79959,5 +80095,113 @@
     "run": 42731612494,
     "job": 129550761566,
     "status": "PASS_THREE_NATIVE_BASELINES_THREE_PS_GAP_REJECTIONS"
+  },
+  "sufficesQualification": {
+    "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+    "runner": "3192aee60f078483faecbe09236d876bf36602ca",
+    "run": 42732341309,
+    "job": 129553211536,
+    "status": "QUALIFIED_FINITE",
+    "mappedDefinitions": 61,
+    "ordinaryDefinitions": 48,
+    "loopDefinitions": 6,
+    "sufficesDefinitions": 7,
+    "privateProofGuards": 48,
+    "sourceOriginCases": 37,
+    "invalidGapRejections": 34,
+    "actualCompilerFiles": 18,
+    "actualNativeElfs": 3,
+    "hashes": {
+      "loop-contracts-42732341309/LoopContracts": "f7ac9b0b70a0418e0d32f402f0fac7c2e2133a95e3854071d0026028ef5ebde5",
+      "loop-contracts-42732341309/baseline.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42732341309/baseline.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "loop-contracts-42732341309/migrated.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42732341309/migrated.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "loop-contracts-42732341309/planned.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42732341309/planned.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "match-host-42732341309/OrdinaryHostOrigins": "b57857e639d59951923bcc264dfe33de67d5753b898f9d44d9be47415ae1bb39",
+      "match-host-42732341309/baseline-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42732341309/baseline-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "match-host-42732341309/migrated-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42732341309/migrated-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "match-host-42732341309/planned-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42732341309/planned-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "suffices-42732341309/SufficesRuntime": "fc8b3c241b168ac1748f523dfd512bce71ab8a84c1848ef7045739b9644c19a9",
+      "suffices-42732341309/baseline.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42732341309/baseline.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+      "suffices-42732341309/migrated.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42732341309/migrated.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+      "suffices-42732341309/planned.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42732341309/planned.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461"
+    },
+    "sufficesEvidence": {
+      "comparisons": {
+        "ir/SufficesBootstrap.c": {
+          "baseline": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+          "migrated": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+          "planned": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791"
+        },
+        "lib/lean/SufficesBootstrap.olean": {
+          "baseline": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+          "migrated": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+          "planned": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461"
+        }
+      },
+      "grammar_migration_complete": false,
+      "logical_imports": [
+        "Init"
+      ],
+      "mapped_definitions": 7,
+      "mapped_theorems": 5,
+      "native_executable_sha256": "fc8b3c241b168ac1748f523dfd512bce71ab8a84c1848ef7045739b9644c19a9",
+      "private_rfl_guards": 5,
+      "runtime": "PS0_SUFFICES: PASS",
+      "scope": "finite suffices type/from/by/continuation roles with native named and anonymous binder nodes",
+      "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+      "verified_execution": false
+    },
+    "producerArtifact": {
+      "id": 13724873844,
+      "digest": "sha256:75181813f9f8ef8e390936694ae121d569d36874435f6ad963071fa53b51e544"
+    },
+    "independentInspection": {
+      "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+      "runner": "39cb94df10f16b0487d7f6f1799205bb0e6a0444",
+      "run": 42733189207,
+      "job": 129556004927,
+      "status": "PASS",
+      "artifact": {
+        "id": 13726505079,
+        "digest": "sha256:d7d36778dc16bdb4c5693e4b1287940cdd5cfe07a93e03ff3ff5f81a89d3f677"
+      }
+    },
+    "scope": "Three finite native/handwritten/planner modules including loop annotations and suffices type/from/by-prime/continuation, preserved named/anonymous binders and native Lake linking/runtime; not whole canonical compiler or loop invariant certification",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "latestFiniteGrammarQualification": {
+    "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
+    "runner": "3192aee60f078483faecbe09236d876bf36602ca",
+    "run": 42732341309,
+    "status": "QUALIFIED_FINITE",
+    "independentRun": 42733189207,
+    "mappedDefinitions": 61,
+    "privateProofGuards": 48,
+    "sourceOriginCases": 37,
+    "invalidGapRejections": 34,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "diagnosticOriginsTestFirstCandidate": {
+    "source": "e5e2d27d8264bb0fa46d7b9b91a88338e6bb3ce9",
+    "runner": "3c08d300992d52fd1788b70b875355061ac2134c",
+    "run": 42733276428,
+    "status": "PENDING_TEST_FIRST",
+    "cases": [
+      "legacy-lf",
+      "legacy-crlf",
+      "modern-lf",
+      "modern-crlf"
+    ]
   }
 }
