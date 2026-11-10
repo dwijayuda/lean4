@@ -67,8 +67,8 @@ private def inspectModuleHeader (path : String) : IO UInt32 := do
     independently parsed IR without retaining the accepted Lean environment. -/
 private def checkSourceEnvironment (path source : String) :
     IO (Option Environment) := do
-  let frontendSource ← match ← preparedPsModule source path with
-    | .ok text => pure text
+  let prepared ← match ← LakeFrontend.prepareWithOrigins source path with
+    | .ok prepared => pure prepared
     | .error err =>
         IO.eprintln s!"PS0V1 source-profile implementation error: {err}"
         return none
@@ -77,8 +77,8 @@ private def checkSourceEnvironment (path source : String) :
   -- Official runFrontend recognizes modern module headers, import stages
   -- and interleaved changes to syntax/macro/elaborator registrations.
   -- Checking does not write an olean or executable artifact.
-  let some checked ← Elab.runFrontend frontendSource options path
-      `PS0_SourceCheck (trustLevel := 0)
+  let some checked ← LakeFrontend.checkWithOrigins prepared source options path
+      `PS0_SourceCheck
     | IO.eprintln "PS0V1: official Lean module frontend rejected source"
       return none
   return some checked
