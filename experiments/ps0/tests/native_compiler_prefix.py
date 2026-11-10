@@ -23,6 +23,18 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def source_identity_counts(inputs):
+    for module, item in inputs.items():
+        assert item['body_mode'] in ['planned-ps-grammar', 'byte-identical', 'native-header-adapter'], module
+        assert all(re.fullmatch('[0-9a-f]{64}', item[key])
+                   for key in ['original_sha256', 'ps_sha256']), module
+    modes = [item['body_mode'] for item in inputs.values()]
+    return dict(total_inputs=len(inputs), planned_ps_grammar_inputs=modes.count('planned-ps-grammar'),
+        byte_identical_mode_inputs=modes.count('byte-identical'),
+        native_compatible_mode_inputs=sum(mode != 'planned-ps-grammar' for mode in modes),
+        source_hashes_equal_original=sum(item['ps_sha256'] == item['original_sha256'] for item in inputs.values()))
+
+
 def verify_compiler_prefix(root, expected_source):
     root = Path(root).resolve()
     assert re.fullmatch('[0-9a-f]{40}', expected_source), expected_source
@@ -31,6 +43,9 @@ def verify_compiler_prefix(root, expected_source):
     assert migration['source_commit'] == expected_source and migration['lean_commit'] == LEAN
     assert migration['module_count'] == len(migration['inputs']) == len(migration['outputs']) == 2569
     assert migration['inputs'].keys() == migration['outputs'].keys()
+    counts = source_identity_counts(migration['inputs'])
+    if 'source_identity_counts' in migration:
+        assert migration['source_identity_counts'] == counts
     assert {'Init', 'Std', 'Lean', 'Lake', 'PS0', 'PS0Main'} <= migration['inputs'].keys()
     assert migration['stage_lean_options']['ps0.sourceGrammar'] is True
     assert migration['stage_lean_options']['interpreter.prefer_native'] is False
@@ -75,5 +90,6 @@ def verify_compiler_prefix(root, expected_source):
     return dict(schema='ps0-verified-stage-prefix/1', source=expected_source,
         driver=str(driver), metadata=str(metadata), migration=str(root / 'migration.json'), driver_sha256=sha(driver),
         metadata_files=len(expected), ps_sources_rehashed=2569,
+        source_identity_counts=counts,
         scope='Artifact identity and retained stage prerequisites only; no new compilation or fixed-point result',
         grammar_migration_complete=False, verified_execution=False)

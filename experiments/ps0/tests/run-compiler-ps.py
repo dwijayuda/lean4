@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import time
 from native_census_cache import NativeCensusCache, needs_head_lexical_refresh, needs_initializer_refresh, needs_data_refresh, OPERATOR_SCOPE
-from native_compiler_prefix import verify_compiler_prefix
+from native_compiler_prefix import source_identity_counts, verify_compiler_prefix
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--driver', type=Path)
@@ -263,16 +263,19 @@ for relative, original in sorted(originals.items()):
     }
 modules = work / 'modules.txt'
 modules.write_text('\n'.join(sorted(inputs)) + '\n')
+identity_counts = source_identity_counts(inputs)
 (evidence / 'input-inventory.json').write_text(json.dumps({
     'source_commit': os.environ['PS0_SOURCE_SHA'], 'lean_commit': LEAN,
     'stage_driver_sha256': digest(driver), 'module_count': len(inputs), 'inputs': inputs,
+    'source_identity_counts': identity_counts,
 }, indent=2) + '\n')
-print('PS0_COMPILER_PS_INPUTS: ' + str(len(inputs)) + '; byte_identical=' +
-      str(sum(x['body_mode'] == 'byte-identical' for x in inputs.values())), flush=True)
+print('PS0_COMPILER_PS_INPUTS: ' + str(len(inputs)) + '; ' +
+      '; '.join(key + '=' + str(value) for key, value in identity_counts.items() if key != 'total_inputs'), flush=True)
 if args.prepare_only:
     (evidence / 'preparation-only.json').write_text(json.dumps({
         'source_commit': os.environ['PS0_SOURCE_SHA'], 'lean_commit': LEAN,
         'module_count': len(inputs), 'source_grammar': True,
+        'source_identity_counts': identity_counts,
         'scope': 'prepared transformed source and plans only; target dependency graph is not compiled',
         'compiled_graph': False, 'grammar_migration_complete': False, 'verified_execution': False,
     }, indent=2) + '\n')
@@ -281,8 +284,8 @@ if args.prepare_only:
 baseline = json.loads(args.compare.read_text()) if args.compare else None
 if baseline:
     assert digest(driver) == baseline['driver_sha256'], 'stage driver differs from the uploaded stage-one executable'
-    assert {k: v['ps_sha256'] for k, v in inputs.items()} == {
-        k: v['ps_sha256'] for k, v in baseline['inputs'].items()}, 'stage inputs changed'
+    assert {k: (v['original_sha256'], v['ps_sha256']) for k, v in inputs.items()} == {
+        k: (v['original_sha256'], v['ps_sha256']) for k, v in baseline['inputs'].items()}, 'stage original/PS source identities changed'
 
 build = work / 'artifacts'
 shutil.copytree(sysroot / 'include', build / 'include')
@@ -363,6 +366,7 @@ migrated = build / 'bin/ps0project'
 result = {
     'schema': 'ps0-compiler-source-migration/1', 'source_commit': os.environ['PS0_SOURCE_SHA'],
     'lean_commit': LEAN, 'module_count': len(inputs), 'inputs': inputs, 'outputs': outputs,
+    'source_identity_counts': identity_counts,
     'driver_sha256': digest(migrated), 'verified_execution': False,
     'bootstrap_package_identity': None,
     'compiler_build_timeout_seconds': 19800,

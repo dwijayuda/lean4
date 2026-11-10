@@ -49,8 +49,8 @@ def verify_fixed_point(first, second, expected_source):
     roots = [Path(first).resolve(), Path(second).resolve()]
     verified = [verify_compiler_prefix(root, expected_source) for root in roots]
     a, b = [read(root, 'migration.json') for root in roots]
-    assert {k: v['ps_sha256'] for k, v in a['inputs'].items()} == {
-        k: v['ps_sha256'] for k, v in b['inputs'].items()}, 'stage input bytes differ'
+    assert {k: (v['original_sha256'], v['ps_sha256']) for k, v in a['inputs'].items()} == {
+        k: (v['original_sha256'], v['ps_sha256']) for k, v in b['inputs'].items()}, 'stage original/PS source identities differ'
     assert a['outputs'] == b['outputs'], 'per-module C/public olean receipts differ'
     assert b['fixed_point'] == {'changed_c': [], 'changed_olean': []}
     receipt = read(roots[1], 'stage-prefix-verification.json')
@@ -78,6 +78,7 @@ def verify_fixed_point(first, second, expected_source):
         lean_commit=LEAN, modules=2569, stages=2, ps_sources_rehashed=5138,
         mapped_censuses_rehashed=5138, driver_files_rehashed=2,
         metadata_files_rehashed=sum(row['metadata_files'] for row in verified),
+        source_identity_counts=verified[0]['source_identity_counts'],
         c_and_public_olean_receipt_hashes_compared=5138,
         stage_two_metadata_mode=metadata['mode'], status='PASS',
         scope='Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim',

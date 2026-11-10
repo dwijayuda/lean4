@@ -121,6 +121,13 @@ class FixedPointArtifactContracts(unittest.TestCase):
         with self.assertRaises(AssertionError):
             self.verify()
 
+    def test_original_source_identity_cannot_change_when_ps_bytes_match(self):
+        value = audit.read(self.second, 'migration.json')
+        value['inputs']['PS0']['original_sha256'] = 'f' * 64
+        self.write(self.second, 'migration.json', value)
+        with self.assertRaises(AssertionError):
+            self.verify()
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

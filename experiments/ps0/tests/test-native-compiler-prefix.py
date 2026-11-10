@@ -37,7 +37,8 @@ class CompilerPrefixIdentity(unittest.TestCase):
         for name in names:
             data = ('module\n-- synthetic source ' + name + '\n').encode()
             self.write('transformed-source/' + name.replace('.', '/') + '.ps', data)
-            inputs[name] = dict(ps_sha256=digest(data), body_mode='planned-ps-grammar')
+            inputs[name] = dict(ps_sha256=digest(data), original_sha256=digest(data) if name == 'Init' else 'e' * 64,
+                                body_mode='planned-ps-grammar')
         self.migration = dict(schema='ps0-compiler-source-migration/1', source_commit=SOURCE,
             lean_commit=LEAN, module_count=2569, inputs=inputs,
             outputs={name: dict(c_sha256='c' * 64, olean_sha256='d' * 64) for name in names},
@@ -66,6 +67,9 @@ class CompilerPrefixIdentity(unittest.TestCase):
         report = self.verify()
         self.assertEqual(report['ps_sources_rehashed'], 2569)
         self.assertEqual(report['metadata_files'], 4)
+        self.assertEqual(report['source_identity_counts']['source_hashes_equal_original'], 1)
+        self.assertEqual(report['source_identity_counts']['planned_ps_grammar_inputs'], 2569)
+        self.assertEqual(report['source_identity_counts']['byte_identical_mode_inputs'], 0)
         self.assertEqual(Path(report['metadata']), self.root / 'compiler-prefix/lib/lean')
         self.assertFalse(report['verified_execution'])
         self.assertFalse(report['grammar_migration_complete'])
@@ -159,6 +163,20 @@ class CompilerPrefixIdentity(unittest.TestCase):
             self.verify()
         (self.root / 'transformed-source/Native.lean').unlink()
         self.migration['inputs']['PS0']['body_mode'] = 'native-header-adapter'
+        self.save()
+        with self.assertRaises(AssertionError):
+            self.verify()
+
+    def test_original_source_hash_identity_required(self):
+        self.migration['inputs']['PS0']['original_sha256'] = 'invalid'
+        self.save()
+        with self.assertRaises(AssertionError):
+            self.verify()
+
+    def test_claimed_mode_counter_cannot_substitute_for_actual_hash_count(self):
+        self.migration['source_identity_counts'] = dict(total_inputs=2569,
+            planned_ps_grammar_inputs=2569, byte_identical_mode_inputs=0,
+            native_compatible_mode_inputs=0, source_hashes_equal_original=0)
         self.save()
         with self.assertRaises(AssertionError):
             self.verify()
