@@ -85,10 +85,6 @@ private def letPrefix : Parser :=
 @[run_parser_attribute_hooks] def forwardTerm : Parser :=
   operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doForward
 
-@[run_parser_attribute_hooks] def ownedBindElem : Parser :=
-  leadingNode `ps0HostDoBind maxPrec <| withPosition <|
-    symbol "let " >> ident >> symbol "←" >> categoryParser `psTerm 0
-
 @[run_parser_attribute_hooks] def ascriptionTerm : Parser :=
   -- These overlapping native grouping productions must share category caches.
   -- Their value callbacks enter PS directly with native position/hygiene rules.
@@ -520,8 +516,6 @@ def ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
 def ps0NativeNestedAction : Lean.Parser.Parser := PS0.DoLayout.nestedActionTerm
 @[psTerm_parser 20000]
 def ps0NativeDoForward : Lean.Parser.Parser := PS0.DoLayout.forwardTerm
-@[psDoElem_parser 20001]
-def ps0PositionedDoBind : Lean.Parser.Parser := PS0.DoLayout.ownedBindElem
 @[psTerm_parser 20000]
 def ps0NativeTermReturn : Lean.Parser.Parser := PS0.DoLayout.returnTerm
 @[psTerm_parser 20000]
@@ -653,6 +647,17 @@ syntax (name := ps0HostDoLetMut) (priority := high)
   "let " "mut " ident (":" psTerm)? ":=" psTerm : psDoElem
 syntax (name := ps0HostDoBind) (priority := high)
   "let " ident "←" psTerm : psDoElem
+
+namespace PS0.DoLayout
+open Lean.Parser
+@[run_parser_attribute_hooks] def ownedBindElem : Parser :=
+  leadingNode ``ps0HostDoBind maxPrec <| withPosition <|
+    symbol "let " >> ident >> symbol "←" >> categoryParser `psTerm 0
+end PS0.DoLayout
+
+@[psDoElem_parser 20001]
+def ps0PositionedDoBind : Lean.Parser.Parser := PS0.DoLayout.ownedBindElem
+
 syntax (name := ps0HostDoReassign) (priority := high) ident ":=" psTerm : psDoElem
 syntax (name := ps0HostDoExpr) (priority := high)
   Lean.Parser.Term.notFollowedByRedefinedTermToken psTerm : psDoElem
