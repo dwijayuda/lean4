@@ -74,7 +74,7 @@ private def checkSourceEnvironment (path source : String) :
         return none
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
-  -- Official runFrontend recognizes modern module headers, import stages
+  -- Lean's module processor recognizes modern module headers, import stages
   -- and interleaved changes to syntax/macro/elaborator registrations.
   -- Checking does not write an olean or executable artifact.
   let some checked ← LakeFrontend.checkWithOrigins prepared source options path
