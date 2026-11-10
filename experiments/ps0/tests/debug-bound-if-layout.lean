@@ -5,6 +5,14 @@ import PS0.HostCategories
 
 open Lean
 
+private partial def escapedIf (source : Syntax) : Bool :=
+  (source.isOfKind ``ps0NativeDoElemBridge && source[0].isOfKind ``Lean.Parser.Term.doIf) ||
+    source.getArgs.any escapedIf
+
+private partial def adjacentCalls (source : Syntax) : Nat :=
+  (if source.isOfKind ``ps0HostAdjacentCall then 1 else 0) +
+    source.getArgs.foldl (fun count child => count + adjacentCalls child) 0
+
 private partial def roleNodes (source : Syntax) (path : Array String := #[]) : Array Json := Id.run do
   let kind := source.getKind.toString
   let path := path.push kind
@@ -22,6 +30,8 @@ run_cmd do
       ("bound-if", "do\n  let result ← if b then\n    pure <| add(1, 2)\n  else\n    addM(3, 4)\n  return result"),
       ("standalone-if", "do\n  if b then\n    pure <| add(1, 2)\n  else\n    addM(3, 4)") ] do
     let parsed ← IO.ofExcept <| Parser.runParserCategory env `psTerm text
+    unless !escapedIf parsed && adjacentCalls parsed == 2 do
+      throwError s!"PS0_BOUND_IF_OWNERSHIP: {label}: escaped={escapedIf parsed}, calls={adjacentCalls parsed}"
     let lowered ← Elab.liftMacroM <| PS0.Syntax.lower `psTerm parsed
     logInfo ("PS0_BOUND_IF_ROLE_PATHS:" ++ (Json.mkObj [
       ("case", toJson label), ("parsed", toJson (roleNodes parsed)),

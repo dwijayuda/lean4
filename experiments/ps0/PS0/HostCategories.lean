@@ -310,7 +310,9 @@ def recursivePrefix : Parser :=
 
 @[run_parser_attribute_hooks] def bindElem : Parser :=
   leadingNode ``Lean.Parser.Term.doLetArrow maxPrec <| withPosition <|
-    letPrefix >> operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.doIdDecl
+    letPrefix >> node ``Lean.Parser.Term.doIdDecl
+      (atomic (ident >> operands #[(`term, `psTerm)] Lean.Parser.Term.optType >>
+        ppSpace >> Lean.Parser.Term.leftArrow) >> categoryParser `psDoElem 0)
 
 @[run_parser_attribute_hooks] def patternBindElem : Parser :=
   operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doLetArrow
