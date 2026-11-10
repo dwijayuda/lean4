@@ -29,7 +29,7 @@ for modern in [False, True]:
         native.write_bytes(text.replace('function bad', 'def      bad').encode())
         positions = {}
         for label, args, path in [('native', ['lake', 'env', 'lean', str(native)], native),
-                                  ('ps', [str(driver), 'check', str(ps)], ps)]:
+                                  ('ps', ['lake', 'env', str(driver), 'check', str(ps)], ps)]:
             result = subprocess.run(args, capture_output=True, text=True, timeout=120)
             diagnostic = result.stdout + result.stderr
             (work / (name + '-' + label + '.log')).write_text(diagnostic)
