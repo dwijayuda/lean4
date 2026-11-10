@@ -98,7 +98,7 @@ for label, body in [('baseline', native + native_main), ('migrated', ps + ps_mai
     build = work / (label + '-build')
     args = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source_root),
             '-Kroots=' + module, '-KmoduleNames=' + module, '-KrootModule=' + module,
-            '-Kbootstrap=true', '-Kdriver=' + str(ROOT / '.lake/build/bin/ps0'),
+            '-Kdriver=' + str(ROOT / '.lake/build/bin/ps0'),
             '-KprojectBuildDir=' + str(build)]
     if label != 'baseline':
         args.append('-KsourceGrammar=true')
