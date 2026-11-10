@@ -16368,211 +16368,14 @@
       "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
       "runner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
       "run": 42726667178,
-      "status": "37_SUCCESS_1_PROOF_LINKED_IN_PROGRESS",
-      "independentArtifactScope": {
-        "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
-        "producerRun": 42726667178,
-        "producerRunner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
-        "producerStatus": "37_SUCCESS_1_PROOF_LINKED_IN_PROGRESS",
-        "independentRun": 42729489333,
-        "independentJob": 129543583692,
-        "independentRunner": "078a67ed543ebb9f7656953a29f404484082bb60",
-        "status": "PASS_FINITE_ARTIFACT_SCOPE",
-        "actualFiles": 172,
-        "totalModules": 43,
-        "compilerMatrixFiles": 164,
-        "compilerMatrixModules": 41,
-        "additionalBootstrapFiles": 8,
-        "artifact": {
-          "id": 13723234268,
-          "digest": "sha256:e4ba59a3d896b5baebdf178e481f53dea3ebd426cc7c06ac36364c46d67a413c"
-        },
-        "producerArtifacts": [
-          {
-            "id": 13723990339,
-            "name": "ps0-compiler-intlinear-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:51eec473775f3319d45e6552d75995245934d46007a610b5ff0a330705a5eb62"
-          },
-          {
-            "id": 13723945776,
-            "name": "ps0-project-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:5d0760313dd4345757d02fa0fd85641d636987c6f3861bec56e22ab82922ef50"
-          },
-          {
-            "id": 13723885547,
-            "name": "ps0-compiler-extdtreemapbasic-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:7d2d885179f64d45ddb7b8efdc5a28b4619c4fde2ec8da6bc0b986af9eb7e790"
-          },
-          {
-            "id": 13723840961,
-            "name": "ps0-compiler-iteratorempty-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:1bbc94202805b35559e29dfa609c639024849c76bc960d736c9d650733344aa9"
-          },
-          {
-            "id": 13723811222,
-            "name": "ps0-compiler-synthinstance14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:989fafcd8bd54187da1931eeb06a9cea7e752dbbdbfdba56deb33ff4699e0624"
-          },
-          {
-            "id": 13723780338,
-            "name": "ps0-native-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:b53e612d565f8acd8e197d022ba79602669c6a20f541d5cec5b29ffe60e31181"
-          },
-          {
-            "id": 13723715532,
-            "name": "ps0-compiler-setoption14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:60101b7ea9fd3552f238b51617feaf1d258e5b2d8ea26b354eea2f9caefb68f1"
-          },
-          {
-            "id": 13723700836,
-            "name": "ps0-compiler-grindac-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:fffdb71303e85861b9a301105288e1c80f757b273e5163ef0983d7a12f2e9019"
-          },
-          {
-            "id": 13723551474,
-            "name": "ps0-compiler-parserbasic14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:4e2d79a4882682bc9af32ed359e2500141fa397037d888ae36a14cfeda3c95da"
-          },
-          {
-            "id": 13723542887,
-            "name": "ps0-compiler-associative-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:a10bd98cc31a150b6a29eef8371c07caf02ccdf6f044af91781b244041a7f77d"
-          },
-          {
-            "id": 13723493126,
-            "name": "ps0-compiler-fixtures-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:a36c1f839af2cb9271df532e5bd6533894ab5fcd7177883c50d0decbc0bd3194"
-          },
-          {
-            "id": 13723423752,
-            "name": "ps0-compiler-compilerm14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:4604f2c639d0c04798564449274e6d406cf875c62582fb9f6c76cb3559fd62ce"
-          },
-          {
-            "id": 13723418573,
-            "name": "ps0-compiler-persistenthashmap-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:f942a633372487e3b79ef7cb059f509d88e7f14df128116aa9c3e1af49a0356c"
-          },
-          {
-            "id": 13723386763,
-            "name": "ps0-compiler-spredlaws-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:7526cc5e70fd821a95b562d01e879a354891d3b7ec66e36d5d6aed57179065a6"
-          },
-          {
-            "id": 13723377755,
-            "name": "ps0-compiler-signedbitvec-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:390e9077e952d265025f670d27cde5853326a805dd5b65094c691d19880e9fda"
-          },
-          {
-            "id": 13723322793,
-            "name": "ps0-compiler-listattach-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:f5c151ec6ebe64600c6a085d315b765ad9585361ae8e22338b19ebb030a1f7b7"
-          },
-          {
-            "id": 13723312396,
-            "name": "ps0-compiler-environment-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:c8962cb80b9afaa7a80ab6683bd4322ef83fd39ae71daf51f99240a57a6251fe"
-          },
-          {
-            "id": 13723258122,
-            "name": "ps0-operator-baseline-42726667178",
-            "digest": "sha256:37557d1b2b00f470f8633d123c7a7c7ad042871adfde58aa0af185626a670a8c"
-          },
-          {
-            "id": 13723238797,
-            "name": "ps0-compiler-nanosecond-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:19cb1aef41b0cc059d9e7cbda80e6217a9c07c9ef77ec0291d61b004bed3d128"
-          },
-          {
-            "id": 13723182663,
-            "name": "ps0-compiler-jsonrpc-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:127f482e3b4d3b4d8b60017480ace9257a2a329ace64feddc06b87690b698a6a"
-          },
-          {
-            "id": 13723032440,
-            "name": "ps0-compiler-prelude-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:77fe6d5283e723133554698d123e1c3e8df1bbd3e4896b9217292ec3a7d465d0"
-          },
-          {
-            "id": 13722898902,
-            "name": "ps0-compiler-defeqattrib14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:ee1b5a0fb427947a1a8119474bd617920a1274336b2a57bd6a9055142231e297"
-          },
-          {
-            "id": 13722793613,
-            "name": "ps0-compiler-unless-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:31f2bc33220cc3046b246cf8b4a185b5f4c55e9307d59b8eb89c793f6886dadc"
-          },
-          {
-            "id": 13722738501,
-            "name": "ps0-compiler-tzif-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:f1ad92d52bf58d5cf74827ff74aba02bd6b78c3471e8e220f7476690e5a5dde4"
-          },
-          {
-            "id": 13722698134,
-            "name": "ps0-compiler-finbasic-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:938afb6fd16952d160db121baae317e7ad6b6b5ae512d390fd24901eaf0fa4ea"
-          },
-          {
-            "id": 13722624530,
-            "name": "ps0-compiler-options-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:09ba6de7d380d3fcac36bd7b099f0e884a4ebc959e03600a7ddad4dd2323a8db"
-          },
-          {
-            "id": 13722608739,
-            "name": "ps0-compiler-natlemmas-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:af8e905956249fa1d88085bc89c00225c1f0f00141c6c6abc7e7bcff325b7333"
-          },
-          {
-            "id": 13722518217,
-            "name": "ps0-compiler-natbasic-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:ac0781e307fa3e6fed6d37645c755030a0cc3cbdf5226a0d86f0c86463a2f4c7"
-          },
-          {
-            "id": 13722388098,
-            "name": "ps0-compiler-initwf-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:eacc61a5abdf21016691b44f3969604c0321b0f4050bc87993c1cd4e5be3e275"
-          },
-          {
-            "id": 13722344245,
-            "name": "ps0-compiler-rangechar-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:df06a36f1d507ca7c9b1de4e7211cd2571397167d7a4e1abd5ddfd8366fe0366"
-          },
-          {
-            "id": 13722293241,
-            "name": "ps0-compiler-stream-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:86f5e575a7ff7b677dcdfc0ed242b86561b107f8a5cf25e00ef83a07954b9e6a"
-          },
-          {
-            "id": 13722278088,
-            "name": "ps0-do-layout-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:2ba8e484158d104b8cdc7af47ab5089d784498369db205b84626ab7260afcee6"
-          },
-          {
-            "id": 13722229909,
-            "name": "ps0-compiler-ambiguousopen14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:03c0f47fbe418ced1187fbb198322b531156c62b8c4df67ba19006708c96b0fb"
-          },
-          {
-            "id": 13722124416,
-            "name": "ps0-compiler-core-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:602dc64e265ca8844c00e873f0e15ccf2abe4745ce44d7355e7602e2247c6f2e"
-          },
-          {
-            "id": 13722098487,
-            "name": "ps0-compiler-natlinear-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:c447f3d6d8214b637e7b35fb16c67a481684b5a2d39a142c9e5215a4874e79de"
-          },
-          {
-            "id": 13722069612,
-            "name": "ps0-compiler-arrayperm-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-            "digest": "sha256:1a4e5f3d4e17d4d821b290f34fd596134fdac6ab6aa4ff7715245c93f86b43c8"
-          }
-        ],
-        "fullGraphBuild": false,
-        "grammarMigrationComplete": false,
-        "verified_execution": false
-      }
+      "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
+      "jobCount": 38,
+      "producerArtifactCount": 37,
+      "independentRun": 42729489333,
+      "independentJob": 129543583692,
+      "evidenceField": "loop48MatrixArtifactQualification",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     },
     "loopAnnotationTestFirstEvidence": {
       "source": "4956ce392ce70c8d03b11ef5cc46e75f38c15710",
@@ -16667,7 +16470,7 @@
       "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
       "producerRun": 42726667178,
       "producerRunner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
-      "producerStatus": "37_SUCCESS_1_PROOF_LINKED_IN_PROGRESS",
+      "producerStatus": "ALL_38_JOBS_PASS",
       "independentRun": 42729489333,
       "independentJob": 129543583692,
       "independentRunner": "078a67ed543ebb9f7656953a29f404484082bb60",
@@ -16682,6 +16485,11 @@
         "digest": "sha256:e4ba59a3d896b5baebdf178e481f53dea3ebd426cc7c06ac36364c46d67a413c"
       },
       "producerArtifacts": [
+        {
+          "id": 13725066567,
+          "name": "ps0-external-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
+          "digest": "sha256:2a5fa6a89464bde18236aa14edf96673000ea45d5c0f0e6b76908fbaa007c560"
+        },
         {
           "id": 13723990339,
           "name": "ps0-compiler-intlinear-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
@@ -16865,7 +16673,199 @@
       ],
       "fullGraphBuild": false,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "jobs": [
+        {
+          "id": 129533935039,
+          "name": "compiler-prelude",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935275,
+          "name": "compiler-initwf",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935382,
+          "name": "host-contract",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935387,
+          "name": "compiler-setoption14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935398,
+          "name": "compiler-natlinear",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935441,
+          "name": "compiler-finbasic",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935477,
+          "name": "compiler-environment",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935482,
+          "name": "compiler-natbasic",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935487,
+          "name": "compiler-parserbasic14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935489,
+          "name": "compiler-stream",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935512,
+          "name": "compiler-associative",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935514,
+          "name": "compiler-listattach",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935519,
+          "name": "compiler-core",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935523,
+          "name": "compiler-unless",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935537,
+          "name": "proof-linked",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935541,
+          "name": "compiler-jsonrpc",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935544,
+          "name": "compiler-synthinstance14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935568,
+          "name": "project-build",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935584,
+          "name": "do-layout",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935599,
+          "name": "compiler-persistenthashmap",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935607,
+          "name": "compiler-spredlaws",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935615,
+          "name": "native-build",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935711,
+          "name": "compiler-grindac",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935723,
+          "name": "compiler-signedbitvec",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935755,
+          "name": "compiler-fixtures",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935823,
+          "name": "compiler-rangechar",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935861,
+          "name": "compiler-nanosecond",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935940,
+          "name": "operator-baseline",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935954,
+          "name": "compiler-arrayperm",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533935982,
+          "name": "compiler-options",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533936020,
+          "name": "compiler-ambiguousopen14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533936069,
+          "name": "compiler-tzif",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533936081,
+          "name": "compiler-compilerm14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533936107,
+          "name": "compiler-iteratorempty",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533936160,
+          "name": "compiler-defeqattrib14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533936168,
+          "name": "compiler-natlemmas",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533936204,
+          "name": "compiler-intlinear",
+          "conclusion": "success"
+        },
+        {
+          "id": 129533936212,
+          "name": "compiler-extdtreemapbasic",
+          "conclusion": "success"
+        }
+      ]
     },
     "sufficesTestFirstCandidate": {
       "source": "69b59de262563d8b45385774462f52e828182544",
@@ -16995,6 +16995,19 @@
       "plannedPrivateProofGuards": 48,
       "plannedSourceOrigins": 37,
       "plannedGapRejections": 34,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "latestFullMatrixQualification": {
+      "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
+      "runner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
+      "run": 42726667178,
+      "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
+      "jobCount": 38,
+      "producerArtifactCount": 37,
+      "independentRun": 42729489333,
+      "independentJob": 129543583692,
+      "evidenceField": "loop48MatrixArtifactQualification",
       "grammarMigrationComplete": false,
       "verified_execution": false
     }
@@ -76779,211 +76792,14 @@
     "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
     "runner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
     "run": 42726667178,
-    "status": "37_SUCCESS_1_PROOF_LINKED_IN_PROGRESS",
-    "independentArtifactScope": {
-      "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
-      "producerRun": 42726667178,
-      "producerRunner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
-      "producerStatus": "37_SUCCESS_1_PROOF_LINKED_IN_PROGRESS",
-      "independentRun": 42729489333,
-      "independentJob": 129543583692,
-      "independentRunner": "078a67ed543ebb9f7656953a29f404484082bb60",
-      "status": "PASS_FINITE_ARTIFACT_SCOPE",
-      "actualFiles": 172,
-      "totalModules": 43,
-      "compilerMatrixFiles": 164,
-      "compilerMatrixModules": 41,
-      "additionalBootstrapFiles": 8,
-      "artifact": {
-        "id": 13723234268,
-        "digest": "sha256:e4ba59a3d896b5baebdf178e481f53dea3ebd426cc7c06ac36364c46d67a413c"
-      },
-      "producerArtifacts": [
-        {
-          "id": 13723990339,
-          "name": "ps0-compiler-intlinear-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:51eec473775f3319d45e6552d75995245934d46007a610b5ff0a330705a5eb62"
-        },
-        {
-          "id": 13723945776,
-          "name": "ps0-project-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:5d0760313dd4345757d02fa0fd85641d636987c6f3861bec56e22ab82922ef50"
-        },
-        {
-          "id": 13723885547,
-          "name": "ps0-compiler-extdtreemapbasic-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:7d2d885179f64d45ddb7b8efdc5a28b4619c4fde2ec8da6bc0b986af9eb7e790"
-        },
-        {
-          "id": 13723840961,
-          "name": "ps0-compiler-iteratorempty-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:1bbc94202805b35559e29dfa609c639024849c76bc960d736c9d650733344aa9"
-        },
-        {
-          "id": 13723811222,
-          "name": "ps0-compiler-synthinstance14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:989fafcd8bd54187da1931eeb06a9cea7e752dbbdbfdba56deb33ff4699e0624"
-        },
-        {
-          "id": 13723780338,
-          "name": "ps0-native-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:b53e612d565f8acd8e197d022ba79602669c6a20f541d5cec5b29ffe60e31181"
-        },
-        {
-          "id": 13723715532,
-          "name": "ps0-compiler-setoption14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:60101b7ea9fd3552f238b51617feaf1d258e5b2d8ea26b354eea2f9caefb68f1"
-        },
-        {
-          "id": 13723700836,
-          "name": "ps0-compiler-grindac-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:fffdb71303e85861b9a301105288e1c80f757b273e5163ef0983d7a12f2e9019"
-        },
-        {
-          "id": 13723551474,
-          "name": "ps0-compiler-parserbasic14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:4e2d79a4882682bc9af32ed359e2500141fa397037d888ae36a14cfeda3c95da"
-        },
-        {
-          "id": 13723542887,
-          "name": "ps0-compiler-associative-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:a10bd98cc31a150b6a29eef8371c07caf02ccdf6f044af91781b244041a7f77d"
-        },
-        {
-          "id": 13723493126,
-          "name": "ps0-compiler-fixtures-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:a36c1f839af2cb9271df532e5bd6533894ab5fcd7177883c50d0decbc0bd3194"
-        },
-        {
-          "id": 13723423752,
-          "name": "ps0-compiler-compilerm14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:4604f2c639d0c04798564449274e6d406cf875c62582fb9f6c76cb3559fd62ce"
-        },
-        {
-          "id": 13723418573,
-          "name": "ps0-compiler-persistenthashmap-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:f942a633372487e3b79ef7cb059f509d88e7f14df128116aa9c3e1af49a0356c"
-        },
-        {
-          "id": 13723386763,
-          "name": "ps0-compiler-spredlaws-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:7526cc5e70fd821a95b562d01e879a354891d3b7ec66e36d5d6aed57179065a6"
-        },
-        {
-          "id": 13723377755,
-          "name": "ps0-compiler-signedbitvec-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:390e9077e952d265025f670d27cde5853326a805dd5b65094c691d19880e9fda"
-        },
-        {
-          "id": 13723322793,
-          "name": "ps0-compiler-listattach-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:f5c151ec6ebe64600c6a085d315b765ad9585361ae8e22338b19ebb030a1f7b7"
-        },
-        {
-          "id": 13723312396,
-          "name": "ps0-compiler-environment-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:c8962cb80b9afaa7a80ab6683bd4322ef83fd39ae71daf51f99240a57a6251fe"
-        },
-        {
-          "id": 13723258122,
-          "name": "ps0-operator-baseline-42726667178",
-          "digest": "sha256:37557d1b2b00f470f8633d123c7a7c7ad042871adfde58aa0af185626a670a8c"
-        },
-        {
-          "id": 13723238797,
-          "name": "ps0-compiler-nanosecond-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:19cb1aef41b0cc059d9e7cbda80e6217a9c07c9ef77ec0291d61b004bed3d128"
-        },
-        {
-          "id": 13723182663,
-          "name": "ps0-compiler-jsonrpc-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:127f482e3b4d3b4d8b60017480ace9257a2a329ace64feddc06b87690b698a6a"
-        },
-        {
-          "id": 13723032440,
-          "name": "ps0-compiler-prelude-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:77fe6d5283e723133554698d123e1c3e8df1bbd3e4896b9217292ec3a7d465d0"
-        },
-        {
-          "id": 13722898902,
-          "name": "ps0-compiler-defeqattrib14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:ee1b5a0fb427947a1a8119474bd617920a1274336b2a57bd6a9055142231e297"
-        },
-        {
-          "id": 13722793613,
-          "name": "ps0-compiler-unless-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:31f2bc33220cc3046b246cf8b4a185b5f4c55e9307d59b8eb89c793f6886dadc"
-        },
-        {
-          "id": 13722738501,
-          "name": "ps0-compiler-tzif-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:f1ad92d52bf58d5cf74827ff74aba02bd6b78c3471e8e220f7476690e5a5dde4"
-        },
-        {
-          "id": 13722698134,
-          "name": "ps0-compiler-finbasic-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:938afb6fd16952d160db121baae317e7ad6b6b5ae512d390fd24901eaf0fa4ea"
-        },
-        {
-          "id": 13722624530,
-          "name": "ps0-compiler-options-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:09ba6de7d380d3fcac36bd7b099f0e884a4ebc959e03600a7ddad4dd2323a8db"
-        },
-        {
-          "id": 13722608739,
-          "name": "ps0-compiler-natlemmas-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:af8e905956249fa1d88085bc89c00225c1f0f00141c6c6abc7e7bcff325b7333"
-        },
-        {
-          "id": 13722518217,
-          "name": "ps0-compiler-natbasic-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:ac0781e307fa3e6fed6d37645c755030a0cc3cbdf5226a0d86f0c86463a2f4c7"
-        },
-        {
-          "id": 13722388098,
-          "name": "ps0-compiler-initwf-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:eacc61a5abdf21016691b44f3969604c0321b0f4050bc87993c1cd4e5be3e275"
-        },
-        {
-          "id": 13722344245,
-          "name": "ps0-compiler-rangechar-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:df06a36f1d507ca7c9b1de4e7211cd2571397167d7a4e1abd5ddfd8366fe0366"
-        },
-        {
-          "id": 13722293241,
-          "name": "ps0-compiler-stream-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:86f5e575a7ff7b677dcdfc0ed242b86561b107f8a5cf25e00ef83a07954b9e6a"
-        },
-        {
-          "id": 13722278088,
-          "name": "ps0-do-layout-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:2ba8e484158d104b8cdc7af47ab5089d784498369db205b84626ab7260afcee6"
-        },
-        {
-          "id": 13722229909,
-          "name": "ps0-compiler-ambiguousopen14-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:03c0f47fbe418ced1187fbb198322b531156c62b8c4df67ba19006708c96b0fb"
-        },
-        {
-          "id": 13722124416,
-          "name": "ps0-compiler-core-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:602dc64e265ca8844c00e873f0e15ccf2abe4745ce44d7355e7602e2247c6f2e"
-        },
-        {
-          "id": 13722098487,
-          "name": "ps0-compiler-natlinear-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:c447f3d6d8214b637e7b35fb16c67a481684b5a2d39a142c9e5215a4874e79de"
-        },
-        {
-          "id": 13722069612,
-          "name": "ps0-compiler-arrayperm-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
-          "digest": "sha256:1a4e5f3d4e17d4d821b290f34fd596134fdac6ab6aa4ff7715245c93f86b43c8"
-        }
-      ],
-      "fullGraphBuild": false,
-      "grammarMigrationComplete": false,
-      "verified_execution": false
-    }
+    "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
+    "jobCount": 38,
+    "producerArtifactCount": 37,
+    "independentRun": 42729489333,
+    "independentJob": 129543583692,
+    "evidenceField": "loop48MatrixArtifactQualification",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   },
   "loopAnnotationTestFirstEvidence": {
     "source": "4956ce392ce70c8d03b11ef5cc46e75f38c15710",
@@ -77084,7 +76900,7 @@
     "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
     "producerRun": 42726667178,
     "producerRunner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
-    "producerStatus": "37_SUCCESS_1_PROOF_LINKED_IN_PROGRESS",
+    "producerStatus": "ALL_38_JOBS_PASS",
     "independentRun": 42729489333,
     "independentJob": 129543583692,
     "independentRunner": "078a67ed543ebb9f7656953a29f404484082bb60",
@@ -77099,6 +76915,11 @@
       "digest": "sha256:e4ba59a3d896b5baebdf178e481f53dea3ebd426cc7c06ac36364c46d67a413c"
     },
     "producerArtifacts": [
+      {
+        "id": 13725066567,
+        "name": "ps0-external-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
+        "digest": "sha256:2a5fa6a89464bde18236aa14edf96673000ea45d5c0f0e6b76908fbaa007c560"
+      },
       {
         "id": 13723990339,
         "name": "ps0-compiler-intlinear-5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e-42726667178",
@@ -77282,7 +77103,199 @@
     ],
     "fullGraphBuild": false,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "jobs": [
+      {
+        "id": 129533935039,
+        "name": "compiler-prelude",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935275,
+        "name": "compiler-initwf",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935382,
+        "name": "host-contract",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935387,
+        "name": "compiler-setoption14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935398,
+        "name": "compiler-natlinear",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935441,
+        "name": "compiler-finbasic",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935477,
+        "name": "compiler-environment",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935482,
+        "name": "compiler-natbasic",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935487,
+        "name": "compiler-parserbasic14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935489,
+        "name": "compiler-stream",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935512,
+        "name": "compiler-associative",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935514,
+        "name": "compiler-listattach",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935519,
+        "name": "compiler-core",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935523,
+        "name": "compiler-unless",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935537,
+        "name": "proof-linked",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935541,
+        "name": "compiler-jsonrpc",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935544,
+        "name": "compiler-synthinstance14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935568,
+        "name": "project-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935584,
+        "name": "do-layout",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935599,
+        "name": "compiler-persistenthashmap",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935607,
+        "name": "compiler-spredlaws",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935615,
+        "name": "native-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935711,
+        "name": "compiler-grindac",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935723,
+        "name": "compiler-signedbitvec",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935755,
+        "name": "compiler-fixtures",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935823,
+        "name": "compiler-rangechar",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935861,
+        "name": "compiler-nanosecond",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935940,
+        "name": "operator-baseline",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935954,
+        "name": "compiler-arrayperm",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533935982,
+        "name": "compiler-options",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533936020,
+        "name": "compiler-ambiguousopen14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533936069,
+        "name": "compiler-tzif",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533936081,
+        "name": "compiler-compilerm14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533936107,
+        "name": "compiler-iteratorempty",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533936160,
+        "name": "compiler-defeqattrib14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533936168,
+        "name": "compiler-natlemmas",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533936204,
+        "name": "compiler-intlinear",
+        "conclusion": "success"
+      },
+      {
+        "id": 129533936212,
+        "name": "compiler-extdtreemapbasic",
+        "conclusion": "success"
+      }
+    ]
   },
   "loopAnnotationBuildFailureHistory": [
     {
@@ -77442,6 +77455,19 @@
     "plannedPrivateProofGuards": 48,
     "plannedSourceOrigins": 37,
     "plannedGapRejections": 34,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "latestFullMatrixQualification": {
+    "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
+    "runner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
+    "run": 42726667178,
+    "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
+    "jobCount": 38,
+    "producerArtifactCount": 37,
+    "independentRun": 42729489333,
+    "independentJob": 129543583692,
+    "evidenceField": "loop48MatrixArtifactQualification",
     "grammarMigrationComplete": false,
     "verified_execution": false
   }

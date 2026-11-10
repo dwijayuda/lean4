@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-10 — updated full matrix 38/38 and independent 172-file audit PASS
+
+**All 38 Linux jobs PASS**, source **5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e**, runner **e52cce59fdd1838a82422c0230f9c09d675f5a4b**, [42726667178](https://github.com/dwijayuda/pskernel/actions/runs/42726667178), including proof-linked **129533935537**, recursive project **129533935568**, compiler fixtures **129533935755**, associative **129533935512** and integer-linear **129533936204**. The final proof-linked artifact is **13725066567 / sha256:2a5fa6a89464bde18236aa14edf96673000ea45d5c0f0e6b76908fbaa007c560**. Both JSON ledgers retain **all 38 job IDs/conclusions and all 37 producer artifact IDs/digests**.
+
+The same-source [independent 42729489333 / 129543583692](https://github.com/dwijayuda/pskernel/actions/runs/42729489333/job/129543583692), runner **078a67ed543ebb9f7656953a29f404484082bb60**, already passed **172 actual C/public olean files / 43 modules**, including source reconstruction, local mixed/default and where evidence. Audit artifact **13723234268 / sha256:e4ba59a3d896b5baebdf178e481f53dea3ebd426cc7c06ac36364c46d67a413c**. This final matrix status resolves the earlier 37/38 checkpoint; it does not expand the independently audited artifact scope to proof-linked certificate contents or qualify the later suffices implementation. Whole canonical PS source graph and fixed point remain open.
+
 ## 2026-11-10 — loop annotation grammar and native Lake executable: independently qualified finite PASS
 
 Source **3e49c4020daeb556b601c33a63f788c2fd4965f5**, runner **befc48d5b22bd2ea4f56d04d3fcd24d7e2bf417d**, [42730966108 / 129548542914](https://github.com/dwijayuda/pskernel/actions/runs/42730966108/job/129548542914), **PASS**: **54 mapped definitions** across the existing 48-definition Init-only module and a six-definition Std.WP module, **43 private proof guards / 32 origin cases / 31 invalid PS gap rejections**, plus bounded complete parenthesis parses. Separate loop binder grammar preserves native patterns while adapting types. Stock invariant/basicFun/measure nodes retain binder, clause-token and arrow origins. Native do builders elaborate in separate scoped commands at the unchanged **800000** maximum; target checker and trust options are unchanged.
