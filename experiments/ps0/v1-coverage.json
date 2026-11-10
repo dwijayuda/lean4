@@ -18621,8 +18621,8 @@
       "independentRun": 42712824864
     },
     "ordinaryAggregateCandidate": {
-      "source": "a90b971b9f7424225869b2d463501ed202a92788",
-      "runner": "fd744b7ff893a52f0e001829af4dfd533eff8d44",
+      "source": "b1e17376da88660afbe16d313a2a31dd209c280e",
+      "runner": "f34697e024d118a467ebc7a282f62bc456902352",
       "positiveRun": 42723160821,
       "negativeRun": 42723160297,
       "status": "PENDING",
@@ -18656,6 +18656,28 @@
         "negativeJob": 129521939528,
         "heartbeatBound": 800000,
         "grammarTestsReached": false
+      },
+      "prior": {
+        "source": "a90b971b9f7424225869b2d463501ed202a92788",
+        "runner": "fd744b7ff893a52f0e001829af4dfd533eff8d44",
+        "positiveRun": 42724133352,
+        "positiveJob": 129525280933,
+        "positiveStatus": "FAILED_PLANNER_SHOW_BY_TACTIC_PRIME_SHAPE",
+        "negativeRun": 42724133773,
+        "negativeJob": 129525286149,
+        "negativeStatus": "PASS_EIGHT_NATIVE_CONTROLS_AND_REJECTIONS",
+        "artifact": {
+          "id": 13722530324,
+          "sha256": "d11477e86980d3c10ed2952db2ab673a1056c5f051d2b34c285ced659efb9d48"
+        }
+      },
+      "loopAnnotation": {
+        "source": "4956ce392ce70c8d03b11ef5cc46e75f38c15710",
+        "runner": "a4823d70881f255382f3971ec6a616c1a9b69d18",
+        "status": "PENDING_NATIVE_CONTROLS",
+        "imports": [
+          "Std.WP"
+        ]
       }
     },
     "ordinaryHostRestoredBroadMatrix": {
@@ -39435,8 +39457,8 @@
     }
   },
   "ordinaryAggregateCandidate": {
-    "source": "a90b971b9f7424225869b2d463501ed202a92788",
-    "runner": "fd744b7ff893a52f0e001829af4dfd533eff8d44",
+    "source": "b1e17376da88660afbe16d313a2a31dd209c280e",
+    "runner": "f34697e024d118a467ebc7a282f62bc456902352",
     "positiveRun": 42723160821,
     "negativeRun": 42723160297,
     "status": "PENDING",
@@ -39470,6 +39492,28 @@
       "negativeJob": 129521939528,
       "heartbeatBound": 800000,
       "grammarTestsReached": false
+    },
+    "prior": {
+      "source": "a90b971b9f7424225869b2d463501ed202a92788",
+      "runner": "fd744b7ff893a52f0e001829af4dfd533eff8d44",
+      "positiveRun": 42724133352,
+      "positiveJob": 129525280933,
+      "positiveStatus": "FAILED_PLANNER_SHOW_BY_TACTIC_PRIME_SHAPE",
+      "negativeRun": 42724133773,
+      "negativeJob": 129525286149,
+      "negativeStatus": "PASS_EIGHT_NATIVE_CONTROLS_AND_REJECTIONS",
+      "artifact": {
+        "id": 13722530324,
+        "sha256": "d11477e86980d3c10ed2952db2ab673a1056c5f051d2b34c285ced659efb9d48"
+      }
+    },
+    "loopAnnotation": {
+      "source": "4956ce392ce70c8d03b11ef5cc46e75f38c15710",
+      "runner": "a4823d70881f255382f3971ec6a616c1a9b69d18",
+      "status": "PENDING_NATIVE_CONTROLS",
+      "imports": [
+        "Std.WP"
+      ]
     }
   },
   "ordinaryAggregateCandidateHistory": [
@@ -78403,5 +78447,13 @@
       "id": 13719990278,
       "sha256": "e863be86fed57ccd31e173ca015808c2cc00b0c758f05987aa4ef665f8d15d6d"
     }
+  },
+  "loopAnnotationTestFirstCandidate": {
+    "source": "4956ce392ce70c8d03b11ef5cc46e75f38c15710",
+    "runner": "a4823d70881f255382f3971ec6a616c1a9b69d18",
+    "status": "PENDING_NATIVE_CONTROLS",
+    "imports": [
+      "Std.WP"
+    ]
   }
 }
