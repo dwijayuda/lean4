@@ -18,7 +18,7 @@ bridges = {'ps0NativeTermBridge', 'ps0NativeHeadBridge', 'ps0NativeTacticBridge'
            'ps0NativeDoBridge', 'ps0NativeDoElemBridge', 'ps0NativeFunBinderBridge',
            'ps0LoopNativeBinderBridge'}
 counts, owners, modules, examples = Counter(), defaultdict(set), defaultdict(set), defaultdict(list)
-captures, mapped_owners, skipped = [], 0, 0
+captures, mapped_owners, skipped, incomplete_mapped_commands = [], 0, 0, 0
 
 
 def commands(rows):
@@ -65,8 +65,13 @@ for file in files:
         if declaration is not None:
             if declaration['mode'] == 'mapped-ps':
                 owner = declaration['sourceName']
-                selections.extend((role, declaration.get(field), owner) for role, field in
-                                  [('signature', 'signatureSyntax'), ('value', 'valueSyntax')])
+                if 'mappedCommandSyntax' in declaration:
+                    assert census['mappedOperandSyntaxScope'] == 'raw-command-before-native-lowering/1'
+                    selections.append(('mappedCommand', declaration['mappedCommandSyntax'], owner))
+                else:
+                    incomplete_mapped_commands += 1
+                    selections.extend((role, declaration.get(field), owner) for role, field in
+                                      [('legacy-telescope', 'signatureSyntax'), ('legacy-value', 'valueSyntax')])
             else:
                 skipped += 1
         for field in ['initialization', 'dataDeclaration']:
@@ -89,6 +94,7 @@ for file in files:
 result = dict(schema='ps0-mapped-native-bridge-inventory/1', capture_source=args.capture_source,
     auditor_source=args.auditor_source, retained_captures=len(captures), captures=captures,
     mapped_command_owners=mapped_owners, skipped_native_declarations=skipped,
+    mapped_commands_without_complete_operand_capture=incomplete_mapped_commands,
     observations=[dict(role_bridge_native_kind=key, occurrences=counts[key],
         module_count=len(modules[key]), owner_count=len(owners[key]), examples=examples[key])
         for key in sorted(counts)],
