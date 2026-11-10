@@ -17,7 +17,7 @@ native = '''def pairSum (p : Nat × Nat) : Nat := p.1 + p.2
 def sufficesBody (n : Nat) : Nat := suffices h : Nat from pairSum (h, 1); n
 def sufficesType (n : Nat) : Nat := suffices h : (fun (_ : Nat) => Nat) (pairSum (n, 1)) from h; n
 def sufficesContinuation (n : Nat) : Nat := suffices h : Nat from h; pairSum (n, 1)
-def sufficesBy (n : Nat) : Nat := suffices h : Nat by exact pairSum (h, 1); n
+def sufficesBy (n : Nat) : Nat := suffices h : Nat by { exact pairSum (h, 1) }; n
 def sufficesAnonymous (n : Nat) : Nat := suffices Nat from pairSum (this, 1); n
 private theorem bodyResult : sufficesBody 2 = 3 := rfl
 private theorem typeResult : sufficesType 2 = 2 := rfl
@@ -29,7 +29,7 @@ ps = '''function pairSum(p: Nat × Nat): Nat := p.1 + p.2
 function sufficesBody(n: Nat): Nat := suffices h : Nat from pairSum((h, 1)); n
 function sufficesType(n: Nat): Nat := suffices h : (fun (_ : Nat) => Nat)(pairSum((n, 1))) from h; n
 function sufficesContinuation(n: Nat): Nat := suffices h : Nat from h; pairSum((n, 1))
-function sufficesBy(n: Nat): Nat := suffices h : Nat by exact pairSum((h, 1)); n
+function sufficesBy(n: Nat): Nat := suffices h : Nat by { exact pairSum((h, 1)) }; n
 function sufficesAnonymous(n: Nat): Nat := suffices Nat from pairSum((this, 1)); n
 private theorem bodyResult : sufficesBody 2 = 3 := rfl
 private theorem typeResult : sufficesType 2 = 2 := rfl
