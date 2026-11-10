@@ -16461,10 +16461,10 @@
       "run": 42743328824
     },
     "nextActions": [
-      "Inspect isolated 2569-input data/initializer preparation",
-      "Preserve immutable graph seventeen while it compiles",
-      "Run current complete graph with mapped data/initializer census assertions",
-      "Require relocated operation, fixed point and remaining ownership/source-fidelity evidence"
+      "Inspect the immutable complete graph jobs without timeout-driven restart",
+      "Resolve actual graph failures using captured full mapped syntax",
+      "Retain actual PS-built prefix metadata for the independent next compiler stage",
+      "Require complete graph, relocated operation and exact fixed point before claiming completion"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -21386,6 +21386,43 @@
       "retiredVolatileRun": 42752417487,
       "retiredVolatileConclusion": "CANCELLED",
       "scope": "Preparation only, no target graph compilation claimed"
+    },
+    "mixedDataQualification": {
+      "source": "5febe0f507ad4345787157b7bac4a89753a3f4f3",
+      "run": 42758116305,
+      "independentRun": 42759153657,
+      "status": "PASS_FINITE_MIXED_DATA",
+      "evidenceField": "mixedDataQualification"
+    },
+    "mixedDataParserTypesQualification": {
+      "source": "ea0c698084f8c70ea84409c3a9eb2d8e226ca214",
+      "run": 42756812357,
+      "independentRun": 42757589671,
+      "status": "PASS",
+      "evidenceField": "mixedDataParserTypesQualification"
+    },
+    "completeDataPreparationQualification": {
+      "source": "4471a585933c6260449fab38642641bc6f2e8b25",
+      "run": 42753352309,
+      "independentRun": 42756308226,
+      "status": "PASS_PREPARATION_ONLY",
+      "psSources": 2569,
+      "compiledGraph": false,
+      "evidenceField": "completeDataPreparationQualification"
+    },
+    "latestCompleteTransformedGraphCandidate": {
+      "source": "92b22875cf81199f10413661b633e50df4671fb6",
+      "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
+      "run": 42756129015,
+      "job": 129630835886,
+      "draftPR": 247,
+      "status": "IN_PROGRESS",
+      "cancelInProgress": false
+    },
+    "compilerPrefixRetentionCandidate": {
+      "source": "6709a18ec07694ca9946faa1193ab5f57b226596",
+      "status": "PENDING_FULL_GRAPH",
+      "inLiveGraphs": false
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -84146,5 +84183,350 @@
     "retiredVolatileRun": 42752417487,
     "retiredVolatileConclusion": "CANCELLED",
     "scope": "Preparation only, no target graph compilation claimed"
+  },
+  "mixedDataQualification": {
+    "source": "5febe0f507ad4345787157b7bac4a89753a3f4f3",
+    "runner": "bc9363a8c07eb93eaf1aed39971e499a38ad407a",
+    "run": 42758116305,
+    "job": 129637149898,
+    "status": "PASS_FINITE_MIXED_DATA",
+    "admittedCaseBuilds": 12,
+    "nativeConstraintGuards": 3,
+    "structuralOriginCases": 5,
+    "commaOriginCases": 3,
+    "commaOriginGroups": 4,
+    "commaOriginParameters": 8,
+    "mappedDefinitions": 5,
+    "privateRflGuards": 3,
+    "dataDeclarations": 3,
+    "producerArtifact": {
+      "id": 13735739426,
+      "name": "ps0-data-mixed-binders-5febe0f507ad4345787157b7bac4a89753a3f4f3-42758116305",
+      "digest": "sha256:6cf233632717f0fbbb6e33bfb6747ba746f0f30d0f3b6c2d500e554b8e30f0c0",
+      "size": 4271565
+    },
+    "comparisons": {
+      "ir/DataDeclarationsBootstrap.c": {
+        "baseline": "2eed058e8db89a80fe1cac38245c89092480b60dbb4e3bc31643ed00c61e3637",
+        "migrated": "2eed058e8db89a80fe1cac38245c89092480b60dbb4e3bc31643ed00c61e3637",
+        "planned": "2eed058e8db89a80fe1cac38245c89092480b60dbb4e3bc31643ed00c61e3637"
+      },
+      "lib/lean/DataDeclarationsBootstrap.olean": {
+        "baseline": "bb0e33cf7d02e83161fad4a25bea21836b0cfbeeb00708a19f603d3b9f1c36c9",
+        "migrated": "a536cf4f03561af23f025e7684445363bcca4a7012295b28057872db34952114",
+        "planned": "bb0e33cf7d02e83161fad4a25bea21836b0cfbeeb00708a19f603d3b9f1c36c9"
+      }
+    },
+    "nativeExecutableSha256": "56763b8fbc1e73773b042002285719afea5d2d184c78d0589c5ee4230635d6c7",
+    "publicConstantEquality": "exact native expression representations modulo bound forall/lambda/let names only",
+    "changedGeneratedBinderConstants": [
+      "DataBox.ctorIdx",
+      "DataBox.mk.inj",
+      "DataPacket.noConfusionType",
+      "DataPacket.mk.inj",
+      "DataBox.noConfusionType",
+      "DataPacket.ctorIdx"
+    ],
+    "handwrittenPublicOleanByteEqual": false,
+    "extensionPayloadsCompared": false,
+    "caseObservations": [
+      {
+        "case": "structure-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "class-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "inductive-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "class-inductive-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "coinductive-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "constructor-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "field-method-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "constructor-name-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "dependent-parameter-defaults",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "ordered-mixed-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "shared-and-anonymous-parameters",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "automatic-and-term-defaults",
+        "nativeExit": 0,
+        "psExit": 0,
+        "expectedNativePass": true,
+        "expectedPsPass": true
+      },
+      {
+        "case": "empty-data-parameter",
+        "nativeExit": 1,
+        "psExit": 1,
+        "expectedNativePass": false,
+        "expectedPsPass": false
+      },
+      {
+        "case": "grouped-field-is-not-method-telescope",
+        "nativeExit": 0,
+        "psExit": 1,
+        "expectedNativePass": true,
+        "expectedPsPass": false
+      },
+      {
+        "case": "typed-constructor-override-is-invalid",
+        "nativeExit": 1,
+        "psExit": 1,
+        "expectedNativePass": false,
+        "expectedPsPass": false
+      }
+    ],
+    "independent": {
+      "runner": "6cf2491eec9f522fbe81e42356de09ecb927cc89",
+      "run": 42759153657,
+      "job": 129640487344,
+      "status": "PASS",
+      "actualCompilerFilesRehashed": 30,
+      "actualNativeElfFilesRehashed": 1,
+      "nativePublicComparisonsRepeated": 2,
+      "artifact": {
+        "id": 13736543665,
+        "name": "ps0-data-mixed-inspection-42759153657",
+        "digest": "sha256:e10ff077672cb7d5369c86571b56a02a9f512fc53465688d7a0d9f7dac16e142",
+        "size": 9719
+      },
+      "mixedCaseHashes": {
+        "automatic-and-term-defaults.c": "c3cb6e7b06d8bc536e748258ec037087a78824a535483a3bfd0e55197855735f",
+        "automatic-and-term-defaults.olean": "3dfbb8e2aa2698efe9afac3aace63ec310b1c159419ebd9b7310edf50f32933d",
+        "class-inductive-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "class-inductive-parameters.olean": "5fdf2246ba38a416a869512a8fbfa37e4313d19ae48cb8d966c891f35d640e7a",
+        "class-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "class-parameters.olean": "e68ebb15783363a9bd10fd494476c40db8058320061b9abf87b49be38d1376ee",
+        "coinductive-parameters.c": "fd63f7bcff4def11f5d4148bf5c0ed0431ef2841c0de72d2afeb6cb8abe9a2e0",
+        "coinductive-parameters.olean": "7c962e99a16839f6f6ed932f0a52931c457c539d66e50f796fdfa6e6d6609b3e",
+        "constructor-name-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "constructor-name-parameters.olean": "166e85898278c0a12fcb7d71575b93e47a1e94785090c03648946feffd5a1ed8",
+        "constructor-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "constructor-parameters.olean": "f9e259643e507f1570701779ba85e855eef48f42516ce536c67fc7a94de18d39",
+        "dependent-parameter-defaults.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "dependent-parameter-defaults.olean": "e1d2d71b6f94e2d4f491dcc6054686772feb32848ff404f63aa40ade5ed5da29",
+        "field-method-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "field-method-parameters.olean": "04c7dc05f0c01996c52141bdf5c032c7216af5f2e3238381914403aff7db0201",
+        "inductive-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "inductive-parameters.olean": "ded1b740af111bcf3a1922230b7489999a2fae2d49c8024c35e268b297a1ab08",
+        "ordered-mixed-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "ordered-mixed-parameters.olean": "68bc4ab27ac228384d3c4be7a5d82fd383a0756f935ce5956653f9a4e41c0138",
+        "shared-and-anonymous-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "shared-and-anonymous-parameters.olean": "e099058bc890e965f27401f5158f7d6886caa3c19521b81e58c818b132ddd0c2",
+        "structure-parameters.c": "1f17691a531bfa1ea75fa79bc75e02b38fe778709ff79884e2089068f9a9294c",
+        "structure-parameters.olean": "52d925ebf5482903335c3ddc1c91ae3812cffcf8c92e780ed3e45b986f7ef8d1"
+      }
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "mixedDataTestFirstEvidence": {
+    "source": "8bc5d9270a832185d22166943f0b7d3bd3150345",
+    "runner": "573c454d62581643b42642bd8a3afbbbfd25f466",
+    "run": 42755155226,
+    "job": 129627718605,
+    "status": "FAIL",
+    "validNativeCasesWithPsRejections": 8,
+    "invalidNativeControlCases": 1,
+    "artifact": {
+      "id": 13734529613,
+      "name": "ps0-data-mixed-binders-8bc5d9270a832185d22166943f0b7d3bd3150345-42755155226",
+      "digest": "sha256:af8eda5b13f6a7a03c0feef3d5c0f20c861542e2aab2e36eaa2b271222944ef8",
+      "size": 28912
+    },
+    "invalidControlExplanation": "Typed structure constructor overrides are rejected natively; corrected positive uses untyped binder-kind overrides and typed rejection remains a negative control"
+  },
+  "mixedDataParserTypesQualification": {
+    "source": "ea0c698084f8c70ea84409c3a9eb2d8e226ca214",
+    "runner": "9256440039fb5fabc17013022a58542b336108ee",
+    "run": 42756812357,
+    "job": 129632975933,
+    "status": "PASS",
+    "producerArtifact": {
+      "id": 13736181232,
+      "name": "ps0-data-parser-types-ea0c698084f8c70ea84409c3a9eb2d8e226ca214-42756812357",
+      "digest": "sha256:be18aff67bf840fc8310ca4b87e9e9bfe252ca4b7c9341821400bd6831dc61a1",
+      "size": 603945
+    },
+    "independent": {
+      "runner": "6be107a5a2625f789aef8fec86b7d68f031eb7d7",
+      "run": 42757589671,
+      "job": 129635457310,
+      "status": "PASS",
+      "artifact": {
+        "id": 13736331762,
+        "name": "ps0-data-types-inspection-42757589671",
+        "digest": "sha256:8f1dbec49969471aeb0ab2096a0ca44b414506dacad42a7a30e1a83426b89349",
+        "size": 8554
+      },
+      "report": {
+        "actual_compiler_files_rehashed": 4,
+        "data_declarations": 15,
+        "grammar_migration_complete": false,
+        "modules": [
+          {
+            "converted_sha256": "6efec8d8ae8c3dff1b939ab0a38a59f3e7c8e443227613651bc5ff9d4ffce453",
+            "definitions": 70,
+            "hashes": {
+              "ir/Lean/Parser/Types.c": "8af04d5974a45ed4aba4ca7be2113ac9e4b26594c00040d24dbf1f642003a787",
+              "lib/lean/Lean/Parser/Types.olean": "e47eb47b44316da986e3f15004cbf8d2ab41c0d8d09fe1b79ede38ce76c28dfe"
+            },
+            "line_count_preserved": true,
+            "module": "Lean.Parser.Types",
+            "pinned_blob": "83c6647aba46768322afe237e359a3f271e1cf10",
+            "source_sha256": "a43c015d7e858f805d4eb20a904799daf7d2a224fb26c8b6e43129f5f217fe90",
+            "strategies": {
+              "const": 12,
+              "def": 6,
+              "function": 52
+            }
+          }
+        ],
+        "producer_job": 129632975933,
+        "producer_run": 42756812357,
+        "scope": "Actual pinned parser type module, 70 function heads and native data operands; no complete corpus claim",
+        "source": "ea0c698084f8c70ea84409c3a9eb2d8e226ca214",
+        "status": "PASS",
+        "verified_execution": false
+      }
+    },
+    "mappedOperandInventory": {
+      "owners": 100,
+      "missingFullCommandCaptures": 0,
+      "scope": "actual parser-types complete mapped command and data syntax; bridge traversal stops at native category boundaries"
+    }
+  },
+  "completeDataPreparationQualification": {
+    "source": "4471a585933c6260449fab38642641bc6f2e8b25",
+    "runner": "434d93fe2a3aa4f2da6e1154f414ce5690e7f636",
+    "run": 42753352309,
+    "job": 129621894476,
+    "status": "PASS_PREPARATION_ONLY",
+    "artifact": {
+      "id": 13735052165,
+      "name": "ps0-data-preparation-4471a585933c6260449fab38642641bc6f2e8b25-42753352309",
+      "digest": "sha256:3d7b8dd9065356a359eafbf38c5b95f7217297e06309d7f113dabb9dbfbe00f3",
+      "size": 108113295
+    },
+    "independent": {
+      "runner": "5a48db49e6ba5bc6fade1d5d8d766b706e87f992",
+      "run": 42756308226,
+      "job": 129631394406,
+      "status": "PASS",
+      "artifact": {
+        "id": 13735822196,
+        "name": "ps0-data-preparation-inspection-42756308226",
+        "digest": "sha256:42ce126cacf97728462382543991db9f35600339042b15b8668ffd6360a44500",
+        "size": 214478
+      },
+      "report": {
+        "actual_ps_sources_rehashed": 2569,
+        "compiled_graph": false,
+        "data_declarations": 3106,
+        "definitions": 26680,
+        "grammar_migration_complete": false,
+        "initialization_commands": 850,
+        "original_native_captures_used": 0,
+        "plans_reconstructed": 2569,
+        "producer_job": 129621894476,
+        "producer_run": 42753352309,
+        "producer_source": "4471a585933c6260449fab38642641bc6f2e8b25",
+        "retained_captures_used": 2569,
+        "scope": "All prepared sources and source edits; SDK/blob checks belong to the producer, target graph compilation is not claimed",
+        "status": "PASS",
+        "verified_execution": false
+      }
+    }
+  },
+  "latestCompleteTransformedGraphCandidate": {
+    "source": "92b22875cf81199f10413661b633e50df4671fb6",
+    "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
+    "run": 42756129015,
+    "job": 129630835886,
+    "draftPR": 247,
+    "status": "IN_PROGRESS",
+    "cancelInProgress": false
+  },
+  "legacyMappedBridgeInventory": {
+    "source": "ac75f82a9b916e870cd4cbf590b5f79410427553",
+    "runner": "e0ab4a87b080e3262daac1f162085d4921a86103",
+    "run": 42754577893,
+    "job": 129625862016,
+    "status": "PASS_OBSERVATIONAL",
+    "artifact": {
+      "id": 13734602933,
+      "name": "ps0-mapped-bridge-inventory-42754577893",
+      "digest": "sha256:2180e4482e265fd7c8e2f400831bac072a86edc3b076d5adbf8fe96dc047d304",
+      "size": 70740
+    },
+    "captureSource": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+    "selectedCaptures": 1286,
+    "mappedCommandOwners": 64712,
+    "scope": "Legacy mapped telescope captures only; full values and result types are absent. Frequencies are not ownership or conformance counts."
+  },
+  "compilerPrefixRetentionCandidate": {
+    "source": "6709a18ec07694ca9946faa1193ab5f57b226596",
+    "status": "PENDING_FULL_GRAPH",
+    "inLiveGraphs": false
   }
 }
