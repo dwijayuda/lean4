@@ -16449,47 +16449,46 @@
     "finiteSyntheticModules": 4,
     "finiteSyntheticDefinitionHeads": 37,
     "fullTransformedGraph": {
-      "source": "0942ac5898b144d0f8ff3181ff6b4dacbfc76b8c",
-      "runner": "8f4e328409bbf64788182c639e6fe52ac46628c5",
-      "preparedInputsTarget": 2569,
-      "nativeCaptureProducerSource": "0942ac5898b144d0f8ff3181ff6b4dacbfc76b8c",
-      "nativeCaptureProducerRun": 42681043836,
-      "nativeCaptureArtifacts": [
+      "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+      "runner": "5b50bc70b9788efaa585d1c5522a38731a64fef2",
+      "run": 42719483426,
+      "job": 129509484457,
+      "status": "FAIL_THREE_COMPILER_MODULES",
+      "observedInputs": 2569,
+      "observedByteIdenticalInputs": 0,
+      "failures": [
         {
-          "id": 13702284512,
-          "name": "ps0-native-head-census-0942ac5898b144d0f8ff3181ff6b4dacbfc76b8c-42681043836",
-          "size_in_bytes": 101936270,
-          "url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13702284512",
-          "archive_download_url": "https://api.github.com/repos/dwijayuda/pskernel/actions/artifacts/13702284512/zip",
-          "expired": false,
-          "created_at": "2026-11-09T19:29:34Z",
-          "expires_at": "2027-02-07T19:11:58Z",
-          "updated_at": "2026-11-09T19:29:34Z",
-          "digest": "sha256:d3cacb55cb17aa4cef91e6d2a2936efb3cb17476d485f00aae9696873585b701",
-          "workflow_run": {
-            "id": 42681043836,
-            "repository_id": 1381609925,
-            "head_repository_id": 1381609925,
-            "head_branch": "ci/ps0-index-operands-20261109",
-            "head_sha": "95132e12f8cf7fc7ddb4f7daaf8c4cc0595fd865"
-          }
+          "module": "Std.Http.Data.URI.Parser",
+          "line": 97,
+          "diagnostic": "takeWhileAtMost function and argument tuple treated as separate parser do expressions"
+        },
+        {
+          "module": "Lean.Meta.AbstractMVars",
+          "line": 102,
+          "diagnostic": "pure applied to appendIndexAfter function; following argument treated as separate monadic expression"
+        },
+        {
+          "module": "Lean.Meta.DiscrTree.Main",
+          "line": 278,
+          "diagnostic": "pushArgsAux function and argument tuple treated as separate MetaM do expressions"
         }
       ],
-      "status": "IN_PROGRESS",
-      "fullGraphBuild": false,
-      "canonicalFixedPoint": false,
+      "artifact": {
+        "id": 13726028378,
+        "digest": "sha256:bfcdf20b1c73eb6dd73bdf7fa9c101b2479dcbf8ef820ad1ff910a84307890e7"
+      },
+      "parserTypesBuiltInLog": true,
+      "wholeCompilerBuilt": false,
+      "relocatedCompilerVerified": false,
+      "fixedPointVerified": false,
       "grammarMigrationComplete": false,
-      "verified_execution": false,
-      "scope": "complete transformed graph retest after six finite boundary fixes; four confirmed ordinary host-application admission gaps mean this build alone cannot establish canonical PS conformance",
-      "run": 42684712051,
-      "job": 129388301690,
-      "lastObservedUtc": "2026-11-09 19:39:50 UTC"
+      "verified_execution": false
     },
     "nextActions": [
-      "Inspect original CLI diagnostic coordinate controls before implementation",
-      "Start a new complete matrix from the finite-qualified implementation",
-      "Inspect immutable full graph without polling-driven restart",
-      "Continue remaining ordinary grammar and require canonical PS compiler graph, relocated operation and fixed point"
+      "Inspect direct named-bind parser ownership and three actual failing compiler modules",
+      "Qualify exact C/public olean and regression scope before another full graph",
+      "Continue remaining PS grammar and original-source fidelity roles",
+      "Require complete canonical PS compiler, native relocated operation and fixed point"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -18785,7 +18784,7 @@
       "priorNativeCaptureSource": "0942ac5898b144d0f8ff3181ff6b4dacbfc76b8c",
       "priorNativeCaptureRun": 42681043836,
       "operatorContract": "active-and-captured-kinds/2",
-      "status": "PENDING",
+      "status": "FAIL_THREE_COMPILER_MODULES",
       "scope": "fresh whole transformed source build; ordinary-role exhaustive ownership and canonical fixed point still required",
       "run": 42719483426,
       "job": 129509484457
@@ -19448,15 +19447,12 @@
       "verified_execution": false
     },
     "latestFullMatrixQualification": {
-      "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
-      "runner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
-      "run": 42726667178,
+      "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
+      "runner": "e07cd73d97503bdce969ebe540faa6810052a59e",
+      "run": 42733594998,
       "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
-      "jobCount": 38,
-      "producerArtifactCount": 37,
-      "independentRun": 42729489333,
-      "independentJob": 129543583692,
-      "evidenceField": "loop48MatrixArtifactQualification",
+      "independentRun": 42736961933,
+      "evidenceField": "sufficesFullMatrixQualification",
       "grammarMigrationComplete": false,
       "verified_execution": false
     },
@@ -19565,15 +19561,16 @@
       "verified_execution": false
     },
     "latestFiniteGrammarQualification": {
-      "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
-      "runner": "3192aee60f078483faecbe09236d876bf36602ca",
-      "run": 42732341309,
-      "status": "QUALIFIED_FINITE",
-      "independentRun": 42733189207,
+      "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+      "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
+      "run": 42734916050,
+      "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
       "mappedDefinitions": 61,
       "privateProofGuards": 48,
       "sourceOriginCases": 37,
       "invalidGapRejections": 34,
+      "diagnosticCoordinateCases": 4,
+      "independentRun": 42735535354,
       "grammarMigrationComplete": false,
       "verified_execution": false
     },
@@ -19587,7 +19584,11 @@
       "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
       "runner": "e07cd73d97503bdce969ebe540faa6810052a59e",
       "run": 42733594998,
-      "status": "PENDING_LINUX_38_JOB_MATRIX"
+      "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
+      "independentRun": 42736961933,
+      "evidenceField": "sufficesFullMatrixQualification",
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     },
     "diagnosticOriginsEnvironmentFailure": {
       "source": "e5e2d27d8264bb0fa46d7b9b91a88338e6bb3ce9",
@@ -19679,7 +19680,13 @@
         "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
         "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
         "run": 42734916050,
-        "status": "PENDING_COMBINED_61_DEFINITION_34_GAP_AND_4_COORDINATE_REGRESSION",
+        "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
+        "mappedDefinitions": 61,
+        "privateProofGuards": 48,
+        "sourceOriginCases": 37,
+        "invalidGapRejections": 34,
+        "diagnosticCoordinateCases": 4,
+        "independentRun": 42735535354,
         "grammarMigrationComplete": false,
         "verified_execution": false
       }
@@ -19760,7 +19767,640 @@
       "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
       "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
       "run": 42734916050,
-      "status": "PENDING_COMBINED_61_DEFINITION_34_GAP_AND_4_COORDINATE_REGRESSION",
+      "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
+      "mappedDefinitions": 61,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 34,
+      "diagnosticCoordinateCases": 4,
+      "independentRun": 42735535354,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "combinedGrammarDiagnosticQualification": {
+      "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+      "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
+      "run": 42734916050,
+      "job": 129561689362,
+      "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
+      "mappedDefinitions": 61,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 34,
+      "diagnosticCoordinateCases": 4,
+      "actualCompilerFiles": 18,
+      "actualNativeElfs": 3,
+      "diagnosticSourceFiles": 8,
+      "hashes": {
+        "loop-contracts-42734916050/LoopContracts": "f7ac9b0b70a0418e0d32f402f0fac7c2e2133a95e3854071d0026028ef5ebde5",
+        "loop-contracts-42734916050/baseline.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42734916050/baseline.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "loop-contracts-42734916050/migrated.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42734916050/migrated.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "loop-contracts-42734916050/planned.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42734916050/planned.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "match-host-42734916050/OrdinaryHostOrigins": "b57857e639d59951923bcc264dfe33de67d5753b898f9d44d9be47415ae1bb39",
+        "match-host-42734916050/baseline-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42734916050/baseline-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "match-host-42734916050/migrated-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42734916050/migrated-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "match-host-42734916050/planned-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42734916050/planned-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "suffices-42734916050/SufficesRuntime": "fc8b3c241b168ac1748f523dfd512bce71ab8a84c1848ef7045739b9644c19a9",
+        "suffices-42734916050/baseline.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42734916050/baseline.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+        "suffices-42734916050/migrated.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42734916050/migrated.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+        "suffices-42734916050/planned.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42734916050/planned.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461"
+      },
+      "diagnosticSourceHashes": {
+        "diagnostic-origins-42734916050/legacy-crlf.lean": "c3fada361e84d0f3a47a17296c976134d54e5e60a9f8fba9d693516820bcf4fd",
+        "diagnostic-origins-42734916050/legacy-crlf.ps": "3da3f0558a8e99bb64739fc23f3505f3c3d32b5f2d4bb0632afbd6335136633c",
+        "diagnostic-origins-42734916050/legacy-lf.lean": "0c7272dffb3ca410435586985d891701c70b85263b1293f4de2d65abbb30c351",
+        "diagnostic-origins-42734916050/legacy-lf.ps": "1d06767e228c79bef3a1ef62d79e4dbaa4f6ba1e03d43b55433e48f5695fa038",
+        "diagnostic-origins-42734916050/modern-crlf.lean": "6d24a38174b3f087b851be82fd7a279106483eb43193abf1bfc39dd305afb28c",
+        "diagnostic-origins-42734916050/modern-crlf.ps": "758d4373e6b5a764e7c01c8da4ede62423dd9738b719a5918b6314e447613f46",
+        "diagnostic-origins-42734916050/modern-lf.lean": "e29dc15fda2435e38059324040cfce4a19b61c4394707eae89da4d65c71c7054",
+        "diagnostic-origins-42734916050/modern-lf.ps": "1334a05ff00b952df79aca0975a5d0a7a397d3e271805d4a59ac00b012978c7c"
+      },
+      "producerArtifact": {
+        "id": 13727275358,
+        "digest": "sha256:8f865cd95c2cf41cbbed86605c5fbc016551dcea7598294938ae0be929a0f123"
+      },
+      "independentInspection": {
+        "runner": "a46213d45effd0d6607b1d93715a8df2dc65182d",
+        "run": 42735535354,
+        "job": 129563720379,
+        "status": "PASS",
+        "artifact": {
+          "id": 13725879651,
+          "digest": "sha256:cf609df3ec1a8696e23cca41d4bfd1727c8cdec7119a2cd7eed394cca23430a2"
+        }
+      },
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "sufficesFullMatrixQualification": {
+      "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
+      "runner": "e07cd73d97503bdce969ebe540faa6810052a59e",
+      "run": 42733594998,
+      "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
+      "jobs": [
+        {
+          "id": 129557337392,
+          "name": "compiler-fixtures",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337558,
+          "name": "compiler-arrayperm",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337589,
+          "name": "host-contract",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337621,
+          "name": "project-build",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337628,
+          "name": "compiler-defeqattrib14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337638,
+          "name": "native-build",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337658,
+          "name": "compiler-parserbasic14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337674,
+          "name": "compiler-ambiguousopen14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337679,
+          "name": "compiler-environment",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337681,
+          "name": "compiler-rangechar",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337699,
+          "name": "compiler-jsonrpc",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337705,
+          "name": "operator-baseline",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337723,
+          "name": "compiler-listattach",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337725,
+          "name": "compiler-finbasic",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337735,
+          "name": "compiler-extdtreemapbasic",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337739,
+          "name": "proof-linked",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337742,
+          "name": "compiler-natbasic",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337748,
+          "name": "compiler-persistenthashmap",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337749,
+          "name": "compiler-nanosecond",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337788,
+          "name": "do-layout",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337790,
+          "name": "compiler-unless",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337837,
+          "name": "compiler-iteratorempty",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337838,
+          "name": "compiler-signedbitvec",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337887,
+          "name": "compiler-core",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337893,
+          "name": "compiler-natlinear",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337914,
+          "name": "compiler-synthinstance14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337941,
+          "name": "compiler-intlinear",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557337955,
+          "name": "compiler-options",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338014,
+          "name": "compiler-setoption14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338033,
+          "name": "compiler-compilerm14",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338070,
+          "name": "compiler-stream",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338084,
+          "name": "compiler-initwf",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338119,
+          "name": "compiler-natlemmas",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338121,
+          "name": "compiler-tzif",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338212,
+          "name": "compiler-spredlaws",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338226,
+          "name": "compiler-associative",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338267,
+          "name": "compiler-grindac",
+          "conclusion": "success"
+        },
+        {
+          "id": 129557338338,
+          "name": "compiler-prelude",
+          "conclusion": "success"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13726725016,
+          "name": "ps0-native-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:816e9185b1e3a2ea74792074837d53c4f68c449ef42f8f72e05afc6572ce5e16"
+        },
+        {
+          "id": 13726675293,
+          "name": "ps0-do-layout-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:ae140748832c6495dad925cdbadeb1f5fd815a4604cf35a9bfd078707433b40c"
+        },
+        {
+          "id": 13726655683,
+          "name": "ps0-compiler-core-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:d0ab3c30b882e453313b1c281966b66ab88cb79f5e2a95f71ebca4571a908575"
+        },
+        {
+          "id": 13726600753,
+          "name": "ps0-compiler-parserbasic14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:619717fdba5d041cd1f4ca5f2c2e9a5e2e4aa5d56ec76302d30377bcabda6e20"
+        },
+        {
+          "id": 13726531137,
+          "name": "ps0-compiler-intlinear-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:bdd189df9713609a6a67ad7a5555d585caf93f661e61b30c375117cb1bdd2cef"
+        },
+        {
+          "id": 13726446224,
+          "name": "ps0-compiler-setoption14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:e8ef0905bc567a39ae1ab3d357e7b90e9c2fa552846b3e821d850fbdd642e2f8"
+        },
+        {
+          "id": 13726346926,
+          "name": "ps0-compiler-grindac-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:cfae440a158843528e98e59f0226d4a606ef4ef4f073aa0435b2c0ec092a410e"
+        },
+        {
+          "id": 13726346681,
+          "name": "ps0-compiler-stream-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:8426fd0a9cf6e878f05b5240ebfb01d55505077f6d8b40b6b06f734a38c6740c"
+        },
+        {
+          "id": 13726306427,
+          "name": "ps0-compiler-natlinear-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:75340d0ba7ddd569addce6396a9f4fbb95b51e49fd0bd9289a80fee1674b8dc3"
+        },
+        {
+          "id": 13726261666,
+          "name": "ps0-compiler-compilerm14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:038f7e866beaf6fb4a4b096c816253bfcc17f9b19b9b27121e6fa430aea024f6"
+        },
+        {
+          "id": 13726212299,
+          "name": "ps0-external-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:b9ef3124984f0fef336c1d0468da8be1c206792ab66ff0234e45b4f0925e7f73"
+        },
+        {
+          "id": 13726151969,
+          "name": "ps0-compiler-tzif-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:48dae1d6e14e9473e4b0476ddc7fd7d43646aeb02ce013a0bdb8e966d96dc0cc"
+        },
+        {
+          "id": 13726097184,
+          "name": "ps0-compiler-fixtures-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:bdbddf56c3098a051365edc9e543214ff20dd1a5fcc2f5920701bb6522d93d32"
+        },
+        {
+          "id": 13726041793,
+          "name": "ps0-compiler-finbasic-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:90c0e548558bd1fa50633cc7ebdc0105bf78336c31245df69f8a31080487f467"
+        },
+        {
+          "id": 13726002591,
+          "name": "ps0-project-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:a12395b0a22af58360270e751dbcf5f5663b06bd46124838942062286b80ae5b"
+        },
+        {
+          "id": 13726001751,
+          "name": "ps0-operator-baseline-42733594998",
+          "digest": "sha256:c28f564c295774db7d5e16e42a0e24f86a08665820b26c1b8a4bb7a9f94441fc"
+        },
+        {
+          "id": 13725882430,
+          "name": "ps0-compiler-signedbitvec-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:141bd1ee03c4c57e05aa03594bf8c0f7a681f3e68052b33c6299854daf7bb1e9"
+        },
+        {
+          "id": 13725862323,
+          "name": "ps0-compiler-jsonrpc-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:072f77ac1cbf6389c8dfd50948156e909a4fda2902d1c48bdf0c3ff6a0379d95"
+        },
+        {
+          "id": 13725832983,
+          "name": "ps0-compiler-prelude-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:778f10d3123a614ddf915b4fce2f0c778a075d6e916d27d886ac85e7cf79d941"
+        },
+        {
+          "id": 13725817408,
+          "name": "ps0-compiler-ambiguousopen14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:686b977d90ac59b196c45969b59dc89457172563054279762b21f3dd01c9262d"
+        },
+        {
+          "id": 13725777622,
+          "name": "ps0-compiler-listattach-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:078756ba7851afda92ce79cedfd4004e46d3cb51075a7de2eab663a6cbd6a2ae"
+        },
+        {
+          "id": 13725632859,
+          "name": "ps0-compiler-unless-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:6d2de4422b9617e1bd39fdd62cd436ce004e1ab2fad748148a99186c74231e83"
+        },
+        {
+          "id": 13725619299,
+          "name": "ps0-compiler-associative-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:99271dade8eff86ea75a560a8e9f856fb263bac51c61f36eb69b1c74637a0547"
+        },
+        {
+          "id": 13725522938,
+          "name": "ps0-compiler-natbasic-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:eb7bbd5e39e89bd05dd83b9eb7a41503d2ee29ef7b33865ed368d1b13a3fece5"
+        },
+        {
+          "id": 13725513876,
+          "name": "ps0-compiler-natlemmas-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:a543953bb98987e983b3f21aea71cbc92d68dcd3b445f079311c641a2b5834c7"
+        },
+        {
+          "id": 13725513321,
+          "name": "ps0-compiler-extdtreemapbasic-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:6194b6ff8c73122b0cdae65db22523f5269d9d0125bcfcc2d34c7abf55a927fd"
+        },
+        {
+          "id": 13725452925,
+          "name": "ps0-compiler-defeqattrib14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:bdb51356ebd540c9f3ca3ee20e98c3eb04ae6585b670df1ef8d107d20f127ccf"
+        },
+        {
+          "id": 13725368281,
+          "name": "ps0-compiler-nanosecond-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:7a74d33559cd10a231686d695847f00c7033136daf4e311984f1f886851f12f8"
+        },
+        {
+          "id": 13725298474,
+          "name": "ps0-compiler-iteratorempty-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:e4b350f6681f9c03d2215b4629c8ba97f807559944303bcac956a0dda8cc7974"
+        },
+        {
+          "id": 13725218637,
+          "name": "ps0-compiler-arrayperm-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:7ee9fb41445d60697e237b42ac5dcdd2630ad1cb7dcbb504e1846588fd6e5075"
+        },
+        {
+          "id": 13725173997,
+          "name": "ps0-compiler-spredlaws-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:141683d06b64eb8d294011661c66597ff589ec6ad578b1887748070380c0387a"
+        },
+        {
+          "id": 13725168951,
+          "name": "ps0-compiler-options-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:1cfb59d03584ef5da133a975b22c7b2ffa2a23ba0987d64fb2d60a8d5f697fe0"
+        },
+        {
+          "id": 13725139701,
+          "name": "ps0-compiler-environment-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:9c79118b2e3f437650462793ff21155ffd08dd9dff85f6159a7f9766a3b4d38b"
+        },
+        {
+          "id": 13725124248,
+          "name": "ps0-compiler-rangechar-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:9ccf4985713fc7cb3c83b84af01907025fccb57b0d99d7c85efc342474b6a3a6"
+        },
+        {
+          "id": 13725114837,
+          "name": "ps0-compiler-initwf-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:c9ee282dbdde584acf84e878d0242528a5ec078329c6aacb158dd3a697f29c2c"
+        },
+        {
+          "id": 13725089655,
+          "name": "ps0-compiler-synthinstance14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:45fdc64ddaa6b976d4a861d668a38dca59526e6984c0f0b714af65447c23cb6e"
+        },
+        {
+          "id": 13725054199,
+          "name": "ps0-compiler-persistenthashmap-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+          "digest": "sha256:1bd63584246416f820da3df308897104f7dd25e3c8d1e04f5323ead6502864fb"
+        }
+      ],
+      "independentInspection": {
+        "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
+        "runner": "51199eab23e6aa31361a34112605389756028bb7",
+        "run": 42736961933,
+        "job": 129568419906,
+        "status": "PASS",
+        "actualFiles": 172,
+        "totalModules": 43,
+        "artifact": {
+          "id": 13727247032,
+          "digest": "sha256:923269f917ad3f07ec2b5abd824b98f1382e60ac710f56af74ff51ea95e5f8da"
+        }
+      },
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "canonicalGraphSixteenthResult": {
+      "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+      "runner": "5b50bc70b9788efaa585d1c5522a38731a64fef2",
+      "run": 42719483426,
+      "job": 129509484457,
+      "status": "FAIL_THREE_COMPILER_MODULES",
+      "observedInputs": 2569,
+      "observedByteIdenticalInputs": 0,
+      "failures": [
+        {
+          "module": "Std.Http.Data.URI.Parser",
+          "line": 97,
+          "diagnostic": "takeWhileAtMost function and argument tuple treated as separate parser do expressions"
+        },
+        {
+          "module": "Lean.Meta.AbstractMVars",
+          "line": 102,
+          "diagnostic": "pure applied to appendIndexAfter function; following argument treated as separate monadic expression"
+        },
+        {
+          "module": "Lean.Meta.DiscrTree.Main",
+          "line": 278,
+          "diagnostic": "pushArgsAux function and argument tuple treated as separate MetaM do expressions"
+        }
+      ],
+      "artifact": {
+        "id": 13726028378,
+        "digest": "sha256:bfcdf20b1c73eb6dd73bdf7fa9c101b2479dcbf8ef820ad1ff910a84307890e7"
+      },
+      "parserTypesBuiltInLog": true,
+      "wholeCompilerBuilt": false,
+      "relocatedCompilerVerified": false,
+      "fixedPointVerified": false,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "latestFullGraphEvidence": {
+      "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+      "runner": "5b50bc70b9788efaa585d1c5522a38731a64fef2",
+      "run": 42719483426,
+      "job": 129509484457,
+      "status": "FAIL_THREE_COMPILER_MODULES",
+      "observedInputs": 2569,
+      "observedByteIdenticalInputs": 0,
+      "failures": [
+        {
+          "module": "Std.Http.Data.URI.Parser",
+          "line": 97,
+          "diagnostic": "takeWhileAtMost function and argument tuple treated as separate parser do expressions"
+        },
+        {
+          "module": "Lean.Meta.AbstractMVars",
+          "line": 102,
+          "diagnostic": "pure applied to appendIndexAfter function; following argument treated as separate monadic expression"
+        },
+        {
+          "module": "Lean.Meta.DiscrTree.Main",
+          "line": 278,
+          "diagnostic": "pushArgsAux function and argument tuple treated as separate MetaM do expressions"
+        }
+      ],
+      "artifact": {
+        "id": 13726028378,
+        "digest": "sha256:bfcdf20b1c73eb6dd73bdf7fa9c101b2479dcbf8ef820ad1ff910a84307890e7"
+      },
+      "parserTypesBuiltInLog": true,
+      "wholeCompilerBuilt": false,
+      "relocatedCompilerVerified": false,
+      "fixedPointVerified": false,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "graphSixteenthSdkReproduction": {
+      "runner": "b1e246933a308214fcc8e12f6c2539d077073d1f",
+      "run": 42736881463,
+      "status": "SIX_MODULE_REPRODUCTION_JOBS_FAILED",
+      "jobs": [
+        {
+          "id": 129568159582,
+          "name": "graph-plan-inspection",
+          "conclusion": "success"
+        },
+        {
+          "id": 129568159945,
+          "name": "current-AbstractMVars",
+          "conclusion": "failure"
+        },
+        {
+          "id": 129568159979,
+          "name": "graph-source-URIParser",
+          "conclusion": "failure"
+        },
+        {
+          "id": 129568159988,
+          "name": "graph-source-DiscrTreeMain",
+          "conclusion": "failure"
+        },
+        {
+          "id": 129568159999,
+          "name": "current-DiscrTreeMain",
+          "conclusion": "failure"
+        },
+        {
+          "id": 129568160014,
+          "name": "current-URIParser",
+          "conclusion": "failure"
+        },
+        {
+          "id": 129568160095,
+          "name": "graph-source-AbstractMVars",
+          "conclusion": "failure"
+        }
+      ],
+      "currentSource": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+      "currentSourceMigratedModuleFailures": 3,
+      "scope": "Current-source failures reproduce the graph diagnostics against pinned SDK siblings; old-source job classifications retained separately in logs"
+    },
+    "boundIfSyntaxObservation": {
+      "source": "38229bf11fc71f66df817677a4d907c7a10ba1e0",
+      "runner": "9bcaa71c08fc373a7094e0030a111ecf1dbda319",
+      "run": 42737920195,
+      "job": 129571594312,
+      "status": "DIAGNOSTIC_OBSERVATION_NOT_FIX_QUALIFICATION",
+      "cases": [
+        {
+          "case": "bound-if",
+          "adjacentCallNodes": 0,
+          "escapedIfBridges": 1
+        },
+        {
+          "case": "standalone-if",
+          "adjacentCallNodes": 2,
+          "escapedIfBridges": 0
+        }
+      ],
+      "planReconstruction": {
+        "runner": "b6078586e10ee6baed242f38aabbff45f27aa015",
+        "run": 42737363604,
+        "job": 129569756981,
+        "status": "PASS_SOURCE_AND_RESULT_HASHES_AND_NATIVE_ROLE_PATHS"
+      }
+    },
+    "directBindCandidate": {
+      "source": "7cb84202ade8aa0dddc306c459ab8335229c9ab8",
+      "runner": "d9bbc47cab4be0ed03db182070891d30af2c9f00",
+      "status": "PENDING_DIRECT_NAMED_BIND_PS_DO_OPERAND",
+      "realModules": [
+        {
+          "module": "Std.Http.Data.URI.Parser",
+          "blob": "d51844ce35afe12c4c815dd41f617891f3a62980"
+        },
+        {
+          "module": "Lean.Meta.AbstractMVars",
+          "blob": "175738e203ab7cbd59798431b0fb0133dd41ca5a"
+        },
+        {
+          "module": "Lean.Meta.DiscrTree.Main",
+          "blob": "bdfbcdff9d7ae3dcc369b2d637a4dec8cfe1f14a"
+        }
+      ],
       "grammarMigrationComplete": false,
       "verified_execution": false
     }
@@ -79500,7 +80140,7 @@
     "priorNativeCaptureSource": "0942ac5898b144d0f8ff3181ff6b4dacbfc76b8c",
     "priorNativeCaptureRun": 42681043836,
     "operatorContract": "active-and-captured-kinds/2",
-    "status": "PENDING",
+    "status": "FAIL_THREE_COMPILER_MODULES",
     "scope": "fresh whole transformed source build; ordinary-role exhaustive ownership and canonical fixed point still required",
     "run": 42719483426,
     "job": 129509484457
@@ -80307,15 +80947,12 @@
     "verified_execution": false
   },
   "latestFullMatrixQualification": {
-    "source": "5bd3b36744f2a9f9fcfef5aa87dc6cfffe2b673e",
-    "runner": "e52cce59fdd1838a82422c0230f9c09d675f5a4b",
-    "run": 42726667178,
+    "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
+    "runner": "e07cd73d97503bdce969ebe540faa6810052a59e",
+    "run": 42733594998,
     "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
-    "jobCount": 38,
-    "producerArtifactCount": 37,
-    "independentRun": 42729489333,
-    "independentJob": 129543583692,
-    "evidenceField": "loop48MatrixArtifactQualification",
+    "independentRun": 42736961933,
+    "evidenceField": "sufficesFullMatrixQualification",
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
@@ -80437,15 +81074,16 @@
     "verified_execution": false
   },
   "latestFiniteGrammarQualification": {
-    "source": "cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b",
-    "runner": "3192aee60f078483faecbe09236d876bf36602ca",
-    "run": 42732341309,
-    "status": "QUALIFIED_FINITE",
-    "independentRun": 42733189207,
+    "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+    "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
+    "run": 42734916050,
+    "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
     "mappedDefinitions": 61,
     "privateProofGuards": 48,
     "sourceOriginCases": 37,
     "invalidGapRejections": 34,
+    "diagnosticCoordinateCases": 4,
+    "independentRun": 42735535354,
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
@@ -80459,7 +81097,11 @@
     "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
     "runner": "e07cd73d97503bdce969ebe540faa6810052a59e",
     "run": 42733594998,
-    "status": "PENDING_LINUX_38_JOB_MATRIX"
+    "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
+    "independentRun": 42736961933,
+    "evidenceField": "sufficesFullMatrixQualification",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   },
   "diagnosticOriginsEnvironmentFailure": {
     "source": "e5e2d27d8264bb0fa46d7b9b91a88338e6bb3ce9",
@@ -80557,7 +81199,13 @@
       "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
       "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
       "run": 42734916050,
-      "status": "PENDING_COMBINED_61_DEFINITION_34_GAP_AND_4_COORDINATE_REGRESSION",
+      "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
+      "mappedDefinitions": 61,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 34,
+      "diagnosticCoordinateCases": 4,
+      "independentRun": 42735535354,
       "grammarMigrationComplete": false,
       "verified_execution": false
     }
@@ -80638,7 +81286,640 @@
     "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
     "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
     "run": 42734916050,
-    "status": "PENDING_COMBINED_61_DEFINITION_34_GAP_AND_4_COORDINATE_REGRESSION",
+    "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
+    "mappedDefinitions": 61,
+    "privateProofGuards": 48,
+    "sourceOriginCases": 37,
+    "invalidGapRejections": 34,
+    "diagnosticCoordinateCases": 4,
+    "independentRun": 42735535354,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "combinedGrammarDiagnosticQualification": {
+    "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+    "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
+    "run": 42734916050,
+    "job": 129561689362,
+    "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
+    "mappedDefinitions": 61,
+    "privateProofGuards": 48,
+    "sourceOriginCases": 37,
+    "invalidGapRejections": 34,
+    "diagnosticCoordinateCases": 4,
+    "actualCompilerFiles": 18,
+    "actualNativeElfs": 3,
+    "diagnosticSourceFiles": 8,
+    "hashes": {
+      "loop-contracts-42734916050/LoopContracts": "f7ac9b0b70a0418e0d32f402f0fac7c2e2133a95e3854071d0026028ef5ebde5",
+      "loop-contracts-42734916050/baseline.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42734916050/baseline.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "loop-contracts-42734916050/migrated.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42734916050/migrated.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "loop-contracts-42734916050/planned.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42734916050/planned.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "match-host-42734916050/OrdinaryHostOrigins": "b57857e639d59951923bcc264dfe33de67d5753b898f9d44d9be47415ae1bb39",
+      "match-host-42734916050/baseline-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42734916050/baseline-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "match-host-42734916050/migrated-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42734916050/migrated-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "match-host-42734916050/planned-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42734916050/planned-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "suffices-42734916050/SufficesRuntime": "fc8b3c241b168ac1748f523dfd512bce71ab8a84c1848ef7045739b9644c19a9",
+      "suffices-42734916050/baseline.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42734916050/baseline.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+      "suffices-42734916050/migrated.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42734916050/migrated.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+      "suffices-42734916050/planned.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42734916050/planned.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461"
+    },
+    "diagnosticSourceHashes": {
+      "diagnostic-origins-42734916050/legacy-crlf.lean": "c3fada361e84d0f3a47a17296c976134d54e5e60a9f8fba9d693516820bcf4fd",
+      "diagnostic-origins-42734916050/legacy-crlf.ps": "3da3f0558a8e99bb64739fc23f3505f3c3d32b5f2d4bb0632afbd6335136633c",
+      "diagnostic-origins-42734916050/legacy-lf.lean": "0c7272dffb3ca410435586985d891701c70b85263b1293f4de2d65abbb30c351",
+      "diagnostic-origins-42734916050/legacy-lf.ps": "1d06767e228c79bef3a1ef62d79e4dbaa4f6ba1e03d43b55433e48f5695fa038",
+      "diagnostic-origins-42734916050/modern-crlf.lean": "6d24a38174b3f087b851be82fd7a279106483eb43193abf1bfc39dd305afb28c",
+      "diagnostic-origins-42734916050/modern-crlf.ps": "758d4373e6b5a764e7c01c8da4ede62423dd9738b719a5918b6314e447613f46",
+      "diagnostic-origins-42734916050/modern-lf.lean": "e29dc15fda2435e38059324040cfce4a19b61c4394707eae89da4d65c71c7054",
+      "diagnostic-origins-42734916050/modern-lf.ps": "1334a05ff00b952df79aca0975a5d0a7a397d3e271805d4a59ac00b012978c7c"
+    },
+    "producerArtifact": {
+      "id": 13727275358,
+      "digest": "sha256:8f865cd95c2cf41cbbed86605c5fbc016551dcea7598294938ae0be929a0f123"
+    },
+    "independentInspection": {
+      "runner": "a46213d45effd0d6607b1d93715a8df2dc65182d",
+      "run": 42735535354,
+      "job": 129563720379,
+      "status": "PASS",
+      "artifact": {
+        "id": 13725879651,
+        "digest": "sha256:cf609df3ec1a8696e23cca41d4bfd1727c8cdec7119a2cd7eed394cca23430a2"
+      }
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "sufficesFullMatrixQualification": {
+    "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
+    "runner": "e07cd73d97503bdce969ebe540faa6810052a59e",
+    "run": 42733594998,
+    "status": "PASS_ALL_38_WITH_FINITE_172_FILE_INDEPENDENT_AUDIT",
+    "jobs": [
+      {
+        "id": 129557337392,
+        "name": "compiler-fixtures",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337558,
+        "name": "compiler-arrayperm",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337589,
+        "name": "host-contract",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337621,
+        "name": "project-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337628,
+        "name": "compiler-defeqattrib14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337638,
+        "name": "native-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337658,
+        "name": "compiler-parserbasic14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337674,
+        "name": "compiler-ambiguousopen14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337679,
+        "name": "compiler-environment",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337681,
+        "name": "compiler-rangechar",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337699,
+        "name": "compiler-jsonrpc",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337705,
+        "name": "operator-baseline",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337723,
+        "name": "compiler-listattach",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337725,
+        "name": "compiler-finbasic",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337735,
+        "name": "compiler-extdtreemapbasic",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337739,
+        "name": "proof-linked",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337742,
+        "name": "compiler-natbasic",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337748,
+        "name": "compiler-persistenthashmap",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337749,
+        "name": "compiler-nanosecond",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337788,
+        "name": "do-layout",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337790,
+        "name": "compiler-unless",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337837,
+        "name": "compiler-iteratorempty",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337838,
+        "name": "compiler-signedbitvec",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337887,
+        "name": "compiler-core",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337893,
+        "name": "compiler-natlinear",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337914,
+        "name": "compiler-synthinstance14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337941,
+        "name": "compiler-intlinear",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557337955,
+        "name": "compiler-options",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338014,
+        "name": "compiler-setoption14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338033,
+        "name": "compiler-compilerm14",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338070,
+        "name": "compiler-stream",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338084,
+        "name": "compiler-initwf",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338119,
+        "name": "compiler-natlemmas",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338121,
+        "name": "compiler-tzif",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338212,
+        "name": "compiler-spredlaws",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338226,
+        "name": "compiler-associative",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338267,
+        "name": "compiler-grindac",
+        "conclusion": "success"
+      },
+      {
+        "id": 129557338338,
+        "name": "compiler-prelude",
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13726725016,
+        "name": "ps0-native-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:816e9185b1e3a2ea74792074837d53c4f68c449ef42f8f72e05afc6572ce5e16"
+      },
+      {
+        "id": 13726675293,
+        "name": "ps0-do-layout-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:ae140748832c6495dad925cdbadeb1f5fd815a4604cf35a9bfd078707433b40c"
+      },
+      {
+        "id": 13726655683,
+        "name": "ps0-compiler-core-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:d0ab3c30b882e453313b1c281966b66ab88cb79f5e2a95f71ebca4571a908575"
+      },
+      {
+        "id": 13726600753,
+        "name": "ps0-compiler-parserbasic14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:619717fdba5d041cd1f4ca5f2c2e9a5e2e4aa5d56ec76302d30377bcabda6e20"
+      },
+      {
+        "id": 13726531137,
+        "name": "ps0-compiler-intlinear-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:bdd189df9713609a6a67ad7a5555d585caf93f661e61b30c375117cb1bdd2cef"
+      },
+      {
+        "id": 13726446224,
+        "name": "ps0-compiler-setoption14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:e8ef0905bc567a39ae1ab3d357e7b90e9c2fa552846b3e821d850fbdd642e2f8"
+      },
+      {
+        "id": 13726346926,
+        "name": "ps0-compiler-grindac-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:cfae440a158843528e98e59f0226d4a606ef4ef4f073aa0435b2c0ec092a410e"
+      },
+      {
+        "id": 13726346681,
+        "name": "ps0-compiler-stream-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:8426fd0a9cf6e878f05b5240ebfb01d55505077f6d8b40b6b06f734a38c6740c"
+      },
+      {
+        "id": 13726306427,
+        "name": "ps0-compiler-natlinear-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:75340d0ba7ddd569addce6396a9f4fbb95b51e49fd0bd9289a80fee1674b8dc3"
+      },
+      {
+        "id": 13726261666,
+        "name": "ps0-compiler-compilerm14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:038f7e866beaf6fb4a4b096c816253bfcc17f9b19b9b27121e6fa430aea024f6"
+      },
+      {
+        "id": 13726212299,
+        "name": "ps0-external-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:b9ef3124984f0fef336c1d0468da8be1c206792ab66ff0234e45b4f0925e7f73"
+      },
+      {
+        "id": 13726151969,
+        "name": "ps0-compiler-tzif-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:48dae1d6e14e9473e4b0476ddc7fd7d43646aeb02ce013a0bdb8e966d96dc0cc"
+      },
+      {
+        "id": 13726097184,
+        "name": "ps0-compiler-fixtures-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:bdbddf56c3098a051365edc9e543214ff20dd1a5fcc2f5920701bb6522d93d32"
+      },
+      {
+        "id": 13726041793,
+        "name": "ps0-compiler-finbasic-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:90c0e548558bd1fa50633cc7ebdc0105bf78336c31245df69f8a31080487f467"
+      },
+      {
+        "id": 13726002591,
+        "name": "ps0-project-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:a12395b0a22af58360270e751dbcf5f5663b06bd46124838942062286b80ae5b"
+      },
+      {
+        "id": 13726001751,
+        "name": "ps0-operator-baseline-42733594998",
+        "digest": "sha256:c28f564c295774db7d5e16e42a0e24f86a08665820b26c1b8a4bb7a9f94441fc"
+      },
+      {
+        "id": 13725882430,
+        "name": "ps0-compiler-signedbitvec-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:141bd1ee03c4c57e05aa03594bf8c0f7a681f3e68052b33c6299854daf7bb1e9"
+      },
+      {
+        "id": 13725862323,
+        "name": "ps0-compiler-jsonrpc-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:072f77ac1cbf6389c8dfd50948156e909a4fda2902d1c48bdf0c3ff6a0379d95"
+      },
+      {
+        "id": 13725832983,
+        "name": "ps0-compiler-prelude-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:778f10d3123a614ddf915b4fce2f0c778a075d6e916d27d886ac85e7cf79d941"
+      },
+      {
+        "id": 13725817408,
+        "name": "ps0-compiler-ambiguousopen14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:686b977d90ac59b196c45969b59dc89457172563054279762b21f3dd01c9262d"
+      },
+      {
+        "id": 13725777622,
+        "name": "ps0-compiler-listattach-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:078756ba7851afda92ce79cedfd4004e46d3cb51075a7de2eab663a6cbd6a2ae"
+      },
+      {
+        "id": 13725632859,
+        "name": "ps0-compiler-unless-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:6d2de4422b9617e1bd39fdd62cd436ce004e1ab2fad748148a99186c74231e83"
+      },
+      {
+        "id": 13725619299,
+        "name": "ps0-compiler-associative-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:99271dade8eff86ea75a560a8e9f856fb263bac51c61f36eb69b1c74637a0547"
+      },
+      {
+        "id": 13725522938,
+        "name": "ps0-compiler-natbasic-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:eb7bbd5e39e89bd05dd83b9eb7a41503d2ee29ef7b33865ed368d1b13a3fece5"
+      },
+      {
+        "id": 13725513876,
+        "name": "ps0-compiler-natlemmas-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:a543953bb98987e983b3f21aea71cbc92d68dcd3b445f079311c641a2b5834c7"
+      },
+      {
+        "id": 13725513321,
+        "name": "ps0-compiler-extdtreemapbasic-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:6194b6ff8c73122b0cdae65db22523f5269d9d0125bcfcc2d34c7abf55a927fd"
+      },
+      {
+        "id": 13725452925,
+        "name": "ps0-compiler-defeqattrib14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:bdb51356ebd540c9f3ca3ee20e98c3eb04ae6585b670df1ef8d107d20f127ccf"
+      },
+      {
+        "id": 13725368281,
+        "name": "ps0-compiler-nanosecond-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:7a74d33559cd10a231686d695847f00c7033136daf4e311984f1f886851f12f8"
+      },
+      {
+        "id": 13725298474,
+        "name": "ps0-compiler-iteratorempty-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:e4b350f6681f9c03d2215b4629c8ba97f807559944303bcac956a0dda8cc7974"
+      },
+      {
+        "id": 13725218637,
+        "name": "ps0-compiler-arrayperm-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:7ee9fb41445d60697e237b42ac5dcdd2630ad1cb7dcbb504e1846588fd6e5075"
+      },
+      {
+        "id": 13725173997,
+        "name": "ps0-compiler-spredlaws-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:141683d06b64eb8d294011661c66597ff589ec6ad578b1887748070380c0387a"
+      },
+      {
+        "id": 13725168951,
+        "name": "ps0-compiler-options-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:1cfb59d03584ef5da133a975b22c7b2ffa2a23ba0987d64fb2d60a8d5f697fe0"
+      },
+      {
+        "id": 13725139701,
+        "name": "ps0-compiler-environment-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:9c79118b2e3f437650462793ff21155ffd08dd9dff85f6159a7f9766a3b4d38b"
+      },
+      {
+        "id": 13725124248,
+        "name": "ps0-compiler-rangechar-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:9ccf4985713fc7cb3c83b84af01907025fccb57b0d99d7c85efc342474b6a3a6"
+      },
+      {
+        "id": 13725114837,
+        "name": "ps0-compiler-initwf-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:c9ee282dbdde584acf84e878d0242528a5ec078329c6aacb158dd3a697f29c2c"
+      },
+      {
+        "id": 13725089655,
+        "name": "ps0-compiler-synthinstance14-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:45fdc64ddaa6b976d4a861d668a38dca59526e6984c0f0b714af65447c23cb6e"
+      },
+      {
+        "id": 13725054199,
+        "name": "ps0-compiler-persistenthashmap-9ed6422e674437e1e2d7cd6dce190b2f7043462f-42733594998",
+        "digest": "sha256:1bd63584246416f820da3df308897104f7dd25e3c8d1e04f5323ead6502864fb"
+      }
+    ],
+    "independentInspection": {
+      "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
+      "runner": "51199eab23e6aa31361a34112605389756028bb7",
+      "run": 42736961933,
+      "job": 129568419906,
+      "status": "PASS",
+      "actualFiles": 172,
+      "totalModules": 43,
+      "artifact": {
+        "id": 13727247032,
+        "digest": "sha256:923269f917ad3f07ec2b5abd824b98f1382e60ac710f56af74ff51ea95e5f8da"
+      }
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "canonicalGraphSixteenthResult": {
+    "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+    "runner": "5b50bc70b9788efaa585d1c5522a38731a64fef2",
+    "run": 42719483426,
+    "job": 129509484457,
+    "status": "FAIL_THREE_COMPILER_MODULES",
+    "observedInputs": 2569,
+    "observedByteIdenticalInputs": 0,
+    "failures": [
+      {
+        "module": "Std.Http.Data.URI.Parser",
+        "line": 97,
+        "diagnostic": "takeWhileAtMost function and argument tuple treated as separate parser do expressions"
+      },
+      {
+        "module": "Lean.Meta.AbstractMVars",
+        "line": 102,
+        "diagnostic": "pure applied to appendIndexAfter function; following argument treated as separate monadic expression"
+      },
+      {
+        "module": "Lean.Meta.DiscrTree.Main",
+        "line": 278,
+        "diagnostic": "pushArgsAux function and argument tuple treated as separate MetaM do expressions"
+      }
+    ],
+    "artifact": {
+      "id": 13726028378,
+      "digest": "sha256:bfcdf20b1c73eb6dd73bdf7fa9c101b2479dcbf8ef820ad1ff910a84307890e7"
+    },
+    "parserTypesBuiltInLog": true,
+    "wholeCompilerBuilt": false,
+    "relocatedCompilerVerified": false,
+    "fixedPointVerified": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "latestFullGraphEvidence": {
+    "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
+    "runner": "5b50bc70b9788efaa585d1c5522a38731a64fef2",
+    "run": 42719483426,
+    "job": 129509484457,
+    "status": "FAIL_THREE_COMPILER_MODULES",
+    "observedInputs": 2569,
+    "observedByteIdenticalInputs": 0,
+    "failures": [
+      {
+        "module": "Std.Http.Data.URI.Parser",
+        "line": 97,
+        "diagnostic": "takeWhileAtMost function and argument tuple treated as separate parser do expressions"
+      },
+      {
+        "module": "Lean.Meta.AbstractMVars",
+        "line": 102,
+        "diagnostic": "pure applied to appendIndexAfter function; following argument treated as separate monadic expression"
+      },
+      {
+        "module": "Lean.Meta.DiscrTree.Main",
+        "line": 278,
+        "diagnostic": "pushArgsAux function and argument tuple treated as separate MetaM do expressions"
+      }
+    ],
+    "artifact": {
+      "id": 13726028378,
+      "digest": "sha256:bfcdf20b1c73eb6dd73bdf7fa9c101b2479dcbf8ef820ad1ff910a84307890e7"
+    },
+    "parserTypesBuiltInLog": true,
+    "wholeCompilerBuilt": false,
+    "relocatedCompilerVerified": false,
+    "fixedPointVerified": false,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "graphSixteenthSdkReproduction": {
+    "runner": "b1e246933a308214fcc8e12f6c2539d077073d1f",
+    "run": 42736881463,
+    "status": "SIX_MODULE_REPRODUCTION_JOBS_FAILED",
+    "jobs": [
+      {
+        "id": 129568159582,
+        "name": "graph-plan-inspection",
+        "conclusion": "success"
+      },
+      {
+        "id": 129568159945,
+        "name": "current-AbstractMVars",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129568159979,
+        "name": "graph-source-URIParser",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129568159988,
+        "name": "graph-source-DiscrTreeMain",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129568159999,
+        "name": "current-DiscrTreeMain",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129568160014,
+        "name": "current-URIParser",
+        "conclusion": "failure"
+      },
+      {
+        "id": 129568160095,
+        "name": "graph-source-AbstractMVars",
+        "conclusion": "failure"
+      }
+    ],
+    "currentSource": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
+    "currentSourceMigratedModuleFailures": 3,
+    "scope": "Current-source failures reproduce the graph diagnostics against pinned SDK siblings; old-source job classifications retained separately in logs"
+  },
+  "boundIfSyntaxObservation": {
+    "source": "38229bf11fc71f66df817677a4d907c7a10ba1e0",
+    "runner": "9bcaa71c08fc373a7094e0030a111ecf1dbda319",
+    "run": 42737920195,
+    "job": 129571594312,
+    "status": "DIAGNOSTIC_OBSERVATION_NOT_FIX_QUALIFICATION",
+    "cases": [
+      {
+        "case": "bound-if",
+        "adjacentCallNodes": 0,
+        "escapedIfBridges": 1
+      },
+      {
+        "case": "standalone-if",
+        "adjacentCallNodes": 2,
+        "escapedIfBridges": 0
+      }
+    ],
+    "planReconstruction": {
+      "runner": "b6078586e10ee6baed242f38aabbff45f27aa015",
+      "run": 42737363604,
+      "job": 129569756981,
+      "status": "PASS_SOURCE_AND_RESULT_HASHES_AND_NATIVE_ROLE_PATHS"
+    }
+  },
+  "directBindCandidate": {
+    "source": "7cb84202ade8aa0dddc306c459ab8335229c9ab8",
+    "runner": "d9bbc47cab4be0ed03db182070891d30af2c9f00",
+    "status": "PENDING_DIRECT_NAMED_BIND_PS_DO_OPERAND",
+    "realModules": [
+      {
+        "module": "Std.Http.Data.URI.Parser",
+        "blob": "d51844ce35afe12c4c815dd41f617891f3a62980"
+      },
+      {
+        "module": "Lean.Meta.AbstractMVars",
+        "blob": "175738e203ab7cbd59798431b0fb0133dd41ca5a"
+      },
+      {
+        "module": "Lean.Meta.DiscrTree.Main",
+        "blob": "bdfbcdff9d7ae3dcc369b2d637a4dec8cfe1f14a"
+      }
+    ],
     "grammarMigrationComplete": false,
     "verified_execution": false
   }
