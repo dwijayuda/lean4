@@ -71,7 +71,7 @@ private def commandOperands (parser : Parser) : Parser :=
 
 private def ownedCommandWords : Array String :=
   #["set_option", "open", "attribute", "variable", "include", "omit", "mutual",
-    "initialize", "builtin_initialize", "inductive", "coinductive", "structure", "class"]
+    "initialize", "builtin_initialize", "inductive", "coinductive", "structure"]
 
 private def escapedDeclaration (source : Syntax) : Bool :=
   let native := if source.isOfKind `ps0NativeCommandBridge then source[0] else source

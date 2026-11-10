@@ -302,41 +302,41 @@ def finallyElem : Parser :=
       optional (atomic (ident >> operands #[(`term, `psTerm)] Lean.Parser.Term.typeSpec >>
         ppSpace >> Lean.Parser.Term.leftArrow)) >> sequence
 
-private def dataSignature : Parser :=
+def dataSignature : Parser :=
   operands #[(`term, `psDataOperand)] Lean.Parser.Command.optDeclSig
 
-private def dataComputedField : Parser :=
+def dataComputedField : Parser :=
   node ``Lean.Parser.Command.computedField <|
     Lean.Parser.Command.declModifiers true >> ident >> " : " >>
       categoryParser `psDataOperand 0 >> Lean.Parser.Term.matchAlts (categoryParser `psDataOperand 0)
 
-private def dataComputedFields : Parser :=
+def dataComputedFields : Parser :=
   node ``Lean.Parser.Command.computedFields <|
     "with" >> manyIndent (ppLine >> ppGroup dataComputedField)
 
-private def dataConstructor : Parser :=
+def dataConstructor : Parser :=
   node ``Lean.Parser.Command.ctor <|
     atomic (optional Lean.Parser.Command.docComment >> "\n| ") >>
       ppGroup (Lean.Parser.Command.declModifiers true >> rawIdent >> dataSignature)
 
-private def dataInductive (kind : Name) (keyword : String) : Parser :=
-  node kind <| symbol keyword >> recover Lean.Parser.Command.declId skipUntilWsOrDelim >>
+def dataInductive (kind : Name) (keyword : String) : Parser :=
+  node kind <| symbol keyword >> recover Lean.Parser.Command.declId Lean.Parser.Command.skipUntilWsOrDelim >>
     ppIndent dataSignature >> optional (symbol " :=" <|> " where") >> many dataConstructor >>
     optional (ppDedent ppLine >> dataComputedFields) >> Lean.Parser.Command.optDeriving >>
     optional (operands #[(`tactic, `psDataTacticOperand)] Lean.Parser.Command.monotonicityBy)
 
-private def dataClassInductive : Parser :=
+def dataClassInductive : Parser :=
   node ``Lean.Parser.Command.classInductive <|
     atomic (group (symbol "class " >> "inductive ")) >>
-      recover Lean.Parser.Command.declId skipUntilWsOrDelim >> ppIndent dataSignature >>
+      recover Lean.Parser.Command.declId Lean.Parser.Command.skipUntilWsOrDelim >> ppIndent dataSignature >>
       optional (symbol " :=" <|> " where") >> many dataConstructor >> Lean.Parser.Command.optDeriving
 
-private def dataExtends : Parser :=
+def dataExtends : Parser :=
   node ``Lean.Parser.Command.«extends» <|
     " extends " >> sepBy1 (operands #[(`term, `psDataOperand)] Lean.Parser.Command.structParent) ", " >>
       operands #[(`term, `psDataOperand)] Lean.Parser.Term.optType
 
-private def dataStructure : Parser :=
+def dataStructure : Parser :=
   node ``Lean.Parser.Command.«structure» <|
     (Lean.Parser.Command.structureTk <|> Lean.Parser.Command.classTk) >> Lean.Parser.Command.declId >>
       ppIndent (dataSignature >> optional dataExtends) >>
