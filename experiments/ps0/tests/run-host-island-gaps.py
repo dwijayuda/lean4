@@ -20,6 +20,18 @@ ps_prefix = ('module\nprelude\npublic import Init\npublic section\n'
              'function pairSum(p: Nat × Nat): Nat := p.1 + p.2\n'
              'structure IslandCell where\n  value : Nat\n')
 cases = [
+    ('structure-field-type', 'structure FieldType where\n  value : Fin (pairSum (1, 2))',
+     'structure FieldType where\n  value : Fin (pairSum (1, 2))'),
+    ('structure-field-default', 'structure FieldDefault where\n  value : Nat := pairSum (1, 2)',
+     'structure FieldDefault where\n  value : Nat := pairSum (1, 2)'),
+    ('class-field-default', 'class FieldClass where\n  value : Nat := pairSum (1, 2)',
+     'class FieldClass where\n  value : Nat := pairSum (1, 2)'),
+    ('inductive-constructor-type', 'inductive ConstructorType where\n  | mk (value : Fin (pairSum (1, 2))) : ConstructorType',
+     'inductive ConstructorType where\n  | mk (value : Fin (pairSum (1, 2))) : ConstructorType'),
+    ('inductive-parameter-type', 'inductive ParameterType (value : Fin (pairSum (1, 2))) where\n  | mk',
+     'inductive ParameterType (value : Fin (pairSum (1, 2))) where\n  | mk'),
+    ('structure-parameter-type', 'structure ParameterStructure (value : Fin (pairSum (1, 2))) where\n  dummy : Nat',
+     'structure ParameterStructure (value : Fin (pairSum (1, 2))) where\n  dummy : Nat'),
     ('initialize-value', 'initialize initialValue : Nat ← pure (pairSum (1, 2))',
      'initialize initialValue : Nat ← pure <| pairSum (1, 2)'),
     ('builtin-initialize-value', 'builtin_initialize initialValue : Nat ← pure (pairSum (1, 2))',
