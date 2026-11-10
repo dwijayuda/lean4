@@ -14033,13 +14033,20 @@
       "relocatedCompilerVerified": false,
       "fixedPointVerified": false,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "finiteModuleResolution": {
+        "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+        "run": 42740049293,
+        "independentRun": 42741650847,
+        "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
+        "wholeGraphRevalidated": false
+      }
     },
     "nextActions": [
-      "Inspect direct named-bind parser ownership and three actual failing compiler modules",
-      "Qualify exact C/public olean and regression scope before another full graph",
-      "Continue remaining PS grammar and original-source fidelity roles",
-      "Require complete canonical PS compiler, native relocated operation and fixed point"
+      "Launch a fresh complete graph with current planner and hash-validated native AST reuse only",
+      "Expand complete matrix to retain the three real compiler regressions with narrow artifacts",
+      "Require whole PS compiler linking, relocated operation and fixed point",
+      "Continue remaining PS grammar and original-source diagnostic roles"
     ],
     "goalStatus": "ACTIVE",
     "obligationsPending": 240,
@@ -17112,16 +17119,16 @@
       "verified_execution": false
     },
     "latestFiniteGrammarQualification": {
-      "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
-      "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
-      "run": 42734916050,
-      "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
+      "source": "658acba36911b357875220ead7470bd375281fd7",
+      "runner": "4f3b57c021e9602b14a0a7c44b7a4dcf2ed180bb",
+      "run": 42740638507,
+      "status": "QUALIFIED_FINITE_OWNED_BOUND_IF",
       "mappedDefinitions": 61,
       "privateProofGuards": 48,
       "sourceOriginCases": 37,
-      "invalidGapRejections": 34,
+      "invalidGapRejections": 36,
       "diagnosticCoordinateCases": 4,
-      "independentRun": 42735535354,
+      "independentRun": 42741650593,
       "grammarMigrationComplete": false,
       "verified_execution": false
     },
@@ -17826,7 +17833,14 @@
       "relocatedCompilerVerified": false,
       "fixedPointVerified": false,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "finiteModuleResolution": {
+        "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+        "run": 42740049293,
+        "independentRun": 42741650847,
+        "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
+        "wholeGraphRevalidated": false
+      }
     },
     "latestFullGraphEvidence": {
       "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
@@ -17862,7 +17876,14 @@
       "relocatedCompilerVerified": false,
       "fixedPointVerified": false,
       "grammarMigrationComplete": false,
-      "verified_execution": false
+      "verified_execution": false,
+      "finiteModuleResolution": {
+        "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+        "run": 42740049293,
+        "independentRun": 42741650847,
+        "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
+        "wholeGraphRevalidated": false
+      }
     },
     "graphSixteenthSdkReproduction": {
       "runner": "b1e246933a308214fcc8e12f6c2539d077073d1f",
@@ -17937,23 +17958,169 @@
     "directBindCandidate": {
       "source": "7cb84202ade8aa0dddc306c459ab8335229c9ab8",
       "runner": "d9bbc47cab4be0ed03db182070891d30af2c9f00",
-      "status": "PENDING_DIRECT_NAMED_BIND_PS_DO_OPERAND",
-      "realModules": [
-        {
-          "module": "Std.Http.Data.URI.Parser",
-          "blob": "d51844ce35afe12c4c815dd41f617891f3a62980"
-        },
-        {
-          "module": "Lean.Meta.AbstractMVars",
-          "blob": "175738e203ab7cbd59798431b0fb0133dd41ca5a"
-        },
-        {
-          "module": "Lean.Meta.DiscrTree.Main",
-          "blob": "bdfbcdff9d7ae3dcc369b2d637a4dec8cfe1f14a"
+      "run": 42738648582,
+      "job": 129573984029,
+      "status": "FAILED_AND_REVERTED",
+      "reason": "Direct named-bind entry retained escaped if and zero PS adjacent call nodes",
+      "revertedAt": "96413c1a96369001e9933da9eacfbb32d08cf835"
+    },
+    "ownedBoundIfQualification": {
+      "source": "658acba36911b357875220ead7470bd375281fd7",
+      "runner": "4f3b57c021e9602b14a0a7c44b7a4dcf2ed180bb",
+      "run": 42740638507,
+      "status": "QUALIFIED_FINITE_OWNED_BOUND_IF",
+      "mappedDefinitions": 61,
+      "privateProofGuards": 48,
+      "sourceOriginCases": 37,
+      "invalidGapRejections": 36,
+      "diagnosticCoordinateCases": 4,
+      "actualCompilerFiles": 18,
+      "actualNativeElfs": 3,
+      "diagnosticSourceFiles": 8,
+      "hashes": {
+        "loop-contracts-42740638507/LoopContracts": "f7ac9b0b70a0418e0d32f402f0fac7c2e2133a95e3854071d0026028ef5ebde5",
+        "loop-contracts-42740638507/baseline.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42740638507/baseline.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "loop-contracts-42740638507/migrated.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42740638507/migrated.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "loop-contracts-42740638507/planned.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+        "loop-contracts-42740638507/planned.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+        "match-host-42740638507/OrdinaryHostOrigins": "b57857e639d59951923bcc264dfe33de67d5753b898f9d44d9be47415ae1bb39",
+        "match-host-42740638507/baseline-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42740638507/baseline-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "match-host-42740638507/migrated-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42740638507/migrated-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "match-host-42740638507/planned-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+        "match-host-42740638507/planned-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+        "suffices-42740638507/SufficesRuntime": "fc8b3c241b168ac1748f523dfd512bce71ab8a84c1848ef7045739b9644c19a9",
+        "suffices-42740638507/baseline.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42740638507/baseline.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+        "suffices-42740638507/migrated.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42740638507/migrated.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+        "suffices-42740638507/planned.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+        "suffices-42740638507/planned.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461"
+      },
+      "producerArtifact": {
+        "id": 13728967701,
+        "digest": "sha256:031835cce5d060e949bcb762b83eb61d8ade104f0d91b2ce83e46eef041af911"
+      },
+      "independentInspection": {
+        "runner": "d2dfaf1f7f95d78d26fb332cf7ddd28f106e5f92",
+        "run": 42741650593,
+        "job": 129583895528,
+        "status": "PASS",
+        "artifact": {
+          "id": 13729098055,
+          "digest": "sha256:9d6eae0d8ede12bec10839b0fb52ff04e237544b270218768197c28273b3aee3"
         }
-      ],
+      },
       "grammarMigrationComplete": false,
       "verified_execution": false
+    },
+    "graphSixteenthFixedModuleQualification": {
+      "actual_compiler_files_rehashed": 12,
+      "grammar_migration_complete": false,
+      "modules": [
+        {
+          "converted_sha256": "d7feffd5daa618beff7739ac61dbbc86ba6143582695c629c788673e9c715546",
+          "definitions": 6,
+          "edits": 61,
+          "hashes": {
+            "ir/Lean/Meta/AbstractMVars.c": "cc81d95058680d0511f334e4393302acdcb3eae3154e3560de7e93a990903b11",
+            "lib/lean/Lean/Meta/AbstractMVars.olean": "47155f9d30ac7a42e5bbc6579fb01b6a386b7068acc320710a6ed265b2df8278"
+          },
+          "line_count_preserved": true,
+          "module": "Lean.Meta.AbstractMVars",
+          "pinned_blob": "175738e203ab7cbd59798431b0fb0133dd41ca5a",
+          "source_sha256": "d78b0f4058d23f6d8bb55fc738663b2b8c9852375d1709b2abe9bf1c5749b640"
+        },
+        {
+          "converted_sha256": "80fa3af913c4fa76e8005373957ffe5d50c5989de8607edcbcad8ab9d3e18bef",
+          "definitions": 32,
+          "edits": 234,
+          "hashes": {
+            "ir/Lean/Meta/DiscrTree/Main.c": "3162062485a3be2c02c1d807f6155a759dac3c9b2f82357937f7ac5df50367d4",
+            "lib/lean/Lean/Meta/DiscrTree/Main.olean": "e06218067bab9ca0cb59cbf308a505bff1638ee5f7651cd6ccb52ee8bd701c35"
+          },
+          "line_count_preserved": true,
+          "module": "Lean.Meta.DiscrTree.Main",
+          "pinned_blob": "bdfbcdff9d7ae3dcc369b2d637a4dec8cfe1f14a",
+          "source_sha256": "b75802b76196a6af439b2be370b3cccc41e71c94b5aadc49304fce7692d2889d"
+        },
+        {
+          "converted_sha256": "54ae8f28e198852d920caf2b1d176910445fe6adc9aa4e170aaac538029f74b1",
+          "definitions": 18,
+          "edits": 152,
+          "hashes": {
+            "ir/Std/Http/Data/URI/Parser.c": "6e17d7fb6d2e6936202eb722f6154b62a713b9aa79154b3adbce7073f46c91a8",
+            "lib/lean/Std/Http/Data/URI/Parser.olean": "36fa13449ff0ef9724b54029519307d23008cefe07b903c61132725d5cea13da"
+          },
+          "line_count_preserved": true,
+          "module": "Std.Http.Data.URI.Parser",
+          "pinned_blob": "d51844ce35afe12c4c815dd41f617891f3a62980",
+          "source_sha256": "8468cc54704bf1de0f5dd61ab11769bec16fd448fbb1207dbfa1d005ff61c842"
+        }
+      ],
+      "producer_run": 42740049293,
+      "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+      "verified_execution": false,
+      "whole_graph_built": false,
+      "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
+      "runner": "f5cb5d6f9e3a63d6072e39139270b0356ad8f371",
+      "run": 42740049293,
+      "jobs": [
+        129578569857,
+        129578570074,
+        129578570098
+      ],
+      "mappedDefinitions": 56,
+      "producerArtifacts": [
+        {
+          "id": 13729710670,
+          "name": "ps0-graph16-module-repro-owned-if-AbstractMVars-42740049293",
+          "digest": "sha256:b480b2105b008cfc7283f8e570847e0a10630ff7a60fe6d4ac6d331798b96abf",
+          "size_in_bytes": 1812901999
+        },
+        {
+          "id": 13728448372,
+          "name": "ps0-graph16-module-repro-owned-if-URIParser-42740049293",
+          "digest": "sha256:c63d670062db189d4864a17c440badd4e159e673cde68cc1716c010d0f417019",
+          "size_in_bytes": 1812446760
+        },
+        {
+          "id": 13728373558,
+          "name": "ps0-graph16-module-repro-owned-if-DiscrTreeMain-42740049293",
+          "digest": "sha256:6f7533a956f90b65cc879d9661d2852f088227aeb73ddbcab58980fa6d402fab",
+          "size_in_bytes": 1812958117
+        }
+      ],
+      "independentInspection": {
+        "runner": "d2dfaf1f7f95d78d26fb332cf7ddd28f106e5f92",
+        "run": 42741650847,
+        "job": 129583896367,
+        "status": "PASS",
+        "artifact": {
+          "id": 13728524796,
+          "digest": "sha256:60dd63c36fea54872f3b08d051ffe795fbb3f2c4116575ec9ba3b6789535a6c3"
+        }
+      },
+      "scope": "Three actual pinned modules, 56 definition heads, exact native/PS C and public olean with SDK sibling metadata; not whole compiler graph or module runtime"
+    },
+    "boundIfOwnershipQualification": {
+      "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+      "runner": "f5cb5d6f9e3a63d6072e39139270b0356ad8f371",
+      "run": 42740049406,
+      "job": 129578573961,
+      "status": "PASS_BOUND_AND_STANDALONE_IF_OWNERSHIP",
+      "escapedIfBridges": 0,
+      "adjacentCallsPerCase": 2
+    },
+    "boundIfOwnedDiagnostic": {
+      "source": "96413c1a96369001e9933da9eacfbb32d08cf835",
+      "runner": "c691e01a2701f973f0fd234bb0d55c2fd62066ac",
+      "run": 42739356451,
+      "job": 129576310277,
+      "status": "OWNED_PARSE_SUCCEEDS_WITH_NATIVE_FALLBACK_EXCLUDED_NORMAL_OWNERSHIP_FAILS"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -78625,16 +78792,16 @@
     "verified_execution": false
   },
   "latestFiniteGrammarQualification": {
-    "source": "9c9a416ce7cfc5ac21c9d50f01ca27523800dad2",
-    "runner": "057765de4c005e8ad7c94d97e0c2aa43cc9003ae",
-    "run": 42734916050,
-    "status": "QUALIFIED_FINITE_WITH_ORIGINAL_CHECK_COORDINATES",
+    "source": "658acba36911b357875220ead7470bd375281fd7",
+    "runner": "4f3b57c021e9602b14a0a7c44b7a4dcf2ed180bb",
+    "run": 42740638507,
+    "status": "QUALIFIED_FINITE_OWNED_BOUND_IF",
     "mappedDefinitions": 61,
     "privateProofGuards": 48,
     "sourceOriginCases": 37,
-    "invalidGapRejections": 34,
+    "invalidGapRejections": 36,
     "diagnosticCoordinateCases": 4,
-    "independentRun": 42735535354,
+    "independentRun": 42741650593,
     "grammarMigrationComplete": false,
     "verified_execution": false
   },
@@ -79345,7 +79512,14 @@
     "relocatedCompilerVerified": false,
     "fixedPointVerified": false,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "finiteModuleResolution": {
+      "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+      "run": 42740049293,
+      "independentRun": 42741650847,
+      "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
+      "wholeGraphRevalidated": false
+    }
   },
   "latestFullGraphEvidence": {
     "source": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
@@ -79381,7 +79555,14 @@
     "relocatedCompilerVerified": false,
     "fixedPointVerified": false,
     "grammarMigrationComplete": false,
-    "verified_execution": false
+    "verified_execution": false,
+    "finiteModuleResolution": {
+      "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+      "run": 42740049293,
+      "independentRun": 42741650847,
+      "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
+      "wholeGraphRevalidated": false
+    }
   },
   "graphSixteenthSdkReproduction": {
     "runner": "b1e246933a308214fcc8e12f6c2539d077073d1f",
@@ -79456,22 +79637,168 @@
   "directBindCandidate": {
     "source": "7cb84202ade8aa0dddc306c459ab8335229c9ab8",
     "runner": "d9bbc47cab4be0ed03db182070891d30af2c9f00",
-    "status": "PENDING_DIRECT_NAMED_BIND_PS_DO_OPERAND",
-    "realModules": [
-      {
-        "module": "Std.Http.Data.URI.Parser",
-        "blob": "d51844ce35afe12c4c815dd41f617891f3a62980"
-      },
-      {
-        "module": "Lean.Meta.AbstractMVars",
-        "blob": "175738e203ab7cbd59798431b0fb0133dd41ca5a"
-      },
-      {
-        "module": "Lean.Meta.DiscrTree.Main",
-        "blob": "bdfbcdff9d7ae3dcc369b2d637a4dec8cfe1f14a"
+    "run": 42738648582,
+    "job": 129573984029,
+    "status": "FAILED_AND_REVERTED",
+    "reason": "Direct named-bind entry retained escaped if and zero PS adjacent call nodes",
+    "revertedAt": "96413c1a96369001e9933da9eacfbb32d08cf835"
+  },
+  "ownedBoundIfQualification": {
+    "source": "658acba36911b357875220ead7470bd375281fd7",
+    "runner": "4f3b57c021e9602b14a0a7c44b7a4dcf2ed180bb",
+    "run": 42740638507,
+    "status": "QUALIFIED_FINITE_OWNED_BOUND_IF",
+    "mappedDefinitions": 61,
+    "privateProofGuards": 48,
+    "sourceOriginCases": 37,
+    "invalidGapRejections": 36,
+    "diagnosticCoordinateCases": 4,
+    "actualCompilerFiles": 18,
+    "actualNativeElfs": 3,
+    "diagnosticSourceFiles": 8,
+    "hashes": {
+      "loop-contracts-42740638507/LoopContracts": "f7ac9b0b70a0418e0d32f402f0fac7c2e2133a95e3854071d0026028ef5ebde5",
+      "loop-contracts-42740638507/baseline.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42740638507/baseline.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "loop-contracts-42740638507/migrated.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42740638507/migrated.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "loop-contracts-42740638507/planned.c": "553ec7ee4f03323d34977a86f6a964ca3d9deea7323bbf58a38421f8ba9ffce1",
+      "loop-contracts-42740638507/planned.olean": "be80095f49c81695cc920df8f1d790aba389bffca990f502d05996cc92ec415e",
+      "match-host-42740638507/OrdinaryHostOrigins": "b57857e639d59951923bcc264dfe33de67d5753b898f9d44d9be47415ae1bb39",
+      "match-host-42740638507/baseline-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42740638507/baseline-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "match-host-42740638507/migrated-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42740638507/migrated-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "match-host-42740638507/planned-MatchHostBootstrap.c": "cd98057dfe26a209a30c8c3577cc86c1ce5e838220efa3074181e0b9ea3667df",
+      "match-host-42740638507/planned-MatchHostBootstrap.olean": "39228578303e5e3610b78318c5f63255fbbe807c80c991ba02bb8f87b766ed62",
+      "suffices-42740638507/SufficesRuntime": "fc8b3c241b168ac1748f523dfd512bce71ab8a84c1848ef7045739b9644c19a9",
+      "suffices-42740638507/baseline.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42740638507/baseline.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+      "suffices-42740638507/migrated.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42740638507/migrated.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461",
+      "suffices-42740638507/planned.c": "d085fff06dbdc816e3873d58482b3eb353fdd04866fe95f4b6046e39edcf1791",
+      "suffices-42740638507/planned.olean": "3855f0452e8f2c114f3cf80c9c3302b3c90031717e8feb7ad27b9049b98a6461"
+    },
+    "producerArtifact": {
+      "id": 13728967701,
+      "digest": "sha256:031835cce5d060e949bcb762b83eb61d8ade104f0d91b2ce83e46eef041af911"
+    },
+    "independentInspection": {
+      "runner": "d2dfaf1f7f95d78d26fb332cf7ddd28f106e5f92",
+      "run": 42741650593,
+      "job": 129583895528,
+      "status": "PASS",
+      "artifact": {
+        "id": 13729098055,
+        "digest": "sha256:9d6eae0d8ede12bec10839b0fb52ff04e237544b270218768197c28273b3aee3"
       }
-    ],
+    },
     "grammarMigrationComplete": false,
     "verified_execution": false
+  },
+  "graphSixteenthFixedModuleQualification": {
+    "actual_compiler_files_rehashed": 12,
+    "grammar_migration_complete": false,
+    "modules": [
+      {
+        "converted_sha256": "d7feffd5daa618beff7739ac61dbbc86ba6143582695c629c788673e9c715546",
+        "definitions": 6,
+        "edits": 61,
+        "hashes": {
+          "ir/Lean/Meta/AbstractMVars.c": "cc81d95058680d0511f334e4393302acdcb3eae3154e3560de7e93a990903b11",
+          "lib/lean/Lean/Meta/AbstractMVars.olean": "47155f9d30ac7a42e5bbc6579fb01b6a386b7068acc320710a6ed265b2df8278"
+        },
+        "line_count_preserved": true,
+        "module": "Lean.Meta.AbstractMVars",
+        "pinned_blob": "175738e203ab7cbd59798431b0fb0133dd41ca5a",
+        "source_sha256": "d78b0f4058d23f6d8bb55fc738663b2b8c9852375d1709b2abe9bf1c5749b640"
+      },
+      {
+        "converted_sha256": "80fa3af913c4fa76e8005373957ffe5d50c5989de8607edcbcad8ab9d3e18bef",
+        "definitions": 32,
+        "edits": 234,
+        "hashes": {
+          "ir/Lean/Meta/DiscrTree/Main.c": "3162062485a3be2c02c1d807f6155a759dac3c9b2f82357937f7ac5df50367d4",
+          "lib/lean/Lean/Meta/DiscrTree/Main.olean": "e06218067bab9ca0cb59cbf308a505bff1638ee5f7651cd6ccb52ee8bd701c35"
+        },
+        "line_count_preserved": true,
+        "module": "Lean.Meta.DiscrTree.Main",
+        "pinned_blob": "bdfbcdff9d7ae3dcc369b2d637a4dec8cfe1f14a",
+        "source_sha256": "b75802b76196a6af439b2be370b3cccc41e71c94b5aadc49304fce7692d2889d"
+      },
+      {
+        "converted_sha256": "54ae8f28e198852d920caf2b1d176910445fe6adc9aa4e170aaac538029f74b1",
+        "definitions": 18,
+        "edits": 152,
+        "hashes": {
+          "ir/Std/Http/Data/URI/Parser.c": "6e17d7fb6d2e6936202eb722f6154b62a713b9aa79154b3adbce7073f46c91a8",
+          "lib/lean/Std/Http/Data/URI/Parser.olean": "36fa13449ff0ef9724b54029519307d23008cefe07b903c61132725d5cea13da"
+        },
+        "line_count_preserved": true,
+        "module": "Std.Http.Data.URI.Parser",
+        "pinned_blob": "d51844ce35afe12c4c815dd41f617891f3a62980",
+        "source_sha256": "8468cc54704bf1de0f5dd61ab11769bec16fd448fbb1207dbfa1d005ff61c842"
+      }
+    ],
+    "producer_run": 42740049293,
+    "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+    "verified_execution": false,
+    "whole_graph_built": false,
+    "status": "QUALIFIED_FINITE_SDK_COMPILER_MODULES",
+    "runner": "f5cb5d6f9e3a63d6072e39139270b0356ad8f371",
+    "run": 42740049293,
+    "jobs": [
+      129578569857,
+      129578570074,
+      129578570098
+    ],
+    "mappedDefinitions": 56,
+    "producerArtifacts": [
+      {
+        "id": 13729710670,
+        "name": "ps0-graph16-module-repro-owned-if-AbstractMVars-42740049293",
+        "digest": "sha256:b480b2105b008cfc7283f8e570847e0a10630ff7a60fe6d4ac6d331798b96abf",
+        "size_in_bytes": 1812901999
+      },
+      {
+        "id": 13728448372,
+        "name": "ps0-graph16-module-repro-owned-if-URIParser-42740049293",
+        "digest": "sha256:c63d670062db189d4864a17c440badd4e159e673cde68cc1716c010d0f417019",
+        "size_in_bytes": 1812446760
+      },
+      {
+        "id": 13728373558,
+        "name": "ps0-graph16-module-repro-owned-if-DiscrTreeMain-42740049293",
+        "digest": "sha256:6f7533a956f90b65cc879d9661d2852f088227aeb73ddbcab58980fa6d402fab",
+        "size_in_bytes": 1812958117
+      }
+    ],
+    "independentInspection": {
+      "runner": "d2dfaf1f7f95d78d26fb332cf7ddd28f106e5f92",
+      "run": 42741650847,
+      "job": 129583896367,
+      "status": "PASS",
+      "artifact": {
+        "id": 13728524796,
+        "digest": "sha256:60dd63c36fea54872f3b08d051ffe795fbb3f2c4116575ec9ba3b6789535a6c3"
+      }
+    },
+    "scope": "Three actual pinned modules, 56 definition heads, exact native/PS C and public olean with SDK sibling metadata; not whole compiler graph or module runtime"
+  },
+  "boundIfOwnershipQualification": {
+    "source": "795c862f8bcf252819076c28456b6ee0438e1c7f",
+    "runner": "f5cb5d6f9e3a63d6072e39139270b0356ad8f371",
+    "run": 42740049406,
+    "job": 129578573961,
+    "status": "PASS_BOUND_AND_STANDALONE_IF_OWNERSHIP",
+    "escapedIfBridges": 0,
+    "adjacentCallsPerCase": 2
+  },
+  "boundIfOwnedDiagnostic": {
+    "source": "96413c1a96369001e9933da9eacfbb32d08cf835",
+    "runner": "c691e01a2701f973f0fd234bb0d55c2fd62066ac",
+    "run": 42739356451,
+    "job": 129576310277,
+    "status": "OWNED_PARSE_SUCCEEDS_WITH_NATIVE_FALLBACK_EXCLUDED_NORMAL_OWNERSHIP_FAILS"
   }
 }
