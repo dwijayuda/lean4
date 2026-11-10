@@ -18,10 +18,10 @@ run_cmd do
     ("binary-rhs-simple-call", "acc + step n true", "acc + step(n, true)"),
     ("indexed-matches", "xs[i]! matches some _ | none", "xs[i]! matches some _ | none"),
     ("call-matches", "choose xs[i]! matches some (some _) | none", "choose(xs[i]!) matches some (some _) | none"),
-    ("projection-matches", "(getEnv ()).find? key matches some _ | none", "(getEnv()).find?(key) matches some _ | none"),
+    ("projection-matches", "(← getEnv).find? key matches some _ | none", "(← getEnv).find?(key) matches some _ | none"),
     ("sepBy-callee", "sepBy p sep", "sepBy(p, sep)"),
     ("sepBy1-callee", "sepBy1 p sep", "sepBy1(p, sep)")]
-  let mut failures := 0
+  let mut failures : Nat := 0
   for (label, nativeText, psText) in cases do
     let native ← match Parser.runParserCategory (← getEnv) `term nativeText with
       | .ok source => pure source
