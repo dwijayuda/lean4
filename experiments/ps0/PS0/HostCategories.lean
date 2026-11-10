@@ -319,8 +319,11 @@ def dataConstructor : Parser :=
     atomic (optional Lean.Parser.Command.docComment >> "\n| ") >>
       ppGroup (Lean.Parser.Command.declModifiers true >> rawIdent >> dataSignature)
 
+def dataDeclRecovery : Parser :=
+  skipUntil fun c => c.isWhitespace || c == '(' || c == '{' || c == '[' || c == ':'
+
 def dataInductive (kind : Name) (keyword : String) : Parser :=
-  node kind <| symbol keyword >> recover Lean.Parser.Command.declId Lean.Parser.Command.skipUntilWsOrDelim >>
+  node kind <| symbol keyword >> recover Lean.Parser.Command.declId dataDeclRecovery >>
     ppIndent dataSignature >> optional (symbol " :=" <|> " where") >> many dataConstructor >>
     optional (ppDedent ppLine >> dataComputedFields) >> Lean.Parser.Command.optDeriving >>
     optional (operands #[(`tactic, `psDataTacticOperand)] Lean.Parser.Command.monotonicityBy)
@@ -328,7 +331,7 @@ def dataInductive (kind : Name) (keyword : String) : Parser :=
 def dataClassInductive : Parser :=
   node ``Lean.Parser.Command.classInductive <|
     atomic (group (symbol "class " >> "inductive ")) >>
-      recover Lean.Parser.Command.declId Lean.Parser.Command.skipUntilWsOrDelim >> ppIndent dataSignature >>
+      recover Lean.Parser.Command.declId dataDeclRecovery >> ppIndent dataSignature >>
       optional (symbol " :=" <|> " where") >> many dataConstructor >> Lean.Parser.Command.optDeriving
 
 def dataExtends : Parser :=
