@@ -90,6 +90,20 @@ def single_type_call(operand, role='owned binder type'):
             if value['atom'] is None:
                 single_type_call(value, role + ' collection element')
         return
+    if operand['kind'] == 'Lean.Parser.Term.suffices':
+        assert len(parts) == 4
+        declaration = parts[1]
+        assert declaration['kind'] == 'Lean.Parser.Term.sufficesDecl' and len(declaration['args']) == 3
+        single_type_call(declaration['args'][1], role + ' suffices type')
+        rhs = declaration['args'][2]
+        if rhs['kind'] == 'Lean.Parser.Term.fromTerm':
+            assert len(rhs['args']) == 2
+            single_type_call(rhs['args'][1], role + ' suffices value')
+        else:
+            assert rhs['kind'] == "Lean.Parser.Term.byTactic'" and len(rhs['args']) == 2
+            where_tactics(rhs['args'][1])
+        single_type_call(parts[3], role + ' suffices continuation')
+        return
     if operand['kind'] == 'Lean.Parser.Term.show':
         assert len(parts) == 3
         single_type_call(parts[1], role + ' show type')

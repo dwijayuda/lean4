@@ -18,6 +18,7 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
     ``Lean.Parser.Term.«forall», `termIfLet, ``Lean.Parser.Term.letPatDecl,
     `interpolatedStrLitKind, ``Lean.Parser.Term.anonymousCtor, ``Lean.Parser.Term.«show»,
     ``Lean.Parser.Term.fromTerm, ``Lean.Parser.Term.«have»,
+    ``Lean.Parser.Term.«suffices», ``Lean.Parser.Term.sufficesDecl,
     ``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil, ``Lean.Parser.Term.byTactic',
     ``Lean.Parser.Term.doLoopInvariant, ``Lean.Parser.Term.doLoopDecreasing, ``Lean.Parser.Term.basicFun]
   let mut count := 0
@@ -46,6 +47,8 @@ meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat
       else if kind == `termIfLet then #[0, 1, 2, 3, 5, 7]
       else if kind == ``Lean.Parser.Term.letPatDecl then #[0, 1, 3]
       else if kind == ``Lean.Parser.Term.«show» || kind == ``Lean.Parser.Term.fromTerm then #[0]
+      else if kind == ``Lean.Parser.Term.«suffices» then #[0, 2]
+      else if kind == ``Lean.Parser.Term.sufficesDecl then #[0]
       else if kind == ``Lean.Parser.Term.«have» then #[0, 1, 3]
       else if kind == ``Lean.Parser.Term.doWhile || kind == ``Lean.Parser.Term.doRepeatUntil then #[0, 4]
       else if kind == ``Lean.Parser.Term.doLoopInvariant || kind == ``Lean.Parser.Term.doLoopDecreasing then #[0]
@@ -93,6 +96,11 @@ example : hostOrigin ⟨add(n, 1), n⟩ := by trivial
 example : hostOrigin show Nat from add(n, 1) := by trivial
 example : hostOrigin show Fin(add(n, 1)) from value(n) := by trivial
 example : hostOrigin show Nat by { exact add(n, 1) } := by trivial
+example : hostOrigin suffices h : Nat from add(h, 1); n := by trivial
+example : hostOrigin suffices h : Fin(add(n, 1)) from h; value(n) := by trivial
+example : hostOrigin suffices h : Nat from h; add(n, 1) := by trivial
+example : hostOrigin suffices h : Nat by { exact add(h, 1) }; n := by trivial
+example : hostOrigin suffices Nat from add(this, 1); n := by trivial
 example : hostOrigin have step (x: Nat := add(n, 1)): Nat := add(x, 1); step := by trivial
 example : hostOrigin do { while false do { return add(n, 1) }; return n } := by trivial
 example : hostOrigin do { while h : add(n, 1) > 0 do { break }; return n } := by trivial

@@ -136,6 +136,9 @@ def loopBasicFun : Parser :=
 @[run_parser_attribute_hooks] def showTerm : Parser :=
   operands #[(`term, `psTerm), (`tactic, `psTactic)] Lean.Parser.Term.«show»
 
+@[run_parser_attribute_hooks] def sufficesTerm : Parser :=
+  operands #[(`term, `psTerm), (`tactic, `psTactic)] Lean.Parser.Term.«suffices»
+
 @[run_parser_attribute_hooks] def patternIfTerm : Parser :=
   leadingNode `termIfLet leadPrec <|
     "if " >> "let " >> termParser >> " := " >> categoryParser `psTerm 0 >>
@@ -429,6 +432,8 @@ def ps0NativeConstructor : Lean.Parser.Parser := PS0.DoLayout.constructorTerm
 @[psTerm_parser 20000]
 def ps0NativeShow : Lean.Parser.Parser := PS0.DoLayout.showTerm
 @[psTerm_parser 20000]
+def ps0NativeSuffices : Lean.Parser.Parser := PS0.DoLayout.sufficesTerm
+@[psTerm_parser 20000]
 def ps0NativePatternIf : Lean.Parser.Parser := PS0.DoLayout.patternIfTerm
 @[psTerm_parser 10000]
 def ps0NativePatternLet : Lean.Parser.Parser := PS0.DoLayout.patternLetTerm
@@ -551,18 +556,29 @@ private partial def checkProjectionSubject (source : Lean.Syntax) : MacroM Unit 
       checkProjectionSubject
         (if argument.isOfKind ``Lean.Parser.Term.namedArgument then argument[3] else argument)
 
+private def lowerShowRhsWith
+    (lowerTerm lowerTactics : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
+  if source.isOfKind ``Lean.Parser.Term.fromTerm && source.getArgs.size == 2 then
+    return source.setArg 1 (← lowerTerm source[1])
+  if source.isOfKind ``Lean.Parser.Term.byTactic' && source.getArgs.size == 2 then
+    return source.setArg 1 (← lowerTactics source[1])
+  Macro.throwError "PS0V1-SHOW-RHS: unexpected native value/tactic grammar"
+
 private def lowerAggregateValue
     (lowerTerm lowerBinder lowerOptionalType lowerTactics : Lean.Syntax → MacroM Lean.Syntax)
     (source : Lean.Syntax) : MacroM Lean.Syntax := withRef source do
   if source.isOfKind ``Lean.Parser.Term.«show» then
     unless source.getArgs.size == 3 do Macro.throwError "PS0V1-SHOW: unexpected native type/value roles"
     let source := source.setArg 1 (← lowerTerm source[1])
-    let rhs := source[2]
-    if rhs.isOfKind ``Lean.Parser.Term.fromTerm && rhs.getArgs.size == 2 then
-      return source.setArg 2 (rhs.setArg 1 (← lowerTerm rhs[1]))
-    if rhs.isOfKind ``Lean.Parser.Term.byTactic' && rhs.getArgs.size == 2 then
-      return source.setArg 2 (rhs.setArg 1 (← lowerTactics rhs[1]))
-    Macro.throwError "PS0V1-SHOW-RHS: unexpected native value/tactic grammar"
+    return source.setArg 2 (← lowerShowRhsWith lowerTerm lowerTactics source[2])
+  if source.isOfKind ``Lean.Parser.Term.«suffices» then
+    unless source.getArgs.size == 4 && source[1].isOfKind ``Lean.Parser.Term.sufficesDecl &&
+        source[1].getArgs.size == 3 do
+      Macro.throwError "PS0V1-SUFFICES: unexpected native binder/type/value roles"
+    let declaration := source[1].setArg 1 (← lowerTerm source[1][1])
+    let declaration := declaration.setArg 2 (← lowerShowRhsWith lowerTerm lowerTactics declaration[2])
+    return (source.setArg 1 declaration).setArg 3 (← lowerTerm source[3])
   if source.isOfKind ``Lean.Parser.Term.tuple then
     unless source.getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native delimiters"
     if source[1].getArgs.isEmpty then return source
@@ -981,6 +997,7 @@ partial def lower (category : Name) (source : Lean.Syntax) :
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
     if #[``Lean.Parser.Term.tuple, ``Lean.Parser.Term.anonymousCtor, ``Lean.Parser.Term.«show»,
+        ``Lean.Parser.Term.«suffices»,
         `«term[_]», `«term#[_,]», `termS!_,
         ``Lean.Parser.Term.«forall», `termIfLet].contains source.getKind then
       return ← lowerAggregateValue (lower `psTerm) lowerNativeLocalBinder lowerNativeOptionalType
