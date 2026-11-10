@@ -21421,13 +21421,25 @@
       "evidenceField": "completeDataPreparationQualification"
     },
     "latestCompleteTransformedGraphCandidate": {
-      "source": "92b22875cf81199f10413661b633e50df4671fb6",
-      "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
-      "run": 42756129015,
-      "job": 129630835886,
-      "draftPR": 247,
+      "source": "298395dde05464d06dca208fec5d0b74012297e4",
+      "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
+      "run": 42824602117,
+      "stageOneJob": 129858509851,
+      "job": 129858509851,
+      "stageTwoJob": null,
       "status": "IN_PROGRESS",
-      "cancelInProgress": false
+      "observedAt": "2026-11-10 13:41:45 UTC",
+      "pr": 248,
+      "branch": "ci/ps0-selfhost-fixed-point-20261110",
+      "moduleCount": 2569,
+      "wallClockMinutesPerStage": 360,
+      "compilerBuildTimeoutSeconds": 19800,
+      "sourceGrammar": true,
+      "interpreterPreferNative": false,
+      "selfCensusMetadataMode": "retained-ps-built-prefix",
+      "stageTwoRequiresActualPrefix": true,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     },
     "compilerPrefixRetentionCandidate": {
       "source": "6709a18ec07694ca9946faa1193ab5f57b226596",
@@ -21442,13 +21454,14 @@
       "evidenceField": "compilerPrefixContractQualification"
     },
     "completePSCompilerFixedPointCandidate": {
-      "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
-      "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
-      "run": 42770353333,
-      "stageOneJob": 129676437006,
+      "source": "298395dde05464d06dca208fec5d0b74012297e4",
+      "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
+      "run": 42824602117,
+      "stageOneJob": 129858509851,
+      "job": 129858509851,
       "stageTwoJob": null,
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-10T06:46:18Z",
+      "observedAt": "2026-11-10 13:41:45 UTC",
       "pr": 248,
       "branch": "ci/ps0-selfhost-fixed-point-20261110",
       "moduleCount": 2569,
@@ -21458,8 +21471,8 @@
       "interpreterPreferNative": false,
       "selfCensusMetadataMode": "retained-ps-built-prefix",
       "stageTwoRequiresActualPrefix": true,
-      "verified_execution": false,
-      "grammarMigrationComplete": false
+      "grammarMigrationComplete": false,
+      "verified_execution": false
     },
     "supersededCompletePSCompilerFixedPointCandidate": {
       "run": 42762560779,
@@ -21545,8 +21558,77 @@
       "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
       "run": 42824602117,
       "stageOneJob": 129858509851,
+      "job": 129858509851,
+      "stageTwoJob": null,
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-10 13:32:32 UTC"
+      "observedAt": "2026-11-10 13:41:45 UTC",
+      "pr": 248,
+      "branch": "ci/ps0-selfhost-fixed-point-20261110",
+      "moduleCount": 2569,
+      "wallClockMinutesPerStage": 360,
+      "compilerBuildTimeoutSeconds": 19800,
+      "sourceGrammar": true,
+      "interpreterPreferNative": false,
+      "selfCensusMetadataMode": "retained-ps-built-prefix",
+      "stageTwoRequiresActualPrefix": true,
+      "grammarMigrationComplete": false,
+      "verified_execution": false
+    },
+    "priorCompletePSCompilerFixedPointCandidates": [
+      {
+        "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+        "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
+        "run": 42770353333,
+        "stageOneJob": 129676437006,
+        "stageTwoJob": 129825598431,
+        "status": "FAIL",
+        "observedAt": "2026-11-10T06:46:18Z",
+        "pr": 248,
+        "branch": "ci/ps0-selfhost-fixed-point-20261110",
+        "moduleCount": 2569,
+        "wallClockMinutesPerStage": 360,
+        "compilerBuildTimeoutSeconds": 19800,
+        "sourceGrammar": true,
+        "interpreterPreferNative": false,
+        "selfCensusMetadataMode": "retained-ps-built-prefix",
+        "stageTwoRequiresActualPrefix": true,
+        "verified_execution": false,
+        "grammarMigrationComplete": false,
+        "stageTwoStatus": "SKIPPED",
+        "evidenceField": "canonicalSelfhostTimedGraphTerminalEvidence"
+      }
+    ],
+    "priorCompleteTransformedGraphCandidates": [
+      {
+        "source": "92b22875cf81199f10413661b633e50df4671fb6",
+        "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
+        "run": 42756129015,
+        "job": 129630835886,
+        "draftPR": 247,
+        "status": "FAIL",
+        "cancelInProgress": false,
+        "evidenceField": "canonicalDataGraphTerminalEvidence"
+      }
+    ],
+    "timedCompilerGraphRecoveryIndependentAudit": {
+      "run": 42825263378,
+      "job": 129860795044,
+      "status": "PASS",
+      "actualCFiles": 12,
+      "plans": 6,
+      "evidenceField": "timedCompilerGraphRecoveryIndependentAudit"
+    },
+    "timedCompilerGraphBroaderRegressions": {
+      "run": 42824866927,
+      "status": "FAIL",
+      "passedJobs": 29,
+      "failedJobs": 7,
+      "evidenceField": "timedCompilerGraphBroaderRegressions"
+    },
+    "timedCompilerGraphProjectRegressions": {
+      "run": 42826588007,
+      "status": "IN_PROGRESS",
+      "evidenceField": "timedCompilerGraphProjectRegressions"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -84633,13 +84715,25 @@
     }
   },
   "latestCompleteTransformedGraphCandidate": {
-    "source": "92b22875cf81199f10413661b633e50df4671fb6",
-    "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
-    "run": 42756129015,
-    "job": 129630835886,
-    "draftPR": 247,
+    "source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
+    "run": 42824602117,
+    "stageOneJob": 129858509851,
+    "job": 129858509851,
+    "stageTwoJob": null,
     "status": "IN_PROGRESS",
-    "cancelInProgress": false
+    "observedAt": "2026-11-10 13:41:45 UTC",
+    "pr": 248,
+    "branch": "ci/ps0-selfhost-fixed-point-20261110",
+    "moduleCount": 2569,
+    "wallClockMinutesPerStage": 360,
+    "compilerBuildTimeoutSeconds": 19800,
+    "sourceGrammar": true,
+    "interpreterPreferNative": false,
+    "selfCensusMetadataMode": "retained-ps-built-prefix",
+    "stageTwoRequiresActualPrefix": true,
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   },
   "legacyMappedBridgeInventory": {
     "source": "ac75f82a9b916e870cd4cbf590b5f79410427553",
@@ -84693,13 +84787,14 @@
     }
   },
   "completePSCompilerFixedPointCandidate": {
-    "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
-    "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
-    "run": 42770353333,
-    "stageOneJob": 129676437006,
+    "source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
+    "run": 42824602117,
+    "stageOneJob": 129858509851,
+    "job": 129858509851,
     "stageTwoJob": null,
     "status": "IN_PROGRESS",
-    "observedAt": "2026-11-10T06:46:18Z",
+    "observedAt": "2026-11-10 13:41:45 UTC",
     "pr": 248,
     "branch": "ci/ps0-selfhost-fixed-point-20261110",
     "moduleCount": 2569,
@@ -84709,8 +84804,8 @@
     "interpreterPreferNative": false,
     "selfCensusMetadataMode": "retained-ps-built-prefix",
     "stageTwoRequiresActualPrefix": true,
-    "verified_execution": false,
-    "grammarMigrationComplete": false
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   },
   "initialCompilerPrefixContractQualification": {
     "source": "6c71f6ef3f86815c179284c55177112e8af6014f",
@@ -85597,6 +85692,14 @@
         "artifact": {
           "id": 13767923653,
           "digest": "sha256:733b90842d9203df322b28a5e3dd03c9d27a1fa090d71495dad1ff44e810788d"
+        },
+        "independentlyRehashedC": {
+          "native": "2535435e2d041af8885043df1573656e5e194f41727bee11b185440491c16876",
+          "ps": "2535435e2d041af8885043df1573656e5e194f41727bee11b185440491c16876"
+        },
+        "publicOleanReceiptHashes": {
+          "native": "860026a9e24c6d248f145e307b1983fb5e8e940b3db86c36e6c502c3ac60b990",
+          "ps": "860026a9e24c6d248f145e307b1983fb5e8e940b3db86c36e6c502c3ac60b990"
         }
       },
       {
@@ -85609,6 +85712,14 @@
         "artifact": {
           "id": 13767154798,
           "digest": "sha256:0f357bb193f89d547615343ca982bc0b0d0b89c8027e25755b86ed4a6f8ca5fe"
+        },
+        "independentlyRehashedC": {
+          "native": "ef414dc2c180f31a94b52439e700c60c78d4ee56027788f8d03beacb2b2f44af",
+          "ps": "ef414dc2c180f31a94b52439e700c60c78d4ee56027788f8d03beacb2b2f44af"
+        },
+        "publicOleanReceiptHashes": {
+          "native": "de3f45292a5079359c72462ff5016187cd80e6a8f435608bec892c66ea04f163",
+          "ps": "de3f45292a5079359c72462ff5016187cd80e6a8f435608bec892c66ea04f163"
         }
       },
       {
@@ -85621,6 +85732,14 @@
         "artifact": {
           "id": 13768565240,
           "digest": "sha256:45861ad3d8d9eafa674ab94645ce6edc45341bf66c53ed0421566878b28e4af7"
+        },
+        "independentlyRehashedC": {
+          "native": "cf76c4406fdbc661b0e24370812c8654548a994738c59f62179eeb20d1238b80",
+          "ps": "cf76c4406fdbc661b0e24370812c8654548a994738c59f62179eeb20d1238b80"
+        },
+        "publicOleanReceiptHashes": {
+          "native": "8d4b7cd721b3233443d95bcdfb097f9fe60b2e7f043f91e02c3b6a2145a538b5",
+          "ps": "8d4b7cd721b3233443d95bcdfb097f9fe60b2e7f043f91e02c3b6a2145a538b5"
         }
       },
       {
@@ -85650,6 +85769,10 @@
         "actualCReceiptHashes": {
           "native": "d11b8991aeaadebcf6d9afd8d889a7b3b5098ad5a35efde086d8e00cbec5f875",
           "ps": "a3f8f330cb226f53eccfc6da18997d1f364ea311469137eebd62a78b9039ca47"
+        },
+        "independentlyRehashedC": {
+          "native": "d11b8991aeaadebcf6d9afd8d889a7b3b5098ad5a35efde086d8e00cbec5f875",
+          "ps": "a3f8f330cb226f53eccfc6da18997d1f364ea311469137eebd62a78b9039ca47"
         }
       },
       {
@@ -85670,6 +85793,10 @@
         "readerChangedCommonConstants": 0,
         "readerSelectedFlags": [],
         "actualCReceiptHashes": {
+          "native": "b30f12b76e06c7e0e7b195651d4e053a81d80b218bf1b828808e4303b8c58369",
+          "ps": "292eb121389b41fc21cb9bbfe9b1954bca89c2e592a1f2837ac05dd36d4a44d0"
+        },
+        "independentlyRehashedC": {
           "native": "b30f12b76e06c7e0e7b195651d4e053a81d80b218bf1b828808e4303b8c58369",
           "ps": "292eb121389b41fc21cb9bbfe9b1954bca89c2e592a1f2837ac05dd36d4a44d0"
         }
@@ -85761,6 +85888,10 @@
         "actualCReceiptHashes": {
           "native": "79fb0d8e6dc246dd476b886ef35a184239421292e8fe7532d43ecca6bd19679e",
           "ps": "4ba526540e78ae455d95e651e07942009a917af1aaa710b73a75369cff2e8e51"
+        },
+        "independentlyRehashedC": {
+          "native": "79fb0d8e6dc246dd476b886ef35a184239421292e8fe7532d43ecca6bd19679e",
+          "ps": "4ba526540e78ae455d95e651e07942009a917af1aaa710b73a75369cff2e8e51"
         }
       }
     ],
@@ -85781,8 +85912,14 @@
     "independent": {
       "runner": "6a89f513c83a2b957104679f4bf4fcb200d2558c",
       "run": 42825263378,
-      "status": "QUEUED",
-      "scope": "12 actual C files / six reconstructed plans / strict-pass public-olean receipt equality; target olean files not retained"
+      "status": "PASS",
+      "scope": "12 actual C files / six reconstructed plans / strict-pass public-olean receipt equality; target olean files not retained",
+      "job": 129860795044,
+      "artifact": {
+        "id": 13770141231,
+        "digest": "sha256:090d24dcddeabda03a5613008da520154e9f601ffe0eeabc831d898c3ba8c9f1"
+      },
+      "evidenceField": "timedCompilerGraphRecoveryIndependentAudit"
     },
     "history": [
       {
@@ -85820,6 +85957,489 @@
         "reason": "artifact path outside per-step working directory; corrected runner path"
       }
     },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  },
+  "timedCompilerGraphRecoveryIndependentAudit": {
+    "run": 42825263378,
+    "job": 129860795044,
+    "runner": "6a89f513c83a2b957104679f4bf4fcb200d2558c",
+    "artifact": {
+      "id": 13770141231,
+      "digest": "sha256:090d24dcddeabda03a5613008da520154e9f601ffe0eeabc831d898c3ba8c9f1"
+    },
+    "actual_c_files_rehashed": 12,
+    "grammar_migration_complete": false,
+    "producer_run": 42823677427,
+    "producer_source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "rows": [
+      {
+        "actual_c_sha256": {
+          "native": "ef414dc2c180f31a94b52439e700c60c78d4ee56027788f8d03beacb2b2f44af",
+          "ps": "ef414dc2c180f31a94b52439e700c60c78d4ee56027788f8d03beacb2b2f44af"
+        },
+        "compiled": true,
+        "definitions": 17,
+        "module": "Lean.Meta.Tactic.Cbv.ControlFlow",
+        "pinned_blob": "8fe30cc1f35b60a43cceac1c13c2f61524b5d92e",
+        "public_olean_receipt_sha256": {
+          "native": "de3f45292a5079359c72462ff5016187cd80e6a8f435608bec892c66ea04f163",
+          "ps": "de3f45292a5079359c72462ff5016187cd80e6a8f435608bec892c66ea04f163"
+        },
+        "qualification": "producer strict C/public olean PASS; independent actual C rehash"
+      },
+      {
+        "actual_c_sha256": {
+          "native": "d11b8991aeaadebcf6d9afd8d889a7b3b5098ad5a35efde086d8e00cbec5f875",
+          "ps": "a3f8f330cb226f53eccfc6da18997d1f364ea311469137eebd62a78b9039ca47"
+        },
+        "compiled": true,
+        "definitions": 8,
+        "module": "Lean.Compiler.LCNF.Simp.JpCases",
+        "pinned_blob": "80eb3b4f7b3c69da0c50c58d8860b5e65c709d2c",
+        "qualification": "target compiled; strict byte parity FAIL remains; no broad semantic-equivalence claim",
+        "reader_changed_constants": 1,
+        "reader_summary": {}
+      },
+      {
+        "actual_c_sha256": {
+          "native": "2535435e2d041af8885043df1573656e5e194f41727bee11b185440491c16876",
+          "ps": "2535435e2d041af8885043df1573656e5e194f41727bee11b185440491c16876"
+        },
+        "compiled": true,
+        "definitions": 1,
+        "module": "Lean.Meta.Tactic.Rewrite",
+        "pinned_blob": "f616c869ab7dd86e771fc22918303ab8b7aa2998",
+        "public_olean_receipt_sha256": {
+          "native": "860026a9e24c6d248f145e307b1983fb5e8e940b3db86c36e6c502c3ac60b990",
+          "ps": "860026a9e24c6d248f145e307b1983fb5e8e940b3db86c36e6c502c3ac60b990"
+        },
+        "qualification": "producer strict C/public olean PASS; independent actual C rehash"
+      },
+      {
+        "actual_c_sha256": {
+          "native": "b30f12b76e06c7e0e7b195651d4e053a81d80b218bf1b828808e4303b8c58369",
+          "ps": "292eb121389b41fc21cb9bbfe9b1954bca89c2e592a1f2837ac05dd36d4a44d0"
+        },
+        "compiled": true,
+        "definitions": 19,
+        "module": "Lean.Meta.MkIffOfInductiveProp",
+        "pinned_blob": "6826af10a3ea2f461432d2eb45e1b6c831883e27",
+        "qualification": "target compiled; strict byte parity FAIL remains; no broad semantic-equivalence claim",
+        "reader_changed_constants": 0,
+        "reader_summary": {}
+      },
+      {
+        "actual_c_sha256": {
+          "native": "79fb0d8e6dc246dd476b886ef35a184239421292e8fe7532d43ecca6bd19679e",
+          "ps": "4ba526540e78ae455d95e651e07942009a917af1aaa710b73a75369cff2e8e51"
+        },
+        "compiled": true,
+        "definitions": 26,
+        "module": "Lean.Elab.Syntax",
+        "pinned_blob": "7b11aaf4830c83cc828eb77f40de308c06307053",
+        "qualification": "target compiled; strict byte parity FAIL remains; no broad semantic-equivalence claim",
+        "reader_changed_constants": 11,
+        "reader_summary": {}
+      },
+      {
+        "actual_c_sha256": {
+          "native": "cf76c4406fdbc661b0e24370812c8654548a994738c59f62179eeb20d1238b80",
+          "ps": "cf76c4406fdbc661b0e24370812c8654548a994738c59f62179eeb20d1238b80"
+        },
+        "compiled": true,
+        "definitions": 107,
+        "module": "Lean.Server.Watchdog",
+        "pinned_blob": "dedb28154c483633b49a12d1689938209c1531c4",
+        "public_olean_receipt_sha256": {
+          "native": "8d4b7cd721b3233443d95bcdfb097f9fe60b2e7f043f91e02c3b6a2145a538b5",
+          "ps": "8d4b7cd721b3233443d95bcdfb097f9fe60b2e7f043f91e02c3b6a2145a538b5"
+        },
+        "qualification": "producer strict C/public olean PASS; independent actual C rehash"
+      }
+    ],
+    "schema": "ps0-terminal-recovery-artifact-audit/1",
+    "scope": "artifact fidelity and exact phase distinctions only; actual target public olean files were not retained and are not independently rehashed; no whole-compiler or fixed-point result",
+    "source_plans_reconstructed": 6,
+    "status": "PASS",
+    "verified_execution": false
+  },
+  "timedCompilerGraphBroaderRegressions": {
+    "source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "runner": "0831781ee63594cc37f9e9771f429e5d0c0ae47c",
+    "run": 42824866927,
+    "status": "FAIL",
+    "jobs": [
+      {
+        "job": 129859444852,
+        "name": "compiler-core",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445173,
+        "name": "compiler-natbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445212,
+        "name": "native-build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445306,
+        "name": "compiler-natlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445402,
+        "name": "compiler-fixtures",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "job": 129859445418,
+        "name": "compiler-prelude",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445487,
+        "name": "compiler-finbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445575,
+        "name": "compiler-iteratorempty",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445588,
+        "name": "compiler-natlemmas",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445658,
+        "name": "compiler-unless",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "job": 129859445682,
+        "name": "compiler-intlinear",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445689,
+        "name": "compiler-initwf",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445720,
+        "name": "compiler-options",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "job": 129859445738,
+        "name": "compiler-compilerm14",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445767,
+        "name": "compiler-ambiguousopen14",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445775,
+        "name": "compiler-stream",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445781,
+        "name": "compiler-grindac",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445782,
+        "name": "compiler-environment",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "job": 129859445803,
+        "name": "compiler-associative",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445808,
+        "name": "compiler-listattach",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445818,
+        "name": "compiler-arrayperm",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445826,
+        "name": "compiler-spredlaws",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445830,
+        "name": "compiler-nanosecond",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445874,
+        "name": "compiler-tzif",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445894,
+        "name": "compiler-parserbasic14",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "job": 129859445897,
+        "name": "compiler-setoption14",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859445966,
+        "name": "compiler-extdtreemapbasic",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859446014,
+        "name": "compiler-jsonrpc",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859446031,
+        "name": "compiler-synthinstance14",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "job": 129859446038,
+        "name": "compiler-signedbitvec",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859446064,
+        "name": "compiler-rangechar",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859446070,
+        "name": "compiler-persistenthashmap",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859446178,
+        "name": "compiler-bound-if-URIParser",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859446240,
+        "name": "compiler-bound-if-DiscrTreeMain",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859446304,
+        "name": "compiler-bound-if-AbstractMVars",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129859446486,
+        "name": "compiler-defeqattrib14",
+        "status": "completed",
+        "conclusion": "failure"
+      }
+    ],
+    "passedJobs": 29,
+    "failedJobs": 7,
+    "failures": [
+      {
+        "job": 129859445402,
+        "name": "compiler-fixtures",
+        "targetCompiled": true,
+        "scope": "LCNF.Basic strict public-olean bytes FAIL after target compilation; C bytes equal"
+      },
+      {
+        "job": 129859445658,
+        "name": "compiler-unless",
+        "targetCompiled": true,
+        "scope": "strict C bytes FAIL after target compilation"
+      },
+      {
+        "job": 129859445720,
+        "name": "compiler-options",
+        "targetCompiled": true,
+        "scope": "strict C bytes FAIL after target compilation"
+      },
+      {
+        "job": 129859445782,
+        "name": "compiler-environment",
+        "targetCompiled": true,
+        "scope": "strict C bytes FAIL after target compilation"
+      },
+      {
+        "job": 129859445894,
+        "name": "compiler-parserbasic14",
+        "targetCompiled": true,
+        "scope": "strict C bytes FAIL after target compilation"
+      },
+      {
+        "job": 129859446031,
+        "name": "compiler-synthinstance14",
+        "targetCompiled": true,
+        "scope": "strict C bytes FAIL after target compilation"
+      },
+      {
+        "job": 129859446486,
+        "name": "compiler-defeqattrib14",
+        "targetCompiled": true,
+        "scope": "strict C bytes FAIL after target compilation"
+      }
+    ]
+  },
+  "timedCompilerGraphProjectRegressions": {
+    "source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "runner": "bf95dd79d0d0e830c146e20cee28ec36956612d5",
+    "run": 42826588007,
+    "status": "IN_PROGRESS",
+    "observedAt": "2026-11-10 13:41:45 UTC",
+    "jobs": [
+      {
+        "job": 129865407598,
+        "name": "project-build",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "job": 129865407715,
+        "name": "operator-baseline",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "job": 129865407723,
+        "name": "term-monadic-qualified",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "job": 129865407791,
+        "name": "initializer-qualified",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "job": 129865407797,
+        "name": "proof-linked",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "job": 129865407941,
+        "name": "do-layout",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "job": 129865408352,
+        "name": "host-contract",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "jobTemplates": 7
+  },
+  "priorCompletePSCompilerFixedPointCandidates": [
+    {
+      "source": "cc92a4e1d344ab1e76d1c7e68dfbda00b7a85575",
+      "runner": "ba74f9b9db67c0ba2d50b1ded8fd16650bd4afa7",
+      "run": 42770353333,
+      "stageOneJob": 129676437006,
+      "stageTwoJob": 129825598431,
+      "status": "FAIL",
+      "observedAt": "2026-11-10T06:46:18Z",
+      "pr": 248,
+      "branch": "ci/ps0-selfhost-fixed-point-20261110",
+      "moduleCount": 2569,
+      "wallClockMinutesPerStage": 360,
+      "compilerBuildTimeoutSeconds": 19800,
+      "sourceGrammar": true,
+      "interpreterPreferNative": false,
+      "selfCensusMetadataMode": "retained-ps-built-prefix",
+      "stageTwoRequiresActualPrefix": true,
+      "verified_execution": false,
+      "grammarMigrationComplete": false,
+      "stageTwoStatus": "SKIPPED",
+      "evidenceField": "canonicalSelfhostTimedGraphTerminalEvidence"
+    }
+  ],
+  "priorCompleteTransformedGraphCandidates": [
+    {
+      "source": "92b22875cf81199f10413661b633e50df4671fb6",
+      "runner": "57aee6aebef51dda1e2adbecf450a5c1916dcac7",
+      "run": 42756129015,
+      "job": 129630835886,
+      "draftPR": 247,
+      "status": "FAIL",
+      "cancelInProgress": false,
+      "evidenceField": "canonicalDataGraphTerminalEvidence"
+    }
+  ],
+  "currentFullCompilerCandidate": {
+    "source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
+    "run": 42824602117,
+    "stageOneJob": 129858509851,
+    "job": 129858509851,
+    "stageTwoJob": null,
+    "status": "IN_PROGRESS",
+    "observedAt": "2026-11-10 13:41:45 UTC",
+    "pr": 248,
+    "branch": "ci/ps0-selfhost-fixed-point-20261110",
+    "moduleCount": 2569,
+    "wallClockMinutesPerStage": 360,
+    "compilerBuildTimeoutSeconds": 19800,
+    "sourceGrammar": true,
+    "interpreterPreferNative": false,
+    "selfCensusMetadataMode": "retained-ps-built-prefix",
+    "stageTwoRequiresActualPrefix": true,
     "grammarMigrationComplete": false,
     "verified_execution": false
   }
