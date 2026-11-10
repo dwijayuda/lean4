@@ -21527,6 +21527,26 @@
       "migratedFailures": 6,
       "probe": 42816376776,
       "evidenceField": "timedCompilerGraphFocusedEvidence"
+    },
+    "timedCompilerGraphRecovery": {
+      "source": "298395dde05464d06dca208fec5d0b74012297e4",
+      "run": 42823677427,
+      "targetCompilations": 6,
+      "plannedDefinitions": 178,
+      "strictMatrix": {
+        "PASS": 3,
+        "FAIL": 3
+      },
+      "probeJob": 129855293781,
+      "evidenceField": "timedCompilerGraphRecovery"
+    },
+    "currentFullCompilerCandidate": {
+      "source": "298395dde05464d06dca208fec5d0b74012297e4",
+      "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
+      "run": 42824602117,
+      "stageOneJob": 129858509851,
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-10 13:32:32 UTC"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -85542,5 +85562,265 @@
       "run": 42816376776,
       "status": "PENDING"
     }
+  },
+  "timedCompilerGraphRecovery": {
+    "source": "298395dde05464d06dca208fec5d0b74012297e4",
+    "runner": "1753320c93f3fcc01777913dac477346202861f0",
+    "run": 42823677427,
+    "probe": {
+      "job": 129855293781,
+      "status": "PASS",
+      "newControls": 14,
+      "previousTermShapes": 10,
+      "existingMatchesOrigins": 3,
+      "existingCalleeOrigins": 2,
+      "existingReservedCalleeGuards": 5,
+      "artifact": {
+        "id": 13768425340,
+        "digest": "sha256:0819b37dd3e9bd5c73335cb9ff7bdeec1bb6be4b92a001df2f66368526b488b5"
+      }
+    },
+    "targetCompilations": 6,
+    "plannedDefinitions": 178,
+    "strictMatrix": {
+      "PASS": 3,
+      "FAIL": 3
+    },
+    "modules": [
+      {
+        "fixture": "Rewrite19",
+        "module": "Lean.Meta.Tactic.Rewrite",
+        "job": 129855294131,
+        "plannedDefinitions": 1,
+        "targetCompiled": true,
+        "strictByteParity": "PASS",
+        "artifact": {
+          "id": 13767923653,
+          "digest": "sha256:733b90842d9203df322b28a5e3dd03c9d27a1fa090d71495dad1ff44e810788d"
+        }
+      },
+      {
+        "fixture": "CbvControlFlow19",
+        "module": "Lean.Meta.Tactic.Cbv.ControlFlow",
+        "job": 129855294248,
+        "plannedDefinitions": 17,
+        "targetCompiled": true,
+        "strictByteParity": "PASS",
+        "artifact": {
+          "id": 13767154798,
+          "digest": "sha256:0f357bb193f89d547615343ca982bc0b0d0b89c8027e25755b86ed4a6f8ca5fe"
+        }
+      },
+      {
+        "fixture": "Watchdog19",
+        "module": "Lean.Server.Watchdog",
+        "job": 129855294249,
+        "plannedDefinitions": 107,
+        "targetCompiled": true,
+        "strictByteParity": "PASS",
+        "artifact": {
+          "id": 13768565240,
+          "digest": "sha256:45861ad3d8d9eafa674ab94645ce6edc45341bf66c53ed0421566878b28e4af7"
+        }
+      },
+      {
+        "fixture": "JpCases19",
+        "module": "Lean.Compiler.LCNF.Simp.JpCases",
+        "job": 129855294192,
+        "plannedDefinitions": 8,
+        "targetCompiled": true,
+        "strictByteParity": "FAIL",
+        "artifact": {
+          "id": 13768048813,
+          "digest": "sha256:5ad1ce6af36e72c23822e0b6ff8994a36ff3f58c6659ff64c846949b7ac55ad0"
+        },
+        "publicOleanReceiptHashes": {
+          "native": "54b0723ab97e7937bd048d9008747808432136b50d96fba453a2261127aa3727",
+          "ps": "f296a4c30a649f9ecb2bd870ff6e4d37889aac512d2f4fbf0d98fc6a6f470644"
+        },
+        "readerChangedCommonConstants": 1,
+        "readerSelectedFlags": [
+          {
+            "name": "_private.Lean.Compiler.LCNF.Simp.JpCases.0.Lean.Compiler.LCNF.Simp.mkJpAlt.go",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          }
+        ],
+        "actualCReceiptHashes": {
+          "native": "d11b8991aeaadebcf6d9afd8d889a7b3b5098ad5a35efde086d8e00cbec5f875",
+          "ps": "a3f8f330cb226f53eccfc6da18997d1f364ea311469137eebd62a78b9039ca47"
+        }
+      },
+      {
+        "fixture": "MkIffInductive19",
+        "module": "Lean.Meta.MkIffOfInductiveProp",
+        "job": 129855294140,
+        "plannedDefinitions": 19,
+        "targetCompiled": true,
+        "strictByteParity": "FAIL",
+        "artifact": {
+          "id": 13768098308,
+          "digest": "sha256:746edcab7843a429016fc86ba1f40a60d4e5499e7cf413dfe3da5c7c829f1a89"
+        },
+        "publicOleanReceiptHashes": {
+          "native": "6618ff39b5dbbe1792d104de2892667044fcf5531a04069b89f3c18746b11f31",
+          "ps": "dfec453882022bf52f8a6527751fba642a94611d5957cc9c674267f3147427e7"
+        },
+        "readerChangedCommonConstants": 0,
+        "readerSelectedFlags": [],
+        "actualCReceiptHashes": {
+          "native": "b30f12b76e06c7e0e7b195651d4e053a81d80b218bf1b828808e4303b8c58369",
+          "ps": "292eb121389b41fc21cb9bbfe9b1954bca89c2e592a1f2837ac05dd36d4a44d0"
+        }
+      },
+      {
+        "fixture": "ElabSyntax19",
+        "module": "Lean.Elab.Syntax",
+        "job": 129855294225,
+        "plannedDefinitions": 26,
+        "targetCompiled": true,
+        "strictByteParity": "FAIL",
+        "artifact": {
+          "id": 13766749708,
+          "digest": "sha256:cc5c077b31ba53682be8acdfca648423899265b4b9a49249ebfd01536dab3326"
+        },
+        "publicOleanReceiptHashes": {
+          "native": "217a1d392881b2166815d4375dd3781af354c373d51cf71b84ed413f9c909255",
+          "ps": "ed4186311e2d332389c1b1eb407bb7a789c225e97622b87ba83875bc2da2dc3b"
+        },
+        "readerChangedCommonConstants": 11,
+        "readerSelectedFlags": [
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Term.toParserDescr.match_3",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Command.elabSyntax.match_5",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Command.elabSyntaxAbbrev.match_1",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "Lean.Elab.Command.elabSyntaxAbbrev",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "Lean.Elab.Command.elabSyntax",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Command.elabSyntaxAbbrev.match_3",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Command.elabSyntax.match_7",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Term.toParserDescr.match_5",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Term.toParserDescr.processAlias._unsafe_rec",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Command.elabSyntax.match_3",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          },
+          {
+            "name": "_private.Lean.Elab.Syntax.0.Lean.Elab.Command.elabSyntax.match_1",
+            "typeEqual": true,
+            "valueEqual": true,
+            "hintsEqual": true
+          }
+        ],
+        "actualCReceiptHashes": {
+          "native": "79fb0d8e6dc246dd476b886ef35a184239421292e8fe7532d43ecca6bd19679e",
+          "ps": "4ba526540e78ae455d95e651e07942009a917af1aaa710b73a75369cff2e8e51"
+        }
+      }
+    ],
+    "fullCandidate": {
+      "source": "298395dde05464d06dca208fec5d0b74012297e4",
+      "runner": "dadc926dd69cf341345bd74e45ebc224a7a12e9b",
+      "run": 42824602117,
+      "stageOneJob": 129858509851,
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-10 13:32:32 UTC"
+    },
+    "broad": {
+      "source": "298395dde05464d06dca208fec5d0b74012297e4",
+      "runner": "0831781ee63594cc37f9e9771f429e5d0c0ae47c",
+      "run": 42824866927,
+      "status": "QUEUED"
+    },
+    "independent": {
+      "runner": "6a89f513c83a2b957104679f4bf4fcb200d2558c",
+      "run": 42825263378,
+      "status": "QUEUED",
+      "scope": "12 actual C files / six reconstructed plans / strict-pass public-olean receipt equality; target olean files not retained"
+    },
+    "history": [
+      {
+        "source": "36a69a58663a6a0ac2b34fac320f6963826fbeba",
+        "run": 42819556372,
+        "scope": "JpCases target compiles; strict C FAIL; five other target compilations FAIL; six probe failures"
+      },
+      {
+        "source": "dfcbe67f43b494ec56908ed0ba9f482f43853a13",
+        "run": 42820570479,
+        "job": 129844770325,
+        "scope": "clean PS0 build fails: positioned parser hook precedes syntax node declaration; no target qualification"
+      },
+      {
+        "source": "67b5ca9e18da59edd554a50e7d4f0b1fed149603",
+        "run": 42820976779,
+        "scope": "three targets compile / Cbv strict PASS / JpCases and Rewrite strict C FAIL; Elab.Syntax, MkIff and Watchdog target compile failures; probe 11 PASS / three FAIL"
+      },
+      {
+        "source": "d2a5ed7c2bd864ad8e296dfa7a5875b239ea74ed",
+        "run": 42822590624,
+        "scope": "five targets compile / three strict PASS / two strict C FAIL / MkIff target compile FAIL; probe 11 PASS / three FAIL"
+      }
+    ],
+    "controlCorrections": {
+      "frozenR2BraceOwnership": "direct local := { term } is body grouping; protect original native collection with parentheses; no grammar or type-directed ownership change",
+      "nativeControlEnvironment": "exclude only legacy PS0.pscvBracedExpression from native collection control alternatives; retain every actual native alternative",
+      "unitCallSpelling": "two PS snippets used invalid pure (); corrected to pure(()) while native controls retain pure ()",
+      "capturePathPreflight": {
+        "source": "3808825343c1a1b6f7dcfe349920e047d270f60d",
+        "runner": "dd55ef324a413347552ccd38c301611718255842",
+        "run": 42817451665,
+        "job": 129834039665,
+        "status": "FAIL_BEFORE_PROBE",
+        "reason": "artifact path outside per-step working directory; corrected runner path"
+      }
+    },
+    "grammarMigrationComplete": false,
+    "verified_execution": false
   }
 }
