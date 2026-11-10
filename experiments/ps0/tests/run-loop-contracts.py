@@ -6,6 +6,10 @@ import json
 import os
 import shutil
 import subprocess
+import sys
+
+if len(sys.argv) != 1:
+    raise SystemExit('run-loop-contracts.py accepts no arguments')
 
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
