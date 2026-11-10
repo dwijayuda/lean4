@@ -1,5 +1,13 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-10 — qualified grammar continuation: full matrix and original diagnostic controls pending
+
+A new complete 38-job Linux matrix is pending at source **9ed6422e674437e1e2d7cd6dce190b2f7043462f**, runner **e07cd73d97503bdce969ebe540faa6810052a59e**, [42733594998](https://github.com/dwijayuda/pskernel/actions/runs/42733594998), following the independently qualified 61-definition finite checkpoint. The previous **5bd3b367 / 42726667178 / 38 PASS / independent 172-file** result retains its own source.
+
+The first original-coordinate probe at source **e5e2d27d8264bb0fa46d7b9b91a88338e6bb3ce9**, runner **3c08d300992d52fd1788b70b875355061ac2134c**, [42733276428 / 129556288616](https://github.com/dwijayuda/pskernel/actions/runs/42733276428/job/129556288616), failed in its **test harness search path**: direct ps0 execution could not import PS0.Policy. It produced **no coordinate observations** and is not evidence of a diagnostic adapter regression. Artifact **13725433160 / sha256:2c9e93a09f77f0a76a182e9ec99f9479715559dc0c0843c79b1cea8c04c64fb2**. The corrected probe uses native **lake env** for both controls and is pending at source **9a7b425c5c52a3eea47b915569e16e9e64cf3f18**, runner **24c4e721dd8a868cbdbd1a6985907087f19e58a8**, [42733692152](https://github.com/dwijayuda/pskernel/actions/runs/42733692152). No coordinate-remapping implementation is claimed yet.
+
+Source draft PR #20 now describes the complete thin-adapter scope and separate finite/matrix evidence. Graph sixteen remains in progress at its immutable source; whole canonical PS conversion and fixed point remain open.
+
 ## 2026-11-10 — suffices native grammar and source fidelity: independently qualified finite PASS
 
 Source **cbba1e79c8ba7ed5453ed75e5bfc8ba214e8c75b**, runner **3192aee60f078483faecbe09236d876bf36602ca**, [42732341309 / 129553211536](https://github.com/dwijayuda/pskernel/actions/runs/42732341309/job/129553211536), **PASS**: **61 mapped definitions / 48 private proof guards / 37 origin cases / 34 invalid PS gap rejections**. This is three distinct finite modules: ordinary **48 definitions**, Std.WP loop annotations **six**, and Init-only suffices **seven**. Lean's exact suffices parser and four-slot root/three-slot declaration are reused. Only type, from value, by-prime tactic sequence and continuation are adapted; named and anonymous binder/hygiene nodes, keyword, semicolon, ranges and native information remain intact. Five new origin checks cover these forms.

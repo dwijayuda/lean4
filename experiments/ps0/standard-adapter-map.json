@@ -17129,16 +17129,28 @@
       "verified_execution": false
     },
     "diagnosticOriginsTestFirstCandidate": {
+      "source": "9a7b425c5c52a3eea47b915569e16e9e64cf3f18",
+      "runner": "24c4e721dd8a868cbdbd1a6985907087f19e58a8",
+      "run": 42733692152,
+      "status": "PENDING_NATIVE_CONTROLLED_TEST_FIRST"
+    },
+    "sufficesBroaderMatrixCandidate": {
+      "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
+      "runner": "e07cd73d97503bdce969ebe540faa6810052a59e",
+      "run": 42733594998,
+      "status": "PENDING_LINUX_38_JOB_MATRIX"
+    },
+    "diagnosticOriginsEnvironmentFailure": {
       "source": "e5e2d27d8264bb0fa46d7b9b91a88338e6bb3ce9",
       "runner": "3c08d300992d52fd1788b70b875355061ac2134c",
       "run": 42733276428,
-      "status": "PENDING_TEST_FIRST",
-      "cases": [
-        "legacy-lf",
-        "legacy-crlf",
-        "modern-lf",
-        "modern-crlf"
-      ]
+      "job": 129556288616,
+      "status": "TEST_HARNESS_SEARCH_PATH_FAILURE_NO_COORDINATE_OBSERVATIONS",
+      "reason": "Direct PS executable lacked Lake LEAN_PATH; unknown module prefix PS0 prevented intended coordinate observations",
+      "artifact": {
+        "id": 13725433160,
+        "digest": "sha256:2c9e93a09f77f0a76a182e9ec99f9479715559dc0c0843c79b1cea8c04c64fb2"
+      }
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -77744,15 +77756,27 @@
     "verified_execution": false
   },
   "diagnosticOriginsTestFirstCandidate": {
+    "source": "9a7b425c5c52a3eea47b915569e16e9e64cf3f18",
+    "runner": "24c4e721dd8a868cbdbd1a6985907087f19e58a8",
+    "run": 42733692152,
+    "status": "PENDING_NATIVE_CONTROLLED_TEST_FIRST"
+  },
+  "sufficesBroaderMatrixCandidate": {
+    "source": "9ed6422e674437e1e2d7cd6dce190b2f7043462f",
+    "runner": "e07cd73d97503bdce969ebe540faa6810052a59e",
+    "run": 42733594998,
+    "status": "PENDING_LINUX_38_JOB_MATRIX"
+  },
+  "diagnosticOriginsEnvironmentFailure": {
     "source": "e5e2d27d8264bb0fa46d7b9b91a88338e6bb3ce9",
     "runner": "3c08d300992d52fd1788b70b875355061ac2134c",
     "run": 42733276428,
-    "status": "PENDING_TEST_FIRST",
-    "cases": [
-      "legacy-lf",
-      "legacy-crlf",
-      "modern-lf",
-      "modern-crlf"
-    ]
+    "job": 129556288616,
+    "status": "TEST_HARNESS_SEARCH_PATH_FAILURE_NO_COORDINATE_OBSERVATIONS",
+    "reason": "Direct PS executable lacked Lake LEAN_PATH; unknown module prefix PS0 prevented intended coordinate observations",
+    "artifact": {
+      "id": 13725433160,
+      "digest": "sha256:2c9e93a09f77f0a76a182e9ec99f9479715559dc0c0843c79b1cea8c04c64fb2"
+    }
   }
 }
