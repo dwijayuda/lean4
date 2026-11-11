@@ -1,5 +1,11 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-11 — Linux stage one builds the first 850 Lean object targets
+
+Linux [43039426271 / 130587016860](https://github.com/dwijayuda/pskernel/actions/runs/43039426271/job/130587016860) passed at source **b75a583592dc8bbe9046fd6e93784d8ef0365580**, build harness **5cfaede4b3aa5d1e521456866cc9f360f8ade15a** and runner **379d4fda49546a5d6b25744fccbdbddc356cb880**. Native Lake verified all **38,949** imported base checkpoint files, completed **2,630** tasks and logged **850** successful Lean object targets with zero Init/Std object rebuilds. It sealed **57,650** files. Checkpoint artifact **13870203959 / sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0**, **1,095,085,726 bytes**. Phase evidence artifact **13870312862 / sha256:6ac6eaf80b99adcbf08711d84ff476cc7f5faf0d5c5ce699440618900f6f5b03**.
+
+The remaining Lean target job **130642380018** is running. Full Lake linking and runtime checks, the PS-built second stage, and the independent fixed-point audit remain pending.
+
 ## 2026-11-11 — retain the Lean target plan through the source checkout
 
 Recovery [43038127959 / 130582449228](https://github.com/dwijayuda/pskernel/actions/runs/43038127959/job/130582449228), runner **45c349de95a4fa483018ccb5fc64f4b750aa802c**, verified all **38949** base checkpoint files and stopped before Lake started. The compiler source checkout removed the separately checked-out target-plan directory. Diagnostic artifact **13863792161 / sha256:da66732e97b76ec9186c1cf27f4c0aa3064b6789c5c51a295fb27ea36f4eee06** preserves the failure. The corrected runner checks out the target plan after the compiler source and checks that it exists before restoring the archive.
