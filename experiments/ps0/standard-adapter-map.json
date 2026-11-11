@@ -19250,27 +19250,31 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Monitor stage-one-compiler job 130154095736 in exact full candidate 42885813901; preserve remaining full graph/link/runtime/census, actual PS-built second stage and complete audit gates",
+    "nextAction": "Monitor the resumed Linux compiler phases in run 43038127959 through full graph linking, actual PS-built second stage and independent fixed-point audit",
     "currentPSCompilerCandidate": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
-      "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
-      "run": 42885813901,
-      "qualificationJob": 130073735643,
-      "job": 130154095736,
-      "status": "IN_PROGRESS",
-      "phase": "stage-one-compiler",
-      "observedAt": "2026-11-10 21:58:08 UTC",
-      "pr": 255,
-      "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification",
-      "basePhase": {
-        "job": 130075349238,
+      "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
+      "runner": "45c349de95a4fa483018ccb5fc64f4b750aa802c",
+      "run": 43038127959,
+      "pr": 257,
+      "qualification": {
+        "job": 130582354724,
         "status": "PASS",
-        "targets": 1147,
-        "checkpointFiles": 38949,
+        "checkpointContracts": 16
+      },
+      "job": 130582449228,
+      "phase": "stage-one-compiler-early",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-11T14:25:45Z",
+      "earlyTargets": 850,
+      "graphRunId": 42885813901,
+      "baseCheckpoint": {
+        "run": 42885813901,
+        "job": 130075349238,
         "artifact": 13806062082,
+        "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4",
         "auditRun": 42909326507,
-        "auditJob": 130155498486,
-        "evidenceField": "nativeLakeBasePhase"
+        "auditJob": 130155498486
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -19288,6 +19292,13 @@
       "auditJob": 130155498486,
       "actualTargetOutputFilesRehashed": 3441,
       "evidenceField": "nativeLakeBasePhase"
+    },
+    "nativeLakeCompilerRecovery": {
+      "run": 43038127959,
+      "job": 130582449228,
+      "phase": "stage-one-compiler-early",
+      "status": "IN_PROGRESS",
+      "evidenceField": "nativeLakeCompilerRecovery"
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -84725,24 +84736,28 @@
     },
     "candidate": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
-      "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
-      "run": 42885813901,
-      "qualificationJob": 130073735643,
-      "job": 130154095736,
-      "status": "IN_PROGRESS",
-      "phase": "stage-one-compiler",
-      "observedAt": "2026-11-10 21:58:08 UTC",
-      "pr": 255,
-      "scope": "Full 2569-module inventory preserved; base/compiler/final native Lake slices followed by actual PS-built second stage and independent audit; no completed compiler qualification",
-      "basePhase": {
-        "job": 130075349238,
+      "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
+      "runner": "45c349de95a4fa483018ccb5fc64f4b750aa802c",
+      "run": 43038127959,
+      "pr": 257,
+      "qualification": {
+        "job": 130582354724,
         "status": "PASS",
-        "targets": 1147,
-        "checkpointFiles": 38949,
+        "checkpointContracts": 16
+      },
+      "job": 130582449228,
+      "phase": "stage-one-compiler-early",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-11T14:25:45Z",
+      "earlyTargets": 850,
+      "graphRunId": 42885813901,
+      "baseCheckpoint": {
+        "run": 42885813901,
+        "job": 130075349238,
         "artifact": 13806062082,
+        "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4",
         "auditRun": 42909326507,
-        "auditJob": 130155498486,
-        "evidenceField": "nativeLakeBasePhase"
+        "auditJob": 130155498486
       }
     },
     "previousGatedRun": {
@@ -84939,5 +84954,62 @@
       "status": "IN_PROGRESS"
     },
     "scope": "1147 actual Init/Std native module object targets and independently rehashed retained outputs/censuses only; no complete compiler graph/link/runtime/PS-built second-stage/fixed-point qualification"
+  },
+  "nativeLakeCompilerRecovery": {
+    "timeout": {
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "runner": "ba0f8845164eef2ba55b042562ab1061ace775da",
+      "run": 42885813901,
+      "job": 130154095736,
+      "status": "FAIL_NATIVE_LAKE_TIMEOUT",
+      "completedAt": "2026-11-11T03:39:43Z",
+      "configuredTimeoutSeconds": 19800,
+      "lastSuccessfulTask": {
+        "index": 3580,
+        "total": 3603,
+        "module": "Lean.Elab.MutualDef"
+      },
+      "leanObjectTasksLogged": 1215,
+      "baseObjectRebuildsLogged": 0,
+      "reportedTargetCompilationErrors": 0,
+      "verifiedBaseFiles": 38949,
+      "diagnosticArtifact": {
+        "id": 13826188112,
+        "size_in_bytes": 241961745,
+        "digest": "sha256:f9ea71963c28b8cf3437551363d9b5adc385932aa22ea8c2c0eaf200b74dade0"
+      },
+      "skippedJobs": [
+        130305734980,
+        130305735427,
+        130305736324,
+        130305736587
+      ]
+    },
+    "recovery": {
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
+      "runner": "45c349de95a4fa483018ccb5fc64f4b750aa802c",
+      "run": 43038127959,
+      "pr": 257,
+      "qualification": {
+        "job": 130582354724,
+        "status": "PASS",
+        "checkpointContracts": 16
+      },
+      "job": 130582449228,
+      "phase": "stage-one-compiler-early",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-11T14:25:45Z",
+      "earlyTargets": 850,
+      "graphRunId": 42885813901,
+      "baseCheckpoint": {
+        "run": 42885813901,
+        "job": 130075349238,
+        "artifact": 13806062082,
+        "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4",
+        "auditRun": 42909326507,
+        "auditJob": 130155498486
+      }
+    }
   }
 }
