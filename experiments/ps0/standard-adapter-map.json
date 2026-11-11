@@ -19250,7 +19250,7 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Verify the 368-target checkpoint and NoConfusion diagnostic, then continue through final Lean dependencies, full linking, PS-built stage two and independent audit",
+    "nextAction": "Qualify the parser repair against the exact NoConfusion module and source census while the unchanged middle slice runs, then complete full Lake linking, the PS-built second stage, and the independent fixed-point audit.",
     "currentPSCompilerCandidate": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -19265,7 +19265,7 @@
       "job": 130823423731,
       "phase": "stage-one-compiler-middle",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T22:16:50Z",
+      "observedAt": "2026-11-11T22:57:33Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
@@ -19294,10 +19294,27 @@
         9
       ],
       "diagnostic": {
-        "run": 43110379784,
-        "job": 130824498076,
-        "runner": "5d30b434fae4a7134c231f6be32cda19d6e08cbf",
         "target": "Lean.Meta.Constructions.NoConfusion",
+        "run": 43114702098,
+        "job": 130839540932,
+        "runner": "3dceb646a4c192fda8f5e8e68dd0ceb96d2583ee",
+        "artifact": 13897099954,
+        "digest": "sha256:9ab9a72f18b2756efcbcfb096e0dd4115ee423bb65b3fbc4783cdfa0fceda254",
+        "declaration": "mkNoConfusionCtorArg",
+        "psLines": [
+          29,
+          52
+        ],
+        "elapsedSeconds": 18.06,
+        "exitCode": 124,
+        "originalNativeSdkSeconds": 0.59,
+        "status": "REPRODUCED_PREFIX_TIMEOUT"
+      },
+      "parserCandidate": {
+        "run": 43115983517,
+        "job": 130843980508,
+        "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
         "status": "IN_PROGRESS"
       }
     },
@@ -84772,7 +84789,7 @@
       "job": 130823423731,
       "phase": "stage-one-compiler-middle",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T22:16:50Z",
+      "observedAt": "2026-11-11T22:57:33Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
@@ -84801,10 +84818,27 @@
         9
       ],
       "diagnostic": {
-        "run": 43110379784,
-        "job": 130824498076,
-        "runner": "5d30b434fae4a7134c231f6be32cda19d6e08cbf",
         "target": "Lean.Meta.Constructions.NoConfusion",
+        "run": 43114702098,
+        "job": 130839540932,
+        "runner": "3dceb646a4c192fda8f5e8e68dd0ceb96d2583ee",
+        "artifact": 13897099954,
+        "digest": "sha256:9ab9a72f18b2756efcbcfb096e0dd4115ee423bb65b3fbc4783cdfa0fceda254",
+        "declaration": "mkNoConfusionCtorArg",
+        "psLines": [
+          29,
+          52
+        ],
+        "elapsedSeconds": 18.06,
+        "exitCode": 124,
+        "originalNativeSdkSeconds": 0.59,
+        "status": "REPRODUCED_PREFIX_TIMEOUT"
+      },
+      "parserCandidate": {
+        "run": 43115983517,
+        "job": 130843980508,
+        "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
         "status": "IN_PROGRESS"
       }
     },
@@ -85079,7 +85113,7 @@
       "job": 130823423731,
       "phase": "stage-one-compiler-middle",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T22:16:50Z",
+      "observedAt": "2026-11-11T22:57:33Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
@@ -85108,10 +85142,27 @@
         9
       ],
       "diagnostic": {
-        "run": 43110379784,
-        "job": 130824498076,
-        "runner": "5d30b434fae4a7134c231f6be32cda19d6e08cbf",
         "target": "Lean.Meta.Constructions.NoConfusion",
+        "run": 43114702098,
+        "job": 130839540932,
+        "runner": "3dceb646a4c192fda8f5e8e68dd0ceb96d2583ee",
+        "artifact": 13897099954,
+        "digest": "sha256:9ab9a72f18b2756efcbcfb096e0dd4115ee423bb65b3fbc4783cdfa0fceda254",
+        "declaration": "mkNoConfusionCtorArg",
+        "psLines": [
+          29,
+          52
+        ],
+        "elapsedSeconds": 18.06,
+        "exitCode": 124,
+        "originalNativeSdkSeconds": 0.59,
+        "status": "REPRODUCED_PREFIX_TIMEOUT"
+      },
+      "parserCandidate": {
+        "run": 43115983517,
+        "job": 130843980508,
+        "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
         "status": "IN_PROGRESS"
       }
     },
@@ -85178,6 +85229,58 @@
         "id": 13894284613,
         "digest": "sha256:f20af34f8469a8bfea3a48d2e5cecc16979938b0d012039249d7e6aeeaa0ffcf",
         "size_in_bytes": 107835784
+      }
+    },
+    "noConfusionParserDiagnosis": {
+      "target": "Lean.Meta.Constructions.NoConfusion",
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "graphRunId": 42885813901,
+      "checkpointFiles": 57650,
+      "exactFacet": {
+        "run": 43110379784,
+        "job": 130824498076,
+        "runner": "5d30b434fae4a7134c231f6be32cda19d6e08cbf",
+        "artifact": 13897610623,
+        "digest": "sha256:5ae618a128e694934e9ec7afa8a9fdc41e2e256f84cb17153cefa3f24cb48d8a",
+        "facet": "c.o",
+        "originalNativeSdkSeconds": 0.82,
+        "observedStallSeconds": 900,
+        "status": "PROBE_TERMINATED"
+      },
+      "parserStacks": {
+        "run": 43113272990,
+        "job": 130834602395,
+        "runner": "d42d133efdd7c744ddaae465e9550595e1afa1b5",
+        "artifact": 13897811905,
+        "digest": "sha256:06741971da32bfc89920dd7bb8ec8e73895b48ed4e5acccd38c6d5d464516d41",
+        "stackSamples": 3,
+        "activeFrame": "Lean_Parser_runLongestMatchParser",
+        "originalNativeSdkSeconds": 0.69,
+        "observedStallSeconds": 243,
+        "status": "PROBE_TERMINATED"
+      },
+      "firstDeclaration": {
+        "run": 43114702098,
+        "job": 130839540932,
+        "runner": "3dceb646a4c192fda8f5e8e68dd0ceb96d2583ee",
+        "artifact": 13897099954,
+        "digest": "sha256:9ab9a72f18b2756efcbcfb096e0dd4115ee423bb65b3fbc4783cdfa0fceda254",
+        "declaration": "mkNoConfusionCtorArg",
+        "psLines": [
+          29,
+          52
+        ],
+        "elapsedSeconds": 18.06,
+        "exitCode": 124,
+        "originalNativeSdkSeconds": 0.59,
+        "status": "REPRODUCED_PREFIX_TIMEOUT"
+      },
+      "candidate": {
+        "run": 43115983517,
+        "job": 130843980508,
+        "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "status": "IN_PROGRESS"
       }
     }
   }

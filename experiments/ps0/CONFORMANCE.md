@@ -1,5 +1,15 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-12 — Linux diagnosis of the remaining NoConfusion object target
+
+The exact `Lean.Meta.Constructions.NoConfusion:c.o` probe verified the 57,650 files of checkpoint `13870203959` and observed the PS process for 900 seconds before termination. The pinned SDK accepted the original module in 0.82 seconds in a separate frontend invocation. Runner `5d30b434fae4a7134c231f6be32cda19d6e08cbf`. Artifact `13897610623` (`sha256:5ae618a128e694934e9ec7afa8a9fdc41e2e256f84cb17153cefa3f24cb48d8a`). [Linux job 130824498076](https://github.com/dwijayuda/pskernel/actions/runs/43110379784/job/130824498076)
+
+Three debugger samples from the exact PS invocation put the active thread in `Lean_Parser_runLongestMatchParser`, `longestMatchStep`, `leadingParserAux`, and `trailingLoop`. That probe terminated the process after 243 seconds. Runner `d42d133efdd7c744ddaae465e9550595e1afa1b5`. Artifact `13897811905` (`sha256:06741971da32bfc89920dd7bb8ec8e73895b48ed4e5acccd38c6d5d464516d41`). [Linux job 130834602395](https://github.com/dwijayuda/pskernel/actions/runs/43113272990/job/130834602395)
+
+The original driver reproduced the timeout in the generated `mkNoConfusionCtorArg` declaration at PS lines 29–52 using the exact Lake setup and import environment. The prefix exited 124 after 18.06 seconds. The separate native SDK frontend invocation exited 0 in 0.59 seconds. Runner `3dceb646a4c192fda8f5e8e68dd0ceb96d2583ee`. Artifact `13897099954` (`sha256:9ab9a72f18b2756efcbcfb096e0dd4115ee423bb65b3fbc4783cdfa0fceda254`). [Linux job 130839540932](https://github.com/dwijayuda/pskernel/actions/runs/43114702098/job/130839540932)
+
+Source `0c98bc2d0fefeadc242bdeec725a108a265a8111` enters the PS term category directly from the do-expression adapter so Lean can share its category cache across alternatives. Linux job `130843980508` is testing the exact declaration and full generated module with a separately built driver. Run `43110044806` continues the 368-target slice with its original pinned driver. Full Lake linking, a PS-built second stage, and the independent fixed-point audit remain pending. [Candidate parser job](https://github.com/dwijayuda/pskernel/actions/runs/43115983517/job/130843980508)
+
 ## 2026-11-12 — checkpoint 368 Lean targets before the final nine
 
 Linux [43039426271 / 130642380018](https://github.com/dwijayuda/pskernel/actions/runs/43039426271/job/130642380018) at source **b75a583592dc8bbe9046fd6e93784d8ef0365580**, harness **5cfaede4b3aa5d1e521456866cc9f360f8ade15a**, runner **379d4fda49546a5d6b25744fccbdbddc356cb880**, verified all **57,650** early checkpoint files and built **368 of 377** requested Lean object targets. GitHub cancelled the job at the six-hour limit. The last logged task was **2735/2753 Lean.Elab.BuiltinEvalCommand:c.o** and the log reports no target compilation errors. Diagnostic artifact **13894284613 / sha256:f20af34f8469a8bfea3a48d2e5cecc16979938b0d012039249d7e6aeeaa0ffcf**. No second Lean checkpoint was sealed.
