@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-11 — retain the Lean target plan through the source checkout
+
+Recovery [43038127959 / 130582449228](https://github.com/dwijayuda/pskernel/actions/runs/43038127959/job/130582449228), runner **45c349de95a4fa483018ccb5fc64f4b750aa802c**, verified all **38949** base checkpoint files and stopped before Lake started. The compiler source checkout removed the separately checked-out target-plan directory. Diagnostic artifact **13863792161 / sha256:da66732e97b76ec9186c1cf27f4c0aa3064b6789c5c51a295fb27ea36f4eee06** preserves the failure. The corrected runner checks out the target plan after the compiler source and checks that it exists before restoring the archive.
+
+Corrected recovery [43039426271](https://github.com/dwijayuda/pskernel/actions/runs/43039426271), runner **379d4fda49546a5d6b25744fccbdbddc356cb880**, exact compiler source **b75a583592dc8bbe9046fd6e93784d8ef0365580**, build harness **5cfaede4b3aa5d1e521456866cc9f360f8ade15a**. Linux qualification job **130586916765 PASS** ran **16** checkpoint contracts and verified base artifact **13806062082 / sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4**. The **850**-target Lean build job **130587016860** is in progress. Full linking and runtime qualification, the actual PS-built second stage, fixed point and independent artifact audit remain pending.
+
 ## 2026-11-11 — resume the full PS compiler from its audited base checkpoint after Lean-phase timeout
 
 Linux [42885813901 / 130154095736](https://github.com/dwijayuda/pskernel/actions/runs/42885813901/job/130154095736) at source **b75a583592dc8bbe9046fd6e93784d8ef0365580**, runner **ba0f8845164eef2ba55b042562ab1061ace775da**, verified all **38949** retained base files and reached the configured **19800-second build timeout**. The final successful Lake task was **3580/3603 Lean.Elab.MutualDef**. The log records **1215 successful Lean object tasks**, no Init/Std object rebuilds and no reported target compilation errors. The task counter includes cached work. Diagnostic artifact **13826188112 / sha256:f9ea71963c28b8cf3437551363d9b5adc385932aa22ea8c2c0eaf200b74dade0** retains source and partial census evidence. The failed phase did not produce a Lean build checkpoint. Final linking and all second-stage jobs were skipped.

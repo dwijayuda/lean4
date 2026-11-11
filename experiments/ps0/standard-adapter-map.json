@@ -19250,22 +19250,22 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Monitor the resumed Linux compiler phases in run 43038127959 through full graph linking, actual PS-built second stage and independent fixed-point audit",
+    "nextAction": "Monitor recovery run 43039426271 through full graph linking, actual PS-built second stage and independent fixed-point audit",
     "currentPSCompilerCandidate": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
       "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
-      "runner": "45c349de95a4fa483018ccb5fc64f4b750aa802c",
-      "run": 43038127959,
+      "runner": "379d4fda49546a5d6b25744fccbdbddc356cb880",
+      "run": 43039426271,
       "pr": 257,
       "qualification": {
-        "job": 130582354724,
+        "job": 130586916765,
         "status": "PASS",
         "checkpointContracts": 16
       },
-      "job": 130582449228,
+      "job": 130587016860,
       "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T14:25:45Z",
+      "observedAt": "2026-11-11T14:32:45Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
@@ -19294,8 +19294,8 @@
       "evidenceField": "nativeLakeBasePhase"
     },
     "nativeLakeCompilerRecovery": {
-      "run": 43038127959,
-      "job": 130582449228,
+      "run": 43039426271,
+      "job": 130587016860,
       "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
@@ -84737,18 +84737,18 @@
     "candidate": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
       "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
-      "runner": "45c349de95a4fa483018ccb5fc64f4b750aa802c",
-      "run": 43038127959,
+      "runner": "379d4fda49546a5d6b25744fccbdbddc356cb880",
+      "run": 43039426271,
       "pr": 257,
       "qualification": {
-        "job": 130582354724,
+        "job": 130586916765,
         "status": "PASS",
         "checkpointContracts": 16
       },
-      "job": 130582449228,
+      "job": 130587016860,
       "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T14:25:45Z",
+      "observedAt": "2026-11-11T14:32:45Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
@@ -84985,7 +84985,7 @@
         130305736587
       ]
     },
-    "recovery": {
+    "firstRecovery": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
       "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
       "runner": "45c349de95a4fa483018ccb5fc64f4b750aa802c",
@@ -84998,8 +84998,40 @@
       },
       "job": 130582449228,
       "phase": "stage-one-compiler-early",
-      "status": "IN_PROGRESS",
+      "status": "FAIL_MISSING_TARGET_PLAN_AFTER_SOURCE_CHECKOUT",
       "observedAt": "2026-11-11T14:25:45Z",
+      "earlyTargets": 850,
+      "graphRunId": 42885813901,
+      "baseCheckpoint": {
+        "run": 42885813901,
+        "job": 130075349238,
+        "artifact": 13806062082,
+        "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4",
+        "auditRun": 42909326507,
+        "auditJob": 130155498486
+      },
+      "verifiedBaseFiles": 38949,
+      "nativeLakeStarted": false,
+      "diagnosticArtifact": {
+        "id": 13863792161,
+        "digest": "sha256:da66732e97b76ec9186c1cf27f4c0aa3064b6789c5c51a295fb27ea36f4eee06"
+      }
+    },
+    "recovery": {
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
+      "runner": "379d4fda49546a5d6b25744fccbdbddc356cb880",
+      "run": 43039426271,
+      "pr": 257,
+      "qualification": {
+        "job": 130586916765,
+        "status": "PASS",
+        "checkpointContracts": 16
+      },
+      "job": 130587016860,
+      "phase": "stage-one-compiler-early",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-11T14:32:45Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
