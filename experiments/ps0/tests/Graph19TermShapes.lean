@@ -50,6 +50,8 @@ run_cmd do
       "withLocalDeclD(`_a, α, fun a => do isDefEq((← inferType((eAbst.instantiate1 a))), eType))"),
     ("unless-inline-do-call", "do\n  unless (← withLocalDeclD `_a α fun a => do isDefEq (← inferType (eAbst.instantiate1 a)) eType) do\n    pure ()",
       "do\n  unless (← withLocalDeclD(`_a, α, fun a => do isDefEq((← inferType((eAbst.instantiate1 a))), eType))) do\n    pure(())"),
+    ("nested-do-continuation-calls", "do\n  step x fun x => do\n  step x fun x => do\n  step x fun x => do\n  withContext x do\n  step x fun x => do\n  withContext x do\n    pure x",
+      "do\n  step(x, fun x => do\n  step(x, fun x => do\n  step(x, fun x => do\n  withContext(x, do\n  step(x, fun x => do\n  withContext(x, do\n    pure(x)))))))"),
     ("inline-do-pattern", "do let ⟨mvar', fvars⟩ ← nCasesProd n mv h\n       let mvar'' ← mvar'.tryClear fvars.getLast!\n       pure ⟨mvar'', fvars⟩",
       "do let ⟨mvar', fvars⟩ ← nCasesProd n mv h\n       let mvar'' ← mvar'.tryClear fvars.getLast!\n       pure ⟨mvar'', fvars⟩"),
     ("nested-do-condition", "do\n  while (← do\n    let fullName := (← getCurrNamespace) ++ name\n    hasConst fullName <||> (withoutExporting <| hasConst (mkPrivateName (← getEnv) fullName))) do\n    pure ()",
@@ -88,4 +90,4 @@ run_cmd do
         logInfo m!"GRAPH19_COMMAND {label}: FAIL {message}"
         failures := failures + 1
   unless failures == 0 do throwError "GRAPH19_REGRESSIONS: {failures} failures"
-  logInfo "GRAPH19_REGRESSIONS: PASS 14 cases"
+  logInfo "GRAPH19_REGRESSIONS: PASS 15 cases"
