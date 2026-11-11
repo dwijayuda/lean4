@@ -21665,22 +21665,22 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Monitor the remaining Lean targets in job 130642380018, then verify native Lake linking, actual PS-built stage two and independent fixed point",
+    "nextAction": "Verify the 368-target checkpoint and NoConfusion diagnostic, then continue through final Lean dependencies, full linking, PS-built stage two and independent audit",
     "currentPSCompilerCandidate": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
-      "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
-      "runner": "379d4fda49546a5d6b25744fccbdbddc356cb880",
-      "run": 43039426271,
-      "pr": 257,
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+      "run": 43110044806,
+      "pr": 258,
       "qualification": {
-        "job": 130586916765,
+        "job": 130823342593,
         "status": "PASS",
-        "checkpointContracts": 16
+        "checkpointContracts": 18
       },
-      "job": 130642380018,
-      "phase": "stage-one-compiler",
+      "job": 130823423731,
+      "phase": "stage-one-compiler-middle",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T16:31:39Z",
+      "observedAt": "2026-11-11T22:16:50Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
@@ -21696,6 +21696,24 @@
         "job": 130587016860,
         "checkpoint": 13870203959,
         "checkpointFiles": 57650
+      },
+      "checkpointImport": {
+        "run": 43039426271,
+        "job": 130587016860,
+        "artifact": 13870203959,
+        "digest": "sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0"
+      },
+      "leanTargetPartitions": [
+        850,
+        368,
+        9
+      ],
+      "diagnostic": {
+        "run": 43110379784,
+        "job": 130824498076,
+        "runner": "5d30b434fae4a7134c231f6be32cda19d6e08cbf",
+        "target": "Lean.Meta.Constructions.NoConfusion",
+        "status": "IN_PROGRESS"
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -21715,9 +21733,9 @@
       "evidenceField": "nativeLakeBasePhase"
     },
     "nativeLakeCompilerRecovery": {
-      "run": 43039426271,
-      "job": 130642380018,
-      "phase": "stage-one-compiler",
+      "run": 43110044806,
+      "job": 130823423731,
+      "phase": "stage-one-compiler-middle",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
     }
@@ -87138,19 +87156,19 @@
     },
     "candidate": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
-      "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
-      "runner": "379d4fda49546a5d6b25744fccbdbddc356cb880",
-      "run": 43039426271,
-      "pr": 257,
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+      "run": 43110044806,
+      "pr": 258,
       "qualification": {
-        "job": 130586916765,
+        "job": 130823342593,
         "status": "PASS",
-        "checkpointContracts": 16
+        "checkpointContracts": 18
       },
-      "job": 130642380018,
-      "phase": "stage-one-compiler",
+      "job": 130823423731,
+      "phase": "stage-one-compiler-middle",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T16:31:39Z",
+      "observedAt": "2026-11-11T22:16:50Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
@@ -87166,6 +87184,24 @@
         "job": 130587016860,
         "checkpoint": 13870203959,
         "checkpointFiles": 57650
+      },
+      "checkpointImport": {
+        "run": 43039426271,
+        "job": 130587016860,
+        "artifact": 13870203959,
+        "digest": "sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0"
+      },
+      "leanTargetPartitions": [
+        850,
+        368,
+        9
+      ],
+      "diagnostic": {
+        "run": 43110379784,
+        "job": 130824498076,
+        "runner": "5d30b434fae4a7134c231f6be32cda19d6e08cbf",
+        "target": "Lean.Meta.Constructions.NoConfusion",
+        "status": "IN_PROGRESS"
       }
     },
     "previousGatedRun": {
@@ -87427,19 +87463,19 @@
     },
     "recovery": {
       "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
-      "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
-      "runner": "379d4fda49546a5d6b25744fccbdbddc356cb880",
-      "run": 43039426271,
-      "pr": 257,
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+      "run": 43110044806,
+      "pr": 258,
       "qualification": {
-        "job": 130586916765,
+        "job": 130823342593,
         "status": "PASS",
-        "checkpointContracts": 16
+        "checkpointContracts": 18
       },
-      "job": 130642380018,
-      "phase": "stage-one-compiler",
+      "job": 130823423731,
+      "phase": "stage-one-compiler-middle",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T16:31:39Z",
+      "observedAt": "2026-11-11T22:16:50Z",
       "earlyTargets": 850,
       "graphRunId": 42885813901,
       "baseCheckpoint": {
@@ -87455,6 +87491,24 @@
         "job": 130587016860,
         "checkpoint": 13870203959,
         "checkpointFiles": 57650
+      },
+      "checkpointImport": {
+        "run": 43039426271,
+        "job": 130587016860,
+        "artifact": 13870203959,
+        "digest": "sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0"
+      },
+      "leanTargetPartitions": [
+        850,
+        368,
+        9
+      ],
+      "diagnostic": {
+        "run": 43110379784,
+        "job": 130824498076,
+        "runner": "5d30b434fae4a7134c231f6be32cda19d6e08cbf",
+        "target": "Lean.Meta.Constructions.NoConfusion",
+        "status": "IN_PROGRESS"
       }
     },
     "stageOneEarly": {
@@ -87486,6 +87540,41 @@
         }
       ],
       "nextJob": 130642380018
+    },
+    "stageOneLateCancelled": {
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "buildHarnessSource": "5cfaede4b3aa5d1e521456866cc9f360f8ade15a",
+      "runner": "379d4fda49546a5d6b25744fccbdbddc356cb880",
+      "run": 43039426271,
+      "job": 130642380018,
+      "status": "CANCELLED_GITHUB_JOB_TIMEOUT",
+      "verifiedCheckpointFiles": 57650,
+      "objectTargetsCompleted": 368,
+      "objectTargetsRequested": 377,
+      "lastLakeTask": {
+        "index": 2735,
+        "total": 2753,
+        "module": "Lean.Elab.BuiltinEvalCommand:c.o"
+      },
+      "lastBuildAt": "2026-11-11T20:21:45.1823795Z",
+      "cancellationAt": "2026-11-11T22:07:31.0329043Z",
+      "reportedTargetCompilationErrors": 0,
+      "remainingTargets": [
+        "Lean",
+        "Lean.Elab",
+        "Lean.Elab.Declaration",
+        "Lean.Elab.Inductive",
+        "Lean.Elab.MutualInductive",
+        "Lean.Elab.Structure",
+        "Lean.Meta",
+        "Lean.Meta.Constructions",
+        "Lean.Meta.Constructions.NoConfusion"
+      ],
+      "diagnosticArtifact": {
+        "id": 13894284613,
+        "digest": "sha256:f20af34f8469a8bfea3a48d2e5cecc16979938b0d012039249d7e6aeeaa0ffcf",
+        "size_in_bytes": 107835784
+      }
     }
   }
 }

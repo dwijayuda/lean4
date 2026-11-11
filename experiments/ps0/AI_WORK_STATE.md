@@ -1,5 +1,13 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-12 — checkpoint 368 Lean targets before the final nine
+
+Linux [43039426271 / 130642380018](https://github.com/dwijayuda/pskernel/actions/runs/43039426271/job/130642380018) at source **b75a583592dc8bbe9046fd6e93784d8ef0365580**, harness **5cfaede4b3aa5d1e521456866cc9f360f8ade15a**, runner **379d4fda49546a5d6b25744fccbdbddc356cb880**, verified all **57,650** early checkpoint files and built **368 of 377** requested Lean object targets. GitHub cancelled the job at the six-hour limit. The last logged task was **2735/2753 Lean.Elab.BuiltinEvalCommand:c.o** and the log reports no target compilation errors. Diagnostic artifact **13894284613 / sha256:f20af34f8469a8bfea3a48d2e5cecc16979938b0d012039249d7e6aeeaa0ffcf**. No second Lean checkpoint was sealed.
+
+Continuation [43110044806](https://github.com/dwijayuda/pskernel/actions/runs/43110044806) pins the same compiler source, build harness **dc3c66b1c71cb64f96384a07599d50361e56137d** and runner **0751db1aae6a383f780f557a5c8f2eb647bfa851**. Qualification job **130823342593 PASS** ran **18** contracts and verified the successful 850-target checkpoint **13870203959 / sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0** from run **43039426271**, job **130587016860**. The middle job **130823423731** builds the 368 targets from the previous completion log before the final nine targets run separately. The graph paths remain anchored to run **42885813901** for stage comparison.
+
+An isolated Linux diagnostic [43110379784 / 130824498076](https://github.com/dwijayuda/pskernel/actions/runs/43110379784/job/130824498076) profiles the unresolved `Lean.Meta.Constructions.NoConfusion` target against the same checkpoint. The remaining targets include its consumers and umbrella modules. Full native Lake linking, PS-built stage two and independent fixed-point qualification are pending.
+
 ## 2026-11-11 — Linux stage one builds the first 850 Lean object targets
 
 Linux [43039426271 / 130587016860](https://github.com/dwijayuda/pskernel/actions/runs/43039426271/job/130587016860) passed at source **b75a583592dc8bbe9046fd6e93784d8ef0365580**, build harness **5cfaede4b3aa5d1e521456866cc9f360f8ade15a** and runner **379d4fda49546a5d6b25744fccbdbddc356cb880**. Native Lake verified all **38,949** imported base checkpoint files, completed **2,630** tasks and logged **850** successful Lean object targets with zero Init/Std object rebuilds. It sealed **57,650** files. Checkpoint artifact **13870203959 / sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0**, **1,095,085,726 bytes**. Phase evidence artifact **13870312862 / sha256:6ac6eaf80b99adcbf08711d84ff476cc7f5faf0d5c5ce699440618900f6f5b03**.
