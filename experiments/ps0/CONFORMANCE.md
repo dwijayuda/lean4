@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-12 — Linux NoConfusion parser regression passed
+
+Linux run `43115983517`, job `130843980508`, built PS0 source `0c98bc2d0fefeadc242bdeec725a108a265a8111` with pinned Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. The repaired driver exited 0 in **2.24 s** for PS lines 29–52 and in **33.66 s** for the full `Lean.Meta.Constructions.NoConfusion` module. The probe verified 57,650 retained checkpoint files and used the original Lake setup and import paths. It emitted C, public `.olean`, and `.ilean` with hashes recorded in the machine-readable ledger. The probe invoked the frontend directly. Native object and full-link qualification belong to the new build. Runner `8cca8e2e6a74456299025f7d0c18af12123658a8`. Artifact `13897584156` (`sha256:5e3d089a6ad6cbfdbc9a54a898e5b1350a0d59119fef741d728f2b0301c21f23`, 838,281 bytes). [Linux regression job](https://github.com/dwijayuda/pskernel/actions/runs/43115983517/job/130843980508)
+
+The clean two-stage lane uses the repaired driver and builds fresh Init/Std and Lean object slices for stage one, then links and builds stage two with the actual PS-built prefix. The 1,227 Lean targets are partitioned into 850, 368, and 9. Runner `ca75baadef520113bcdd2eb243934b1bd58e1e4c`, source `0c98bc2d0fefeadc242bdeec725a108a265a8111`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. The preceding run `43110044806` retains its original source and driver pin. The clean lane has not yet produced either linked compiler. [Clean Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43117013891)
+
 ## 2026-11-12 — Linux diagnosis of the remaining NoConfusion object target
 
 The exact `Lean.Meta.Constructions.NoConfusion:c.o` probe verified the 57,650 files of checkpoint `13870203959` and observed the PS process for 900 seconds before termination. The pinned SDK accepted the original module in 0.82 seconds in a separate frontend invocation. Runner `5d30b434fae4a7134c231f6be32cda19d6e08cbf`. Artifact `13897610623` (`sha256:5ae618a128e694934e9ec7afa8a9fdc41e2e256f84cb17153cefa3f24cb48d8a`). [Linux job 130824498076](https://github.com/dwijayuda/pskernel/actions/runs/43110379784/job/130824498076)

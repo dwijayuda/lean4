@@ -21665,72 +21665,56 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Qualify the parser repair against the exact NoConfusion module and source census while the unchanged middle slice runs, then complete full Lake linking, the PS-built second stage, and the independent fixed-point audit.",
+    "nextAction": "Follow the clean repaired-source native Lake stage-one build and link, the PS-built stage-two build and link, and the independent fixed-point audit. Keep full qualification pending until both stages and the audit pass.",
     "currentPSCompilerCandidate": {
-      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "run": 43117013891,
+      "pr": 260,
+      "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
-      "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
-      "run": 43110044806,
-      "pr": 258,
-      "qualification": {
-        "job": 130823342593,
-        "status": "PASS",
-        "checkpointContracts": 18
-      },
-      "job": 130823423731,
-      "phase": "stage-one-compiler-middle",
+      "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+      "job": 130847498507,
+      "phase": "checkpoint-qualification",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T22:57:33Z",
-      "earlyTargets": 850,
-      "graphRunId": 42885813901,
-      "baseCheckpoint": {
-        "run": 42885813901,
-        "job": 130075349238,
-        "artifact": 13806062082,
-        "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4",
-        "auditRun": 42909326507,
-        "auditJob": 130155498486
-      },
-      "earlyLean": {
-        "status": "PASS_EARLY_LEAN_OBJECT_TARGETS",
-        "job": 130587016860,
-        "checkpoint": 13870203959,
-        "checkpointFiles": 57650
-      },
-      "checkpointImport": {
-        "run": 43039426271,
-        "job": 130587016860,
-        "artifact": 13870203959,
-        "digest": "sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0"
-      },
+      "observedAt": "2026-11-11T23:05:18Z",
       "leanTargetPartitions": [
         850,
         368,
         9
       ],
-      "diagnostic": {
-        "target": "Lean.Meta.Constructions.NoConfusion",
-        "run": 43114702098,
-        "job": 130839540932,
-        "runner": "3dceb646a4c192fda8f5e8e68dd0ceb96d2583ee",
-        "artifact": 13897099954,
-        "digest": "sha256:9ab9a72f18b2756efcbcfb096e0dd4115ee423bb65b3fbc4783cdfa0fceda254",
-        "declaration": "mkNoConfusionCtorArg",
-        "psLines": [
-          29,
-          52
-        ],
-        "elapsedSeconds": 18.06,
-        "exitCode": 124,
-        "originalNativeSdkSeconds": 0.59,
-        "status": "REPRODUCED_PREFIX_TIMEOUT"
-      },
+      "bootstrapCheckpointPolicy": "clean same-source, same-run producer checkpoints",
       "parserCandidate": {
         "run": 43115983517,
         "job": 130843980508,
         "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
         "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
-        "status": "IN_PROGRESS"
+        "status": "PASS_FOCUSED_FRONTEND",
+        "verifiedCheckpointFiles": 57650,
+        "prefix": {
+          "psLines": [
+            29,
+            52
+          ],
+          "exitCode": 0,
+          "seconds": 2.24
+        },
+        "module": {
+          "exitCode": 0,
+          "seconds": 33.66,
+          "psSha256": "d635f571a1fb8235d34fd67037602fd9e72df055a9e3f87a721b11fc188b782f",
+          "publicOleanSha256": "7eb1a90fc69c13f3aba976e4274f5cb91de397387c6f40b28c36181ff2237b33",
+          "ileanSha256": "4aeecd58fbe215b7ee4d5ae96e7704bcc33ae2e5eb998865ff70c032e9ee0e14",
+          "cSha256": "c6d8eb78dda3acfd2e95b1b0ce79cb9ebc1653bc077eebb066b3fd371f82c219"
+        },
+        "driverSha256": "c0a4e421522eed55b89ffb2dddeb4002ef345705603bbc8379048ced8e6359ba",
+        "artifact": 13897584156,
+        "digest": "sha256:5e3d089a6ad6cbfdbc9a54a898e5b1350a0d59119fef741d728f2b0301c21f23",
+        "artifactBytes": 838281
+      },
+      "precedingCandidate": {
+        "run": 43110044806,
+        "job": 130823423731,
+        "status": "IN_PROGRESS",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -21750,9 +21734,9 @@
       "evidenceField": "nativeLakeBasePhase"
     },
     "nativeLakeCompilerRecovery": {
-      "run": 43110044806,
-      "job": 130823423731,
-      "phase": "stage-one-compiler-middle",
+      "run": 43117013891,
+      "job": 130847498507,
+      "phase": "checkpoint-qualification",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
     }
@@ -87172,70 +87156,54 @@
       ]
     },
     "candidate": {
-      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "run": 43117013891,
+      "pr": 260,
+      "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
-      "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
-      "run": 43110044806,
-      "pr": 258,
-      "qualification": {
-        "job": 130823342593,
-        "status": "PASS",
-        "checkpointContracts": 18
-      },
-      "job": 130823423731,
-      "phase": "stage-one-compiler-middle",
+      "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+      "job": 130847498507,
+      "phase": "checkpoint-qualification",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T22:57:33Z",
-      "earlyTargets": 850,
-      "graphRunId": 42885813901,
-      "baseCheckpoint": {
-        "run": 42885813901,
-        "job": 130075349238,
-        "artifact": 13806062082,
-        "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4",
-        "auditRun": 42909326507,
-        "auditJob": 130155498486
-      },
-      "earlyLean": {
-        "status": "PASS_EARLY_LEAN_OBJECT_TARGETS",
-        "job": 130587016860,
-        "checkpoint": 13870203959,
-        "checkpointFiles": 57650
-      },
-      "checkpointImport": {
-        "run": 43039426271,
-        "job": 130587016860,
-        "artifact": 13870203959,
-        "digest": "sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0"
-      },
+      "observedAt": "2026-11-11T23:05:18Z",
       "leanTargetPartitions": [
         850,
         368,
         9
       ],
-      "diagnostic": {
-        "target": "Lean.Meta.Constructions.NoConfusion",
-        "run": 43114702098,
-        "job": 130839540932,
-        "runner": "3dceb646a4c192fda8f5e8e68dd0ceb96d2583ee",
-        "artifact": 13897099954,
-        "digest": "sha256:9ab9a72f18b2756efcbcfb096e0dd4115ee423bb65b3fbc4783cdfa0fceda254",
-        "declaration": "mkNoConfusionCtorArg",
-        "psLines": [
-          29,
-          52
-        ],
-        "elapsedSeconds": 18.06,
-        "exitCode": 124,
-        "originalNativeSdkSeconds": 0.59,
-        "status": "REPRODUCED_PREFIX_TIMEOUT"
-      },
+      "bootstrapCheckpointPolicy": "clean same-source, same-run producer checkpoints",
       "parserCandidate": {
         "run": 43115983517,
         "job": 130843980508,
         "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
         "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
-        "status": "IN_PROGRESS"
+        "status": "PASS_FOCUSED_FRONTEND",
+        "verifiedCheckpointFiles": 57650,
+        "prefix": {
+          "psLines": [
+            29,
+            52
+          ],
+          "exitCode": 0,
+          "seconds": 2.24
+        },
+        "module": {
+          "exitCode": 0,
+          "seconds": 33.66,
+          "psSha256": "d635f571a1fb8235d34fd67037602fd9e72df055a9e3f87a721b11fc188b782f",
+          "publicOleanSha256": "7eb1a90fc69c13f3aba976e4274f5cb91de397387c6f40b28c36181ff2237b33",
+          "ileanSha256": "4aeecd58fbe215b7ee4d5ae96e7704bcc33ae2e5eb998865ff70c032e9ee0e14",
+          "cSha256": "c6d8eb78dda3acfd2e95b1b0ce79cb9ebc1653bc077eebb066b3fd371f82c219"
+        },
+        "driverSha256": "c0a4e421522eed55b89ffb2dddeb4002ef345705603bbc8379048ced8e6359ba",
+        "artifact": 13897584156,
+        "digest": "sha256:5e3d089a6ad6cbfdbc9a54a898e5b1350a0d59119fef741d728f2b0301c21f23",
+        "artifactBytes": 838281
+      },
+      "precedingCandidate": {
+        "run": 43110044806,
+        "job": 130823423731,
+        "status": "IN_PROGRESS",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
       }
     },
     "previousGatedRun": {
@@ -87496,70 +87464,54 @@
       }
     },
     "recovery": {
-      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "run": 43117013891,
+      "pr": 260,
+      "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
-      "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
-      "run": 43110044806,
-      "pr": 258,
-      "qualification": {
-        "job": 130823342593,
-        "status": "PASS",
-        "checkpointContracts": 18
-      },
-      "job": 130823423731,
-      "phase": "stage-one-compiler-middle",
+      "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+      "job": 130847498507,
+      "phase": "checkpoint-qualification",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T22:57:33Z",
-      "earlyTargets": 850,
-      "graphRunId": 42885813901,
-      "baseCheckpoint": {
-        "run": 42885813901,
-        "job": 130075349238,
-        "artifact": 13806062082,
-        "digest": "sha256:ef30cb64c1b9c7cda8f9036055d93ed2241cf910aac1b885333eedc18bcf15f4",
-        "auditRun": 42909326507,
-        "auditJob": 130155498486
-      },
-      "earlyLean": {
-        "status": "PASS_EARLY_LEAN_OBJECT_TARGETS",
-        "job": 130587016860,
-        "checkpoint": 13870203959,
-        "checkpointFiles": 57650
-      },
-      "checkpointImport": {
-        "run": 43039426271,
-        "job": 130587016860,
-        "artifact": 13870203959,
-        "digest": "sha256:1ef7c1283e1eed8a43d34a5465d3855f2535d462dcb349f85b336e93b86a4de0"
-      },
+      "observedAt": "2026-11-11T23:05:18Z",
       "leanTargetPartitions": [
         850,
         368,
         9
       ],
-      "diagnostic": {
-        "target": "Lean.Meta.Constructions.NoConfusion",
-        "run": 43114702098,
-        "job": 130839540932,
-        "runner": "3dceb646a4c192fda8f5e8e68dd0ceb96d2583ee",
-        "artifact": 13897099954,
-        "digest": "sha256:9ab9a72f18b2756efcbcfb096e0dd4115ee423bb65b3fbc4783cdfa0fceda254",
-        "declaration": "mkNoConfusionCtorArg",
-        "psLines": [
-          29,
-          52
-        ],
-        "elapsedSeconds": 18.06,
-        "exitCode": 124,
-        "originalNativeSdkSeconds": 0.59,
-        "status": "REPRODUCED_PREFIX_TIMEOUT"
-      },
+      "bootstrapCheckpointPolicy": "clean same-source, same-run producer checkpoints",
       "parserCandidate": {
         "run": 43115983517,
         "job": 130843980508,
         "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
         "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
-        "status": "IN_PROGRESS"
+        "status": "PASS_FOCUSED_FRONTEND",
+        "verifiedCheckpointFiles": 57650,
+        "prefix": {
+          "psLines": [
+            29,
+            52
+          ],
+          "exitCode": 0,
+          "seconds": 2.24
+        },
+        "module": {
+          "exitCode": 0,
+          "seconds": 33.66,
+          "psSha256": "d635f571a1fb8235d34fd67037602fd9e72df055a9e3f87a721b11fc188b782f",
+          "publicOleanSha256": "7eb1a90fc69c13f3aba976e4274f5cb91de397387c6f40b28c36181ff2237b33",
+          "ileanSha256": "4aeecd58fbe215b7ee4d5ae96e7704bcc33ae2e5eb998865ff70c032e9ee0e14",
+          "cSha256": "c6d8eb78dda3acfd2e95b1b0ce79cb9ebc1653bc077eebb066b3fd371f82c219"
+        },
+        "driverSha256": "c0a4e421522eed55b89ffb2dddeb4002ef345705603bbc8379048ced8e6359ba",
+        "artifact": 13897584156,
+        "digest": "sha256:5e3d089a6ad6cbfdbc9a54a898e5b1350a0d59119fef741d728f2b0301c21f23",
+        "artifactBytes": 838281
+      },
+      "precedingCandidate": {
+        "run": 43110044806,
+        "job": 130823423731,
+        "status": "IN_PROGRESS",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
       }
     },
     "stageOneEarly": {
@@ -87677,6 +87629,87 @@
         "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
         "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
         "status": "IN_PROGRESS"
+      }
+    },
+    "noConfusionParserRepair": {
+      "candidate": {
+        "run": 43115983517,
+        "job": 130843980508,
+        "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "status": "PASS_FOCUSED_FRONTEND",
+        "verifiedCheckpointFiles": 57650,
+        "prefix": {
+          "psLines": [
+            29,
+            52
+          ],
+          "exitCode": 0,
+          "seconds": 2.24
+        },
+        "module": {
+          "exitCode": 0,
+          "seconds": 33.66,
+          "psSha256": "d635f571a1fb8235d34fd67037602fd9e72df055a9e3f87a721b11fc188b782f",
+          "publicOleanSha256": "7eb1a90fc69c13f3aba976e4274f5cb91de397387c6f40b28c36181ff2237b33",
+          "ileanSha256": "4aeecd58fbe215b7ee4d5ae96e7704bcc33ae2e5eb998865ff70c032e9ee0e14",
+          "cSha256": "c6d8eb78dda3acfd2e95b1b0ce79cb9ebc1653bc077eebb066b3fd371f82c219"
+        },
+        "driverSha256": "c0a4e421522eed55b89ffb2dddeb4002ef345705603bbc8379048ced8e6359ba",
+        "artifact": 13897584156,
+        "digest": "sha256:5e3d089a6ad6cbfdbc9a54a898e5b1350a0d59119fef741d728f2b0301c21f23",
+        "artifactBytes": 838281
+      },
+      "cleanLane": {
+        "run": 43117013891,
+        "pr": 260,
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+        "job": 130847498507,
+        "phase": "checkpoint-qualification",
+        "status": "IN_PROGRESS",
+        "observedAt": "2026-11-11T23:05:18Z",
+        "leanTargetPartitions": [
+          850,
+          368,
+          9
+        ],
+        "bootstrapCheckpointPolicy": "clean same-source, same-run producer checkpoints",
+        "parserCandidate": {
+          "run": 43115983517,
+          "job": 130843980508,
+          "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
+          "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+          "status": "PASS_FOCUSED_FRONTEND",
+          "verifiedCheckpointFiles": 57650,
+          "prefix": {
+            "psLines": [
+              29,
+              52
+            ],
+            "exitCode": 0,
+            "seconds": 2.24
+          },
+          "module": {
+            "exitCode": 0,
+            "seconds": 33.66,
+            "psSha256": "d635f571a1fb8235d34fd67037602fd9e72df055a9e3f87a721b11fc188b782f",
+            "publicOleanSha256": "7eb1a90fc69c13f3aba976e4274f5cb91de397387c6f40b28c36181ff2237b33",
+            "ileanSha256": "4aeecd58fbe215b7ee4d5ae96e7704bcc33ae2e5eb998865ff70c032e9ee0e14",
+            "cSha256": "c6d8eb78dda3acfd2e95b1b0ce79cb9ebc1653bc077eebb066b3fd371f82c219"
+          },
+          "driverSha256": "c0a4e421522eed55b89ffb2dddeb4002ef345705603bbc8379048ced8e6359ba",
+          "artifact": 13897584156,
+          "digest": "sha256:5e3d089a6ad6cbfdbc9a54a898e5b1350a0d59119fef741d728f2b0301c21f23",
+          "artifactBytes": 838281
+        },
+        "precedingCandidate": {
+          "run": 43110044806,
+          "job": 130823423731,
+          "status": "IN_PROGRESS",
+          "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
+        }
       }
     }
   }
