@@ -19257,10 +19257,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130847498507,
-      "phase": "checkpoint-qualification",
+      "job": 130847635697,
+      "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T23:05:18Z",
+      "observedAt": "2026-11-11T23:11:21Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -19300,6 +19300,27 @@
         "job": 130823423731,
         "status": "IN_PROGRESS",
         "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
+      },
+      "qualification": {
+        "job": 130847498507,
+        "checkpointContracts": 18,
+        "status": "PASS"
+      },
+      "parserRegression": {
+        "run": 43117448148,
+        "job": 130848975477,
+        "runner": "40e101f0ba996ca02f0f6ab71ed2cfe26ba59d88",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "result": "PASS",
+        "termShapeCases": 15,
+        "nestedDoContinuationLoweredSyntax": "PASS",
+        "nativeDoLayout": "PASS",
+        "nativeUnless": "PASS",
+        "nativeLocalRecursion": "PASS",
+        "regressionCommit": "849488185fa9a53cec25c9313b465f684bf2e9f7",
+        "artifact": 13898518380,
+        "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
+        "artifactBytes": 7734
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -19320,8 +19341,8 @@
     },
     "nativeLakeCompilerRecovery": {
       "run": 43117013891,
-      "job": 130847498507,
-      "phase": "checkpoint-qualification",
+      "job": 130847635697,
+      "phase": "stage-one-base",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
     }
@@ -84765,10 +84786,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130847498507,
-      "phase": "checkpoint-qualification",
+      "job": 130847635697,
+      "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T23:05:18Z",
+      "observedAt": "2026-11-11T23:11:21Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -84808,6 +84829,27 @@
         "job": 130823423731,
         "status": "IN_PROGRESS",
         "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
+      },
+      "qualification": {
+        "job": 130847498507,
+        "checkpointContracts": 18,
+        "status": "PASS"
+      },
+      "parserRegression": {
+        "run": 43117448148,
+        "job": 130848975477,
+        "runner": "40e101f0ba996ca02f0f6ab71ed2cfe26ba59d88",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "result": "PASS",
+        "termShapeCases": 15,
+        "nestedDoContinuationLoweredSyntax": "PASS",
+        "nativeDoLayout": "PASS",
+        "nativeUnless": "PASS",
+        "nativeLocalRecursion": "PASS",
+        "regressionCommit": "849488185fa9a53cec25c9313b465f684bf2e9f7",
+        "artifact": 13898518380,
+        "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
+        "artifactBytes": 7734
       }
     },
     "previousGatedRun": {
@@ -85073,10 +85115,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130847498507,
-      "phase": "checkpoint-qualification",
+      "job": 130847635697,
+      "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T23:05:18Z",
+      "observedAt": "2026-11-11T23:11:21Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -85116,6 +85158,27 @@
         "job": 130823423731,
         "status": "IN_PROGRESS",
         "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
+      },
+      "qualification": {
+        "job": 130847498507,
+        "checkpointContracts": 18,
+        "status": "PASS"
+      },
+      "parserRegression": {
+        "run": 43117448148,
+        "job": 130848975477,
+        "runner": "40e101f0ba996ca02f0f6ab71ed2cfe26ba59d88",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "result": "PASS",
+        "termShapeCases": 15,
+        "nestedDoContinuationLoweredSyntax": "PASS",
+        "nativeDoLayout": "PASS",
+        "nativeUnless": "PASS",
+        "nativeLocalRecursion": "PASS",
+        "regressionCommit": "849488185fa9a53cec25c9313b465f684bf2e9f7",
+        "artifact": 13898518380,
+        "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
+        "artifactBytes": 7734
       }
     },
     "stageOneEarly": {
@@ -85315,6 +85378,22 @@
           "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
         }
       }
+    },
+    "noConfusionParserFixtures": {
+      "run": 43117448148,
+      "job": 130848975477,
+      "runner": "40e101f0ba996ca02f0f6ab71ed2cfe26ba59d88",
+      "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+      "result": "PASS",
+      "termShapeCases": 15,
+      "nestedDoContinuationLoweredSyntax": "PASS",
+      "nativeDoLayout": "PASS",
+      "nativeUnless": "PASS",
+      "nativeLocalRecursion": "PASS",
+      "regressionCommit": "849488185fa9a53cec25c9313b465f684bf2e9f7",
+      "artifact": 13898518380,
+      "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
+      "artifactBytes": 7734
     }
   }
 }
