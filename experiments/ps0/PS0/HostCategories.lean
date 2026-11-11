@@ -56,7 +56,12 @@ private def operands (roles : Array (Name × Name)) (parser : Parser) : Parser :
   operands #[(`term, `psTerm)] Lean.Parser.Term.termReturn
 
 @[run_parser_attribute_hooks] def expressionElem : Parser :=
-  operands #[(`term, `psTerm)] Lean.Parser.Term.doExpr
+  -- Both do-expression alternatives read the same PS operand. Enter it directly
+  -- so longest-match alternatives can reuse Lean's category cache.
+  leadingNode ``Lean.Parser.Term.doExpr leadPrec <|
+    Lean.Parser.Term.notFollowedByRedefinedTermToken >> categoryParser `psTerm 0 >>
+      notFollowedBy (symbol ":=" <|> Lean.Parser.Term.leftArrow)
+        "unexpected token after 'expr' in 'do' block"
 
 @[run_parser_attribute_hooks] def nativeDoOperand : Parser :=
   withFn (fun parse ctx initial =>
