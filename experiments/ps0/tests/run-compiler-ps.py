@@ -29,7 +29,7 @@ parser.add_argument('--stage-source')
 parser.add_argument('--build-slice', choices=['base', 'compiler', 'finish'], default='finish')
 parser.add_argument('--resume-build', type=Path)
 parser.add_argument('--checkpoint-run-id', help='Producer run ID when resuming across workflows')
-parser.add_argument('--compiler-part', choices=['early', 'late'])
+parser.add_argument('--compiler-part', choices=['early', 'middle', 'late'])
 parser.add_argument('--compiler-target-plan', type=Path)
 parser.add_argument('--workspace', type=Path, help='Pinned compiler source checkout for a separately pinned harness')
 args = parser.parse_args()
@@ -53,6 +53,7 @@ if bool(args.compiler_part) != bool(args.compiler_target_plan) or (args.compiler
     parser.error('compiler partitions require --compiler-part and --compiler-target-plan in the compiler slice')
 ROOT = args.workspace.resolve() if args.workspace else Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
+target_plan = json.loads(args.compiler_target_plan.read_text()) if args.compiler_target_plan else None
 stage = verify_compiler_prefix(args.stage_artifact, args.stage_source) if args.stage_artifact else None
 if stage:
     args.driver, args.compare = Path(stage['driver']), Path(stage['migration'])
@@ -92,11 +93,17 @@ run_id = os.environ.get('GITHUB_RUN_ID', str(os.getpid()))
 graph_run_id = baseline.get('native_lake_graph_run_id', run_id) if baseline else run_id
 checkpoint_parent_run_id = args.checkpoint_run_id or run_id
 if args.resume_build:
-    previous = 'base' if args.build_slice == 'compiler' and args.compiler_part != 'late' else 'compiler'
+    previous = 'base' if args.build_slice == 'compiler' and args.compiler_part in (None, 'early') else 'compiler'
     checkpoint = verify_checkpoint(ROOT, args.resume_build, source=os.environ['PS0_SOURCE_SHA'],
         phase=previous, run_id=checkpoint_parent_run_id, driver=driver)
     state = checkpoint['state']
-    assert (state.get('compiler_part') == 'early') == (args.compiler_part == 'late')
+    if args.compiler_part == 'middle':
+        assert state.get('compiler_part') == 'early', 'middle partition requires early checkpoint'
+    elif args.compiler_part == 'late':
+        expected_part = 'middle' if isinstance(target_plan, dict) else 'early'
+        assert state.get('compiler_part') == expected_part, 'late partition has an unexpected predecessor'
+    elif args.build_slice == 'finish':
+        assert state.get('compiler_part') in (None, 'late'), 'final link requires every compiler partition'
     graph_run_id = checkpoint_graph_run_id(state)
     checkpoint_history = state['history']
     print('PS0_NATIVE_LAKE_CHECKPOINT_VERIFIED: ' + previous +
@@ -355,9 +362,9 @@ else:
     selected = [module for module in sorted(inputs)
                 if any(module == name or module.startswith(name + '.') for name in namespaces)]
     if args.compiler_part:
-        early = json.loads(args.compiler_target_plan.read_text())
-        prior_targets = checkpoint_history[-1]['targets'] if args.compiler_part == 'late' else None
-        selected = compiler_part_targets(selected, early, args.compiler_part, prior_targets)
+        prior_targets = sorted(module for phase in checkpoint_history if phase['phase'] == 'compiler'
+                               for module in phase['targets'])
+        selected = compiler_part_targets(selected, target_plan, args.compiler_part, prior_targets)
     assert selected
     # Native module facets own dependency scheduling, compilation and traces.
     # The package, complete module inventory, options and workspace stay fixed.

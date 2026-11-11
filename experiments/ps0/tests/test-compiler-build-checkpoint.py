@@ -103,6 +103,21 @@ class CheckpointTests(unittest.TestCase):
             with self.subTest(early=early), self.assertRaises(AssertionError):
                 checkpoint.compiler_part_targets(['Lean', 'Lean.Syntax'], early, 'early')
 
+    def test_three_compiler_parts_require_the_complete_predecessor(self):
+        modules = ['Lean', 'Lean.Elab', 'Lean.Parser', 'Lean.Syntax']
+        plan = {'early': ['Lean.Syntax'], 'middle': ['Lean.Parser']}
+        self.assertEqual(checkpoint.compiler_part_targets(
+            modules, plan, 'middle', ['Lean.Syntax']), ['Lean.Parser'])
+        self.assertEqual(checkpoint.compiler_part_targets(
+            modules, plan, 'late', ['Lean.Parser', 'Lean.Syntax']), ['Lean', 'Lean.Elab'])
+        with self.assertRaises(AssertionError):
+            checkpoint.compiler_part_targets(modules, plan, 'late', ['Lean.Syntax'])
+
+    def test_three_compiler_parts_reject_overlap(self):
+        plan = {'early': ['Lean.Syntax'], 'middle': ['Lean.Syntax']}
+        with self.assertRaises(AssertionError):
+            checkpoint.compiler_part_targets(['Lean', 'Lean.Syntax'], plan, 'early')
+
     def test_driver_identity_is_checked(self):
         self.write('.lake/build/bin/ps0', b'different compiler')
         with self.assertRaises(AssertionError): self.verify()

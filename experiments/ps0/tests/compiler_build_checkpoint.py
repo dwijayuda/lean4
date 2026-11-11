@@ -20,14 +20,25 @@ def graph_run_id(state):
     return origin
 
 
-def compiler_part_targets(modules, early, part, previous=None):
+def compiler_part_targets(modules, plan, part, previous=None):
     targets = {module for module in modules if module == 'Lean' or module.startswith('Lean.')}
+    if isinstance(plan, list):
+        early, middle = plan, []
+    else:
+        assert plan.keys() == {'early', 'middle'} and plan['middle'], 'invalid three-part plan'
+        early, middle = plan['early'], plan['middle']
     first = set(early)
-    assert len(first) == len(early) and first and first < targets and 'Lean' not in first
+    second = set(middle)
+    assert len(first) == len(early) and len(second) == len(middle) and first and not first & second
+    preceding = first | second
+    assert preceding < targets and 'Lean' not in preceding
     if part == 'early':
         return sorted(first)
-    assert part == 'late' and previous == sorted(first), 'compiler partition changed since early checkpoint'
-    return sorted(targets - first)
+    if part == 'middle':
+        assert second and previous == sorted(first), 'middle partition requires the exact early checkpoint'
+        return sorted(second)
+    assert part == 'late' and previous == sorted(preceding), 'compiler partition changed since its checkpoint'
+    return sorted(targets - preceding)
 
 
 def sha(path):
