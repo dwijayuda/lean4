@@ -7,10 +7,27 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import tarfile
 
 LEAN = 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc'
+
+def graph_run_id(state):
+    origin = state.get('graph_run_id', state['run_id'])
+    assert re.fullmatch(r'[0-9]+', origin), origin
+    assert state['work'] == 'build/compiler-ps-' + origin, state['work']
+    return origin
+
+
+def compiler_part_targets(modules, early, part, previous=None):
+    targets = {module for module in modules if module == 'Lean' or module.startswith('Lean.')}
+    first = set(early)
+    assert len(first) == len(early) and first and first < targets and 'Lean' not in first
+    if part == 'early':
+        return sorted(first)
+    assert part == 'late' and previous == sorted(first), 'compiler partition changed since early checkpoint'
+    return sorted(targets - first)
 
 
 def sha(path):
@@ -124,3 +141,4 @@ if __name__ == '__main__':
         pack(args.root, args.manifest, args.archive)
     else:
         unpack(args.archive, args.root)
+

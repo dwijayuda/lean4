@@ -75,6 +75,34 @@ class CheckpointTests(unittest.TestCase):
     def test_slice_order_is_checked(self):
         with self.assertRaises(AssertionError): self.verify(phase='compiler')
 
+    def test_graph_path_survives_a_new_workflow_run(self):
+        self.state.update(run_id='456', graph_run_id='123', work='build/compiler-ps-123')
+        self.seal()
+        verified = self.verify(run_id='456')['state']
+        self.assertEqual(checkpoint.graph_run_id(verified), '123')
+
+    def test_graph_path_must_match_the_sealed_identity(self):
+        self.state.update(graph_run_id='123', work='build/compiler-ps-456')
+        with self.assertRaises(AssertionError):
+            checkpoint.graph_run_id(self.state)
+
+    def test_compiler_parts_partition_all_targets_with_root_last(self):
+        modules = ['Init', 'Lean', 'Lean.Elab', 'Lean.Syntax']
+        early = checkpoint.compiler_part_targets(modules, ['Lean.Syntax'], 'early')
+        late = checkpoint.compiler_part_targets(modules, ['Lean.Syntax'], 'late', early)
+        self.assertEqual(early, ['Lean.Syntax'])
+        self.assertEqual(late, ['Lean', 'Lean.Elab'])
+
+    def test_compiler_part_rejects_mismatched_predecessor(self):
+        with self.assertRaises(AssertionError):
+            checkpoint.compiler_part_targets(
+                ['Lean', 'Lean.Elab', 'Lean.Syntax'], ['Lean.Syntax'], 'late', ['Lean.Elab'])
+
+    def test_compiler_part_rejects_duplicate_foreign_or_root_targets(self):
+        for early in (['Lean.Syntax', 'Lean.Syntax'], ['Std'], ['Lean']):
+            with self.subTest(early=early), self.assertRaises(AssertionError):
+                checkpoint.compiler_part_targets(['Lean', 'Lean.Syntax'], early, 'early')
+
     def test_driver_identity_is_checked(self):
         self.write('.lake/build/bin/ps0', b'different compiler')
         with self.assertRaises(AssertionError): self.verify()
@@ -108,3 +136,4 @@ class CheckpointTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

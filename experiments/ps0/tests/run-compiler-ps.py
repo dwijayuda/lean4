@@ -11,7 +11,10 @@ import subprocess
 import time
 from native_census_cache import NativeCensusCache, needs_head_lexical_refresh, needs_initializer_refresh, needs_data_refresh, OPERATOR_SCOPE
 from native_compiler_prefix import source_identity_counts, verify_compiler_prefix
-from compiler_build_checkpoint import seal as seal_checkpoint, verify as verify_checkpoint
+from compiler_build_checkpoint import (
+    compiler_part_targets, graph_run_id as checkpoint_graph_run_id,
+    seal as seal_checkpoint, verify as verify_checkpoint,
+)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--driver', type=Path)
@@ -25,6 +28,10 @@ parser.add_argument('--stage-artifact', type=Path)
 parser.add_argument('--stage-source')
 parser.add_argument('--build-slice', choices=['base', 'compiler', 'finish'], default='finish')
 parser.add_argument('--resume-build', type=Path)
+parser.add_argument('--checkpoint-run-id', help='Producer run ID when resuming across workflows')
+parser.add_argument('--compiler-part', choices=['early', 'late'])
+parser.add_argument('--compiler-target-plan', type=Path)
+parser.add_argument('--workspace', type=Path, help='Pinned compiler source checkout for a separately pinned harness')
 args = parser.parse_args()
 if bool(args.native_censuses) != bool(args.census_source):
     parser.error('--native-censuses and --census-source must be supplied together')
@@ -40,11 +47,16 @@ if args.build_slice == 'compiler' and not args.resume_build:
     parser.error('compiler slice requires verified base checkpoint')
 if args.build_slice != 'finish' and (args.prepare_only or not args.source_plans):
     parser.error('partial slices require PS grammar and cannot be preparation-only')
-ROOT = Path(__file__).resolve().parents[1]
+if args.checkpoint_run_id and not args.resume_build:
+    parser.error('--checkpoint-run-id requires --resume-build')
+if bool(args.compiler_part) != bool(args.compiler_target_plan) or (args.compiler_part and args.build_slice != 'compiler'):
+    parser.error('compiler partitions require --compiler-part and --compiler-target-plan in the compiler slice')
+ROOT = args.workspace.resolve() if args.workspace else Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
 stage = verify_compiler_prefix(args.stage_artifact, args.stage_source) if args.stage_artifact else None
 if stage:
     args.driver, args.compare = Path(stage['driver']), Path(stage['migration'])
+baseline = json.loads(args.compare.read_text()) if args.compare else None
 driver = (args.driver or ROOT / '.lake/build/bin/ps0').resolve()
 evidence = ROOT / 'build/compiler-evidence'
 evidence.mkdir(parents=True, exist_ok=True)
@@ -52,10 +64,6 @@ if stage:
     (evidence / 'stage-prefix-verification.json').write_text(json.dumps(stage, indent=2) + '\n')
     # GitHub artifact extraction does not preserve executable permission bits.
     driver.chmod(driver.stat().st_mode | 0o100)
-work = ROOT / 'build' / ('compiler-ps-' + os.environ.get('GITHUB_RUN_ID', str(os.getpid())))
-source = work / 'src'
-if not args.resume_build:
-    source.mkdir(parents=True, exist_ok=False)
 LEAN = 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc'
 
 def digest(path):
@@ -80,12 +88,24 @@ assert subprocess.check_output(['lean', '--githash'], text=True).strip() == LEAN
 sysroot = Path(subprocess.check_output(['lean', '--print-prefix'], text=True).strip())
 sdk = sysroot / 'src/lean'
 checkpoint_history = []
+run_id = os.environ.get('GITHUB_RUN_ID', str(os.getpid()))
+graph_run_id = baseline.get('native_lake_graph_run_id', run_id) if baseline else run_id
+checkpoint_parent_run_id = args.checkpoint_run_id or run_id
 if args.resume_build:
-    previous = 'base' if args.build_slice == 'compiler' else 'compiler'
+    previous = 'base' if args.build_slice == 'compiler' and args.compiler_part != 'late' else 'compiler'
     checkpoint = verify_checkpoint(ROOT, args.resume_build, source=os.environ['PS0_SOURCE_SHA'],
-        phase=previous, run_id=os.environ['GITHUB_RUN_ID'], driver=driver)
+        phase=previous, run_id=checkpoint_parent_run_id, driver=driver)
     state = checkpoint['state']
-    assert state['work'] == work.relative_to(ROOT).as_posix()
+    assert (state.get('compiler_part') == 'early') == (args.compiler_part == 'late')
+    graph_run_id = checkpoint_graph_run_id(state)
+    checkpoint_history = state['history']
+    print('PS0_NATIVE_LAKE_CHECKPOINT_VERIFIED: ' + previous +
+          '; producer_run=' + checkpoint_parent_run_id + '; graph_run=' + graph_run_id +
+          '; files=' + str(len(checkpoint['files'])), flush=True)
+assert graph_run_id.isascii() and graph_run_id.isdecimal(), graph_run_id
+work = ROOT / 'build' / ('compiler-ps-' + graph_run_id)
+source = work / 'src'
+if args.resume_build:
     inputs = json.loads((evidence / 'input-inventory.json').read_text())['inputs']
     assert len(inputs) == 2569
     source_plans = {}
@@ -98,9 +118,8 @@ if args.resume_build:
         assert digest(source / Path(*module.split('.')).with_suffix('.ps')) == inputs[module]['ps_sha256']
     assert not list(source.rglob('*.lean'))
     identity_counts = source_identity_counts(inputs)
-    checkpoint_history = state['history']
-    print('PS0_NATIVE_LAKE_CHECKPOINT_VERIFIED: ' + previous + '; files=' + str(len(checkpoint['files'])), flush=True)
 else:
+    source.mkdir(parents=True, exist_ok=False)
     originals = {}
     for namespace in ['Init', 'Std', 'Lean']:
         folder = sdk / namespace
@@ -313,8 +332,8 @@ else:
         }, indent=2) + '\n')
         print('PS0_COMPILER_PS_PREPARATION_ONLY: ' + str(len(inputs)), flush=True)
         raise SystemExit(0)
-baseline = json.loads(args.compare.read_text()) if args.compare else None
 if baseline:
+    assert baseline.get('native_lake_graph_run_id', graph_run_id) == graph_run_id, 'fixed-point graph path changed'
     assert digest(driver) == baseline['driver_sha256'], 'stage driver differs from the uploaded stage-one executable'
     assert {k: (v['original_sha256'], v['ps_sha256']) for k, v in inputs.items()} == {
         k: (v['original_sha256'], v['ps_sha256']) for k, v in baseline['inputs'].items()}, 'stage original/PS source identities changed'
@@ -335,12 +354,19 @@ else:
     namespaces = ['Init', 'Std'] if args.build_slice == 'base' else ['Lean']
     selected = [module for module in sorted(inputs)
                 if any(module == name or module.startswith(name + '.') for name in namespaces)]
+    if args.compiler_part:
+        early = json.loads(args.compiler_target_plan.read_text())
+        prior_targets = checkpoint_history[-1]['targets'] if args.compiler_part == 'late' else None
+        selected = compiler_part_targets(selected, early, args.compiler_part, prior_targets)
     assert selected
     # Native module facets own dependency scheduling, compilation and traces.
     # The package, complete module inventory, options and workspace stay fixed.
     build_command += ['+' + module + ':c.o' for module in selected]
 try:
-    run(build_command, 'compiler-build' if args.build_slice == 'finish' else 'compiler-build-' + args.build_slice, timeout=19800)
+    log_name = 'compiler-build'
+    if args.build_slice != 'finish':
+        log_name += '-' + (args.compiler_part or args.build_slice)
+    run(build_command, log_name, timeout=19800)
 except Exception:
     completed = []
     for module in inputs:
@@ -361,10 +387,11 @@ except Exception:
 
 if args.build_slice != 'finish':
     history = checkpoint_history + [dict(phase=args.build_slice, targets=selected,
+        compiler_part=args.compiler_part, producer_run_id=run_id,
         source_commit=os.environ['PS0_SOURCE_SHA'], driver_sha256=digest(driver),
         options={'interpreter.prefer_native': False, 'ps0.sourceGrammar': True})]
     state = dict(source_commit=os.environ['PS0_SOURCE_SHA'], lean_commit=LEAN,
-        run_id=os.environ['GITHUB_RUN_ID'], phase=args.build_slice,
+        run_id=run_id, graph_run_id=graph_run_id, phase=args.build_slice, compiler_part=args.compiler_part,
         driver=str(driver), driver_sha256=digest(driver), source_grammar=True,
         work=work.relative_to(ROOT).as_posix(), history=history)
     sealed = seal_checkpoint(ROOT, ROOT / 'build/compiler-checkpoint.json', state,
@@ -427,6 +454,8 @@ result = {
     'driver_sha256': digest(migrated), 'verified_execution': False,
     'bootstrap_package_identity': None,
     'compiler_build_timeout_seconds': 19800,
+    'native_lake_graph_run_id': graph_run_id,
+    'build_harness_source': os.environ.get('PS0_BUILD_HARNESS_SHA', os.environ['PS0_SOURCE_SHA']),
     'native_lake_build_slices': checkpoint_history + [{'phase': 'finish', 'targets': ['PS0Project:static', 'ps0project']}],
     'stage_lean_options': {'interpreter.prefer_native': False,
                            **({'ps0.sourceGrammar': True} if args.source_plans else {})},
@@ -491,3 +520,4 @@ if baseline:
 else:
     (evidence / 'migration.json').write_text(json.dumps(result, indent=2) + '\n')
 print('PS0_COMPILER_PS_SOURCE: PASS; modules=' + str(len(inputs)), flush=True)
+
