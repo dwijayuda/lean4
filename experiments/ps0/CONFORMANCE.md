@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-12 — Original-driver Lean middle checkpoint passed
+
+The original-driver continuation verified all 57,650 files of the early checkpoint from run `43039426271` and built all **368** selected Lean `:c.o` targets in 2,607 native Lake tasks. The last reported object was `Lean.Elab.BuiltinEvalCommand:c.o`. The job sealed **65,747** files. Checkpoint `13903195713` (`sha256:d580b7d4e8561f08a37be522e4c611b9ff5a2022f3af29e6d8d0f20caf7a752e`, 1,315,488,282 bytes). Slice evidence `13903200729` (`sha256:a141cbda7abcf6c32cec2aa6157670f42b98efeb0023fbf2d5bc1b1e0ed65524`, 107,835,782 bytes). Source `b75a583592dc8bbe9046fd6e93784d8ef0365580`, runner `0751db1aae6a383f780f557a5c8f2eb647bfa851`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. [Linux middle job](https://github.com/dwijayuda/pskernel/actions/runs/43110044806/job/130823423731)
+
+Run `43110044806` advanced to the final nine Lean object targets using its original source and driver. The clean repaired-source candidate `43117013891` continues its own base slice. [Original-driver final Lean slice](https://github.com/dwijayuda/pskernel/actions/runs/43110044806/job/130875523736)
+
 ## 2026-11-12 — Linux do-expression source-shape and runtime regressions passed
 
 On PS0 source `0c98bc2d0fefeadc242bdeec725a108a265a8111`, the 15-case parser and lowering fixture passed, including an exact native lowered syntax-tree comparison for deeply nested do continuations. The native do-layout, unless, and local-recursion fixture suites also passed their runtime and rejection assertions. The nested case is recorded in `tests/Graph19TermShapes.lean` at `849488185fa9a53cec25c9313b465f684bf2e9f7`. Runner `40e101f0ba996ca02f0f6ab71ed2cfe26ba59d88`. Artifact `13898518380` (`sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0`, 7,734 bytes). [Linux fixture job](https://github.com/dwijayuda/pskernel/actions/runs/43117448148/job/130848975477)

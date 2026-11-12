@@ -21675,7 +21675,7 @@
       "job": 130847635697,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T23:11:21Z",
+      "observedAt": "2026-11-12T00:14:47Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -21712,9 +21712,15 @@
       },
       "precedingCandidate": {
         "run": 43110044806,
-        "job": 130823423731,
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "job": 130875523736,
+        "phase": "stage-one-compiler",
         "status": "IN_PROGRESS",
-        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
+        "middleCheckpoint": {
+          "artifact": 13903195713,
+          "digest": "sha256:d580b7d4e8561f08a37be522e4c611b9ff5a2022f3af29e6d8d0f20caf7a752e",
+          "bytes": 1315488282
+        }
       },
       "qualification": {
         "job": 130847498507,
@@ -87185,7 +87191,7 @@
       "job": 130847635697,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T23:11:21Z",
+      "observedAt": "2026-11-12T00:14:47Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -87222,9 +87228,15 @@
       },
       "precedingCandidate": {
         "run": 43110044806,
-        "job": 130823423731,
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "job": 130875523736,
+        "phase": "stage-one-compiler",
         "status": "IN_PROGRESS",
-        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
+        "middleCheckpoint": {
+          "artifact": 13903195713,
+          "digest": "sha256:d580b7d4e8561f08a37be522e4c611b9ff5a2022f3af29e6d8d0f20caf7a752e",
+          "bytes": 1315488282
+        }
       },
       "qualification": {
         "job": 130847498507,
@@ -87514,7 +87526,7 @@
       "job": 130847635697,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-11T23:11:21Z",
+      "observedAt": "2026-11-12T00:14:47Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -87551,9 +87563,15 @@
       },
       "precedingCandidate": {
         "run": 43110044806,
-        "job": 130823423731,
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "job": 130875523736,
+        "phase": "stage-one-compiler",
         "status": "IN_PROGRESS",
-        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580"
+        "middleCheckpoint": {
+          "artifact": 13903195713,
+          "digest": "sha256:d580b7d4e8561f08a37be522e4c611b9ff5a2022f3af29e6d8d0f20caf7a752e",
+          "bytes": 1315488282
+        }
       },
       "qualification": {
         "job": 130847498507,
@@ -87790,6 +87808,43 @@
       "artifact": 13898518380,
       "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
       "artifactBytes": 7734
+    },
+    "originalDriverLeanMiddle": {
+      "run": 43110044806,
+      "job": 130823423731,
+      "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 42885813901,
+      "imported": {
+        "run": 43039426271,
+        "job": 130587016860,
+        "artifact": 13870203959,
+        "verifiedFiles": 57650
+      },
+      "status": "PASS_LEAN_MIDDLE_OBJECT_TARGETS",
+      "targets": 368,
+      "actualNativeObjects": 368,
+      "nativeLakeTasks": 2607,
+      "lastNativeObject": "Lean.Elab.BuiltinEvalCommand:c.o",
+      "checkpointFiles": 65747,
+      "checkpoint": {
+        "artifact": 13903195713,
+        "digest": "sha256:d580b7d4e8561f08a37be522e4c611b9ff5a2022f3af29e6d8d0f20caf7a752e",
+        "bytes": 1315488282
+      },
+      "evidence": {
+        "artifact": 13903200729,
+        "digest": "sha256:a141cbda7abcf6c32cec2aa6157670f42b98efeb0023fbf2d5bc1b1e0ed65524",
+        "bytes": 107835782
+      },
+      "next": {
+        "job": 130875523736,
+        "phase": "stage-one-compiler",
+        "targets": 9,
+        "status": "IN_PROGRESS",
+        "observedAt": "2026-11-12T00:14:47Z"
+      }
     }
   }
 }
