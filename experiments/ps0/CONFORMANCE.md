@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-13 — Canonical ProofScript compiler source cutover
+
+Commit `a5160194aad78ff06acf55c42109ca1a5bb16f4d` replaces **2,546** tracked pinned Lean compiler sources under `src/` and **23** PS0 implementation sources with the exact ProofScript files from the audited fixed point. The cutover base `6d750d88418e952589bbd98ca0deaf1bc18ca22a` uses the pinned Lean source tree at `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. The source catalog SHA-256 is `6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4`. The native Lake harness validates and stages the Git checkout's PS bytes at the logical module paths and retains their source-map and mapped-census checks. [Source cutover PR](https://github.com/dwijayuda/lean4/pull/21)
+
+Linux verified the tracked corpus, passed five canonical-source contracts, 18 checkpoint contracts, and nine auditor contracts. It also verified audited seed artifact `13934124327` (`sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd`). The full run pins source `a5160194aad78ff06acf55c42109ca1a5bb16f4d` and runner `24ecd03305d220e0301fa82a4abca5cf830ae85d`. Stage-one Init/Std has started. The two canonical links and fixed-point audit are pending. [Linux source gate](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131528643634) [Canonical build](https://github.com/dwijayuda/pskernel/actions/runs/43317326789)
+
 ## 2026-11-12 — Pinned ProofScript compiler corpus linked and passed independent fixed-point audit
 
 **Pinned compiler corpus qualification complete.** Linux built both full **2,569-module** `.ps` stages using native Lake. Each stage built `PS0Project:static` and `ps0project:exe` and passed its runtime and relocated grammar tests with 220 PS0 metadata files. Stage two used the exact PS-built stage-one prefix and matched the C and public `.olean` output hashes for every module. Source `978d594a10fac8f6e5687190a22d70334b331dab`, pinned Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`, runner `a12344e09baeb6fcee479b1934805de16e7c42b4`, build harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. All 11 producer jobs passed. [Linux producer run](https://github.com/dwijayuda/pskernel/actions/runs/43161199302)
