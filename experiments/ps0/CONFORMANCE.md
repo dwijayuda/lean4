@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-12 — Repaired-driver stage-one Init/Std checkpoint passed
+
+The clean Linux build prepared **2,569** `.ps` inputs with PS grammar enabled. It built **1,147** Init/Std `:c.o` targets in **2,296** native Lake tasks, ending at `Std:c.o`, and sealed **38,949** checkpoint files. The 402 inputs with original-identical byte hashes are counted separately from grammar mode. Source `0c98bc2d0fefeadc242bdeec725a108a265a8111`, runner `ca75baadef520113bcdd2eb243934b1bd58e1e4c`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. Checkpoint `13909390231` (`sha256:c21ad68b14e1612f74653df51e093a75c511b6ac3bfef3f5fbb3b6a44d218a98`, 679,083,461 bytes). Slice evidence `13908208141` (`sha256:58a3743878caf8aaefbdf57932658ffe2bccb3c695170a335a451a894bcc1a2a`, 107,810,081 bytes). [Linux base job](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130847635697)
+
+The clean build advanced to its 850-target early Lean slice. Full native Lake linking, the PS-built stage, and the independent audit remain pending. [Linux early Lean job](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130921951706)
+
 ## 2026-11-12 — Original-driver Lean middle checkpoint passed
 
 The original-driver continuation verified all 57,650 files of the early checkpoint from run `43039426271` and built all **368** selected Lean `:c.o` targets in 2,607 native Lake tasks. The last reported object was `Lean.Elab.BuiltinEvalCommand:c.o`. The job sealed **65,747** files. Checkpoint `13903195713` (`sha256:d580b7d4e8561f08a37be522e4c611b9ff5a2022f3af29e6d8d0f20caf7a752e`, 1,315,488,282 bytes). Slice evidence `13903200729` (`sha256:a141cbda7abcf6c32cec2aa6157670f42b98efeb0023fbf2d5bc1b1e0ed65524`, 107,835,782 bytes). Source `b75a583592dc8bbe9046fd6e93784d8ef0365580`, runner `0751db1aae6a383f780f557a5c8f2eb647bfa851`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. [Linux middle job](https://github.com/dwijayuda/pskernel/actions/runs/43110044806/job/130823423731)

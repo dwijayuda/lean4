@@ -21672,10 +21672,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130847635697,
-      "phase": "stage-one-base",
+      "job": 130921951706,
+      "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T00:14:47Z",
+      "observedAt": "2026-11-12T02:17:06Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -21742,6 +21742,40 @@
         "artifact": 13898518380,
         "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
         "artifactBytes": 7734
+      },
+      "graphRunId": 43117013891,
+      "baseCheckpoint": {
+        "run": 43117013891,
+        "job": 130847635697,
+        "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43117013891,
+        "status": "PASS_INIT_STD_BASE_OBJECT_TARGETS",
+        "targets": 1147,
+        "actualNativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "lastNativeObject": "Std:c.o",
+        "inputModules": 2569,
+        "originalByteIdentities": 402,
+        "checkpointFiles": 38949,
+        "checkpoint": {
+          "artifact": 13909390231,
+          "digest": "sha256:c21ad68b14e1612f74653df51e093a75c511b6ac3bfef3f5fbb3b6a44d218a98",
+          "bytes": 679083461
+        },
+        "evidence": {
+          "artifact": 13908208141,
+          "digest": "sha256:58a3743878caf8aaefbdf57932658ffe2bccb3c695170a335a451a894bcc1a2a",
+          "bytes": 107810081
+        },
+        "next": {
+          "job": 130921951706,
+          "phase": "stage-one-compiler-early",
+          "targets": 850,
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T02:17:06Z"
+        }
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -21762,8 +21796,8 @@
     },
     "nativeLakeCompilerRecovery": {
       "run": 43117013891,
-      "job": 130847635697,
-      "phase": "stage-one-base",
+      "job": 130921951706,
+      "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
     }
@@ -87188,10 +87222,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130847635697,
-      "phase": "stage-one-base",
+      "job": 130921951706,
+      "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T00:14:47Z",
+      "observedAt": "2026-11-12T02:17:06Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -87258,6 +87292,40 @@
         "artifact": 13898518380,
         "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
         "artifactBytes": 7734
+      },
+      "graphRunId": 43117013891,
+      "baseCheckpoint": {
+        "run": 43117013891,
+        "job": 130847635697,
+        "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43117013891,
+        "status": "PASS_INIT_STD_BASE_OBJECT_TARGETS",
+        "targets": 1147,
+        "actualNativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "lastNativeObject": "Std:c.o",
+        "inputModules": 2569,
+        "originalByteIdentities": 402,
+        "checkpointFiles": 38949,
+        "checkpoint": {
+          "artifact": 13909390231,
+          "digest": "sha256:c21ad68b14e1612f74653df51e093a75c511b6ac3bfef3f5fbb3b6a44d218a98",
+          "bytes": 679083461
+        },
+        "evidence": {
+          "artifact": 13908208141,
+          "digest": "sha256:58a3743878caf8aaefbdf57932658ffe2bccb3c695170a335a451a894bcc1a2a",
+          "bytes": 107810081
+        },
+        "next": {
+          "job": 130921951706,
+          "phase": "stage-one-compiler-early",
+          "targets": 850,
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T02:17:06Z"
+        }
       }
     },
     "previousGatedRun": {
@@ -87523,10 +87591,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130847635697,
-      "phase": "stage-one-base",
+      "job": 130921951706,
+      "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T00:14:47Z",
+      "observedAt": "2026-11-12T02:17:06Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -87593,6 +87661,40 @@
         "artifact": 13898518380,
         "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
         "artifactBytes": 7734
+      },
+      "graphRunId": 43117013891,
+      "baseCheckpoint": {
+        "run": 43117013891,
+        "job": 130847635697,
+        "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43117013891,
+        "status": "PASS_INIT_STD_BASE_OBJECT_TARGETS",
+        "targets": 1147,
+        "actualNativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "lastNativeObject": "Std:c.o",
+        "inputModules": 2569,
+        "originalByteIdentities": 402,
+        "checkpointFiles": 38949,
+        "checkpoint": {
+          "artifact": 13909390231,
+          "digest": "sha256:c21ad68b14e1612f74653df51e093a75c511b6ac3bfef3f5fbb3b6a44d218a98",
+          "bytes": 679083461
+        },
+        "evidence": {
+          "artifact": 13908208141,
+          "digest": "sha256:58a3743878caf8aaefbdf57932658ffe2bccb3c695170a335a451a894bcc1a2a",
+          "bytes": 107810081
+        },
+        "next": {
+          "job": 130921951706,
+          "phase": "stage-one-compiler-early",
+          "targets": 850,
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T02:17:06Z"
+        }
       }
     },
     "stageOneEarly": {
@@ -87844,6 +87946,39 @@
         "targets": 9,
         "status": "IN_PROGRESS",
         "observedAt": "2026-11-12T00:14:47Z"
+      }
+    },
+    "cleanParserStageOneBase": {
+      "run": 43117013891,
+      "job": 130847635697,
+      "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+      "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 43117013891,
+      "status": "PASS_INIT_STD_BASE_OBJECT_TARGETS",
+      "targets": 1147,
+      "actualNativeObjects": 1147,
+      "nativeLakeTasks": 2296,
+      "lastNativeObject": "Std:c.o",
+      "inputModules": 2569,
+      "originalByteIdentities": 402,
+      "checkpointFiles": 38949,
+      "checkpoint": {
+        "artifact": 13909390231,
+        "digest": "sha256:c21ad68b14e1612f74653df51e093a75c511b6ac3bfef3f5fbb3b6a44d218a98",
+        "bytes": 679083461
+      },
+      "evidence": {
+        "artifact": 13908208141,
+        "digest": "sha256:58a3743878caf8aaefbdf57932658ffe2bccb3c695170a335a451a894bcc1a2a",
+        "bytes": 107810081
+      },
+      "next": {
+        "job": 130921951706,
+        "phase": "stage-one-compiler-early",
+        "targets": 850,
+        "status": "IN_PROGRESS",
+        "observedAt": "2026-11-12T02:17:06Z"
       }
     }
   }
