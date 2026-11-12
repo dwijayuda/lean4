@@ -21669,10 +21669,10 @@
     "currentPSCompilerCandidate": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131068141924,
-      "phase": "stage-one-compiler-early",
+      "job": 131124669250,
+      "phase": "stage-two-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T08:48:16Z",
+      "observedAt": "2026-11-12T10:40:44Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -21864,6 +21864,114 @@
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T08:48:16Z"
         }
+      },
+      "stageOneLink": {
+        "run": 43161199302,
+        "job": 131116729741,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_FULL_STAGE_ONE_NATIVE_LAKE_LINK",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 131068141924,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38949,
+            "checkpointFiles": 57650,
+            "checkpoint": {
+              "artifact": 13931855903,
+              "digest": "sha256:ada90b7992021bd77c244b1739d9f161e6d904820bb808ea14362fffceb8f914",
+              "bytes": 1095298568
+            },
+            "evidence": {
+              "artifact": 13931367233,
+              "digest": "sha256:1bd337304250791b0f9e3f74870ce2dabfc60f853e19575b4d0677bc97bfc4e4",
+              "bytes": 107858199
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T08:37:30Z",
+            "completedAt": "2026-11-12T09:33:59Z"
+          },
+          {
+            "part": "middle",
+            "job": 131095296236,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 57650,
+            "checkpointFiles": 65747,
+            "checkpoint": {
+              "artifact": 13933118397,
+              "digest": "sha256:d8a183aae5cae365373547db7c21a7e687da5d0074d432b8cccb38e13959d2d1",
+              "bytes": 1315674351
+            },
+            "evidence": {
+              "artifact": 13933936246,
+              "digest": "sha256:95ded16734ed40d0ea2d2f237efbab917d35d5e147836d98c3ae4e26d13dcb2b",
+              "bytes": 107866958
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T09:34:03Z",
+            "completedAt": "2026-11-12T10:07:20Z"
+          },
+          {
+            "part": "late",
+            "job": 131112167389,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65747,
+            "checkpointFiles": 65946,
+            "checkpoint": {
+              "artifact": 13933918444,
+              "digest": "sha256:6c32f3b52a32b1eabeabeb363933ed7bce6ad4a40eeae94eef2015ca78ddbcb0",
+              "bytes": 1329311197
+            },
+            "evidence": {
+              "artifact": 13933039482,
+              "digest": "sha256:7c338bd2f962260b1efea5c368a4684712fdf91ddab9d32625a7a579521ff156",
+              "bytes": 107867416
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T10:07:23Z",
+            "completedAt": "2026-11-12T10:16:17Z"
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 65946,
+        "finishObjectBuilds": 195,
+        "nativeLakeFinishTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "runtimeSmoke": "PASS",
+        "relocatedGrammar": "PASS",
+        "relocatedMetadataFiles": 220,
+        "census": {
+          "modules": 2569,
+          "topLevelDeclarationModes": {
+            "mapped-ps": 78712
+          }
+        },
+        "stageArtifact": {
+          "artifact": 13934124327,
+          "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+          "bytes": 384532453
+        },
+        "noConfusionFrontendSeconds": 63,
+        "next": {
+          "job": 131124669250,
+          "phase": "stage-two-base",
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T10:40:44Z"
+        }
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -21884,8 +21992,8 @@
     },
     "nativeLakeCompilerRecovery": {
       "run": 43161199302,
-      "job": 131068141924,
-      "phase": "stage-one-compiler-early",
+      "job": 131124669250,
+      "phase": "stage-two-base",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
     }
@@ -87307,10 +87415,10 @@
     "candidate": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131068141924,
-      "phase": "stage-one-compiler-early",
+      "job": 131124669250,
+      "phase": "stage-two-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T08:48:16Z",
+      "observedAt": "2026-11-12T10:40:44Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -87501,6 +87609,114 @@
           "targets": 850,
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T08:48:16Z"
+        }
+      },
+      "stageOneLink": {
+        "run": 43161199302,
+        "job": 131116729741,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_FULL_STAGE_ONE_NATIVE_LAKE_LINK",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 131068141924,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38949,
+            "checkpointFiles": 57650,
+            "checkpoint": {
+              "artifact": 13931855903,
+              "digest": "sha256:ada90b7992021bd77c244b1739d9f161e6d904820bb808ea14362fffceb8f914",
+              "bytes": 1095298568
+            },
+            "evidence": {
+              "artifact": 13931367233,
+              "digest": "sha256:1bd337304250791b0f9e3f74870ce2dabfc60f853e19575b4d0677bc97bfc4e4",
+              "bytes": 107858199
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T08:37:30Z",
+            "completedAt": "2026-11-12T09:33:59Z"
+          },
+          {
+            "part": "middle",
+            "job": 131095296236,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 57650,
+            "checkpointFiles": 65747,
+            "checkpoint": {
+              "artifact": 13933118397,
+              "digest": "sha256:d8a183aae5cae365373547db7c21a7e687da5d0074d432b8cccb38e13959d2d1",
+              "bytes": 1315674351
+            },
+            "evidence": {
+              "artifact": 13933936246,
+              "digest": "sha256:95ded16734ed40d0ea2d2f237efbab917d35d5e147836d98c3ae4e26d13dcb2b",
+              "bytes": 107866958
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T09:34:03Z",
+            "completedAt": "2026-11-12T10:07:20Z"
+          },
+          {
+            "part": "late",
+            "job": 131112167389,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65747,
+            "checkpointFiles": 65946,
+            "checkpoint": {
+              "artifact": 13933918444,
+              "digest": "sha256:6c32f3b52a32b1eabeabeb363933ed7bce6ad4a40eeae94eef2015ca78ddbcb0",
+              "bytes": 1329311197
+            },
+            "evidence": {
+              "artifact": 13933039482,
+              "digest": "sha256:7c338bd2f962260b1efea5c368a4684712fdf91ddab9d32625a7a579521ff156",
+              "bytes": 107867416
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T10:07:23Z",
+            "completedAt": "2026-11-12T10:16:17Z"
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 65946,
+        "finishObjectBuilds": 195,
+        "nativeLakeFinishTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "runtimeSmoke": "PASS",
+        "relocatedGrammar": "PASS",
+        "relocatedMetadataFiles": 220,
+        "census": {
+          "modules": 2569,
+          "topLevelDeclarationModes": {
+            "mapped-ps": 78712
+          }
+        },
+        "stageArtifact": {
+          "artifact": 13934124327,
+          "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+          "bytes": 384532453
+        },
+        "noConfusionFrontendSeconds": 63,
+        "next": {
+          "job": 131124669250,
+          "phase": "stage-two-base",
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T10:40:44Z"
         }
       }
     },
@@ -87764,10 +87980,10 @@
     "recovery": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131068141924,
-      "phase": "stage-one-compiler-early",
+      "job": 131124669250,
+      "phase": "stage-two-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T08:48:16Z",
+      "observedAt": "2026-11-12T10:40:44Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -87958,6 +88174,114 @@
           "targets": 850,
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T08:48:16Z"
+        }
+      },
+      "stageOneLink": {
+        "run": 43161199302,
+        "job": 131116729741,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_FULL_STAGE_ONE_NATIVE_LAKE_LINK",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 131068141924,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38949,
+            "checkpointFiles": 57650,
+            "checkpoint": {
+              "artifact": 13931855903,
+              "digest": "sha256:ada90b7992021bd77c244b1739d9f161e6d904820bb808ea14362fffceb8f914",
+              "bytes": 1095298568
+            },
+            "evidence": {
+              "artifact": 13931367233,
+              "digest": "sha256:1bd337304250791b0f9e3f74870ce2dabfc60f853e19575b4d0677bc97bfc4e4",
+              "bytes": 107858199
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T08:37:30Z",
+            "completedAt": "2026-11-12T09:33:59Z"
+          },
+          {
+            "part": "middle",
+            "job": 131095296236,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 57650,
+            "checkpointFiles": 65747,
+            "checkpoint": {
+              "artifact": 13933118397,
+              "digest": "sha256:d8a183aae5cae365373547db7c21a7e687da5d0074d432b8cccb38e13959d2d1",
+              "bytes": 1315674351
+            },
+            "evidence": {
+              "artifact": 13933936246,
+              "digest": "sha256:95ded16734ed40d0ea2d2f237efbab917d35d5e147836d98c3ae4e26d13dcb2b",
+              "bytes": 107866958
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T09:34:03Z",
+            "completedAt": "2026-11-12T10:07:20Z"
+          },
+          {
+            "part": "late",
+            "job": 131112167389,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65747,
+            "checkpointFiles": 65946,
+            "checkpoint": {
+              "artifact": 13933918444,
+              "digest": "sha256:6c32f3b52a32b1eabeabeb363933ed7bce6ad4a40eeae94eef2015ca78ddbcb0",
+              "bytes": 1329311197
+            },
+            "evidence": {
+              "artifact": 13933039482,
+              "digest": "sha256:7c338bd2f962260b1efea5c368a4684712fdf91ddab9d32625a7a579521ff156",
+              "bytes": 107867416
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T10:07:23Z",
+            "completedAt": "2026-11-12T10:16:17Z"
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 65946,
+        "finishObjectBuilds": 195,
+        "nativeLakeFinishTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "runtimeSmoke": "PASS",
+        "relocatedGrammar": "PASS",
+        "relocatedMetadataFiles": 220,
+        "census": {
+          "modules": 2569,
+          "topLevelDeclarationModes": {
+            "mapped-ps": 78712
+          }
+        },
+        "stageArtifact": {
+          "artifact": 13934124327,
+          "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+          "bytes": 384532453
+        },
+        "noConfusionFrontendSeconds": 63,
+        "next": {
+          "job": 131124669250,
+          "phase": "stage-two-base",
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T10:40:44Z"
         }
       }
     },
@@ -88998,6 +89322,114 @@
         "targets": 850,
         "status": "IN_PROGRESS",
         "observedAt": "2026-11-12T08:48:16Z"
+      }
+    },
+    "currentIRFullStageOneLink": {
+      "run": 43161199302,
+      "job": 131116729741,
+      "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+      "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 43161199302,
+      "status": "PASS_FULL_STAGE_ONE_NATIVE_LAKE_LINK",
+      "modules": 2569,
+      "leanObjects": 1227,
+      "partitions": [
+        {
+          "part": "early",
+          "job": 131068141924,
+          "status": "PASS",
+          "targets": 850,
+          "actualNativeObjects": 850,
+          "nativeLakeTasks": 2630,
+          "verifiedFiles": 38949,
+          "checkpointFiles": 57650,
+          "checkpoint": {
+            "artifact": 13931855903,
+            "digest": "sha256:ada90b7992021bd77c244b1739d9f161e6d904820bb808ea14362fffceb8f914",
+            "bytes": 1095298568
+          },
+          "evidence": {
+            "artifact": 13931367233,
+            "digest": "sha256:1bd337304250791b0f9e3f74870ce2dabfc60f853e19575b4d0677bc97bfc4e4",
+            "bytes": 107858199
+          },
+          "lastNativeObject": "Lean.Elab.Frontend:c.o",
+          "startedAt": "2026-11-12T08:37:30Z",
+          "completedAt": "2026-11-12T09:33:59Z"
+        },
+        {
+          "part": "middle",
+          "job": 131095296236,
+          "status": "PASS",
+          "targets": 368,
+          "actualNativeObjects": 368,
+          "nativeLakeTasks": 2607,
+          "verifiedFiles": 57650,
+          "checkpointFiles": 65747,
+          "checkpoint": {
+            "artifact": 13933118397,
+            "digest": "sha256:d8a183aae5cae365373547db7c21a7e687da5d0074d432b8cccb38e13959d2d1",
+            "bytes": 1315674351
+          },
+          "evidence": {
+            "artifact": 13933936246,
+            "digest": "sha256:95ded16734ed40d0ea2d2f237efbab917d35d5e147836d98c3ae4e26d13dcb2b",
+            "bytes": 107866958
+          },
+          "lastNativeObject": "Lean.Elab.Tactic:c.o",
+          "startedAt": "2026-11-12T09:34:03Z",
+          "completedAt": "2026-11-12T10:07:20Z"
+        },
+        {
+          "part": "late",
+          "job": 131112167389,
+          "status": "PASS",
+          "targets": 9,
+          "actualNativeObjects": 9,
+          "nativeLakeTasks": 2385,
+          "verifiedFiles": 65747,
+          "checkpointFiles": 65946,
+          "checkpoint": {
+            "artifact": 13933918444,
+            "digest": "sha256:6c32f3b52a32b1eabeabeb363933ed7bce6ad4a40eeae94eef2015ca78ddbcb0",
+            "bytes": 1329311197
+          },
+          "evidence": {
+            "artifact": 13933039482,
+            "digest": "sha256:7c338bd2f962260b1efea5c368a4684712fdf91ddab9d32625a7a579521ff156",
+            "bytes": 107867416
+          },
+          "lastNativeObject": "Lean.Elab.Structure:c.o",
+          "startedAt": "2026-11-12T10:07:23Z",
+          "completedAt": "2026-11-12T10:16:17Z"
+        }
+      ],
+      "verifiedFinishCheckpointFiles": 65946,
+      "finishObjectBuilds": 195,
+      "nativeLakeFinishTasks": 5142,
+      "archive": "PS0Project:static",
+      "executable": "ps0project:exe",
+      "runtimeSmoke": "PASS",
+      "relocatedGrammar": "PASS",
+      "relocatedMetadataFiles": 220,
+      "census": {
+        "modules": 2569,
+        "topLevelDeclarationModes": {
+          "mapped-ps": 78712
+        }
+      },
+      "stageArtifact": {
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "bytes": 384532453
+      },
+      "noConfusionFrontendSeconds": 63,
+      "next": {
+        "job": 131124669250,
+        "phase": "stage-two-base",
+        "status": "IN_PROGRESS",
+        "observedAt": "2026-11-12T10:40:44Z"
       }
     }
   }
