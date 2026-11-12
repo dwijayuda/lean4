@@ -50,14 +50,31 @@ private def copyMacros (host : Environment) (kind : Name) : IO Unit := do
   for entry in macroAttribute.getEntries host kind do
     macroAttribute.addBuiltin kind entry.declName entry.value
 
-private def rootDispatch (native : CategoryParserFn) : CategoryParserFn := fun category =>
+private structure GrammarOverlay where
+  categories : ParserCategories := {}
+  tokens : List Token := []
+
+private def GrammarOverlay.addParser (overlay : GrammarOverlay) (name : Name)
+    (parser : Parser) (leading := true) : IO GrammarOverlay := do
+  let parser := evalInsideQuot name parser
+  let categories ← IO.ofExcept <| Lean.Parser.addParser overlay.categories `psCommand name leading parser 20000
+  builtinSyntaxNodeKindSetRef.modify parser.info.collectKinds
+  return {categories, tokens := parser.info.collectTokens overlay.tokens}
+
+private def GrammarOverlay.activate (overlay : GrammarOverlay) (ctx : ParserContextCore) : ParserContextCore :=
+  let addTokens (table : TokenTable) := overlay.tokens.foldl (fun table token => table.insert token token) table
+  let env := parserExtension.modifyState ctx.env fun state =>
+    { state with
+      categories := overlay.categories.foldl (fun categories name category => categories.insert name category) state.categories
+      tokens := addTokens state.tokens }
+  { ctx with env, tokens := addTokens ctx.tokens, options := ctx.options.setBool `ps0.sourceGrammar false }
+
+private def rootDispatch (overlay : GrammarOverlay) (native : CategoryParserFn) : CategoryParserFn := fun category =>
   if category != `command then native category else fun ctx state =>
     if ctx.options.getBool `ps0.sourceGrammar false then
       -- Consume the route only in this parser context. Native command operands,
       -- quotations and independently owned DSL categories keep native parsing.
-      let parsed := adaptUncacheableContextFn
-        (fun c => {c with options := c.options.setBool `ps0.sourceGrammar false})
-        (native `psCommand) ctx state
+      let parsed := adaptUncacheableContextFn overlay.activate (native `psCommand) ctx state
       if parsed.hasError then parsed else
         let root := parsed.stxStack.back
         if root.isOfKind `ps0NativeCommandBridge then
@@ -115,17 +132,16 @@ private def unownedCommand (parser : Parser) : Parser :=
           else parsed
     | _ => parse ctx state) parser
 
-private def installCommandOperands : IO Unit := do
-  let categories ← builtinParserCategoriesRef.get
-  let some category := categories.find? `psCommand
+private def installCommandOperands (overlay : GrammarOverlay) : IO GrammarOverlay := do
+  let some category := overlay.categories.find? `psCommand
     | throw <| IO.userError "PS0-SOURCE-COMMAND: missing psCommand category"
   let isBridge := fun (parser : Parser) => (parser.info.collectKinds {}).contains `ps0NativeCommandBridge
   unless category.tables.leadingParsers.any (fun p => isBridge p.1) do
     throw <| IO.userError "PS0-SOURCE-COMMAND: native bridge registration is not unindexed"
   let leading := category.tables.leadingParsers.map fun (parser, priority) =>
     (if isBridge parser then unownedCommand parser else parser, priority)
-  builtinParserCategoriesRef.set <| categories.insert `psCommand
-    {category with tables := {category.tables with leadingParsers := leading} }
+  let mut overlay := {overlay with categories := overlay.categories.insert `psCommand
+    {category with tables := {category.tables with leadingParsers := leading} }}
   -- These are prefix commands for native `in`; the native trailing parser keeps
   -- withOpen/withSetOption behavior while its command operand uses PS grammar.
   for (name, parser) in #[
@@ -135,11 +151,10 @@ private def installCommandOperands : IO Unit := do
       (``Lean.Parser.Command.«variable», Lean.Parser.Command.«variable»),
       (``Lean.Parser.Command.«include», Lean.Parser.Command.«include»),
       (``Lean.Parser.Command.«omit», Lean.Parser.Command.«omit»)] do
-    addBuiltinLeadingParser `psCommand name parser 20000
-  addBuiltinTrailingParser `psCommand ``Lean.Parser.Command.«in»
-    (commandOperands Lean.Parser.Command.«in») 20000
-  addBuiltinLeadingParser `psCommand ``Lean.Parser.Command.«mutual»
-    (commandOperands Lean.Parser.Command.«mutual») 20000
+    overlay ← overlay.addParser name parser
+  overlay ← overlay.addParser ``Lean.Parser.Command.«in»
+    (commandOperands Lean.Parser.Command.«in») (leading := false)
+  overlay.addParser ``Lean.Parser.Command.«mutual» (commandOperands Lean.Parser.Command.«mutual»)
 
 private unsafe def installImpl (options : Options) : IO Unit := do
   -- Native toolchains ship compiler metadata beside their executable. Load that
@@ -156,19 +171,20 @@ private unsafe def installImpl (options : Options) : IO Unit := do
   finally
     searchPathRef.set targetPath
   let state := parserExtension.getState host
+  let mut overlay : GrammarOverlay := {}
   for name in categoryNames do
     let some cat := state.categories.find? name
       | throw <| IO.userError s!"PS0-SOURCE-GRAMMAR: missing host category {name}"
-    builtinParserCategoriesRef.modify fun cats => cats.insert name cat
+    overlay := {overlay with categories := overlay.categories.insert name cat}
     builtinSyntaxNodeKindSetRef.modify fun kinds =>
       cat.kinds.foldl (fun kinds kind _ => kinds.insert kind) kinds
   for name in commandNames do
     let descr ← IO.ofExcept <| host.evalConst ParserDescr options name
     let parser ← (compileParserDescr state.categories (contextualAliases descr)).run
       {env := host, opts := options}
-    addBuiltinLeadingParser `psCommand name (withPosition parser) 20000
+    overlay ← overlay.addParser name (withPosition parser)
     copyMacros host name
-  installCommandOperands
+  overlay ← installCommandOperands overlay
   -- This bridge is an identity macro; target logic never imports its declaration.
   macroAttribute.addBuiltin `ps0NativeCommandBridge `PS0.SourceGrammar.nativeCommand
     (fun source => pure source[0])
@@ -180,7 +196,7 @@ private unsafe def installImpl (options : Options) : IO Unit := do
   registerBuiltinNodeKind `PS0.Binders.binderDefault
   copyMacros host `ps0LocalCommaBinder
   let native ← categoryParserFnRef.get
-  categoryParserFnRef.set (rootDispatch native)
+  categoryParserFnRef.set (rootDispatch overlay native)
 
 @[implemented_by installImpl]
 opaque install (options : Options) : IO Unit
