@@ -126,3 +126,8 @@ def lowerTelescope (parts : Array (TSyntax `psDeclBinder)) (alias := false) :
   return result.map (⟨·⟩)
 
 end PS0.Binders
+
+syntax (name := ps0LocalCommaBinder) PS0.Binders.psCommaBinder : psLocalBinder
+
+@[macro ps0LocalCommaBinder] def expandLocalCommaBinder : Macro := fun source => do
+  return mkNullNode (← PS0.Binders.lowerOne source[0])

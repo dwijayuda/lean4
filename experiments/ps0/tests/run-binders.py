@@ -40,6 +40,9 @@ for name, decl, reason in [
     ('empty-two-unit', 'function two(x: Unit, y: Unit): Nat := 0\ndef bad : Nat := two()', 'PS0V1-CALL-EMPTY'),
     ('empty-returned-function', 'function higher(): Unit → Nat := fun _ => 0\ndef bad : Unit → Nat := higher()', 'PS0V1-CALL-EMPTY'),
     ('empty-explicit', 'def bad := @id()', 'PS0V1-CALL-EMPTY'),
+    ('instance-type-gap', 'instance bad : CoeFun Nat (fun _ => Unit → Nat) where\n  coe n := fun _ => n', 'PS0V1-CALL-GAP'),
+    ('where-value-gap', 'structure BindBox where\n  value : Nat\ndef bad : BindBox where\n  value := add (1, 2)', 'PS0V1-CALL-GAP'),
+    ('theorem-equation-gap', 'theorem bad : (n : Nat) → n = n\n  | n => Eq.refl (n)', 'PS0V1-CALL-GAP'),
 ]:
     path = work / (name + '.ps')
     path.write_text(prefix + decl + '\n')

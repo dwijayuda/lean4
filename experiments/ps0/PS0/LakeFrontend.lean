@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 import Lean
 import Lean.Elab.Frontend
 import Lean.Elab.Import
+import Lean.Linter.PersistentLintLog
 import Lean.Compiler.LCNF.EmitC
 import PS0.SourceCensus
 import PS0.SourceGrammar
@@ -122,6 +123,51 @@ def printSourceOrigin (path : String) (pos : Nat) : IO UInt32 := do
   IO.println (toJson (originalPos? p ⟨pos⟩)).compress
   return 0
 
+private def messageWithOrigins (prepared : PreparedSource) (preparedMap originalMap : FileMap)
+    (filename : String) (message : Message) : Message := Id.run do
+  if message.fileName != filename then return message
+  let position? (position : Position) : Option Position := do
+    let offset := (preparedMap.ofPosition position).byteIdx
+    let original ← prepared.segments.findSome? fun segment => do
+      let start ← (segment.getObjValAs? Nat "preparedStart").toOption
+      let stop ← (segment.getObjValAs? Nat "preparedEnd").toOption
+      let original ← (segment.getObjValAs? Nat "originalStart").toOption
+      if start ≤ offset && offset ≤ stop then some (original + offset - start) else none
+    return originalMap.toPosition ⟨original⟩
+  let some pos := position? message.pos | return message
+  return {message with pos, endPos := message.endPos.map fun p => (position? p).getD p}
+
+/-- Check through Lean's public processing pipeline, reporting original source positions. -/
+def checkWithOrigins (prepared : PreparedSource) (raw : String) (opts : Options)
+    (filename : String) (mainModuleName : Name) : IO (Option Environment) := do
+  let inputCtx := Parser.mkInputContext prepared.source filename
+  let opts := Lean.internal.cmdlineSnapshots.setIfNotSet opts true
+  let opts := Lean.Elab.async.setIfNotSet opts true
+  let snapshot ← Language.Lean.process (fun header => pure <| .ok {
+    imports := header.imports
+    isModule := header.isModule
+    mainModuleName, opts
+    trustLevel := 0
+  }) none {inputCtx with}
+  let tree := Language.toSnapshotTree snapshot
+  let preparedMap := FileMap.ofString prepared.source
+  let originalMap := FileMap.ofString raw
+  let messages ← tree.foldM (init := ({} : MessageLog)) fun messages snapshot => do
+    let mut messages := messages
+    for message in snapshot.diagnostics.msgLog.unreported do
+      messages := messages.add (messageWithOrigins prepared preparedMap originalMap filename message)
+    return messages
+  let report : Language.SnapshotTree := .mk {
+    diagnostics := ← Language.Snapshot.Diagnostics.ofMessageLog messages
+  } #[]
+  let hasErrors ← report.runAndReport opts
+  let some commandState := Language.Lean.waitForFinalCmdState? snapshot | return none
+  if hasErrors then return none
+  let mut env := commandState.env
+  for task in commandState.codeQualityEntryTasks do
+    env := Lean.Linter.codeQualityLogExt.modifyState env fun entries => entries ++ task.get
+  return some env
+
 def printSourceMap (path : String) : IO UInt32 := do
   let raw ← IO.FS.readFile path
   let p ← match ← prepareWithOrigins raw path with
@@ -154,8 +200,11 @@ def censusSource (path moduleName output : String) : IO UInt32 := do
   if ← stage.pathExists then IO.FS.removeFile stage
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
+  -- As in Lake bootstrap builds, evaluate the current source's parser declarations
+  -- even when a previous stage has same-named native symbols in its executable.
   let opts := ({} : Options) |>.set `ps0.sourceCensusPath stage.toString
     |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
+    |>.setBool `interpreter.prefer_native false
   let env ← Elab.runFrontend source opts path moduleName.toName (trustLevel := 0)
   if env.isNone then
     if ← stage.pathExists then IO.FS.removeFile stage

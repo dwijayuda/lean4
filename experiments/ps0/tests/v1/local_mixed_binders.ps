@@ -1,0 +1,162 @@
+/-! Named local telescopes compose native binders and PS comma groups in their original order. -/
+abbrev Box (α : Type) : Type := α
+function add(x: Nat, y: Nat): Nat := x + y
+
+const ordinaryValue: Id(Nat) := do
+  let step (x: Box(Nat), y: Nat := add(1, 2)): Nat := add(x, y)
+  return step(4)
+
+const recursiveValue: Id(Nat) := do
+  let rec step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+  return step(4)
+
+const pureRecursiveValue: Nat :=
+  let rec step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+  step(4)
+
+const mixedValue: Id(Nat) := do
+  let step {α: Type} [Inhabited(α)] (x: Nat, y: Nat := add(1, 2))
+      (z: Nat := 1): Nat := add(add(x, y), z)
+  return step(α := Nat, x := 4)
+
+const pureValue: Nat :=
+  let step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+  step(4)
+
+macro "nativeLocal " seq:doSeq : term => `(do $seq)
+const nativeValue: Id(Nat) := nativeLocal
+  let step (x y : Nat) : Nat := Nat.add x y
+  return step 2 3
+
+meta partial def firstLocalId? (source : Lean.Syntax) : Option Lean.Syntax :=
+  if source.isOfKind ``Lean.Parser.Term.letIdDecl then some source
+  else source.getArgs.findSome? firstLocalId?
+
+meta def localSpan (source : Lean.Syntax) : String :=
+  match source.getRange? with
+  | some span => s!"{span.start.byteIdx}:{span.stop.byteIdx}"
+  | none => "none"
+
+meta partial def checkLocalBinderOrigin (before : Lean.Syntax)
+    (after : Array Lean.Syntax) : Lean.MacroM Unit := do
+  if before.isOfKind Lean.choiceKind then
+    for alternative in before.getArgs do
+      let candidate ← PS0.Syntax.lowerLocalBinder alternative
+      checkLocalBinderOrigin alternative candidate
+      if alternative.isOfKind `ps0NativeLocalBinder then
+        unless candidate.size == after.size &&
+            (candidate.zip after).all (fun (x, y) => x.eqWithInfo y) do
+          Lean.Macro.throwError "PS0_LOCAL_COALESCED_NATIVE_ORIGIN"
+  else if before.isOfKind `ps0NativeLocalBinder then
+    let original := before[0]
+    unless after.size == 1 && original.getKind == after[0]!.getKind &&
+        original.getRange? == after[0]!.getRange? do
+      Lean.Macro.throwError s!"PS0_LOCAL_NATIVE_BINDER_ORIGIN: {original.getKind} {localSpan original} -> {after.map (fun x => (x.getKind, localSpan x))}"
+    let lowered := after[0]!
+    if original.isIdent || original.isOfKind ``Lean.Parser.Term.hole then
+      unless original.eqWithInfo lowered do Lean.Macro.throwError "PS0_LOCAL_IDENT_ORIGIN"
+    else
+      unless original[0].eqWithInfo lowered[0] && original[1].eqWithInfo lowered[1] &&
+          original.getArgs.back!.eqWithInfo lowered.getArgs.back! do
+        Lean.Macro.throwError "PS0_LOCAL_BRACKET_ORIGIN"
+      if original.isOfKind ``Lean.Parser.Term.explicitBinder then
+        unless original[3].getArgs.size == lowered[3].getArgs.size do
+          Lean.Macro.throwError "PS0_LOCAL_NATIVE_SUFFIX_ORIGIN"
+        if !original[3].getArgs.isEmpty then
+          unless original[3][0].getKind == lowered[3][0].getKind &&
+              original[3][0][0].eqWithInfo lowered[3][0][0] &&
+              original[3][0][1].getRange? == lowered[3][0][1].getRange? do
+            Lean.Macro.throwError "PS0_LOCAL_NATIVE_DEFAULT_ORIGIN"
+  else if before.isOfKind `ps0LocalCommaBinder then
+    let parameters := before[0][1].getSepArgs
+    unless parameters.size == after.size do Lean.Macro.throwError "PS0_LOCAL_COMMA_ARITY"
+    for (parameter, binder) in parameters.zip after do
+      unless binder.isOfKind ``Lean.Parser.Term.explicitBinder &&
+          parameter.getRange? == binder.getRange? &&
+          parameter[0].eqWithInfo binder[1][0] && parameter[1].eqWithInfo binder[2][0] &&
+          parameter[2].getRange? == binder[2][1].getRange? do
+        Lean.Macro.throwError "PS0_LOCAL_COMMA_PARAMETER_ORIGIN"
+      unless parameter[3].getArgs.size == binder[3].getArgs.size do
+        Lean.Macro.throwError "PS0_LOCAL_COMMA_SUFFIX_ARITY"
+      if !parameter[3].getArgs.isEmpty then
+        unless parameter[3][0][0].eqWithInfo binder[3][0][0] &&
+            parameter[3][0][1].getRange? == binder[3][0][1].getRange? do
+          Lean.Macro.throwError "PS0_LOCAL_COMMA_SUFFIX_ORIGIN"
+  else Lean.Macro.throwError "PS0_LOCAL_UNOWNED_BINDER"
+
+macro "localOrigin " e:psTerm : term => do
+  let some before := firstLocalId? e.raw | Lean.Macro.throwError "PS0_LOCAL_OWNERSHIP"
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  let some after := firstLocalId? lowered | Lean.Macro.throwError "PS0_LOCAL_NATIVE_ID"
+  unless before.getRange? == after.getRange? && before[0].eqWithInfo after[0] &&
+      before[3].eqWithInfo after[3] && before[1].getRange? == after[1].getRange? do
+    Lean.Macro.throwError "PS0_LOCAL_DECLARATION_ORIGIN"
+  let mut offset := 0
+  for binder in before[1].getArgs do
+    let result ← PS0.Syntax.lowerLocalBinder binder
+    checkLocalBinderOrigin binder (after[1].getArgs.extract offset (offset + result.size))
+    offset := offset + result.size
+  unless offset == after[1].getArgs.size do Lean.Macro.throwError "PS0_LOCAL_PARTITION"
+  `(True)
+
+example : localOrigin let +nondep step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, y); step(4) := by trivial
+example : localOrigin let rec step (x: Nat, y: Nat := add(1, 2)): Nat := add(x, y); step(4) := by trivial
+example : localOrigin do { let step {α: Type} [Inhabited(α)] (x y: Nat): Nat := add(x, y); return step(2, 3) } := by trivial
+example : localOrigin let step (x: Nat): Nat := x; step(4) := by trivial
+example : localOrigin let step (x: Nat, h: x = x := by rfl): Nat := x; step(4) := by trivial
+example : localOrigin let step (x y: Nat := add(1, 2)): Nat := add(x, y); step() := by trivial
+
+const localShapes: Nat :=
+  let step {α: Type} ⦃β: Type⦄ [Inhabited(α)] (x y: Nat) z: Nat := add(add(x, y), z)
+  step(1, 2, 3, α := Nat, β := Nat)
+const automaticValue: Nat :=
+  let step (x: Nat, h: x = x := by rfl): Nat := x
+  step(4)
+const dependentDefault: Nat :=
+  let step (x: Nat, y: Nat := add(x, 1)): Nat := add(x, y)
+  step(4)
+const adjacentInstance: Nat :=
+  let step (x: Nat)[Inhabited(Nat)]: Nat := x
+  step(4)
+const recursiveEquationValue: Nat :=
+  let rec step (x: Nat, y: Nat := add(1, 2)): Nat → Nat
+    | 0 => add(x, y)
+    | Nat.succ n => step(x, y, n)
+  step(4, 3, 0)
+const doRecursiveEquationValue: Id(Nat) := do
+  let rec step (x: Nat, y: Nat := add(1, 2)): Nat → Nat
+    | 0 => add(x, y)
+    | Nat.succ n => step(x, y, n)
+  return step(4, 3, 0)
+const doRecursiveEquationResult: Nat := Id.run(doRecursiveEquationValue)
+example : localShapes = 6 := by decide
+example : automaticValue = 4 := by decide
+example : dependentDefault = 9 := by decide
+example : adjacentInstance = 4 := by decide
+example : recursiveEquationValue = 7 := by decide
+example : doRecursiveEquationResult = 7 := by decide
+
+meta def nativeLocalQuote : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| let step (x y : Nat) : Nat := Nat.add x y; step 2 3)
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeLocalQuote
+  let some declaration := firstLocalId? quoted.raw | Lean.throwError "PS0_LOCAL_NATIVE_QUOTE"
+  unless declaration[1][0].isOfKind ``Lean.Parser.Term.explicitBinder &&
+      declaration[1][0][1].getArgs.size == 2 do
+    Lean.throwError "PS0_LOCAL_NATIVE_QUOTE_BINDER"
+  Lean.Elab.liftMacroM do
+    let left ← `(psLocalBinder| (x : Nat))
+    let right ← `(psLocalBinder| (y : Nat))
+    let duplicate := Lean.mkNode Lean.choiceKind #[left.raw, left.raw]
+    let result ← PS0.Syntax.lowerLocalBinder duplicate
+    unless result.size == 1 do Lean.Macro.throwError "PS0_LOCAL_DUPLICATE_PARTITION"
+    let mut rejected := false
+    try
+      let _ ← PS0.Syntax.lowerLocalBinder (Lean.mkNode Lean.choiceKind #[left.raw, right.raw])
+    catch _ => rejected := true
+    unless rejected do Lean.Macro.throwError "PS0_LOCAL_AMBIGUITY_NOT_REJECTED"
+
+def main : IO Unit :=
+  do
+    IO.println s!"PS0_LOCAL_MIXED:{ordinaryValue}:{recursiveValue}:{pureRecursiveValue}:{mixedValue}:{pureValue}:{nativeValue}"
+    IO.println s!"PS0_LOCAL_EQNS:{recursiveEquationValue}:{doRecursiveEquationResult}"

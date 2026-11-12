@@ -1,0 +1,213 @@
+/-! Ordinary host adapters preserve original native nodes, tokens, patterns and binder roles. -/
+
+meta partial def sameHostNode? (source reference : Lean.Syntax) : Option Lean.Syntax :=
+  if source.getKind == reference.getKind && source.getRange? == reference.getRange? then
+    some source
+  else source.getArgs.findSome?(fun child => sameHostNode? child reference)
+
+meta partial def checkHostOrigins (before after : Lean.Syntax) : Lean.MacroM Nat := do
+  let kind := before.getKind
+  let selected := #[``Lean.Parser.Term.«match», ``Lean.Parser.Term.matchAlt,
+    ``Lean.Parser.Term.structInst, ``Lean.Parser.Term.structInstField,
+    ``Lean.Parser.Term.doIf, ``Lean.Parser.Term.doIfLet, ``Lean.Parser.Term.doIfProp,
+    ``Lean.Parser.Term.doMatch, ``Lean.Parser.Term.doHave,
+    ``Lean.Parser.Term.doFor, ``Lean.Parser.Term.doForDecl, ``Lean.Parser.Term.doTry,
+    ``Lean.Parser.Term.doCatch, ``Lean.Parser.Term.doCatchMatch, ``Lean.Parser.Term.doFinally,
+    `termDepIfThenElse, ``Lean.Parser.Term.typeAscription, ``Lean.Parser.Term.byTactic,
+    ``Lean.Parser.Term.tuple, `«term[_]», `«term#[_,]», `termS!_,
+    ``Lean.Parser.Term.«forall», `termIfLet, ``Lean.Parser.Term.letPatDecl,
+    `interpolatedStrLitKind, ``Lean.Parser.Term.anonymousCtor, ``Lean.Parser.Term.«show»,
+    ``Lean.Parser.Term.fromTerm, ``Lean.Parser.Term.«have»,
+    ``Lean.Parser.Term.«suffices», ``Lean.Parser.Term.sufficesDecl,
+    ``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil, ``Lean.Parser.Term.byTactic',
+    ``Lean.Parser.Term.doLoopInvariant, ``Lean.Parser.Term.doLoopDecreasing, ``Lean.Parser.Term.basicFun,
+    ``Lean.Parser.Term.nestedAction, ``Lean.Parser.Term.termReturn,
+    ``Lean.Parser.Term.termTry, ``Lean.Parser.Term.termFor]
+  let mut count := 0
+  if selected.contains kind then
+    let some lowered := sameHostNode? after before
+      | Lean.Macro.throwError s!"PS0_HOST_NODE_ORIGIN: {kind}"
+    let unchanged : Array Nat :=
+      if kind == ``Lean.Parser.Term.«match» then #[0, 1, 4]
+      else if kind == ``Lean.Parser.Term.matchAlt then #[0, 1, 2]
+      else if kind == ``Lean.Parser.Term.structInst then #[0, 3, 5]
+      else if kind == ``Lean.Parser.Term.structInstField then #[0]
+      else if kind == ``Lean.Parser.Term.doIfLet then #[0, 1]
+      else if kind == ``Lean.Parser.Term.doIfProp then #[0]
+      else if kind == ``Lean.Parser.Term.doMatch then #[0, 1, 2, 5]
+      else if kind == ``Lean.Parser.Term.doHave then #[0, 1]
+      else if kind == ``Lean.Parser.Term.doFor then #[0, 4]
+      else if kind == ``Lean.Parser.Term.doForDecl then #[0, 1, 2]
+      else if kind == ``Lean.Parser.Term.doTry then #[0]
+      else if kind == ``Lean.Parser.Term.doCatch then #[0, 1, 3]
+      else if kind == ``Lean.Parser.Term.doCatchMatch || kind == ``Lean.Parser.Term.doFinally then #[0]
+      else if kind == `termDepIfThenElse then #[0, 1, 2, 4, 6]
+      else if kind == ``Lean.Parser.Term.typeAscription then #[0, 2, 4]
+      else if kind == ``Lean.Parser.Term.byTactic || kind == ``Lean.Parser.Term.byTactic' then #[0]
+      else if kind == `termS!_ || kind == `interpolatedStrLitKind then #[0]
+      else if kind == ``Lean.Parser.Term.«forall» then #[0, 3]
+      else if kind == `termIfLet then #[0, 1, 2, 3, 5, 7]
+      else if kind == ``Lean.Parser.Term.letPatDecl then #[0, 1, 3]
+      else if kind == ``Lean.Parser.Term.«show» || kind == ``Lean.Parser.Term.fromTerm then #[0]
+      else if kind == ``Lean.Parser.Term.«suffices» then #[0, 2]
+      else if kind == ``Lean.Parser.Term.sufficesDecl then #[0]
+      else if kind == ``Lean.Parser.Term.«have» then #[0, 1, 3]
+      else if kind == ``Lean.Parser.Term.doWhile || kind == ``Lean.Parser.Term.doRepeatUntil then #[0, 4]
+      else if kind == ``Lean.Parser.Term.doLoopInvariant || kind == ``Lean.Parser.Term.doLoopDecreasing then #[0]
+      else if kind == ``Lean.Parser.Term.basicFun then #[2]
+      else if kind == ``Lean.Parser.Term.nestedAction || kind == ``Lean.Parser.Term.termReturn ||
+          kind == ``Lean.Parser.Term.termTry then #[0]
+      else if kind == ``Lean.Parser.Term.termFor then #[0, 4]
+      else #[0, 2]
+    for index in unchanged do
+      unless before[index].eqWithInfo lowered[index] do
+        Lean.Macro.throwError s!"PS0_HOST_UNCHANGED_ROLE_ORIGIN: {kind}/{index}"
+    if kind == ``Lean.Parser.Term.structInstField && !before[1].getArgs.isEmpty then
+      unless before[1][0].eqWithInfo lowered[1][0] do
+        Lean.Macro.throwError "PS0_HOST_FIELD_BINDER_ORIGIN"
+    if kind == ``Lean.Parser.Term.basicFun then
+      unless before[0].getArgs.size == lowered[0].getArgs.size do
+        Lean.Macro.throwError "PS0_LOOP_BINDER_COUNT_ORIGIN"
+      for index in [:before[0].getArgs.size] do
+        let binder := before[0][index]
+        let native := lowered[0][index]
+        if binder.isOfKind ``ps0LoopNativeBinderBridge then
+          unless binder[0].eqWithInfo native do
+            Lean.Macro.throwError "PS0_LOOP_NATIVE_PATTERN_ORIGIN"
+        else if binder.isOfKind ``Lean.Parser.Term.typeAscription then
+          for slot in #[0, 1, 2, 4] do
+            unless binder[slot].eqWithInfo native[slot] do
+              Lean.Macro.throwError s!"PS0_LOOP_TYPED_PATTERN_ORIGIN: {slot}"
+    count := count + 1
+  for child in before.getArgs do
+    count := count + (← checkHostOrigins child after)
+  return count
+
+macro "hostOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless (← checkHostOrigins e.raw lowered) > 0 do
+    Lean.Macro.throwError "PS0_HOST_ORIGIN_NO_CASE"
+  `(True)
+
+example : hostOrigin (add(n, 1), n) := by trivial
+example : hostOrigin [add(n, 1), n,] := by trivial
+example : hostOrigin #[add(n, 1), n,] := by trivial
+example : hostOrigin s!"value:{add(n, 1)}" := by trivial
+example : hostOrigin ∀ (n : Fin(add(1, 2))), n.val < 3 := by trivial
+example : hostOrigin forall (n : Nat), add(n, 0) = n := by trivial
+example : hostOrigin let (a, b) : Nat × Nat := pair(n); add(a, b) := by trivial
+example : hostOrigin if let some (Nat.succ k) := some(n) then add(k, 1) else add(n, 0) := by trivial
+example : hostOrigin ⟨add(n, 1), n⟩ := by trivial
+example : hostOrigin show Nat from add(n, 1) := by trivial
+example : hostOrigin show Fin(add(n, 1)) from value(n) := by trivial
+example : hostOrigin show Nat by { exact add(n, 1) } := by trivial
+example : hostOrigin (← action(n, 1)) := by trivial
+example : hostOrigin return add(n, 1) := by trivial
+example : hostOrigin try { return add(n, 1) } catch _ => { return n } := by trivial
+example : hostOrigin for k in values(n) do { action(k, 1) } := by trivial
+example : hostOrigin suffices h : Nat from add(h, 1); n := by trivial
+example : hostOrigin suffices h : Fin(add(n, 1)) from h; value(n) := by trivial
+example : hostOrigin suffices h : Nat from h; add(n, 1) := by trivial
+example : hostOrigin suffices h : Nat by { exact add(h, 1) }; n := by trivial
+example : hostOrigin suffices Nat from add(this, 1); n := by trivial
+example : hostOrigin have step (x: Nat := add(n, 1)): Nat := add(x, 1); step := by trivial
+example : hostOrigin do { while false do { return add(n, 1) }; return n } := by trivial
+example : hostOrigin do { while h : add(n, 1) > 0 do { break }; return n } := by trivial
+example : hostOrigin do { repeat { result := add(n, 1) } until true; return result } := by trivial
+example : hostOrigin do { repeat { pure Unit.unit } until add(n, 1) == 0; return n } := by trivial
+example : hostOrigin do
+  for k in pairs(n)
+  invariant pref suff => pairSum((n, 1)) = n + 1
+  do result := k
+  return result := by trivial
+example : hostOrigin do
+  for k in pairs(n)
+  invariant (pref : List(Fin(pairSum((n, 1))))) suff => True
+  do result := k
+  return result := by trivial
+example : hostOrigin do
+  while false
+  invariant exit => pairSum((n, 1)) = n + 1
+  do result := n
+  return result := by trivial
+example : hostOrigin do
+  while false
+  decreasing pairSum((n, 1))
+  do result := n
+  return result := by trivial
+
+example : hostOrigin match (generalizing := true) h : n with
+  | some (Nat.succ k) => add(k, 1)
+  | _ => add(1, 2) := by trivial
+example : hostOrigin (fun | some (Nat.succ k) => add(k, 1) | _ => 0) := by trivial
+example : hostOrigin { base with value := add(n, 1), step x := add(x, n) : AdapterCell } := by trivial
+example : hostOrigin do
+  if h : n = 0 then return add(n, 1)
+  else if let some (Nat.succ k) := some n then return add(k, 1)
+  else return 0 := by trivial
+example : hostOrigin do
+  match (dependent := false) h : n with
+  | some (Nat.succ k) => return add(k, 1)
+  | _ => return 0 := by trivial
+example : hostOrigin do
+  have step (x: Nat := add(n, 1)): Nat := add(x, 1)
+  return step := by trivial
+example : hostOrigin do
+  for (a, b) in pairs(n) do
+    result := add(a, b)
+  return result := by trivial
+example : hostOrigin do { try { return add(n, 1) }
+  catch e : IO.Error => { return add(n, 2) }
+  finally { pure(()) } } := by trivial
+example : hostOrigin if h : n = 0 then add(n, 1) else add(n, 2) := by trivial
+example : hostOrigin (add(n, 1) : Id(Nat)) := by trivial
+example : hostOrigin by { exact add(n, 1) } := by trivial
+
+macro "nativeMatchBody " e:term : term => pure e
+function pairSum(p: Nat × Nat): Nat := p.1 + p.2
+const independentlyOwnedMatch: Nat := nativeMatchBody
+  match some 0 with | some n => pairSum (n, 1) | none => 0
+example : independentlyOwnedMatch = 1 := by decide
+
+meta def nativeHostQuotation : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| match some 0 with | some n => Nat.add n 1 | none => 0)
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeHostQuotation
+  unless quoted.raw.isOfKind ``Lean.Parser.Term.«match» do
+    throwError "PS0_HOST_NATIVE_QUOTATION"
+  Lean.logInfo "PS0_HOST_NATIVE_QUOTATION: PASS"
+
+function runtimeTry(n: Nat): IO(Nat) := do
+  try
+    if n == 0 then throw(IO.userError("zero"))
+    return n + 1
+  catch _ => return n + 2
+  finally pure(())
+
+function runtimeInterpolation(n: Nat): String := s!"value:{pairSum((n, 1))}"
+
+function runtimeWhile(n: Nat): IO(Nat) := do
+  let mut result := n
+  while h : result < n + 2 do
+    result := pairSum((result, 1))
+  return result
+
+function runtimeRepeat(n: Nat): IO(Nat) := do
+  let mut result := n
+  repeat
+    result := pairSum((result, 1))
+  until result == n + 2
+  return result
+
+def main : IO Unit := do
+  let mut total := 3
+  for k in [0:2] do total := total + k
+  unless total == 4 do throw(IO.userError("PS0_HOST_RANGE_RUNTIME"))
+  let a ← runtimeTry(0)
+  let b ← runtimeTry(2)
+  unless a == 2 && b == 3 do throw(IO.userError("PS0_HOST_TRY_RUNTIME"))
+  unless runtimeInterpolation(2) == "value:3" do throw(IO.userError("PS0_HOST_INTERPOLATION_RUNTIME"))
+  let c ← runtimeWhile(2)
+  let d ← runtimeRepeat(3)
+  unless c == 4 && d == 5 do throw(IO.userError("PS0_HOST_LOOP_RUNTIME"))
+  IO.println "PS0_HOST_ORIGINS: PASS"

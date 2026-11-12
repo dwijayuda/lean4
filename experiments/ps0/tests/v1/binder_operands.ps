@@ -83,7 +83,7 @@ def evaluatedAbbrev : Nat := mixedAbbrev(1, 2)
 
 structure Callable where
   n : Nat
-instance : CoeFun Callable (fun _ => Unit → Nat) where
+instance : CoeFun(Callable, (fun _ => Unit → Nat)) where
   coe c := fun _ => c.n
 def callable : Callable := { n := 5 }
 def evaluatedCallable : Nat := callable()

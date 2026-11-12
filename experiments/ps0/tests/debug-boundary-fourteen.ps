@@ -1,0 +1,99 @@
+module
+public import Lean
+public meta section
+
+/-! Compare native and syntax-only PS parses at the six graph-fourteen boundaries. -/
+run_cmd do
+  unsafe Lean.enableInitializersExecution
+  let host ← Lean.importModules #[{module := `PS0.SourceGrammar, isMeta := true}] {}
+    (leakEnv := true) (loadExts := true)
+  let some implementation := Lean.Compiler.getImplementedBy? host `PS0.SourceGrammar.install
+    | Lean.throwError "missing native grammar host implementation"
+  let install ← IO.ofExcept <| unsafe host.evalConst (Lean.Options → IO Unit) {} implementation
+  unsafe Lean.enableInitializersExecution
+  install {}
+  let patternParser ← IO.ofExcept <| unsafe host.evalConst Lean.Parser.Parser {}
+    `PS0.DoLayout.patternLetElseElem
+  unsafe Lean.enableInitializersExecution
+  let cases := [
+    ("unless", `doElem, `psDoElem,
+      "unless getLinterValue linter.ambiguousOpen (← getLinterOptions) do return",
+      "unless getLinterValue(linter.ambiguousOpen, (← getLinterOptions)) do return"),
+    ("pattern", `doElem, `psDoElem,
+      "let .ident info _ id preresolved := nsStx.raw | return",
+      "let .ident info _ id preresolved := nsStx.raw | return"),
+    ("pattern-some", `doElem, `psDoElem,
+      "let some dep := decl.deprecation? | return",
+      "let some dep := decl.deprecation? | return"),
+    ("pattern-some-continuation", `term, `psTerm,
+      "do\n  let some dep := decl.deprecation? | return\n  return ()",
+      "do\n  let some dep := decl.deprecation? | return\n  return ()"),
+    ("pattern-call-value", `term, `psTerm,
+      "do\n  let some dep := Option.some 1 | return\n  return ()",
+      "do\n  let some dep := Option.some(1) | return\n  return ()"),
+    ("match-lambda", `doElem, `psDoElem,
+      "if preresolved.any fun | .namespace _ => true | _ => false then return",
+      "if preresolved.any fun | .namespace _ => true | _ => false then return"),
+    ("lambda-body", `term, `psTerm,
+      "withEqLhsRhs info.type fun lhs rhs =>\n  withImplicit (isDefEq lhs rhs)",
+      "withEqLhsRhs(info.type, fun lhs rhs =>\n  withImplicit((isDefEq lhs rhs)))"),
+    ("record-update", `term, `psTerm,
+      "withConfig (fun config => { config with isDefEqStuckEx := true, transparency := TransparencyMode.instances,\n                                          foApprox := true, ctxApprox := true, constApprox := false, univApprox := false }) do\n  return ()",
+      "withConfig((fun config => { config with isDefEqStuckEx := true, transparency := TransparencyMode.instances,\n                                          foApprox := true, ctxApprox := true, constApprox := false, univApprox := false }), do\n  return ())"),
+    ("record-update-shifted", `term, `psTerm,
+      "  withConfig (fun config => { config with isDefEqStuckEx := true, transparency := TransparencyMode.instances,\n                                          foApprox := true, ctxApprox := true, constApprox := false, univApprox := false }) do\n    return ()",
+      "  withConfig( (fun config => { config with isDefEqStuckEx := true, transparency := TransparencyMode.instances,\n                                          foApprox := true, ctxApprox := true, constApprox := false, univApprox := false }), do\n    return ())"),
+    ("named-after-do", `term, `psTerm,
+      "profileitM Exception \"typeclass inference\" (← getOptions) (decl := type.getAppFn.constName?.getD .anonymous) do\n  synthInstanceCore? type maxResultSize?",
+      "profileitM(Exception, \"typeclass inference\", (← getOptions), do\n  synthInstanceCore? type maxResultSize?, decl := type.getAppFn.constName?.getD .anonymous)"),
+    ("pipeline-call", `doElem, `psDoElem,
+      "return ext.toEnvExtension.getState (← getEnv) |>.2.find? a",
+      "return ext.toEnvExtension.getState((← getEnv)) |>.2.find?(a)"),
+    ("grouped-pipeline-call", `doElem, `psDoElem,
+      "return ext.toEnvExtension.getState (← getEnv) |>.2.find? a",
+      "return (ext.toEnvExtension.getState((← getEnv)) |>.2.find?)(a)"),
+    ("pattern-continuation", `doSeq, `psDoSeq,
+      "\n  let .ident info _ id preresolved := nsStx.raw | return\n  let .original .. := info | return\n  if preresolved.any fun | .namespace _ => true | _ => false then return\n  return ()",
+      "\n  let .ident info _ id preresolved := nsStx.raw | return\n  let .original .. := info | return\n  if preresolved.any fun | .namespace _ => true | _ => false then return\n  return ()"),
+    ("unless-continuation", `doSeq, `psDoSeq,
+      "\n  unless linter.deprecated.options.get (← getOptions) do return\n  let some dep := decl.deprecation? | return\n  return ()",
+      "\n  unless linter.deprecated.options.get((← getOptions)) do return\n  let some dep := decl.deprecation? | return\n  return ()"),
+    ("lambda-bind", `doSeq, `psDoSeq,
+      "\n    let strict ← withEqLhsRhs info.type fun lhs rhs =>\n      withImplicit (isDefEq lhs rhs)\n    return strict",
+      "\n    let strict ← withEqLhsRhs(info.type, fun lhs rhs =>\n      withImplicit((isDefEq lhs rhs)))\n    return strict"),
+    ("reserved-head", `command, `psCommand,
+      "def sepBy (p : Nat) : Nat := p",
+      "function sepBy(p : Nat) : Nat := p"),
+    ("escaped-head", `command, `psCommand,
+      "def «sepBy» (p : Nat) : Nat := p",
+      "function «sepBy»(p : Nat) : Nat := p")]
+  for (context, modules) in [
+      ("Lean", #[`Lean]),
+      ("AmbiguousOpen", #[`Lean.ResolveName, `Lean.Linter.Init]),
+      ("SetOption", #[`Lean.Elab.InfoTree, `Init.Syntax]),
+      ("DefEqAttrib", #[`Lean.Meta.Basic, `Lean.Meta.Check, `Lean.Meta.WHNF]),
+      ("SynthInstance", #[`Init.Data.Array.InsertionSort, `Lean.Meta.Instances,
+        `Lean.Meta.AbstractMVars, `Lean.Meta.Check, `Init.While, `Lean.Util.CollectFVars])] do
+    unsafe Lean.enableInitializersExecution
+    let target ← Lean.importModules (modules.map fun moduleName => {module := moduleName}) {}
+    let input := "let some dep := decl.deprecation? | return\n  return ()"
+    let inputContext := Lean.Parser.mkInputContext input "<direct-pattern-let>"
+    let state := patternParser.fn.run inputContext {env := target, options := {}}
+      (Lean.Parser.getTokenTable target) (Lean.Parser.mkParserState input)
+    Lean.logInfo m!"PS0_BOUNDARY14_DIRECT {context} pos={state.pos.byteIdx} errorCount={state.allErrors.size} errors={state.toErrorMsg inputContext} syntax={repr (state.stxStack.extract 0 state.stxStack.size)}"
+    if context == "Lean" then
+      for (mode, category, input) in [
+          ("native", `term, "do\n  unless linter.deprecated.options.get (← getOptions) do return\n  let some dep := decl.deprecation? | return\n  return ()"),
+          ("ps", `psTerm, "do\n  unless linter.deprecated.options.get((← getOptions)) do return\n  let some dep := decl.deprecation? | return\n  return ()")] do
+        let inputContext := Lean.Parser.mkInputContext input "<unless-pattern-continuation>"
+        let parser := Lean.Parser.categoryParser category 0
+        let state := parser.fn.run inputContext {env := target, options := {}}
+          (Lean.Parser.getTokenTable target) (Lean.Parser.mkParserState input)
+        Lean.logInfo m!"PS0_BOUNDARY14_PARTIAL {mode} pos={state.pos.byteIdx} errorCount={state.allErrors.size} errors={state.toErrorMsg inputContext} syntax={repr (state.stxStack.extract 0 state.stxStack.size)}"
+    for (label, nativeCategory, psCategory, native, ps) in cases do
+      for (mode, category, input) in [("native", nativeCategory, native), ("ps", psCategory, ps)] do
+        let (category, input) := if category == `doSeq then (`term, "do" ++ input)
+          else if category == `psDoSeq then (`psTerm, "do" ++ input) else (category, input)
+        match Lean.Parser.runParserCategory target category input with
+        | .ok source => Lean.logInfo m!"PS0_BOUNDARY14_OK {context} {label} {mode}: {repr source}"
+        | .error error => Lean.logInfo m!"PS0_BOUNDARY14_ERROR {context} {label} {mode}: {error}"

@@ -26,12 +26,15 @@ fixture = 'tests/v1/operator_operands.ps'
 oracle = 'PS0_OPERATORS:17:6:5:512:8:1:10:10:4:2:4'
 run(['lake', 'exe', 'ps0', 'check', fixture], 'check')
 run(['lake', 'exe', 'ps0', 'build-native', fixture, 'OperatorOperands', work / 'native'], 'native')
-assert oracle in run([work / 'native/OperatorOperands'], 'runtime')
+runtime = run([work / 'native/OperatorOperands'], 'runtime')
+assert oracle in runtime
+assert 'PS0_DOLLAR:4:left; right' in runtime
 prefix = 'function add(x: Nat, y: Nat): Nat := x + y\n'
 for name, source, reason in [
     ('left-gap', 'const bad: Nat := add (1, 2) + 3', 'PS0V1-CALL-GAP'),
     ('right-gap', 'const bad: Nat := 1 + add (2, 3)', 'PS0V1-CALL-GAP'),
     ('right-order', 'const bad: Nat := 1 + add(x := 2, 3)', 'PS0V1-CALL-ORDER'),
+    ('dollar-gap', 'const bad: Nat := Nat.succ $ add (1, 2)', 'PS0V1-CALL-GAP'),
     ('local-scope', 'section\nlocal infixl:65 " <%%> " => Nat.add\nend\nconst bad: Nat := 1 <%%> 2', None),
 ]:
     path = work / (name + '.ps')

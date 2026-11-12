@@ -1,0 +1,21 @@
+/-! Explicit native ellipsis arguments retain Lean completion and original syntax information. -/
+const reflexive: Eq(3, 3) := Eq.refl(..)
+const namedReflexive: Eq(3, 3) := Eq.refl(.., a := 3)
+theorem nestedEllipsis (a i j : Nat) : a - i ≤ a + j - i :=
+  Nat.sub_le_sub_right(Nat.le_add_right(..), ..)
+
+macro "ellipsisOrigin " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  unless lowered.getRange? == e.raw.getRange? && e.raw.getRange?.isSome do
+    Lean.Macro.throwError "PS0_ELLIPSIS_ORIGIN: call span changed"
+  match e with
+  | `(psTerm| $head:ident($[$arguments:psCallArg],*)) =>
+    unless arguments.size > 0 && arguments[0]!.raw.isOfKind ``ps0NativeEllipsisArg &&
+        lowered[1].getArgs.size == arguments.size &&
+        lowered[1].getArgs.back!.eqWithInfo arguments[0]!.raw[0] do
+      Lean.Macro.throwError "PS0_ELLIPSIS_ORIGIN: native completion syntax changed"
+  | _ => Lean.Macro.throwError "PS0_ELLIPSIS_ORIGIN: expected one native completion argument"
+  `(True)
+example : ellipsisOrigin Eq.refl(..) := by trivial
+example : ellipsisOrigin Eq.refl(.., a := 3) := by trivial
+def main : IO Unit := IO.println "PS0_NATIVE_ELLIPSIS:PASS"

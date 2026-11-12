@@ -1,0 +1,9 @@
+/-! Keep empty return on its own line before a native pattern fallback and PS continuation. -/
+function emptyBoundary(n: Nat): IO Unit := do
+  unless n == 0 do return
+  let some k := some(n) | return
+  IO.println(s!"PS0_RETURN_BOUNDARY:{k}")
+
+const main: IO Unit := do
+  emptyBoundary(1)
+  emptyBoundary(0)

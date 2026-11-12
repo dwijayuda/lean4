@@ -10,6 +10,9 @@ public section
 open Lean Lean.Parser
 namespace PS0.OperatorDescriptors
 
+def builtinBinaryKinds : Array Name :=
+  #[``Lean.Parser.Term.arrow, ``Lean.Parser.Term.subst]
+
 private def label : Name → String
   | .str _ s => s
   | _ => ""
@@ -17,22 +20,30 @@ private def label : Name → String
 private partial def roles : ParserDescr → Option (Array Nat)
   | .symbol _ | .nonReservedSymbol .. | .unicodeSymbol .. => some #[0]
   | .cat `term _ => some #[1]
-  | .const n => if #["ppSpace", "ppLine", "ppHardLine", "ppAllowUngrouped"].contains (label n) then some #[] else none
+  | .const n => if #["ppSpace", "ppLine", "ppHardLine", "ppAllowUngrouped", "ws"].contains (label n) then some #[] else none
   | .unary n p =>
-      if #["ppGroup", "ppRealGroup", "withoutPosition", "withPosition"].contains (label n) then roles p else none
+      if #["ppGroup", "ppRealGroup", "withoutPosition", "withPosition", "atomic"].contains (label n) then roles p else none
   | .binary n p q => if n == `andthen then do return (← roles p) ++ (← roles q) else none
   | _ => none
 
-private unsafe def binaryKindsImpl (env : Environment) (opts : Options) : Array Name := Id.run do
-  let mut result := #[``Lean.Parser.Term.arrow]
-  let some category := getParserCategory? env `term | return result
-  let names := category.kinds.foldl (fun names name _ => names.push name) (#[] : Array Name)
+private unsafe def binaryKindsForImpl (env : Environment) (opts : Options)
+    (names : Array Name) : Array Name := Id.run do
+  let mut result := builtinBinaryKinds
   for name in names do
     if let some info := env.find? name then
       if info.type.getAppFn.isConstOf ``TrailingParserDescr then
         if let .ok (.trailingNode kind _ _ body) := env.evalConst TrailingParserDescr opts name then
           if roles body == some #[0, 1] then result := result.push kind
   return result
+
+@[implemented_by binaryKindsForImpl]
+opaque binaryKindsFor (env : Environment) (opts : Options) (names : Array Name) : Array Name
+
+private unsafe def binaryKindsImpl (env : Environment) (opts : Options) : Array Name :=
+  match getParserCategory? env `term with
+  | none => builtinBinaryKinds
+  | some category => binaryKindsForImpl env opts <|
+      category.kinds.foldl (fun names name _ => names.push name) #[]
 
 @[implemented_by binaryKindsImpl]
 opaque binaryKinds (env : Environment) (opts : Options) : Array Name
