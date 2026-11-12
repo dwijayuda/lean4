@@ -21672,7 +21672,7 @@
       "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:27:21Z",
+      "observedAt": "2026-11-12T05:44:24Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -21745,7 +21745,23 @@
         "job": 130992364677,
         "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
         "source": "978d594a10fac8f6e5687190a22d70334b331dab",
-        "status": "IN_PROGRESS"
+        "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_WITH_NATIVE_RECENSUS",
+        "modules": 23,
+        "replannedWithFirstPSBuiltPrefix": 23,
+        "changes": {
+          "source": [],
+          "c": [],
+          "olean": []
+        },
+        "firstDriverSha256": "3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55",
+        "secondDriverSha256": "3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55",
+        "relocatedGrammar": [
+          "PASS",
+          "PASS"
+        ],
+        "artifact": 13918468011,
+        "digest": "sha256:a094143eca678a6e64187203de88b0845aff41838c1a6ab05215669762dab954",
+        "bytes": 1920843
       },
       "precedingCandidate": {
         "run": 43156540873,
@@ -21756,6 +21772,36 @@
         "diagnostic": {
           "artifact": 13917409157,
           "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
+        }
+      },
+      "originalDriverFinalLean": {
+        "run": 43110044806,
+        "job": 130875523736,
+        "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "status": "PASS_FINAL_NINE_LEAN_OBJECTS",
+        "graphRunId": 42885813901,
+        "targets": 9,
+        "tasks": 2385,
+        "verifiedFiles": 65747,
+        "checkpointFiles": 65946,
+        "noConfusionFrontendSeconds": 18716,
+        "noConfusionObjectSeconds": 1.8,
+        "checkpoint": {
+          "artifact": 13918446774,
+          "digest": "sha256:f4709db2f0dd22526d1e679794ccfa353b9c052ed76f3dbe5847f877088f4251",
+          "bytes": 1329165603
+        },
+        "evidence": {
+          "artifact": 13919075051,
+          "digest": "sha256:26ddb6f7d181c40a6203c980f87a20015686b43629ec8613ca634d7d8a16d00a",
+          "bytes": 107836549
+        },
+        "next": {
+          "job": 130995433747,
+          "status": "IN_PROGRESS",
+          "phase": "stage-one"
         }
       }
     },
@@ -87203,7 +87249,7 @@
       "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:27:21Z",
+      "observedAt": "2026-11-12T05:44:24Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -87276,7 +87322,23 @@
         "job": 130992364677,
         "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
         "source": "978d594a10fac8f6e5687190a22d70334b331dab",
-        "status": "IN_PROGRESS"
+        "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_WITH_NATIVE_RECENSUS",
+        "modules": 23,
+        "replannedWithFirstPSBuiltPrefix": 23,
+        "changes": {
+          "source": [],
+          "c": [],
+          "olean": []
+        },
+        "firstDriverSha256": "3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55",
+        "secondDriverSha256": "3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55",
+        "relocatedGrammar": [
+          "PASS",
+          "PASS"
+        ],
+        "artifact": 13918468011,
+        "digest": "sha256:a094143eca678a6e64187203de88b0845aff41838c1a6ab05215669762dab954",
+        "bytes": 1920843
       },
       "precedingCandidate": {
         "run": 43156540873,
@@ -87287,6 +87349,36 @@
         "diagnostic": {
           "artifact": 13917409157,
           "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
+        }
+      },
+      "originalDriverFinalLean": {
+        "run": 43110044806,
+        "job": 130875523736,
+        "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "status": "PASS_FINAL_NINE_LEAN_OBJECTS",
+        "graphRunId": 42885813901,
+        "targets": 9,
+        "tasks": 2385,
+        "verifiedFiles": 65747,
+        "checkpointFiles": 65946,
+        "noConfusionFrontendSeconds": 18716,
+        "noConfusionObjectSeconds": 1.8,
+        "checkpoint": {
+          "artifact": 13918446774,
+          "digest": "sha256:f4709db2f0dd22526d1e679794ccfa353b9c052ed76f3dbe5847f877088f4251",
+          "bytes": 1329165603
+        },
+        "evidence": {
+          "artifact": 13919075051,
+          "digest": "sha256:26ddb6f7d181c40a6203c980f87a20015686b43629ec8613ca634d7d8a16d00a",
+          "bytes": 107836549
+        },
+        "next": {
+          "job": 130995433747,
+          "status": "IN_PROGRESS",
+          "phase": "stage-one"
         }
       }
     },
@@ -87553,7 +87645,7 @@
       "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:27:21Z",
+      "observedAt": "2026-11-12T05:44:24Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -87626,7 +87718,23 @@
         "job": 130992364677,
         "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
         "source": "978d594a10fac8f6e5687190a22d70334b331dab",
-        "status": "IN_PROGRESS"
+        "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_WITH_NATIVE_RECENSUS",
+        "modules": 23,
+        "replannedWithFirstPSBuiltPrefix": 23,
+        "changes": {
+          "source": [],
+          "c": [],
+          "olean": []
+        },
+        "firstDriverSha256": "3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55",
+        "secondDriverSha256": "3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55",
+        "relocatedGrammar": [
+          "PASS",
+          "PASS"
+        ],
+        "artifact": 13918468011,
+        "digest": "sha256:a094143eca678a6e64187203de88b0845aff41838c1a6ab05215669762dab954",
+        "bytes": 1920843
       },
       "precedingCandidate": {
         "run": 43156540873,
@@ -87637,6 +87745,36 @@
         "diagnostic": {
           "artifact": 13917409157,
           "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
+        }
+      },
+      "originalDriverFinalLean": {
+        "run": 43110044806,
+        "job": 130875523736,
+        "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "status": "PASS_FINAL_NINE_LEAN_OBJECTS",
+        "graphRunId": 42885813901,
+        "targets": 9,
+        "tasks": 2385,
+        "verifiedFiles": 65747,
+        "checkpointFiles": 65946,
+        "noConfusionFrontendSeconds": 18716,
+        "noConfusionObjectSeconds": 1.8,
+        "checkpoint": {
+          "artifact": 13918446774,
+          "digest": "sha256:f4709db2f0dd22526d1e679794ccfa353b9c052ed76f3dbe5847f877088f4251",
+          "bytes": 1329165603
+        },
+        "evidence": {
+          "artifact": 13919075051,
+          "digest": "sha256:26ddb6f7d181c40a6203c980f87a20015686b43629ec8613ca634d7d8a16d00a",
+          "bytes": 107836549
+        },
+        "next": {
+          "job": 130995433747,
+          "status": "IN_PROGRESS",
+          "phase": "stage-one"
         }
       }
     },
@@ -88560,6 +88698,61 @@
             "artifact": 13917409157,
             "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
           }
+        }
+      }
+    },
+    "selfGrammarNativeRecensusFixedPoint": {
+      "scoped": {
+        "run": 43161148569,
+        "job": 130992364677,
+        "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_WITH_NATIVE_RECENSUS",
+        "modules": 23,
+        "replannedWithFirstPSBuiltPrefix": 23,
+        "changes": {
+          "source": [],
+          "c": [],
+          "olean": []
+        },
+        "firstDriverSha256": "3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55",
+        "secondDriverSha256": "3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55",
+        "relocatedGrammar": [
+          "PASS",
+          "PASS"
+        ],
+        "artifact": 13918468011,
+        "digest": "sha256:a094143eca678a6e64187203de88b0845aff41838c1a6ab05215669762dab954",
+        "bytes": 1920843
+      },
+      "originalDriver": {
+        "run": 43110044806,
+        "job": 130875523736,
+        "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "status": "PASS_FINAL_NINE_LEAN_OBJECTS",
+        "graphRunId": 42885813901,
+        "targets": 9,
+        "tasks": 2385,
+        "verifiedFiles": 65747,
+        "checkpointFiles": 65946,
+        "noConfusionFrontendSeconds": 18716,
+        "noConfusionObjectSeconds": 1.8,
+        "checkpoint": {
+          "artifact": 13918446774,
+          "digest": "sha256:f4709db2f0dd22526d1e679794ccfa353b9c052ed76f3dbe5847f877088f4251",
+          "bytes": 1329165603
+        },
+        "evidence": {
+          "artifact": 13919075051,
+          "digest": "sha256:26ddb6f7d181c40a6203c980f87a20015686b43629ec8613ca634d7d8a16d00a",
+          "bytes": 107836549
+        },
+        "next": {
+          "job": 130995433747,
+          "status": "IN_PROGRESS",
+          "phase": "stage-one"
         }
       }
     }

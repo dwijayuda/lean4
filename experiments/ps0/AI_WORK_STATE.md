@@ -1,5 +1,13 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-12 — Repaired native recensus and scoped PS-built fixed point passed
+
+On source `978d594a10fac8f6e5687190a22d70334b331dab`, the isolated Linux build passed both native Lake links for all 23 PS0 modules using pinned SDK dependencies. The actual first PS-built prefix re-censused the original bytes and regenerated **all 23** stage-two plans. The source, C, and public `.olean` hashes matched for every module. Both relocated grammar tests passed. Both executable hashes were `3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55`. The artifact was downloaded and rehashed. Runner `3fa52ef9b69cf3461d6647802011d37af98959d0`. Artifact `13918468011` (`sha256:a094143eca678a6e64187203de88b0845aff41838c1a6ab05215669762dab954`, 1,920,843 bytes). [Linux scoped fixed-point job](https://github.com/dwijayuda/pskernel/actions/runs/43161148569/job/130992364677)
+
+The original continuation from run `43039426271` verified **65,747** files and built its last nine Lean native objects in 2,385 Lake tasks. Lake reported `NoConfusion` in 18,716 seconds and its C object in 1.8 seconds. The job sealed **65,946** files and advanced to finish. Checkpoint `13918446774` (`sha256:f4709db2f0dd22526d1e679794ccfa353b9c052ed76f3dbe5847f877088f4251`). Slice evidence `13919075051` (`sha256:26ddb6f7d181c40a6203c980f87a20015686b43629ec8613ca634d7d8a16d00a`). [Original-driver Lean closure](https://github.com/dwijayuda/pskernel/actions/runs/43110044806/job/130875523736)
+
+Run `43161199302` continues the full graph with the scoped grammar, native declaration capture, and current-stage census repair. Both full-graph links and their independent fixed-point audit remain pending. [Full Linux candidate](https://github.com/dwijayuda/pskernel/actions/runs/43161199302)
+
 ## 2026-11-12 — Scoped PS-built fixed point passed and native census IR was isolated
 
 Both Linux Lake links passed for the 23 PS0-owned modules with identical prepared `.ps` inputs and pinned SDK dependencies. The first PS-built prefix drove the second stage. All 23 C and public `.olean` hashes matched, strict mapped censuses passed, and both relocated grammar tests passed. The two executable hashes were `63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a`. The artifact was downloaded and rehashed. Artifact `13918265644` (`sha256:9049bfdce870731beb1a2fad7c13d3b0244b7e3e0c5d703feb602d6f26c094a3`, 975,204 bytes). [Scoped fixed-point job](https://github.com/dwijayuda/pskernel/actions/runs/43158861471/job/130985062946)
