@@ -1,4 +1,9 @@
 cmake_minimum_required(VERSION 3.21)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/Lean.ps")
+  message(FATAL_ERROR
+    "Build the canonical ProofScript corpus with native Lake. "
+    "See experiments/ps0/README.md for the verified bootstrap command.")
+endif()
 include(ExternalProject)
 include(FetchContent)
 

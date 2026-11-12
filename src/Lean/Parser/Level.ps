@@ -1,0 +1,42 @@
+/-
+Copyright (c) 2019 Microsoft Corporation. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Leonardo de Moura, Sebastian Ullrich
+-/
+module
+
+prelude
+public import Lean.Parser.Extra
+
+public section
+
+namespace Lean
+namespace Parser
+
+builtin_initialize
+  registerBuiltinParserAttribute `builtin_level_parser ``Category.level
+
+@[inline] function levelParser(rbp : Nat := 0) : Parser :=
+  categoryParser `level rbp
+
+namespace Level
+
+@[builtin_level_parser] const paren  := leading_parser
+  "(" >> withoutPosition levelParser >> ")"
+@[builtin_level_parser] const max    := leading_parser
+  nonReservedSymbol "max" true  >> many1 (ppSpace >> levelParser maxPrec)
+@[builtin_level_parser] const imax   := leading_parser
+  nonReservedSymbol "imax" true >> many1 (ppSpace >> levelParser maxPrec)
+@[builtin_level_parser] const hole   := leading_parser
+  "_"
+@[builtin_level_parser] const num    :=
+  checkPrec maxPrec >> numLit
+@[builtin_level_parser] const ident  :=
+  checkPrec maxPrec >> Parser.ident
+@[builtin_level_parser] const addLit := trailing_parser:65
+  " + " >> numLit
+
+end Level
+
+end Parser
+end Lean

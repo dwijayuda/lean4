@@ -1,0 +1,332 @@
+/-
+Copyright (c) 2026 Dwijayuda. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+module
+prelude
+public import Init
+public meta import Init
+public import Lean
+public import Lean.Elab.Frontend
+public import Lean.Elab.Import
+public import Lean.Linter.PersistentLintLog
+public import Lean.Compiler.LCNF.EmitC
+public import PS0.SourceCensus
+public import PS0.SourceGrammar
+public section
+/-! Source-kind adaptation for Lean's ordinary Lake module compilation protocol. -/
+
+open Lean System
+namespace PS0.LakeFrontend
+
+private function rawPosition(raw : String, normalized : String.Pos.Raw) : String.Pos.Raw :=
+  (FileMap.ofString raw).ofPosition(((FileMap.ofString raw.crlfToLf).toPosition(normalized)))
+
+private def parseRawHeader (raw filename : String) := do
+  let (header, state, messages) ← Parser.parseHeader((Parser.mkInputContext raw filename))
+  -- This state is used only for slicing the original text, never to resume parsing.
+  return (header, {state with pos := rawPosition raw state.pos}, messages)
+
+def parseHeader (raw filename : String) :
+    IO((Except(String, (Elab.HeaderSyntax × Parser.ModuleParserState × Nat)))) := do
+  let (header, state, messages) ← parseRawHeader raw filename
+  if Elab.HeaderSyntax.isModule header then
+    if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid import header"
+    return .ok((header, state, 0))
+  let modulePrefix := "module\n"
+  let (header, state, messages) ← parseRawHeader((modulePrefix ++ raw), filename)
+  if messages.hasErrors then return .error "PS0-MODULE-HEADER: invalid implicit module header"
+  return .ok((header, state, modulePrefix.utf8ByteSize))
+
+def sourceImportsAndBody (raw filename : String) : IO((Except(String, (Array Import × String)))) := do
+  let (header, state, prefixBytes) ← match ← parseHeader raw filename with
+    | .ok x => pure x
+    | .error e => return .error e
+  if state.pos.byteIdx < prefixBytes then return .error "PS0-MODULE-HEADER: invalid source offset"
+  let some body := (raw.toByteArray.extract((state.pos.byteIdx - prefixBytes), raw.utf8ByteSize)).utf8Decode?
+    | return .error "PS0-MODULE-HEADER: invalid UTF-8 boundary"
+  return .ok((Elab.HeaderSyntax.imports header (includeInit := false), String.ofList body.toList))
+
+function isPrelude(header : Elab.HeaderSyntax) : Bool :=
+  match header with
+  | `(Parser.Module.header| $[module%$_]? $[prelude%$p]? $_imports*) => p.isSome
+  | _ => false
+
+function importSource(im : Import) : String :=
+  (if im.isExported then "public " else "") ++ (if im.isMeta then "meta " else "") ++
+  "import " ++ (if im.importAll then "all " else "") ++ im.module.toString ++ "\n"
+
+structure PreparedSource where
+  source : String := ""
+  segments : Array Json := #[]
+
+private def appendOriginal (p : PreparedSource) (text : String) (start : Nat) : PreparedSource :=
+  { source := p.source ++ text
+    segments := p.segments.push <| Json.mkObj([
+      ("kind", toJson ("original" : String)),
+      ("preparedStart", toJson p.source.utf8ByteSize),
+      ("preparedEnd", toJson((p.source.utf8ByteSize + text.utf8ByteSize))),
+      ("originalStart", toJson start), ("originalEnd", toJson((start + text.utf8ByteSize)))]) }
+
+private def appendGenerated (p : PreparedSource) (text reason : String) : PreparedSource :=
+  { source := p.source ++ text
+    segments := p.segments.push <| Json.mkObj([
+      ("kind", toJson ("generated" : String)), ("reason", toJson reason),
+      ("preparedStart", toJson p.source.utf8ByteSize),
+      ("preparedEnd", toJson((p.source.utf8ByteSize + text.utf8ByteSize)))]) }
+
+def prepareWithOrigins (raw filename : String) : IO((Except String PreparedSource)) := do
+  let (header, state, prefixBytes) ← match ← parseHeader raw filename with
+    | .ok x => pure x
+    | .error e => return .error e
+  -- Native bootstrap modules retain their own substrate; no hidden Init or PS0 import.
+  if isPrelude header then return .ok((appendOriginal {} raw 0))
+  if state.pos.byteIdx < prefixBytes then return .error "PS0-MODULE-HEADER: invalid source offset"
+  let bodyStart := state.pos.byteIdx - prefixBytes
+  let some leading := (raw.toByteArray.extract 0 bodyStart).utf8Decode?
+    | return .error "PS0-MODULE-HEADER: invalid UTF-8 boundary"
+  let some body := (raw.toByteArray.extract bodyStart raw.utf8ByteSize).utf8Decode?
+    | return .error "PS0-MODULE-HEADER: invalid UTF-8 boundary"
+  let p := if prefixBytes == 0 then ({} : PreparedSource) else
+    appendGenerated {} "module\n" "implicit modern module"
+  let p := appendOriginal(p, (String.ofList leading.toList), 0)
+  let p := appendGenerated p "\npublic import PS0.Policy\n" "policy import"
+  let p := if prefixBytes == 0 then p else appendGenerated p "public section\n" "implicit public declarations"
+  let p := appendGenerated p "open scoped PS0.StandardAdapters\n" "PS operand adapters"
+  let p := appendOriginal(p, (String.ofList body.toList), bodyStart)
+  return .ok((appendGenerated p "\n#ps0_evidence\n" "source policy evidence"))
+
+def prepare (raw filename : String) : IO((Except String String)) := do
+  return (← prepareWithOrigins raw filename).map((·.source))
+
+def sourceMapJson (p : PreparedSource) (raw path : String) : Json :=
+  Json.mkObj [
+    ("schema", toJson ("ps0-source-map/1" : String)), ("file", toJson path),
+    ("originalByteSize", toJson raw.utf8ByteSize), ("source", toJson p.source),
+    ("nativeSource", toJson p.source.crlfToLf),
+    ("segments", toJson p.segments)]
+
+/-- Translate native normalized parser offsets using Lean's own logical position maps. -/
+function originalPos?(p : PreparedSource, pos : String.Pos.Raw) : Option Nat := do
+  let nativeMap := FileMap.ofString p.source.crlfToLf
+  if pos > nativeMap.source.rawEndPos then none else do
+    let preparedPos := (FileMap.ofString p.source).ofPosition((nativeMap.toPosition pos))
+    p.segments.findSome?(fun s => do
+      let start ← (s.getObjValAs? Nat "preparedStart").toOption
+      let stop ← (s.getObjValAs? Nat "preparedEnd").toOption
+      let original ← (s.getObjValAs? Nat "originalStart").toOption
+      if start ≤ preparedPos.byteIdx && preparedPos.byteIdx < stop then
+        some((original + preparedPos.byteIdx - start))
+      else none)
+
+function printSourceOrigin(path : String, pos : Nat) : IO UInt32 := do
+  let raw ← IO.FS.readFile path
+  let p ← match ← prepareWithOrigins raw path with
+    | .ok p => pure p
+    | .error e => IO.eprintln e; return 1
+  IO.println((toJson((originalPos? p ⟨pos⟩))).compress)
+  return 0
+
+private def messageWithOrigins (prepared : PreparedSource) (preparedMap originalMap : FileMap)
+    (filename : String) (message : Message) : Message := Id.run(do
+  if message.fileName != filename then return message
+  let position? (position : Position) : Option Position := do
+    let offset := (preparedMap.ofPosition position).byteIdx
+    let original ← prepared.segments.findSome?(fun segment => do
+      let start ← (segment.getObjValAs? Nat "preparedStart").toOption
+      let stop ← (segment.getObjValAs? Nat "preparedEnd").toOption
+      let original ← (segment.getObjValAs? Nat "originalStart").toOption
+      if start ≤ offset && offset ≤ stop then some((original + offset - start)) else none)
+    return originalMap.toPosition ⟨original⟩
+  let some pos := position? message.pos | return message
+  return {message with pos, endPos := message.endPos.map(fun p => (position? p).getD(p))})
+
+/-- Check through Lean's public processing pipeline, reporting original source positions. -/
+function checkWithOrigins(prepared : PreparedSource, raw : String, opts : Options,
+    filename : String, mainModuleName : Name) : IO((Option Environment)) := do
+  let inputCtx := Parser.mkInputContext prepared.source filename
+  let opts := Lean.internal.cmdlineSnapshots.setIfNotSet opts true
+  let opts := Lean.Elab.async.setIfNotSet opts true
+  let snapshot ← Language.Lean.process((fun header => pure <| .ok {
+    imports := header.imports
+    isModule := header.isModule
+    mainModuleName, opts
+    trustLevel := 0
+  }), none, {inputCtx with})
+  let tree := Language.toSnapshotTree snapshot
+  let preparedMap := FileMap.ofString prepared.source
+  let originalMap := FileMap.ofString raw
+  let messages ← tree.foldM( fun messages snapshot => do
+    let mut messages := messages
+    for message in snapshot.diagnostics.msgLog.unreported do
+      messages := messages.add((messageWithOrigins prepared preparedMap originalMap filename message))
+    return messages, init := ({} : MessageLog))
+  let report : Language.SnapshotTree := .mk {
+    diagnostics := ← Language.Snapshot.Diagnostics.ofMessageLog messages
+  } #[]
+  let hasErrors ← report.runAndReport opts
+  let some commandState := Language.Lean.waitForFinalCmdState? snapshot | return none
+  if hasErrors then return none
+  let mut env := commandState.env
+  for task in commandState.codeQualityEntryTasks do
+    env := Lean.Linter.codeQualityLogExt.modifyState(env, fun entries => entries ++ task.get)
+  return some env
+
+function printSourceMap(path : String) : IO UInt32 := do
+  let raw ← IO.FS.readFile path
+  let p ← match ← prepareWithOrigins raw path with
+    | .ok p => pure p
+    | .error e => IO.eprintln e; return 1
+  IO.println((sourceMapJson p raw path).compress)
+  return 0
+
+function printHeader(path : String) : IO UInt32 := do
+  let raw ← IO.FS.readFile path
+  let source ← match ← prepare raw path with
+    | .ok x => pure x
+    | .error e => IO.eprintln e; return 1
+  let header ← Lean.parseImports' source path
+  IO.println((toJson header).compress)
+  return 0
+
+def censusSource (path moduleName output : String) : IO UInt32 := do
+  unless path.endsWith ".ps" && (FilePath.mk output).extension == some "json" do
+    IO.eprintln "PS0-CENSUS-INPUT: expected a .ps source and a .json output"
+    return 2
+  let raw ← IO.FS.readFile path
+  let source ← match ← prepare raw path with
+    | .ok source => pure source
+    | .error e => IO.eprintln e; return 1
+  let target : FilePath := output
+  IO.FS.createDirAll((target.parent.getD "."))
+  if ← target.pathExists then IO.FS.removeFile target
+  let stage := target.addExtension "pending"
+  if ← stage.pathExists then IO.FS.removeFile stage
+  initSearchPath((← findSysroot))
+  unsafe enableInitializersExecution
+  -- As in Lake bootstrap builds, evaluate the current source's parser declarations
+  -- even when a previous stage has same-named native symbols in its executable.
+  let opts := ({} : Options) |>.set `ps0.sourceCensusPath stage.toString
+    |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
+    |>.setBool `interpreter.prefer_native false
+  let env ← Elab.runFrontend source opts path moduleName.toName (trustLevel := 0)
+  if env.isNone then
+    if ← stage.pathExists then IO.FS.removeFile stage
+    return 1
+  unless ← stage.pathExists do
+    IO.eprintln "PS0-CENSUS-MISSING: native module linter did not produce evidence"
+    return 1
+  IO.FS.rename stage target
+  IO.println s!"PS0_NATIVE_SOURCE_CENSUS_WRITTEN: {target}"
+  return 0
+
+function compile(args : List String) : IO UInt32 := do
+  let mut source? : Option String := none
+  let mut setup? : Option FilePath := none
+  let mut olean? : Option FilePath := none
+  let mut ilean? : Option FilePath := none
+  let mut c? : Option FilePath := none
+  let mut json := false
+  let mut requireMain := false
+  let mut rest := args
+  while !rest.isEmpty do
+    match rest with
+    | "--setup" :: p :: tail => setup? := some p; rest := tail
+    | "-o" :: p :: tail => olean? := some p; rest := tail
+    | "-i" :: p :: tail => ilean? := some p; rest := tail
+    | "-c" :: p :: tail => c? := some p; rest := tail
+    | "--json" :: tail => json := true; rest := tail
+    | "--ps0-entry" :: tail => requireMain := true; rest := tail
+    | p :: tail =>
+        unless p.endsWith ".ps" && source?.isNone do
+          IO.eprintln s!"PS0-LAKE-ARG: unsupported module invocation argument {p}"
+          return 2
+        source? := some p
+        rest := tail
+    | [] => pure(())
+  let some path := source? | IO.eprintln "PS0-LAKE-INPUT: missing .ps source"; return 2
+  let some setupFile := setup? | IO.eprintln "PS0-LAKE-SETUP: missing native module setup"; return 2
+  let setup ← ModuleSetup.load setupFile
+  let raw ← IO.FS.readFile path
+  let prepared ← match ← prepareWithOrigins raw path with
+    | .ok x => pure x
+    | .error e => IO.eprintln e; return 1
+  let source := prepared.source
+  initSearchPath((← findSysroot))
+  unsafe enableInitializersExecution
+  let nativePrelude := source == raw
+  if setup.options.toOptions.getBool `ps0.sourceGrammar false then
+    SourceGrammar.install setup.options.toOptions
+    -- Native importModules closes its initializer-execution window; the target
+    -- frontend starts a fresh import phase after the separate host environment.
+    unsafe enableInitializersExecution
+  let opts := if nativePrelude then ({} : Options) else
+    ({} : Options) |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
+  let census? : Option((FilePath × FilePath)) ← ilean?.mapM(fun ilean => do
+    let target := ilean.addExtension "ps0-source-census.json"
+    let stage := target.addExtension "pending"
+    IO.FS.createDirAll((target.parent.getD "."))
+    if ← target.pathExists then IO.FS.removeFile target
+    if ← stage.pathExists then IO.FS.removeFile stage
+    return (target, stage))
+  let opts := match census? with
+    | some (_, stage) => opts.set `ps0.sourceCensusPath stage.toString
+    | none => opts
+  let some env ← Elab.runFrontend source opts path setup.name
+      (trustLevel := 0) (oleanFileName? := olean?) (ileanFileName? := ilean?)
+      (jsonOutput := json) (setup? := some setup)
+    | do
+      if let some (_, stage) := census? then
+        if ← stage.pathExists then IO.FS.removeFile stage
+      return 1
+  if let some (target, stage) := census? then
+    unless ← stage.pathExists do
+      IO.eprintln "PS0-CENSUS-MISSING: native module compilation did not produce evidence"
+      return 1
+    IO.FS.rename stage target
+  if let some ilean := ilean? then
+    IO.FS.writeFile((ilean.addExtension "ps0-source-map.json"),
+      (sourceMapJson prepared raw path).compress)
+  if let some c := c? then
+    if requireMain then
+      let localCode ← Compiler.LCNF.getLocalImpureDecls
+        |>.toIO' {fileName := path, fileMap := default} {env}
+      unless localCode.contains `main do
+        IO.eprintln "PS0-NATIVE-MAIN: executable entry module must compile its own main"
+        return 1
+    let code ← Compiler.LCNF.emitC setup.name |>.toIO' {fileName := path, fileMap := default} {env}
+    IO.FS.writeFile c code
+  return 0
+
+/-- Preserve native bodies while making a legacy header explicit in PS0's modern module model. -/
+def convertNative (source target : FilePath) : IO Unit := do
+  let raw ← IO.FS.readFile source
+  let (header, state, messages) ← parseRawHeader raw source.toString
+  if messages.hasErrors then throw <| IO.userError s!"PS0-CONVERT-HEADER: {source}"
+  let converted ← if isPrelude header then pure raw else do
+    let some body := (raw.toByteArray.extract state.pos.byteIdx raw.utf8ByteSize).utf8Decode?
+      | throw <| IO.userError "PS0-CONVERT-UTF8"
+    let first := rawPosition(raw, (header.raw.getPos?.getD ⟨0⟩))
+    let leading := String.fromUTF8!((raw.toByteArray.extract 0 first.byteIdx))
+    let imports := Elab.HeaderSyntax.imports header (includeInit := true)
+    let rendered := imports.toList.map(fun im =>
+      if im.importAll && im.isExported then
+        importSource {im with importAll := false} ++ importSource {im with isExported := false}
+      else importSource im)
+    pure((leading ++ "module\nprelude\n" ++ String.join rendered ++
+      (if Elab.HeaderSyntax.isModule header then "" else "public section\n") ++ String.ofList body.toList))
+  IO.FS.createDirAll((target.parent.getD "."))
+  IO.FS.writeFile target converted
+
+def convertTree (source target : FilePath) : IO UInt32 := do
+  let files ← source.walkDir
+  let mut count := 0
+  for file in files do
+    if file.extension == some "lean" then
+      let relative := file.toString.drop((source.toString.length + 1)) |>.toString
+      convertNative(file, (target / (FilePath.mk relative).withExtension("ps")))
+      count := count + 1
+  IO.println s!"PS0_NATIVE_SOURCE_CONVERSION: {count} modules"
+  return 0
+
+end PS0.LakeFrontend

@@ -1,0 +1,123 @@
+/-
+Copyright (c) 2025 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Leonardo de Moura
+-/
+module
+
+prelude
+public import Lean.Meta.Basic
+
+public section
+
+namespace Lean.Meta
+/-!
+Functions for testing whether expressions are canonical `Int` instances.
+-/
+namespace Structural
+/-!
+**Note**: Structural tests are *syntactic*. They are more efficient, but
+should be used only in modules that have perform some kind of canonicalization.
+-/
+
+function isInstOfNatInt(e : Expr) : MetaM Bool := do
+  let_expr instOfNat _ ← e | return false
+  return true
+function isInstNegInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instNegInt ← e | return false
+  return true
+function isInstAddInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instAdd ← e | return false
+  return true
+function isInstSubInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instSub ← e | return false
+  return true
+function isInstMulInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instMul ← e | return false
+  return true
+function isInstDivInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instDiv ← e | return false
+  return true
+function isInstModInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instMod ← e | return false
+  return true
+function isInstDvdInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instDvd ← e | return false
+  return true
+function isInstHAddInt(e : Expr) : MetaM Bool := do
+  let_expr instHAdd _ i ← e | return false
+  isInstAddInt i
+function isInstHSubInt(e : Expr) : MetaM Bool := do
+  let_expr instHSub _ i ← e | return false
+  isInstSubInt i
+function isInstHMulInt(e : Expr) : MetaM Bool := do
+  let_expr instHMul _ i ← e | return false
+  isInstMulInt i
+function isInstHDivInt(e : Expr) : MetaM Bool := do
+  let_expr instHDiv _ i ← e | return false
+  isInstDivInt i
+function isInstHModInt(e : Expr) : MetaM Bool := do
+  let_expr instHMod _ i ← e | return false
+  isInstModInt i
+function isInstLTInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instLTInt ← e | return false
+  return true
+function isInstLEInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instLEInt ← e | return false
+  return true
+function isInstNatPowInt(e : Expr) : MetaM Bool := do
+  let_expr Int.instNatPow ← e | return false
+  return true
+function isInstPowInt(e : Expr) : MetaM Bool := do
+  let_expr instPowNat _ i ← e | return false
+  isInstNatPowInt i
+function isInstHPowInt(e : Expr) : MetaM Bool := do
+  let_expr instHPow _ _ i ← e | return false
+  isInstPowInt i
+end Structural
+
+namespace DefEq
+
+function isInstNegInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstNegInt e) then return true
+  isDefEqI e Int.mkInstNeg
+
+function isInstAddInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstAddInt e) then return true
+  isDefEqI e Int.mkInstAdd
+
+function isInstHAddInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstHAddInt e) then return true
+  isDefEqI e Int.mkInstHAdd
+
+function isInstSubInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstSubInt e) then return true
+  isDefEqI e Int.mkInstSub
+
+function isInstHSubInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstHSubInt e) then return true
+  isDefEqI e Int.mkInstHSub
+
+function isInstMulInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstMulInt e) then return true
+  isDefEqI e Int.mkInstMul
+
+function isInstHMulInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstHMulInt e) then return true
+  isDefEqI e Int.mkInstHMul
+
+function isInstLTInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstLTInt e) then return true
+  isDefEqI e Int.mkInstLT
+
+function isInstLEInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstLEInt e) then return true
+  isDefEqI e Int.mkInstLE
+
+function isInstDvdInt(e : Expr) : MetaM Bool := do
+  if (← Structural.isInstDvdInt e) then return true
+  isDefEqI(e, (mkConst ``Int.instDvd))
+
+end DefEq
+
+end Lean.Meta

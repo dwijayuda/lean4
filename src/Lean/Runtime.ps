@@ -1,0 +1,56 @@
+/-
+Copyright (c) 2019 Microsoft Corporation. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Leonardo de Moura
+-/
+module
+
+prelude
+public import Init.Prelude
+
+public section
+
+namespace Lean
+
+@[extern "lean_closure_max_args"]
+opaque closureMaxArgsFn : Unit → Nat
+
+@[extern "lean_max_small_nat"]
+opaque maxSmallNatFn : Unit → Nat
+
+@[extern "lean_get_max_ctor_fields"]
+opaque getMaxCtorFields : Unit → Nat
+const maxCtorFields := getMaxCtorFields(())
+
+@[extern "lean_get_max_ctor_scalars_size"]
+opaque getMaxCtorScalarsSize : Unit → Nat
+const maxCtorScalarsSize := getMaxCtorScalarsSize(())
+
+@[extern "lean_get_max_ctor_tag"]
+opaque getMaxCtorTag : Unit → Nat
+const maxCtorTag := getMaxCtorTag(())
+
+@[extern "lean_get_usize_size"]
+opaque getUSizeSize : Unit → Nat
+const usizeSize := getUSizeSize(())
+
+
+@[extern "lean_libuv_version"]
+opaque libUVVersionFn : Unit → Nat
+
+@[extern "lean_openssl_version"]
+opaque openSSLVersionFn : Unit → Nat
+
+const closureMaxArgs : Nat :=
+  closureMaxArgsFn(())
+
+const maxSmallNat : Nat :=
+  maxSmallNatFn(())
+
+const libUVVersion : Nat :=
+  libUVVersionFn(())
+
+const openSSLVersion : Nat :=
+  openSSLVersionFn(())
+
+end Lean

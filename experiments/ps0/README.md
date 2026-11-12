@@ -4,7 +4,31 @@
 not a completed v1 compiler or a verified executable compiler.
 
 
-## Finite compiler-source grammar mode
+## Canonical compiler source
+
+The pinned compiler source is tracked as `.ps` in `src/` and in the PS0
+implementation directory. The canonical catalog preserves the correspondence
+between upstream paths, Lake module names, and the audited ProofScript bytes.
+
+On Linux with the pinned Lean 4.35.0 SDK, extract the audited stage-one
+artifact from run `43161199302` (artifact `13934124327`). Pass the absolute
+path of its `compiler-evidence` directory as the bootstrap input:
+
+```bash
+cd experiments/ps0
+export PS0_SOURCE_SHA="$(git rev-parse HEAD)"
+python3 tests/run-compiler-ps.py --canonical-corpus \
+  --bootstrap-artifact /absolute/path/to/compiler-evidence \
+  --bootstrap-source 978d594a10fac8f6e5687190a22d70334b331dab
+```
+
+The build verifies the retained seed prefix and stages the checked-out PS
+bytes under Lake's logical module paths. Native Lake builds the archive and
+executable. The Linux two-stage workflow uses a fresh checkout for the second
+stage and supplies the first linked PS-built prefix through `--stage-artifact`
+and `--stage-source`.
+
+## Compiler-source grammar mode
 
 Native Lake project builds may opt into the finite syntax-only compiler host with
 `-KsourceGrammar=true` in addition to their existing `lakefile.project.lean` source,
@@ -25,8 +49,9 @@ Compiler bootstrap builds use native Lake `leanOptions` with
 `interpreter.prefer_native=false`, as in the pinned upstream Lean CMake stage
 configuration. Native frontend/kernel/code generation, graph/artifact/cache,
 native object compilation and linking remain Lean/Lake responsibilities.
-The complete pinned forest has a native-compatible census baseline; canonical PS
-grammar conversion and a fresh full migrated fixed point remain open.
+The generated compiler corpus and its fixed point were qualified before the
+source cutover. The work state and conformance ledger record the corresponding
+generated and canonical build evidence.
 
 ## Sole normative authority
 
