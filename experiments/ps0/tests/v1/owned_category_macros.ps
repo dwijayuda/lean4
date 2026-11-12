@@ -1,0 +1,13 @@
+/-! PS-owned term macros use native expansion, scope hygiene and recursive lowering. -/
+function add(x: Nat, y: Nat): Nat := x + y
+
+macro "twicePS " x:psTerm : psTerm => `(psTerm| add($x:psTerm, $x:psTerm))
+macro "fourPS " x:psTerm : psTerm => `(psTerm| twicePS (twicePS $x))
+
+const observed: Nat := fourPS 2
+function captureTest(add: Nat): Nat := twicePS 3
+const captured: Nat := captureTest(100)
+example : observed = 8 := by rfl
+example : captured = 6 := by rfl
+
+def main : IO Unit := IO.println s!"PS0_OWNED_MACROS:{observed}:{captured}"

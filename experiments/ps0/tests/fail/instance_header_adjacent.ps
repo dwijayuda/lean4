@@ -1,0 +1,5 @@
+-- PSCV0-BIND-02 rejects two explicit groups without an intervening implicit group.
+class AdjacentExample where {
+  value: Nat
+}
+instance chosen(x: Nat)(y: Nat) : AdjacentExample where { value := x + y }

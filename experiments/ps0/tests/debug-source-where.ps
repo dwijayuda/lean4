@@ -1,0 +1,28 @@
+module
+public import Lean
+public meta section
+
+/-! Inspect the syntax-only bootstrap host in an isolated Init target environment. -/
+run_cmd do
+  unsafe Lean.enableInitializersExecution
+  let host ← Lean.importModules #[{module := `PS0.SourceGrammar, isMeta := true}] {}
+    (leakEnv := true) (loadExts := true)
+  let some implementation := Lean.Compiler.getImplementedBy? host `PS0.SourceGrammar.install
+    | Lean.throwError "missing native grammar host implementation"
+  let install ← IO.ofExcept <| unsafe host.evalConst (Lean.Options → IO Unit) {} implementation
+  unsafe Lean.enableInitializersExecution
+  install {}
+  unsafe Lean.enableInitializersExecution
+  let target ← Lean.importModules #[{module := `Init}] {}
+  let some tactics := Lean.Parser.getParserCategory? target `psTactic
+    | Lean.throwError "missing copied tactic category"
+  Lean.logInfo m!"PS0_SOURCE_WHERE_TACTIC_BEHAVIOR: {repr tactics.behavior}"
+  for (category, input) in [
+      (`psTerm, "add(n, 1)"),
+      (`psTactic, "exact(add(n, 1))"),
+      (`psWhereFinally, "finally { exact(add(n, 1)) }"),
+      (`psWhereFinally, "finally\n  exact(add(n, 1))"),
+      (`psWhereClause, "where { finally { exact(add(n, 1)) } }")] do
+    match Lean.Parser.runParserCategory target category input with
+    | .ok source => Lean.logInfo m!"PS0_SOURCE_WHERE_PARSE_OK {category} {input}: {repr source}"
+    | .error error => Lean.logInfo m!"PS0_SOURCE_WHERE_PARSE_ERROR {category} {input}: {error}"

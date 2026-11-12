@@ -1,0 +1,14 @@
+-- PSCV0-TERM-01. Lean 4.35 owns WF recursion and kernel proof checking.
+function down(n: Nat): Nat := {
+  if (n == 0) { 0 } else { down(n - 1) }
+}
+termination_by n
+decreasing_by by { omega }
+
+function downInferred(n: Nat): Nat := {
+  if (n == 0) { 0 } else { downInferred(n - 1) }
+}
+termination_by n
+
+theorem downZero: down(0) = 0 := by { rfl }
+theorem downInferredZero: downInferred(0) = 0 := by { rfl }

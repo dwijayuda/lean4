@@ -1,0 +1,6 @@
+-- Native Lean v7 module policy: source module header is implicit.
+import Std
+
+-- Unicode after the parsed header must keep the original source byte offset.
+function μPlus(n: Nat): Nat := { n + 1 }
+theorem μPlusZero: μPlus(0) = 1 := by { rfl }

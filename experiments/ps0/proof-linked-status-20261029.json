@@ -1,0 +1,36 @@
+{
+  "schema": "ps0-development-observation/1",
+  "observation_date": "2026-10-29",
+  "timezone": "Asia/Jakarta",
+  "repository": "dwijayuda/lean4",
+  "branch": "feature/ps0-proof-linked-js-ts-20261029",
+  "pull_request": 6,
+  "architecture_base": "60ca3b645e0fc05c6b6416b7f9ea46afa10b46fc",
+  "implementation_commit": "5aecd139989a8755b541de3c3e457ec1b0f23a26",
+  "implementation_tree": "2eaa2a9167d7fe70af2a3ceb99e701304bb915cb",
+  "qualification": "UNEXECUTED",
+  "observed_branch_workflow_runs": 0,
+  "observed_exact_commit_check_runs": 0,
+  "run_id": null,
+  "run_url": null,
+  "queries": [
+    "https://api.github.com/repos/dwijayuda/lean4/actions/runs?branch=feature%2Fps0-proof-linked-js-ts-20261029&per_page=10",
+    "https://api.github.com/repos/dwijayuda/lean4/commits/5aecd139989a8755b541de3c3e457ec1b0f23a26/check-runs"
+  ],
+  "not_executed": [
+    "Lean compilation",
+    "source specification replay",
+    "extraction and target-model proof replay",
+    "host-contract tests",
+    "TypeScript consumer compilation",
+    "JS and TS-generated JS runtime regressions",
+    "publication and intended semantic refusal tests"
+  ],
+  "implementation_scope": "reviewed two-Nat-input inventory example; proof-linked JS/TS candidate",
+  "strict_verified_execution": false,
+  "conditional_profile": "conditional-nat2-reviewed-v0",
+  "cause_of_missing_workflow_runs": "UNKNOWN",
+  "milestone_completion_claimed": false,
+  "local_compiler_build_performed": false,
+  "notes": "This file records an observation, not a proof certificate, test PASS or release authorization. Existing R2 and compiler implementation modules remain unchanged."
+}

@@ -1,0 +1,7 @@
+-- Overlapping source instances must preserve pinned Lean priority order.
+class PreferredSource where {
+  value: Nat
+}
+instance (priority := low) : PreferredSource where { value := 11 }
+instance (priority := high) : PreferredSource where { value := 99 }
+theorem selectedPriority: (inferInstance : PreferredSource).value = 99 := by { rfl }

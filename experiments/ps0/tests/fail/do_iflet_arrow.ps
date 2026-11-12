@@ -1,0 +1,4 @@
+-- PSCV0-DO-IFLET-ARROW: monadic if-let bind belongs to a deferred profile.
+function bad(action: Except String (Option Nat)): Except String Nat := do {
+  if let .some n ← action then { return n } else { return 0 }
+}

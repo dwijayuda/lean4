@@ -1,0 +1,6 @@
+import Demo.Library
+import NativeSupport
+
+def main (args : List String) : IO UInt32 := do
+  IO.println s!"PS0_PROJECT:{Demo.answer}:{nativeSupport}:{args.length}"
+  return 0

@@ -1,0 +1,3 @@
+-- Well-typed function composition with hidden local function values
+-- is not in the monomorphic direct-call backend.
+function apply(f: Nat -> Nat, x: Nat): Nat := { f(x) }

@@ -1,0 +1,5 @@
+-- PSCV0-INSTANCE-PRIO-01 only accepts low/mid/default/high or a decimal.
+class FailPriority where {
+  value: Nat
+}
+instance (priority := highest) : FailPriority where { value := 1 }

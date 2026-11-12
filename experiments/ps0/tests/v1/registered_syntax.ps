@@ -1,0 +1,8 @@
+-- PS0 v1 has import-driven Lean syntax registration, not a finite
+-- command allowlist. This extension must parse subsequent terms.
+syntax "ps0_v1_zero" : term
+macro_rules
+  | `(ps0_v1_zero) => `(0)
+
+def fromRegisteredSyntax : Nat := ps0_v1_zero
+example : fromRegisteredSyntax = 0 := by rfl

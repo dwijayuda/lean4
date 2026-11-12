@@ -1,0 +1,11 @@
+import PS0NativeSupport
+
+function twice(x: Nat): Nat := x + x
+const answer: Nat := twice(21)
+
+example : answer = 42 := by rfl
+
+def main (args : List String) : IO UInt32 := do
+  let values := (List.range 5).map((fun n => n + 1))
+  IO.println s!"PS0_NATIVE:{answer}:{nativeSupport}:{values.foldl Nat.add 0}:{args.length}"
+  return 0

@@ -1,0 +1,16 @@
+/-! Mixed telescope slots reuse native declaration, visibility and instance semantics. -/
+function add(x: Nat, y: Nat): Nat := x + y
+abbrev agree (x y : Nat) : Prop := x = y
+
+opaque mixedOpaque (x y : Nat) (z: Nat := add(x, y), w: Nat := z): Nat := w
+axiom signatureHypothesis (x y : Nat) (z: Nat := add(x, y), w: Nat := z): agree(w, w)
+const signatureValue: Nat := add(1, 2)
+example (x y : Nat) (z: Nat := add(x, y), w: Nat := z) := Eq.refl w
+
+class PairValue (x y : Nat) where
+  value : Nat
+instance pairValue (x: Nat, y: Nat): PairValue(x, y) := ⟨x + y⟩
+def evaluatedOpaque : Nat := mixedOpaque(1, 2)
+def evaluatedInstance : Nat := PairValue.value(x := 1, y := 2)
+def main : IO Unit := do
+  IO.println s!"PS0_SIGNATURE_HEADS:{evaluatedOpaque}:{evaluatedInstance}:{signatureValue}"

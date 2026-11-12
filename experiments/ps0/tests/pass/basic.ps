@@ -1,0 +1,8 @@
+-- PS0 keeps v7 surface syntax while Lean elaborates/proves it.
+namespace PS0Fixture
+function add(a: Nat, b: Nat): Nat := { a + b }
+function clock(): Nat := { 42 }
+theorem add_zero(n: Nat): add(n, 0) = n := by { simp [add] }
+#check add(20, 22)
+#check clock()
+end PS0Fixture

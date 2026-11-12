@@ -1,0 +1,35 @@
+/-! Declaration tails retain native where binding and termination elaboration. -/
+function add(x: Nat, y: Nat): Nat := x + y
+const localStep: Nat := 99
+const localValue: Nat := 100
+
+function withWhere(n: Nat): Nat :=
+  localStep n
+where
+  localStep (x : Nat) : Nat := x + 1
+
+function countdown(n: Nat): Nat :=
+  match n with
+  | 0 => 0
+  | k + 1 => countdown k + 1
+termination_by n
+
+const withConstWhere: Nat := localValue
+where
+  localValue : Nat := 7
+
+def withDefault (n: Nat := add(1, 2)) : Nat := localStep n
+where
+  localStep (x : Nat) : Nat := x + 2
+
+example : withWhere(3) = 4 := by rfl
+example : countdown(3) = 3 := by simp [countdown]
+example : withConstWhere = 7 := by rfl
+example : withDefault() = 5 := by rfl
+
+const evaluatedWhere: Nat := withWhere(3)
+const evaluatedCountdown: Nat := countdown(3)
+const evaluatedDefault: Nat := withDefault()
+
+def main : IO Unit :=
+  IO.println s!"PS0_DECLARATION_TAILS:{evaluatedWhere}:{evaluatedCountdown}:{withConstWhere}:{evaluatedDefault}"

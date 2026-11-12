@@ -1,0 +1,158 @@
+/-! Braced where helpers retain native local recursion, captured scopes and mixed telescopes. -/
+function add(x: Nat, y: Nat): Nat := x + y
+function tacticWords(exact: Nat, apply: Nat, refine: Nat): Nat := add(exact, add(apply, refine))
+structure LocalPoint where
+  x : Nat
+  y : Nat
+
+meta partial def whereTactics (owned : Bool) (source : Lean.Syntax) : Array Lean.Syntax :=
+  let kinds := if owned then #[`ps0HostExact, `ps0HostApply, `ps0HostRefine]
+    else #[`Lean.Parser.Tactic.exact, `Lean.Parser.Tactic.apply, `Lean.Parser.Tactic.refine]
+  if kinds.contains source.getKind then #[source]
+  else source.getArgs.foldl((fun result child => result ++ whereTactics(owned, child)), #[])
+
+macro "whereOrigin " clause:psWhereClause : term => do
+  let before := clause.raw
+  let after ← PS0.StandardAdapters.lowerWhereClause before
+  unless after.isOfKind ``Lean.Parser.Term.whereDecls &&
+      before.getRange? == after.getRange? && before[0].eqWithInfo after[0] do
+    Lean.Macro.throwError "PS0_WHERE_CLAUSE_ORIGIN"
+  let helpers := before[2].getArgs.filter (·.isOfKind `PS0.StandardAdapters.psWhereLocalDefinition)
+  let nativeHelpers := after[1].getArgs.filter (·.isOfKind ``Lean.Parser.Term.letRecDecl)
+  unless helpers.size == nativeHelpers.size do Lean.Macro.throwError "PS0_WHERE_HELPER_ARITY"
+  for (helper, native) in helpers.zip nativeHelpers do
+    let value := native[2][0]
+    unless helper.getRange? == native.getRange? &&
+        helper[0].eqWithInfo native[0] && helper[1].eqWithInfo native[1] &&
+        helper[3].eqWithInfo value[0] && helper[4].getRange? == value[1].getRange? &&
+        helper[7].eqWithInfo native[3] do
+      Lean.Macro.throwError "PS0_WHERE_HELPER_ORIGIN"
+    if !helper[5].getArgs.isEmpty then
+      unless helper[5][0][0].eqWithInfo value[2][0][0] &&
+          helper[5][0][1].getRange? == value[2][0][1].getRange? do
+        Lean.Macro.throwError "PS0_WHERE_TYPE_ORIGIN"
+    if helper[6].isOfKind `PS0.StandardAdapters.psWhereLocalSimple then
+      unless helper[6][0].eqWithInfo value[3] do Lean.Macro.throwError "PS0_WHERE_ASSIGN_ORIGIN"
+  if !before[3].getArgs.isEmpty then
+    let original := before[3][0]
+    let original := if original.isOfKind `PS0.StandardAdapters.psWhereFinallyNative then original[0] else original
+    let native := after[2][0]
+    unless original.getRange? == native.getRange? && original[0].eqWithInfo native[0] do
+      Lean.Macro.throwError "PS0_WHERE_FINALLY_ORIGIN"
+    let originalTactics := whereTactics true original
+    let nativeTactics := whereTactics false native
+    unless originalTactics.size == nativeTactics.size && originalTactics.size == 1 do
+      Lean.Macro.throwError "PS0_WHERE_TACTIC_ARITY"
+    for (originalTactic, nativeTactic) in originalTactics.zip nativeTactics do
+      unless originalTactic.getRange? == nativeTactic.getRange? &&
+          originalTactic[0].eqWithInfo nativeTactic[0] &&
+          originalTactic[1].getRange? == nativeTactic.getArgs.back!.getRange? do
+        Lean.Macro.throwError "PS0_WHERE_TACTIC_ORIGIN"
+  `(True)
+
+example : whereOrigin where { def helper(x: Nat, y: Nat := add(1, 2)): Nat := add(x, y) } := by trivial
+example : whereOrigin where {
+  /-- Keep the native doc comment. -/
+  @[inline] def helper(x: Nat): Nat := x
+} := by trivial
+example : whereOrigin where { def helper(x: Nat): Nat → Nat | 0 => x | Nat.succ k => helper(x, k) } := by trivial
+example : whereOrigin where { def helper(x: Nat): LocalPoint where { x := x; y := 0 } } := by trivial
+example : whereOrigin where { def first(x: Nat): Nat := second(x); def second(x: Nat): Nat := x } := by trivial
+example : whereOrigin where { finally { exact add(1, 2) } } := by trivial
+example : whereOrigin where { finally { apply Nat.succ } } := by trivial
+example : whereOrigin where { finally { refine Nat.succ(0) } } := by trivial
+
+meta def nativeWhereTailQuote : Lean.MacroM(Lean.TSyntax ``Lean.Parser.Term.whereDecls) :=
+  `(Lean.Parser.Term.whereDecls| where helper (x y : Nat) : Nat := Nat.add x y)
+run_cmd do
+  let quoted ← Lean.Elab.liftMacroM nativeWhereTailQuote
+  let binder := quoted.raw[1][0][2][0][1][0]
+  unless binder.isOfKind ``Lean.Parser.Term.explicitBinder && binder[1].getArgs.size == 2 do
+    Lean.throwError "PS0_WHERE_NATIVE_QUOTATION"
+
+function defaultHelper(n: Nat): Nat := helper(n)
+where {
+  def helper(x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+}
+
+function capturedHelper(n: Nat): Nat := helper(1)
+where {
+  /-- Preserve local helper documentation and its permitted attribute. -/
+  @[inline] def helper(x: Nat): Nat := add(n, x)
+}
+
+function equationHelper(n: Nat): Nat := helper(0, n, 0)
+where {
+  def helper(offset: Nat, value: Nat): Nat → Nat
+    | 0 => add(offset, value)
+    | Nat.succ k => helper(offset, value, k)
+}
+
+function recordHelper(n: Nat): Nat := helper(n).x
+where {
+  def helper(k: Nat): LocalPoint where { x := k; y := 0 }
+}
+
+function forwardHelper(n: Nat): Nat := first(n)
+where {
+  def first(x: Nat): Nat := second(x)
+  def second(x: Nat): Nat := add(x, 1)
+}
+
+function wrappedHelper(n: Nat): Nat := helper(n)
+where {
+  def helper(x: Nat): Nat := { add(x, 1) }
+}
+
+function nativeWhereHelper(n: Nat): Nat := helper(n)
+where
+  helper(x: Nat, y: Nat := add(1, 2)): Nat := add(x, y)
+
+function namedProof(n: Nat): Nat := ?value
+where {
+  finally { exact(add(n, 1)) }
+}
+
+function defaultProof(n: Nat): Nat := ?value
+where {
+  finally { exact(add(n, 2)) }
+}
+
+function helperProof(n: Nat): Nat := helper(n) + ?value
+where {
+  def helper(x: Nat): Nat := add(x, 1)
+  finally { exact(2) }
+}
+
+function nativeProof(n: Nat): Nat := ?value
+where
+finally
+  exact(add(n, 3))
+
+function wordProof(exact: Nat): Nat := ?value
+where { finally { exact exact } }
+
+example : namedProof(4) = 5 := by decide
+example : defaultProof(4) = 6 := by decide
+example : helperProof(4) = 7 := by decide
+example : nativeProof(4) = 7 := by decide
+example : wordProof(4) = 4 := by decide
+
+def main : IO Unit :=
+  do
+    let a := defaultHelper(4)
+    let b := capturedHelper(4)
+    let c := equationHelper(4)
+    let d := recordHelper(4)
+    let e := forwardHelper(4)
+    let f := wrappedHelper(4)
+    let g := nativeWhereHelper(4)
+    let h := namedProof(4)
+    let i := defaultProof(4)
+    let j := helperProof(4)
+    let k := nativeProof(4)
+    let l := tacticWords(1, 2, 3)
+    let m := wordProof(4)
+    IO.println s!"PS0_WHERE_LOCAL:{a}:{b}:{c}:{d}:{e}"
+    IO.println s!"PS0_WHERE_PROOF:{f}:{g}:{h}:{i}:{j}:{k}"
+    IO.println s!"PS0_WHERE_CONTEXTUAL:{l}:{m}"

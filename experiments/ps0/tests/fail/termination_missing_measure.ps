@@ -1,0 +1,5 @@
+-- PSCV0 v7 does not admit a standalone decreasing_by proof without a measure.
+function broken(n: Nat): Nat := {
+  broken(n)
+}
+decreasing_by by { omega }

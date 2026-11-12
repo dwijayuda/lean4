@@ -1,0 +1,6 @@
+-- A trailing comma is allowed only after at least one actual argument.
+macro "psApply " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  return ⟨lowered⟩
+def addNat (x y : Nat) : Nat := x + y
+#check psApply addNat(,)

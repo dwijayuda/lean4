@@ -1,0 +1,6 @@
+namespace Inventory
+
+-- Saturating Nat subtraction: requesting more than stock leaves zero.
+function remaining(stock: Nat, requested: Nat): Nat := stock - requested
+
+end Inventory

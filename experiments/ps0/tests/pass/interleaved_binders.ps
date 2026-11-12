@@ -1,0 +1,8 @@
+-- PSCV0-BIND-02: preserve telescope order through native Lean elaboration.
+function choose(n: Nat)[Decidable(n = 0)](x: Fin(n + 1)): Nat := { x.val }
+def select {α: Type}(x: α)[Inhabited α](y: α): α := x
+function retain {{α: Type}}(x: α): α := x
+theorem chooseCorrect(n: Nat)[Decidable(n = 0)](x: Fin(n + 1)):
+    choose(n, x) = x.val := by { rfl }
+theorem selectCorrect {α: Type}(x: α)[Inhabited α](y: α):
+    select(x, y) = x := by { rfl }

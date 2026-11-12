@@ -1,0 +1,21 @@
+-- PS0 v1 section 0B: the native-capture bridge must preserve syntax data,
+-- source information and identifier hygiene rather than reparse text.
+macro "ps0Bridge " e:psTerm : term => do
+  let lowered ← PS0.Syntax.lower `psTerm e.raw
+  let native ← if e.raw.isOfKind ``ps0NativeTermBridge then pure e.raw[0]
+    else if e.raw.isOfKind ``ps0HostHeadTerm && e.raw[0].isOfKind ``ps0NativeHeadBridge then
+      pure e.raw[0][0]
+    else Lean.Macro.throwError "PS0V1-TEST-NATIVE-IDENTITY: expected native capture"
+  unless native.eqWithInfo lowered do
+    Lean.Macro.throwError "PS0V1-TEST-NATIVE-IDENTITY: native capture changed"
+  return ⟨lowered⟩
+
+-- Binary operators now have their own owned operand adapter.
+-- Keep this identity assertion on an independently captured native application.
+def bridgedValue : Nat := ps0Bridge Nat.succ 41
+example : bridgedValue = 42 := by rfl
+
+-- Native quotations are syntax data in their own category.
+def nativeQuoted : Lean.MacroM(Lean.TSyntax `term) :=
+  `(term| (40 + 2))
+
