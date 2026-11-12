@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-12 — Current-stage IR full build passed Init and Std
+
+The clean Linux build prepared 2,569 `.ps` inputs with PS grammar enabled and built all **1,147** Init/Std `:c.o` targets in **2,296** native Lake tasks, ending at `Std:c.o`. The stage sealed **38,949** checkpoint files. Of the inputs, 402 original byte hashes matched their prepared source bytes. Source `978d594a10fac8f6e5687190a22d70334b331dab`, runner `a12344e09baeb6fcee479b1934805de16e7c42b4`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. Checkpoint `13926783975` (`sha256:b65212705c9b9dafc54811eff21d6f02be6581c8d047ffc5ffd78f804663b7e7`, 679,210,848 bytes). Slice evidence `13927223224` (`sha256:bdd80e34d557ec0aac843b8f2ca8efc5634786cfad1c01c1effde5809fb0a2c7`, 107,840,950 bytes). [Linux base job](https://github.com/dwijayuda/pskernel/actions/runs/43161199302/job/130992952236)
+
+The clean build advanced to the 850-target early Lean slice. The full links and independent fixed-point audit remain pending. [Linux early Lean job](https://github.com/dwijayuda/pskernel/actions/runs/43161199302/job/131068141924)
+
 ## 2026-11-12 — Original continuation reached its stage-one finish limit
 
 Run `43110044806`, resumed from `43039426271`, verified the **65,946-file** compiler checkpoint and reached native Lake task 5,141 of 5,142. `PS0.HostCategories.ps:17:0` reproduced the duplicate bootstrap `psTerm` category error on the original driver. Lake reported `PS0.HostCategories` as the only failed target and exited 1. The archive and executable did not qualify, and all five stage-two jobs were skipped. Artifact `13919531294` (`sha256:0d1fd969fec096c4659ed1d69b38b5a02346413d87109743d54c0a584983b6bd`, 248,003,669 bytes) contains failure evidence. [Original Linux finish job](https://github.com/dwijayuda/pskernel/actions/runs/43110044806/job/130995433747)
