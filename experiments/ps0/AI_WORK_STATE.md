@@ -1,5 +1,11 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-12 — Original continuation reached its stage-one finish limit
+
+Run `43110044806`, resumed from `43039426271`, verified the **65,946-file** compiler checkpoint and reached native Lake task 5,141 of 5,142. `PS0.HostCategories.ps:17:0` reproduced the duplicate bootstrap `psTerm` category error on the original driver. Lake reported `PS0.HostCategories` as the only failed target and exited 1. The archive and executable did not qualify, and all five stage-two jobs were skipped. Artifact `13919531294` (`sha256:0d1fd969fec096c4659ed1d69b38b5a02346413d87109743d54c0a584983b6bd`, 248,003,669 bytes) contains failure evidence. [Original Linux finish job](https://github.com/dwijayuda/pskernel/actions/runs/43110044806/job/130995433747)
+
+The scoped-grammar and current-stage census repairs are incorporated in the clean full-graph build. Its original-source recensus, both links, and C/public `.olean` fixed point passed in the 23-module scope. [Clean full build](https://github.com/dwijayuda/pskernel/actions/runs/43161199302) [Scoped evidence](https://github.com/dwijayuda/pskernel/actions/runs/43161148569/job/130992364677)
+
 ## 2026-11-12 — Repaired native recensus and scoped PS-built fixed point passed
 
 On source `978d594a10fac8f6e5687190a22d70334b331dab`, the isolated Linux build passed both native Lake links for all 23 PS0 modules using pinned SDK dependencies. The actual first PS-built prefix re-censused the original bytes and regenerated **all 23** stage-two plans. The source, C, and public `.olean` hashes matched for every module. Both relocated grammar tests passed. Both executable hashes were `3bd0253a6161b0cc58d44fb43226c1e3661c6d355e8b23ad73de20f789ac9c55`. The artifact was downloaded and rehashed. Runner `3fa52ef9b69cf3461d6647802011d37af98959d0`. Artifact `13918468011` (`sha256:a094143eca678a6e64187203de88b0845aff41838c1a6ab05215669762dab954`, 1,920,843 bytes). [Linux scoped fixed-point job](https://github.com/dwijayuda/pskernel/actions/runs/43161148569/job/130992364677)

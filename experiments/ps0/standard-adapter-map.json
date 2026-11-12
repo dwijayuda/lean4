@@ -19257,7 +19257,7 @@
       "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:44:24Z",
+      "observedAt": "2026-11-12T06:15:59Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -19388,6 +19388,34 @@
           "status": "IN_PROGRESS",
           "phase": "stage-one"
         }
+      },
+      "originalDriverFinish": {
+        "run": 43110044806,
+        "job": 130995433747,
+        "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 42885813901,
+        "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
+        "checkpointFiles": 65946,
+        "failedTarget": "PS0.HostCategories",
+        "firstError": {
+          "line": 17,
+          "column": 0,
+          "message": "parser category `psTerm` has already been defined"
+        },
+        "lastNativeLakeTask": 5141,
+        "totalNativeLakeTasks": 5142,
+        "stageTwoSkippedJobs": [
+          131003262431,
+          131003263061,
+          131003264439,
+          131003264692,
+          131003264697
+        ],
+        "artifact": 13919531294,
+        "digest": "sha256:0d1fd969fec096c4659ed1d69b38b5a02346413d87109743d54c0a584983b6bd",
+        "bytes": 248003669
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -84853,7 +84881,7 @@
       "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:44:24Z",
+      "observedAt": "2026-11-12T06:15:59Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -84984,6 +85012,34 @@
           "status": "IN_PROGRESS",
           "phase": "stage-one"
         }
+      },
+      "originalDriverFinish": {
+        "run": 43110044806,
+        "job": 130995433747,
+        "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 42885813901,
+        "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
+        "checkpointFiles": 65946,
+        "failedTarget": "PS0.HostCategories",
+        "firstError": {
+          "line": 17,
+          "column": 0,
+          "message": "parser category `psTerm` has already been defined"
+        },
+        "lastNativeLakeTask": 5141,
+        "totalNativeLakeTasks": 5142,
+        "stageTwoSkippedJobs": [
+          131003262431,
+          131003263061,
+          131003264439,
+          131003264692,
+          131003264697
+        ],
+        "artifact": 13919531294,
+        "digest": "sha256:0d1fd969fec096c4659ed1d69b38b5a02346413d87109743d54c0a584983b6bd",
+        "bytes": 248003669
       }
     },
     "previousGatedRun": {
@@ -85249,7 +85305,7 @@
       "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:44:24Z",
+      "observedAt": "2026-11-12T06:15:59Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -85380,6 +85436,34 @@
           "status": "IN_PROGRESS",
           "phase": "stage-one"
         }
+      },
+      "originalDriverFinish": {
+        "run": 43110044806,
+        "job": 130995433747,
+        "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+        "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 42885813901,
+        "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
+        "checkpointFiles": 65946,
+        "failedTarget": "PS0.HostCategories",
+        "firstError": {
+          "line": 17,
+          "column": 0,
+          "message": "parser category `psTerm` has already been defined"
+        },
+        "lastNativeLakeTask": 5141,
+        "totalNativeLakeTasks": 5142,
+        "stageTwoSkippedJobs": [
+          131003262431,
+          131003263061,
+          131003264439,
+          131003264692,
+          131003264697
+        ],
+        "artifact": 13919531294,
+        "digest": "sha256:0d1fd969fec096c4659ed1d69b38b5a02346413d87109743d54c0a584983b6bd",
+        "bytes": 248003669
       }
     },
     "stageOneEarly": {
@@ -86359,6 +86443,34 @@
           "phase": "stage-one"
         }
       }
+    },
+    "originalDriverFinishFailure": {
+      "run": 43110044806,
+      "job": 130995433747,
+      "runner": "0751db1aae6a383f780f557a5c8f2eb647bfa851",
+      "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 42885813901,
+      "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
+      "checkpointFiles": 65946,
+      "failedTarget": "PS0.HostCategories",
+      "firstError": {
+        "line": 17,
+        "column": 0,
+        "message": "parser category `psTerm` has already been defined"
+      },
+      "lastNativeLakeTask": 5141,
+      "totalNativeLakeTasks": 5142,
+      "stageTwoSkippedJobs": [
+        131003262431,
+        131003263061,
+        131003264439,
+        131003264692,
+        131003264697
+      ],
+      "artifact": 13919531294,
+      "digest": "sha256:0d1fd969fec096c4659ed1d69b38b5a02346413d87109743d54c0a584983b6bd",
+      "bytes": 248003669
     }
   }
 }
