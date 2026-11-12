@@ -299,6 +299,12 @@ private def declaration (env : Environment) (operators : Array Name) (source : S
 
 private partial def command (env : Environment) (operators : Array Name) (source : Syntax) : Json :=
   let viewed := if source.isOfKind `ps0NativeCommandBridge then source[0] else source
+  -- Legacy host syntax can tie with the native declaration parser in a self-source
+  -- census. Keep the raw command kind and expose only a unique native declaration.
+  let viewed := if viewed.isOfKind choiceKind then
+    let alternatives := viewed.getArgs.filter (·.isOfKind ``Lean.Parser.Command.declaration)
+    if alternatives.size == 1 then alternatives[0]! else viewed
+  else viewed
   let initialized := if viewed.isOfKind `PS0.StandardAdapters.ps0StandardInitialize then viewed[0] else viewed
   let dataRoot := if viewed.isOfKind `PS0.StandardAdapters.ps0StandardData then viewed[0] else viewed
   let dataDeclaration := if dataRoot.isOfKind ``Lean.Parser.Command.declaration &&
