@@ -140,8 +140,8 @@ private def installCommandOperands (overlay : GrammarOverlay) : IO GrammarOverla
     throw <| IO.userError "PS0-SOURCE-COMMAND: native bridge registration is not unindexed"
   let leading := category.tables.leadingParsers.map fun (parser, priority) =>
     (if isBridge parser then unownedCommand parser else parser, priority)
-  let mut overlay := {overlay with categories := overlay.categories.insert `psCommand
-    {category with tables := {category.tables with leadingParsers := leading} }}
+  let category := {category with tables := {category.tables with leadingParsers := leading}}
+  let mut overlay := {overlay with categories := overlay.categories.insert `psCommand category}
   -- These are prefix commands for native `in`; the native trailing parser keeps
   -- withOpen/withSetOption behavior while its command operand uses PS grammar.
   for (name, parser) in #[
