@@ -14034,24 +14034,22 @@
     "finiteSyntheticModules": 4,
     "finiteSyntheticDefinitionHeads": 37,
     "fullTransformedGraph": {
-      "source": "9bb5f1a9de58b5ddee92ccefa06ee980d04aff2c",
-      "runner": "19ab4bf0f3abd40e67cf90ea6d38f7a27465a945",
-      "status": "PENDING_FRESH_NATIVE_LAKE_GRAPH",
-      "nativeCacheSource": "f94118fb3d1463304c32b5a28189d7ea6572ecce",
-      "nativeCacheRun": 42719483426,
-      "nativeCacheScope": "hash-validated native AST only; every plan regenerated; no converted source or target objects reused",
-      "fixedPointRequested": false,
-      "grammarMigrationComplete": false,
-      "verified_execution": false,
-      "run": 42743328824
+      "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+      "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "run": 43161199302,
+      "stageOneJob": 131116729741,
+      "stageTwoJob": 131285603913,
+      "auditRun": 43254180674,
+      "auditJob": 131307810313,
+      "modules": 2569,
+      "scope": "Pinned Lean 4.35.0 compiler source corpus and the PS0 compiler modules, built from generated ProofScript sources through native Lake on Linux",
+      "status": "PASS",
+      "compilerCorpusGrammarMigrationComplete": true,
+      "verified_execution": false
     },
-    "nextActions": [
-      "Inspect current complete connected graph without timeout-driven restart",
-      "Resolve actual new module failures using complete mapped captures",
-      "After both stages succeed retarget and execute the independent full fixed-point artifact audit",
-      "Require current complete PS source graph, native linking/relocation and exact per-module C/public-olean fixed point before completion"
-    ],
-    "goalStatus": "ACTIVE",
+    "nextActions": [],
+    "goalStatus": "COMPLETE",
     "obligationsPending": 240,
     "grammarMigrationComplete": false,
     "verified_execution": false,
@@ -19250,14 +19248,14 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Follow the clean scoped-grammar build through both complete native Lake links, verify the PS-built second-stage prefix and output equality, then run the independent audit.",
+    "nextAction": "Pinned compiler corpus qualification is complete.",
     "currentPSCompilerCandidate": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131218562554,
-      "phase": "stage-two-compiler-early",
-      "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T13:43:25Z",
+      "job": 131285603913,
+      "phase": "full-compiler-fixed-point",
+      "status": "PASS_FULL_COMPILER_CORPUS",
+      "observedAt": "2026-11-12T16:05:58Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -19595,6 +19593,253 @@
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T13:43:25Z"
         }
+      },
+      "compilerCorpusGrammarMigrationComplete": true,
+      "scope": "Pinned Lean 4.35.0 compiler source corpus and the PS0 compiler modules, built from generated ProofScript sources through native Lake on Linux",
+      "stageTwoLink": {
+        "run": 43161199302,
+        "job": 131285603913,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_FULL_PS_BUILT_STAGE_TWO_NATIVE_LAKE_LINK",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 131218562554,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38210,
+            "checkpointFiles": 56912,
+            "checkpoint": {
+              "artifact": 13953714778,
+              "digest": "sha256:cbf9401aabfb90112c8a97b23cf543c37b92b1f7c46f55994f0135979890a48d",
+              "bytes": 1008734001
+            },
+            "evidence": {
+              "artifact": 13955285658,
+              "digest": "sha256:bb6fd443705c4faf7492f1ad4ff3567bf31727453a3f924f9ff299bb686a5a6c",
+              "bytes": 107857979
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T13:35:19Z",
+            "completedAt": "2026-11-12T14:50:14Z"
+          },
+          {
+            "part": "middle",
+            "job": 131262212803,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 56912,
+            "checkpointFiles": 65009,
+            "checkpoint": {
+              "artifact": 13956836678,
+              "digest": "sha256:57b7fb89a27367d4ea619024e0edec7617021dd01b6aeaeddc990691854caf6f",
+              "bytes": 1229127907
+            },
+            "evidence": {
+              "artifact": 13955319606,
+              "digest": "sha256:bf74a36f8cd9be3709a4798e873feba615c823f23bdd01c4aa3662b6b69436b5",
+              "bytes": 107866696
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T14:50:17Z",
+            "completedAt": "2026-11-12T15:15:03Z"
+          },
+          {
+            "part": "late",
+            "job": 131277773131,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65009,
+            "checkpointFiles": 65208,
+            "checkpoint": {
+              "artifact": 13957996259,
+              "digest": "sha256:ef558351e9ae759068d08defc7e119949c8232db9f607e3e19ce467e462b296c",
+              "bytes": 1242795280
+            },
+            "evidence": {
+              "artifact": 13957406736,
+              "digest": "sha256:600bf33a6123fb4dc0400ff6467b4346318fb593fd014f477305d02f9ab4896c",
+              "bytes": 107867158
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T15:15:07Z",
+            "completedAt": "2026-11-12T15:27:16Z"
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 65208,
+        "finishObjectBuilds": 195,
+        "nativeLakeFinishTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "runtimeSmoke": "PASS",
+        "relocatedGrammar": "PASS",
+        "relocatedMetadataFiles": 220,
+        "census": {
+          "modules": 2569,
+          "topLevelDeclarationModes": {
+            "mapped-ps": 78712
+          }
+        },
+        "stageArtifact": {
+          "artifact": 13960655720,
+          "digest": "sha256:e1181ef53eb305d2b71938c0021acc1bd05f9faafadb058620311ec94b0ea4bb",
+          "bytes": 384532234
+        },
+        "fixedPoint": {
+          "status": "PASS",
+          "changedC": [],
+          "changedPublicOlean": [],
+          "moduleOutputsCompared": 2569
+        },
+        "noConfusionFrontendSeconds": 62
+      },
+      "independentFixedPointAudit": {
+        "run": 43254180674,
+        "job": 131307810313,
+        "runner": "db4b234482cea7af65e7f6fe53db9998c8233821",
+        "pr": 262,
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "PASS",
+        "contractsPassed": 9,
+        "artifact": 13960208346,
+        "digest": "sha256:a5300ea93ac5ab487204b314d68f4250ba9048334d39182a22deb26a0175d1ae",
+        "bytes": 1879,
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        },
+        "stageReceipts": {
+          "first": {
+            "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3",
+            "compiler_link_map_sha256": "93458046d6e78542a736912f86cc29290357ca8c98fefec72f19a5dbfa0b879d",
+            "migration_sha256": "d06d274fc059118d5eaf9e18419573e11ee983105e207f82057d468532da6474",
+            "declaration_modes": {
+              "mapped-ps": 78712
+            },
+            "nested_declaration_modes": {
+              "mapped-ps": 1124
+            }
+          },
+          "second": {
+            "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3",
+            "compiler_link_map_sha256": "93458046d6e78542a736912f86cc29290357ca8c98fefec72f19a5dbfa0b879d",
+            "migration_sha256": "0c8117d0c363d643c24e7cd8cf17524cc00e6aef420cda03eafece1522b4921d",
+            "declaration_modes": {
+              "mapped-ps": 78712
+            },
+            "nested_declaration_modes": {
+              "mapped-ps": 1124
+            }
+          }
+        },
+        "producer": {
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "harness": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+          "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+          "run": 43161199302,
+          "jobs": [
+            {
+              "id": 130992905462,
+              "name": "checkpoint-qualification",
+              "conclusion": "success"
+            },
+            {
+              "id": 130992952236,
+              "name": "stage-one-base",
+              "conclusion": "success"
+            },
+            {
+              "id": 131068141924,
+              "name": "stage-one-compiler-early",
+              "conclusion": "success"
+            },
+            {
+              "id": 131095296236,
+              "name": "stage-one-compiler-middle",
+              "conclusion": "success"
+            },
+            {
+              "id": 131112167389,
+              "name": "stage-one-compiler",
+              "conclusion": "success"
+            },
+            {
+              "id": 131116729741,
+              "name": "stage-one",
+              "conclusion": "success"
+            },
+            {
+              "id": 131124669250,
+              "name": "stage-two-base",
+              "conclusion": "success"
+            },
+            {
+              "id": 131218562554,
+              "name": "stage-two-compiler-early",
+              "conclusion": "success"
+            },
+            {
+              "id": 131262212803,
+              "name": "stage-two-compiler-middle",
+              "conclusion": "success"
+            },
+            {
+              "id": 131277773131,
+              "name": "stage-two-compiler",
+              "conclusion": "success"
+            },
+            {
+              "id": 131285603913,
+              "name": "stage-two",
+              "conclusion": "success"
+            }
+          ],
+          "stages": [
+            {
+              "id": 13934124327,
+              "name": "ps0-selfhost-stage-one-978d594a10fac8f6e5687190a22d70334b331dab-43161199302",
+              "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+              "bytes": 384532453
+            },
+            {
+              "id": 13960655720,
+              "name": "ps0-selfhost-stage-two-978d594a10fac8f6e5687190a22d70334b331dab-43161199302",
+              "digest": "sha256:e1181ef53eb305d2b71938c0021acc1bd05f9faafadb058620311ec94b0ea4bb",
+              "bytes": 384532234
+            }
+          ]
+        }
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -19615,10 +19860,27 @@
     },
     "nativeLakeCompilerRecovery": {
       "run": 43161199302,
-      "job": 131218562554,
-      "phase": "stage-two-compiler-early",
-      "status": "IN_PROGRESS",
+      "job": 131285603913,
+      "phase": "full-compiler-fixed-point",
+      "status": "PASS_FULL_COMPILER_CORPUS",
+      "auditRun": 43254180674,
+      "auditJob": 131307810313,
       "evidenceField": "nativeLakeCompilerRecovery"
+    },
+    "qualifiedCompilerCorpus": {
+      "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+      "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "run": 43161199302,
+      "stageOneJob": 131116729741,
+      "stageTwoJob": 131285603913,
+      "auditRun": 43254180674,
+      "auditJob": 131307810313,
+      "modules": 2569,
+      "scope": "Pinned Lean 4.35.0 compiler source corpus and the PS0 compiler modules, built from generated ProofScript sources through native Lake on Linux",
+      "status": "PASS",
+      "compilerCorpusGrammarMigrationComplete": true,
+      "verified_execution": false
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -85057,10 +85319,10 @@
     "candidate": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131218562554,
-      "phase": "stage-two-compiler-early",
-      "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T13:43:25Z",
+      "job": 131285603913,
+      "phase": "full-compiler-fixed-point",
+      "status": "PASS_FULL_COMPILER_CORPUS",
+      "observedAt": "2026-11-12T16:05:58Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -85398,6 +85660,253 @@
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T13:43:25Z"
         }
+      },
+      "compilerCorpusGrammarMigrationComplete": true,
+      "scope": "Pinned Lean 4.35.0 compiler source corpus and the PS0 compiler modules, built from generated ProofScript sources through native Lake on Linux",
+      "stageTwoLink": {
+        "run": 43161199302,
+        "job": 131285603913,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_FULL_PS_BUILT_STAGE_TWO_NATIVE_LAKE_LINK",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 131218562554,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38210,
+            "checkpointFiles": 56912,
+            "checkpoint": {
+              "artifact": 13953714778,
+              "digest": "sha256:cbf9401aabfb90112c8a97b23cf543c37b92b1f7c46f55994f0135979890a48d",
+              "bytes": 1008734001
+            },
+            "evidence": {
+              "artifact": 13955285658,
+              "digest": "sha256:bb6fd443705c4faf7492f1ad4ff3567bf31727453a3f924f9ff299bb686a5a6c",
+              "bytes": 107857979
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T13:35:19Z",
+            "completedAt": "2026-11-12T14:50:14Z"
+          },
+          {
+            "part": "middle",
+            "job": 131262212803,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 56912,
+            "checkpointFiles": 65009,
+            "checkpoint": {
+              "artifact": 13956836678,
+              "digest": "sha256:57b7fb89a27367d4ea619024e0edec7617021dd01b6aeaeddc990691854caf6f",
+              "bytes": 1229127907
+            },
+            "evidence": {
+              "artifact": 13955319606,
+              "digest": "sha256:bf74a36f8cd9be3709a4798e873feba615c823f23bdd01c4aa3662b6b69436b5",
+              "bytes": 107866696
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T14:50:17Z",
+            "completedAt": "2026-11-12T15:15:03Z"
+          },
+          {
+            "part": "late",
+            "job": 131277773131,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65009,
+            "checkpointFiles": 65208,
+            "checkpoint": {
+              "artifact": 13957996259,
+              "digest": "sha256:ef558351e9ae759068d08defc7e119949c8232db9f607e3e19ce467e462b296c",
+              "bytes": 1242795280
+            },
+            "evidence": {
+              "artifact": 13957406736,
+              "digest": "sha256:600bf33a6123fb4dc0400ff6467b4346318fb593fd014f477305d02f9ab4896c",
+              "bytes": 107867158
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T15:15:07Z",
+            "completedAt": "2026-11-12T15:27:16Z"
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 65208,
+        "finishObjectBuilds": 195,
+        "nativeLakeFinishTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "runtimeSmoke": "PASS",
+        "relocatedGrammar": "PASS",
+        "relocatedMetadataFiles": 220,
+        "census": {
+          "modules": 2569,
+          "topLevelDeclarationModes": {
+            "mapped-ps": 78712
+          }
+        },
+        "stageArtifact": {
+          "artifact": 13960655720,
+          "digest": "sha256:e1181ef53eb305d2b71938c0021acc1bd05f9faafadb058620311ec94b0ea4bb",
+          "bytes": 384532234
+        },
+        "fixedPoint": {
+          "status": "PASS",
+          "changedC": [],
+          "changedPublicOlean": [],
+          "moduleOutputsCompared": 2569
+        },
+        "noConfusionFrontendSeconds": 62
+      },
+      "independentFixedPointAudit": {
+        "run": 43254180674,
+        "job": 131307810313,
+        "runner": "db4b234482cea7af65e7f6fe53db9998c8233821",
+        "pr": 262,
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "PASS",
+        "contractsPassed": 9,
+        "artifact": 13960208346,
+        "digest": "sha256:a5300ea93ac5ab487204b314d68f4250ba9048334d39182a22deb26a0175d1ae",
+        "bytes": 1879,
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        },
+        "stageReceipts": {
+          "first": {
+            "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3",
+            "compiler_link_map_sha256": "93458046d6e78542a736912f86cc29290357ca8c98fefec72f19a5dbfa0b879d",
+            "migration_sha256": "d06d274fc059118d5eaf9e18419573e11ee983105e207f82057d468532da6474",
+            "declaration_modes": {
+              "mapped-ps": 78712
+            },
+            "nested_declaration_modes": {
+              "mapped-ps": 1124
+            }
+          },
+          "second": {
+            "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3",
+            "compiler_link_map_sha256": "93458046d6e78542a736912f86cc29290357ca8c98fefec72f19a5dbfa0b879d",
+            "migration_sha256": "0c8117d0c363d643c24e7cd8cf17524cc00e6aef420cda03eafece1522b4921d",
+            "declaration_modes": {
+              "mapped-ps": 78712
+            },
+            "nested_declaration_modes": {
+              "mapped-ps": 1124
+            }
+          }
+        },
+        "producer": {
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "harness": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+          "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+          "run": 43161199302,
+          "jobs": [
+            {
+              "id": 130992905462,
+              "name": "checkpoint-qualification",
+              "conclusion": "success"
+            },
+            {
+              "id": 130992952236,
+              "name": "stage-one-base",
+              "conclusion": "success"
+            },
+            {
+              "id": 131068141924,
+              "name": "stage-one-compiler-early",
+              "conclusion": "success"
+            },
+            {
+              "id": 131095296236,
+              "name": "stage-one-compiler-middle",
+              "conclusion": "success"
+            },
+            {
+              "id": 131112167389,
+              "name": "stage-one-compiler",
+              "conclusion": "success"
+            },
+            {
+              "id": 131116729741,
+              "name": "stage-one",
+              "conclusion": "success"
+            },
+            {
+              "id": 131124669250,
+              "name": "stage-two-base",
+              "conclusion": "success"
+            },
+            {
+              "id": 131218562554,
+              "name": "stage-two-compiler-early",
+              "conclusion": "success"
+            },
+            {
+              "id": 131262212803,
+              "name": "stage-two-compiler-middle",
+              "conclusion": "success"
+            },
+            {
+              "id": 131277773131,
+              "name": "stage-two-compiler",
+              "conclusion": "success"
+            },
+            {
+              "id": 131285603913,
+              "name": "stage-two",
+              "conclusion": "success"
+            }
+          ],
+          "stages": [
+            {
+              "id": 13934124327,
+              "name": "ps0-selfhost-stage-one-978d594a10fac8f6e5687190a22d70334b331dab-43161199302",
+              "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+              "bytes": 384532453
+            },
+            {
+              "id": 13960655720,
+              "name": "ps0-selfhost-stage-two-978d594a10fac8f6e5687190a22d70334b331dab-43161199302",
+              "digest": "sha256:e1181ef53eb305d2b71938c0021acc1bd05f9faafadb058620311ec94b0ea4bb",
+              "bytes": 384532234
+            }
+          ]
+        }
       }
     },
     "previousGatedRun": {
@@ -85412,7 +85921,7 @@
       "tests/test-compiler-build-checkpoint.py",
       "tests/run-compiler-ps.py"
     ],
-    "goalStatus": "ACTIVE",
+    "goalStatus": "COMPLETE",
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "basePhase": {
@@ -85478,6 +85987,21 @@
         "status": "IN_PROGRESS"
       },
       "scope": "1147 actual Init/Std native module object targets and independently rehashed retained outputs/censuses only; no complete compiler graph/link/runtime/PS-built second-stage/fixed-point qualification"
+    },
+    "qualifiedCompilerCorpus": {
+      "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+      "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "run": 43161199302,
+      "stageOneJob": 131116729741,
+      "stageTwoJob": 131285603913,
+      "auditRun": 43254180674,
+      "auditJob": 131307810313,
+      "modules": 2569,
+      "scope": "Pinned Lean 4.35.0 compiler source corpus and the PS0 compiler modules, built from generated ProofScript sources through native Lake on Linux",
+      "status": "PASS",
+      "compilerCorpusGrammarMigrationComplete": true,
+      "verified_execution": false
     }
   },
   "timedCompilerGraphCurrentPartialAudit": {
@@ -85660,10 +86184,10 @@
     "recovery": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131218562554,
-      "phase": "stage-two-compiler-early",
-      "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T13:43:25Z",
+      "job": 131285603913,
+      "phase": "full-compiler-fixed-point",
+      "status": "PASS_FULL_COMPILER_CORPUS",
+      "observedAt": "2026-11-12T16:05:58Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -86000,6 +86524,253 @@
           "targets": 850,
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T13:43:25Z"
+        }
+      },
+      "compilerCorpusGrammarMigrationComplete": true,
+      "scope": "Pinned Lean 4.35.0 compiler source corpus and the PS0 compiler modules, built from generated ProofScript sources through native Lake on Linux",
+      "stageTwoLink": {
+        "run": 43161199302,
+        "job": 131285603913,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_FULL_PS_BUILT_STAGE_TWO_NATIVE_LAKE_LINK",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 131218562554,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38210,
+            "checkpointFiles": 56912,
+            "checkpoint": {
+              "artifact": 13953714778,
+              "digest": "sha256:cbf9401aabfb90112c8a97b23cf543c37b92b1f7c46f55994f0135979890a48d",
+              "bytes": 1008734001
+            },
+            "evidence": {
+              "artifact": 13955285658,
+              "digest": "sha256:bb6fd443705c4faf7492f1ad4ff3567bf31727453a3f924f9ff299bb686a5a6c",
+              "bytes": 107857979
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T13:35:19Z",
+            "completedAt": "2026-11-12T14:50:14Z"
+          },
+          {
+            "part": "middle",
+            "job": 131262212803,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 56912,
+            "checkpointFiles": 65009,
+            "checkpoint": {
+              "artifact": 13956836678,
+              "digest": "sha256:57b7fb89a27367d4ea619024e0edec7617021dd01b6aeaeddc990691854caf6f",
+              "bytes": 1229127907
+            },
+            "evidence": {
+              "artifact": 13955319606,
+              "digest": "sha256:bf74a36f8cd9be3709a4798e873feba615c823f23bdd01c4aa3662b6b69436b5",
+              "bytes": 107866696
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T14:50:17Z",
+            "completedAt": "2026-11-12T15:15:03Z"
+          },
+          {
+            "part": "late",
+            "job": 131277773131,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65009,
+            "checkpointFiles": 65208,
+            "checkpoint": {
+              "artifact": 13957996259,
+              "digest": "sha256:ef558351e9ae759068d08defc7e119949c8232db9f607e3e19ce467e462b296c",
+              "bytes": 1242795280
+            },
+            "evidence": {
+              "artifact": 13957406736,
+              "digest": "sha256:600bf33a6123fb4dc0400ff6467b4346318fb593fd014f477305d02f9ab4896c",
+              "bytes": 107867158
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T15:15:07Z",
+            "completedAt": "2026-11-12T15:27:16Z"
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 65208,
+        "finishObjectBuilds": 195,
+        "nativeLakeFinishTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "runtimeSmoke": "PASS",
+        "relocatedGrammar": "PASS",
+        "relocatedMetadataFiles": 220,
+        "census": {
+          "modules": 2569,
+          "topLevelDeclarationModes": {
+            "mapped-ps": 78712
+          }
+        },
+        "stageArtifact": {
+          "artifact": 13960655720,
+          "digest": "sha256:e1181ef53eb305d2b71938c0021acc1bd05f9faafadb058620311ec94b0ea4bb",
+          "bytes": 384532234
+        },
+        "fixedPoint": {
+          "status": "PASS",
+          "changedC": [],
+          "changedPublicOlean": [],
+          "moduleOutputsCompared": 2569
+        },
+        "noConfusionFrontendSeconds": 62
+      },
+      "independentFixedPointAudit": {
+        "run": 43254180674,
+        "job": 131307810313,
+        "runner": "db4b234482cea7af65e7f6fe53db9998c8233821",
+        "pr": 262,
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "PASS",
+        "contractsPassed": 9,
+        "artifact": 13960208346,
+        "digest": "sha256:a5300ea93ac5ab487204b314d68f4250ba9048334d39182a22deb26a0175d1ae",
+        "bytes": 1879,
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        },
+        "stageReceipts": {
+          "first": {
+            "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3",
+            "compiler_link_map_sha256": "93458046d6e78542a736912f86cc29290357ca8c98fefec72f19a5dbfa0b879d",
+            "migration_sha256": "d06d274fc059118d5eaf9e18419573e11ee983105e207f82057d468532da6474",
+            "declaration_modes": {
+              "mapped-ps": 78712
+            },
+            "nested_declaration_modes": {
+              "mapped-ps": 1124
+            }
+          },
+          "second": {
+            "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3",
+            "compiler_link_map_sha256": "93458046d6e78542a736912f86cc29290357ca8c98fefec72f19a5dbfa0b879d",
+            "migration_sha256": "0c8117d0c363d643c24e7cd8cf17524cc00e6aef420cda03eafece1522b4921d",
+            "declaration_modes": {
+              "mapped-ps": 78712
+            },
+            "nested_declaration_modes": {
+              "mapped-ps": 1124
+            }
+          }
+        },
+        "producer": {
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "harness": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+          "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+          "run": 43161199302,
+          "jobs": [
+            {
+              "id": 130992905462,
+              "name": "checkpoint-qualification",
+              "conclusion": "success"
+            },
+            {
+              "id": 130992952236,
+              "name": "stage-one-base",
+              "conclusion": "success"
+            },
+            {
+              "id": 131068141924,
+              "name": "stage-one-compiler-early",
+              "conclusion": "success"
+            },
+            {
+              "id": 131095296236,
+              "name": "stage-one-compiler-middle",
+              "conclusion": "success"
+            },
+            {
+              "id": 131112167389,
+              "name": "stage-one-compiler",
+              "conclusion": "success"
+            },
+            {
+              "id": 131116729741,
+              "name": "stage-one",
+              "conclusion": "success"
+            },
+            {
+              "id": 131124669250,
+              "name": "stage-two-base",
+              "conclusion": "success"
+            },
+            {
+              "id": 131218562554,
+              "name": "stage-two-compiler-early",
+              "conclusion": "success"
+            },
+            {
+              "id": 131262212803,
+              "name": "stage-two-compiler-middle",
+              "conclusion": "success"
+            },
+            {
+              "id": 131277773131,
+              "name": "stage-two-compiler",
+              "conclusion": "success"
+            },
+            {
+              "id": 131285603913,
+              "name": "stage-two",
+              "conclusion": "success"
+            }
+          ],
+          "stages": [
+            {
+              "id": 13934124327,
+              "name": "ps0-selfhost-stage-one-978d594a10fac8f6e5687190a22d70334b331dab-43161199302",
+              "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+              "bytes": 384532453
+            },
+            {
+              "id": 13960655720,
+              "name": "ps0-selfhost-stage-two-978d594a10fac8f6e5687190a22d70334b331dab-43161199302",
+              "digest": "sha256:e1181ef53eb305d2b71938c0021acc1bd05f9faafadb058620311ec94b0ea4bb",
+              "bytes": 384532234
+            }
+          ]
         }
       }
     },
@@ -87186,6 +87957,364 @@
         "targets": 850,
         "status": "IN_PROGRESS",
         "observedAt": "2026-11-12T13:43:25Z"
+      }
+    },
+    "currentIRFullCompilerFixedPoint": {
+      "status": "PASS",
+      "compilerCorpusGrammarMigrationComplete": true,
+      "scope": "Pinned Lean 4.35.0 compiler source corpus and the PS0 compiler modules, built from generated ProofScript sources through native Lake on Linux",
+      "stageOne": {
+        "run": 43161199302,
+        "job": 131116729741,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_FULL_STAGE_ONE_NATIVE_LAKE_LINK",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 131068141924,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38949,
+            "checkpointFiles": 57650,
+            "checkpoint": {
+              "artifact": 13931855903,
+              "digest": "sha256:ada90b7992021bd77c244b1739d9f161e6d904820bb808ea14362fffceb8f914",
+              "bytes": 1095298568
+            },
+            "evidence": {
+              "artifact": 13931367233,
+              "digest": "sha256:1bd337304250791b0f9e3f74870ce2dabfc60f853e19575b4d0677bc97bfc4e4",
+              "bytes": 107858199
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T08:37:30Z",
+            "completedAt": "2026-11-12T09:33:59Z"
+          },
+          {
+            "part": "middle",
+            "job": 131095296236,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 57650,
+            "checkpointFiles": 65747,
+            "checkpoint": {
+              "artifact": 13933118397,
+              "digest": "sha256:d8a183aae5cae365373547db7c21a7e687da5d0074d432b8cccb38e13959d2d1",
+              "bytes": 1315674351
+            },
+            "evidence": {
+              "artifact": 13933936246,
+              "digest": "sha256:95ded16734ed40d0ea2d2f237efbab917d35d5e147836d98c3ae4e26d13dcb2b",
+              "bytes": 107866958
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T09:34:03Z",
+            "completedAt": "2026-11-12T10:07:20Z"
+          },
+          {
+            "part": "late",
+            "job": 131112167389,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65747,
+            "checkpointFiles": 65946,
+            "checkpoint": {
+              "artifact": 13933918444,
+              "digest": "sha256:6c32f3b52a32b1eabeabeb363933ed7bce6ad4a40eeae94eef2015ca78ddbcb0",
+              "bytes": 1329311197
+            },
+            "evidence": {
+              "artifact": 13933039482,
+              "digest": "sha256:7c338bd2f962260b1efea5c368a4684712fdf91ddab9d32625a7a579521ff156",
+              "bytes": 107867416
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T10:07:23Z",
+            "completedAt": "2026-11-12T10:16:17Z"
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 65946,
+        "finishObjectBuilds": 195,
+        "nativeLakeFinishTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "runtimeSmoke": "PASS",
+        "relocatedGrammar": "PASS",
+        "relocatedMetadataFiles": 220,
+        "census": {
+          "modules": 2569,
+          "topLevelDeclarationModes": {
+            "mapped-ps": 78712
+          }
+        },
+        "stageArtifact": {
+          "artifact": 13934124327,
+          "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+          "bytes": 384532453
+        },
+        "noConfusionFrontendSeconds": 63,
+        "next": {
+          "job": 131124669250,
+          "phase": "stage-two-base",
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T10:40:44Z"
+        }
+      },
+      "stageTwo": {
+        "run": 43161199302,
+        "job": 131285603913,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_FULL_PS_BUILT_STAGE_TWO_NATIVE_LAKE_LINK",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 131218562554,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38210,
+            "checkpointFiles": 56912,
+            "checkpoint": {
+              "artifact": 13953714778,
+              "digest": "sha256:cbf9401aabfb90112c8a97b23cf543c37b92b1f7c46f55994f0135979890a48d",
+              "bytes": 1008734001
+            },
+            "evidence": {
+              "artifact": 13955285658,
+              "digest": "sha256:bb6fd443705c4faf7492f1ad4ff3567bf31727453a3f924f9ff299bb686a5a6c",
+              "bytes": 107857979
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T13:35:19Z",
+            "completedAt": "2026-11-12T14:50:14Z"
+          },
+          {
+            "part": "middle",
+            "job": 131262212803,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 56912,
+            "checkpointFiles": 65009,
+            "checkpoint": {
+              "artifact": 13956836678,
+              "digest": "sha256:57b7fb89a27367d4ea619024e0edec7617021dd01b6aeaeddc990691854caf6f",
+              "bytes": 1229127907
+            },
+            "evidence": {
+              "artifact": 13955319606,
+              "digest": "sha256:bf74a36f8cd9be3709a4798e873feba615c823f23bdd01c4aa3662b6b69436b5",
+              "bytes": 107866696
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T14:50:17Z",
+            "completedAt": "2026-11-12T15:15:03Z"
+          },
+          {
+            "part": "late",
+            "job": 131277773131,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65009,
+            "checkpointFiles": 65208,
+            "checkpoint": {
+              "artifact": 13957996259,
+              "digest": "sha256:ef558351e9ae759068d08defc7e119949c8232db9f607e3e19ce467e462b296c",
+              "bytes": 1242795280
+            },
+            "evidence": {
+              "artifact": 13957406736,
+              "digest": "sha256:600bf33a6123fb4dc0400ff6467b4346318fb593fd014f477305d02f9ab4896c",
+              "bytes": 107867158
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T15:15:07Z",
+            "completedAt": "2026-11-12T15:27:16Z"
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 65208,
+        "finishObjectBuilds": 195,
+        "nativeLakeFinishTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "runtimeSmoke": "PASS",
+        "relocatedGrammar": "PASS",
+        "relocatedMetadataFiles": 220,
+        "census": {
+          "modules": 2569,
+          "topLevelDeclarationModes": {
+            "mapped-ps": 78712
+          }
+        },
+        "stageArtifact": {
+          "artifact": 13960655720,
+          "digest": "sha256:e1181ef53eb305d2b71938c0021acc1bd05f9faafadb058620311ec94b0ea4bb",
+          "bytes": 384532234
+        },
+        "fixedPoint": {
+          "status": "PASS",
+          "changedC": [],
+          "changedPublicOlean": [],
+          "moduleOutputsCompared": 2569
+        },
+        "noConfusionFrontendSeconds": 62
+      },
+      "independentAudit": {
+        "run": 43254180674,
+        "job": 131307810313,
+        "runner": "db4b234482cea7af65e7f6fe53db9998c8233821",
+        "pr": 262,
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "PASS",
+        "contractsPassed": 9,
+        "artifact": 13960208346,
+        "digest": "sha256:a5300ea93ac5ab487204b314d68f4250ba9048334d39182a22deb26a0175d1ae",
+        "bytes": 1879,
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        },
+        "stageReceipts": {
+          "first": {
+            "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3",
+            "compiler_link_map_sha256": "93458046d6e78542a736912f86cc29290357ca8c98fefec72f19a5dbfa0b879d",
+            "migration_sha256": "d06d274fc059118d5eaf9e18419573e11ee983105e207f82057d468532da6474",
+            "declaration_modes": {
+              "mapped-ps": 78712
+            },
+            "nested_declaration_modes": {
+              "mapped-ps": 1124
+            }
+          },
+          "second": {
+            "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3",
+            "compiler_link_map_sha256": "93458046d6e78542a736912f86cc29290357ca8c98fefec72f19a5dbfa0b879d",
+            "migration_sha256": "0c8117d0c363d643c24e7cd8cf17524cc00e6aef420cda03eafece1522b4921d",
+            "declaration_modes": {
+              "mapped-ps": 78712
+            },
+            "nested_declaration_modes": {
+              "mapped-ps": 1124
+            }
+          }
+        },
+        "producer": {
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "harness": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+          "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+          "run": 43161199302,
+          "jobs": [
+            {
+              "id": 130992905462,
+              "name": "checkpoint-qualification",
+              "conclusion": "success"
+            },
+            {
+              "id": 130992952236,
+              "name": "stage-one-base",
+              "conclusion": "success"
+            },
+            {
+              "id": 131068141924,
+              "name": "stage-one-compiler-early",
+              "conclusion": "success"
+            },
+            {
+              "id": 131095296236,
+              "name": "stage-one-compiler-middle",
+              "conclusion": "success"
+            },
+            {
+              "id": 131112167389,
+              "name": "stage-one-compiler",
+              "conclusion": "success"
+            },
+            {
+              "id": 131116729741,
+              "name": "stage-one",
+              "conclusion": "success"
+            },
+            {
+              "id": 131124669250,
+              "name": "stage-two-base",
+              "conclusion": "success"
+            },
+            {
+              "id": 131218562554,
+              "name": "stage-two-compiler-early",
+              "conclusion": "success"
+            },
+            {
+              "id": 131262212803,
+              "name": "stage-two-compiler-middle",
+              "conclusion": "success"
+            },
+            {
+              "id": 131277773131,
+              "name": "stage-two-compiler",
+              "conclusion": "success"
+            },
+            {
+              "id": 131285603913,
+              "name": "stage-two",
+              "conclusion": "success"
+            }
+          ],
+          "stages": [
+            {
+              "id": 13934124327,
+              "name": "ps0-selfhost-stage-one-978d594a10fac8f6e5687190a22d70334b331dab-43161199302",
+              "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+              "bytes": 384532453
+            },
+            {
+              "id": 13960655720,
+              "name": "ps0-selfhost-stage-two-978d594a10fac8f6e5687190a22d70334b331dab-43161199302",
+              "digest": "sha256:e1181ef53eb305d2b71938c0021acc1bd05f9faafadb058620311ec94b0ea4bb",
+              "bytes": 384532234
+            }
+          ]
+        }
       }
     }
   }
