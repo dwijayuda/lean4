@@ -19254,10 +19254,10 @@
     "currentPSCompilerCandidate": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131124669250,
-      "phase": "stage-two-base",
+      "job": 131218562554,
+      "phase": "stage-two-compiler-early",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T10:40:44Z",
+      "observedAt": "2026-11-12T13:43:25Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -19557,6 +19557,44 @@
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T10:40:44Z"
         }
+      },
+      "stageTwoBaseCheckpoint": {
+        "run": 43161199302,
+        "job": 131124669250,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_PS_BUILT_INIT_STD_BASE_OBJECT_TARGETS",
+        "targets": 1147,
+        "actualNativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "lastNativeObject": "Std:c.o",
+        "inputModules": 2569,
+        "originalByteIdentities": 402,
+        "checkpointFiles": 38210,
+        "stageOneArtifact": {
+          "artifact": 13934124327,
+          "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+          "bytes": 384532453
+        },
+        "checkpoint": {
+          "artifact": 13949695980,
+          "digest": "sha256:bba259ab6692d80f301b71f429ee667b2595908d0c12d49f6f17b7098f05c0c4",
+          "bytes": 592633526
+        },
+        "evidence": {
+          "artifact": 13949840056,
+          "digest": "sha256:cfbf5cab4df591afaedd52ac32b960da89ac41161f56e2b0eebfe613d7ac73f2",
+          "bytes": 107839069
+        },
+        "next": {
+          "job": 131218562554,
+          "phase": "stage-two-compiler-early",
+          "targets": 850,
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T13:43:25Z"
+        }
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -19577,8 +19615,8 @@
     },
     "nativeLakeCompilerRecovery": {
       "run": 43161199302,
-      "job": 131124669250,
-      "phase": "stage-two-base",
+      "job": 131218562554,
+      "phase": "stage-two-compiler-early",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
     }
@@ -85019,10 +85057,10 @@
     "candidate": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131124669250,
-      "phase": "stage-two-base",
+      "job": 131218562554,
+      "phase": "stage-two-compiler-early",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T10:40:44Z",
+      "observedAt": "2026-11-12T13:43:25Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -85321,6 +85359,44 @@
           "phase": "stage-two-base",
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T10:40:44Z"
+        }
+      },
+      "stageTwoBaseCheckpoint": {
+        "run": 43161199302,
+        "job": 131124669250,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_PS_BUILT_INIT_STD_BASE_OBJECT_TARGETS",
+        "targets": 1147,
+        "actualNativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "lastNativeObject": "Std:c.o",
+        "inputModules": 2569,
+        "originalByteIdentities": 402,
+        "checkpointFiles": 38210,
+        "stageOneArtifact": {
+          "artifact": 13934124327,
+          "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+          "bytes": 384532453
+        },
+        "checkpoint": {
+          "artifact": 13949695980,
+          "digest": "sha256:bba259ab6692d80f301b71f429ee667b2595908d0c12d49f6f17b7098f05c0c4",
+          "bytes": 592633526
+        },
+        "evidence": {
+          "artifact": 13949840056,
+          "digest": "sha256:cfbf5cab4df591afaedd52ac32b960da89ac41161f56e2b0eebfe613d7ac73f2",
+          "bytes": 107839069
+        },
+        "next": {
+          "job": 131218562554,
+          "phase": "stage-two-compiler-early",
+          "targets": 850,
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T13:43:25Z"
         }
       }
     },
@@ -85584,10 +85660,10 @@
     "recovery": {
       "run": 43161199302,
       "pr": 260,
-      "job": 131124669250,
-      "phase": "stage-two-base",
+      "job": 131218562554,
+      "phase": "stage-two-compiler-early",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T10:40:44Z",
+      "observedAt": "2026-11-12T13:43:25Z",
       "source": "978d594a10fac8f6e5687190a22d70334b331dab",
       "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
@@ -85886,6 +85962,44 @@
           "phase": "stage-two-base",
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T10:40:44Z"
+        }
+      },
+      "stageTwoBaseCheckpoint": {
+        "run": 43161199302,
+        "job": 131124669250,
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "status": "PASS_PS_BUILT_INIT_STD_BASE_OBJECT_TARGETS",
+        "targets": 1147,
+        "actualNativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "lastNativeObject": "Std:c.o",
+        "inputModules": 2569,
+        "originalByteIdentities": 402,
+        "checkpointFiles": 38210,
+        "stageOneArtifact": {
+          "artifact": 13934124327,
+          "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+          "bytes": 384532453
+        },
+        "checkpoint": {
+          "artifact": 13949695980,
+          "digest": "sha256:bba259ab6692d80f301b71f429ee667b2595908d0c12d49f6f17b7098f05c0c4",
+          "bytes": 592633526
+        },
+        "evidence": {
+          "artifact": 13949840056,
+          "digest": "sha256:cfbf5cab4df591afaedd52ac32b960da89ac41161f56e2b0eebfe613d7ac73f2",
+          "bytes": 107839069
+        },
+        "next": {
+          "job": 131218562554,
+          "phase": "stage-two-compiler-early",
+          "targets": 850,
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T13:43:25Z"
         }
       }
     },
@@ -87034,6 +87148,44 @@
         "phase": "stage-two-base",
         "status": "IN_PROGRESS",
         "observedAt": "2026-11-12T10:40:44Z"
+      }
+    },
+    "currentIRStageTwoBase": {
+      "run": 43161199302,
+      "job": 131124669250,
+      "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+      "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 43161199302,
+      "status": "PASS_PS_BUILT_INIT_STD_BASE_OBJECT_TARGETS",
+      "targets": 1147,
+      "actualNativeObjects": 1147,
+      "nativeLakeTasks": 2296,
+      "lastNativeObject": "Std:c.o",
+      "inputModules": 2569,
+      "originalByteIdentities": 402,
+      "checkpointFiles": 38210,
+      "stageOneArtifact": {
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "bytes": 384532453
+      },
+      "checkpoint": {
+        "artifact": 13949695980,
+        "digest": "sha256:bba259ab6692d80f301b71f429ee667b2595908d0c12d49f6f17b7098f05c0c4",
+        "bytes": 592633526
+      },
+      "evidence": {
+        "artifact": 13949840056,
+        "digest": "sha256:cfbf5cab4df591afaedd52ac32b960da89ac41161f56e2b0eebfe613d7ac73f2",
+        "bytes": 107839069
+      },
+      "next": {
+        "job": 131218562554,
+        "phase": "stage-two-compiler-early",
+        "targets": 850,
+        "status": "IN_PROGRESS",
+        "observedAt": "2026-11-12T13:43:25Z"
       }
     }
   }

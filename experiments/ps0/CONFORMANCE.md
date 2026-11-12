@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-12 — Full PS-built stage two passed Init and Std
+
+The stage-two base used the verified stage-one executable and metadata from artifact `13934124327`. The harness regenerated and compared the identities of all 2,569 prepared `.ps` inputs. Native Lake built all **1,147** Init/Std objects in **2,296** tasks, ending at `Std:c.o`. The stage sealed **38,210** checkpoint files. Source `978d594a10fac8f6e5687190a22d70334b331dab`, runner `a12344e09baeb6fcee479b1934805de16e7c42b4`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. Checkpoint `13949695980` (`sha256:bba259ab6692d80f301b71f429ee667b2595908d0c12d49f6f17b7098f05c0c4`, 592,633,526 bytes). Slice evidence `13949840056` (`sha256:cfbf5cab4df591afaedd52ac32b960da89ac41161f56e2b0eebfe613d7ac73f2`, 107,839,069 bytes). [Linux PS-built base job](https://github.com/dwijayuda/pskernel/actions/runs/43161199302/job/131124669250)
+
+The clean build advanced to the 850-target early Lean slice of stage two. Its full link and the independent fixed-point audit remain pending. [Linux stage-two early Lean job](https://github.com/dwijayuda/pskernel/actions/runs/43161199302/job/131218562554)
+
 ## 2026-11-12 — Full stage-one native Lake linking passed
 
 Stage one built all **2,569** compiler modules from `.ps`. Its three Lean slices passed all **1,227** native object targets and sealed the checkpoints below. Finish verified the 65,946-file checkpoint, built 195 additional native objects, and completed `PS0Project:static` at task 5,141 and `ps0project:exe` at task 5,142. The linked executable passed the runtime and relocated grammar checks with **220** PS0 metadata files. The complete source census reported 2,569 modules and 78,712 top-level mapped PS declarations. Source `978d594a10fac8f6e5687190a22d70334b331dab`, runner `a12344e09baeb6fcee479b1934805de16e7c42b4`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. Stage artifact `13934124327` (`sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd`, 384,532,453 bytes). [Linux stage-one link](https://github.com/dwijayuda/pskernel/actions/runs/43161199302/job/131116729741)
