@@ -21676,7 +21676,7 @@
       "job": 130977732297,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T04:44:29Z",
+      "observedAt": "2026-11-12T05:02:59Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -21709,14 +21709,37 @@
         "job": 130978028483,
         "runner": "99ab0007bcc0aaeec83d45a7295542c6a5a9f2ea",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "IN_PROGRESS",
-        "scope": "23 PS0 modules using the pinned SDK"
+        "status": "FAILED_NATIVE_SELF_CENSUS_STAGE_TWO_PREPARATION",
+        "firstStage": {
+          "modules": 23,
+          "strictSourceCensus": "PASS",
+          "nativeLakeLink": "PASS",
+          "relocatedGrammar": "PASS",
+          "driverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a"
+        },
+        "failure": {
+          "command": "census-source",
+          "module": "PS0.Binders",
+          "signal": "SIGSEGV",
+          "signalNumber": 11
+        },
+        "artifact": 13916363200,
+        "digest": "sha256:58bc8179c10bd058d81f20bfe7759a1f11ddd360b6d0e50e14566fdc91d68182",
+        "artifactBytes": 1049688
       },
       "precedingCandidate": {
         "run": 43117013891,
         "job": 130957051646,
         "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
         "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111"
+      },
+      "selfCensusDiagnosis": {
+        "run": 43158616436,
+        "job": 130984282368,
+        "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "IN_PROGRESS",
+        "scope": "exact linked driver census and same-source interpreter preference diagnostic"
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -87167,7 +87190,7 @@
       "job": 130977732297,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T04:44:29Z",
+      "observedAt": "2026-11-12T05:02:59Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -87200,14 +87223,37 @@
         "job": 130978028483,
         "runner": "99ab0007bcc0aaeec83d45a7295542c6a5a9f2ea",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "IN_PROGRESS",
-        "scope": "23 PS0 modules using the pinned SDK"
+        "status": "FAILED_NATIVE_SELF_CENSUS_STAGE_TWO_PREPARATION",
+        "firstStage": {
+          "modules": 23,
+          "strictSourceCensus": "PASS",
+          "nativeLakeLink": "PASS",
+          "relocatedGrammar": "PASS",
+          "driverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a"
+        },
+        "failure": {
+          "command": "census-source",
+          "module": "PS0.Binders",
+          "signal": "SIGSEGV",
+          "signalNumber": 11
+        },
+        "artifact": 13916363200,
+        "digest": "sha256:58bc8179c10bd058d81f20bfe7759a1f11ddd360b6d0e50e14566fdc91d68182",
+        "artifactBytes": 1049688
       },
       "precedingCandidate": {
         "run": 43117013891,
         "job": 130957051646,
         "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
         "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111"
+      },
+      "selfCensusDiagnosis": {
+        "run": 43158616436,
+        "job": 130984282368,
+        "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "IN_PROGRESS",
+        "scope": "exact linked driver census and same-source interpreter preference diagnostic"
       }
     },
     "previousGatedRun": {
@@ -87477,7 +87523,7 @@
       "job": 130977732297,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T04:44:29Z",
+      "observedAt": "2026-11-12T05:02:59Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -87510,14 +87556,37 @@
         "job": 130978028483,
         "runner": "99ab0007bcc0aaeec83d45a7295542c6a5a9f2ea",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "IN_PROGRESS",
-        "scope": "23 PS0 modules using the pinned SDK"
+        "status": "FAILED_NATIVE_SELF_CENSUS_STAGE_TWO_PREPARATION",
+        "firstStage": {
+          "modules": 23,
+          "strictSourceCensus": "PASS",
+          "nativeLakeLink": "PASS",
+          "relocatedGrammar": "PASS",
+          "driverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a"
+        },
+        "failure": {
+          "command": "census-source",
+          "module": "PS0.Binders",
+          "signal": "SIGSEGV",
+          "signalNumber": 11
+        },
+        "artifact": 13916363200,
+        "digest": "sha256:58bc8179c10bd058d81f20bfe7759a1f11ddd360b6d0e50e14566fdc91d68182",
+        "artifactBytes": 1049688
       },
       "precedingCandidate": {
         "run": 43117013891,
         "job": 130957051646,
         "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
         "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111"
+      },
+      "selfCensusDiagnosis": {
+        "run": 43158616436,
+        "job": 130984282368,
+        "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "IN_PROGRESS",
+        "scope": "exact linked driver census and same-source interpreter preference diagnostic"
       }
     },
     "stageOneEarly": {
@@ -88250,6 +88319,39 @@
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
         "status": "IN_PROGRESS",
         "scope": "23 PS0 modules using the pinned SDK"
+      }
+    },
+    "selfGrammarStageTwoCensusCrash": {
+      "probeResult": {
+        "run": 43156647457,
+        "job": 130978028483,
+        "runner": "99ab0007bcc0aaeec83d45a7295542c6a5a9f2ea",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "FAILED_NATIVE_SELF_CENSUS_STAGE_TWO_PREPARATION",
+        "firstStage": {
+          "modules": 23,
+          "strictSourceCensus": "PASS",
+          "nativeLakeLink": "PASS",
+          "relocatedGrammar": "PASS",
+          "driverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a"
+        },
+        "failure": {
+          "command": "census-source",
+          "module": "PS0.Binders",
+          "signal": "SIGSEGV",
+          "signalNumber": 11
+        },
+        "artifact": 13916363200,
+        "digest": "sha256:58bc8179c10bd058d81f20bfe7759a1f11ddd360b6d0e50e14566fdc91d68182",
+        "artifactBytes": 1049688
+      },
+      "diagnosis": {
+        "run": 43158616436,
+        "job": 130984282368,
+        "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "IN_PROGRESS",
+        "scope": "exact linked driver census and same-source interpreter preference diagnostic"
       }
     }
   }

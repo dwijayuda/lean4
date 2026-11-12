@@ -1,5 +1,11 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-12 — PS-built native self-census failed before the isolated second stage
+
+The isolated second-stage probe passed strict source-census checks for all 23 PS0 modules in its first build. The Lake archive, executable, and relocated grammar checks passed. The exact linked driver SHA-256 was `63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a`. During second-stage preparation, its native `census-source` invocation for `PS0.Binders` exited on SIGSEGV (signal 11). The probe stopped before compiling the second-stage PS inputs. Runner `99ab0007bcc0aaeec83d45a7295542c6a5a9f2ea`. Artifact `13916363200` (`sha256:58bc8179c10bd058d81f20bfe7759a1f11ddd360b6d0e50e14566fdc91d68182`, 1,049,688 bytes). [Linux second-stage probe](https://github.com/dwijayuda/pskernel/actions/runs/43156647457/job/130978028483)
+
+A diagnostic job is testing the exact linked driver and collecting native stack frames. The full scoped-grammar stage-one build continues at its original pin. [Linux census diagnosis](https://github.com/dwijayuda/pskernel/actions/runs/43158616436/job/130984282368)
+
 ## 2026-11-12 — PS0 self-source native archive, executable, and relocated grammar passed
 
 Linux built all **23** PS0-owned compiler modules from transformed `.ps` sources with PS grammar enabled and the pinned Lean SDK dependencies. Lake built `PS0Project:static` and `ps0project:exe` in a 50-task graph. The executable passed the relocated grammar test with **220** retained PS0 metadata files. The native census retained the command choice and captured `compile`. The exact line at PS line 243 migrated to `| [] => pure(())`. Driver SHA-256 `63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a`. Runner `a093e8ba91e354e887f99d4a77ac701ed258e041`. Artifact `13915683869` (`sha256:b4a97f688a1a9581cf23f95ed55501188933d6db70c5d6725087bbc009a0351d`, 959,556 bytes). [Linux self-source job](https://github.com/dwijayuda/pskernel/actions/runs/43155211864/job/130973457617)
