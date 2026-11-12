@@ -200,8 +200,11 @@ def censusSource (path moduleName output : String) : IO UInt32 := do
   if ← stage.pathExists then IO.FS.removeFile stage
   initSearchPath (← findSysroot)
   unsafe enableInitializersExecution
+  -- As in Lake bootstrap builds, evaluate the current source's parser declarations
+  -- even when a previous stage has same-named native symbols in its executable.
   let opts := ({} : Options) |>.set `ps0.sourceCensusPath stage.toString
     |>.setBool `experimental.vcgen true |>.setBool `experimental.intrinsic true
+    |>.setBool `interpreter.prefer_native false
   let env ← Elab.runFrontend source opts path moduleName.toName (trustLevel := 0)
   if env.isNone then
     if ← stage.pathExists then IO.FS.removeFile stage
