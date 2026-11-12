@@ -1,5 +1,13 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-12 — Self-source probe found an uncaptured native declaration choice
+
+The scoped category repair let `PS0.HostCategories.ps` elaborate and emit C. The self-source probe then failed in `PS0.LakeFrontend.ps:243:17` with `PS0V1-CALL-GAP`. The retained native census recorded `compile` as a raw command `choice` without a declaration, so the plan skipped its body and left `| [] => pure ()` at that line. The retained source and census archive was independently downloaded and rehashed. The same probe also omitted the pinned SDK C headers in its bootstrap build directory. Artifact `13915251209` (`sha256:261da9faa82c2f301123171cfc8202957bd77f302c2a76a79e49b3854117dce8`). [Linux self-source job](https://github.com/dwijayuda/pskernel/actions/runs/43152856603/job/130965900168)
+
+An earlier candidate probe failed during the SDK build on record-update layout in `PS0/SourceGrammar.lean:143:85`. The subsequent source used a local binding and passed the SDK build. Artifact `13913769146` (`sha256:00f5fb8c77f8c7d8a9b980fee39bc7f9faf7aa130a903316c885caec0e4755a4`). [First candidate job](https://github.com/dwijayuda/pskernel/actions/runs/43152480504/job/130964694421)
+
+Source `bff5d8296cd8798f8c3e9e954ef695f77ea0aec4` keeps the raw command choice in the census and captures its unique native declaration for migration. The new probe checks the planned `pure(())` spelling and supplies the pinned C headers. [Linux follow-up](https://github.com/dwijayuda/pskernel/actions/runs/43155211864/job/130973457617)
+
 ## 2026-11-12 — Stage-one finish exposed bootstrap category collisions
 
 The finish job verified the **65,946-file** Lean checkpoint and reached native Lake task 5,141 of 5,142. The only failed target reported was `PS0.HostCategories`. Its first error at PS line 17, column 0 was `parser category psTerm has already been defined`, followed by duplicate category and unknown parser-attribute errors. Native Lake exited 1 before completing the archive and executable. GitHub skipped all five stage-two jobs. The artifact is a failure diagnostic. Artifact `13914586148` (`sha256:48a7caa75de930f8c6d7cf612f2a2014aad199b7cf4bf4250c45ad40cce27538`, 248,004,586 bytes). [Linux finish job](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130957051646)

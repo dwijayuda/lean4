@@ -21675,7 +21675,7 @@
       "job": 130957051646,
       "phase": "stage-one",
       "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
-      "observedAt": "2026-11-12T04:06:06Z",
+      "observedAt": "2026-11-12T04:35:53Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -21891,13 +21891,12 @@
       },
       "link": "PENDING",
       "selfGrammarProbe": {
-        "run": 43152480504,
-        "job": 130964694421,
-        "runner": "7511f07e889627820b466878b26e1524b8866b23",
-        "source": "ad39b88901d06b483ddcc1f79b5c000fdbbca31a",
-        "pr": 261,
+        "run": 43155211864,
+        "job": 130973457617,
+        "runner": "a093e8ba91e354e887f99d4a77ac701ed258e041",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
         "status": "IN_PROGRESS",
-        "scope": "PS0-owned modules using the pinned SDK"
+        "observedAt": "2026-11-12T04:35:53Z"
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -87347,7 +87346,7 @@
       "job": 130957051646,
       "phase": "stage-one",
       "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
-      "observedAt": "2026-11-12T04:06:06Z",
+      "observedAt": "2026-11-12T04:35:53Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -87563,13 +87562,12 @@
       },
       "link": "PENDING",
       "selfGrammarProbe": {
-        "run": 43152480504,
-        "job": 130964694421,
-        "runner": "7511f07e889627820b466878b26e1524b8866b23",
-        "source": "ad39b88901d06b483ddcc1f79b5c000fdbbca31a",
-        "pr": 261,
+        "run": 43155211864,
+        "job": 130973457617,
+        "runner": "a093e8ba91e354e887f99d4a77ac701ed258e041",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
         "status": "IN_PROGRESS",
-        "scope": "PS0-owned modules using the pinned SDK"
+        "observedAt": "2026-11-12T04:35:53Z"
       }
     },
     "previousGatedRun": {
@@ -87838,7 +87836,7 @@
       "job": 130957051646,
       "phase": "stage-one",
       "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
-      "observedAt": "2026-11-12T04:06:06Z",
+      "observedAt": "2026-11-12T04:35:53Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -88054,13 +88052,12 @@
       },
       "link": "PENDING",
       "selfGrammarProbe": {
-        "run": 43152480504,
-        "job": 130964694421,
-        "runner": "7511f07e889627820b466878b26e1524b8866b23",
-        "source": "ad39b88901d06b483ddcc1f79b5c000fdbbca31a",
-        "pr": 261,
+        "run": 43155211864,
+        "job": 130973457617,
+        "runner": "a093e8ba91e354e887f99d4a77ac701ed258e041",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
         "status": "IN_PROGRESS",
-        "scope": "PS0-owned modules using the pinned SDK"
+        "observedAt": "2026-11-12T04:35:53Z"
       }
     },
     "stageOneEarly": {
@@ -88672,6 +88669,47 @@
         "pr": 261,
         "status": "IN_PROGRESS",
         "scope": "PS0-owned modules using the pinned SDK"
+      }
+    },
+    "selfGrammarNativeCommandChoice": {
+      "scope": {
+        "run": 43152856603,
+        "job": 130965900168,
+        "runner": "cf7c59f38d51e45432db5be44e8adb55823cae46",
+        "source": "f1e0813fa86d7932f4e708656f6acbe4dff4572c",
+        "status": "HOST_CATEGORIES_ELABORATED_SELF_PROBE_FAILED",
+        "artifact": 13915251209,
+        "digest": "sha256:261da9faa82c2f301123171cfc8202957bd77f302c2a76a79e49b3854117dce8",
+        "failure": {
+          "module": "PS0.LakeFrontend",
+          "line": 243,
+          "column": 17,
+          "raw": "| [] => pure ()",
+          "parserKind": "choice",
+          "missingNativeDeclaration": "compile",
+          "diagnostic": "PS0V1-CALL-GAP"
+        },
+        "probeSetupFailure": "The standalone probe omitted the pinned include directory under its bootstrap build root."
+      },
+      "initial": {
+        "run": 43152480504,
+        "job": 130964694421,
+        "runner": "7511f07e889627820b466878b26e1524b8866b23",
+        "source": "ad39b88901d06b483ddcc1f79b5c000fdbbca31a",
+        "status": "FAILED_BOOTSTRAP_SOURCE_LAYOUT",
+        "file": "PS0/SourceGrammar.lean",
+        "line": 143,
+        "column": 85,
+        "artifact": 13913769146,
+        "digest": "sha256:00f5fb8c77f8c7d8a9b980fee39bc7f9faf7aa130a903316c885caec0e4755a4"
+      },
+      "current": {
+        "run": 43155211864,
+        "job": 130973457617,
+        "runner": "a093e8ba91e354e887f99d4a77ac701ed258e041",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "IN_PROGRESS",
+        "observedAt": "2026-11-12T04:35:53Z"
       }
     }
   }
