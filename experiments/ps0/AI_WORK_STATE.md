@@ -1,5 +1,15 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-12 — Repaired-driver stage-one Lean object closure passed
+
+The three clean Linux Lean slices built all **1,227** selected `:c.o` targets from the repaired PS source. Each slice verified its predecessor. None reported an Init/Std object rebuild. In the last slice Lake reported `Lean.Meta.Constructions.NoConfusion` in 49 seconds and `Lean.Meta.Constructions.NoConfusion:c.o` in 1.7 seconds. Source `0c98bc2d0fefeadc242bdeec725a108a265a8111`, runner `ca75baadef520113bcdd2eb243934b1bd58e1e4c`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`.
+
+- early built 850 Lean objects in 2,630 Lake tasks and sealed 57,650 files. Checkpoint `13911408257` (`sha256:35599b4be2796f11693dab6501cc6791323e02f2e62884dc150f32aba3bdc3de`). Slice evidence `13911492387` (`sha256:86bfeaea9972c5bd2c2cf6ffa1e26df167bf200baa9a6be5995d1b300999d697`). [Linux job 130921951706](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130921951706)
+- middle built 368 Lean objects in 2,607 Lake tasks and sealed 65,747 files. Checkpoint `13912459402` (`sha256:443eac1e3fb0738bc71292bdedb84eeb516fc40cf16761404eb665714483ed82`). Slice evidence `13913071526` (`sha256:de2ee5113f332ab8e05378fdfdbb5d93efbcd40c632f66d3465c66cd6ddd34f2`). [Linux job 130944487384](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130944487384)
+- late built 9 Lean objects in 2,385 Lake tasks and sealed 65,946 files. Checkpoint `13914160060` (`sha256:c9bbb24717248437947ea8bcedd20b0619b5e8df3c37fbde24580300ed85ce53`). Slice evidence `13912799717` (`sha256:589a1b4e6bafb06ca0c37ee16191774ae0183a16dc5714321b07bc88edea7bb9`). [Linux job 130954481137](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130954481137)
+
+The native Lake finish job is building the rest of the graph, the static archive, and the executable. The linked compiler and PS-built second stage remain pending. [Linux stage-one finish](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130957051646)
+
 ## 2026-11-12 — Repaired-driver stage-one Init/Std checkpoint passed
 
 The clean Linux build prepared **2,569** `.ps` inputs with PS grammar enabled. It built **1,147** Init/Std `:c.o` targets in **2,296** native Lake tasks, ending at `Std:c.o`, and sealed **38,949** checkpoint files. The 402 inputs with original-identical byte hashes are counted separately from grammar mode. Source `0c98bc2d0fefeadc242bdeec725a108a265a8111`, runner `ca75baadef520113bcdd2eb243934b1bd58e1e4c`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`. Checkpoint `13909390231` (`sha256:c21ad68b14e1612f74653df51e093a75c511b6ac3bfef3f5fbb3b6a44d218a98`, 679,083,461 bytes). Slice evidence `13908208141` (`sha256:58a3743878caf8aaefbdf57932658ffe2bccb3c695170a335a451a894bcc1a2a`, 107,810,081 bytes). [Linux base job](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130847635697)

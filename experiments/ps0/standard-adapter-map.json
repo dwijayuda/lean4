@@ -19257,10 +19257,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130921951706,
-      "phase": "stage-one-compiler-early",
+      "job": 130957051646,
+      "phase": "stage-one",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T02:17:06Z",
+      "observedAt": "2026-11-12T03:49:25Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -19361,6 +19361,97 @@
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T02:17:06Z"
         }
+      },
+      "stageOneLean": {
+        "run": 43117013891,
+        "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43117013891,
+        "status": "PASS_ALL_LEAN_OBJECT_PARTITIONS",
+        "targets": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 130921951706,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38949,
+            "checkpointFiles": 57650,
+            "checkpoint": {
+              "artifact": 13911408257,
+              "digest": "sha256:35599b4be2796f11693dab6501cc6791323e02f2e62884dc150f32aba3bdc3de",
+              "bytes": 1095081438
+            },
+            "evidence": {
+              "artifact": 13911492387,
+              "digest": "sha256:86bfeaea9972c5bd2c2cf6ffa1e26df167bf200baa9a6be5995d1b300999d697",
+              "bytes": 107827620
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T02:08:02Z",
+            "completedAt": "2026-11-12T03:08:51Z"
+          },
+          {
+            "part": "middle",
+            "job": 130944487384,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 57650,
+            "checkpointFiles": 65747,
+            "checkpoint": {
+              "artifact": 13912459402,
+              "digest": "sha256:443eac1e3fb0738bc71292bdedb84eeb516fc40cf16761404eb665714483ed82",
+              "bytes": 1315523522
+            },
+            "evidence": {
+              "artifact": 13913071526,
+              "digest": "sha256:de2ee5113f332ab8e05378fdfdbb5d93efbcd40c632f66d3465c66cd6ddd34f2",
+              "bytes": 107836653
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T03:08:53Z",
+            "completedAt": "2026-11-12T03:36:15Z"
+          },
+          {
+            "part": "late",
+            "job": 130954481137,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65747,
+            "checkpointFiles": 65946,
+            "checkpoint": {
+              "artifact": 13914160060,
+              "digest": "sha256:c9bbb24717248437947ea8bcedd20b0619b5e8df3c37fbde24580300ed85ce53",
+              "bytes": 1329158745
+            },
+            "evidence": {
+              "artifact": 13912799717,
+              "digest": "sha256:589a1b4e6bafb06ca0c37ee16191774ae0183a16dc5714321b07bc88edea7bb9",
+              "bytes": 107837417
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T03:36:17Z",
+            "completedAt": "2026-11-12T03:43:44Z"
+          }
+        ],
+        "noConfusion": {
+          "job": 130954481137,
+          "frontendSeconds": 49,
+          "objectSeconds": 1.7
+        },
+        "next": {
+          "job": 130957051646,
+          "phase": "stage-one",
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T03:49:25Z"
+        }
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -19381,8 +19472,8 @@
     },
     "nativeLakeCompilerRecovery": {
       "run": 43117013891,
-      "job": 130921951706,
-      "phase": "stage-one-compiler-early",
+      "job": 130957051646,
+      "phase": "stage-one",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
     }
@@ -84826,10 +84917,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130921951706,
-      "phase": "stage-one-compiler-early",
+      "job": 130957051646,
+      "phase": "stage-one",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T02:17:06Z",
+      "observedAt": "2026-11-12T03:49:25Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -84929,6 +85020,97 @@
           "targets": 850,
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T02:17:06Z"
+        }
+      },
+      "stageOneLean": {
+        "run": 43117013891,
+        "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43117013891,
+        "status": "PASS_ALL_LEAN_OBJECT_PARTITIONS",
+        "targets": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 130921951706,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38949,
+            "checkpointFiles": 57650,
+            "checkpoint": {
+              "artifact": 13911408257,
+              "digest": "sha256:35599b4be2796f11693dab6501cc6791323e02f2e62884dc150f32aba3bdc3de",
+              "bytes": 1095081438
+            },
+            "evidence": {
+              "artifact": 13911492387,
+              "digest": "sha256:86bfeaea9972c5bd2c2cf6ffa1e26df167bf200baa9a6be5995d1b300999d697",
+              "bytes": 107827620
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T02:08:02Z",
+            "completedAt": "2026-11-12T03:08:51Z"
+          },
+          {
+            "part": "middle",
+            "job": 130944487384,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 57650,
+            "checkpointFiles": 65747,
+            "checkpoint": {
+              "artifact": 13912459402,
+              "digest": "sha256:443eac1e3fb0738bc71292bdedb84eeb516fc40cf16761404eb665714483ed82",
+              "bytes": 1315523522
+            },
+            "evidence": {
+              "artifact": 13913071526,
+              "digest": "sha256:de2ee5113f332ab8e05378fdfdbb5d93efbcd40c632f66d3465c66cd6ddd34f2",
+              "bytes": 107836653
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T03:08:53Z",
+            "completedAt": "2026-11-12T03:36:15Z"
+          },
+          {
+            "part": "late",
+            "job": 130954481137,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65747,
+            "checkpointFiles": 65946,
+            "checkpoint": {
+              "artifact": 13914160060,
+              "digest": "sha256:c9bbb24717248437947ea8bcedd20b0619b5e8df3c37fbde24580300ed85ce53",
+              "bytes": 1329158745
+            },
+            "evidence": {
+              "artifact": 13912799717,
+              "digest": "sha256:589a1b4e6bafb06ca0c37ee16191774ae0183a16dc5714321b07bc88edea7bb9",
+              "bytes": 107837417
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T03:36:17Z",
+            "completedAt": "2026-11-12T03:43:44Z"
+          }
+        ],
+        "noConfusion": {
+          "job": 130954481137,
+          "frontendSeconds": 49,
+          "objectSeconds": 1.7
+        },
+        "next": {
+          "job": 130957051646,
+          "phase": "stage-one",
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T03:49:25Z"
         }
       }
     },
@@ -85195,10 +85377,10 @@
       "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
       "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
-      "job": 130921951706,
-      "phase": "stage-one-compiler-early",
+      "job": 130957051646,
+      "phase": "stage-one",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T02:17:06Z",
+      "observedAt": "2026-11-12T03:49:25Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -85298,6 +85480,97 @@
           "targets": 850,
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T02:17:06Z"
+        }
+      },
+      "stageOneLean": {
+        "run": 43117013891,
+        "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43117013891,
+        "status": "PASS_ALL_LEAN_OBJECT_PARTITIONS",
+        "targets": 1227,
+        "partitions": [
+          {
+            "part": "early",
+            "job": 130921951706,
+            "status": "PASS",
+            "targets": 850,
+            "actualNativeObjects": 850,
+            "nativeLakeTasks": 2630,
+            "verifiedFiles": 38949,
+            "checkpointFiles": 57650,
+            "checkpoint": {
+              "artifact": 13911408257,
+              "digest": "sha256:35599b4be2796f11693dab6501cc6791323e02f2e62884dc150f32aba3bdc3de",
+              "bytes": 1095081438
+            },
+            "evidence": {
+              "artifact": 13911492387,
+              "digest": "sha256:86bfeaea9972c5bd2c2cf6ffa1e26df167bf200baa9a6be5995d1b300999d697",
+              "bytes": 107827620
+            },
+            "lastNativeObject": "Lean.Elab.Frontend:c.o",
+            "startedAt": "2026-11-12T02:08:02Z",
+            "completedAt": "2026-11-12T03:08:51Z"
+          },
+          {
+            "part": "middle",
+            "job": 130944487384,
+            "status": "PASS",
+            "targets": 368,
+            "actualNativeObjects": 368,
+            "nativeLakeTasks": 2607,
+            "verifiedFiles": 57650,
+            "checkpointFiles": 65747,
+            "checkpoint": {
+              "artifact": 13912459402,
+              "digest": "sha256:443eac1e3fb0738bc71292bdedb84eeb516fc40cf16761404eb665714483ed82",
+              "bytes": 1315523522
+            },
+            "evidence": {
+              "artifact": 13913071526,
+              "digest": "sha256:de2ee5113f332ab8e05378fdfdbb5d93efbcd40c632f66d3465c66cd6ddd34f2",
+              "bytes": 107836653
+            },
+            "lastNativeObject": "Lean.Elab.Tactic:c.o",
+            "startedAt": "2026-11-12T03:08:53Z",
+            "completedAt": "2026-11-12T03:36:15Z"
+          },
+          {
+            "part": "late",
+            "job": 130954481137,
+            "status": "PASS",
+            "targets": 9,
+            "actualNativeObjects": 9,
+            "nativeLakeTasks": 2385,
+            "verifiedFiles": 65747,
+            "checkpointFiles": 65946,
+            "checkpoint": {
+              "artifact": 13914160060,
+              "digest": "sha256:c9bbb24717248437947ea8bcedd20b0619b5e8df3c37fbde24580300ed85ce53",
+              "bytes": 1329158745
+            },
+            "evidence": {
+              "artifact": 13912799717,
+              "digest": "sha256:589a1b4e6bafb06ca0c37ee16191774ae0183a16dc5714321b07bc88edea7bb9",
+              "bytes": 107837417
+            },
+            "lastNativeObject": "Lean.Elab.Structure:c.o",
+            "startedAt": "2026-11-12T03:36:17Z",
+            "completedAt": "2026-11-12T03:43:44Z"
+          }
+        ],
+        "noConfusion": {
+          "job": 130954481137,
+          "frontendSeconds": 49,
+          "objectSeconds": 1.7
+        },
+        "next": {
+          "job": 130957051646,
+          "phase": "stage-one",
+          "status": "IN_PROGRESS",
+          "observedAt": "2026-11-12T03:49:25Z"
         }
       }
     },
@@ -85583,6 +85856,97 @@
         "targets": 850,
         "status": "IN_PROGRESS",
         "observedAt": "2026-11-12T02:17:06Z"
+      }
+    },
+    "cleanParserStageOneLean": {
+      "run": 43117013891,
+      "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+      "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 43117013891,
+      "status": "PASS_ALL_LEAN_OBJECT_PARTITIONS",
+      "targets": 1227,
+      "partitions": [
+        {
+          "part": "early",
+          "job": 130921951706,
+          "status": "PASS",
+          "targets": 850,
+          "actualNativeObjects": 850,
+          "nativeLakeTasks": 2630,
+          "verifiedFiles": 38949,
+          "checkpointFiles": 57650,
+          "checkpoint": {
+            "artifact": 13911408257,
+            "digest": "sha256:35599b4be2796f11693dab6501cc6791323e02f2e62884dc150f32aba3bdc3de",
+            "bytes": 1095081438
+          },
+          "evidence": {
+            "artifact": 13911492387,
+            "digest": "sha256:86bfeaea9972c5bd2c2cf6ffa1e26df167bf200baa9a6be5995d1b300999d697",
+            "bytes": 107827620
+          },
+          "lastNativeObject": "Lean.Elab.Frontend:c.o",
+          "startedAt": "2026-11-12T02:08:02Z",
+          "completedAt": "2026-11-12T03:08:51Z"
+        },
+        {
+          "part": "middle",
+          "job": 130944487384,
+          "status": "PASS",
+          "targets": 368,
+          "actualNativeObjects": 368,
+          "nativeLakeTasks": 2607,
+          "verifiedFiles": 57650,
+          "checkpointFiles": 65747,
+          "checkpoint": {
+            "artifact": 13912459402,
+            "digest": "sha256:443eac1e3fb0738bc71292bdedb84eeb516fc40cf16761404eb665714483ed82",
+            "bytes": 1315523522
+          },
+          "evidence": {
+            "artifact": 13913071526,
+            "digest": "sha256:de2ee5113f332ab8e05378fdfdbb5d93efbcd40c632f66d3465c66cd6ddd34f2",
+            "bytes": 107836653
+          },
+          "lastNativeObject": "Lean.Elab.Tactic:c.o",
+          "startedAt": "2026-11-12T03:08:53Z",
+          "completedAt": "2026-11-12T03:36:15Z"
+        },
+        {
+          "part": "late",
+          "job": 130954481137,
+          "status": "PASS",
+          "targets": 9,
+          "actualNativeObjects": 9,
+          "nativeLakeTasks": 2385,
+          "verifiedFiles": 65747,
+          "checkpointFiles": 65946,
+          "checkpoint": {
+            "artifact": 13914160060,
+            "digest": "sha256:c9bbb24717248437947ea8bcedd20b0619b5e8df3c37fbde24580300ed85ce53",
+            "bytes": 1329158745
+          },
+          "evidence": {
+            "artifact": 13912799717,
+            "digest": "sha256:589a1b4e6bafb06ca0c37ee16191774ae0183a16dc5714321b07bc88edea7bb9",
+            "bytes": 107837417
+          },
+          "lastNativeObject": "Lean.Elab.Structure:c.o",
+          "startedAt": "2026-11-12T03:36:17Z",
+          "completedAt": "2026-11-12T03:43:44Z"
+        }
+      ],
+      "noConfusion": {
+        "job": 130954481137,
+        "frontendSeconds": 49,
+        "objectSeconds": 1.7
+      },
+      "next": {
+        "job": 130957051646,
+        "phase": "stage-one",
+        "status": "IN_PROGRESS",
+        "observedAt": "2026-11-12T03:49:25Z"
       }
     }
   }
