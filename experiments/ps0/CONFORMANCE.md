@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-12 — Stage-one finish exposed bootstrap category collisions
+
+The finish job verified the **65,946-file** Lean checkpoint and reached native Lake task 5,141 of 5,142. The only failed target reported was `PS0.HostCategories`. Its first error at PS line 17, column 0 was `parser category psTerm has already been defined`, followed by duplicate category and unknown parser-attribute errors. Native Lake exited 1 before completing the archive and executable. GitHub skipped all five stage-two jobs. The artifact is a failure diagnostic. Artifact `13914586148` (`sha256:48a7caa75de930f8c6d7cf612f2a2014aad199b7cf4bf4250c45ad40cce27538`, 248,004,586 bytes). [Linux finish job](https://github.com/dwijayuda/pskernel/actions/runs/43117013891/job/130957051646)
+
+Source `ad39b88901d06b483ddcc1f79b5c000fdbbca31a` scopes the bootstrap grammar tables and their tokens to source command parsing, so target elaboration can register its own PS categories. Linux is testing the full PS0 module set with the pinned SDK, native Lake linking, and a relocated grammar probe. Full compiler linking and fixed-point qualification remain pending. [Linux self-source probe](https://github.com/dwijayuda/pskernel/actions/runs/43152480504/job/130964694421)
+
 ## 2026-11-12 — Repaired-driver stage-one Lean object closure passed
 
 The three clean Linux Lean slices built all **1,227** selected `:c.o` targets from the repaired PS source. Each slice verified its predecessor. None reported an Init/Std object rebuild. In the last slice Lake reported `Lean.Meta.Constructions.NoConfusion` in 49 seconds and `Lean.Meta.Constructions.NoConfusion:c.o` in 1.7 seconds. Source `0c98bc2d0fefeadc242bdeec725a108a265a8111`, runner `ca75baadef520113bcdd2eb243934b1bd58e1e4c`, harness `dc3c66b1c71cb64f96384a07599d50361e56137d`.

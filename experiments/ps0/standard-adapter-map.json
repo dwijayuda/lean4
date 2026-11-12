@@ -19250,7 +19250,7 @@
       "artifact": 13794741596,
       "evidenceField": "timedCompilerGraphCurrentTimeout"
     },
-    "nextAction": "Follow the clean repaired-source native Lake stage-one build and link, the PS-built stage-two build and link, and the independent fixed-point audit. Keep full qualification pending until both stages and the audit pass.",
+    "nextAction": "Verify the scoped grammar against the complete PS0 self-source subgraph, then qualify the complete two-stage native Lake graph and independent audit.",
     "currentPSCompilerCandidate": {
       "run": 43117013891,
       "pr": 260,
@@ -19259,8 +19259,8 @@
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
       "job": 130957051646,
       "phase": "stage-one",
-      "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T03:49:25Z",
+      "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
+      "observedAt": "2026-11-12T04:06:06Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -19452,6 +19452,37 @@
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T03:49:25Z"
         }
+      },
+      "failedModule": "PS0.HostCategories",
+      "firstError": {
+        "line": 17,
+        "column": 0,
+        "message": "parser category `psTerm` has already been defined"
+      },
+      "checkpointVerifiedFiles": 65946,
+      "lastNativeLakeTask": 5141,
+      "totalNativeLakeTasks": 5142,
+      "stageTwoSkippedJobs": [
+        130963121831,
+        130963122545,
+        130963122959,
+        130963123025,
+        130963124396
+      ],
+      "diagnostic": {
+        "artifact": 13914586148,
+        "digest": "sha256:48a7caa75de930f8c6d7cf612f2a2014aad199b7cf4bf4250c45ad40cce27538",
+        "bytes": 248004586
+      },
+      "link": "PENDING",
+      "selfGrammarProbe": {
+        "run": 43152480504,
+        "job": 130964694421,
+        "runner": "7511f07e889627820b466878b26e1524b8866b23",
+        "source": "ad39b88901d06b483ddcc1f79b5c000fdbbca31a",
+        "pr": 261,
+        "status": "IN_PROGRESS",
+        "scope": "PS0-owned modules using the pinned SDK"
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -19474,7 +19505,7 @@
       "run": 43117013891,
       "job": 130957051646,
       "phase": "stage-one",
-      "status": "IN_PROGRESS",
+      "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
       "evidenceField": "nativeLakeCompilerRecovery"
     }
   },
@@ -84919,8 +84950,8 @@
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
       "job": 130957051646,
       "phase": "stage-one",
-      "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T03:49:25Z",
+      "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
+      "observedAt": "2026-11-12T04:06:06Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -85112,6 +85143,37 @@
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T03:49:25Z"
         }
+      },
+      "failedModule": "PS0.HostCategories",
+      "firstError": {
+        "line": 17,
+        "column": 0,
+        "message": "parser category `psTerm` has already been defined"
+      },
+      "checkpointVerifiedFiles": 65946,
+      "lastNativeLakeTask": 5141,
+      "totalNativeLakeTasks": 5142,
+      "stageTwoSkippedJobs": [
+        130963121831,
+        130963122545,
+        130963122959,
+        130963123025,
+        130963124396
+      ],
+      "diagnostic": {
+        "artifact": 13914586148,
+        "digest": "sha256:48a7caa75de930f8c6d7cf612f2a2014aad199b7cf4bf4250c45ad40cce27538",
+        "bytes": 248004586
+      },
+      "link": "PENDING",
+      "selfGrammarProbe": {
+        "run": 43152480504,
+        "job": 130964694421,
+        "runner": "7511f07e889627820b466878b26e1524b8866b23",
+        "source": "ad39b88901d06b483ddcc1f79b5c000fdbbca31a",
+        "pr": 261,
+        "status": "IN_PROGRESS",
+        "scope": "PS0-owned modules using the pinned SDK"
       }
     },
     "previousGatedRun": {
@@ -85379,8 +85441,8 @@
       "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
       "job": 130957051646,
       "phase": "stage-one",
-      "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T03:49:25Z",
+      "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
+      "observedAt": "2026-11-12T04:06:06Z",
       "leanTargetPartitions": [
         850,
         368,
@@ -85572,6 +85634,37 @@
           "status": "IN_PROGRESS",
           "observedAt": "2026-11-12T03:49:25Z"
         }
+      },
+      "failedModule": "PS0.HostCategories",
+      "firstError": {
+        "line": 17,
+        "column": 0,
+        "message": "parser category `psTerm` has already been defined"
+      },
+      "checkpointVerifiedFiles": 65946,
+      "lastNativeLakeTask": 5141,
+      "totalNativeLakeTasks": 5142,
+      "stageTwoSkippedJobs": [
+        130963121831,
+        130963122545,
+        130963122959,
+        130963123025,
+        130963124396
+      ],
+      "diagnostic": {
+        "artifact": 13914586148,
+        "digest": "sha256:48a7caa75de930f8c6d7cf612f2a2014aad199b7cf4bf4250c45ad40cce27538",
+        "bytes": 248004586
+      },
+      "link": "PENDING",
+      "selfGrammarProbe": {
+        "run": 43152480504,
+        "job": 130964694421,
+        "runner": "7511f07e889627820b466878b26e1524b8866b23",
+        "source": "ad39b88901d06b483ddcc1f79b5c000fdbbca31a",
+        "pr": 261,
+        "status": "IN_PROGRESS",
+        "scope": "PS0-owned modules using the pinned SDK"
       }
     },
     "stageOneEarly": {
@@ -85947,6 +86040,242 @@
         "phase": "stage-one",
         "status": "IN_PROGRESS",
         "observedAt": "2026-11-12T03:49:25Z"
+      }
+    },
+    "cleanParserStageOneSelfGrammarFailure": {
+      "failedFinish": {
+        "run": 43117013891,
+        "pr": 260,
+        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+        "job": 130957051646,
+        "phase": "stage-one",
+        "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
+        "observedAt": "2026-11-12T04:06:06Z",
+        "leanTargetPartitions": [
+          850,
+          368,
+          9
+        ],
+        "bootstrapCheckpointPolicy": "clean same-source, same-run producer checkpoints",
+        "parserCandidate": {
+          "run": 43115983517,
+          "job": 130843980508,
+          "runner": "8cca8e2e6a74456299025f7d0c18af12123658a8",
+          "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+          "status": "PASS_FOCUSED_FRONTEND",
+          "verifiedCheckpointFiles": 57650,
+          "prefix": {
+            "psLines": [
+              29,
+              52
+            ],
+            "exitCode": 0,
+            "seconds": 2.24
+          },
+          "module": {
+            "exitCode": 0,
+            "seconds": 33.66,
+            "psSha256": "d635f571a1fb8235d34fd67037602fd9e72df055a9e3f87a721b11fc188b782f",
+            "publicOleanSha256": "7eb1a90fc69c13f3aba976e4274f5cb91de397387c6f40b28c36181ff2237b33",
+            "ileanSha256": "4aeecd58fbe215b7ee4d5ae96e7704bcc33ae2e5eb998865ff70c032e9ee0e14",
+            "cSha256": "c6d8eb78dda3acfd2e95b1b0ce79cb9ebc1653bc077eebb066b3fd371f82c219"
+          },
+          "driverSha256": "c0a4e421522eed55b89ffb2dddeb4002ef345705603bbc8379048ced8e6359ba",
+          "artifact": 13897584156,
+          "digest": "sha256:5e3d089a6ad6cbfdbc9a54a898e5b1350a0d59119fef741d728f2b0301c21f23",
+          "artifactBytes": 838281
+        },
+        "precedingCandidate": {
+          "run": 43110044806,
+          "source": "b75a583592dc8bbe9046fd6e93784d8ef0365580",
+          "job": 130875523736,
+          "phase": "stage-one-compiler",
+          "status": "IN_PROGRESS",
+          "middleCheckpoint": {
+            "artifact": 13903195713,
+            "digest": "sha256:d580b7d4e8561f08a37be522e4c611b9ff5a2022f3af29e6d8d0f20caf7a752e",
+            "bytes": 1315488282
+          }
+        },
+        "qualification": {
+          "job": 130847498507,
+          "checkpointContracts": 18,
+          "status": "PASS"
+        },
+        "parserRegression": {
+          "run": 43117448148,
+          "job": 130848975477,
+          "runner": "40e101f0ba996ca02f0f6ab71ed2cfe26ba59d88",
+          "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+          "result": "PASS",
+          "termShapeCases": 15,
+          "nestedDoContinuationLoweredSyntax": "PASS",
+          "nativeDoLayout": "PASS",
+          "nativeUnless": "PASS",
+          "nativeLocalRecursion": "PASS",
+          "regressionCommit": "849488185fa9a53cec25c9313b465f684bf2e9f7",
+          "artifact": 13898518380,
+          "digest": "sha256:6f62b0690b86b826651427e9aeba9d489da35cf38678c50f96e3e682fc786fe0",
+          "artifactBytes": 7734
+        },
+        "graphRunId": 43117013891,
+        "baseCheckpoint": {
+          "run": 43117013891,
+          "job": 130847635697,
+          "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+          "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+          "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+          "graphRunId": 43117013891,
+          "status": "PASS_INIT_STD_BASE_OBJECT_TARGETS",
+          "targets": 1147,
+          "actualNativeObjects": 1147,
+          "nativeLakeTasks": 2296,
+          "lastNativeObject": "Std:c.o",
+          "inputModules": 2569,
+          "originalByteIdentities": 402,
+          "checkpointFiles": 38949,
+          "checkpoint": {
+            "artifact": 13909390231,
+            "digest": "sha256:c21ad68b14e1612f74653df51e093a75c511b6ac3bfef3f5fbb3b6a44d218a98",
+            "bytes": 679083461
+          },
+          "evidence": {
+            "artifact": 13908208141,
+            "digest": "sha256:58a3743878caf8aaefbdf57932658ffe2bccb3c695170a335a451a894bcc1a2a",
+            "bytes": 107810081
+          },
+          "next": {
+            "job": 130921951706,
+            "phase": "stage-one-compiler-early",
+            "targets": 850,
+            "status": "IN_PROGRESS",
+            "observedAt": "2026-11-12T02:17:06Z"
+          }
+        },
+        "stageOneLean": {
+          "run": 43117013891,
+          "runner": "ca75baadef520113bcdd2eb243934b1bd58e1e4c",
+          "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111",
+          "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+          "graphRunId": 43117013891,
+          "status": "PASS_ALL_LEAN_OBJECT_PARTITIONS",
+          "targets": 1227,
+          "partitions": [
+            {
+              "part": "early",
+              "job": 130921951706,
+              "status": "PASS",
+              "targets": 850,
+              "actualNativeObjects": 850,
+              "nativeLakeTasks": 2630,
+              "verifiedFiles": 38949,
+              "checkpointFiles": 57650,
+              "checkpoint": {
+                "artifact": 13911408257,
+                "digest": "sha256:35599b4be2796f11693dab6501cc6791323e02f2e62884dc150f32aba3bdc3de",
+                "bytes": 1095081438
+              },
+              "evidence": {
+                "artifact": 13911492387,
+                "digest": "sha256:86bfeaea9972c5bd2c2cf6ffa1e26df167bf200baa9a6be5995d1b300999d697",
+                "bytes": 107827620
+              },
+              "lastNativeObject": "Lean.Elab.Frontend:c.o",
+              "startedAt": "2026-11-12T02:08:02Z",
+              "completedAt": "2026-11-12T03:08:51Z"
+            },
+            {
+              "part": "middle",
+              "job": 130944487384,
+              "status": "PASS",
+              "targets": 368,
+              "actualNativeObjects": 368,
+              "nativeLakeTasks": 2607,
+              "verifiedFiles": 57650,
+              "checkpointFiles": 65747,
+              "checkpoint": {
+                "artifact": 13912459402,
+                "digest": "sha256:443eac1e3fb0738bc71292bdedb84eeb516fc40cf16761404eb665714483ed82",
+                "bytes": 1315523522
+              },
+              "evidence": {
+                "artifact": 13913071526,
+                "digest": "sha256:de2ee5113f332ab8e05378fdfdbb5d93efbcd40c632f66d3465c66cd6ddd34f2",
+                "bytes": 107836653
+              },
+              "lastNativeObject": "Lean.Elab.Tactic:c.o",
+              "startedAt": "2026-11-12T03:08:53Z",
+              "completedAt": "2026-11-12T03:36:15Z"
+            },
+            {
+              "part": "late",
+              "job": 130954481137,
+              "status": "PASS",
+              "targets": 9,
+              "actualNativeObjects": 9,
+              "nativeLakeTasks": 2385,
+              "verifiedFiles": 65747,
+              "checkpointFiles": 65946,
+              "checkpoint": {
+                "artifact": 13914160060,
+                "digest": "sha256:c9bbb24717248437947ea8bcedd20b0619b5e8df3c37fbde24580300ed85ce53",
+                "bytes": 1329158745
+              },
+              "evidence": {
+                "artifact": 13912799717,
+                "digest": "sha256:589a1b4e6bafb06ca0c37ee16191774ae0183a16dc5714321b07bc88edea7bb9",
+                "bytes": 107837417
+              },
+              "lastNativeObject": "Lean.Elab.Structure:c.o",
+              "startedAt": "2026-11-12T03:36:17Z",
+              "completedAt": "2026-11-12T03:43:44Z"
+            }
+          ],
+          "noConfusion": {
+            "job": 130954481137,
+            "frontendSeconds": 49,
+            "objectSeconds": 1.7
+          },
+          "next": {
+            "job": 130957051646,
+            "phase": "stage-one",
+            "status": "IN_PROGRESS",
+            "observedAt": "2026-11-12T03:49:25Z"
+          }
+        },
+        "failedModule": "PS0.HostCategories",
+        "firstError": {
+          "line": 17,
+          "column": 0,
+          "message": "parser category `psTerm` has already been defined"
+        },
+        "checkpointVerifiedFiles": 65946,
+        "lastNativeLakeTask": 5141,
+        "totalNativeLakeTasks": 5142,
+        "stageTwoSkippedJobs": [
+          130963121831,
+          130963122545,
+          130963122959,
+          130963123025,
+          130963124396
+        ],
+        "diagnostic": {
+          "artifact": 13914586148,
+          "digest": "sha256:48a7caa75de930f8c6d7cf612f2a2014aad199b7cf4bf4250c45ad40cce27538",
+          "bytes": 248004586
+        },
+        "link": "PENDING"
+      },
+      "probe": {
+        "run": 43152480504,
+        "job": 130964694421,
+        "runner": "7511f07e889627820b466878b26e1524b8866b23",
+        "source": "ad39b88901d06b483ddcc1f79b5c000fdbbca31a",
+        "pr": 261,
+        "status": "IN_PROGRESS",
+        "scope": "PS0-owned modules using the pinned SDK"
       }
     }
   }
