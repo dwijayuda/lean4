@@ -19252,26 +19252,26 @@
     },
     "nextAction": "Follow the clean scoped-grammar build through both complete native Lake links, verify the PS-built second-stage prefix and output equality, then run the independent audit.",
     "currentPSCompilerCandidate": {
-      "run": 43156540873,
+      "run": 43161199302,
       "pr": 260,
-      "runner": "43a5116f90ce1ef75f940afded304c2591fda9bc",
-      "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
-      "graphRunId": 43156540873,
-      "job": 130977732297,
+      "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:02:59Z",
+      "observedAt": "2026-11-12T05:27:21Z",
+      "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+      "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 43161199302,
+      "qualification": {
+        "job": 130992905462,
+        "status": "PASS",
+        "checkpointContracts": 18
+      },
       "leanTargetPartitions": [
         850,
         368,
         9
       ],
-      "qualification": {
-        "job": 130977689716,
-        "checkpointContracts": 18,
-        "status": "PASS"
-      },
       "selfGrammarProbe": {
         "run": 43155211864,
         "job": 130973457617,
@@ -19289,42 +19289,59 @@
         "digest": "sha256:b4a97f688a1a9581cf23f95ed55501188933d6db70c5d6725087bbc009a0351d",
         "artifactBytes": 959556
       },
-      "selfGrammarSecondStageProbe": {
-        "run": 43156647457,
-        "job": 130978028483,
-        "runner": "99ab0007bcc0aaeec83d45a7295542c6a5a9f2ea",
+      "scopedFixedPoint": {
+        "run": 43158861471,
+        "job": 130985062946,
+        "runner": "2d9919b1b7669dd19dcc200923bb6797b8c515ed",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "FAILED_NATIVE_SELF_CENSUS_STAGE_TWO_PREPARATION",
-        "firstStage": {
-          "modules": 23,
-          "strictSourceCensus": "PASS",
-          "nativeLakeLink": "PASS",
-          "relocatedGrammar": "PASS",
-          "driverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a"
+        "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_USING_SDK",
+        "modules": 23,
+        "changes": {
+          "source": [],
+          "c": [],
+          "olean": []
         },
-        "failure": {
-          "command": "census-source",
-          "module": "PS0.Binders",
-          "signal": "SIGSEGV",
-          "signalNumber": 11
-        },
-        "artifact": 13916363200,
-        "digest": "sha256:58bc8179c10bd058d81f20bfe7759a1f11ddd360b6d0e50e14566fdc91d68182",
-        "artifactBytes": 1049688
-      },
-      "precedingCandidate": {
-        "run": 43117013891,
-        "job": 130957051646,
-        "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
-        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111"
+        "firstDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+        "secondDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+        "relocatedGrammar": [
+          "PASS",
+          "PASS"
+        ],
+        "artifact": 13918265644,
+        "digest": "sha256:9049bfdce870731beb1a2fad7c13d3b0244b7e3e0c5d703feb602d6f26c094a3",
+        "bytes": 975204
       },
       "selfCensusDiagnosis": {
         "run": 43158616436,
         "job": 130984282368,
         "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "IN_PROGRESS",
-        "scope": "exact linked driver census and same-source interpreter preference diagnostic"
+        "status": "REPRODUCED_AND_ISOLATED_NATIVE_SELF_CENSUS_CRASH",
+        "originalExit": -11,
+        "interpretedExit": 0,
+        "frame": "lean::ir::interpreter::call_boxed",
+        "caller": "Lean.Parser.mkParserOfConstantUnsafe",
+        "artifact": 13916943020,
+        "digest": "sha256:7f8f2c996c5c66cd073a9ddfe316be7e78abc4f39218c1dcdeb732f33ab8e398",
+        "bytes": 986244
+      },
+      "selfCensusCurrentIRProbe": {
+        "run": 43161148569,
+        "job": 130992364677,
+        "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "IN_PROGRESS"
+      },
+      "precedingCandidate": {
+        "run": 43156540873,
+        "job": 130977732297,
+        "runner": "43a5116f90ce1ef75f940afded304c2591fda9bc",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "CANCELLED_BY_REPIN_BEFORE_BASE_CHECKPOINT",
+        "diagnostic": {
+          "artifact": 13917409157,
+          "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
+        }
       }
     },
     "nativeLakeCheckpointQualification": {
@@ -19344,8 +19361,8 @@
       "evidenceField": "nativeLakeBasePhase"
     },
     "nativeLakeCompilerRecovery": {
-      "run": 43156540873,
-      "job": 130977732297,
+      "run": 43161199302,
+      "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
       "evidenceField": "nativeLakeCompilerRecovery"
@@ -84785,26 +84802,26 @@
       ]
     },
     "candidate": {
-      "run": 43156540873,
+      "run": 43161199302,
       "pr": 260,
-      "runner": "43a5116f90ce1ef75f940afded304c2591fda9bc",
-      "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
-      "graphRunId": 43156540873,
-      "job": 130977732297,
+      "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:02:59Z",
+      "observedAt": "2026-11-12T05:27:21Z",
+      "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+      "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 43161199302,
+      "qualification": {
+        "job": 130992905462,
+        "status": "PASS",
+        "checkpointContracts": 18
+      },
       "leanTargetPartitions": [
         850,
         368,
         9
       ],
-      "qualification": {
-        "job": 130977689716,
-        "checkpointContracts": 18,
-        "status": "PASS"
-      },
       "selfGrammarProbe": {
         "run": 43155211864,
         "job": 130973457617,
@@ -84822,42 +84839,59 @@
         "digest": "sha256:b4a97f688a1a9581cf23f95ed55501188933d6db70c5d6725087bbc009a0351d",
         "artifactBytes": 959556
       },
-      "selfGrammarSecondStageProbe": {
-        "run": 43156647457,
-        "job": 130978028483,
-        "runner": "99ab0007bcc0aaeec83d45a7295542c6a5a9f2ea",
+      "scopedFixedPoint": {
+        "run": 43158861471,
+        "job": 130985062946,
+        "runner": "2d9919b1b7669dd19dcc200923bb6797b8c515ed",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "FAILED_NATIVE_SELF_CENSUS_STAGE_TWO_PREPARATION",
-        "firstStage": {
-          "modules": 23,
-          "strictSourceCensus": "PASS",
-          "nativeLakeLink": "PASS",
-          "relocatedGrammar": "PASS",
-          "driverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a"
+        "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_USING_SDK",
+        "modules": 23,
+        "changes": {
+          "source": [],
+          "c": [],
+          "olean": []
         },
-        "failure": {
-          "command": "census-source",
-          "module": "PS0.Binders",
-          "signal": "SIGSEGV",
-          "signalNumber": 11
-        },
-        "artifact": 13916363200,
-        "digest": "sha256:58bc8179c10bd058d81f20bfe7759a1f11ddd360b6d0e50e14566fdc91d68182",
-        "artifactBytes": 1049688
-      },
-      "precedingCandidate": {
-        "run": 43117013891,
-        "job": 130957051646,
-        "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
-        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111"
+        "firstDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+        "secondDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+        "relocatedGrammar": [
+          "PASS",
+          "PASS"
+        ],
+        "artifact": 13918265644,
+        "digest": "sha256:9049bfdce870731beb1a2fad7c13d3b0244b7e3e0c5d703feb602d6f26c094a3",
+        "bytes": 975204
       },
       "selfCensusDiagnosis": {
         "run": 43158616436,
         "job": 130984282368,
         "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "IN_PROGRESS",
-        "scope": "exact linked driver census and same-source interpreter preference diagnostic"
+        "status": "REPRODUCED_AND_ISOLATED_NATIVE_SELF_CENSUS_CRASH",
+        "originalExit": -11,
+        "interpretedExit": 0,
+        "frame": "lean::ir::interpreter::call_boxed",
+        "caller": "Lean.Parser.mkParserOfConstantUnsafe",
+        "artifact": 13916943020,
+        "digest": "sha256:7f8f2c996c5c66cd073a9ddfe316be7e78abc4f39218c1dcdeb732f33ab8e398",
+        "bytes": 986244
+      },
+      "selfCensusCurrentIRProbe": {
+        "run": 43161148569,
+        "job": 130992364677,
+        "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "IN_PROGRESS"
+      },
+      "precedingCandidate": {
+        "run": 43156540873,
+        "job": 130977732297,
+        "runner": "43a5116f90ce1ef75f940afded304c2591fda9bc",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "CANCELLED_BY_REPIN_BEFORE_BASE_CHECKPOINT",
+        "diagnostic": {
+          "artifact": 13917409157,
+          "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
+        }
       }
     },
     "previousGatedRun": {
@@ -85118,26 +85152,26 @@
       }
     },
     "recovery": {
-      "run": 43156540873,
+      "run": 43161199302,
       "pr": 260,
-      "runner": "43a5116f90ce1ef75f940afded304c2591fda9bc",
-      "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
-      "graphRunId": 43156540873,
-      "job": 130977732297,
+      "job": 130992952236,
       "phase": "stage-one-base",
       "status": "IN_PROGRESS",
-      "observedAt": "2026-11-12T05:02:59Z",
+      "observedAt": "2026-11-12T05:27:21Z",
+      "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+      "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+      "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+      "graphRunId": 43161199302,
+      "qualification": {
+        "job": 130992905462,
+        "status": "PASS",
+        "checkpointContracts": 18
+      },
       "leanTargetPartitions": [
         850,
         368,
         9
       ],
-      "qualification": {
-        "job": 130977689716,
-        "checkpointContracts": 18,
-        "status": "PASS"
-      },
       "selfGrammarProbe": {
         "run": 43155211864,
         "job": 130973457617,
@@ -85155,42 +85189,59 @@
         "digest": "sha256:b4a97f688a1a9581cf23f95ed55501188933d6db70c5d6725087bbc009a0351d",
         "artifactBytes": 959556
       },
-      "selfGrammarSecondStageProbe": {
-        "run": 43156647457,
-        "job": 130978028483,
-        "runner": "99ab0007bcc0aaeec83d45a7295542c6a5a9f2ea",
+      "scopedFixedPoint": {
+        "run": 43158861471,
+        "job": 130985062946,
+        "runner": "2d9919b1b7669dd19dcc200923bb6797b8c515ed",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "FAILED_NATIVE_SELF_CENSUS_STAGE_TWO_PREPARATION",
-        "firstStage": {
-          "modules": 23,
-          "strictSourceCensus": "PASS",
-          "nativeLakeLink": "PASS",
-          "relocatedGrammar": "PASS",
-          "driverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a"
+        "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_USING_SDK",
+        "modules": 23,
+        "changes": {
+          "source": [],
+          "c": [],
+          "olean": []
         },
-        "failure": {
-          "command": "census-source",
-          "module": "PS0.Binders",
-          "signal": "SIGSEGV",
-          "signalNumber": 11
-        },
-        "artifact": 13916363200,
-        "digest": "sha256:58bc8179c10bd058d81f20bfe7759a1f11ddd360b6d0e50e14566fdc91d68182",
-        "artifactBytes": 1049688
-      },
-      "precedingCandidate": {
-        "run": 43117013891,
-        "job": 130957051646,
-        "status": "FAILED_SELF_GRAMMAR_BEFORE_LINK",
-        "source": "0c98bc2d0fefeadc242bdeec725a108a265a8111"
+        "firstDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+        "secondDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+        "relocatedGrammar": [
+          "PASS",
+          "PASS"
+        ],
+        "artifact": 13918265644,
+        "digest": "sha256:9049bfdce870731beb1a2fad7c13d3b0244b7e3e0c5d703feb602d6f26c094a3",
+        "bytes": 975204
       },
       "selfCensusDiagnosis": {
         "run": 43158616436,
         "job": 130984282368,
         "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
-        "status": "IN_PROGRESS",
-        "scope": "exact linked driver census and same-source interpreter preference diagnostic"
+        "status": "REPRODUCED_AND_ISOLATED_NATIVE_SELF_CENSUS_CRASH",
+        "originalExit": -11,
+        "interpretedExit": 0,
+        "frame": "lean::ir::interpreter::call_boxed",
+        "caller": "Lean.Parser.mkParserOfConstantUnsafe",
+        "artifact": 13916943020,
+        "digest": "sha256:7f8f2c996c5c66cd073a9ddfe316be7e78abc4f39218c1dcdeb732f33ab8e398",
+        "bytes": 986244
+      },
+      "selfCensusCurrentIRProbe": {
+        "run": 43161148569,
+        "job": 130992364677,
+        "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "IN_PROGRESS"
+      },
+      "precedingCandidate": {
+        "run": 43156540873,
+        "job": 130977732297,
+        "runner": "43a5116f90ce1ef75f940afded304c2591fda9bc",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "CANCELLED_BY_REPIN_BEFORE_BASE_CHECKPOINT",
+        "diagnostic": {
+          "artifact": 13917409157,
+          "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
+        }
       }
     },
     "stageOneEarly": {
@@ -85956,6 +86007,164 @@
         "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
         "status": "IN_PROGRESS",
         "scope": "exact linked driver census and same-source interpreter preference diagnostic"
+      }
+    },
+    "selfGrammarScopedFixedPointAndCensusIR": {
+      "direct": {
+        "run": 43158861471,
+        "job": 130985062946,
+        "runner": "2d9919b1b7669dd19dcc200923bb6797b8c515ed",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_USING_SDK",
+        "modules": 23,
+        "changes": {
+          "source": [],
+          "c": [],
+          "olean": []
+        },
+        "firstDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+        "secondDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+        "relocatedGrammar": [
+          "PASS",
+          "PASS"
+        ],
+        "artifact": 13918265644,
+        "digest": "sha256:9049bfdce870731beb1a2fad7c13d3b0244b7e3e0c5d703feb602d6f26c094a3",
+        "bytes": 975204
+      },
+      "stack": {
+        "run": 43158616436,
+        "job": 130984282368,
+        "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "REPRODUCED_AND_ISOLATED_NATIVE_SELF_CENSUS_CRASH",
+        "originalExit": -11,
+        "interpretedExit": 0,
+        "frame": "lean::ir::interpreter::call_boxed",
+        "caller": "Lean.Parser.mkParserOfConstantUnsafe",
+        "artifact": 13916943020,
+        "digest": "sha256:7f8f2c996c5c66cd073a9ddfe316be7e78abc4f39218c1dcdeb732f33ab8e398",
+        "bytes": 986244
+      },
+      "failedTest": {
+        "run": 43159921328,
+        "job": 130988400404,
+        "runner": "5e75f4f3f315e15799f6023214cfd01d87c1fb47",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "FAILED_STALE_SOURCE_LINE_ASSERTION",
+        "artifact": 13917742292,
+        "digest": "sha256:b63cee8c9255c68377661357d34c9171ccfd22036bab580114afaaff5adb8222"
+      },
+      "activeProbe": {
+        "run": 43161148569,
+        "job": 130992364677,
+        "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "status": "IN_PROGRESS"
+      },
+      "superseded": {
+        "run": 43156540873,
+        "job": 130977732297,
+        "runner": "43a5116f90ce1ef75f940afded304c2591fda9bc",
+        "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+        "status": "CANCELLED_BY_REPIN_BEFORE_BASE_CHECKPOINT",
+        "diagnostic": {
+          "artifact": 13917409157,
+          "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
+        }
+      },
+      "current": {
+        "run": 43161199302,
+        "pr": 260,
+        "job": 130992952236,
+        "phase": "stage-one-base",
+        "status": "IN_PROGRESS",
+        "observedAt": "2026-11-12T05:27:21Z",
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "runner": "a12344e09baeb6fcee479b1934805de16e7c42b4",
+        "buildHarnessSource": "dc3c66b1c71cb64f96384a07599d50361e56137d",
+        "graphRunId": 43161199302,
+        "qualification": {
+          "job": 130992905462,
+          "status": "PASS",
+          "checkpointContracts": 18
+        },
+        "leanTargetPartitions": [
+          850,
+          368,
+          9
+        ],
+        "selfGrammarProbe": {
+          "run": 43155211864,
+          "job": 130973457617,
+          "runner": "a093e8ba91e354e887f99d4a77ac701ed258e041",
+          "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+          "status": "PASS_PS0_SELF_SOURCE_LINK_USING_SDK",
+          "targets": 23,
+          "lakeTasks": 50,
+          "archive": "PS0Project:static",
+          "executable": "ps0project:exe",
+          "relocatedGrammar": "PASS",
+          "relocatedMetadataFiles": 220,
+          "driverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+          "artifact": 13915683869,
+          "digest": "sha256:b4a97f688a1a9581cf23f95ed55501188933d6db70c5d6725087bbc009a0351d",
+          "artifactBytes": 959556
+        },
+        "scopedFixedPoint": {
+          "run": 43158861471,
+          "job": 130985062946,
+          "runner": "2d9919b1b7669dd19dcc200923bb6797b8c515ed",
+          "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+          "status": "PASS_PS0_SELF_SOURCE_FIXED_POINT_USING_SDK",
+          "modules": 23,
+          "changes": {
+            "source": [],
+            "c": [],
+            "olean": []
+          },
+          "firstDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+          "secondDriverSha256": "63d54f686765aa713c16104cd5ce4181007997b952d4c2cf51403a9a5b84c64a",
+          "relocatedGrammar": [
+            "PASS",
+            "PASS"
+          ],
+          "artifact": 13918265644,
+          "digest": "sha256:9049bfdce870731beb1a2fad7c13d3b0244b7e3e0c5d703feb602d6f26c094a3",
+          "bytes": 975204
+        },
+        "selfCensusDiagnosis": {
+          "run": 43158616436,
+          "job": 130984282368,
+          "runner": "a1b54c39c2b7be5ccc99b936b7fd7d93d0565411",
+          "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+          "status": "REPRODUCED_AND_ISOLATED_NATIVE_SELF_CENSUS_CRASH",
+          "originalExit": -11,
+          "interpretedExit": 0,
+          "frame": "lean::ir::interpreter::call_boxed",
+          "caller": "Lean.Parser.mkParserOfConstantUnsafe",
+          "artifact": 13916943020,
+          "digest": "sha256:7f8f2c996c5c66cd073a9ddfe316be7e78abc4f39218c1dcdeb732f33ab8e398",
+          "bytes": 986244
+        },
+        "selfCensusCurrentIRProbe": {
+          "run": 43161148569,
+          "job": 130992364677,
+          "runner": "3fa52ef9b69cf3461d6647802011d37af98959d0",
+          "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+          "status": "IN_PROGRESS"
+        },
+        "precedingCandidate": {
+          "run": 43156540873,
+          "job": 130977732297,
+          "runner": "43a5116f90ce1ef75f940afded304c2591fda9bc",
+          "source": "bff5d8296cd8798f8c3e9e954ef695f77ea0aec4",
+          "status": "CANCELLED_BY_REPIN_BEFORE_BASE_CHECKPOINT",
+          "diagnostic": {
+            "artifact": 13917409157,
+            "digest": "sha256:07059c4b179016dad01ac678313897655cdb437ca3ca0eb04d71d9287481c007"
+          }
+        }
       }
     }
   }
