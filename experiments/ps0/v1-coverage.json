@@ -931,10 +931,30 @@
       "sourceOrSetup": "`const count: Nat := 3`",
       "requiredInterpretation": "Parameterless source `def` alias.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: count",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Native def with zero binders and rfl value 3"
+      }
     },
     {
       "id": "PS0-P-DECL-02",
@@ -942,10 +962,30 @@
       "sourceOrSetup": "`function add(x: Nat, y: Nat): Nat := x + y`",
       "requiredInterpretation": "Comma explicit telescope, native curried meaning.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: add",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Two explicit binders and rfl curried application"
+      }
     },
     {
       "id": "PS0-P-DECL-03",
@@ -953,10 +993,30 @@
       "sourceOrSetup": "`function tick(): Nat := 1`",
       "requiredInterpretation": "Insert exactly one final required Unit parameter.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: tick",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Exactly one required explicit Unit binder and successful empty call"
+      }
     },
     {
       "id": "PS0-P-DECL-04",
@@ -964,10 +1024,30 @@
       "sourceOrSetup": "`def f (x y : Nat) := x + y`",
       "requiredInterpretation": "Full native declaration telescope remains valid in v1.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: f",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Two native explicit binders and rfl sum"
+      }
     },
     {
       "id": "PS0-P-DECL-05",
@@ -975,10 +1055,30 @@
       "sourceOrSetup": "`function same {α: Type}[BEq α](x: α, y: α) := x == y`",
       "requiredInterpretation": "Implicit/instance/explicit order is preserved.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: same",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Implicit, instance, explicit, explicit order and rfl result"
+      }
     },
     {
       "id": "PS0-P-DECL-06",
@@ -986,10 +1086,30 @@
       "sourceOrSetup": "`function choose(n: Nat)[Decidable(n = 0)](x: Fin(n + 1)) := x.val`",
       "requiredInterpretation": "Interleaved dependent binders.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: choose",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Explicit, instance, explicit dependent order and rfl Fin result"
+      }
     },
     {
       "id": "PS0-P-DECL-07",
@@ -997,10 +1117,30 @@
       "sourceOrSetup": "`opaque value: Nat := 1`",
       "requiredInterpretation": "Checked opaque body, not transparent def.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: value",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Native opaque declaration and runtime body result 1"
+      }
     },
     {
       "id": "PS0-P-DECL-08",
@@ -1008,10 +1148,30 @@
       "sourceOrSetup": "`opaque value: Nat`",
       "requiredInterpretation": "Native inhabitant synthesis where available.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: defaultCount",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Native opaque declaration with omitted body and runtime synthesized 0"
+      }
     },
     {
       "id": "PS0-P-DECL-09",
@@ -1019,10 +1179,30 @@
       "sourceOrSetup": "`axiom assumed: True`",
       "requiredInterpretation": "An explicit assumption, not a proved theorem.",
       "section": "§2, §12",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: assumed",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Native axiom declaration classified separately from checked proofs"
+      }
     },
     {
       "id": "PS0-P-DECL-10",
@@ -1030,10 +1210,30 @@
       "sourceOrSetup": "`noncomputable def pick {α: Sort u}(h: Nonempty α): α := Classical.choice(h)`",
       "requiredInterpretation": "Logical use under native noncomputability conditions.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_declarations.ps :: pick",
+      "qualifiedCommit": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43528789812",
+      "evidence": {
+        "jobId": 132241045882,
+        "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "compiler": {
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "run": 43414525459,
+          "stageTwoJob": 132147282879,
+          "artifact": 14074263951,
+          "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+        },
+        "artifact": {
+          "id": 14085954260,
+          "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+          "bytes": 11021
+        },
+        "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+        "oracle": "Noncomputable definition with implicit sort and explicit Nonempty witness"
+      }
     },
     {
       "id": "PS0-P-CALL-01",
@@ -5768,12 +5968,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 240,
+    "PENDING": 230,
     "featureFamiliesPending": 100,
     "boundaryWitnessesPending": 31,
-    "acceptanceCasesPending": 109,
-    "note": "No case status is changed by the native operator checkpoint. Historical finite PASS cases remain source-pinned.",
-    "PASS": 2,
+    "acceptanceCasesPending": 99,
+    "note": "Ten positive declaration cases passed the first R2 qualification batch. Two historical finite passes retain their original pins.",
+    "PASS": 12,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -16465,7 +16665,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 240,
+    "obligationsPending": 230,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -22607,6 +22807,91 @@
           "id": 132158734460,
           "name": "independent-audit",
           "conclusion": "success"
+        }
+      ]
+    },
+    "r2DeclarationQualification": {
+      "source": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+      "run": 43528789812,
+      "job": 132241045882,
+      "artifact": {
+        "id": 14085954260,
+        "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+        "bytes": 11021
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "referenceSha256": "34bc630e14af32cb65944656cffe98d1791787cbea4aaf61661d8ee9f1a57a26",
+      "compiler": {
+        "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+        "run": 43414525459,
+        "stageTwoJob": 132147282879,
+        "artifact": 14074263951,
+        "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+      },
+      "fixture": "tests/v1/r2_declarations.ps",
+      "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+      "runtime": "PS0_R2_DECLARATIONS:3:5:1:5:true:0:1:0",
+      "projectRuntime": "PS0_PROJECT:42:7:2",
+      "initialFailure": {
+        "source": "1da2e8cd68c3f2b32aafad94c7267dcb5ddb5ffc",
+        "runner": "6f2f89878b797ec0097e2310bff5aace3c289672",
+        "run": 43528338894,
+        "job": 132239522643,
+        "artifact": 14085923297,
+        "digest": "sha256:17f2ee17fc3db2075bf436a7b531b43cd17a65441e7c72ac4465389384cdbaf6"
+      },
+      "cases": [
+        {
+          "id": "PS0-P-DECL-01",
+          "declaration": "count",
+          "oracle": "Native def with zero binders and rfl value 3"
+        },
+        {
+          "id": "PS0-P-DECL-02",
+          "declaration": "add",
+          "oracle": "Two explicit binders and rfl curried application"
+        },
+        {
+          "id": "PS0-P-DECL-03",
+          "declaration": "tick",
+          "oracle": "Exactly one required explicit Unit binder and successful empty call"
+        },
+        {
+          "id": "PS0-P-DECL-04",
+          "declaration": "f",
+          "oracle": "Two native explicit binders and rfl sum"
+        },
+        {
+          "id": "PS0-P-DECL-05",
+          "declaration": "same",
+          "oracle": "Implicit, instance, explicit, explicit order and rfl result"
+        },
+        {
+          "id": "PS0-P-DECL-06",
+          "declaration": "choose",
+          "oracle": "Explicit, instance, explicit dependent order and rfl Fin result"
+        },
+        {
+          "id": "PS0-P-DECL-07",
+          "declaration": "value",
+          "oracle": "Native opaque declaration and runtime body result 1"
+        },
+        {
+          "id": "PS0-P-DECL-08",
+          "declaration": "defaultCount",
+          "oracle": "Native opaque declaration with omitted body and runtime synthesized 0"
+        },
+        {
+          "id": "PS0-P-DECL-09",
+          "declaration": "assumed",
+          "oracle": "Native axiom declaration classified separately from checked proofs"
+        },
+        {
+          "id": "PS0-P-DECL-10",
+          "declaration": "pick",
+          "oracle": "Noncomputable definition with implicit sort and explicit Nonempty witness"
         }
       ]
     }
@@ -92253,5 +92538,90 @@
         }
       ]
     }
+  },
+  "r2DeclarationQualification": {
+    "source": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+    "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+    "run": 43528789812,
+    "job": 132241045882,
+    "artifact": {
+      "id": 14085954260,
+      "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+      "bytes": 11021
+    },
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "referenceSha256": "34bc630e14af32cb65944656cffe98d1791787cbea4aaf61661d8ee9f1a57a26",
+    "compiler": {
+      "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+      "run": 43414525459,
+      "stageTwoJob": 132147282879,
+      "artifact": 14074263951,
+      "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+    },
+    "fixture": "tests/v1/r2_declarations.ps",
+    "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+    "runtime": "PS0_R2_DECLARATIONS:3:5:1:5:true:0:1:0",
+    "projectRuntime": "PS0_PROJECT:42:7:2",
+    "initialFailure": {
+      "source": "1da2e8cd68c3f2b32aafad94c7267dcb5ddb5ffc",
+      "runner": "6f2f89878b797ec0097e2310bff5aace3c289672",
+      "run": 43528338894,
+      "job": 132239522643,
+      "artifact": 14085923297,
+      "digest": "sha256:17f2ee17fc3db2075bf436a7b531b43cd17a65441e7c72ac4465389384cdbaf6"
+    },
+    "cases": [
+      {
+        "id": "PS0-P-DECL-01",
+        "declaration": "count",
+        "oracle": "Native def with zero binders and rfl value 3"
+      },
+      {
+        "id": "PS0-P-DECL-02",
+        "declaration": "add",
+        "oracle": "Two explicit binders and rfl curried application"
+      },
+      {
+        "id": "PS0-P-DECL-03",
+        "declaration": "tick",
+        "oracle": "Exactly one required explicit Unit binder and successful empty call"
+      },
+      {
+        "id": "PS0-P-DECL-04",
+        "declaration": "f",
+        "oracle": "Two native explicit binders and rfl sum"
+      },
+      {
+        "id": "PS0-P-DECL-05",
+        "declaration": "same",
+        "oracle": "Implicit, instance, explicit, explicit order and rfl result"
+      },
+      {
+        "id": "PS0-P-DECL-06",
+        "declaration": "choose",
+        "oracle": "Explicit, instance, explicit dependent order and rfl Fin result"
+      },
+      {
+        "id": "PS0-P-DECL-07",
+        "declaration": "value",
+        "oracle": "Native opaque declaration and runtime body result 1"
+      },
+      {
+        "id": "PS0-P-DECL-08",
+        "declaration": "defaultCount",
+        "oracle": "Native opaque declaration with omitted body and runtime synthesized 0"
+      },
+      {
+        "id": "PS0-P-DECL-09",
+        "declaration": "assumed",
+        "oracle": "Native axiom declaration classified separately from checked proofs"
+      },
+      {
+        "id": "PS0-P-DECL-10",
+        "declaration": "pick",
+        "oracle": "Noncomputable definition with implicit sort and explicit Nonempty witness"
+      }
+    ]
   }
 }
