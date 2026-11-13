@@ -22311,8 +22311,8 @@
       "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
       "runnerPr": 263,
       "run": 43317326789,
-      "job": 131528877854,
-      "phase": "stage-one-base",
+      "job": 131613776258,
+      "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
       "observedAt": "2026-11-12T22:12:12Z",
       "gate": {
@@ -22331,6 +22331,23 @@
         "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
         "auditRun": 43254180674,
         "auditJob": 131307810313
+      },
+      "stageOneBase": {
+        "job": 131528877854,
+        "status": "PASS",
+        "nativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "checkpointFiles": 30418,
+        "checkpoint": {
+          "id": 13999304140,
+          "digest": "sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1",
+          "bytes": 451616506
+        },
+        "evidence": {
+          "id": 13999741991,
+          "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
+          "bytes": 8240812
+        }
       }
     }
   },
@@ -90801,8 +90818,8 @@
       "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
       "runnerPr": 263,
       "run": 43317326789,
-      "job": 131528877854,
-      "phase": "stage-one-base",
+      "job": 131613776258,
+      "phase": "stage-one-compiler-early",
       "status": "IN_PROGRESS",
       "observedAt": "2026-11-12T22:12:12Z",
       "gate": {
@@ -90821,6 +90838,76 @@
         "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
         "auditRun": 43254180674,
         "auditJob": 131307810313
+      },
+      "stageOneBase": {
+        "job": 131528877854,
+        "status": "PASS",
+        "nativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "checkpointFiles": 30418,
+        "checkpoint": {
+          "id": 13999304140,
+          "digest": "sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1",
+          "bytes": 451616506
+        },
+        "evidence": {
+          "id": 13999741991,
+          "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
+          "bytes": 8240812
+        }
+      }
+    },
+    "stageOneBase": {
+      "source": "a5160194aad78ff06acf55c42109ca1a5bb16f4d",
+      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
+      "runnerPr": 263,
+      "run": 43317326789,
+      "job": 131613776258,
+      "phase": "stage-one-compiler-early",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-12T22:12:12Z",
+      "gate": {
+        "job": 131528643634,
+        "status": "PASS",
+        "canonicalSourceContracts": 5,
+        "checkpointContracts": 18,
+        "auditContracts": 9,
+        "trackedModules": 2569
+      },
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "stageOneBase": {
+        "job": 131528877854,
+        "status": "PASS",
+        "nativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "checkpointFiles": 30418,
+        "checkpoint": {
+          "id": 13999304140,
+          "digest": "sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1",
+          "bytes": 451616506
+        },
+        "evidence": {
+          "id": 13999741991,
+          "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
+          "bytes": 8240812
+        }
       }
     }
   }

@@ -1,5 +1,11 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-13 — Canonical stage-one base passed
+
+The canonical Linux build read 2,569 tracked PS sources and built 1,147 Init and Std native objects in 2,296 Lake tasks. Checkpoint `13999304140` sealed 30,418 files with digest `sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1`. Slice evidence `13999741991` has digest `sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5`. [Linux base job](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131528877854)
+
+The 850-target early Lean slice is running. [Linux early Lean job](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131613776258)
+
 ## 2026-11-13 — Canonical ProofScript compiler source cutover
 
 Commit `a5160194aad78ff06acf55c42109ca1a5bb16f4d` replaces **2,546** tracked pinned Lean compiler sources under `src/` and **23** PS0 implementation sources with the exact ProofScript files from the audited fixed point. The cutover base `6d750d88418e952589bbd98ca0deaf1bc18ca22a` uses the pinned Lean source tree at `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. The source catalog SHA-256 is `6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4`. The native Lake harness validates and stages the Git checkout's PS bytes at the logical module paths and retains their source-map and mapped-census checks. [Source cutover PR](https://github.com/dwijayuda/lean4/pull/21)
