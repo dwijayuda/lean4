@@ -1,5 +1,11 @@
 # PS0 — AI Work State (10 November 2026)
 
+## Published PS0 bootstrap and clean Linux validation
+
+Release `ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64` publishes the original audited Linux x86-64 bootstrap ZIP as asset `743335210` and its `SHA256SUMS` as asset `743335211`. GitHub reports archive digest `sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd` and checksum-file digest `sha256:c970015b96b415f53d2462a96439b0e9f46fb87fd7e98c79eaf6b7e21adc5753`. The publisher verified the original audit job and archive bytes before uploading. Publication receipt `14031680180` has digest `sha256:0110423260a1b120942e5d70c89bc8077dd5587f2293d2ad082a7421eb410483`. [Release](https://github.com/dwijayuda/pskernel/releases/tag/ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64) [Publication job](https://github.com/dwijayuda/pskernel/actions/runs/43414260939/job/131848065417)
+
+The clean build pins source `430c21f1742334d0abb103a58a7aaa1c65fc16e1` and runner `d5ccec6831ef55f156c4ee99d695e02953c1d4d5`. Each stage-one job invokes the documented checkout script to verify the public archive before extraction. Linux passed the source gate and started the two-stage validation. [Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43414525459)
+
 ## 2026-11-13 — Canonical ProofScript compiler cutover qualified on Linux
 
 **The tracked ProofScript compiler corpus passed both native Lake stages on Linux.** Source `a5160194aad78ff06acf55c42109ca1a5bb16f4d`, tree `d3d75b02b36f574f92d509045385e340a71984f7`, runner `24ecd03305d220e0301fa82a4abca5cf830ae85d`, pinned Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. The checkout contains **2,546** upstream replacements under `src/` and **23** PS0 replacements. Both stages verified catalog SHA-256 `6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4` and compiled the same 2,569 tracked sources. Stage one used the audited seed prefix and stage two used the exact newly built prefix. All 12 jobs passed. [Canonical source PR](https://github.com/dwijayuda/lean4/pull/21) [Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43317326789)
