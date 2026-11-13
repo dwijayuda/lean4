@@ -10,15 +10,20 @@ The pinned compiler source is tracked as `.ps` in `src/` and in the PS0
 implementation directory. The canonical catalog preserves the correspondence
 between upstream paths, Lake module names, and the audited ProofScript bytes.
 
-On Linux with the pinned Lean 4.35.0 SDK, extract the audited stage-one
-artifact from run `43161199302` (artifact `13934124327`). Pass the absolute
-path of its `compiler-evidence` directory as the bootstrap input:
+On Linux x86-64 with the pinned Lean 4.35.0 SDK, download the [audited bootstrap bundle](https://github.com/dwijayuda/pskernel/releases/tag/ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64).
+The download script verifies the published `SHA256SUMS` against the digest
+pinned in the checkout and checks the archive before extracting it. Use a new
+output directory for the download.
 
 ```bash
 cd experiments/ps0
+test "$(lean --githash)" = eb6cafb7290e8bd5f2937522d8d804f58f02bafc
+bootstrap="$(pwd)/build/release-bootstrap"
+mkdir -p build
+bash tests/fetch-canonical-bootstrap.sh "$bootstrap"
 export PS0_SOURCE_SHA="$(git rev-parse HEAD)"
 python3 tests/run-compiler-ps.py --canonical-corpus \
-  --bootstrap-artifact /absolute/path/to/compiler-evidence \
+  --bootstrap-artifact "$bootstrap/compiler-evidence" \
   --bootstrap-source 978d594a10fac8f6e5687190a22d70334b331dab
 ```
 
