@@ -1,5 +1,15 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-13 — Canonical stage one linked on Linux
+
+The first stage built all **2,569** canonical modules and passed the source census with **78,712** top-level mapped PS declarations. The final job verified 57,416 checkpoint files, built 195 remaining objects, and linked `PS0Project:static` and `ps0project:exe` at Lake tasks 5,141 and 5,142. The relocated compiler passed with 220 retained PS0 metadata files. Artifact `14006568778` (`sha256:a24cb9cc80440b236847677af004509c90b6f10b15795056cc68b0a7a5fe2c41`, 284,946,668 bytes). [Linux stage-one link](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131658982615)
+
+- Stage-one early built 850 Lean objects. Checkpoint `14004241602` sealed 49,120 files (`sha256:0a21afee00b7dbf1a45dec703e788bdbcd5d38d4b8c7e1516c19e92840e58dd4`). Slice evidence `14003339571` (`sha256:633db459b9dbecac57e4d697cbe4822a3e71584db87bfae4fb07dd138064264b`). [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131613776258)
+- Stage-one middle built 368 Lean objects. Checkpoint `14005671916` sealed 57,217 files (`sha256:ac707cd1314dd5218d7997ea769fa0787d4c3c0dc6d221163922f0437e76300a`). Slice evidence `14006080788` (`sha256:4c58960281db6c8111e62241f1962147fe5d7b527dfd1b9537d3a9220994c308`). [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131643416751)
+- Stage-one late built 9 Lean objects. Checkpoint `14006665553` sealed 57,416 files (`sha256:2cdce79c84011b7969dfd17b3a1eda1afcd91df4620b0eafc4a75451907dbe28`). Slice evidence `14006675567` (`sha256:5aa819f1c0171ea38010ad88176e5065a5b2432f55f4f6bbdb62bc83d1636f58`). [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131655801121)
+
+Stage two began using the verified stage-one compiler prefix and the same tracked corpus. [Linux stage-two base](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131667368624)
+
 ## 2026-11-13 — Canonical stage-one base passed
 
 The canonical Linux build read 2,569 tracked PS sources and built 1,147 Init and Std native objects in 2,296 Lake tasks. Checkpoint `13999304140` sealed 30,418 files with digest `sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1`. Slice evidence `13999741991` has digest `sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5`. [Linux base job](https://github.com/dwijayuda/pskernel/actions/runs/43317326789/job/131528877854)

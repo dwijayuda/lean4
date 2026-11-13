@@ -22311,8 +22311,8 @@
       "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
       "runnerPr": 263,
       "run": 43317326789,
-      "job": 131613776258,
-      "phase": "stage-one-compiler-early",
+      "job": 131667368624,
+      "phase": "stage-two-base",
       "status": "IN_PROGRESS",
       "observedAt": "2026-11-12T22:12:12Z",
       "gate": {
@@ -22347,6 +22347,81 @@
           "id": 13999741991,
           "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
           "bytes": 8240812
+        }
+      },
+      "stageOneLink": {
+        "job": 131658982615,
+        "status": "PASS",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "partition": "early",
+            "job": 131613776258,
+            "objects": 850,
+            "tasks": 2630,
+            "verifiedFiles": 30418,
+            "checkpointFiles": 49120,
+            "checkpoint": {
+              "id": 14004241602,
+              "digest": "sha256:0a21afee00b7dbf1a45dec703e788bdbcd5d38d4b8c7e1516c19e92840e58dd4",
+              "bytes": 867673927
+            },
+            "evidence": {
+              "id": 14003339571,
+              "digest": "sha256:633db459b9dbecac57e4d697cbe4822a3e71584db87bfae4fb07dd138064264b",
+              "bytes": 8259734
+            }
+          },
+          {
+            "partition": "middle",
+            "job": 131643416751,
+            "objects": 368,
+            "tasks": 2607,
+            "verifiedFiles": 49120,
+            "checkpointFiles": 57217,
+            "checkpoint": {
+              "id": 14005671916,
+              "digest": "sha256:ac707cd1314dd5218d7997ea769fa0787d4c3c0dc6d221163922f0437e76300a",
+              "bytes": 1088095181
+            },
+            "evidence": {
+              "id": 14006080788,
+              "digest": "sha256:4c58960281db6c8111e62241f1962147fe5d7b527dfd1b9537d3a9220994c308",
+              "bytes": 8268388
+            }
+          },
+          {
+            "partition": "late",
+            "job": 131655801121,
+            "objects": 9,
+            "tasks": 2385,
+            "verifiedFiles": 57217,
+            "checkpointFiles": 57416,
+            "checkpoint": {
+              "id": 14006665553,
+              "digest": "sha256:2cdce79c84011b7969dfd17b3a1eda1afcd91df4620b0eafc4a75451907dbe28",
+              "bytes": 1101730750
+            },
+            "evidence": {
+              "id": 14006675567,
+              "digest": "sha256:5aa819f1c0171ea38010ad88176e5065a5b2432f55f4f6bbdb62bc83d1636f58",
+              "bytes": 8268849
+            }
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 57416,
+        "finishNativeObjects": 195,
+        "finishLakeTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "relocatedGrammar": "PASS",
+        "metadataFiles": 220,
+        "topLevelMappedDeclarations": 78712,
+        "artifact": {
+          "id": 14006568778,
+          "digest": "sha256:a24cb9cc80440b236847677af004509c90b6f10b15795056cc68b0a7a5fe2c41",
+          "bytes": 284946668
         }
       }
     }
@@ -90818,8 +90893,8 @@
       "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
       "runnerPr": 263,
       "run": 43317326789,
-      "job": 131613776258,
-      "phase": "stage-one-compiler-early",
+      "job": 131667368624,
+      "phase": "stage-two-base",
       "status": "IN_PROGRESS",
       "observedAt": "2026-11-12T22:12:12Z",
       "gate": {
@@ -90854,6 +90929,81 @@
           "id": 13999741991,
           "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
           "bytes": 8240812
+        }
+      },
+      "stageOneLink": {
+        "job": 131658982615,
+        "status": "PASS",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "partition": "early",
+            "job": 131613776258,
+            "objects": 850,
+            "tasks": 2630,
+            "verifiedFiles": 30418,
+            "checkpointFiles": 49120,
+            "checkpoint": {
+              "id": 14004241602,
+              "digest": "sha256:0a21afee00b7dbf1a45dec703e788bdbcd5d38d4b8c7e1516c19e92840e58dd4",
+              "bytes": 867673927
+            },
+            "evidence": {
+              "id": 14003339571,
+              "digest": "sha256:633db459b9dbecac57e4d697cbe4822a3e71584db87bfae4fb07dd138064264b",
+              "bytes": 8259734
+            }
+          },
+          {
+            "partition": "middle",
+            "job": 131643416751,
+            "objects": 368,
+            "tasks": 2607,
+            "verifiedFiles": 49120,
+            "checkpointFiles": 57217,
+            "checkpoint": {
+              "id": 14005671916,
+              "digest": "sha256:ac707cd1314dd5218d7997ea769fa0787d4c3c0dc6d221163922f0437e76300a",
+              "bytes": 1088095181
+            },
+            "evidence": {
+              "id": 14006080788,
+              "digest": "sha256:4c58960281db6c8111e62241f1962147fe5d7b527dfd1b9537d3a9220994c308",
+              "bytes": 8268388
+            }
+          },
+          {
+            "partition": "late",
+            "job": 131655801121,
+            "objects": 9,
+            "tasks": 2385,
+            "verifiedFiles": 57217,
+            "checkpointFiles": 57416,
+            "checkpoint": {
+              "id": 14006665553,
+              "digest": "sha256:2cdce79c84011b7969dfd17b3a1eda1afcd91df4620b0eafc4a75451907dbe28",
+              "bytes": 1101730750
+            },
+            "evidence": {
+              "id": 14006675567,
+              "digest": "sha256:5aa819f1c0171ea38010ad88176e5065a5b2432f55f4f6bbdb62bc83d1636f58",
+              "bytes": 8268849
+            }
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 57416,
+        "finishNativeObjects": 195,
+        "finishLakeTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "relocatedGrammar": "PASS",
+        "metadataFiles": 220,
+        "topLevelMappedDeclarations": 78712,
+        "artifact": {
+          "id": 14006568778,
+          "digest": "sha256:a24cb9cc80440b236847677af004509c90b6f10b15795056cc68b0a7a5fe2c41",
+          "bytes": 284946668
         }
       }
     },
@@ -90907,6 +91057,134 @@
           "id": 13999741991,
           "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
           "bytes": 8240812
+        }
+      }
+    },
+    "stageOneLink": {
+      "source": "a5160194aad78ff06acf55c42109ca1a5bb16f4d",
+      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
+      "runnerPr": 263,
+      "run": 43317326789,
+      "job": 131667368624,
+      "phase": "stage-two-base",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-12T22:12:12Z",
+      "gate": {
+        "job": 131528643634,
+        "status": "PASS",
+        "canonicalSourceContracts": 5,
+        "checkpointContracts": 18,
+        "auditContracts": 9,
+        "trackedModules": 2569
+      },
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "stageOneBase": {
+        "job": 131528877854,
+        "status": "PASS",
+        "nativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "checkpointFiles": 30418,
+        "checkpoint": {
+          "id": 13999304140,
+          "digest": "sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1",
+          "bytes": 451616506
+        },
+        "evidence": {
+          "id": 13999741991,
+          "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
+          "bytes": 8240812
+        }
+      },
+      "stageOneLink": {
+        "job": 131658982615,
+        "status": "PASS",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "partition": "early",
+            "job": 131613776258,
+            "objects": 850,
+            "tasks": 2630,
+            "verifiedFiles": 30418,
+            "checkpointFiles": 49120,
+            "checkpoint": {
+              "id": 14004241602,
+              "digest": "sha256:0a21afee00b7dbf1a45dec703e788bdbcd5d38d4b8c7e1516c19e92840e58dd4",
+              "bytes": 867673927
+            },
+            "evidence": {
+              "id": 14003339571,
+              "digest": "sha256:633db459b9dbecac57e4d697cbe4822a3e71584db87bfae4fb07dd138064264b",
+              "bytes": 8259734
+            }
+          },
+          {
+            "partition": "middle",
+            "job": 131643416751,
+            "objects": 368,
+            "tasks": 2607,
+            "verifiedFiles": 49120,
+            "checkpointFiles": 57217,
+            "checkpoint": {
+              "id": 14005671916,
+              "digest": "sha256:ac707cd1314dd5218d7997ea769fa0787d4c3c0dc6d221163922f0437e76300a",
+              "bytes": 1088095181
+            },
+            "evidence": {
+              "id": 14006080788,
+              "digest": "sha256:4c58960281db6c8111e62241f1962147fe5d7b527dfd1b9537d3a9220994c308",
+              "bytes": 8268388
+            }
+          },
+          {
+            "partition": "late",
+            "job": 131655801121,
+            "objects": 9,
+            "tasks": 2385,
+            "verifiedFiles": 57217,
+            "checkpointFiles": 57416,
+            "checkpoint": {
+              "id": 14006665553,
+              "digest": "sha256:2cdce79c84011b7969dfd17b3a1eda1afcd91df4620b0eafc4a75451907dbe28",
+              "bytes": 1101730750
+            },
+            "evidence": {
+              "id": 14006675567,
+              "digest": "sha256:5aa819f1c0171ea38010ad88176e5065a5b2432f55f4f6bbdb62bc83d1636f58",
+              "bytes": 8268849
+            }
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 57416,
+        "finishNativeObjects": 195,
+        "finishLakeTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "relocatedGrammar": "PASS",
+        "metadataFiles": 220,
+        "topLevelMappedDeclarations": 78712,
+        "artifact": {
+          "id": 14006568778,
+          "digest": "sha256:a24cb9cc80440b236847677af004509c90b6f10b15795056cc68b0a7a5fe2c41",
+          "bytes": 284946668
         }
       }
     }
