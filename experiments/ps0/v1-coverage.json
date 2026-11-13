@@ -22299,7 +22299,7 @@
     },
     "canonicalCompilerSourceCutover": {
       "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
-      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "tree": "d788360aa9dc4519efbf402b12f8b42487b9ff96",
       "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
       "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
       "sourcePr": 21,
@@ -22311,10 +22311,10 @@
       "runner": "d5ccec6831ef55f156c4ee99d695e02953c1d4d5",
       "runnerPr": 263,
       "run": 43414525459,
-      "job": 131849064730,
-      "phase": "stage-one-base",
-      "status": "RELEASE_VALIDATION_IN_PROGRESS",
-      "observedAt": "2026-11-13T11:08:20Z",
+      "job": 132158734460,
+      "phase": "independent-audit",
+      "status": "PASS",
+      "observedAt": "2026-11-13T20:48:33Z",
       "bootstrap": {
         "source": "978d594a10fac8f6e5687190a22d70334b331dab",
         "run": 43161199302,
@@ -22355,7 +22355,260 @@
       "sourceGate": {
         "job": 131848943017,
         "status": "PASS"
-      }
+      },
+      "stageOneLink": {
+        "job": 131987533313,
+        "artifact": {
+          "id": 14054014198,
+          "digest": "sha256:237a5b835062f3ab17d7ea39ae06785af058c7749daf86ab05a134906dae2b5e",
+          "bytes": 284946723,
+          "name": "ps0-selfhost-stage-one-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131849064730,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14045647072,
+              "digest": "sha256:a7702c7dd12aa274cc73589cece6965fe66f1f09dc9b34dbfbc579414ab216bb",
+              "bytes": 451625486,
+              "name": "ps0-compiler-checkpoint-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14045916866,
+              "digest": "sha256:b8dd581469ec55a68152449d85585734ee8d0906d5cdf17c4d867554496edd9b",
+              "bytes": 8240822,
+              "name": "ps0-compiler-slice-evidence-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131935735880,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14049467077,
+              "digest": "sha256:7980bafc1a0a4e5921bd703fb60b6d8827e20502c1a27426adacbb935709b14d",
+              "bytes": 867701911,
+              "name": "ps0-compiler-checkpoint-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14049526956,
+              "digest": "sha256:06ecdf24e7d84f7186279375b1c4971c7b4a115bb906e90653a29e1ab58ab4de",
+              "bytes": 8259799,
+              "name": "ps0-compiler-slice-evidence-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131966340940,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14053066175,
+              "digest": "sha256:08660f60f498c6c167f86f50bc27e4a7fb3c2a0e08811d17fa4af52cec21902c",
+              "bytes": 1088117263,
+              "name": "ps0-compiler-checkpoint-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14052806261,
+              "digest": "sha256:39eb5a47221174af23f6ba7e498f727dcb3ddc06114c89683051efe5681b16dc",
+              "bytes": 8268476,
+              "name": "ps0-compiler-slice-evidence-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131982100410,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14053132799,
+              "digest": "sha256:4ad5120e2feb14283f24c8ab2c75dea0036223b9eb9754bead9003b4e2375e56",
+              "bytes": 1101799646,
+              "name": "ps0-compiler-checkpoint-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14053607744,
+              "digest": "sha256:c7805c0b3df3d4a734a00bc83ea0a02aafe92c3eb92eb9e39ea1b05dc154fd67",
+              "bytes": 8268936,
+              "name": "ps0-compiler-slice-evidence-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ]
+      },
+      "stageTwoLink": {
+        "job": 132147282879,
+        "artifact": {
+          "id": 14074263951,
+          "digest": "sha256:3de0d4290ba7f79371211ae9c9ea71e2661ead75a49bcd424644196d8b90b50a",
+          "bytes": 284946744,
+          "name": "ps0-selfhost-stage-two-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131999194719,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14069140151,
+              "digest": "sha256:4e3d1ff5cb489fbff9150ff7f32d431670a918498276dd69c0d3e98e38b66c5d",
+              "bytes": 451626738,
+              "name": "ps0-compiler-checkpoint-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14068336416,
+              "digest": "sha256:97396d720b14f859f17056708b9c1d60c2356009ba4ebfd6c426961e6a4231a0",
+              "bytes": 8240759,
+              "name": "ps0-compiler-slice-evidence-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132100789446,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14071099560,
+              "digest": "sha256:c09a20d26d1d94ff49fb9a738552bc15e102027c9d7157cf5c589f132a83ac57",
+              "bytes": 867686736,
+              "name": "ps0-compiler-checkpoint-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14072087704,
+              "digest": "sha256:e311a22a12825458069c3922432c319ab4a342cec210209b17bcac439857a4f6",
+              "bytes": 8259716,
+              "name": "ps0-compiler-slice-evidence-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132131536999,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14073358340,
+              "digest": "sha256:92ac3f64484aaf8574a61c259628506bd03a646a57f51a1b3b0303070b7eaafa",
+              "bytes": 1088130578,
+              "name": "ps0-compiler-checkpoint-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073273481,
+              "digest": "sha256:817f5b870a5dc430eeec01a54da062d63d3ba8505d152af7fd6c97da6baece0e",
+              "bytes": 8268465,
+              "name": "ps0-compiler-slice-evidence-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132142893867,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14074366235,
+              "digest": "sha256:cc6890aefd1f994ca0bb5384e5db2f71f17ec034271ded6c2be5b63a6dead468",
+              "bytes": 1101751560,
+              "name": "ps0-compiler-checkpoint-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073678228,
+              "digest": "sha256:f8dcba4c61ebb1981c65ffc7219d1b9a2b2af22d1f138d58e57b40d5e1a8926d",
+              "bytes": 8268927,
+              "name": "ps0-compiler-slice-evidence-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ],
+        "fixedPoint": {
+          "status": "PASS",
+          "modules": 2569,
+          "changedC": [],
+          "changedPublicOlean": []
+        }
+      },
+      "independentAudit": {
+        "job": 132158734460,
+        "artifact": {
+          "id": 14074514400,
+          "digest": "sha256:68cda6675b46ddc536c40cf751dcd2ff4ccb4c5a49899c1e7bcb0dfec3e60a7c",
+          "bytes": 654,
+          "name": "ps0-canonical-independent-audit-43414525459"
+        },
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      },
+      "jobs": [
+        {
+          "id": 131848943017,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 131849064730,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 131935735880,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 131966340940,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 131982100410,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 131987533313,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 131999194719,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132100789446,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132131536999,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132142893867,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132147282879,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 132158734460,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ]
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -90813,7 +91066,7 @@
     },
     "current": {
       "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
-      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "tree": "d788360aa9dc4519efbf402b12f8b42487b9ff96",
       "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
       "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
       "sourcePr": 21,
@@ -90825,10 +91078,10 @@
       "runner": "d5ccec6831ef55f156c4ee99d695e02953c1d4d5",
       "runnerPr": 263,
       "run": 43414525459,
-      "job": 131849064730,
-      "phase": "stage-one-base",
-      "status": "RELEASE_VALIDATION_IN_PROGRESS",
-      "observedAt": "2026-11-13T11:08:20Z",
+      "job": 132158734460,
+      "phase": "independent-audit",
+      "status": "PASS",
+      "observedAt": "2026-11-13T20:48:33Z",
       "bootstrap": {
         "source": "978d594a10fac8f6e5687190a22d70334b331dab",
         "run": 43161199302,
@@ -90869,7 +91122,260 @@
       "sourceGate": {
         "job": 131848943017,
         "status": "PASS"
-      }
+      },
+      "stageOneLink": {
+        "job": 131987533313,
+        "artifact": {
+          "id": 14054014198,
+          "digest": "sha256:237a5b835062f3ab17d7ea39ae06785af058c7749daf86ab05a134906dae2b5e",
+          "bytes": 284946723,
+          "name": "ps0-selfhost-stage-one-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131849064730,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14045647072,
+              "digest": "sha256:a7702c7dd12aa274cc73589cece6965fe66f1f09dc9b34dbfbc579414ab216bb",
+              "bytes": 451625486,
+              "name": "ps0-compiler-checkpoint-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14045916866,
+              "digest": "sha256:b8dd581469ec55a68152449d85585734ee8d0906d5cdf17c4d867554496edd9b",
+              "bytes": 8240822,
+              "name": "ps0-compiler-slice-evidence-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131935735880,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14049467077,
+              "digest": "sha256:7980bafc1a0a4e5921bd703fb60b6d8827e20502c1a27426adacbb935709b14d",
+              "bytes": 867701911,
+              "name": "ps0-compiler-checkpoint-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14049526956,
+              "digest": "sha256:06ecdf24e7d84f7186279375b1c4971c7b4a115bb906e90653a29e1ab58ab4de",
+              "bytes": 8259799,
+              "name": "ps0-compiler-slice-evidence-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131966340940,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14053066175,
+              "digest": "sha256:08660f60f498c6c167f86f50bc27e4a7fb3c2a0e08811d17fa4af52cec21902c",
+              "bytes": 1088117263,
+              "name": "ps0-compiler-checkpoint-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14052806261,
+              "digest": "sha256:39eb5a47221174af23f6ba7e498f727dcb3ddc06114c89683051efe5681b16dc",
+              "bytes": 8268476,
+              "name": "ps0-compiler-slice-evidence-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131982100410,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14053132799,
+              "digest": "sha256:4ad5120e2feb14283f24c8ab2c75dea0036223b9eb9754bead9003b4e2375e56",
+              "bytes": 1101799646,
+              "name": "ps0-compiler-checkpoint-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14053607744,
+              "digest": "sha256:c7805c0b3df3d4a734a00bc83ea0a02aafe92c3eb92eb9e39ea1b05dc154fd67",
+              "bytes": 8268936,
+              "name": "ps0-compiler-slice-evidence-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ]
+      },
+      "stageTwoLink": {
+        "job": 132147282879,
+        "artifact": {
+          "id": 14074263951,
+          "digest": "sha256:3de0d4290ba7f79371211ae9c9ea71e2661ead75a49bcd424644196d8b90b50a",
+          "bytes": 284946744,
+          "name": "ps0-selfhost-stage-two-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131999194719,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14069140151,
+              "digest": "sha256:4e3d1ff5cb489fbff9150ff7f32d431670a918498276dd69c0d3e98e38b66c5d",
+              "bytes": 451626738,
+              "name": "ps0-compiler-checkpoint-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14068336416,
+              "digest": "sha256:97396d720b14f859f17056708b9c1d60c2356009ba4ebfd6c426961e6a4231a0",
+              "bytes": 8240759,
+              "name": "ps0-compiler-slice-evidence-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132100789446,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14071099560,
+              "digest": "sha256:c09a20d26d1d94ff49fb9a738552bc15e102027c9d7157cf5c589f132a83ac57",
+              "bytes": 867686736,
+              "name": "ps0-compiler-checkpoint-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14072087704,
+              "digest": "sha256:e311a22a12825458069c3922432c319ab4a342cec210209b17bcac439857a4f6",
+              "bytes": 8259716,
+              "name": "ps0-compiler-slice-evidence-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132131536999,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14073358340,
+              "digest": "sha256:92ac3f64484aaf8574a61c259628506bd03a646a57f51a1b3b0303070b7eaafa",
+              "bytes": 1088130578,
+              "name": "ps0-compiler-checkpoint-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073273481,
+              "digest": "sha256:817f5b870a5dc430eeec01a54da062d63d3ba8505d152af7fd6c97da6baece0e",
+              "bytes": 8268465,
+              "name": "ps0-compiler-slice-evidence-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132142893867,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14074366235,
+              "digest": "sha256:cc6890aefd1f994ca0bb5384e5db2f71f17ec034271ded6c2be5b63a6dead468",
+              "bytes": 1101751560,
+              "name": "ps0-compiler-checkpoint-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073678228,
+              "digest": "sha256:f8dcba4c61ebb1981c65ffc7219d1b9a2b2af22d1f138d58e57b40d5e1a8926d",
+              "bytes": 8268927,
+              "name": "ps0-compiler-slice-evidence-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ],
+        "fixedPoint": {
+          "status": "PASS",
+          "modules": 2569,
+          "changedC": [],
+          "changedPublicOlean": []
+        }
+      },
+      "independentAudit": {
+        "job": 132158734460,
+        "artifact": {
+          "id": 14074514400,
+          "digest": "sha256:68cda6675b46ddc536c40cf751dcd2ff4ccb4c5a49899c1e7bcb0dfec3e60a7c",
+          "bytes": 654,
+          "name": "ps0-canonical-independent-audit-43414525459"
+        },
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      },
+      "jobs": [
+        {
+          "id": 131848943017,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 131849064730,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 131935735880,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 131966340940,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 131982100410,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 131987533313,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 131999194719,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132100789446,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132131536999,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132142893867,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132147282879,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 132158734460,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ]
     },
     "stageOneBase": {
       "source": "a5160194aad78ff06acf55c42109ca1a5bb16f4d",
@@ -91433,6 +91939,319 @@
         "job": 131848943017,
         "status": "PASS"
       }
+    },
+    "versionedBootstrapQualified": {
+      "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+      "tree": "d788360aa9dc4519efbf402b12f8b42487b9ff96",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "d5ccec6831ef55f156c4ee99d695e02953c1d4d5",
+      "runnerPr": 263,
+      "run": 43414525459,
+      "job": 132158734460,
+      "phase": "independent-audit",
+      "status": "PASS",
+      "observedAt": "2026-11-13T20:48:33Z",
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "canonicalSourceCutoverComplete": true,
+      "release": {
+        "id": 444127839,
+        "url": "https://github.com/dwijayuda/pskernel/releases/tag/ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "tag": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "assets": [
+          {
+            "id": 743335210,
+            "name": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64.zip",
+            "bytes": 384532453,
+            "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd"
+          },
+          {
+            "id": 743335211,
+            "name": "SHA256SUMS",
+            "bytes": 117,
+            "digest": "sha256:c970015b96b415f53d2462a96439b0e9f46fb87fd7e98c79eaf6b7e21adc5753"
+          }
+        ],
+        "publication": {
+          "run": 43414260939,
+          "job": 131848065417,
+          "runner": "c500c564395917f6c659c733197e04c829e4286f",
+          "artifact": 14031680180,
+          "digest": "sha256:0110423260a1b120942e5d70c89bc8077dd5587f2293d2ad082a7421eb410483"
+        }
+      },
+      "previousCanonicalRun": 43317326789,
+      "sourceGate": {
+        "job": 131848943017,
+        "status": "PASS"
+      },
+      "stageOneLink": {
+        "job": 131987533313,
+        "artifact": {
+          "id": 14054014198,
+          "digest": "sha256:237a5b835062f3ab17d7ea39ae06785af058c7749daf86ab05a134906dae2b5e",
+          "bytes": 284946723,
+          "name": "ps0-selfhost-stage-one-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131849064730,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14045647072,
+              "digest": "sha256:a7702c7dd12aa274cc73589cece6965fe66f1f09dc9b34dbfbc579414ab216bb",
+              "bytes": 451625486,
+              "name": "ps0-compiler-checkpoint-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14045916866,
+              "digest": "sha256:b8dd581469ec55a68152449d85585734ee8d0906d5cdf17c4d867554496edd9b",
+              "bytes": 8240822,
+              "name": "ps0-compiler-slice-evidence-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131935735880,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14049467077,
+              "digest": "sha256:7980bafc1a0a4e5921bd703fb60b6d8827e20502c1a27426adacbb935709b14d",
+              "bytes": 867701911,
+              "name": "ps0-compiler-checkpoint-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14049526956,
+              "digest": "sha256:06ecdf24e7d84f7186279375b1c4971c7b4a115bb906e90653a29e1ab58ab4de",
+              "bytes": 8259799,
+              "name": "ps0-compiler-slice-evidence-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131966340940,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14053066175,
+              "digest": "sha256:08660f60f498c6c167f86f50bc27e4a7fb3c2a0e08811d17fa4af52cec21902c",
+              "bytes": 1088117263,
+              "name": "ps0-compiler-checkpoint-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14052806261,
+              "digest": "sha256:39eb5a47221174af23f6ba7e498f727dcb3ddc06114c89683051efe5681b16dc",
+              "bytes": 8268476,
+              "name": "ps0-compiler-slice-evidence-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131982100410,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14053132799,
+              "digest": "sha256:4ad5120e2feb14283f24c8ab2c75dea0036223b9eb9754bead9003b4e2375e56",
+              "bytes": 1101799646,
+              "name": "ps0-compiler-checkpoint-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14053607744,
+              "digest": "sha256:c7805c0b3df3d4a734a00bc83ea0a02aafe92c3eb92eb9e39ea1b05dc154fd67",
+              "bytes": 8268936,
+              "name": "ps0-compiler-slice-evidence-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ]
+      },
+      "stageTwoLink": {
+        "job": 132147282879,
+        "artifact": {
+          "id": 14074263951,
+          "digest": "sha256:3de0d4290ba7f79371211ae9c9ea71e2661ead75a49bcd424644196d8b90b50a",
+          "bytes": 284946744,
+          "name": "ps0-selfhost-stage-two-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131999194719,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14069140151,
+              "digest": "sha256:4e3d1ff5cb489fbff9150ff7f32d431670a918498276dd69c0d3e98e38b66c5d",
+              "bytes": 451626738,
+              "name": "ps0-compiler-checkpoint-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14068336416,
+              "digest": "sha256:97396d720b14f859f17056708b9c1d60c2356009ba4ebfd6c426961e6a4231a0",
+              "bytes": 8240759,
+              "name": "ps0-compiler-slice-evidence-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132100789446,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14071099560,
+              "digest": "sha256:c09a20d26d1d94ff49fb9a738552bc15e102027c9d7157cf5c589f132a83ac57",
+              "bytes": 867686736,
+              "name": "ps0-compiler-checkpoint-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14072087704,
+              "digest": "sha256:e311a22a12825458069c3922432c319ab4a342cec210209b17bcac439857a4f6",
+              "bytes": 8259716,
+              "name": "ps0-compiler-slice-evidence-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132131536999,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14073358340,
+              "digest": "sha256:92ac3f64484aaf8574a61c259628506bd03a646a57f51a1b3b0303070b7eaafa",
+              "bytes": 1088130578,
+              "name": "ps0-compiler-checkpoint-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073273481,
+              "digest": "sha256:817f5b870a5dc430eeec01a54da062d63d3ba8505d152af7fd6c97da6baece0e",
+              "bytes": 8268465,
+              "name": "ps0-compiler-slice-evidence-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132142893867,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14074366235,
+              "digest": "sha256:cc6890aefd1f994ca0bb5384e5db2f71f17ec034271ded6c2be5b63a6dead468",
+              "bytes": 1101751560,
+              "name": "ps0-compiler-checkpoint-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073678228,
+              "digest": "sha256:f8dcba4c61ebb1981c65ffc7219d1b9a2b2af22d1f138d58e57b40d5e1a8926d",
+              "bytes": 8268927,
+              "name": "ps0-compiler-slice-evidence-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ],
+        "fixedPoint": {
+          "status": "PASS",
+          "modules": 2569,
+          "changedC": [],
+          "changedPublicOlean": []
+        }
+      },
+      "independentAudit": {
+        "job": 132158734460,
+        "artifact": {
+          "id": 14074514400,
+          "digest": "sha256:68cda6675b46ddc536c40cf751dcd2ff4ccb4c5a49899c1e7bcb0dfec3e60a7c",
+          "bytes": 654,
+          "name": "ps0-canonical-independent-audit-43414525459"
+        },
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      },
+      "jobs": [
+        {
+          "id": 131848943017,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 131849064730,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 131935735880,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 131966340940,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 131982100410,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 131987533313,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 131999194719,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132100789446,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132131536999,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132142893867,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132147282879,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 132158734460,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ]
     }
   }
 }
