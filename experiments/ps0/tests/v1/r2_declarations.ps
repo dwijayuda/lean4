@@ -1,5 +1,6 @@
 module
 prelude
+public import Init
 public meta import Lean
 public section
 
@@ -50,4 +51,8 @@ run_cmd do
   unless Lean.isNoncomputable env `pick do throwError "pick should be noncomputable"
   logInfo "PS0_R2_DECLARATION_ORACLES: PASS"
 
-def main : IO Unit := IO.println s!"PS0_R2_DECLARATIONS:{count}:{add(2, 3)}:{tick()}:{f 2 3}:{same(3, 3)}:{choose(0, ⟨0, by decide⟩)}:{value}:{defaultCount}"
+const added: Nat := add(2, 3)
+const ticked: Nat := tick()
+const sameNat: Bool := same(3, 3)
+const chosen: Nat := choose(0, ⟨0, by decide⟩)
+def main : IO Unit := IO.println s!"PS0_R2_DECLARATIONS:{count}:{added}:{ticked}:{f 2 3}:{sameNat}:{chosen}:{value}:{defaultCount}"
