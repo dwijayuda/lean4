@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 68,
-    "featureFamiliesPending": 60,
+    "PENDING": 65,
+    "featureFamiliesPending": 57,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 3,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 174,
+    "PASS": 177,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 68,
+    "obligationsPending": 65,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -20726,7 +20726,9 @@
           "source": "cfba2f7436ccd805c27ae09d8a27f551fa1651fa",
           "runner": "38e39c3945df9ceb84d8828a475f9e707926fa87",
           "checkpointJob": 132507907215,
-          "status": "SUBMITTED"
+          "stageOneBaseJob": 132508121552,
+          "checkpointStatus": "PASS",
+          "status": "IN_PROGRESS"
         },
         "remainingNumberedProbe": {
           "run": 43614371826,
@@ -21498,6 +21500,34 @@
         },
         "supportingCases": {
           "V1-058": "db12f57157875596b83f429331e1f0a0956c63d2ca6e8d90c5e5ea3a88cd838e"
+        }
+      },
+      {
+        "summary": "Three additional data families passed on Linux. The fixtures checked an indexed inductive with generated eliminators, structure inheritance and named constructor and parent, and literal, successor and inaccessible constructor patterns.",
+        "source": "cfba2f7436ccd805c27ae09d8a27f551fa1651fa",
+        "runner": "d3b282ee5f80b69cca37bf3feb60c2a2ec600f6a",
+        "run": 43614935467,
+        "job": 132507820371,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-data-pattern.py",
+        "fixtureSha256": "617216e72aa3dc13cb785e692f3de0f8931f611085502ceaf989146698d4286b",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14122365192,
+          "name": "ps0-r2-data-pattern-evidence-43614935467",
+          "digest": "sha256:7afd8ecc98ed1d55011c9398fb9033b75e96a70c5fc78c0d88e9a46ff63bb157",
+          "bytes": 21854
+        },
+        "passed": [
+          "V1-024",
+          "V1-026",
+          "V1-040"
+        ],
+        "fixtureCases": {
+          "V1-024": "f6986802219eb1619fcbff5a19ba2cec03fce5acbe8d31ef129786fd62d62737",
+          "V1-026": "3ed4ea8e231f70ff601f3dd97495bc1ddb08ec4f48f148c56ea75dd9e184a46f",
+          "V1-040": "7da5d345c7f20db17638d464926b154e60250ee6ed3138d5791d2c814024b069"
         }
       }
     ]
@@ -91695,7 +91725,9 @@
         "source": "cfba2f7436ccd805c27ae09d8a27f551fa1651fa",
         "runner": "38e39c3945df9ceb84d8828a475f9e707926fa87",
         "checkpointJob": 132507907215,
-        "status": "SUBMITTED"
+        "stageOneBaseJob": 132508121552,
+        "checkpointStatus": "PASS",
+        "status": "IN_PROGRESS"
       },
       "remainingNumberedProbe": {
         "run": 43614371826,
@@ -92467,6 +92499,34 @@
       },
       "supportingCases": {
         "V1-058": "db12f57157875596b83f429331e1f0a0956c63d2ca6e8d90c5e5ea3a88cd838e"
+      }
+    },
+    {
+      "summary": "Three additional data families passed on Linux. The fixtures checked an indexed inductive with generated eliminators, structure inheritance and named constructor and parent, and literal, successor and inaccessible constructor patterns.",
+      "source": "cfba2f7436ccd805c27ae09d8a27f551fa1651fa",
+      "runner": "d3b282ee5f80b69cca37bf3feb60c2a2ec600f6a",
+      "run": 43614935467,
+      "job": 132507820371,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-data-pattern.py",
+      "fixtureSha256": "617216e72aa3dc13cb785e692f3de0f8931f611085502ceaf989146698d4286b",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14122365192,
+        "name": "ps0-r2-data-pattern-evidence-43614935467",
+        "digest": "sha256:7afd8ecc98ed1d55011c9398fb9033b75e96a70c5fc78c0d88e9a46ff63bb157",
+        "bytes": 21854
+      },
+      "passed": [
+        "V1-024",
+        "V1-026",
+        "V1-040"
+      ],
+      "fixtureCases": {
+        "V1-024": "f6986802219eb1619fcbff5a19ba2cec03fce5acbe8d31ef129786fd62d62737",
+        "V1-026": "3ed4ea8e231f70ff601f3dd97495bc1ddb08ec4f48f148c56ea75dd9e184a46f",
+        "V1-040": "7da5d345c7f20db17638d464926b154e60250ee6ed3138d5791d2c814024b069"
       }
     }
   ]
