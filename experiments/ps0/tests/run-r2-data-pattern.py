@@ -114,9 +114,9 @@ function eliminate(impossible: OnlyZero(1)): Nat := nomatch impossible
 ''', None, None),
     'V1-024': ('''inductive Code : Nat → Type where
   | zero : Code 0
-  | step (prev : Code n) : Code (n + 1)
-example : Code.rec (motive := fun _ _ => Nat) 0 (fun _ k => k + 1)
-    (.step(.step(.zero))) = 2 := rfl
+  | step (prev : Code n) : Code(n + 1)
+example : Code.rec(0, (fun _ k => k + 1), .step(.step(.zero)),
+    motive := fun _ _ => Nat) = 2 := rfl
 #check Code.casesOn
 #check Code.noConfusion
 ''', None, None),
@@ -138,7 +138,7 @@ example : A = A := rfl
 structure ColoredPoint extends point : Point where
   make ::
   color : Nat
-def p : ColoredPoint := ColoredPoint.make (Point.mk 2) 5
+def p : ColoredPoint := ColoredPoint.make(Point.mk(2), 5)
 example : p.point.x = 2 ∧ p.color = 5 := ⟨rfl, rfl⟩
 ''', None, None),
     'V1-027': ('''structure Config where
@@ -166,7 +166,7 @@ example : Color.red ≠ Color.blue := by { decide }
 ''', None, None),
     'V1-040': ('''inductive Marker : Nat → Type where
   | zero : Marker 0
-  | next (n : Nat) : Marker (n + 1)
+  | next (n : Nat) : Marker(n + 1)
 function inspect(n: Nat, m: Marker(n)): Nat := match n, m with
   | .(0), .zero => 0
   | .(k + 1), .next(k) => k + 1
