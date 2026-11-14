@@ -717,46 +717,121 @@
       "id": "V1-031",
       "feature": "PS comma calls, tuple/Unit distinction and argument ownership",
       "sourceBasis": "[feature](#calls-grouping-tuple-arguments-and-postfix-precedence), §2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: V1-031",
+      "qualifiedCommit": "839fef7752c50797ed9973284ef14949eecf12d9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618357355",
+      "evidence": {
+        "jobId": 132518282768,
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "artifact": {
+          "id": 14123745699,
+          "name": "ps0-r2-call-evidence-43618357355",
+          "digest": "sha256:91ce65a3aed5a104325fc379f40c74daa759e3abbcccd59097743e894bb1ab09",
+          "bytes": 32939
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "f7d6dbc170dbe84b58a862c5d807f289ec4026b4f01523b02e8eb8309d021f53",
+        "caseSha256": "3aba2f7ca52b3f3a820b55419fb652170e8dbc28c5cd1c08571c75c3dd43f6d4"
+      }
     },
     {
       "id": "V1-032",
       "feature": "Native unparenthesized application and explicit `@`",
       "sourceBasis": "L-TERM, [feature](#calls-grouping-tuple-arguments-and-postfix-precedence)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: V1-032",
+      "qualifiedCommit": "839fef7752c50797ed9973284ef14949eecf12d9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618357355",
+      "evidence": {
+        "jobId": 132518282768,
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "artifact": {
+          "id": 14123745699,
+          "name": "ps0-r2-call-evidence-43618357355",
+          "digest": "sha256:91ce65a3aed5a104325fc379f40c74daa759e3abbcccd59097743e894bb1ab09",
+          "bytes": 32939
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "f7d6dbc170dbe84b58a862c5d807f289ec4026b4f01523b02e8eb8309d021f53",
+        "caseSha256": "795897d25b8d76e8f648adaeec8e3e2f31bf85cf0791829727120d2988eb284a"
+      }
     },
     {
       "id": "V1-033",
       "feature": "Named arguments, placeholders, ellipsis and partial application",
       "sourceBasis": "L-TERM, [feature](#defaults-named-arguments-coefun-and-empty-invocation)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: V1-033",
+      "qualifiedCommit": "839fef7752c50797ed9973284ef14949eecf12d9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618357355",
+      "evidence": {
+        "jobId": 132518282768,
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "artifact": {
+          "id": 14123745699,
+          "name": "ps0-r2-call-evidence-43618357355",
+          "digest": "sha256:91ce65a3aed5a104325fc379f40c74daa759e3abbcccd59097743e894bb1ab09",
+          "bytes": 32939
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "f7d6dbc170dbe84b58a862c5d807f289ec4026b4f01523b02e8eb8309d021f53",
+        "caseSha256": "0d510d9f3349afbe3ee15927dd5c58be340328cf683e31e4d2151c29fc16de8e"
+      }
     },
     {
       "id": "V1-034",
       "feature": "Field/numeric projections and generalized receiver insertion",
       "sourceBasis": "L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: V1-034",
+      "qualifiedCommit": "839fef7752c50797ed9973284ef14949eecf12d9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618357355",
+      "evidence": {
+        "jobId": 132518282768,
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "artifact": {
+          "id": 14123745699,
+          "name": "ps0-r2-call-evidence-43618357355",
+          "digest": "sha256:91ce65a3aed5a104325fc379f40c74daa759e3abbcccd59097743e894bb1ab09",
+          "bytes": 32939
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "f7d6dbc170dbe84b58a862c5d807f289ec4026b4f01523b02e8eb8309d021f53",
+        "caseSha256": "ccad97e622ba4f701a88c2f371816ce48f45666e6916d3ef0c7324d35b3f67d0"
+      }
     },
     {
       "id": "V1-035",
       "feature": "Type ascription, expected-type control and anonymous constructors",
       "sourceBasis": "L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: V1-035",
+      "qualifiedCommit": "839fef7752c50797ed9973284ef14949eecf12d9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618357355",
+      "evidence": {
+        "jobId": 132518282768,
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "artifact": {
+          "id": 14123745699,
+          "name": "ps0-r2-call-evidence-43618357355",
+          "digest": "sha256:91ce65a3aed5a104325fc379f40c74daa759e3abbcccd59097743e894bb1ab09",
+          "bytes": 32939
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "f7d6dbc170dbe84b58a862c5d807f289ec4026b4f01523b02e8eb8309d021f53",
+        "caseSha256": "8d842a3cf71322704cb30f998ef356c3b94a81bf516b407f0afd5d0b3f414049"
+      }
     },
     {
       "id": "V1-036",
@@ -1458,10 +1533,25 @@
       "id": "V1-075",
       "feature": "Macro declarations/rules and dispatch",
       "sourceBasis": "L-SYNTAX",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-075",
+      "qualifiedCommit": "9a63f06807f052b6e4192084c79d2afa10b32445",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618357302",
+      "evidence": {
+        "jobId": 132518282690,
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "artifact": {
+          "id": 14122981344,
+          "name": "ps0-r2-native-extensions-evidence-43618357302",
+          "digest": "sha256:564e24051de764dfa4505ead7cedc21deae6381dfe79c30c018835230f452841",
+          "bytes": 7974214
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "25a0f1e98a25700bb4d6c832868579360a162535d67a44c6a1f84845abec18e0",
+        "caseSha256": "7afb05791c13299e9c6123ee13d89b6b3dafa7d192c77fd8b7eefde7ccb2253b"
+      }
     },
     {
       "id": "V1-076",
@@ -1502,10 +1592,25 @@
       "id": "V1-078",
       "feature": "Elab/elab_rules and term/command/tactic elaborators",
       "sourceBasis": "L-SYNTAX, L-LEAN",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-078",
+      "qualifiedCommit": "9a63f06807f052b6e4192084c79d2afa10b32445",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618357302",
+      "evidence": {
+        "jobId": 132518282690,
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "artifact": {
+          "id": 14122981344,
+          "name": "ps0-r2-native-extensions-evidence-43618357302",
+          "digest": "sha256:564e24051de764dfa4505ead7cedc21deae6381dfe79c30c018835230f452841",
+          "bytes": 7974214
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "25a0f1e98a25700bb4d6c832868579360a162535d67a44c6a1f84845abec18e0",
+        "caseSha256": "07bb0bf4f26894398dc90a70fcae0a15bed8caeabc1a507fa342220a0c0e55aa"
+      }
     },
     {
       "id": "V1-079",
@@ -1592,10 +1697,25 @@
       "id": "V1-088",
       "feature": "Primitive/data types, collections and indexed access",
       "sourceBasis": "L-INIT, L-STD, [feature](#universes-dependent-functions-equality-quotients-and-core-data)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-088",
+      "qualifiedCommit": "9a63f06807f052b6e4192084c79d2afa10b32445",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618357302",
+      "evidence": {
+        "jobId": 132518282690,
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "artifact": {
+          "id": 14122981344,
+          "name": "ps0-r2-native-extensions-evidence-43618357302",
+          "digest": "sha256:564e24051de764dfa4505ead7cedc21deae6381dfe79c30c018835230f452841",
+          "bytes": 7974214
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "25a0f1e98a25700bb4d6c832868579360a162535d67a44c6a1f84845abec18e0",
+        "caseSha256": "8f0ae4b1c5dbca5dd6193434391a95de9c630c400c8fe528a3b5c77819978144"
+      }
     },
     {
       "id": "V1-089",
@@ -8697,12 +8817,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 55,
-    "featureFamiliesPending": 48,
+    "PENDING": 47,
+    "featureFamiliesPending": 40,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 2,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 187,
+    "PASS": 195,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19394,7 +19514,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 55,
+    "obligationsPending": 47,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -26983,6 +27103,66 @@
           "V1-073": "1fec0ba309f8fdd23cd296bdda1c8e8a1d9382738252d40d916f2589ff43aeb2",
           "V1-076": "6072ee257678784954fb7fe975e75d716e14f971278b863cb74efc6ae13f56ad",
           "V1-094": "865a3151fef27ef5ef94bd1a3d8ed084b6ce27054d2846f712b7be7cc7af5fde"
+        }
+      },
+      {
+        "summary": "The native Lake linked driver passed each application family, including the PS call, native application, explicit @, named/ellipsis arguments, receiver insertion, and expected-type cases.",
+        "source": "839fef7752c50797ed9973284ef14949eecf12d9",
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "run": 43618357355,
+        "job": 132518282768,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-calls.py",
+        "fixtureSha256": "f7d6dbc170dbe84b58a862c5d807f289ec4026b4f01523b02e8eb8309d021f53",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14123745699,
+          "name": "ps0-r2-call-evidence-43618357355",
+          "digest": "sha256:91ce65a3aed5a104325fc379f40c74daa759e3abbcccd59097743e894bb1ab09",
+          "bytes": 32939
+        },
+        "passed": [
+          "V1-031",
+          "V1-032",
+          "V1-033",
+          "V1-034",
+          "V1-035"
+        ],
+        "fixtureCases": {
+          "V1-031": "3aba2f7ca52b3f3a820b55419fb652170e8dbc28c5cd1c08571c75c3dd43f6d4",
+          "V1-032": "795897d25b8d76e8f648adaeec8e3e2f31bf85cf0791829727120d2988eb284a",
+          "V1-033": "0d510d9f3349afbe3ee15927dd5c58be340328cf683e31e4d2151c29fc16de8e",
+          "V1-034": "ccad97e622ba4f701a88c2f371816ce48f45666e6916d3ef0c7324d35b3f67d0",
+          "V1-035": "8d842a3cf71322704cb30f998ef356c3b94a81bf516b407f0afd5d0b3f414049"
+        }
+      },
+      {
+        "summary": "Linux passed macro dispatch, term/command/tactic elaborator registration, and primitive collection and indexed access fixtures.",
+        "source": "9a63f06807f052b6e4192084c79d2afa10b32445",
+        "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+        "run": 43618357302,
+        "job": 132518282690,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "25a0f1e98a25700bb4d6c832868579360a162535d67a44c6a1f84845abec18e0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14122981344,
+          "name": "ps0-r2-native-extensions-evidence-43618357302",
+          "digest": "sha256:564e24051de764dfa4505ead7cedc21deae6381dfe79c30c018835230f452841",
+          "bytes": 7974214
+        },
+        "passed": [
+          "V1-075",
+          "V1-078",
+          "V1-088"
+        ],
+        "fixtureCases": {
+          "V1-075": "7afb05791c13299e9c6123ee13d89b6b3dafa7d192c77fd8b7eefde7ccb2253b",
+          "V1-078": "07bb0bf4f26894398dc90a70fcae0a15bed8caeabc1a507fa342220a0c0e55aa",
+          "V1-088": "8f0ae4b1c5dbca5dd6193434391a95de9c630c400c8fe528a3b5c77819978144"
         }
       }
     ]
@@ -98074,6 +98254,66 @@
         "V1-073": "1fec0ba309f8fdd23cd296bdda1c8e8a1d9382738252d40d916f2589ff43aeb2",
         "V1-076": "6072ee257678784954fb7fe975e75d716e14f971278b863cb74efc6ae13f56ad",
         "V1-094": "865a3151fef27ef5ef94bd1a3d8ed084b6ce27054d2846f712b7be7cc7af5fde"
+      }
+    },
+    {
+      "summary": "The native Lake linked driver passed each application family, including the PS call, native application, explicit @, named/ellipsis arguments, receiver insertion, and expected-type cases.",
+      "source": "839fef7752c50797ed9973284ef14949eecf12d9",
+      "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+      "run": 43618357355,
+      "job": 132518282768,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-calls.py",
+      "fixtureSha256": "f7d6dbc170dbe84b58a862c5d807f289ec4026b4f01523b02e8eb8309d021f53",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14123745699,
+        "name": "ps0-r2-call-evidence-43618357355",
+        "digest": "sha256:91ce65a3aed5a104325fc379f40c74daa759e3abbcccd59097743e894bb1ab09",
+        "bytes": 32939
+      },
+      "passed": [
+        "V1-031",
+        "V1-032",
+        "V1-033",
+        "V1-034",
+        "V1-035"
+      ],
+      "fixtureCases": {
+        "V1-031": "3aba2f7ca52b3f3a820b55419fb652170e8dbc28c5cd1c08571c75c3dd43f6d4",
+        "V1-032": "795897d25b8d76e8f648adaeec8e3e2f31bf85cf0791829727120d2988eb284a",
+        "V1-033": "0d510d9f3349afbe3ee15927dd5c58be340328cf683e31e4d2151c29fc16de8e",
+        "V1-034": "ccad97e622ba4f701a88c2f371816ce48f45666e6916d3ef0c7324d35b3f67d0",
+        "V1-035": "8d842a3cf71322704cb30f998ef356c3b94a81bf516b407f0afd5d0b3f414049"
+      }
+    },
+    {
+      "summary": "Linux passed macro dispatch, term/command/tactic elaborator registration, and primitive collection and indexed access fixtures.",
+      "source": "9a63f06807f052b6e4192084c79d2afa10b32445",
+      "runner": "6afd35134a43c0b57d020e1d683bb17198dbc0dc",
+      "run": 43618357302,
+      "job": 132518282690,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "25a0f1e98a25700bb4d6c832868579360a162535d67a44c6a1f84845abec18e0",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14122981344,
+        "name": "ps0-r2-native-extensions-evidence-43618357302",
+        "digest": "sha256:564e24051de764dfa4505ead7cedc21deae6381dfe79c30c018835230f452841",
+        "bytes": 7974214
+      },
+      "passed": [
+        "V1-075",
+        "V1-078",
+        "V1-088"
+      ],
+      "fixtureCases": {
+        "V1-075": "7afb05791c13299e9c6123ee13d89b6b3dafa7d192c77fd8b7eefde7ccb2253b",
+        "V1-078": "07bb0bf4f26894398dc90a70fcae0a15bed8caeabc1a507fa342220a0c0e55aa",
+        "V1-088": "8f0ae4b1c5dbca5dd6193434391a95de9c630c400c8fe528a3b5c77819978144"
       }
     }
   ]

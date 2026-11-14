@@ -65,8 +65,8 @@ example : True := by { finishR2 }
     'V1-079': ('''public meta import Lean
 open Lean in
 run_cmd do
-  let universe := Level.succ Level.zero
-  let expr := Expr.sort universe
+  let level := Level.succ Level.zero
+  let expr := Expr.sort level
   unless expr == mkSort levelOne do throwError "universe construction"
   let syntaxTree ← Elab.liftMacroM `(term| (42 : Nat))
   unless syntaxTree.raw.getKind == ``Parser.Term.typeAscription do throwError "syntax kind"
@@ -75,7 +75,7 @@ run_cmd do
     'V1-085': ('''abbrev AliasR2 := Nat
 def OrdinaryR2 := Nat
 opaque OpaqueR2 : Type := Nat
-open Lean Meta in
+open Lean Elab Command Meta in
 run_cmd liftTermElabM do
   unless (← withReducible (isDefEq (mkConst ``AliasR2) (mkConst ``Nat))) do
     throwError "abbreviation is not reducible"
@@ -86,7 +86,8 @@ run_cmd liftTermElabM do
   if (← isDefEq (mkConst ``OpaqueR2) (mkConst ``Nat)) then
     throwError "opaque definition unfolded"
 ''', None),
-    'V1-086': ('''public meta import Lean
+    'V1-086': ('''public import Lean
+public meta import Lean
 open Lean in
 builtin_initialize registerTraceClass `R2.options
 set_option pp.universes true in
@@ -112,14 +113,14 @@ example : ('a').toNat = 97 := rfl
   modify Nat.succ
   return before
 example : stateStep.run(10) = (10, 11) := rfl
-def readStep : ReaderT Nat (Except String) Nat := do
+def readStep : ReaderT(Nat, Except(String), Nat) := do
   let n ← read
   if n == 0 then throw "empty" else return n + 1
 example : readStep.run(2) = .ok(3) := rfl
 example : readStep.run(0) = .error("empty") := rfl
 #eval show IO Unit from do
   let path ← IO.currentDir
-  if path.toString.isEmpty then throw(IO.userError("missing cwd"))
+  if path.toString.isEmpty then throw (IO.userError "missing cwd")
 ''', None),
     'V1-094': ('''def diagnosticR2 : Nat := 19
 #check diagnosticR2
