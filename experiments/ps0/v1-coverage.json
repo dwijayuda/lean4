@@ -2326,10 +2326,26 @@
       "sourceOrSetup": "Ordered `given` / `requires` / `ensures r => ...`",
       "requiredInterpretation": "Requires pinned WP environment and actual spec proof.",
       "section": "§7",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: PS0-P-VC-01",
+      "qualifiedCommit": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844032",
+      "evidence": {
+        "jobId": 132420013348,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14109912789,
+          "name": "ps0-r2-contracts-evidence-43585844032",
+          "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+          "bytes": 9437,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+        "caseSha256": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56"
+      }
     },
     {
       "id": "PS0-P-VC-02",
@@ -2348,10 +2364,26 @@
       "sourceOrSetup": "`erased x ← action`",
       "requiredInterpretation": "Action still executes; result is verification-only.",
       "section": "§7",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: PS0-P-VC-03",
+      "qualifiedCommit": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844032",
+      "evidence": {
+        "jobId": 132420013348,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14109912789,
+          "name": "ps0-r2-contracts-evidence-43585844032",
+          "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+          "bytes": 9437,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+        "caseSha256": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6"
+      }
     },
     {
       "id": "PS0-P-EXT-01",
@@ -3315,10 +3347,26 @@
       "sourceOrClaim": "Reordered or repeated intrinsic contract clauses",
       "expectedCategory": "PARSE",
       "reason": "Fixed `given? requires? ensures?` ordering.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: PS0-N-VC-01",
+      "qualifiedCommit": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844032",
+      "evidence": {
+        "jobId": 132420013348,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14109912789,
+          "name": "ps0-r2-contracts-evidence-43585844032",
+          "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+          "bytes": 9437,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+        "caseSha256": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04"
+      }
     },
     {
       "id": "PS0-N-VC-02",
@@ -3326,10 +3374,26 @@
       "sourceOrClaim": "A bare postcondition without its required result binder",
       "expectedCategory": "PARSE",
       "reason": "Ensures uses the basic-function production.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: PS0-N-VC-02",
+      "qualifiedCommit": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844032",
+      "evidence": {
+        "jobId": 132420013348,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14109912789,
+          "name": "ps0-r2-contracts-evidence-43585844032",
+          "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+          "bytes": 9437,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+        "caseSha256": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94"
+      }
     },
     {
       "id": "PS0-N-VC-03",
@@ -3337,10 +3401,26 @@
       "sourceOrClaim": "`given target: Nat` as an intended typed logical binder",
       "expectedCategory": "PARSE",
       "reason": "Use `given (target: Nat)`.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: PS0-N-VC-03",
+      "qualifiedCommit": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844032",
+      "evidence": {
+        "jobId": 132420013348,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14109912789,
+          "name": "ps0-r2-contracts-evidence-43585844032",
+          "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+          "bytes": 9437,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+        "caseSha256": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919"
+      }
     },
     {
       "id": "PS0-N-VC-04",
@@ -3359,10 +3439,26 @@
       "sourceOrClaim": "A required unproved spec/loop/erasure obligation",
       "expectedCategory": "ELAB/VC-PROOF or ASSURANCE",
       "reason": "Cannot qualify the stronger claim.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: PS0-N-VC-05",
+      "qualifiedCommit": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844032",
+      "evidence": {
+        "jobId": 132420013348,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14109912789,
+          "name": "ps0-r2-contracts-evidence-43585844032",
+          "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+          "bytes": 9437,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+        "caseSha256": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+      }
     },
     {
       "id": "PS0-N-ASSURE-01",
@@ -3479,42 +3575,122 @@
     {
       "id": "R2-01",
       "title": "Plain semicolon leaves the second goal",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-01",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "48e1a1ac14bbff7755c9da4f85633e4b1b70d5404dced1c8f3e42d7c9dbfae6f"
+      }
     },
     {
       "id": "R2-02",
       "title": "Two sequential tactics close two goals",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-02",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "b7c44a485704c934a11d9912e66e1d58eef9ec288b38942067b5413282bfc540"
+      }
     },
     {
       "id": "R2-03",
       "title": "Distributing combinator closes both goals",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-03",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "dec3118a39de6d99d7243798def4adb12e113217387f7c66ece31cc6eba971a2"
+      }
     },
     {
       "id": "R2-04",
       "title": "Empty and nonempty constructor adapters",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-04",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "c25e52f742d79ff4e96771d31322807401d73c1c83e3a1cac9d3b2d532a8136d"
+      }
     },
     {
       "id": "R2-05",
       "title": "A Unit field is still a constructor field",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-05",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "bd61646f369b6162b77c65893b9a868953cfaddd2d6c9582913eafd4115fe0ee"
+      }
     },
     {
       "id": "R2-06",
@@ -3527,42 +3703,122 @@
     {
       "id": "R2-07",
       "title": "Defaulted fields do not qualify an empty pattern adapter",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-07",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "441fbbcb4e9cfd7a140a258b8cf0206f82a7579e3b31ac4315e34e451b617f7a"
+      }
     },
     {
       "id": "R2-08",
       "title": "Braced data tails and constructor names",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-08",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "42d833139715e2011f705af39fb72922421f9511d9a8a9f8b8b68b41503be390"
+      }
     },
     {
       "id": "R2-09",
       "title": "Native operand ownership of a custom extension",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-09",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "65cc6b1747da5118ee13734d2421afa4228b61b9af4aa7dbe44946d39d62b32d"
+      }
     },
     {
       "id": "R2-10",
       "title": "Explicit host operand ownership of a custom extension",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-10",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "bd54b90014c3baa7baa103b88a486e013c8b3a43b5c6669f141e598b49fffc44"
+      }
     },
     {
       "id": "R2-11",
       "title": "A host operand cannot fall back to native tuple syntax",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-11",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "9353b747198e05450cc2c550f420bec0db37741c0bc4a556dbb5b1553417dded"
+      }
     },
     {
       "id": "R2-12",
@@ -3575,10 +3831,26 @@
     {
       "id": "R2-13",
       "title": "Quotation ownership is visible to syntax inspection",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-13",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "085095a00ca479fa6135c678a33698305eb994ef561cb223388fe45e5b7b7ade"
+      }
     },
     {
       "id": "R2-14",
@@ -3591,18 +3863,50 @@
     {
       "id": "R2-15",
       "title": "Record punning and body wrapping differ before coercion",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-15",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "0f6391605693769fc3acd33dabab752372773b099ea0448a4ba9d76073732c48"
+      }
     },
     {
       "id": "R2-16",
       "title": "Malformed record cannot become a successful body wrapper",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-16",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "078456c4f08a9ed92d47f103fffc4c69503a622c16a731263ffa285021e927c5"
+      }
     },
     {
       "id": "R2-17",
@@ -3623,106 +3927,314 @@
     {
       "id": "R2-19",
       "title": "Native and comma binders compose in order",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-19",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "88fa3f4585cf2da61b75a3a561ff395510b7c2a5f97912a917d10a1ad4df9733"
+      }
     },
     {
       "id": "R2-20",
       "title": "Function alias keeps its existing telescope restriction",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-20",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "e744f33d9b43a854bf32d740f8efd87ae814c89c1f52d07bcfebe63aed63b508"
+      }
     },
     {
       "id": "R2-21",
       "title": "Default proof term versus automatic parameter syntax",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-21",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "e372ede74524ab7c875bee819b5da836ef225dd8843438f02957d022f2c88749"
+      }
     },
     {
       "id": "R2-22",
       "title": "Local record-valued helper has explicit lowering",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-22",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "ddbe774fef4d3facbe941f50fed5bff89787ca65f4e9994c21e318ea5a2b36c2"
+      }
     },
     {
       "id": "R2-23",
       "title": "Nested local recursion remains expressible",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-23",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "bebed0b544fc393a1f027ff42cd612cadafd8ae2e1ceb3dcfc3ce8eb6a435cee"
+      }
     },
     {
       "id": "R2-24",
       "title": "Duplicate named argument uses the allowed phase set",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-24",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "15e4562fd9a8f2da3991eb12d1cc8278f69759e98d2c5d3ef1802d61ea52ac49"
+      }
     },
     {
       "id": "R2-25",
       "title": "Function-valued result preserves strict whole-Pi completion",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-25",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "3f2d95c12d8bb7cc6f51a64020d6154741c492e2fa498eacc9bbcb71acac9760"
+      }
     },
     {
       "id": "R2-26",
       "title": "Two Unit binders are not an empty call",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-26",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "77533618e0e1f8abed2385d24220de66aa5dfe09949af4a5fd3e823388350c09"
+      }
     },
     {
       "id": "R2-27",
       "title": "Named contract and proof-generation positive candidate",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-27",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "f31f8fdf331db49df67d95b42e67bb7a5290d0829a04f2cef27d005be8ddddc2"
+      }
     },
     {
       "id": "R2-28",
       "title": "A false written contract cannot be ordinary completed output",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-28",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "a946dc311f976fff5de8eb8b5e2cb5f28313e64c5b53654ce9833fb3bd76d8ad"
+      }
     },
     {
       "id": "R2-29",
       "title": "Indexing can produce a callable postfix head",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-29",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "3062792a2c6a315cc9ae86a9a53e67524cbbcde6a42e4535bc7bd6109936403b"
+      }
     },
     {
       "id": "R2-30",
       "title": "Explicit universe suffix can precede a PS call",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-30",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "b38d6d1565714e9052d7ed1b8c4e27e03fa88fd6bc0f77b368420c2cb875a848"
+      }
     },
     {
       "id": "R2-31",
       "title": "Real source gaps are not repaired by normalization",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-boundary.py :: R2-31",
+      "qualifiedCommit": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43585844014",
+      "evidence": {
+        "jobId": 132420013107,
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "01fc21364dc568588e812db7a0864ab46ce996762db2e39cc3a44c94d7d2a065"
+      }
     }
   ],
   "grammarFidelityContinuation": {
@@ -7054,12 +7566,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 160,
+    "PENDING": 128,
     "featureFamiliesPending": 100,
-    "boundaryWitnessesPending": 31,
-    "acceptanceCasesPending": 29,
+    "boundaryWitnessesPending": 5,
+    "acceptanceCasesPending": 23,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 82,
+    "PASS": 114,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -17751,7 +18263,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 160,
+    "obligationsPending": 128,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -24443,6 +24955,136 @@
           "archiveDigestVerified": true
         },
         "summary": "The proof fixtures verified the assumption closure of a direct proof, a registered custom tactic, and native_decide. The binder and lexer cases matched their intended rejection diagnostics."
+      },
+      {
+        "run": 43585844014,
+        "job": 132420013107,
+        "conclusion": "failure",
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "source": "1ca697c673144cf00786a3af6ac9539587823a19",
+        "fixture": "tests/run-r2-boundary.py",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "passed": [
+          "R2-01",
+          "R2-02",
+          "R2-03",
+          "R2-04",
+          "R2-05",
+          "R2-07",
+          "R2-08",
+          "R2-09",
+          "R2-10",
+          "R2-11",
+          "R2-13",
+          "R2-15",
+          "R2-16",
+          "R2-19",
+          "R2-20",
+          "R2-21",
+          "R2-22",
+          "R2-23",
+          "R2-24",
+          "R2-25",
+          "R2-26",
+          "R2-27",
+          "R2-28",
+          "R2-29",
+          "R2-30",
+          "R2-31"
+        ],
+        "failures": [
+          "R2-06",
+          "R2-12",
+          "R2-14",
+          "R2-17",
+          "R2-18"
+        ],
+        "fixtureCases": {
+          "R2-01": "48e1a1ac14bbff7755c9da4f85633e4b1b70d5404dced1c8f3e42d7c9dbfae6f",
+          "R2-02": "b7c44a485704c934a11d9912e66e1d58eef9ec288b38942067b5413282bfc540",
+          "R2-03": "dec3118a39de6d99d7243798def4adb12e113217387f7c66ece31cc6eba971a2",
+          "R2-04": "c25e52f742d79ff4e96771d31322807401d73c1c83e3a1cac9d3b2d532a8136d",
+          "R2-05": "bd61646f369b6162b77c65893b9a868953cfaddd2d6c9582913eafd4115fe0ee",
+          "R2-06": "ab994d95671eb6c0070bc36013d268ec5021b9adc7c7efe7551a5f687a31ee1e",
+          "R2-07": "441fbbcb4e9cfd7a140a258b8cf0206f82a7579e3b31ac4315e34e451b617f7a",
+          "R2-08": "42d833139715e2011f705af39fb72922421f9511d9a8a9f8b8b68b41503be390",
+          "R2-09": "65cc6b1747da5118ee13734d2421afa4228b61b9af4aa7dbe44946d39d62b32d",
+          "R2-10": "bd54b90014c3baa7baa103b88a486e013c8b3a43b5c6669f141e598b49fffc44",
+          "R2-11": "9353b747198e05450cc2c550f420bec0db37741c0bc4a556dbb5b1553417dded",
+          "R2-12": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4",
+          "R2-13": "085095a00ca479fa6135c678a33698305eb994ef561cb223388fe45e5b7b7ade",
+          "R2-14": "40d6437fbc57303fad7146bee67f1799ca1a1de811e95f07dcb0efb4055874e4",
+          "R2-15": "0f6391605693769fc3acd33dabab752372773b099ea0448a4ba9d76073732c48",
+          "R2-16": "078456c4f08a9ed92d47f103fffc4c69503a622c16a731263ffa285021e927c5",
+          "R2-17": "646bb601e021a38b2aca72aa41cd4829d8fa044666f8bd6cece80b406dfd9feb",
+          "R2-18": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479",
+          "R2-19": "88fa3f4585cf2da61b75a3a561ff395510b7c2a5f97912a917d10a1ad4df9733",
+          "R2-20": "e744f33d9b43a854bf32d740f8efd87ae814c89c1f52d07bcfebe63aed63b508",
+          "R2-21": "e372ede74524ab7c875bee819b5da836ef225dd8843438f02957d022f2c88749",
+          "R2-22": "ddbe774fef4d3facbe941f50fed5bff89787ca65f4e9994c21e318ea5a2b36c2",
+          "R2-23": "bebed0b544fc393a1f027ff42cd612cadafd8ae2e1ceb3dcfc3ce8eb6a435cee",
+          "R2-24": "15e4562fd9a8f2da3991eb12d1cc8278f69759e98d2c5d3ef1802d61ea52ac49",
+          "R2-25": "3f2d95c12d8bb7cc6f51a64020d6154741c492e2fa498eacc9bbcb71acac9760",
+          "R2-26": "77533618e0e1f8abed2385d24220de66aa5dfe09949af4a5fd3e823388350c09",
+          "R2-27": "f31f8fdf331db49df67d95b42e67bb7a5290d0829a04f2cef27d005be8ddddc2",
+          "R2-28": "a946dc311f976fff5de8eb8b5e2cb5f28313e64c5b53654ce9833fb3bd76d8ad",
+          "R2-29": "3062792a2c6a315cc9ae86a9a53e67524cbbcde6a42e4535bc7bd6109936403b",
+          "R2-30": "b38d6d1565714e9052d7ed1b8c4e27e03fa88fd6bc0f77b368420c2cb875a848",
+          "R2-31": "01fc21364dc568588e812db7a0864ab46ce996762db2e39cc3a44c94d7d2a065"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "summary": "The numbered reference suite produced 26 passing witnesses. Five remain pending for defaults in constructor patterns, an explicit syntax bridge, competing parser rejection, and two marker-free braced headers."
+      },
+      {
+        "run": 43585844032,
+        "job": 132420013348,
+        "conclusion": "failure",
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "source": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+        "fixture": "tests/run-r2-contracts.py",
+        "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "passed": [
+          "PS0-P-VC-01",
+          "PS0-P-VC-03",
+          "PS0-N-VC-01",
+          "PS0-N-VC-02",
+          "PS0-N-VC-03",
+          "PS0-N-VC-05"
+        ],
+        "failures": [
+          "PS0-P-VC-02",
+          "PS0-N-VC-04"
+        ],
+        "fixtureCases": {
+          "PS0-P-VC-01": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56",
+          "PS0-P-VC-02": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f",
+          "PS0-P-VC-03": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6",
+          "PS0-N-VC-01": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04",
+          "PS0-N-VC-02": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94",
+          "PS0-N-VC-03": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919",
+          "PS0-N-VC-04": "dcd96ce6b8880d78afbc102452fb0efa1dce916fa30753b8cc16b4a99398ff83",
+          "PS0-N-VC-05": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14109912789,
+          "name": "ps0-r2-contracts-evidence-43585844032",
+          "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+          "bytes": 9437,
+          "archiveDigestVerified": true
+        },
+        "summary": "Six contract and erasure cases passed, including a checked spec theorem, execution of the erased-result action, and native contract rejections. The braced spec tail and missing-WP witnesses remain pending."
       }
     ]
   },
@@ -94636,6 +95278,136 @@
         "archiveDigestVerified": true
       },
       "summary": "The proof fixtures verified the assumption closure of a direct proof, a registered custom tactic, and native_decide. The binder and lexer cases matched their intended rejection diagnostics."
+    },
+    {
+      "run": 43585844014,
+      "job": 132420013107,
+      "conclusion": "failure",
+      "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+      "source": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "fixture": "tests/run-r2-boundary.py",
+      "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+      "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+      "passed": [
+        "R2-01",
+        "R2-02",
+        "R2-03",
+        "R2-04",
+        "R2-05",
+        "R2-07",
+        "R2-08",
+        "R2-09",
+        "R2-10",
+        "R2-11",
+        "R2-13",
+        "R2-15",
+        "R2-16",
+        "R2-19",
+        "R2-20",
+        "R2-21",
+        "R2-22",
+        "R2-23",
+        "R2-24",
+        "R2-25",
+        "R2-26",
+        "R2-27",
+        "R2-28",
+        "R2-29",
+        "R2-30",
+        "R2-31"
+      ],
+      "failures": [
+        "R2-06",
+        "R2-12",
+        "R2-14",
+        "R2-17",
+        "R2-18"
+      ],
+      "fixtureCases": {
+        "R2-01": "48e1a1ac14bbff7755c9da4f85633e4b1b70d5404dced1c8f3e42d7c9dbfae6f",
+        "R2-02": "b7c44a485704c934a11d9912e66e1d58eef9ec288b38942067b5413282bfc540",
+        "R2-03": "dec3118a39de6d99d7243798def4adb12e113217387f7c66ece31cc6eba971a2",
+        "R2-04": "c25e52f742d79ff4e96771d31322807401d73c1c83e3a1cac9d3b2d532a8136d",
+        "R2-05": "bd61646f369b6162b77c65893b9a868953cfaddd2d6c9582913eafd4115fe0ee",
+        "R2-06": "ab994d95671eb6c0070bc36013d268ec5021b9adc7c7efe7551a5f687a31ee1e",
+        "R2-07": "441fbbcb4e9cfd7a140a258b8cf0206f82a7579e3b31ac4315e34e451b617f7a",
+        "R2-08": "42d833139715e2011f705af39fb72922421f9511d9a8a9f8b8b68b41503be390",
+        "R2-09": "65cc6b1747da5118ee13734d2421afa4228b61b9af4aa7dbe44946d39d62b32d",
+        "R2-10": "bd54b90014c3baa7baa103b88a486e013c8b3a43b5c6669f141e598b49fffc44",
+        "R2-11": "9353b747198e05450cc2c550f420bec0db37741c0bc4a556dbb5b1553417dded",
+        "R2-12": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4",
+        "R2-13": "085095a00ca479fa6135c678a33698305eb994ef561cb223388fe45e5b7b7ade",
+        "R2-14": "40d6437fbc57303fad7146bee67f1799ca1a1de811e95f07dcb0efb4055874e4",
+        "R2-15": "0f6391605693769fc3acd33dabab752372773b099ea0448a4ba9d76073732c48",
+        "R2-16": "078456c4f08a9ed92d47f103fffc4c69503a622c16a731263ffa285021e927c5",
+        "R2-17": "646bb601e021a38b2aca72aa41cd4829d8fa044666f8bd6cece80b406dfd9feb",
+        "R2-18": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479",
+        "R2-19": "88fa3f4585cf2da61b75a3a561ff395510b7c2a5f97912a917d10a1ad4df9733",
+        "R2-20": "e744f33d9b43a854bf32d740f8efd87ae814c89c1f52d07bcfebe63aed63b508",
+        "R2-21": "e372ede74524ab7c875bee819b5da836ef225dd8843438f02957d022f2c88749",
+        "R2-22": "ddbe774fef4d3facbe941f50fed5bff89787ca65f4e9994c21e318ea5a2b36c2",
+        "R2-23": "bebed0b544fc393a1f027ff42cd612cadafd8ae2e1ceb3dcfc3ce8eb6a435cee",
+        "R2-24": "15e4562fd9a8f2da3991eb12d1cc8278f69759e98d2c5d3ef1802d61ea52ac49",
+        "R2-25": "3f2d95c12d8bb7cc6f51a64020d6154741c492e2fa498eacc9bbcb71acac9760",
+        "R2-26": "77533618e0e1f8abed2385d24220de66aa5dfe09949af4a5fd3e823388350c09",
+        "R2-27": "f31f8fdf331db49df67d95b42e67bb7a5290d0829a04f2cef27d005be8ddddc2",
+        "R2-28": "a946dc311f976fff5de8eb8b5e2cb5f28313e64c5b53654ce9833fb3bd76d8ad",
+        "R2-29": "3062792a2c6a315cc9ae86a9a53e67524cbbcde6a42e4535bc7bd6109936403b",
+        "R2-30": "b38d6d1565714e9052d7ed1b8c4e27e03fa88fd6bc0f77b368420c2cb875a848",
+        "R2-31": "01fc21364dc568588e812db7a0864ab46ce996762db2e39cc3a44c94d7d2a065"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14110138542,
+        "name": "ps0-r2-boundary-evidence-43585844014",
+        "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+        "bytes": 23409,
+        "archiveDigestVerified": true
+      },
+      "summary": "The numbered reference suite produced 26 passing witnesses. Five remain pending for defaults in constructor patterns, an explicit syntax bridge, competing parser rejection, and two marker-free braced headers."
+    },
+    {
+      "run": 43585844032,
+      "job": 132420013348,
+      "conclusion": "failure",
+      "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+      "source": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+      "fixture": "tests/run-r2-contracts.py",
+      "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+      "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+      "passed": [
+        "PS0-P-VC-01",
+        "PS0-P-VC-03",
+        "PS0-N-VC-01",
+        "PS0-N-VC-02",
+        "PS0-N-VC-03",
+        "PS0-N-VC-05"
+      ],
+      "failures": [
+        "PS0-P-VC-02",
+        "PS0-N-VC-04"
+      ],
+      "fixtureCases": {
+        "PS0-P-VC-01": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56",
+        "PS0-P-VC-02": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f",
+        "PS0-P-VC-03": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6",
+        "PS0-N-VC-01": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04",
+        "PS0-N-VC-02": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94",
+        "PS0-N-VC-03": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919",
+        "PS0-N-VC-04": "dcd96ce6b8880d78afbc102452fb0efa1dce916fa30753b8cc16b4a99398ff83",
+        "PS0-N-VC-05": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14109912789,
+        "name": "ps0-r2-contracts-evidence-43585844032",
+        "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+        "bytes": 9437,
+        "archiveDigestVerified": true
+      },
+      "summary": "Six contract and erasure cases passed, including a checked spec theorem, execution of the erased-result action, and native contract rejections. The braced spec tail and missing-WP witnesses remain pending."
     }
   ]
 }

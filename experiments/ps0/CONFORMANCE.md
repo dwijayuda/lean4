@@ -1,5 +1,15 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-14 — R2 source boundaries and intrinsic contracts
+
+The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
+
+The numbered reference suite produced 26 passing witnesses. Five remain pending for defaults in constructor patterns, an explicit syntax bridge, competing parser rejection, and two marker-free braced headers. Qualified `R2-01`, `R2-02`, `R2-03`, `R2-04`, `R2-05`, `R2-07`, `R2-08`, `R2-09`, `R2-10`, `R2-11`, `R2-13`, `R2-15`, `R2-16`, `R2-19`, `R2-20`, `R2-21`, `R2-22`, `R2-23`, `R2-24`, `R2-25`, `R2-26`, `R2-27`, `R2-28`, `R2-29`, `R2-30`, `R2-31`. Source `1ca697c673144cf00786a3af6ac9539587823a19`, runner `dbc89e68cb48c3cc09ca8cd018f37479893b4585`, executable SHA-256 `7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e`, and fixture runner SHA-256 `0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3`. Evidence artifact `14110138542` has digest `sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c` and 23,409 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43585844014/job/132420013107)
+
+Six contract and erasure cases passed, including a checked spec theorem, execution of the erased-result action, and native contract rejections. The braced spec tail and missing-WP witnesses remain pending. Qualified `PS0-P-VC-01`, `PS0-P-VC-03`, `PS0-N-VC-01`, `PS0-N-VC-02`, `PS0-N-VC-03`, `PS0-N-VC-05`. Source `fdff2bb62fee2a2b23fc586aeaa02df4c989dd78`, runner `dbc89e68cb48c3cc09ca8cd018f37479893b4585`, executable SHA-256 `7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e`, and fixture runner SHA-256 `92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6`. Evidence artifact `14109912789` has digest `sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed` and 9,437 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43585844032/job/132420013348)
+
+The ledger records **114 finite passes and 128 pending obligations**.
+
 ## 2026-11-14 — R2 recursion, proofs and numbered source witnesses
 
 The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
