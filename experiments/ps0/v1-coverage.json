@@ -321,12 +321,27 @@
       "id": "V1-013",
       "feature": "Public/private imports and re-export",
       "sourceBasis": "L-MODULE",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: V1-013",
+      "qualifiedCommit": "55d5ab178a79ab7ea4eeb6d6393180671e421006",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43621326669",
       "fixtureCandidate": "tests/v1/implicit_public_module.ps",
-      "candidateCoverage": "MODERN_IMPORT_METADATA_CANDIDATE"
+      "candidateCoverage": "MODERN_IMPORT_METADATA_CANDIDATE",
+      "evidence": {
+        "jobId": 132527461821,
+        "runner": "b25f44481be3677a2a0916d458f29519c6037a89",
+        "artifact": {
+          "id": 14123858799,
+          "name": "ps0-r2-scope-evidence-43621326669",
+          "digest": "sha256:cf2b2a6c145c20b016a86dec619bd1c2ba68502fe677a8700cc91c995211cf1a",
+          "bytes": 16935
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "49d948ee303238cb27a972ee3ecdc54637fc5d88201c639231dbedfeb3d4c22d",
+        "caseSha256": "87b79512a2b69d17fe8ff32b5925b8d565cdf3b0e129bbb19e2a6967857bba5a"
+      }
     },
     {
       "id": "V1-014",
@@ -430,10 +445,25 @@
       "id": "V1-018",
       "feature": "Public/private/protected/expose and body visibility",
       "sourceBasis": "L-CMD, L-DEFS",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: V1-018",
+      "qualifiedCommit": "55d5ab178a79ab7ea4eeb6d6393180671e421006",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43621326669",
+      "evidence": {
+        "jobId": 132527461821,
+        "runner": "b25f44481be3677a2a0916d458f29519c6037a89",
+        "artifact": {
+          "id": 14123858799,
+          "name": "ps0-r2-scope-evidence-43621326669",
+          "digest": "sha256:cf2b2a6c145c20b016a86dec619bd1c2ba68502fe677a8700cc91c995211cf1a",
+          "bytes": 16935
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "49d948ee303238cb27a972ee3ecdc54637fc5d88201c639231dbedfeb3d4c22d",
+        "caseSha256": "cb5cb386c858162de94bf61f11172a1eeb76001d06976cb99d2c7990f923ef2f"
+      }
     },
     {
       "id": "V1-019",
@@ -9042,12 +9072,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 32,
-    "featureFamiliesPending": 26,
+    "PENDING": 30,
+    "featureFamiliesPending": 24,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 210,
+    "PASS": 212,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19739,7 +19769,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 32,
+    "obligationsPending": 30,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -27581,6 +27611,70 @@
           "V1-081": "fcd06c919ffc9bd640b3dec29653658d9e24c16bbac91b12b6969fb826d20981",
           "V1-082": "26aaae269ada8563036ec92e0473094eed07a266c0388c91e48166f4cf7fd1a3",
           "V1-090": "a78a7ec9f00f3a6103f4116dfa823155dc00c40ab95e6000eca482fa659439c9"
+        }
+      },
+      {
+        "summary": "Linux covered downstream re-export and private import visibility. Qualified protected and exposed names remained accessible through their defining namespace, while protected unqualified access and unfolding a hidden body were rejected. Case digests hash the ordered scopeFixtureInputs pairs.",
+        "source": "55d5ab178a79ab7ea4eeb6d6393180671e421006",
+        "runner": "b25f44481be3677a2a0916d458f29519c6037a89",
+        "run": 43621326669,
+        "job": 132527461821,
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixture": "tests/run-r2-scope.py",
+        "fixtureSha256": "49d948ee303238cb27a972ee3ecdc54637fc5d88201c639231dbedfeb3d4c22d",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14123858799,
+          "name": "ps0-r2-scope-evidence-43621326669",
+          "digest": "sha256:cf2b2a6c145c20b016a86dec619bd1c2ba68502fe677a8700cc91c995211cf1a",
+          "bytes": 16935
+        },
+        "passed": [
+          "V1-013",
+          "V1-018"
+        ],
+        "fixtureCases": {
+          "V1-013": "87b79512a2b69d17fe8ff32b5925b8d565cdf3b0e129bbb19e2a6967857bba5a",
+          "V1-018": "cb5cb386c858162de94bf61f11172a1eeb76001d06976cb99d2c7990f923ef2f"
+        },
+        "scopeFixtureInputs": {
+          "V1-013": [
+            [
+              "Scopes.Explicit",
+              "3a9eb70b7c0a5d704fae500cb52059f70da67359b6c30d2c87090e7ce330c12d"
+            ],
+            [
+              "Scopes.Consumer",
+              "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97"
+            ],
+            [
+              "Scopes.Reexport",
+              "1a4ed7f8f8949f5c73a15663eb98f4a192bfe2722c38ab14ed6a0eb3939b3f4c"
+            ],
+            [
+              "Scopes.Restricted",
+              "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68"
+            ]
+          ],
+          "V1-018": [
+            [
+              "Scopes.Explicit",
+              "3a9eb70b7c0a5d704fae500cb52059f70da67359b6c30d2c87090e7ce330c12d"
+            ],
+            [
+              "Scopes.Reexport",
+              "1a4ed7f8f8949f5c73a15663eb98f4a192bfe2722c38ab14ed6a0eb3939b3f4c"
+            ],
+            [
+              "Scopes.HiddenBody",
+              "f8935cab2a2db450f17077faf37f68efe117a07c7c96fb09aec6827acc493af8"
+            ],
+            [
+              "Scopes.Restricted",
+              "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68"
+            ]
+          ]
         }
       }
     ]
@@ -98925,6 +99019,70 @@
         "V1-081": "fcd06c919ffc9bd640b3dec29653658d9e24c16bbac91b12b6969fb826d20981",
         "V1-082": "26aaae269ada8563036ec92e0473094eed07a266c0388c91e48166f4cf7fd1a3",
         "V1-090": "a78a7ec9f00f3a6103f4116dfa823155dc00c40ab95e6000eca482fa659439c9"
+      }
+    },
+    {
+      "summary": "Linux covered downstream re-export and private import visibility. Qualified protected and exposed names remained accessible through their defining namespace, while protected unqualified access and unfolding a hidden body were rejected. Case digests hash the ordered scopeFixtureInputs pairs.",
+      "source": "55d5ab178a79ab7ea4eeb6d6393180671e421006",
+      "runner": "b25f44481be3677a2a0916d458f29519c6037a89",
+      "run": 43621326669,
+      "job": 132527461821,
+      "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+      "fixture": "tests/run-r2-scope.py",
+      "fixtureSha256": "49d948ee303238cb27a972ee3ecdc54637fc5d88201c639231dbedfeb3d4c22d",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14123858799,
+        "name": "ps0-r2-scope-evidence-43621326669",
+        "digest": "sha256:cf2b2a6c145c20b016a86dec619bd1c2ba68502fe677a8700cc91c995211cf1a",
+        "bytes": 16935
+      },
+      "passed": [
+        "V1-013",
+        "V1-018"
+      ],
+      "fixtureCases": {
+        "V1-013": "87b79512a2b69d17fe8ff32b5925b8d565cdf3b0e129bbb19e2a6967857bba5a",
+        "V1-018": "cb5cb386c858162de94bf61f11172a1eeb76001d06976cb99d2c7990f923ef2f"
+      },
+      "scopeFixtureInputs": {
+        "V1-013": [
+          [
+            "Scopes.Explicit",
+            "3a9eb70b7c0a5d704fae500cb52059f70da67359b6c30d2c87090e7ce330c12d"
+          ],
+          [
+            "Scopes.Consumer",
+            "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97"
+          ],
+          [
+            "Scopes.Reexport",
+            "1a4ed7f8f8949f5c73a15663eb98f4a192bfe2722c38ab14ed6a0eb3939b3f4c"
+          ],
+          [
+            "Scopes.Restricted",
+            "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68"
+          ]
+        ],
+        "V1-018": [
+          [
+            "Scopes.Explicit",
+            "3a9eb70b7c0a5d704fae500cb52059f70da67359b6c30d2c87090e7ce330c12d"
+          ],
+          [
+            "Scopes.Reexport",
+            "1a4ed7f8f8949f5c73a15663eb98f4a192bfe2722c38ab14ed6a0eb3939b3f4c"
+          ],
+          [
+            "Scopes.HiddenBody",
+            "f8935cab2a2db450f17077faf37f68efe117a07c7c96fb09aec6827acc493af8"
+          ],
+          [
+            "Scopes.Restricted",
+            "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68"
+          ]
+        ]
       }
     }
   ]
