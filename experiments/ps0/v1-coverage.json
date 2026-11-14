@@ -27050,6 +27050,50 @@
               }
             }
           }
+        },
+        "cleanR2ImplicitFieldsRebuild": {
+          "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
+          "runner": "c7a7d356b4ad075cbd74a7c083e3ef09e21b46e2",
+          "run": 43651120197,
+          "status": "IN_PROGRESS",
+          "checkpointJob": 132619580652,
+          "checkpointStatus": "PASS",
+          "stageOneBaseJob": 132619684382,
+          "stageOneBaseStatus": "IN_PROGRESS",
+          "targeted": {
+            "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
+            "runner": "0a52793a0afc9b996c50f62c21f0d744e26e47f3",
+            "hostCategoriesSha256": "2a18cc8549b0bd555d9738d06fa4c903186cd6f4f9a8348d657d52e2968d4f21",
+            "driverSha256": "708907d0cc0eba1af247a803273753cfb0b3111dcb3b80ac6da98b1c6a781c08",
+            "baseModules": {
+              "run": 43651030468,
+              "job": 132619309357,
+              "status": "PASS",
+              "modules": [
+                "Init.Data.Array.Lex.Basic",
+                "Init.Data.Vector.Basic",
+                "Std.Data.DHashMap.RawDef",
+                "Std.Data.DTreeMap.Internal.Operations",
+                "Std.Tactic.BVDecide.Bitblast.BVExpr.Basic"
+              ],
+              "artifact": {
+                "id": 14136097731,
+                "bytes": 2103,
+                "digest": "sha256:72a0ace430ce2d6f4cb70b6e5396fd790c1c4f20f13eefc233022a23cfa490ed"
+              }
+            },
+            "numberedBoundary": {
+              "run": 43651030448,
+              "job": 132619309288,
+              "status": "PASS",
+              "cases": 31,
+              "artifact": {
+                "id": 14135888110,
+                "bytes": 24487,
+                "digest": "sha256:2f1f3587bd874c6d5a1235f2c5c272cef2ef588b91e8f45b28acc99c76bec9a4"
+              }
+            }
+          }
         }
       }
     },
@@ -99058,6 +99102,50 @@
               "PS0-P-EXT-03": "db3455ca5819f18e28cba4db626ab1e95d90b6ba471f26e14fedf4963c805257",
               "R2Deriving": "e1d2160ca08703cc1bf9634bf6ad9b274a4b2b816e209258dfb4bd4592733094",
               "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
+            }
+          }
+        }
+      },
+      "cleanR2ImplicitFieldsRebuild": {
+        "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
+        "runner": "c7a7d356b4ad075cbd74a7c083e3ef09e21b46e2",
+        "run": 43651120197,
+        "status": "IN_PROGRESS",
+        "checkpointJob": 132619580652,
+        "checkpointStatus": "PASS",
+        "stageOneBaseJob": 132619684382,
+        "stageOneBaseStatus": "IN_PROGRESS",
+        "targeted": {
+          "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
+          "runner": "0a52793a0afc9b996c50f62c21f0d744e26e47f3",
+          "hostCategoriesSha256": "2a18cc8549b0bd555d9738d06fa4c903186cd6f4f9a8348d657d52e2968d4f21",
+          "driverSha256": "708907d0cc0eba1af247a803273753cfb0b3111dcb3b80ac6da98b1c6a781c08",
+          "baseModules": {
+            "run": 43651030468,
+            "job": 132619309357,
+            "status": "PASS",
+            "modules": [
+              "Init.Data.Array.Lex.Basic",
+              "Init.Data.Vector.Basic",
+              "Std.Data.DHashMap.RawDef",
+              "Std.Data.DTreeMap.Internal.Operations",
+              "Std.Tactic.BVDecide.Bitblast.BVExpr.Basic"
+            ],
+            "artifact": {
+              "id": 14136097731,
+              "bytes": 2103,
+              "digest": "sha256:72a0ace430ce2d6f4cb70b6e5396fd790c1c4f20f13eefc233022a23cfa490ed"
+            }
+          },
+          "numberedBoundary": {
+            "run": 43651030448,
+            "job": 132619309288,
+            "status": "PASS",
+            "cases": 31,
+            "artifact": {
+              "id": 14135888110,
+              "bytes": 24487,
+              "digest": "sha256:2f1f3587bd874c6d5a1235f2c5c272cef2ef588b91e8f45b28acc99c76bec9a4"
             }
           }
         }
