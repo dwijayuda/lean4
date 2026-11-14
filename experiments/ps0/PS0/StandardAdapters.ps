@@ -373,9 +373,9 @@ scoped syntax (name := ps0StandardExample) (priority := 20000)
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardDef)
-  | `($mods:declModifiers def $name:declId $bs:psDeclBinder* $[: $ty:psDefType]? $value:psDeclValue $[$derivation:psDefDeriving]?) => do
+  | `(ps0StandardDef| $mods:declModifiers def $name:declId $bs:psDeclBinder* $[: $ty:psDefType]? $value:psDeclValue $[$derivation:psDefDeriving]?) => do
       let bs ← PS0.Binders.lowerTelescope bs
-      let ty ← ty.mapM(fun syntax => nativeTerm ⟨syntax.raw[0]⟩)
+      let ty ← ty.mapM(fun captured => nativeTerm ⟨captured.raw[0]⟩)
       let value ← nativeValue value true
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, withDeriving decl.raw derivation]
@@ -412,9 +412,9 @@ scoped syntax (name := ps0StandardFunction) (priority := 20000)
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardFunction)
-  | `($mods:declModifiers function $name:declId $bs:psDeclBinder* $[: $ty:psDefType]? $value:psDeclValue $[$derivation:psDefDeriving]?) => do
+  | `(ps0StandardFunction| $mods:declModifiers function $name:declId $bs:psDeclBinder* $[: $ty:psDefType]? $value:psDeclValue $[$derivation:psDefDeriving]?) => do
       let bs ← PS0.Binders.lowerTelescope bs true
-      let ty ← ty.mapM(fun syntax => nativeTerm ⟨syntax.raw[0]⟩)
+      let ty ← ty.mapM(fun captured => nativeTerm ⟨captured.raw[0]⟩)
       let value ← nativeValue value true
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, withDeriving decl.raw derivation]
