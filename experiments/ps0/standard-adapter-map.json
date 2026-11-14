@@ -20801,7 +20801,7 @@
           "checkpointJob": 132569058353,
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132569177226,
-          "stageOneBaseStatus": "IN_PROGRESS",
+          "stageOneBaseStatus": "PASS",
           "replacedRun": {
             "run": 43634543017,
             "job": 132568466838,
@@ -20818,6 +20818,40 @@
               "bytes": 24665,
               "digest": "sha256:ffe7104f9fd676188671f2ba665790fb79614210191bf28a6732564a2fec11a9"
             }
+          },
+          "stageOneCompilerEarlyJob": 132615385481,
+          "baseCheckpoint": {
+            "id": 14135393055,
+            "bytes": 451637344,
+            "digest": "sha256:32088cffee0e967ef7ef1eacff86aaa32013711093c69c00f3b30fa16e918f60"
+          },
+          "baseEvidence": {
+            "id": 14135577847,
+            "bytes": 8243565,
+            "digest": "sha256:ea31781ebd3cbe47300e28965282aae15aae4575d44d3c25f969d45474bf9707"
+          },
+          "olderStageTwoDiagnostic": {
+            "run": 43614931481,
+            "source": "cfba2f7436ccd805c27ae09d8a27f551fa1651fa",
+            "stageOneLinkJob": 132576356916,
+            "stageOneArtifact": {
+              "id": 14131273150,
+              "bytes": 285249853,
+              "digest": "sha256:6003d039bb04cc2b183400e495194f0b0c6ab6b6f4a6d3dc4e94d13e008a3f5f"
+            },
+            "job": 132582166559,
+            "artifact": {
+              "id": 14135096407,
+              "bytes": 56364759,
+              "digest": "sha256:641133ffabd8f1cab7e9aadcf9a6a9e276cfafcfa6525d09862da9c0a95e9a22"
+            },
+            "modules": [
+              "Std/Data/DHashMap/RawDef.ps",
+              "Init/Data/Array/Lex/Basic.ps",
+              "Init/Data/Vector/Basic.ps",
+              "Std/Data/DTreeMap/Internal/Operations.ps",
+              "Std/Tactic/BVDecide/Bitblast/BVExpr/Basic.ps"
+            ]
           }
         },
         "cleanR2DoIndentRebuild": {
@@ -92797,7 +92831,7 @@
         "checkpointJob": 132569058353,
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132569177226,
-        "stageOneBaseStatus": "IN_PROGRESS",
+        "stageOneBaseStatus": "PASS",
         "replacedRun": {
           "run": 43634543017,
           "job": 132568466838,
@@ -92814,6 +92848,40 @@
             "bytes": 24665,
             "digest": "sha256:ffe7104f9fd676188671f2ba665790fb79614210191bf28a6732564a2fec11a9"
           }
+        },
+        "stageOneCompilerEarlyJob": 132615385481,
+        "baseCheckpoint": {
+          "id": 14135393055,
+          "bytes": 451637344,
+          "digest": "sha256:32088cffee0e967ef7ef1eacff86aaa32013711093c69c00f3b30fa16e918f60"
+        },
+        "baseEvidence": {
+          "id": 14135577847,
+          "bytes": 8243565,
+          "digest": "sha256:ea31781ebd3cbe47300e28965282aae15aae4575d44d3c25f969d45474bf9707"
+        },
+        "olderStageTwoDiagnostic": {
+          "run": 43614931481,
+          "source": "cfba2f7436ccd805c27ae09d8a27f551fa1651fa",
+          "stageOneLinkJob": 132576356916,
+          "stageOneArtifact": {
+            "id": 14131273150,
+            "bytes": 285249853,
+            "digest": "sha256:6003d039bb04cc2b183400e495194f0b0c6ab6b6f4a6d3dc4e94d13e008a3f5f"
+          },
+          "job": 132582166559,
+          "artifact": {
+            "id": 14135096407,
+            "bytes": 56364759,
+            "digest": "sha256:641133ffabd8f1cab7e9aadcf9a6a9e276cfafcfa6525d09862da9c0a95e9a22"
+          },
+          "modules": [
+            "Std/Data/DHashMap/RawDef.ps",
+            "Init/Data/Array/Lex/Basic.ps",
+            "Init/Data/Vector/Basic.ps",
+            "Std/Data/DTreeMap/Internal/Operations.ps",
+            "Std/Tactic/BVDecide/Bitblast/BVExpr/Basic.ps"
+          ]
         }
       },
       "cleanR2DoIndentRebuild": {
