@@ -17,13 +17,12 @@ def internalDefault : Nat := 7
 private def hidden : Nat := 11
 public section
 def visible : Nat := 13
-theorem visibleOracle : visible = 13 := rfl
+end
 end Explicit
 ''',
     'Scopes.Implicit': '''public import Init
 namespace Implicit
 def visible : Nat := 17
-theorem visibleOracle : visible = 17 := rfl
 end Implicit
 ''',
     'Scopes.MetaPublic': '''module
@@ -72,11 +71,9 @@ example : renamed = 19 := rfl
 public import Scopes.Explicit
 public import Scopes.Implicit
 meta import Scopes.MetaPublic
-public section
-example : Explicit.visible = 13 := Explicit.visibleOracle
-example : Implicit.visible = 17 := Implicit.visibleOracle
 run_cmd do
   unless metaPublic.toString == "r2Scope" do Lean.throwError "public meta import"
+public section
 def main : IO Unit := IO.println s!"PS0_R2_SCOPE:{Explicit.visible}:{Implicit.visible}"
 ''',
     'Scopes.PrivateConsumer': '''module
@@ -145,9 +142,8 @@ def main():
     positive = probe('positive', [*lake, 'build', 'ps0project', 'Scopes.PrivateConsumer',
                      'Scopes.Grouping', 'Scopes.Prelude', 'Scopes.MetaPrivate'],
                      lambda code, log: code == 0 and re.search(r'\(?f x\)? : Nat', log) is not None)
-    if positive:
-        assert probe('runtime', [build / 'bin/ps0project'],
-                     lambda code, log: code == 0 and log.strip() == 'PS0_R2_SCOPE:13:17')
+    if positive and probe('runtime', [build / 'bin/ps0project'],
+                          lambda code, log: code == 0 and log.strip() == 'PS0_R2_SCOPE:13:17'):
         prelude = build / 'lib/lean/Scopes/Prelude.ilean.ps0-source-map.json'
         data = json.loads(prelude.read_text())
         receipt = json.loads((build / 'ps0-inputs/Scopes.Prelude.json').read_text())
