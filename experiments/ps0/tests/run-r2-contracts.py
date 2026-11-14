@@ -63,6 +63,7 @@ function bad(n: Nat): Id Nat
 prelude
 public import Init
 public section
+set_option experimental.intrinsic true
 function bad(n: Nat): Id Nat
   ensures r => r = n := do { return n }
 ''', '', r'Std.WP|Triple|requires.*import|verification environment'),
