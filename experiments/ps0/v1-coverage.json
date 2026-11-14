@@ -1566,19 +1566,49 @@
       "id": "V1-067",
       "feature": "Ordered contracts and logical given binders",
       "sourceBasis": "L-CMD, [feature](#given-requires-ensures-and-generated-specification-proofs)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: V1-067",
+      "qualifiedCommit": "398cba97d783d24143005b808b9c0fdb88f8ed1c",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43621687182",
+      "evidence": {
+        "jobId": 132528561639,
+        "runner": "56ead5bc8454a9112992420fec404ddb7a69da73",
+        "artifact": {
+          "id": 14124511961,
+          "name": "ps0-r2-contracts-evidence-43621687182",
+          "digest": "sha256:f2e8f1c0312a4d3dc0e53da411454c54535dce3b0906df4f8a86087a2141d7e6",
+          "bytes": 11098
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "8205084e72c6d19a8aa6f2868d6c668c47ffa417d81ae1baa9d0afb951ce48e0",
+        "caseSha256": "d32f13ee850b7a798a119c2604a880590b4186138ff1a55162db8f61fc62f09a"
+      }
     },
     {
       "id": "V1-068",
       "feature": "Generated spec proofs and native finally subsections",
       "sourceBasis": "L-TERM, [feature](#local-definitions-equation-bodies-and-wherefinally-tails)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: V1-068",
+      "qualifiedCommit": "398cba97d783d24143005b808b9c0fdb88f8ed1c",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43621687182",
+      "evidence": {
+        "jobId": 132528561639,
+        "runner": "56ead5bc8454a9112992420fec404ddb7a69da73",
+        "artifact": {
+          "id": 14124511961,
+          "name": "ps0-r2-contracts-evidence-43621687182",
+          "digest": "sha256:f2e8f1c0312a4d3dc0e53da411454c54535dce3b0906df4f8a86087a2141d7e6",
+          "bytes": 11098
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "8205084e72c6d19a8aa6f2868d6c668c47ffa417d81ae1baa9d0afb951ce48e0",
+        "caseSha256": "4d9acb91d72954a0799f104f17daa7f91b97467e61d54a9e01550bd24d89a882"
+      }
     },
     {
       "id": "V1-069",
@@ -1602,10 +1632,25 @@
       "id": "V1-071",
       "feature": "Erased state, erased mutation and effectful erased-result bindings",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: V1-071",
+      "qualifiedCommit": "398cba97d783d24143005b808b9c0fdb88f8ed1c",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43621687182",
+      "evidence": {
+        "jobId": 132528561639,
+        "runner": "56ead5bc8454a9112992420fec404ddb7a69da73",
+        "artifact": {
+          "id": 14124511961,
+          "name": "ps0-r2-contracts-evidence-43621687182",
+          "digest": "sha256:f2e8f1c0312a4d3dc0e53da411454c54535dce3b0906df4f8a86087a2141d7e6",
+          "bytes": 11098
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "8205084e72c6d19a8aa6f2868d6c668c47ffa417d81ae1baa9d0afb951ce48e0",
+        "caseSha256": "e93ad17813a3b60d672b1dd3d9139d359aaac637ca609f50e58b5944d389b27a"
+      }
     },
     {
       "id": "V1-072",
@@ -9072,12 +9117,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 30,
-    "featureFamiliesPending": 24,
+    "PENDING": 27,
+    "featureFamiliesPending": 21,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 212,
+    "PASS": 215,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19769,7 +19814,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 30,
+    "obligationsPending": 27,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -27673,6 +27718,66 @@
             [
               "Scopes.Restricted",
               "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68"
+            ]
+          ]
+        }
+      },
+      {
+        "summary": "Linux passed the ordered contract and given-binder controls, checked the generated specification proof and its finally subsection, and verified that erased mutable state leaves the effectful action observable. The two multi-file case digests hash their ordered contractFixtureInputs pairs.",
+        "source": "398cba97d783d24143005b808b9c0fdb88f8ed1c",
+        "runner": "56ead5bc8454a9112992420fec404ddb7a69da73",
+        "run": 43621687182,
+        "job": 132528561639,
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixture": "tests/run-r2-contracts.py",
+        "fixtureSha256": "8205084e72c6d19a8aa6f2868d6c668c47ffa417d81ae1baa9d0afb951ce48e0",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14124511961,
+          "name": "ps0-r2-contracts-evidence-43621687182",
+          "digest": "sha256:f2e8f1c0312a4d3dc0e53da411454c54535dce3b0906df4f8a86087a2141d7e6",
+          "bytes": 11098
+        },
+        "passed": [
+          "V1-067",
+          "V1-068",
+          "V1-071"
+        ],
+        "fixtureCases": {
+          "V1-067": "d32f13ee850b7a798a119c2604a880590b4186138ff1a55162db8f61fc62f09a",
+          "V1-068": "4d9acb91d72954a0799f104f17daa7f91b97467e61d54a9e01550bd24d89a882",
+          "V1-071": "e93ad17813a3b60d672b1dd3d9139d359aaac637ca609f50e58b5944d389b27a"
+        },
+        "contractFixtureInputs": {
+          "V1-067": [
+            [
+              "PS0-P-VC-01",
+              "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56"
+            ],
+            [
+              "PS0-N-VC-01",
+              "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04"
+            ],
+            [
+              "PS0-N-VC-03",
+              "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919"
+            ]
+          ],
+          "V1-068": [
+            [
+              "PS0-P-VC-02",
+              "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f"
+            ],
+            [
+              "PS0-N-VC-05",
+              "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+            ]
+          ],
+          "V1-071": [
+            [
+              "V1-071",
+              "e93ad17813a3b60d672b1dd3d9139d359aaac637ca609f50e58b5944d389b27a"
             ]
           ]
         }
@@ -99081,6 +99186,66 @@
           [
             "Scopes.Restricted",
             "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68"
+          ]
+        ]
+      }
+    },
+    {
+      "summary": "Linux passed the ordered contract and given-binder controls, checked the generated specification proof and its finally subsection, and verified that erased mutable state leaves the effectful action observable. The two multi-file case digests hash their ordered contractFixtureInputs pairs.",
+      "source": "398cba97d783d24143005b808b9c0fdb88f8ed1c",
+      "runner": "56ead5bc8454a9112992420fec404ddb7a69da73",
+      "run": 43621687182,
+      "job": 132528561639,
+      "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+      "fixture": "tests/run-r2-contracts.py",
+      "fixtureSha256": "8205084e72c6d19a8aa6f2868d6c668c47ffa417d81ae1baa9d0afb951ce48e0",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14124511961,
+        "name": "ps0-r2-contracts-evidence-43621687182",
+        "digest": "sha256:f2e8f1c0312a4d3dc0e53da411454c54535dce3b0906df4f8a86087a2141d7e6",
+        "bytes": 11098
+      },
+      "passed": [
+        "V1-067",
+        "V1-068",
+        "V1-071"
+      ],
+      "fixtureCases": {
+        "V1-067": "d32f13ee850b7a798a119c2604a880590b4186138ff1a55162db8f61fc62f09a",
+        "V1-068": "4d9acb91d72954a0799f104f17daa7f91b97467e61d54a9e01550bd24d89a882",
+        "V1-071": "e93ad17813a3b60d672b1dd3d9139d359aaac637ca609f50e58b5944d389b27a"
+      },
+      "contractFixtureInputs": {
+        "V1-067": [
+          [
+            "PS0-P-VC-01",
+            "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56"
+          ],
+          [
+            "PS0-N-VC-01",
+            "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04"
+          ],
+          [
+            "PS0-N-VC-03",
+            "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919"
+          ]
+        ],
+        "V1-068": [
+          [
+            "PS0-P-VC-02",
+            "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f"
+          ],
+          [
+            "PS0-N-VC-05",
+            "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+          ]
+        ],
+        "V1-071": [
+          [
+            "V1-071",
+            "e93ad17813a3b60d672b1dd3d9139d359aaac637ca609f50e58b5944d389b27a"
           ]
         ]
       }

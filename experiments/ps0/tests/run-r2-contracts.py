@@ -31,7 +31,7 @@ def observed : IO Nat := do
 function annotated(n: Nat): Id Nat := do
   let mut value := n
   for i in [n]
-  invariant prefix suffix => True
+  invariant consumed remaining => True
   do value := i + 1
   while false
   invariant exit => True
