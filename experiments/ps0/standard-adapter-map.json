@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 61,
-    "featureFamiliesPending": 53,
+    "PENDING": 55,
+    "featureFamiliesPending": 48,
     "boundaryWitnessesPending": 5,
-    "acceptanceCasesPending": 3,
+    "acceptanceCasesPending": 2,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 181,
+    "PASS": 187,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 61,
+    "obligationsPending": 55,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -21558,6 +21558,87 @@
           "V1-062": "797ee75afb39bfdd8be9b4ed44cc301f2e9e3f1a54d2bb2ccd25eeea1a4b34cf",
           "V1-064": "443d13174d7433ecd3864a43aa6d46c9b4f79d2f6a3d7725c20391851b699285",
           "V1-065": "cc088a81d46db3a1c502b6a5b805ff8fba8306afd6115f9bc5c23af96d1f6c66"
+        }
+      },
+      {
+        "summary": "The native Lake module frontend rejected an intrinsic contract in a prelude that lacks the WP environment. The oracle required Lean's explicit import Std.WP diagnostic.",
+        "source": "41d3c487d911eb83e4c4157594f5a567f6c9e1b6",
+        "runner": "e887deea274cbfb687074a2597b7a29449cbcd4d",
+        "run": 43617485714,
+        "job": 132515621471,
+        "driverSha256": "91989f30ed15cfdcf2d13dc860f36ea77c6301e87384fb31739b9077deb6d030",
+        "fixture": "tests/run-r2-contracts.py",
+        "fixtureSha256": "72d229036146cdfc84dc76d12478e9c6dbd1b60b629806f6cac5d07375e42db4",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14122454467,
+          "name": "ps0-r2-contracts-evidence-43617485714",
+          "digest": "sha256:9037c75878aca950acce8e2bbba600a6948fbb77c3a063478bdcde0a56dfa7be",
+          "bytes": 8291
+        },
+        "passed": [
+          "PS0-N-VC-04"
+        ],
+        "fixtureCases": {
+          "PS0-N-VC-04": "f56d03d26b8c464b3c547c6de4a90dc6f48557b2abff0347fc7b1d3503d95306"
+        }
+      },
+      {
+        "summary": "Development-hole and rejection controls passed. The admitted theorem retained sorryAx, and the invalid proof exited with a direct type diagnostic.",
+        "source": "41d3c487d911eb83e4c4157594f5a567f6c9e1b6",
+        "runner": "e887deea274cbfb687074a2597b7a29449cbcd4d",
+        "run": 43617485702,
+        "job": 132515621645,
+        "driverSha256": "91989f30ed15cfdcf2d13dc860f36ea77c6301e87384fb31739b9077deb6d030",
+        "fixture": "tests/run-r2-proof-bind.py",
+        "fixtureSha256": "a7781319902f5937270b16e9a25a19d6913f77164578abef831550e5cda2a982",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14122198592,
+          "name": "ps0-r2-proof-bind-evidence-43617485702",
+          "digest": "sha256:b523e3ba9aa409f99cd6dce55437167b3ae5b627c94deee40901fa2b7926f51c",
+          "bytes": 10891
+        },
+        "passed": [
+          "V1-066"
+        ],
+        "fixtureCases": {
+          "V1-066": "086c65ffa2990fdea49e2f3a21613036fd9b17e04c5c36c3ee6504fab4944797"
+        },
+        "supportingCases": {
+          "V1-066-recovery": "624eda7fb90348b7f03bdfa91b16ccffe66cc20ee4d2283560fe4934b3167966"
+        }
+      },
+      {
+        "summary": "Registered scoped and local notation, syntax categories and aliases with a binder predicate, quotation splices and hygiene, and diagnostic commands passed. The other failing extension cases in the same job remain open.",
+        "source": "41d3c487d911eb83e4c4157594f5a567f6c9e1b6",
+        "runner": "e887deea274cbfb687074a2597b7a29449cbcd4d",
+        "run": 43617485591,
+        "job": 132515621307,
+        "driverSha256": "91989f30ed15cfdcf2d13dc860f36ea77c6301e87384fb31739b9077deb6d030",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "4cf25440a1198a597f899be325501c1586789429064517b468959da99a9da19b",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14121824793,
+          "name": "ps0-r2-native-extensions-evidence-43617485591",
+          "digest": "sha256:19bed7fe6c5470bf54ef690221800e33ea7efe9f063bf0e6c7f0b4a7b1acff81",
+          "bytes": 7969894
+        },
+        "passed": [
+          "V1-072",
+          "V1-073",
+          "V1-076",
+          "V1-094"
+        ],
+        "fixtureCases": {
+          "V1-072": "475239a8d9c3fd406cc74537fc228610ea0898cdc10f455aa3273ec33ef08877",
+          "V1-073": "1fec0ba309f8fdd23cd296bdda1c8e8a1d9382738252d40d916f2589ff43aeb2",
+          "V1-076": "6072ee257678784954fb7fe975e75d716e14f971278b863cb74efc6ae13f56ad",
+          "V1-094": "865a3151fef27ef5ef94bd1a3d8ed084b6ce27054d2846f712b7be7cc7af5fde"
         }
       }
     ]
@@ -92587,6 +92668,87 @@
         "V1-062": "797ee75afb39bfdd8be9b4ed44cc301f2e9e3f1a54d2bb2ccd25eeea1a4b34cf",
         "V1-064": "443d13174d7433ecd3864a43aa6d46c9b4f79d2f6a3d7725c20391851b699285",
         "V1-065": "cc088a81d46db3a1c502b6a5b805ff8fba8306afd6115f9bc5c23af96d1f6c66"
+      }
+    },
+    {
+      "summary": "The native Lake module frontend rejected an intrinsic contract in a prelude that lacks the WP environment. The oracle required Lean's explicit import Std.WP diagnostic.",
+      "source": "41d3c487d911eb83e4c4157594f5a567f6c9e1b6",
+      "runner": "e887deea274cbfb687074a2597b7a29449cbcd4d",
+      "run": 43617485714,
+      "job": 132515621471,
+      "driverSha256": "91989f30ed15cfdcf2d13dc860f36ea77c6301e87384fb31739b9077deb6d030",
+      "fixture": "tests/run-r2-contracts.py",
+      "fixtureSha256": "72d229036146cdfc84dc76d12478e9c6dbd1b60b629806f6cac5d07375e42db4",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14122454467,
+        "name": "ps0-r2-contracts-evidence-43617485714",
+        "digest": "sha256:9037c75878aca950acce8e2bbba600a6948fbb77c3a063478bdcde0a56dfa7be",
+        "bytes": 8291
+      },
+      "passed": [
+        "PS0-N-VC-04"
+      ],
+      "fixtureCases": {
+        "PS0-N-VC-04": "f56d03d26b8c464b3c547c6de4a90dc6f48557b2abff0347fc7b1d3503d95306"
+      }
+    },
+    {
+      "summary": "Development-hole and rejection controls passed. The admitted theorem retained sorryAx, and the invalid proof exited with a direct type diagnostic.",
+      "source": "41d3c487d911eb83e4c4157594f5a567f6c9e1b6",
+      "runner": "e887deea274cbfb687074a2597b7a29449cbcd4d",
+      "run": 43617485702,
+      "job": 132515621645,
+      "driverSha256": "91989f30ed15cfdcf2d13dc860f36ea77c6301e87384fb31739b9077deb6d030",
+      "fixture": "tests/run-r2-proof-bind.py",
+      "fixtureSha256": "a7781319902f5937270b16e9a25a19d6913f77164578abef831550e5cda2a982",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14122198592,
+        "name": "ps0-r2-proof-bind-evidence-43617485702",
+        "digest": "sha256:b523e3ba9aa409f99cd6dce55437167b3ae5b627c94deee40901fa2b7926f51c",
+        "bytes": 10891
+      },
+      "passed": [
+        "V1-066"
+      ],
+      "fixtureCases": {
+        "V1-066": "086c65ffa2990fdea49e2f3a21613036fd9b17e04c5c36c3ee6504fab4944797"
+      },
+      "supportingCases": {
+        "V1-066-recovery": "624eda7fb90348b7f03bdfa91b16ccffe66cc20ee4d2283560fe4934b3167966"
+      }
+    },
+    {
+      "summary": "Registered scoped and local notation, syntax categories and aliases with a binder predicate, quotation splices and hygiene, and diagnostic commands passed. The other failing extension cases in the same job remain open.",
+      "source": "41d3c487d911eb83e4c4157594f5a567f6c9e1b6",
+      "runner": "e887deea274cbfb687074a2597b7a29449cbcd4d",
+      "run": 43617485591,
+      "job": 132515621307,
+      "driverSha256": "91989f30ed15cfdcf2d13dc860f36ea77c6301e87384fb31739b9077deb6d030",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "4cf25440a1198a597f899be325501c1586789429064517b468959da99a9da19b",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14121824793,
+        "name": "ps0-r2-native-extensions-evidence-43617485591",
+        "digest": "sha256:19bed7fe6c5470bf54ef690221800e33ea7efe9f063bf0e6c7f0b4a7b1acff81",
+        "bytes": 7969894
+      },
+      "passed": [
+        "V1-072",
+        "V1-073",
+        "V1-076",
+        "V1-094"
+      ],
+      "fixtureCases": {
+        "V1-072": "475239a8d9c3fd406cc74537fc228610ea0898cdc10f455aa3273ec33ef08877",
+        "V1-073": "1fec0ba309f8fdd23cd296bdda1c8e8a1d9382738252d40d916f2589ff43aeb2",
+        "V1-076": "6072ee257678784954fb7fe975e75d716e14f971278b863cb74efc6ae13f56ad",
+        "V1-094": "865a3151fef27ef5ef94bd1a3d8ed084b6ce27054d2846f712b7be7cc7af5fde"
       }
     }
   ]
