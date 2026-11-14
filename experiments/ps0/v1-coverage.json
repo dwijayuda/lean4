@@ -1263,12 +1263,25 @@
       "sourceOrSetup": "`sumPair((1, 2))`",
       "requiredInterpretation": "One tuple argument.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
       "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
-      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE"
+      "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-CALL-03",
@@ -1276,10 +1289,23 @@
       "sourceOrSetup": "`tick()` / `tick(())`",
       "requiredInterpretation": "Unit completion or explicit Unit for this function type.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-CALL-04",
@@ -1287,14 +1313,27 @@
       "sourceOrSetup": "`greet(name := \"Ada\")`",
       "requiredInterpretation": "A declared named parameter; type must agree.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
       "fixtureCandidate": "tests/v1/host_postfix_calls.ps",
       "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
       "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
-      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-CALL-05",
@@ -1302,10 +1341,23 @@
       "sourceOrSetup": "`greet()`",
       "requiredInterpretation": "Complete the declared default, not a guessed value.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-CALL-06",
@@ -1313,12 +1365,25 @@
       "sourceOrSetup": "`add(1)`",
       "requiredInterpretation": "A nonempty partial application when the expected type permits it.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
       "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
-      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-CALL-07",
@@ -1326,12 +1391,25 @@
       "sourceOrSetup": "`f(x,)`",
       "requiredInterpretation": "A single argument with one trailing comma.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
       "standardHostOperandFixture": "tests/v1/standard_host_declarations.ps",
-      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-CALL-08",
@@ -1339,10 +1417,23 @@
       "sourceOrSetup": "`f g(x, y)`",
       "requiredInterpretation": "Required tree `f (g x y)`; types must support it.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-CALL-09",
@@ -1350,10 +1441,23 @@
       "sourceOrSetup": "`(f g)(x, y)`",
       "requiredInterpretation": "Required tree `(f g) x y`; not CALL-08.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-CALL-10",
@@ -1361,10 +1465,23 @@
       "sourceOrSetup": "`f(/- inside -/ x)`",
       "requiredInterpretation": "Comment inside the adjacent argument list.",
       "section": "§2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/v1/r2_calls.ps",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-P-SCOPE-01",
@@ -1860,10 +1977,23 @@
       "sourceOrClaim": "`f (x)` in an ordinary host application",
       "expectedCategory": "PARSE",
       "reason": "PS host gap-parenthesized application.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-01",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-02",
@@ -1871,10 +2001,23 @@
       "sourceOrClaim": "`f (x, y)` in an ordinary host application",
       "expectedCategory": "PARSE",
       "reason": "Must preserve one tuple by writing `f((x,y))`.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-02",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-03",
@@ -1882,10 +2025,23 @@
       "sourceOrClaim": "`f ()` in an ordinary host application",
       "expectedCategory": "PARSE",
       "reason": "Use explicit `f(())` or the qualified empty-call rule.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-03",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-04",
@@ -1893,10 +2049,23 @@
       "sourceOrClaim": "`f/- gap -/(x)`",
       "expectedCategory": "PARSE",
       "reason": "Valid comment trivia still breaks adjacency.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-04",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-05",
@@ -1904,10 +2073,23 @@
       "sourceOrClaim": "`answer()` for `answer : Nat`",
       "expectedCategory": "ELAB",
       "reason": "A noncallable value has no empty invocation.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-05",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-06",
@@ -1915,10 +2097,23 @@
       "sourceOrClaim": "`one()` with a required Nat parameter",
       "expectedCategory": "ELAB",
       "reason": "No invented Nat/Inhabited argument.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-06",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-07",
@@ -1926,10 +2121,23 @@
       "sourceOrClaim": "`two()` with two required Unit parameters",
       "expectedCategory": "ELAB",
       "reason": "Exactly one required Unit is the only insertion exception.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-07",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-08",
@@ -1937,10 +2145,23 @@
       "sourceOrClaim": "`f()` with unresolved required argument type",
       "expectedCategory": "ELAB",
       "reason": "Do not guess Unit to resolve an unknown binder type.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-08",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-09",
@@ -1948,14 +2169,27 @@
       "sourceOrClaim": "`f(name := x, y)`",
       "expectedCategory": "PARSE",
       "reason": "Positional argument after a named argument.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-09",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
       "fixtureCandidate": "tests/v1/host_call_named_then_positional.ps",
       "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
       "standardHostOperandFixture": "tests/v1/standard_host_order_negative.ps",
-      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-10",
@@ -1963,14 +2197,27 @@
       "sourceOrClaim": "`f(name := x, name := y)`",
       "expectedCategory": "PARSE or ELAB",
       "reason": "Duplicate named argument must reject no later than elaboration.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-10",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
       "fixtureCandidate": "tests/v1/host_call_duplicate_named.ps",
       "candidateCoverage": "PS_HOST_EXTENSION_CONTEXT_ONLY_NOT_STANDARD_OPERAND_CLOSURE",
       "standardHostOperandFixture": "tests/v1/standard_host_duplicate_negative.ps",
-      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-11",
@@ -1978,10 +2225,23 @@
       "sourceOrClaim": "`f(unknownName := x)`",
       "expectedCategory": "ELAB",
       "reason": "Unknown parameter name.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-11",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-CALL-12",
@@ -1989,12 +2249,25 @@
       "sourceOrClaim": "`f(,)` / `f(x,,y)`",
       "expectedCategory": "PARSE",
       "reason": "No empty argument entries or repeated separator.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/run-r2-calls.py :: PS0-N-CALL-12",
+      "qualifiedCommit": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43534219401",
       "standardHostOperandFixture": "tests/v1/standard_host_call_comma_negative.ps",
-      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI"
+      "standardHostOperandStatus": "PENDING_EXACT_COMMIT_LEAN_CI",
+      "evidence": {
+        "jobId": 132259155460,
+        "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+        "artifact": {
+          "id": 14088508870,
+          "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+          "bytes": 24822
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+        "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c"
+      }
     },
     {
       "id": "PS0-N-BIND-01",
@@ -5968,12 +6241,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 230,
+    "PENDING": 209,
     "featureFamiliesPending": 100,
     "boundaryWitnessesPending": 31,
-    "acceptanceCasesPending": 99,
-    "note": "Ten positive declaration cases passed the first R2 qualification batch. Two historical finite passes retain their original pins.",
-    "PASS": 12,
+    "acceptanceCasesPending": 78,
+    "note": "Twenty-one finite R2 call obligations passed in addition to the declaration batch and two historical passes.",
+    "PASS": 33,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -16665,7 +16938,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 230,
+    "obligationsPending": 209,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -22894,6 +23167,73 @@
           "oracle": "Noncomputable definition with implicit sort and explicit Nonempty witness"
         }
       ]
+    },
+    "r2CallQualification": {
+      "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+      "run": 43534219401,
+      "job": 132259155460,
+      "artifact": {
+        "id": 14088508870,
+        "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+        "bytes": 24822
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c",
+      "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+      "baseline": {
+        "passed": [
+          "PS0-N-CALL-01",
+          "PS0-N-CALL-02",
+          "PS0-N-CALL-03",
+          "PS0-N-CALL-04",
+          "PS0-N-CALL-05",
+          "PS0-N-CALL-06",
+          "PS0-N-CALL-07",
+          "PS0-N-CALL-08",
+          "PS0-N-CALL-09",
+          "PS0-N-CALL-10",
+          "PS0-N-CALL-11",
+          "PS0-N-CALL-12a",
+          "PS0-N-CALL-12b"
+        ],
+        "failures": [
+          "positive"
+        ],
+        "fixture_sha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c",
+        "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+      },
+      "passed": [
+        "PS0-P-CALL-02",
+        "PS0-P-CALL-03",
+        "PS0-P-CALL-04",
+        "PS0-P-CALL-05",
+        "PS0-P-CALL-06",
+        "PS0-P-CALL-07",
+        "PS0-P-CALL-08",
+        "PS0-P-CALL-09",
+        "PS0-P-CALL-10",
+        "PS0-N-CALL-01",
+        "PS0-N-CALL-02",
+        "PS0-N-CALL-03",
+        "PS0-N-CALL-04",
+        "PS0-N-CALL-05",
+        "PS0-N-CALL-06",
+        "PS0-N-CALL-07",
+        "PS0-N-CALL-08",
+        "PS0-N-CALL-09",
+        "PS0-N-CALL-10",
+        "PS0-N-CALL-11",
+        "PS0-N-CALL-12a",
+        "PS0-N-CALL-12b"
+      ],
+      "fullCorpus": {
+        "run": 43534267147,
+        "runner": "343c6939709fb62d3af6eef0cdddf1b7fdb4f6a6",
+        "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+        "status": "IN_PROGRESS"
+      }
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -92623,5 +92963,72 @@
         "oracle": "Noncomputable definition with implicit sort and explicit Nonempty witness"
       }
     ]
+  },
+  "r2CallQualification": {
+    "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+    "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+    "run": 43534219401,
+    "job": 132259155460,
+    "artifact": {
+      "id": 14088508870,
+      "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+      "bytes": 24822
+    },
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c",
+    "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+    "baseline": {
+      "passed": [
+        "PS0-N-CALL-01",
+        "PS0-N-CALL-02",
+        "PS0-N-CALL-03",
+        "PS0-N-CALL-04",
+        "PS0-N-CALL-05",
+        "PS0-N-CALL-06",
+        "PS0-N-CALL-07",
+        "PS0-N-CALL-08",
+        "PS0-N-CALL-09",
+        "PS0-N-CALL-10",
+        "PS0-N-CALL-11",
+        "PS0-N-CALL-12a",
+        "PS0-N-CALL-12b"
+      ],
+      "failures": [
+        "positive"
+      ],
+      "fixture_sha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c",
+      "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+    },
+    "passed": [
+      "PS0-P-CALL-02",
+      "PS0-P-CALL-03",
+      "PS0-P-CALL-04",
+      "PS0-P-CALL-05",
+      "PS0-P-CALL-06",
+      "PS0-P-CALL-07",
+      "PS0-P-CALL-08",
+      "PS0-P-CALL-09",
+      "PS0-P-CALL-10",
+      "PS0-N-CALL-01",
+      "PS0-N-CALL-02",
+      "PS0-N-CALL-03",
+      "PS0-N-CALL-04",
+      "PS0-N-CALL-05",
+      "PS0-N-CALL-06",
+      "PS0-N-CALL-07",
+      "PS0-N-CALL-08",
+      "PS0-N-CALL-09",
+      "PS0-N-CALL-10",
+      "PS0-N-CALL-11",
+      "PS0-N-CALL-12a",
+      "PS0-N-CALL-12b"
+    ],
+    "fullCorpus": {
+      "run": 43534267147,
+      "runner": "343c6939709fb62d3af6eef0cdddf1b7fdb4f6a6",
+      "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "status": "IN_PROGRESS"
+    }
   }
 }

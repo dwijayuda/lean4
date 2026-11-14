@@ -1,5 +1,15 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-14 — R2 call conformance and application precedence
+
+Linux qualified nine positive call cases (PS0-P-CALL-02 through 10) and all twelve call rejections (PS0-N-CALL-01 through 12). The malformed comma obligation exercises both forms. The semantic fixture checks tuple arity, Unit completion, named/default arguments, partial application, trailing comma, comments, and distinct grouping for nested and parenthesized heads. Rejection probes require the case-specific diagnostic at the call line.
+
+The prior audited compiler reproduced the whitespace-application failure for `f g(x, y)`. The repair adds an adjacent-argument alternative to Lean’s native whitespace application parser and retains the native path for ordinary arguments. An intermediate candidate regressed the binder fixture. The final candidate preserves native parser alternatives and activates the added path only when it captures a PS call. Linux built the patched PS0 compiler from canonical sources using native Lake, then passed the call, binder, operator, do-layout, and prelude grammar checks.
+
+Source `c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5`, runner `c697044136bbdeb6a57712bbe18f4d2809fb9551`, Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`, frozen reference Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`. Fixture SHA-256 `342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c`. Patched compiler SHA-256 `a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86`. Evidence artifact `14088508870` has digest `sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10` and 24822 bytes. [Linux qualification](https://github.com/dwijayuda/pskernel/actions/runs/43534219401/job/132259155460)
+
+The ledger now records **209 pending and 33 finite passes**. The complete two-stage corpus rebuild at this source revision is running. [Full Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43534267147)
+
 ## 2026-11-14 — Canonical project fix and first ten R2 declaration cases passed
 
 Review of PR #21 found stale default-Lake commands in the README and a real recursive project regression. The ordinary project configuration compiled the tracked PS0 dependency library through the native parser. The initial Linux job reproduced the failure in PS0/Effect.ps and PS0/OperatorDescriptors.ps. The canonical library now selects PS grammar and current-stage IR when the ordinary project configuration supplies its roots. The full compiler build continues to supply its explicit module inventory. The repaired Linux job passed the documented check, header, and mixed-source project commands and produced `PS0_PROJECT:42:7:2`. The canonical README uses the verified compiler prefix and identifies the pre-cutover dependency of the legacy single-file build path. [Initial Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43528338894/job/132239522643)
