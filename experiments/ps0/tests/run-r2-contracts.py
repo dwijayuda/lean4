@@ -38,8 +38,10 @@ function annotated(n: Nat): Id Nat := do
   decreasing value
   do value := 0
   return value
-example : Id.run(annotated(41)) = 42 := rfl
-''', '', ''),
+#eval show IO Unit from do
+  unless Id.run(annotated(41)) == 42 do throw(IO.userError("loop measure changed execution"))
+  IO.println "PS0_LOOP_ANNOTATIONS:42"
+''', 'PS0_LOOP_ANNOTATIONS:42', ''),
     'V1-071': ('''public import Std.WP
 def effect (counter : IO.Ref Nat) : IO Nat := do
   counter.modify Nat.succ
