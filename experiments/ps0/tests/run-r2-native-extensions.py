@@ -29,6 +29,20 @@ run_cmd do
       syntaxTree.raw[1].getArgs.size == 1 && syntaxTree.raw[1][0].isOfKind ``Parser.Term.tuple do
     throwError "tuple partition changed"
 ''', None),
+    'PS0-N-EXT-01': ('''public meta import Lean
+meta def nativeQuote : Lean.MacroM(Lean.TSyntax `term) := `(term| f (x, y))
+open Lean in
+run_cmd do
+  let tree ← Elab.liftMacroM nativeQuote
+  let args := tree.raw[1].getArgs
+  unless args.size == 1 && args[0]!.isOfKind ``Parser.Term.tuple do
+    throwError "native tuple application was rewritten as a PS comma call"
+''', None),
+    'PS0-N-EXT-02': ('''public meta import Lean
+macro "hostOperand " x:psTerm : psTerm => pure x
+function sumPair(p: Nat × Nat): Nat := p.1 + p.2
+const bad: Nat := hostOperand sumPair (1, 2)
+''', r':4:\d+: error: PS0V1-CALL-GAP'),
     'PS0-P-META-02': ('''public import Lean
 private example : binop% HAdd.hAdd 20 22 = (42 : Nat) := rfl
 ''', None),
@@ -42,6 +56,18 @@ run_cmd do
 #print axioms proven
 #eval IO.println "PS0_DIAGNOSTIC_EVAL"
 #guard 4 + 5 == 9
+''', None),
+    'PS0-P-DOC-01': ('''public meta import Lean
+/-- A Markdown docstring. -/
+def markdownDocumented : Nat := 1
+set_option doc.verso true in
+/-- A *Verso* docstring. -/
+def versoDocumented : Nat := 2
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let some (.inl _) ← findInternalDocString? env ``markdownDocumented | throwError "Markdown missing"
+  let some (.inr _) ← findInternalDocString? env ``versoDocumented | throwError "Verso missing"
 ''', None),
     'PS0-P-RUN-01': ('''function say(): IO Unit := do
   IO.println("PS0_R2_IO:hello")
