@@ -8,6 +8,33 @@ import re
 import subprocess
 
 CASES = {
+    'PS0-P-EXT-03': ('''public import Lean
+public meta import Lean
+open Lean Elab Command
+class ReportCode (α : Type) where
+  code : Nat
+builtin_initialize
+  registerDerivingHandler ``ReportCode fun names => do
+    for name in names do
+      elabCommand (← `(instance : ReportCode $(mkIdent name) := ⟨42⟩))
+    return true
+builtin_initialize r2Marked : TagAttribute ← registerTagAttribute `r2_marked "R2 tag"
+inductive Derived where
+  | marker
+  deriving ReportCode
+@[r2_marked] def marker : Nat := 0
+declare_syntax_cat r2literal
+syntax "fortyTwo" : r2literal
+syntax "readR2 " r2literal : term
+macro_rules | `(readR2 fortyTwo) => `(42)
+def simplifiable : Nat := 42
+dsimproc_decl simplifyR2 (simplifiable) := fun _ => return .done (mkNatLit 42)
+private example : simplifiable = 42 := by dsimp only [simplifyR2]
+private example : readR2 fortyTwo = (42 : Nat) := rfl
+private example : ReportCode.code (α := Derived) = 42 := rfl
+run_cmd do
+  unless r2Marked.hasTag (← getEnv) ``marker do throwError "custom attribute missing"
+''', None),
     'PS0-P-EXT-01': ('''public meta import Lean
 syntax "identityTerm " term : term
 macro_rules | `(identityTerm $x) => pure x
