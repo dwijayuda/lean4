@@ -20794,10 +20794,31 @@
           }
         },
         "cleanR2BraceRebuild": {
-          "run": 43634543017,
+          "run": 43634773769,
           "source": "2f9787de086ffc0c8255fe383cb01df32d4a5521",
-          "runner": "13d50f5f5bb1e022a5d683137396c432007d52de",
-          "status": "IN_PROGRESS"
+          "runner": "1f6e910ef4adcaf6c3074e9249ef5a1e47ea47ec",
+          "status": "IN_PROGRESS",
+          "checkpointJob": 132569058353,
+          "checkpointStatus": "PASS",
+          "stageOneBaseJob": 132569177226,
+          "stageOneBaseStatus": "IN_PROGRESS",
+          "replacedRun": {
+            "run": 43634543017,
+            "job": 132568466838,
+            "runner": "13d50f5f5bb1e022a5d683137396c432007d52de",
+            "reason": "stale reference blob pin"
+          },
+          "markerFreeLoopProbe": {
+            "run": 43634594940,
+            "job": 132568507077,
+            "runner": "9a51e1c6a09ae81b43fca906cfd8d4190e532e9d",
+            "status": "FAIL",
+            "artifact": {
+              "id": 14129771671,
+              "bytes": 24665,
+              "digest": "sha256:ffe7104f9fd676188671f2ba665790fb79614210191bf28a6732564a2fec11a9"
+            }
+          }
         }
       }
     },
@@ -92696,10 +92717,31 @@
         }
       },
       "cleanR2BraceRebuild": {
-        "run": 43634543017,
+        "run": 43634773769,
         "source": "2f9787de086ffc0c8255fe383cb01df32d4a5521",
-        "runner": "13d50f5f5bb1e022a5d683137396c432007d52de",
-        "status": "IN_PROGRESS"
+        "runner": "1f6e910ef4adcaf6c3074e9249ef5a1e47ea47ec",
+        "status": "IN_PROGRESS",
+        "checkpointJob": 132569058353,
+        "checkpointStatus": "PASS",
+        "stageOneBaseJob": 132569177226,
+        "stageOneBaseStatus": "IN_PROGRESS",
+        "replacedRun": {
+          "run": 43634543017,
+          "job": 132568466838,
+          "runner": "13d50f5f5bb1e022a5d683137396c432007d52de",
+          "reason": "stale reference blob pin"
+        },
+        "markerFreeLoopProbe": {
+          "run": 43634594940,
+          "job": 132568507077,
+          "runner": "9a51e1c6a09ae81b43fca906cfd8d4190e532e9d",
+          "status": "FAIL",
+          "artifact": {
+            "id": 14129771671,
+            "bytes": 24665,
+            "digest": "sha256:ffe7104f9fd676188671f2ba665790fb79614210191bf28a6732564a2fec11a9"
+          }
+        }
       }
     }
   },
