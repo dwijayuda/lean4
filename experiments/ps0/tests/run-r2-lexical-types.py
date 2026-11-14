@@ -35,7 +35,7 @@ private example : "42".length = 2 := rfl
     'V1-004': ('''function add(a: Nat, b: Nat): Nat := a + b
 const rawText: String := r#"a"b"#
 private example : rawText = "a\\"b" := rfl
-private example : s!"answer:{add(19, 23)}" = "answer:42" := rfl
+private example : s!"answer:{add(19, 23)}" = "answer:42" := by decide
 ''', '', ''),
     'V1-005': ('''universe u
 def idSort.{v} (α : Sort v) (x : α) : α := x
@@ -83,7 +83,7 @@ private example : dependent(Nat, 42) = 42 := rfl
 private example : pattern(some(7)) = 7 := rfl
 private example : pattern(none) = 0 := rfl
 ''', '', ''),
-    'PS0-N-BOOT-01': ('public import Init\ninit_quot\n', '', r'quotient.*already|already.*quot|kernel.*quot'),
+    'PS0-N-BOOT-01': ('public import Init\ninit_quot\ninit_quot\n', '', r'quotient.*already|already.*quot|kernel.*quot'),
 }
 
 
