@@ -35,7 +35,7 @@ private example : "42".length = 2 := rfl
     'V1-004': ('''function add(a: Nat, b: Nat): Nat := a + b
 const rawText: String := r#"a"b"#
 private example : rawText = "a\\"b" := rfl
-private example : s!"answer:{add(19, 23)}" = "answer:42" := by decide
+#eval if s!"answer:{add 19 23}" == "answer:42" then pure Unit.unit else throw (IO.userError "interpolation")
 ''', '', ''),
     'V1-005': ('''universe u
 def idSort.{v} (α : Sort v) (x : α) : α := x
