@@ -19,7 +19,7 @@ NEGATIVE = {
     '24': r'PS0V1-CALL-NAMED|duplicate.*argument',
     '25': r'PS0V1-CALL-EMPTY:.*required',
     '26': r'PS0V1-CALL-EMPTY:.*required',
-    '28': r'unsolved goals|failed to prove|failed to discharge',
+    '28': r'unproved verification conditions for the contract',
     '31': r'PS0V1-CALL-GAP',
 }
 # Supplement the literal examples with observations that their stated oracles require.

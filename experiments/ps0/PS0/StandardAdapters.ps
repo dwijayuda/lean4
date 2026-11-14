@@ -94,10 +94,9 @@ private function nativeTerm(body : TSyntax `psTerm) : MacroM((TSyntax `term)) :=
 
 scoped syntax (name := ps0StandardCheck) (priority := 20000) "#check " psTerm : command
 
-macro_rules (kind := ps0StandardCheck)
-  | `(#check $body:psTerm) => do
-    let native ← nativeTerm body
-    `(#check $native:term)
+@[macro ps0StandardCheck] const lowerCheck : Macro := fun stx => do
+  let native ← PS0.Syntax.lower `psTerm stx[1]
+  return Syntax.node stx.getHeadInfo ``Lean.Parser.Command.check #[stx[0], native]
 
 declare_syntax_cat psDeclTail
 declare_syntax_cat psWhereClause

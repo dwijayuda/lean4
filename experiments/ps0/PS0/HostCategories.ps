@@ -395,9 +395,9 @@ const dataStructCtor : Parser :=
 
 const bracedDataStructFields : Parser :=
   node ``Lean.Parser.Command.structFields <|
-    withFn((fun parse => withResultOfFn(parse, fun source =>
+    withPosition(withFn((fun parse => withResultOfFn(parse, fun source =>
       mkNullNode(source.getArgs.map(fun field => field[0])))),
-      (many1(group((dataStructField >> optional((symbol ";" <|> symbol ",")))))))
+      (many1(group((checkColGe >> dataStructField >> optional((symbol ";" <|> symbol ","))))))))
 
 const dataStructBody : Parser :=
   withFn((fun parse ctx initial =>
