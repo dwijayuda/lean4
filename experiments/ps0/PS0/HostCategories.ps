@@ -191,20 +191,22 @@ const loopBasicFun : Parser :=
 -- The positional call adapter emits a native pattern application. In
 -- particular an empty application must reach Lean's pattern arity check.
 @[run_parser_attribute_hooks] const patternCall : Parser :=
-  withResultOf(
+  withFn((fun parse => withResultOfFn(parse, fun source =>
+    let info := match source.getRange? with
+      | some span => .synthetic span.start span.stop false
+      | none => .none
+    .node(info, ``Lean.Parser.Term.app, #[source[0], mkNullNode(source[2].getSepArgs)]))),
     (node `PS0.DoLayout.patternCall <|
       (PS0.Operators.adjacentIdentifier <|> Lean.Parser.Term.dotIdent) >>
         checkNoWsBefore >> "(" >>
-        withoutPosition((sepBy((categoryParser `psMatchPattern 0), ",", "," ppSpace, allowTrailingSep))) >>
-        ")"),
-    fun source => .node(source.getHeadInfo, ``Lean.Parser.Term.app,
-      #[source[0], mkNullNode(source[2].getSepArgs)]))
+        withoutPosition((sepBy((categoryParser `psMatchPattern 0), ",", ("," >> ppSpace), true))) >>
+        ")"))
 
 private const matchPatternAlternative : Parser :=
   node ``Lean.Parser.Term.matchAlt <|
     "| " >> ppIndent(
       sepBy1((sepBy1((categoryParser `psMatchPattern 0), ", ")), " | ") >>
-        Lean.Parser.Term.darrow >>
+        Lean.Parser.darrow >>
         checkColGe "alternative right-hand-side to start in a column greater than or equal to the corresponding '|'" >>
         categoryParser `psTerm 0)
 
@@ -217,8 +219,8 @@ private const matchPatternAlternatives : Parser :=
       optional((operands #[(`term, `psTerm)] Lean.Parser.Term.motive)) >>
       sepBy1((operands #[(`term, `psTerm)] Lean.Parser.Term.matchDiscr), ", ") >>
       " with" >> ppDedent(
-        (withResultOf((node `PS0.DoLayout.bracedAlternatives <|
-          "{" >> matchPatternAlternatives >> "}"), fun source => source[1])) <|>
+        withFn((fun parse => withResultOfFn(parse, fun source => source[1])),
+          (node `PS0.DoLayout.bracedAlternatives <| "{" >> matchPatternAlternatives >> "}")) <|>
         matchPatternAlternatives)
 
 @[run_parser_attribute_hooks] const patternLambda : Parser :=
@@ -404,8 +406,8 @@ const dataConstructor : Parser :=
       ppGroup((Lean.Parser.Command.declModifiers true >> rawIdent >> dataSignature))
 
 private const dataConstructors : Parser :=
-  withResultOf((node `PS0.DoLayout.bracedConstructors <| "{" >> many dataConstructor >> "}"),
-    fun source => source[1]) <|> many dataConstructor
+  withFn((fun parse => withResultOfFn(parse, fun source => source[1])),
+    (node `PS0.DoLayout.bracedConstructors <| "{" >> many dataConstructor >> "}")) <|> many dataConstructor
 
 const dataDeclRecovery : Parser where
   fn := andthenFn(
