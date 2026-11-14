@@ -3743,10 +3743,25 @@
       "sourceOrSetup": "Compatible imported native/Lake extension",
       "requiredInterpretation": "Full extension availability, not automatic approved assumptions.",
       "section": "§8A, §14",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-P-ENV-01",
+      "qualifiedCommit": "a2cfbbbf917685cbf272486627c72187441302cf",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43620291836",
+      "evidence": {
+        "jobId": 132524257732,
+        "runner": "d3c70c6d3d85817248baaa7105a35bcf918a5056",
+        "artifact": {
+          "id": 14123779578,
+          "name": "ps0-r2-native-extensions-evidence-43620291836",
+          "digest": "sha256:991e25e3e031d78b2d02bc41fcc748137248b29babd78663ec807b55a37d36fe",
+          "bytes": 7978194
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "730d15e14790df99ed2cecdaf520681e8d463791d4246a7fa481d9c19f4014c2",
+        "caseSha256": "732dfc2907f433004318f2643418165f90d89badef54c1c38b3bfca01254ebb6"
+      }
     },
     {
       "id": "PS0-N-CALL-01",
@@ -8982,12 +8997,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 36,
+    "PENDING": 35,
     "featureFamiliesPending": 29,
     "boundaryWitnessesPending": 5,
-    "acceptanceCasesPending": 2,
+    "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 206,
+    "PASS": 207,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19679,7 +19694,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 36,
+    "obligationsPending": 35,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -27460,6 +27475,30 @@
         ],
         "fixtureCases": {
           "V1-083": "73ebe59ef895de932903ddf6e512191905bd9b4031ddde4c64cf0eed9f132896"
+        }
+      },
+      {
+        "summary": "With explicit Lake imports, PS0 check loaded the native Lake plugin. The package and library commands elaborated and the generated configuration satisfied the package-name, version and target-roots equations.",
+        "source": "a2cfbbbf917685cbf272486627c72187441302cf",
+        "runner": "d3c70c6d3d85817248baaa7105a35bcf918a5056",
+        "run": 43620291836,
+        "job": 132524257732,
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "730d15e14790df99ed2cecdaf520681e8d463791d4246a7fa481d9c19f4014c2",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14123779578,
+          "name": "ps0-r2-native-extensions-evidence-43620291836",
+          "digest": "sha256:991e25e3e031d78b2d02bc41fcc748137248b29babd78663ec807b55a37d36fe",
+          "bytes": 7978194
+        },
+        "passed": [
+          "PS0-P-ENV-01"
+        ],
+        "fixtureCases": {
+          "PS0-P-ENV-01": "732dfc2907f433004318f2643418165f90d89badef54c1c38b3bfca01254ebb6"
         }
       }
     ]
@@ -98743,6 +98782,30 @@
       ],
       "fixtureCases": {
         "V1-083": "73ebe59ef895de932903ddf6e512191905bd9b4031ddde4c64cf0eed9f132896"
+      }
+    },
+    {
+      "summary": "With explicit Lake imports, PS0 check loaded the native Lake plugin. The package and library commands elaborated and the generated configuration satisfied the package-name, version and target-roots equations.",
+      "source": "a2cfbbbf917685cbf272486627c72187441302cf",
+      "runner": "d3c70c6d3d85817248baaa7105a35bcf918a5056",
+      "run": 43620291836,
+      "job": 132524257732,
+      "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "730d15e14790df99ed2cecdaf520681e8d463791d4246a7fa481d9c19f4014c2",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14123779578,
+        "name": "ps0-r2-native-extensions-evidence-43620291836",
+        "digest": "sha256:991e25e3e031d78b2d02bc41fcc748137248b29babd78663ec807b55a37d36fe",
+        "bytes": 7978194
+      },
+      "passed": [
+        "PS0-P-ENV-01"
+      ],
+      "fixtureCases": {
+        "PS0-P-ENV-01": "732dfc2907f433004318f2643418165f90d89badef54c1c38b3bfca01254ebb6"
       }
     }
   ]
