@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 23,
-    "featureFamiliesPending": 17,
+    "PENDING": 20,
+    "featureFamiliesPending": 14,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 219,
+    "PASS": 222,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 23,
+    "obligationsPending": 20,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -22046,6 +22046,37 @@
           "V1-091": "d5dc991144783676d54a57e029773c9add478c68226b2f70ab4539b731a7bc01",
           "V1-092": "3d666186161a4b7cb495b0fdb43045dde2a33197aadeb50a24b13b03b2b797f3",
           "V1-093": "8ecd6185b2ec180ab39aaf61988eb3f29e634fa5a35d5f346748a7476cbc48c9"
+        }
+      },
+      {
+        "summary": "Linux checked explicit PS capture and native quotation ownership, import assertions with recall and the pinned version, and optional Lake command registration with an import-absence rejection.",
+        "source": "cc8c8263daf639281b8119a26bcd99f4e85fa312",
+        "runner": "4abed6d95196bcc2513f9449c6bbea33891ca0d0",
+        "run": 43622576344,
+        "job": 132531293024,
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "d3fc3b1744304ed0d5ae38a26bd7fdf7289a6517c455c030ea578459a5714b16",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14124379251,
+          "name": "ps0-r2-native-extensions-evidence-43622576344",
+          "digest": "sha256:a2e792a51288badfae7efc04d9e167c428c4a710ed7f2d3cbd4ec480d9285109",
+          "bytes": 16126243
+        },
+        "passed": [
+          "V1-077",
+          "V1-095",
+          "V1-099"
+        ],
+        "fixtureCases": {
+          "V1-077": "e2332e0d256efaea8a2bb92363021ff9bedf80fc62c6e77619e3feb63ceca828",
+          "V1-095": "5caa13f5d24cf151d7f88baaeb44beaa1d1156ef5d0debf12e4e52d897b4ce69",
+          "V1-099": "85b32d8f08b0ef43f6cbe06f41f56673b47d67395cbe4072741dbab1de97a7ef"
+        },
+        "supportingCases": {
+          "V1-099-no-import": "76dfd4210eaff54180d2f02089aff008e49bc63ccd16a3ed8d2e16c49098da00"
         }
       }
     ]
@@ -93563,6 +93594,37 @@
         "V1-091": "d5dc991144783676d54a57e029773c9add478c68226b2f70ab4539b731a7bc01",
         "V1-092": "3d666186161a4b7cb495b0fdb43045dde2a33197aadeb50a24b13b03b2b797f3",
         "V1-093": "8ecd6185b2ec180ab39aaf61988eb3f29e634fa5a35d5f346748a7476cbc48c9"
+      }
+    },
+    {
+      "summary": "Linux checked explicit PS capture and native quotation ownership, import assertions with recall and the pinned version, and optional Lake command registration with an import-absence rejection.",
+      "source": "cc8c8263daf639281b8119a26bcd99f4e85fa312",
+      "runner": "4abed6d95196bcc2513f9449c6bbea33891ca0d0",
+      "run": 43622576344,
+      "job": 132531293024,
+      "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "d3fc3b1744304ed0d5ae38a26bd7fdf7289a6517c455c030ea578459a5714b16",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14124379251,
+        "name": "ps0-r2-native-extensions-evidence-43622576344",
+        "digest": "sha256:a2e792a51288badfae7efc04d9e167c428c4a710ed7f2d3cbd4ec480d9285109",
+        "bytes": 16126243
+      },
+      "passed": [
+        "V1-077",
+        "V1-095",
+        "V1-099"
+      ],
+      "fixtureCases": {
+        "V1-077": "e2332e0d256efaea8a2bb92363021ff9bedf80fc62c6e77619e3feb63ceca828",
+        "V1-095": "5caa13f5d24cf151d7f88baaeb44beaa1d1156ef5d0debf12e4e52d897b4ce69",
+        "V1-099": "85b32d8f08b0ef43f6cbe06f41f56673b47d67395cbe4072741dbab1de97a7ef"
+      },
+      "supportingCases": {
+        "V1-099-no-import": "76dfd4210eaff54180d2f02089aff008e49bc63ccd16a3ed8d2e16c49098da00"
       }
     }
   ]
