@@ -1203,10 +1203,25 @@
       "id": "V1-050",
       "feature": "Inductive/coinductive fixed points and predicate declarations",
       "sourceBasis": "L-CMD, L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-050",
+      "qualifiedCommit": "dc6cbc9d43eab63a9fef7e477675f0cac110f430",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43623680394",
+      "evidence": {
+        "jobId": 132534712329,
+        "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+        "artifact": {
+          "id": 14125301694,
+          "name": "ps0-r2-recursion-do-evidence-43623680394",
+          "digest": "sha256:d3f59fe7cb61efc8f987911b9466a531c401b3cf3454fd76c004c71b981d51e0",
+          "bytes": 28641
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "4ec27d7c131c1d580503736a337d1a7183715b497df017f04cfc4506dd73510c",
+        "caseSha256": "a8500a490e3bbfeafba985757752922f6af2d348bc2e002077931c02bd260b1d"
+      }
     },
     {
       "id": "V1-051",
@@ -2219,10 +2234,25 @@
       "id": "V1-096",
       "feature": "Documentation, Verso, tags, recommendations and error explanations",
       "sourceBasis": "L-TERM, L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-096",
+      "qualifiedCommit": "c24423415400cd2c39c5bcb71019899fc0db0352",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43623680410",
+      "evidence": {
+        "jobId": 132534712647,
+        "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+        "artifact": {
+          "id": 14125925424,
+          "name": "ps0-r2-native-extensions-evidence-43623680410",
+          "digest": "sha256:fd41a8ab42f94e45f1397893aadc53352d3c66727d425d5cc3fd74e28b3ebef0",
+          "bytes": 16127986
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "cb41313faf244bf71ba8d78a629ee61748a0731a7cd2ef5b1ee38bff917b6f5b",
+        "caseSha256": "74102e56db3b495f3857a7bdb4a4e40a6120f511df0dad973ae548951328236a"
+      }
     },
     {
       "id": "V1-097",
@@ -2237,10 +2267,25 @@
       "id": "V1-098",
       "feature": "Pretty printers, editor/server and compiler-source library capabilities",
       "sourceBasis": "L-LEAN",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-098",
+      "qualifiedCommit": "c24423415400cd2c39c5bcb71019899fc0db0352",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43623680410",
+      "evidence": {
+        "jobId": 132534712647,
+        "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+        "artifact": {
+          "id": 14125925424,
+          "name": "ps0-r2-native-extensions-evidence-43623680410",
+          "digest": "sha256:fd41a8ab42f94e45f1397893aadc53352d3c66727d425d5cc3fd74e28b3ebef0",
+          "bytes": 16127986
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "cb41313faf244bf71ba8d78a629ee61748a0731a7cd2ef5b1ee38bff917b6f5b",
+        "caseSha256": "f32063980c68352183ab51b32faf7c2dec1ad79c53b62d9f3193176c2df0938b"
+      }
     },
     {
       "id": "V1-099",
@@ -9267,12 +9312,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 17,
-    "featureFamiliesPending": 11,
+    "PENDING": 14,
+    "featureFamiliesPending": 8,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 225,
+    "PASS": 228,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19964,7 +20009,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 17,
+    "obligationsPending": 14,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -28041,6 +28086,56 @@
         "fixtureCases": {
           "V1-069": "e6bf55395374040535f20185478c62b45963a681062ac2188017ab9eb24b86da",
           "V1-070": "48c4c47f0e76f297aa5f999055f3192b83988d1d624d404cd302e52a94338c03"
+        }
+      },
+      {
+        "summary": "Linux checked inductive and coinductive predicate declarations plus both fixed-point modifiers and their unfolding equations.",
+        "source": "dc6cbc9d43eab63a9fef7e477675f0cac110f430",
+        "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+        "run": 43623680394,
+        "job": 132534712329,
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixture": "tests/run-r2-recursion-do.py",
+        "fixtureSha256": "4ec27d7c131c1d580503736a337d1a7183715b497df017f04cfc4506dd73510c",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14125301694,
+          "name": "ps0-r2-recursion-do-evidence-43623680394",
+          "digest": "sha256:d3f59fe7cb61efc8f987911b9466a531c401b3cf3454fd76c004c71b981d51e0",
+          "bytes": 28641
+        },
+        "passed": [
+          "V1-050"
+        ],
+        "fixtureCases": {
+          "V1-050": "a8500a490e3bbfeafba985757752922f6af2d348bc2e002077931c02bd260b1d"
+        }
+      },
+      {
+        "summary": "Linux retained Markdown and Verso documentation and checked a spelling recommendation and error explanation registration. Pretty-printing, editor server and LCNF declarations were also exercised.",
+        "source": "c24423415400cd2c39c5bcb71019899fc0db0352",
+        "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+        "run": 43623680410,
+        "job": 132534712647,
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "cb41313faf244bf71ba8d78a629ee61748a0731a7cd2ef5b1ee38bff917b6f5b",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14125925424,
+          "name": "ps0-r2-native-extensions-evidence-43623680410",
+          "digest": "sha256:fd41a8ab42f94e45f1397893aadc53352d3c66727d425d5cc3fd74e28b3ebef0",
+          "bytes": 16127986
+        },
+        "passed": [
+          "V1-096",
+          "V1-098"
+        ],
+        "fixtureCases": {
+          "V1-096": "74102e56db3b495f3857a7bdb4a4e40a6120f511df0dad973ae548951328236a",
+          "V1-098": "f32063980c68352183ab51b32faf7c2dec1ad79c53b62d9f3193176c2df0938b"
         }
       }
     ]
@@ -99620,6 +99715,56 @@
       "fixtureCases": {
         "V1-069": "e6bf55395374040535f20185478c62b45963a681062ac2188017ab9eb24b86da",
         "V1-070": "48c4c47f0e76f297aa5f999055f3192b83988d1d624d404cd302e52a94338c03"
+      }
+    },
+    {
+      "summary": "Linux checked inductive and coinductive predicate declarations plus both fixed-point modifiers and their unfolding equations.",
+      "source": "dc6cbc9d43eab63a9fef7e477675f0cac110f430",
+      "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+      "run": 43623680394,
+      "job": 132534712329,
+      "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+      "fixture": "tests/run-r2-recursion-do.py",
+      "fixtureSha256": "4ec27d7c131c1d580503736a337d1a7183715b497df017f04cfc4506dd73510c",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14125301694,
+        "name": "ps0-r2-recursion-do-evidence-43623680394",
+        "digest": "sha256:d3f59fe7cb61efc8f987911b9466a531c401b3cf3454fd76c004c71b981d51e0",
+        "bytes": 28641
+      },
+      "passed": [
+        "V1-050"
+      ],
+      "fixtureCases": {
+        "V1-050": "a8500a490e3bbfeafba985757752922f6af2d348bc2e002077931c02bd260b1d"
+      }
+    },
+    {
+      "summary": "Linux retained Markdown and Verso documentation and checked a spelling recommendation and error explanation registration. Pretty-printing, editor server and LCNF declarations were also exercised.",
+      "source": "c24423415400cd2c39c5bcb71019899fc0db0352",
+      "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+      "run": 43623680410,
+      "job": 132534712647,
+      "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "cb41313faf244bf71ba8d78a629ee61748a0731a7cd2ef5b1ee38bff917b6f5b",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14125925424,
+        "name": "ps0-r2-native-extensions-evidence-43623680410",
+        "digest": "sha256:fd41a8ab42f94e45f1397893aadc53352d3c66727d425d5cc3fd74e28b3ebef0",
+        "bytes": 16127986
+      },
+      "passed": [
+        "V1-096",
+        "V1-098"
+      ],
+      "fixtureCases": {
+        "V1-096": "74102e56db3b495f3857a7bdb4a4e40a6120f511df0dad973ae548951328236a",
+        "V1-098": "f32063980c68352183ab51b32faf7c2dec1ad79c53b62d9f3193176c2df0938b"
       }
     }
   ]
