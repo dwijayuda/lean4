@@ -16,6 +16,14 @@ CASES = {
 example : value = 42 := rfl
 example : (let +zeta x := 42; x) = 42 := rfl
 ''', (), ''),
+    'V1-037': ('''def viaAlias : Nat :=
+  let_fun x := 41
+  x + 1
+def viaHave : Nat :=
+  have x := 41
+  x + 1
+example : viaAlias = viaHave ∧ viaHave = 42 := ⟨rfl, rfl⟩
+''', (), ''),
     'V1-038': ('''structure Point where { x: Nat; y: Nat }
 def point : Point := { x := 20, y := 22 }
 function move(x: Nat): Point := { point with x }
@@ -58,6 +66,26 @@ function no(n: Nat): Bool := match n with
 end
 example : pred(7) = 6 := rfl
 example : yes(2) = true ∧ no(3) = true := ⟨rfl, rfl⟩
+''', (), ''),
+    'V1-045': ('''function countDown(n: Nat): Nat :=
+  let rec go (k : Nat) : Nat := match k with
+    | 0 => 0
+    | m + 1 => 1 + go(m)
+  go(n)
+function useWhere(n: Nat): Nat := step(n)
+where {
+  def step(k: Nat): Nat := k + 1
+}
+example : countDown(4) = 4 := rfl
+example : useWhere(4) = 5 := rfl
+''', (), ''),
+    'V1-051': ('''structure Pair where { x: Nat; y: Nat }
+def nativePair : Id Pair := do
+  let x := 20
+  pure { x, y := 22 }
+def bracedPair : Id Pair := do { let x := 20; pure { x, y := 22 } }
+example : (Id.run(nativePair)).x = (Id.run(bracedPair)).x ∧
+    (Id.run(nativePair)).y = 22 := by { constructor; rfl; rfl }
 ''', (), ''),
     'V1-046': ('''function length(xs: List Nat): Nat := match xs with
   | [] => 0
@@ -229,7 +257,7 @@ const bad: Id Nat := do
 for family, case in {
     'V1-047': 'PS0-P-REC-01', 'V1-048': 'PS0-P-REC-02',
     'V1-049': 'PS0-P-REC-03', 'V1-050': 'PS0-P-REC-04',
-    'V1-051': 'PS0-P-DO-01', 'V1-056': 'PS0-P-DO-02',
+    'V1-056': 'PS0-P-DO-02',
     'V1-057': 'PS0-P-DO-03', 'V1-059': 'PS0-P-DO-05',
     'V1-060': 'PS0-P-DO-06',
 }.items():
@@ -251,6 +279,8 @@ def main():
         log = result.stdout
         (args.output / (case + '.log')).write_text(log, encoding='utf-8')
         ok = result.returncode == 0
+        if case == 'V1-037':
+            ok = ok and 'let_fun' in log and 'deprecated' in log
         if diagnostic:
             lines = {i for i, text in enumerate(source.splitlines(), 1) if any(a in text for a in anchors)}
             matched = {int(m[1]) for text in log.splitlines()
