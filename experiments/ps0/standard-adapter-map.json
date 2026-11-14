@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 240,
-    "featureFamiliesPending": 100,
-    "boundaryWitnessesPending": 31,
-    "acceptanceCasesPending": 109,
-    "note": "No case status is changed by the native operator checkpoint. Historical finite PASS cases remain source-pinned.",
-    "PASS": 2,
+    "PENDING": 92,
+    "featureFamiliesPending": 83,
+    "boundaryWitnessesPending": 5,
+    "acceptanceCasesPending": 4,
+    "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
+    "PASS": 150,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 240,
+    "obligationsPending": 92,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -19881,7 +19881,1330 @@
       "status": "PASS",
       "compilerCorpusGrammarMigrationComplete": true,
       "verified_execution": false
-    }
+    },
+    "canonicalCompilerSourceCutover": {
+      "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+      "tree": "d788360aa9dc4519efbf402b12f8b42487b9ff96",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "d5ccec6831ef55f156c4ee99d695e02953c1d4d5",
+      "runnerPr": 263,
+      "run": 43414525459,
+      "job": 132158734460,
+      "phase": "independent-audit",
+      "status": "PASS",
+      "observedAt": "2026-11-13T20:48:33Z",
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "canonicalSourceCutoverComplete": true,
+      "release": {
+        "id": 444127839,
+        "url": "https://github.com/dwijayuda/pskernel/releases/tag/ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "tag": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "assets": [
+          {
+            "id": 743335210,
+            "name": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64.zip",
+            "bytes": 384532453,
+            "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd"
+          },
+          {
+            "id": 743335211,
+            "name": "SHA256SUMS",
+            "bytes": 117,
+            "digest": "sha256:c970015b96b415f53d2462a96439b0e9f46fb87fd7e98c79eaf6b7e21adc5753"
+          }
+        ],
+        "publication": {
+          "run": 43414260939,
+          "job": 131848065417,
+          "runner": "c500c564395917f6c659c733197e04c829e4286f",
+          "artifact": 14031680180,
+          "digest": "sha256:0110423260a1b120942e5d70c89bc8077dd5587f2293d2ad082a7421eb410483"
+        }
+      },
+      "previousCanonicalRun": 43317326789,
+      "sourceGate": {
+        "job": 131848943017,
+        "status": "PASS"
+      },
+      "stageOneLink": {
+        "job": 131987533313,
+        "artifact": {
+          "id": 14054014198,
+          "digest": "sha256:237a5b835062f3ab17d7ea39ae06785af058c7749daf86ab05a134906dae2b5e",
+          "bytes": 284946723,
+          "name": "ps0-selfhost-stage-one-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131849064730,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14045647072,
+              "digest": "sha256:a7702c7dd12aa274cc73589cece6965fe66f1f09dc9b34dbfbc579414ab216bb",
+              "bytes": 451625486,
+              "name": "ps0-compiler-checkpoint-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14045916866,
+              "digest": "sha256:b8dd581469ec55a68152449d85585734ee8d0906d5cdf17c4d867554496edd9b",
+              "bytes": 8240822,
+              "name": "ps0-compiler-slice-evidence-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131935735880,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14049467077,
+              "digest": "sha256:7980bafc1a0a4e5921bd703fb60b6d8827e20502c1a27426adacbb935709b14d",
+              "bytes": 867701911,
+              "name": "ps0-compiler-checkpoint-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14049526956,
+              "digest": "sha256:06ecdf24e7d84f7186279375b1c4971c7b4a115bb906e90653a29e1ab58ab4de",
+              "bytes": 8259799,
+              "name": "ps0-compiler-slice-evidence-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131966340940,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14053066175,
+              "digest": "sha256:08660f60f498c6c167f86f50bc27e4a7fb3c2a0e08811d17fa4af52cec21902c",
+              "bytes": 1088117263,
+              "name": "ps0-compiler-checkpoint-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14052806261,
+              "digest": "sha256:39eb5a47221174af23f6ba7e498f727dcb3ddc06114c89683051efe5681b16dc",
+              "bytes": 8268476,
+              "name": "ps0-compiler-slice-evidence-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131982100410,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14053132799,
+              "digest": "sha256:4ad5120e2feb14283f24c8ab2c75dea0036223b9eb9754bead9003b4e2375e56",
+              "bytes": 1101799646,
+              "name": "ps0-compiler-checkpoint-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14053607744,
+              "digest": "sha256:c7805c0b3df3d4a734a00bc83ea0a02aafe92c3eb92eb9e39ea1b05dc154fd67",
+              "bytes": 8268936,
+              "name": "ps0-compiler-slice-evidence-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ]
+      },
+      "stageTwoLink": {
+        "job": 132147282879,
+        "artifact": {
+          "id": 14074263951,
+          "digest": "sha256:3de0d4290ba7f79371211ae9c9ea71e2661ead75a49bcd424644196d8b90b50a",
+          "bytes": 284946744,
+          "name": "ps0-selfhost-stage-two-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131999194719,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14069140151,
+              "digest": "sha256:4e3d1ff5cb489fbff9150ff7f32d431670a918498276dd69c0d3e98e38b66c5d",
+              "bytes": 451626738,
+              "name": "ps0-compiler-checkpoint-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14068336416,
+              "digest": "sha256:97396d720b14f859f17056708b9c1d60c2356009ba4ebfd6c426961e6a4231a0",
+              "bytes": 8240759,
+              "name": "ps0-compiler-slice-evidence-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132100789446,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14071099560,
+              "digest": "sha256:c09a20d26d1d94ff49fb9a738552bc15e102027c9d7157cf5c589f132a83ac57",
+              "bytes": 867686736,
+              "name": "ps0-compiler-checkpoint-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14072087704,
+              "digest": "sha256:e311a22a12825458069c3922432c319ab4a342cec210209b17bcac439857a4f6",
+              "bytes": 8259716,
+              "name": "ps0-compiler-slice-evidence-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132131536999,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14073358340,
+              "digest": "sha256:92ac3f64484aaf8574a61c259628506bd03a646a57f51a1b3b0303070b7eaafa",
+              "bytes": 1088130578,
+              "name": "ps0-compiler-checkpoint-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073273481,
+              "digest": "sha256:817f5b870a5dc430eeec01a54da062d63d3ba8505d152af7fd6c97da6baece0e",
+              "bytes": 8268465,
+              "name": "ps0-compiler-slice-evidence-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132142893867,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14074366235,
+              "digest": "sha256:cc6890aefd1f994ca0bb5384e5db2f71f17ec034271ded6c2be5b63a6dead468",
+              "bytes": 1101751560,
+              "name": "ps0-compiler-checkpoint-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073678228,
+              "digest": "sha256:f8dcba4c61ebb1981c65ffc7219d1b9a2b2af22d1f138d58e57b40d5e1a8926d",
+              "bytes": 8268927,
+              "name": "ps0-compiler-slice-evidence-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ],
+        "fixedPoint": {
+          "status": "PASS",
+          "modules": 2569,
+          "changedC": [],
+          "changedPublicOlean": []
+        }
+      },
+      "independentAudit": {
+        "job": 132158734460,
+        "artifact": {
+          "id": 14074514400,
+          "digest": "sha256:68cda6675b46ddc536c40cf751dcd2ff4ccb4c5a49899c1e7bcb0dfec3e60a7c",
+          "bytes": 654,
+          "name": "ps0-canonical-independent-audit-43414525459"
+        },
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      },
+      "jobs": [
+        {
+          "id": 131848943017,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 131849064730,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 131935735880,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 131966340940,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 131982100410,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 131987533313,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 131999194719,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132100789446,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132131536999,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132142893867,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132147282879,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 132158734460,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "r2DeclarationQualification": {
+      "source": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+      "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+      "run": 43528789812,
+      "job": 132241045882,
+      "artifact": {
+        "id": 14085954260,
+        "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+        "bytes": 11021
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "referenceSha256": "34bc630e14af32cb65944656cffe98d1791787cbea4aaf61661d8ee9f1a57a26",
+      "compiler": {
+        "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+        "run": 43414525459,
+        "stageTwoJob": 132147282879,
+        "artifact": 14074263951,
+        "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+      },
+      "fixture": "tests/v1/r2_declarations.ps",
+      "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+      "runtime": "PS0_R2_DECLARATIONS:3:5:1:5:true:0:1:0",
+      "projectRuntime": "PS0_PROJECT:42:7:2",
+      "initialFailure": {
+        "source": "1da2e8cd68c3f2b32aafad94c7267dcb5ddb5ffc",
+        "runner": "6f2f89878b797ec0097e2310bff5aace3c289672",
+        "run": 43528338894,
+        "job": 132239522643,
+        "artifact": 14085923297,
+        "digest": "sha256:17f2ee17fc3db2075bf436a7b531b43cd17a65441e7c72ac4465389384cdbaf6"
+      },
+      "cases": [
+        {
+          "id": "PS0-P-DECL-01",
+          "declaration": "count",
+          "oracle": "Native def with zero binders and rfl value 3"
+        },
+        {
+          "id": "PS0-P-DECL-02",
+          "declaration": "add",
+          "oracle": "Two explicit binders and rfl curried application"
+        },
+        {
+          "id": "PS0-P-DECL-03",
+          "declaration": "tick",
+          "oracle": "Exactly one required explicit Unit binder and successful empty call"
+        },
+        {
+          "id": "PS0-P-DECL-04",
+          "declaration": "f",
+          "oracle": "Two native explicit binders and rfl sum"
+        },
+        {
+          "id": "PS0-P-DECL-05",
+          "declaration": "same",
+          "oracle": "Implicit, instance, explicit, explicit order and rfl result"
+        },
+        {
+          "id": "PS0-P-DECL-06",
+          "declaration": "choose",
+          "oracle": "Explicit, instance, explicit dependent order and rfl Fin result"
+        },
+        {
+          "id": "PS0-P-DECL-07",
+          "declaration": "value",
+          "oracle": "Native opaque declaration and runtime body result 1"
+        },
+        {
+          "id": "PS0-P-DECL-08",
+          "declaration": "defaultCount",
+          "oracle": "Native opaque declaration with omitted body and runtime synthesized 0"
+        },
+        {
+          "id": "PS0-P-DECL-09",
+          "declaration": "assumed",
+          "oracle": "Native axiom declaration classified separately from checked proofs"
+        },
+        {
+          "id": "PS0-P-DECL-10",
+          "declaration": "pick",
+          "oracle": "Noncomputable definition with implicit sort and explicit Nonempty witness"
+        }
+      ]
+    },
+    "r2CallQualification": {
+      "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+      "run": 43534219401,
+      "job": 132259155460,
+      "artifact": {
+        "id": 14088508870,
+        "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+        "bytes": 24822
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c",
+      "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+      "baseline": {
+        "passed": [
+          "PS0-N-CALL-01",
+          "PS0-N-CALL-02",
+          "PS0-N-CALL-03",
+          "PS0-N-CALL-04",
+          "PS0-N-CALL-05",
+          "PS0-N-CALL-06",
+          "PS0-N-CALL-07",
+          "PS0-N-CALL-08",
+          "PS0-N-CALL-09",
+          "PS0-N-CALL-10",
+          "PS0-N-CALL-11",
+          "PS0-N-CALL-12a",
+          "PS0-N-CALL-12b"
+        ],
+        "failures": [
+          "positive"
+        ],
+        "fixture_sha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c",
+        "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+      },
+      "passed": [
+        "PS0-P-CALL-02",
+        "PS0-P-CALL-03",
+        "PS0-P-CALL-04",
+        "PS0-P-CALL-05",
+        "PS0-P-CALL-06",
+        "PS0-P-CALL-07",
+        "PS0-P-CALL-08",
+        "PS0-P-CALL-09",
+        "PS0-P-CALL-10",
+        "PS0-N-CALL-01",
+        "PS0-N-CALL-02",
+        "PS0-N-CALL-03",
+        "PS0-N-CALL-04",
+        "PS0-N-CALL-05",
+        "PS0-N-CALL-06",
+        "PS0-N-CALL-07",
+        "PS0-N-CALL-08",
+        "PS0-N-CALL-09",
+        "PS0-N-CALL-10",
+        "PS0-N-CALL-11",
+        "PS0-N-CALL-12a",
+        "PS0-N-CALL-12b"
+      ],
+      "fullCorpus": {
+        "run": 43534267147,
+        "runner": "343c6939709fb62d3af6eef0cdddf1b7fdb4f6a6",
+        "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+        "status": "PASS",
+        "runAttempt": 1,
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "jobs": [
+          {
+            "id": 132259472042,
+            "name": "checkpoint-qualification",
+            "conclusion": "success"
+          },
+          {
+            "id": 132259628164,
+            "name": "stage-one-base",
+            "conclusion": "success"
+          },
+          {
+            "id": 132290353966,
+            "name": "stage-one-compiler-early",
+            "conclusion": "success"
+          },
+          {
+            "id": 132302972653,
+            "name": "stage-one-compiler-middle",
+            "conclusion": "success"
+          },
+          {
+            "id": 132311056367,
+            "name": "stage-one-compiler",
+            "conclusion": "success"
+          },
+          {
+            "id": 132314225341,
+            "name": "stage-one",
+            "conclusion": "success"
+          },
+          {
+            "id": 132320943319,
+            "name": "stage-two-base",
+            "conclusion": "success"
+          },
+          {
+            "id": 132366025472,
+            "name": "stage-two-compiler-early",
+            "conclusion": "success"
+          },
+          {
+            "id": 132379539951,
+            "name": "stage-two-compiler-middle",
+            "conclusion": "success"
+          },
+          {
+            "id": 132387033117,
+            "name": "stage-two-compiler",
+            "conclusion": "success"
+          },
+          {
+            "id": 132388696712,
+            "name": "stage-two",
+            "conclusion": "success"
+          },
+          {
+            "id": 132394382258,
+            "name": "independent-audit",
+            "conclusion": "success"
+          }
+        ],
+        "stages": [
+          {
+            "job": 132314225341,
+            "id": 14097057738,
+            "name": "ps0-selfhost-stage-one-c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5-43534267147",
+            "digest": "sha256:00cf00a76bc7e4cc516182d9456dd667e0e39fda178749e94663b976b51db026",
+            "bytes": 285002179
+          },
+          {
+            "job": 132388696712,
+            "id": 14107360730,
+            "name": "ps0-selfhost-stage-two-c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5-43534267147",
+            "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+            "bytes": 285002372
+          }
+        ],
+        "audit": {
+          "job": 132394382258,
+          "id": 14107121506,
+          "name": "ps0-canonical-independent-audit-43534267147",
+          "digest": "sha256:3442f180565a34576350521c01b160eeb359db9291be43f02d714291a64eb7cf",
+          "bytes": 655,
+          "receipt": {
+            "schema": "ps0-independent-fixed-point-artifact-audit/1",
+            "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+            "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+            "modules": 2569,
+            "stages": 2,
+            "ps_sources_rehashed": 5138,
+            "mapped_censuses_rehashed": 5138,
+            "driver_files_rehashed": 2,
+            "metadata_files_rehashed": 440,
+            "source_identity_counts": {
+              "total_inputs": 2569,
+              "planned_ps_grammar_inputs": 2569,
+              "byte_identical_mode_inputs": 0,
+              "native_compatible_mode_inputs": 0,
+              "source_hashes_equal_original": 402
+            },
+            "c_and_public_olean_receipt_hashes_compared": 5138,
+            "stage_two_metadata_mode": "retained-ps-built-prefix",
+            "status": "PASS",
+            "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+            "grammar_migration_complete": false,
+            "verified_execution": false
+          }
+        }
+      }
+    },
+    "r2ScopeQualification": {
+      "run": 43579464962,
+      "job": 132400875503,
+      "source": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "runner": "15847d69f9547202631477776959067c5e8ab982",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14107737743,
+        "name": "ps0-r2-scope-evidence-43579464962",
+        "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+        "bytes": 19127,
+        "archiveDigestVerified": true
+      },
+      "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+      "fixtureModules": {
+        "Scopes.Explicit": "ca4a9421602f2d3a570ff65f0ab83cff5bf61213df405a625009abf2943e4d74",
+        "Scopes.Implicit": "5945350c57a1d7a22a70b7658e4f2aa8033d83b5e41336b1eb51097e888c358e",
+        "Scopes.MetaPublic": "3fa7f25b369c12b64a4863a20c37eb3580f3718a1a6c7991474790d7d244d0af",
+        "Scopes.MetaPrivate": "e1db84d27a9a3c0613726422bfe3dcefb618d93f6136895536a122c714775618",
+        "Scopes.Prelude": "2979128781a225738011bc6358ddbeced99a7a532dff1ad8569db01b62f9fb95",
+        "Scopes.Grouping": "4078ce1ff1cb30bf2481b4da192c6acbcc51176830e7af363e984c8cdfabbd75",
+        "Scopes.Consumer": "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97",
+        "Scopes.PrivateConsumer": "71126a4a3a44e8e66ad38b4d16e33a659c1321d85074823e0fce320c7965eaa5",
+        "Scopes.Restricted": "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68",
+        "Scopes.PublicAll": "7d624827a05ba4d7c6c9216eafae10845f1ab6e3cc899a582edd013fb47f1128",
+        "Scopes.LateImport": "5ed6526fa6ea4580ec7141c3053360becf6607336b71f9633432addcb3f90748",
+        "Scopes.MetaRuntime": "582f3c45f3096d4f91c682574b0fddcdcbbbfcb10073d3597a0bcd87b32d080f"
+      },
+      "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+      "driverArtifact": {
+        "run": 43534267147,
+        "job": 132388696712,
+        "id": 14107360730,
+        "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+        "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5"
+      },
+      "passed": [
+        "PS0-P-SCOPE-01",
+        "PS0-P-SCOPE-02",
+        "PS0-P-SCOPE-03",
+        "PS0-P-SCOPE-04",
+        "PS0-P-SCOPE-05",
+        "PS0-P-SCOPE-06",
+        "PS0-P-SCOPE-07",
+        "PS0-P-SCOPE-08",
+        "PS0-N-MOD-01",
+        "PS0-N-MOD-02",
+        "PS0-N-MOD-03"
+      ],
+      "failures": [],
+      "runtime": "PS0_R2_SCOPE:13:17",
+      "prelude": {
+        "header": {
+          "isModule": true,
+          "imports": []
+        },
+        "sourceMapSchema": "ps0-source-map/1",
+        "originalByteSize": 74,
+        "segments": [
+          {
+            "kind": "original",
+            "originalEnd": 74,
+            "originalStart": 0,
+            "preparedEnd": 74,
+            "preparedStart": 0
+          }
+        ]
+      },
+      "diagnostics": {
+        "ordinaryImport": "Unknown identifier `Explicit.internalDefault`",
+        "publicAllPS": "PS0-MODULE-HEADER: invalid import header",
+        "publicAllNative": "cannot use `all` with `public import`",
+        "lateImport": "invalid 'import' command, it must be used in the beginning of the file",
+        "metaRuntime": "Invalid definition `runtimeValue`, may not access declaration `metaValue` marked as `meta`"
+      },
+      "summary": "The ordinary Lake project graph built and linked the consumer. Its output was `PS0_R2_SCOPE:13:17`. The fixtures checked section binders, grouped terms, explicit and implicit module visibility, private and public meta imports, `import all`, and scoped notation with a renamed open. The bootstrap prelude had no imports and one original source-map segment spanning all 74 bytes. Linux also confirmed the public/all restriction with a pinned native Lean control, the late import rejection, and the meta-to-runtime rejection. The compiler source was unchanged for this batch."
+    },
+    "r2DataPatternQualification": {
+      "run": 43582656894,
+      "job": 132410491718,
+      "runner": "ab8d003f23e27cc09e041b03f7503cfa2b78c224",
+      "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "fixtureSha256": "28a8baa32dfc43d7ef6a69943660b8e93aef0e1d90a0042cf83ea20093bde8f4",
+      "fixtureCases": {
+        "PS0-P-DATA-01": "5affb766708ef8f71b58b1967625e6232bb8cc63c400a08da62d9f2cde79b78e",
+        "PS0-P-DATA-02": "efe2a83a58f0ce964f15d834ff7234f044a067cecadf73cdc95312f91fe7c259",
+        "PS0-P-DATA-03": "723191f937434b29361d751b3cbc9f3de4c6dbcbe3032b8de941f56bfb5091f4",
+        "PS0-P-DATA-04": "b5aaab925d51701b44e47065c62c01e398fe7704f5d68e8615aaaf2d5308874d",
+        "PS0-P-DATA-05": "ff5818501e8dcc7aea765a8ae15324e9c9cf7280bcce65081fea759bb38ba918",
+        "PS0-P-PAT-01": "2c2ee78a8afbb09f6b9f912bed50344cc3403a2e9c8c23abcf0ce8b5956a583a",
+        "PS0-P-PAT-02": "d1a9c0d12e8f60f34bfbf97f96a1fa9242f3070938e3138803f87d0015215b18",
+        "PS0-P-PAT-03": "257ed55da115d47c072aea045e3f696aada016ab6336e64a18c2c73e3f6af017",
+        "PS0-P-PAT-04": "3e0860296715bbcb54ab500fd324dc96c252fef0c3318f5a8bd7d97a4ab91cef",
+        "PS0-N-DATA-01": "74fef6a701721330f1b43197a41f2352174cbfa4afb3559934242425cfd8dcda",
+        "PS0-N-DATA-02": "ea8687ae9bb6ff60714ac8afc4662767804eb827b5948c7f081275c5283c9b15",
+        "PS0-N-PAT-01": "105d81767434172c29f6e85fd4f498e7fb56f31c62ec8c05816890c0e0071c40",
+        "PS0-N-PAT-02": "474bf21db5a27f0224c7d9a26b547055dd921494e503f0f198ed967d7de6d9c4",
+        "PS0-N-PAT-03": "df64d0c85ea1a03c91b0f8107fb53c45426bae247c03e855f9c1c836dbb2a0c7"
+      },
+      "driverSha256": "f3bf907a9e735f9bee95d6252cd230410bec58c1f1b28f3ce871a16e8da1b497",
+      "artifact": {
+        "id": 14109151949,
+        "name": "ps0-r2-data-pattern-evidence-43582656894",
+        "digest": "sha256:471a84612557388d546cefd0406e6dfa06e933963f5a73fe67f7a2a7e432f156",
+        "bytes": 14851,
+        "archiveDigestVerified": true
+      },
+      "bootstrap": {
+        "run": 43534267147,
+        "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+        "artifact": 14107360730,
+        "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef"
+      },
+      "passed": [
+        "PS0-P-DATA-01",
+        "PS0-P-DATA-02",
+        "PS0-P-DATA-03",
+        "PS0-P-DATA-04",
+        "PS0-P-DATA-05",
+        "PS0-P-PAT-01",
+        "PS0-P-PAT-02",
+        "PS0-P-PAT-03",
+        "PS0-P-PAT-04",
+        "PS0-N-DATA-01",
+        "PS0-N-DATA-02",
+        "PS0-N-PAT-01",
+        "PS0-N-PAT-02",
+        "PS0-N-PAT-03"
+      ],
+      "failures": [],
+      "regressions": {
+        "callProbes": [
+          "PS0-P-CALL-02",
+          "PS0-P-CALL-03",
+          "PS0-P-CALL-04",
+          "PS0-P-CALL-05",
+          "PS0-P-CALL-06",
+          "PS0-P-CALL-07",
+          "PS0-P-CALL-08",
+          "PS0-P-CALL-09",
+          "PS0-P-CALL-10",
+          "PS0-N-CALL-01",
+          "PS0-N-CALL-02",
+          "PS0-N-CALL-03",
+          "PS0-N-CALL-04",
+          "PS0-N-CALL-05",
+          "PS0-N-CALL-06",
+          "PS0-N-CALL-07",
+          "PS0-N-CALL-08",
+          "PS0-N-CALL-09",
+          "PS0-N-CALL-10",
+          "PS0-N-CALL-11",
+          "PS0-N-CALL-12a",
+          "PS0-N-CALL-12b"
+        ],
+        "additionalLogs": [
+          "binder_operands.log",
+          "do_layout_operands.log",
+          "host_postfix_calls.log",
+          "operator_operands.log",
+          "prelude-grammar.log"
+        ],
+        "canonicalSourceFilesVerified": 2569,
+        "nativeLakeJobs": 41
+      },
+      "baseline": {
+        "run": 43580364174,
+        "job": 132403580037,
+        "source": "23f3f7bc814f33070d68d2accefbf65d2e5e4d07",
+        "reproduced": [
+          "braced inductive parser rejected the constructor bar",
+          "adjacent constructor pattern rejected the opening parenthesis"
+        ]
+      },
+      "summary": "Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog.",
+      "fullCorpus": {
+        "run": 43583275609,
+        "runner": "17be3f85c0fe7b0cb36220330062aeb483d936ce",
+        "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
+        "status": "IN_PROGRESS"
+      }
+    },
+    "r2ContinuationBatches": [
+      {
+        "run": 43584745403,
+        "job": 132416725461,
+        "conclusion": "success",
+        "runner": "a5e5fa3e3a8dc0146fe9d80eb7e8d6be0efead37",
+        "source": "7f350d3c5f7e867fb9919630f06bc894d4cd0384",
+        "fixture": "tests/run-r2-recursion-do.py",
+        "fixtureSha256": "95d82fe64c73d8f8faa643394cf9c60eae204a75731e792e04ff0208a7e7def6",
+        "driverSha256": "3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611",
+        "passed": [
+          "PS0-P-REC-01",
+          "PS0-P-REC-02",
+          "PS0-P-REC-03",
+          "PS0-P-REC-04",
+          "PS0-P-DO-01",
+          "PS0-P-DO-02",
+          "PS0-P-DO-03",
+          "PS0-P-DO-04",
+          "PS0-P-DO-05",
+          "PS0-P-DO-06",
+          "PS0-N-REC-01",
+          "PS0-N-REC-02",
+          "PS0-N-REC-03",
+          "PS0-N-DO-01",
+          "PS0-N-DO-02",
+          "PS0-N-DO-03"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "PS0-P-REC-01": "333ccce483720775eccd6ebd32fba1b1b1e186ce8cf62a8208eeeadd890bd424",
+          "PS0-P-REC-02": "fb4ef3214b0e6a661b80f67a3ad9c061475a66c3a79948de79e6330550fab04f",
+          "PS0-P-REC-03": "bc438bfffaded99e3dc1b3ff092a6f9e37c8cdabde1f20d08099c93e47f73f1c",
+          "PS0-P-REC-04": "7beb59e59cf8df9accf0beff1ee8b809aa530360db2797ce2d7ac704d6bc9839",
+          "PS0-P-DO-01": "f1670c8855564409ad0d37ecd409f0aca9b1f53969898397aef46ef2c1158889",
+          "PS0-P-DO-02": "11476bf2ba51b6bf8d404a80d4b9d51e0ef32749abe3dd90a201048f0765f778",
+          "PS0-P-DO-03": "5afe9e438320300da28cfc12ee79b5d0214bc6b8abff279594cd539fb242aa27",
+          "PS0-P-DO-04": "81256eb3a09457c5c932dc6b6468b113b9b6c2bf3c84d84d4fa2005a847b9814",
+          "PS0-P-DO-05": "abedf47772f2f39ae65442c62d40b430b4a26cbbc4977673143f02a5ef025306",
+          "PS0-P-DO-06": "06d7991d1ff7f05b81e2e155d2f953527ddda63cff5fe99a004d155680b5024d",
+          "PS0-N-REC-01": "76372d9918320b6eb1303001be203fe727694b531abe153bc36a9cfdbe281fc4",
+          "PS0-N-REC-02": "3eeb60124867bee4e7d6b163650c7874469002bc694ff518c41cda9306aadce7",
+          "PS0-N-REC-03": "4d6e971c07fe2cc92ac1be540057e8687da4cf8bba32b9bfe2b944337c661548",
+          "PS0-N-DO-01": "618866aad2e9ebfa5aa2a299032281504375d41f515b1f56e6a24eeccc169325",
+          "PS0-N-DO-02": "071f4f6b27fb22fb6689ccb96379f971d9c2eaed3bb2e705eca5c634c483bf0b",
+          "PS0-N-DO-03": "182a444ef508886419bcf10a96662f05f66623a7c1835c5cf711f04a35fcd2f1"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14110465161,
+          "name": "ps0-r2-recursion-do-evidence-43584745403",
+          "digest": "sha256:c419be6ca552713f63f3b2b76a417e004640ba72222bbf143b32c75149c35845",
+          "bytes": 12986,
+          "archiveDigestVerified": true
+        },
+        "summary": "Native Lake linked the compiler and the fixtures exercised well-founded recursion, partial classification, fixed-point equations and monotonicity, loop execution, forwarding, and exception cleanup."
+      },
+      {
+        "run": 43584802449,
+        "job": 132416884117,
+        "conclusion": "success",
+        "runner": "9d1e8f5bc7ce2dc72a79083941bdaac58cf65b4e",
+        "source": "299ca0558e2b13702e9f353dbe9661921ccb27d6",
+        "fixture": "tests/run-r2-proof-bind.py",
+        "fixtureSha256": "14c5acad75d8ad296e99eae312382517a5db99886f69bb618cd8f11ccd526277",
+        "driverSha256": "3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611",
+        "passed": [
+          "PS0-P-PROOF-01",
+          "PS0-P-PROOF-02",
+          "PS0-P-PROOF-03",
+          "PS0-N-BIND-01",
+          "PS0-N-BIND-02",
+          "PS0-N-BIND-03",
+          "PS0-N-BIND-04",
+          "PS0-N-LEX-01"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "PS0-P-PROOF-01": "105c03e0ea03fc0a2fa8b1859443da1607675c88034e210c4e58b13a8d3b431d",
+          "PS0-P-PROOF-02": "89894e5c9a0a0e0eacaa2643ef005f6163dfa66bf68c9d8be97414add45b469c",
+          "PS0-P-PROOF-03": "98da3fde9ca9961b12c038aa17525cc22828aa0f75e04ed85343295b2c72e3e7",
+          "PS0-N-BIND-01": "5245cdc151a9b50e64824de0cf7950f0168767243d622bddbde17e17a374996b",
+          "PS0-N-BIND-02": "4af38b1a0832f7acbc90b2cefdfee8812d64b3837dbcdd23671ae745d5f7a1d5",
+          "PS0-N-BIND-03": "e98e429df46d9f9fb0851873af49e22074c9a6ecce1fd466ec4ed6c8e6039ced",
+          "PS0-N-BIND-04": "a5c4440420471dbd8c293613ac23c0acdb8f21c66d51990008290b9330ab3d84",
+          "PS0-N-LEX-01": "c94b49845eb50da00359e29b0ee42db6d18b58f989a4e060f3dc0f855d21510b"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14109619480,
+          "name": "ps0-r2-proof-bind-evidence-43584802449",
+          "digest": "sha256:cd2060ae8e8f90059b833637498f0ae729e5dcc9237e143e301dbc8ab5dc5230",
+          "bytes": 7680,
+          "archiveDigestVerified": true
+        },
+        "summary": "The proof fixtures verified the assumption closure of a direct proof, a registered custom tactic, and native_decide. The binder and lexer cases matched their intended rejection diagnostics."
+      },
+      {
+        "run": 43585844014,
+        "job": 132420013107,
+        "conclusion": "failure",
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "source": "1ca697c673144cf00786a3af6ac9539587823a19",
+        "fixture": "tests/run-r2-boundary.py",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "passed": [
+          "R2-01",
+          "R2-02",
+          "R2-03",
+          "R2-04",
+          "R2-05",
+          "R2-07",
+          "R2-08",
+          "R2-09",
+          "R2-10",
+          "R2-11",
+          "R2-13",
+          "R2-15",
+          "R2-16",
+          "R2-19",
+          "R2-20",
+          "R2-21",
+          "R2-22",
+          "R2-23",
+          "R2-24",
+          "R2-25",
+          "R2-26",
+          "R2-27",
+          "R2-28",
+          "R2-29",
+          "R2-30",
+          "R2-31"
+        ],
+        "failures": [
+          "R2-06",
+          "R2-12",
+          "R2-14",
+          "R2-17",
+          "R2-18"
+        ],
+        "fixtureCases": {
+          "R2-01": "48e1a1ac14bbff7755c9da4f85633e4b1b70d5404dced1c8f3e42d7c9dbfae6f",
+          "R2-02": "b7c44a485704c934a11d9912e66e1d58eef9ec288b38942067b5413282bfc540",
+          "R2-03": "dec3118a39de6d99d7243798def4adb12e113217387f7c66ece31cc6eba971a2",
+          "R2-04": "c25e52f742d79ff4e96771d31322807401d73c1c83e3a1cac9d3b2d532a8136d",
+          "R2-05": "bd61646f369b6162b77c65893b9a868953cfaddd2d6c9582913eafd4115fe0ee",
+          "R2-06": "ab994d95671eb6c0070bc36013d268ec5021b9adc7c7efe7551a5f687a31ee1e",
+          "R2-07": "441fbbcb4e9cfd7a140a258b8cf0206f82a7579e3b31ac4315e34e451b617f7a",
+          "R2-08": "42d833139715e2011f705af39fb72922421f9511d9a8a9f8b8b68b41503be390",
+          "R2-09": "65cc6b1747da5118ee13734d2421afa4228b61b9af4aa7dbe44946d39d62b32d",
+          "R2-10": "bd54b90014c3baa7baa103b88a486e013c8b3a43b5c6669f141e598b49fffc44",
+          "R2-11": "9353b747198e05450cc2c550f420bec0db37741c0bc4a556dbb5b1553417dded",
+          "R2-12": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4",
+          "R2-13": "085095a00ca479fa6135c678a33698305eb994ef561cb223388fe45e5b7b7ade",
+          "R2-14": "40d6437fbc57303fad7146bee67f1799ca1a1de811e95f07dcb0efb4055874e4",
+          "R2-15": "0f6391605693769fc3acd33dabab752372773b099ea0448a4ba9d76073732c48",
+          "R2-16": "078456c4f08a9ed92d47f103fffc4c69503a622c16a731263ffa285021e927c5",
+          "R2-17": "646bb601e021a38b2aca72aa41cd4829d8fa044666f8bd6cece80b406dfd9feb",
+          "R2-18": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479",
+          "R2-19": "88fa3f4585cf2da61b75a3a561ff395510b7c2a5f97912a917d10a1ad4df9733",
+          "R2-20": "e744f33d9b43a854bf32d740f8efd87ae814c89c1f52d07bcfebe63aed63b508",
+          "R2-21": "e372ede74524ab7c875bee819b5da836ef225dd8843438f02957d022f2c88749",
+          "R2-22": "ddbe774fef4d3facbe941f50fed5bff89787ca65f4e9994c21e318ea5a2b36c2",
+          "R2-23": "bebed0b544fc393a1f027ff42cd612cadafd8ae2e1ceb3dcfc3ce8eb6a435cee",
+          "R2-24": "15e4562fd9a8f2da3991eb12d1cc8278f69759e98d2c5d3ef1802d61ea52ac49",
+          "R2-25": "3f2d95c12d8bb7cc6f51a64020d6154741c492e2fa498eacc9bbcb71acac9760",
+          "R2-26": "77533618e0e1f8abed2385d24220de66aa5dfe09949af4a5fd3e823388350c09",
+          "R2-27": "f31f8fdf331db49df67d95b42e67bb7a5290d0829a04f2cef27d005be8ddddc2",
+          "R2-28": "a946dc311f976fff5de8eb8b5e2cb5f28313e64c5b53654ce9833fb3bd76d8ad",
+          "R2-29": "3062792a2c6a315cc9ae86a9a53e67524cbbcde6a42e4535bc7bd6109936403b",
+          "R2-30": "b38d6d1565714e9052d7ed1b8c4e27e03fa88fd6bc0f77b368420c2cb875a848",
+          "R2-31": "01fc21364dc568588e812db7a0864ab46ce996762db2e39cc3a44c94d7d2a065"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14110138542,
+          "name": "ps0-r2-boundary-evidence-43585844014",
+          "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+          "bytes": 23409,
+          "archiveDigestVerified": true
+        },
+        "summary": "The numbered reference suite produced 26 passing witnesses. Five remain pending for defaults in constructor patterns, an explicit syntax bridge, competing parser rejection, and two marker-free braced headers."
+      },
+      {
+        "run": 43585844032,
+        "job": 132420013348,
+        "conclusion": "failure",
+        "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+        "source": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+        "fixture": "tests/run-r2-contracts.py",
+        "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "passed": [
+          "PS0-P-VC-01",
+          "PS0-P-VC-03",
+          "PS0-N-VC-01",
+          "PS0-N-VC-02",
+          "PS0-N-VC-03",
+          "PS0-N-VC-05"
+        ],
+        "failures": [
+          "PS0-P-VC-02",
+          "PS0-N-VC-04"
+        ],
+        "fixtureCases": {
+          "PS0-P-VC-01": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56",
+          "PS0-P-VC-02": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f",
+          "PS0-P-VC-03": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6",
+          "PS0-N-VC-01": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04",
+          "PS0-N-VC-02": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94",
+          "PS0-N-VC-03": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919",
+          "PS0-N-VC-04": "dcd96ce6b8880d78afbc102452fb0efa1dce916fa30753b8cc16b4a99398ff83",
+          "PS0-N-VC-05": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14109912789,
+          "name": "ps0-r2-contracts-evidence-43585844032",
+          "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+          "bytes": 9437,
+          "archiveDigestVerified": true
+        },
+        "summary": "Six contract and erasure cases passed, including a checked spec theorem, execution of the erased-result action, and native contract rejections. The braced spec tail and missing-WP witnesses remain pending."
+      },
+      {
+        "run": 43586369627,
+        "job": 132421626281,
+        "conclusion": "success",
+        "runner": "8c2d88e76abfc8f6a23a21525f348d5955ae2158",
+        "source": "dcf33a23d9e671a75eaee6f3be46c6d0cba0a3e8",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "7862a321ffc39803ec6d4c4c7f3c8b00d19abfc37f52103eacc304869dcb52fd",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "passed": [
+          "PS0-P-EXT-01",
+          "PS0-P-EXT-02",
+          "PS0-P-META-02",
+          "PS0-P-RUN-02",
+          "PS0-P-DIAG-01",
+          "PS0-P-RUN-01",
+          "PS0-N-EXT-03",
+          "PS0-P-RUN-03",
+          "PS0-P-META-01"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+          "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+          "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+          "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+          "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+          "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+          "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+          "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+          "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14110284177,
+          "name": "ps0-r2-native-extensions-evidence-43586369627",
+          "digest": "sha256:177991d557f91fb6968a03e35c6f0fb8d7160c130afc1384fb45ff287fff9798",
+          "bytes": 7956486,
+          "archiveDigestVerified": true
+        },
+        "summary": "Nine native capability acceptance cases passed. The linked ABI executable returned 42 through a borrowed Nat FFI argument and a deliberately distinct implemented_by replacement. A second executable observed both ordinary and builtin initializer values."
+      },
+      {
+        "run": 43588334976,
+        "job": 132427517941,
+        "conclusion": "success",
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "9336b1d9227b4a3aa6a721a2c8f4c67619c9809b5e534e915197201f7dc04801",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "PS0-N-EXT-01",
+          "PS0-N-EXT-02",
+          "PS0-P-DOC-01"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+          "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+          "PS0-N-EXT-01": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174",
+          "PS0-N-EXT-02": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3",
+          "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+          "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+          "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+          "PS0-P-DOC-01": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77",
+          "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+          "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+          "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+          "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14111765743,
+          "name": "ps0-r2-native-extensions-evidence-43588334976",
+          "digest": "sha256:7a453e11b7fdadb37c331c01fafd3a6629b61f6d41f6903aa046887e76c89386",
+          "bytes": 7958951,
+          "archiveDigestVerified": true
+        },
+        "summary": "Markdown and Verso were observed as distinct registered docstring kinds. Native quotation retained its tuple argument and explicit PS capture rejected the spaced call."
+      },
+      {
+        "run": 43588334974,
+        "job": 132427517789,
+        "conclusion": "failure",
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+        "fixture": "tests/run-r2-contracts.py",
+        "fixtureSha256": "071a2979538449e072c7a6fd3d2e941998056152b96dafa235ca8bda224af63f",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "PS0-P-VC-02"
+        ],
+        "failures": [
+          "PS0-N-VC-04"
+        ],
+        "fixtureCases": {
+          "PS0-P-VC-01": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56",
+          "PS0-P-VC-02": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f",
+          "PS0-P-VC-03": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6",
+          "PS0-N-VC-01": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04",
+          "PS0-N-VC-02": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94",
+          "PS0-N-VC-03": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919",
+          "PS0-N-VC-04": "dcd96ce6b8880d78afbc102452fb0efa1dce916fa30753b8cc16b4a99398ff83",
+          "PS0-N-VC-05": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14111960906,
+          "name": "ps0-r2-contracts-evidence-43588334974",
+          "digest": "sha256:187aea82461f19d88d9f326cec7ac69049e221383a45b24040339fe5f1c9353f",
+          "bytes": 8232,
+          "archiveDigestVerified": true
+        },
+        "summary": "The braced spec subsection discharged the remaining VC and the generated theorem was checked for sorry dependencies."
+      },
+      {
+        "run": 43588334990,
+        "job": 132427517719,
+        "conclusion": "failure",
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+        "fixture": "tests/run-r2-lexical-types.py",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "V1-001",
+          "V1-002",
+          "V1-003",
+          "V1-005",
+          "V1-006",
+          "V1-007",
+          "V1-008",
+          "V1-009",
+          "PS0-N-BOOT-01"
+        ],
+        "failures": [
+          "V1-004"
+        ],
+        "fixtureCases": {
+          "V1-001": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759",
+          "V1-002": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672",
+          "V1-003": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969",
+          "V1-004": "06d5e95ff75622019811981a7a33c6d00f676adad85367a4052b22e8c8325cb4",
+          "V1-005": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5",
+          "V1-006": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa",
+          "V1-007": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623",
+          "V1-008": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20",
+          "V1-009": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1",
+          "PS0-N-BOOT-01": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "summary": "Eight lexical and type families and the duplicate quotient-bootstrap rejection passed. The raw/interpolated string case was pending its corrected evaluation oracle."
+      },
+      {
+        "run": 43588891012,
+        "job": 132429179925,
+        "conclusion": "success",
+        "runner": "eac700fc96dfa34497d52689ffd576f9a61f3a4b",
+        "source": "17b8b1e167d2a1f118cdfb8bcfd19a54e09d6a26",
+        "fixture": "tests/run-r2-lexical-types.py",
+        "fixtureSha256": "03267377d6aab255bb34b2dcc60d467175626fecb8b81cba6d3f47444bae39a7",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "V1-004"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "V1-001": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759",
+          "V1-002": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672",
+          "V1-003": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969",
+          "V1-004": "baa8da6b5a0e6718d6dbde4bd75ec7bc72bcd1b7abfead86acb55e354b7f1cdf",
+          "V1-005": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5",
+          "V1-006": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa",
+          "V1-007": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623",
+          "V1-008": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20",
+          "V1-009": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1",
+          "PS0-N-BOOT-01": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14111686532,
+          "name": "ps0-r2-lexical-types-evidence-43588891012",
+          "digest": "sha256:e024bad9d42cfc6a3f9342d98a936c06f27f4eee63a66d482e15a0e5117dc96b",
+          "bytes": 8629,
+          "archiveDigestVerified": true
+        },
+        "summary": "The native IO oracle verified raw string parsing and evaluated interpolation to the exact expected text."
+      },
+      {
+        "run": 43588983637,
+        "job": 132429461142,
+        "conclusion": "failure",
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "source": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+        "fixture": "tests/run-r2-declaration-families.py",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "V1-010",
+          "V1-016",
+          "V1-017",
+          "V1-019",
+          "V1-021",
+          "V1-022",
+          "V1-023",
+          "PS0-N-ASSURE-01",
+          "PS0-N-ASSURE-02"
+        ],
+        "failures": [
+          "V1-020"
+        ],
+        "fixtureCases": {
+          "V1-010": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd",
+          "V1-016": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a",
+          "V1-017": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33",
+          "V1-019": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f",
+          "V1-020": "e48d317201fe26e19e54569f6563be7b85bd47dfa4c28cf9e3f9280626bb7e19",
+          "V1-021": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247",
+          "V1-022": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f",
+          "V1-023": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1",
+          "PS0-N-ASSURE-01": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03",
+          "PS0-N-ASSURE-02": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "summary": "Seven declaration families and two assumption-boundary cases passed. Lean reported transitive sorry and user or native axioms while leaving ordinary checking explicitly uncertified."
+      },
+      {
+        "run": 43589563081,
+        "job": 132431198887,
+        "conclusion": "success",
+        "runner": "820e6c7622387a141230f59ecd62354181c8dca3",
+        "source": "5268d1e7fb533b5a70036205cec5ffaabd83d70d",
+        "fixture": "tests/run-r2-declaration-families.py",
+        "fixtureSha256": "45c7a0bdb73bcec206f03fc9b1e59c0b89edc778214c3230e895e7181a666bce",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "V1-020"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "V1-010": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd",
+          "V1-016": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a",
+          "V1-017": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33",
+          "V1-019": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f",
+          "V1-020": "e4e8dbfcb1c8a2c0431f16b1565fe994a0b2dba6dc9e191195678963458a4502",
+          "V1-021": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247",
+          "V1-022": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f",
+          "V1-023": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1",
+          "PS0-N-ASSURE-01": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03",
+          "PS0-N-ASSURE-02": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14112270036,
+          "name": "ps0-r2-declaration-families-evidence-43589563081",
+          "digest": "sha256:698b15c9282a2a75dc475cae9783d09e25e4fc300253aadacd8243176e7711b1",
+          "bytes": 8921,
+          "archiveDigestVerified": true
+        },
+        "summary": "The exposed definition supported the exported theorem. Lean also checked the abbreviation’s reducibility hint and the theorem’s declaration kind."
+      },
+      {
+        "run": 43589813648,
+        "job": 132431941598,
+        "conclusion": "failure",
+        "runner": "e9a365fd05e9cafa7a86fd23d05120dd534e7679",
+        "source": "64137d9e1f07cc2553dc9c73f36feb90405f19d9",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "2d8833c6c85d7c6f04a551521ad7dc98e2cb3146e4f09f6dca69fda245aee782",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "PS0-N-ASSURE-03",
+          "PS0-N-ASSURE-04",
+          "PS0-N-ASSURE-06"
+        ],
+        "failures": [
+          "PS0-P-ENV-01",
+          "PS0-N-ASSURE-05"
+        ],
+        "fixtureCases": {
+          "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+          "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+          "PS0-N-EXT-01": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174",
+          "PS0-N-EXT-02": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3",
+          "PS0-P-ENV-01": "7b08ced0763a855546c054578e5607d6b617ff1bb0e04f42475151f0f3608392",
+          "PS0-N-ASSURE-03": "6fe2efbd8d1acea823dc5cb2b66293b5913e186157ac6f0496030f7849324d6b",
+          "PS0-N-ASSURE-04": "c42b4e968d0330dab3b3188363fd53df00b13a6ba8e3122e981f23bdc5727903",
+          "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+          "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+          "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+          "PS0-P-DOC-01": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77",
+          "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+          "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+          "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+          "PS0-N-ASSURE-05": "ed3ec1d78f3e439ae36571c17a8f1276ab32bf17b5e8aad0c43313491912657c",
+          "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442",
+          "PS0-N-ASSURE-06": "5bee2412f64cd8c219a2845ea95188b5c39c304141a701f22b037de84705a8fc"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14111624454,
+          "name": "ps0-r2-native-extensions-evidence-43589813648",
+          "digest": "sha256:b5943d2b6b663855297e011ab3039f98e43fca98714328b20f097721174de424",
+          "bytes": 7963582,
+          "archiveDigestVerified": true
+        },
+        "summary": "The compiler retained the partial implementation and uncertified status, ran the erased action, and demonstrated distinct native and PS source admission on identical source bytes."
+      }
+    ]
   },
   "canonicalGraphThirteenthTerminalEvidence": {
     "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
@@ -88317,5 +89640,2242 @@
         }
       }
     }
-  }
+  },
+  "canonicalCompilerSourceCutover": {
+    "canonicalGitCutover": {
+      "source": "a5160194aad78ff06acf55c42109ca1a5bb16f4d",
+      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
+      "runnerPr": 263,
+      "run": 43317326789,
+      "job": 131528877854,
+      "phase": "stage-one-base",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-12T22:12:12Z",
+      "gate": {
+        "job": 131528643634,
+        "status": "PASS",
+        "canonicalSourceContracts": 5,
+        "checkpointContracts": 18,
+        "auditContracts": 9,
+        "trackedModules": 2569
+      },
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      }
+    },
+    "current": {
+      "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+      "tree": "d788360aa9dc4519efbf402b12f8b42487b9ff96",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "d5ccec6831ef55f156c4ee99d695e02953c1d4d5",
+      "runnerPr": 263,
+      "run": 43414525459,
+      "job": 132158734460,
+      "phase": "independent-audit",
+      "status": "PASS",
+      "observedAt": "2026-11-13T20:48:33Z",
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "canonicalSourceCutoverComplete": true,
+      "release": {
+        "id": 444127839,
+        "url": "https://github.com/dwijayuda/pskernel/releases/tag/ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "tag": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "assets": [
+          {
+            "id": 743335210,
+            "name": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64.zip",
+            "bytes": 384532453,
+            "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd"
+          },
+          {
+            "id": 743335211,
+            "name": "SHA256SUMS",
+            "bytes": 117,
+            "digest": "sha256:c970015b96b415f53d2462a96439b0e9f46fb87fd7e98c79eaf6b7e21adc5753"
+          }
+        ],
+        "publication": {
+          "run": 43414260939,
+          "job": 131848065417,
+          "runner": "c500c564395917f6c659c733197e04c829e4286f",
+          "artifact": 14031680180,
+          "digest": "sha256:0110423260a1b120942e5d70c89bc8077dd5587f2293d2ad082a7421eb410483"
+        }
+      },
+      "previousCanonicalRun": 43317326789,
+      "sourceGate": {
+        "job": 131848943017,
+        "status": "PASS"
+      },
+      "stageOneLink": {
+        "job": 131987533313,
+        "artifact": {
+          "id": 14054014198,
+          "digest": "sha256:237a5b835062f3ab17d7ea39ae06785af058c7749daf86ab05a134906dae2b5e",
+          "bytes": 284946723,
+          "name": "ps0-selfhost-stage-one-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131849064730,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14045647072,
+              "digest": "sha256:a7702c7dd12aa274cc73589cece6965fe66f1f09dc9b34dbfbc579414ab216bb",
+              "bytes": 451625486,
+              "name": "ps0-compiler-checkpoint-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14045916866,
+              "digest": "sha256:b8dd581469ec55a68152449d85585734ee8d0906d5cdf17c4d867554496edd9b",
+              "bytes": 8240822,
+              "name": "ps0-compiler-slice-evidence-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131935735880,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14049467077,
+              "digest": "sha256:7980bafc1a0a4e5921bd703fb60b6d8827e20502c1a27426adacbb935709b14d",
+              "bytes": 867701911,
+              "name": "ps0-compiler-checkpoint-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14049526956,
+              "digest": "sha256:06ecdf24e7d84f7186279375b1c4971c7b4a115bb906e90653a29e1ab58ab4de",
+              "bytes": 8259799,
+              "name": "ps0-compiler-slice-evidence-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131966340940,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14053066175,
+              "digest": "sha256:08660f60f498c6c167f86f50bc27e4a7fb3c2a0e08811d17fa4af52cec21902c",
+              "bytes": 1088117263,
+              "name": "ps0-compiler-checkpoint-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14052806261,
+              "digest": "sha256:39eb5a47221174af23f6ba7e498f727dcb3ddc06114c89683051efe5681b16dc",
+              "bytes": 8268476,
+              "name": "ps0-compiler-slice-evidence-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131982100410,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14053132799,
+              "digest": "sha256:4ad5120e2feb14283f24c8ab2c75dea0036223b9eb9754bead9003b4e2375e56",
+              "bytes": 1101799646,
+              "name": "ps0-compiler-checkpoint-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14053607744,
+              "digest": "sha256:c7805c0b3df3d4a734a00bc83ea0a02aafe92c3eb92eb9e39ea1b05dc154fd67",
+              "bytes": 8268936,
+              "name": "ps0-compiler-slice-evidence-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ]
+      },
+      "stageTwoLink": {
+        "job": 132147282879,
+        "artifact": {
+          "id": 14074263951,
+          "digest": "sha256:3de0d4290ba7f79371211ae9c9ea71e2661ead75a49bcd424644196d8b90b50a",
+          "bytes": 284946744,
+          "name": "ps0-selfhost-stage-two-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131999194719,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14069140151,
+              "digest": "sha256:4e3d1ff5cb489fbff9150ff7f32d431670a918498276dd69c0d3e98e38b66c5d",
+              "bytes": 451626738,
+              "name": "ps0-compiler-checkpoint-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14068336416,
+              "digest": "sha256:97396d720b14f859f17056708b9c1d60c2356009ba4ebfd6c426961e6a4231a0",
+              "bytes": 8240759,
+              "name": "ps0-compiler-slice-evidence-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132100789446,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14071099560,
+              "digest": "sha256:c09a20d26d1d94ff49fb9a738552bc15e102027c9d7157cf5c589f132a83ac57",
+              "bytes": 867686736,
+              "name": "ps0-compiler-checkpoint-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14072087704,
+              "digest": "sha256:e311a22a12825458069c3922432c319ab4a342cec210209b17bcac439857a4f6",
+              "bytes": 8259716,
+              "name": "ps0-compiler-slice-evidence-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132131536999,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14073358340,
+              "digest": "sha256:92ac3f64484aaf8574a61c259628506bd03a646a57f51a1b3b0303070b7eaafa",
+              "bytes": 1088130578,
+              "name": "ps0-compiler-checkpoint-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073273481,
+              "digest": "sha256:817f5b870a5dc430eeec01a54da062d63d3ba8505d152af7fd6c97da6baece0e",
+              "bytes": 8268465,
+              "name": "ps0-compiler-slice-evidence-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132142893867,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14074366235,
+              "digest": "sha256:cc6890aefd1f994ca0bb5384e5db2f71f17ec034271ded6c2be5b63a6dead468",
+              "bytes": 1101751560,
+              "name": "ps0-compiler-checkpoint-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073678228,
+              "digest": "sha256:f8dcba4c61ebb1981c65ffc7219d1b9a2b2af22d1f138d58e57b40d5e1a8926d",
+              "bytes": 8268927,
+              "name": "ps0-compiler-slice-evidence-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ],
+        "fixedPoint": {
+          "status": "PASS",
+          "modules": 2569,
+          "changedC": [],
+          "changedPublicOlean": []
+        }
+      },
+      "independentAudit": {
+        "job": 132158734460,
+        "artifact": {
+          "id": 14074514400,
+          "digest": "sha256:68cda6675b46ddc536c40cf751dcd2ff4ccb4c5a49899c1e7bcb0dfec3e60a7c",
+          "bytes": 654,
+          "name": "ps0-canonical-independent-audit-43414525459"
+        },
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      },
+      "jobs": [
+        {
+          "id": 131848943017,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 131849064730,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 131935735880,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 131966340940,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 131982100410,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 131987533313,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 131999194719,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132100789446,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132131536999,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132142893867,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132147282879,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 132158734460,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "stageOneBase": {
+      "source": "a5160194aad78ff06acf55c42109ca1a5bb16f4d",
+      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
+      "runnerPr": 263,
+      "run": 43317326789,
+      "job": 131613776258,
+      "phase": "stage-one-compiler-early",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-12T22:12:12Z",
+      "gate": {
+        "job": 131528643634,
+        "status": "PASS",
+        "canonicalSourceContracts": 5,
+        "checkpointContracts": 18,
+        "auditContracts": 9,
+        "trackedModules": 2569
+      },
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "stageOneBase": {
+        "job": 131528877854,
+        "status": "PASS",
+        "nativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "checkpointFiles": 30418,
+        "checkpoint": {
+          "id": 13999304140,
+          "digest": "sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1",
+          "bytes": 451616506
+        },
+        "evidence": {
+          "id": 13999741991,
+          "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
+          "bytes": 8240812
+        }
+      }
+    },
+    "stageOneLink": {
+      "source": "a5160194aad78ff06acf55c42109ca1a5bb16f4d",
+      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
+      "runnerPr": 263,
+      "run": 43317326789,
+      "job": 131667368624,
+      "phase": "stage-two-base",
+      "status": "IN_PROGRESS",
+      "observedAt": "2026-11-12T22:12:12Z",
+      "gate": {
+        "job": 131528643634,
+        "status": "PASS",
+        "canonicalSourceContracts": 5,
+        "checkpointContracts": 18,
+        "auditContracts": 9,
+        "trackedModules": 2569
+      },
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "stageOneBase": {
+        "job": 131528877854,
+        "status": "PASS",
+        "nativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "checkpointFiles": 30418,
+        "checkpoint": {
+          "id": 13999304140,
+          "digest": "sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1",
+          "bytes": 451616506
+        },
+        "evidence": {
+          "id": 13999741991,
+          "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
+          "bytes": 8240812
+        }
+      },
+      "stageOneLink": {
+        "job": 131658982615,
+        "status": "PASS",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "partition": "early",
+            "job": 131613776258,
+            "objects": 850,
+            "tasks": 2630,
+            "verifiedFiles": 30418,
+            "checkpointFiles": 49120,
+            "checkpoint": {
+              "id": 14004241602,
+              "digest": "sha256:0a21afee00b7dbf1a45dec703e788bdbcd5d38d4b8c7e1516c19e92840e58dd4",
+              "bytes": 867673927
+            },
+            "evidence": {
+              "id": 14003339571,
+              "digest": "sha256:633db459b9dbecac57e4d697cbe4822a3e71584db87bfae4fb07dd138064264b",
+              "bytes": 8259734
+            }
+          },
+          {
+            "partition": "middle",
+            "job": 131643416751,
+            "objects": 368,
+            "tasks": 2607,
+            "verifiedFiles": 49120,
+            "checkpointFiles": 57217,
+            "checkpoint": {
+              "id": 14005671916,
+              "digest": "sha256:ac707cd1314dd5218d7997ea769fa0787d4c3c0dc6d221163922f0437e76300a",
+              "bytes": 1088095181
+            },
+            "evidence": {
+              "id": 14006080788,
+              "digest": "sha256:4c58960281db6c8111e62241f1962147fe5d7b527dfd1b9537d3a9220994c308",
+              "bytes": 8268388
+            }
+          },
+          {
+            "partition": "late",
+            "job": 131655801121,
+            "objects": 9,
+            "tasks": 2385,
+            "verifiedFiles": 57217,
+            "checkpointFiles": 57416,
+            "checkpoint": {
+              "id": 14006665553,
+              "digest": "sha256:2cdce79c84011b7969dfd17b3a1eda1afcd91df4620b0eafc4a75451907dbe28",
+              "bytes": 1101730750
+            },
+            "evidence": {
+              "id": 14006675567,
+              "digest": "sha256:5aa819f1c0171ea38010ad88176e5065a5b2432f55f4f6bbdb62bc83d1636f58",
+              "bytes": 8268849
+            }
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 57416,
+        "finishNativeObjects": 195,
+        "finishLakeTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "relocatedGrammar": "PASS",
+        "metadataFiles": 220,
+        "topLevelMappedDeclarations": 78712,
+        "artifact": {
+          "id": 14006568778,
+          "digest": "sha256:a24cb9cc80440b236847677af004509c90b6f10b15795056cc68b0a7a5fe2c41",
+          "bytes": 284946668
+        }
+      }
+    },
+    "complete": {
+      "source": "a5160194aad78ff06acf55c42109ca1a5bb16f4d",
+      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "24ecd03305d220e0301fa82a4abca5cf830ae85d",
+      "runnerPr": 263,
+      "run": 43317326789,
+      "job": 131767331144,
+      "phase": "independent-audit",
+      "status": "PASS",
+      "observedAt": "2026-11-12T22:12:12Z",
+      "gate": {
+        "job": 131528643634,
+        "status": "PASS",
+        "canonicalSourceContracts": 5,
+        "checkpointContracts": 18,
+        "auditContracts": 9,
+        "trackedModules": 2569
+      },
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "stageOneBase": {
+        "job": 131528877854,
+        "status": "PASS",
+        "nativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "checkpointFiles": 30418,
+        "checkpoint": {
+          "id": 13999304140,
+          "digest": "sha256:a6f0a710cf4cc7c8c618aa12423fc93ff4eeddbf1ed9793b872cd4134c1814e1",
+          "bytes": 451616506
+        },
+        "evidence": {
+          "id": 13999741991,
+          "digest": "sha256:e7b2fba6df03584ffcfaf17806576ee4c3155e34e84faea15cdbe4a0439baeb5",
+          "bytes": 8240812
+        }
+      },
+      "stageOneLink": {
+        "job": 131658982615,
+        "status": "PASS",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "partition": "early",
+            "job": 131613776258,
+            "objects": 850,
+            "tasks": 2630,
+            "verifiedFiles": 30418,
+            "checkpointFiles": 49120,
+            "checkpoint": {
+              "id": 14004241602,
+              "digest": "sha256:0a21afee00b7dbf1a45dec703e788bdbcd5d38d4b8c7e1516c19e92840e58dd4",
+              "bytes": 867673927
+            },
+            "evidence": {
+              "id": 14003339571,
+              "digest": "sha256:633db459b9dbecac57e4d697cbe4822a3e71584db87bfae4fb07dd138064264b",
+              "bytes": 8259734
+            }
+          },
+          {
+            "partition": "middle",
+            "job": 131643416751,
+            "objects": 368,
+            "tasks": 2607,
+            "verifiedFiles": 49120,
+            "checkpointFiles": 57217,
+            "checkpoint": {
+              "id": 14005671916,
+              "digest": "sha256:ac707cd1314dd5218d7997ea769fa0787d4c3c0dc6d221163922f0437e76300a",
+              "bytes": 1088095181
+            },
+            "evidence": {
+              "id": 14006080788,
+              "digest": "sha256:4c58960281db6c8111e62241f1962147fe5d7b527dfd1b9537d3a9220994c308",
+              "bytes": 8268388
+            }
+          },
+          {
+            "partition": "late",
+            "job": 131655801121,
+            "objects": 9,
+            "tasks": 2385,
+            "verifiedFiles": 57217,
+            "checkpointFiles": 57416,
+            "checkpoint": {
+              "id": 14006665553,
+              "digest": "sha256:2cdce79c84011b7969dfd17b3a1eda1afcd91df4620b0eafc4a75451907dbe28",
+              "bytes": 1101730750
+            },
+            "evidence": {
+              "id": 14006675567,
+              "digest": "sha256:5aa819f1c0171ea38010ad88176e5065a5b2432f55f4f6bbdb62bc83d1636f58",
+              "bytes": 8268849
+            }
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 57416,
+        "finishNativeObjects": 195,
+        "finishLakeTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "relocatedGrammar": "PASS",
+        "metadataFiles": 220,
+        "topLevelMappedDeclarations": 78712,
+        "artifact": {
+          "id": 14006568778,
+          "digest": "sha256:a24cb9cc80440b236847677af004509c90b6f10b15795056cc68b0a7a5fe2c41",
+          "bytes": 284946668
+        }
+      },
+      "canonicalSourceCutoverComplete": true,
+      "stageTwoBase": {
+        "job": 131667368624,
+        "status": "PASS",
+        "nativeObjects": 1147,
+        "nativeLakeTasks": 2296,
+        "checkpointFiles": 30418,
+        "checkpoint": {
+          "id": 14013753666,
+          "digest": "sha256:8fbda3a403d6b1d789957dc5bac1c5b7d75380da43050af08c6bdc32f9cb870b",
+          "bytes": 451621877
+        },
+        "evidence": {
+          "id": 14013634236,
+          "digest": "sha256:cb790e3d40ad414bcab3df2108c32fc02acde2d354736a1ed198a3ed97f30799",
+          "bytes": 8240646
+        }
+      },
+      "stageTwoLink": {
+        "job": 131758766199,
+        "status": "PASS",
+        "modules": 2569,
+        "leanObjects": 1227,
+        "partitions": [
+          {
+            "partition": "early",
+            "job": 131718771308,
+            "objects": 850,
+            "tasks": 2630,
+            "verifiedFiles": 30418,
+            "checkpointFiles": 49120,
+            "checkpoint": {
+              "id": 14017720999,
+              "digest": "sha256:c249d9b9fabddb0cd6cdeebf544b057a537b40f73fcd9248309091b42b8a0c4b",
+              "bytes": 867689276
+            },
+            "evidence": {
+              "id": 14017860652,
+              "digest": "sha256:677256ba5adc6065d010aa4dd7d604e47a7f3bad674cc0984389fee84ad8072d",
+              "bytes": 8259527
+            }
+          },
+          {
+            "partition": "middle",
+            "job": 131745353116,
+            "objects": 368,
+            "tasks": 2607,
+            "verifiedFiles": 49120,
+            "checkpointFiles": 57217,
+            "checkpoint": {
+              "id": 14018737029,
+              "digest": "sha256:5809032e0eda1cdb82e433825f29e5d5f73413f472345fe9705b31260f1645ff",
+              "bytes": 1088075384
+            },
+            "evidence": {
+              "id": 14018387740,
+              "digest": "sha256:362929a6734717c56a3659af6ad1ee0e94ada6595c6fdf2f50278a5206e23343",
+              "bytes": 8268227
+            }
+          },
+          {
+            "partition": "late",
+            "job": 131754839008,
+            "objects": 9,
+            "tasks": 2385,
+            "verifiedFiles": 57217,
+            "checkpointFiles": 57416,
+            "checkpoint": {
+              "id": 14018853345,
+              "digest": "sha256:50467391c6a658d7085ef8f69396adca0c416f9d889bb7501d88ab10e52fe1fc",
+              "bytes": 1101757680
+            },
+            "evidence": {
+              "id": 14018414315,
+              "digest": "sha256:3974404ee833f795eeeb72ca090690842d90b81b17ef6db5157d75bfb7cefc87",
+              "bytes": 8268691
+            }
+          }
+        ],
+        "verifiedFinishCheckpointFiles": 57416,
+        "finishNativeObjects": 195,
+        "finishLakeTasks": 5142,
+        "archive": "PS0Project:static",
+        "executable": "ps0project:exe",
+        "relocatedGrammar": "PASS",
+        "metadataFiles": 220,
+        "topLevelMappedDeclarations": 78712,
+        "artifact": {
+          "id": 14019573349,
+          "digest": "sha256:273b39f2f657e2fa4fef9c48e3e485a8a0d53cd47a1f25a00d0aeccb3b09b213",
+          "bytes": 284946552
+        },
+        "fixedPoint": {
+          "status": "PASS",
+          "changedC": [],
+          "changedPublicOlean": [],
+          "modules": 2569
+        }
+      },
+      "independentAudit": {
+        "job": 131767331144,
+        "status": "PASS",
+        "artifact": {
+          "id": 14020033643,
+          "digest": "sha256:c0f66780259ca763bd0f40b722c6e3767c631a0cdfc6b29ca0a8393f33d73a4a",
+          "bytes": 655
+        },
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "a5160194aad78ff06acf55c42109ca1a5bb16f4d",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      },
+      "jobs": [
+        {
+          "id": 131528643634,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 131528877854,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 131613776258,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 131643416751,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 131655801121,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 131658982615,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 131667368624,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 131718771308,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 131745353116,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 131754839008,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 131758766199,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 131767331144,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "versionedBootstrapPublication": {
+      "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+      "tree": "d3d75b02b36f574f92d509045385e340a71984f7",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "d5ccec6831ef55f156c4ee99d695e02953c1d4d5",
+      "runnerPr": 263,
+      "run": 43414525459,
+      "job": 131849064730,
+      "phase": "stage-one-base",
+      "status": "RELEASE_VALIDATION_IN_PROGRESS",
+      "observedAt": "2026-11-13T11:08:20Z",
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "canonicalSourceCutoverComplete": true,
+      "release": {
+        "id": 444127839,
+        "url": "https://github.com/dwijayuda/pskernel/releases/tag/ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "tag": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "assets": [
+          {
+            "id": 743335210,
+            "name": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64.zip",
+            "bytes": 384532453,
+            "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd"
+          },
+          {
+            "id": 743335211,
+            "name": "SHA256SUMS",
+            "bytes": 117,
+            "digest": "sha256:c970015b96b415f53d2462a96439b0e9f46fb87fd7e98c79eaf6b7e21adc5753"
+          }
+        ],
+        "publication": {
+          "run": 43414260939,
+          "job": 131848065417,
+          "runner": "c500c564395917f6c659c733197e04c829e4286f",
+          "artifact": 14031680180,
+          "digest": "sha256:0110423260a1b120942e5d70c89bc8077dd5587f2293d2ad082a7421eb410483"
+        }
+      },
+      "previousCanonicalRun": 43317326789,
+      "sourceGate": {
+        "job": 131848943017,
+        "status": "PASS"
+      }
+    },
+    "versionedBootstrapQualified": {
+      "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+      "tree": "d788360aa9dc4519efbf402b12f8b42487b9ff96",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "base": "6d750d88418e952589bbd98ca0deaf1bc18ca22a",
+      "sourcePr": 21,
+      "sourceMode": "canonical-git",
+      "upstreamModules": 2546,
+      "selfModules": 23,
+      "modules": 2569,
+      "catalogSha256": "6af934ded6a3bab2ed1d7f86a721bb1626806200a3ad355dc8486daec7231aa4",
+      "runner": "d5ccec6831ef55f156c4ee99d695e02953c1d4d5",
+      "runnerPr": 263,
+      "run": 43414525459,
+      "job": 132158734460,
+      "phase": "independent-audit",
+      "status": "PASS",
+      "observedAt": "2026-11-13T20:48:33Z",
+      "bootstrap": {
+        "source": "978d594a10fac8f6e5687190a22d70334b331dab",
+        "run": 43161199302,
+        "job": 131116729741,
+        "artifact": 13934124327,
+        "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd",
+        "auditRun": 43254180674,
+        "auditJob": 131307810313
+      },
+      "canonicalSourceCutoverComplete": true,
+      "release": {
+        "id": 444127839,
+        "url": "https://github.com/dwijayuda/pskernel/releases/tag/ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "tag": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64",
+        "assets": [
+          {
+            "id": 743335210,
+            "name": "ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64.zip",
+            "bytes": 384532453,
+            "digest": "sha256:8c206edde04ade42d72faa33e191575c05b0662d757fd51d77b649baadc4dbbd"
+          },
+          {
+            "id": 743335211,
+            "name": "SHA256SUMS",
+            "bytes": 117,
+            "digest": "sha256:c970015b96b415f53d2462a96439b0e9f46fb87fd7e98c79eaf6b7e21adc5753"
+          }
+        ],
+        "publication": {
+          "run": 43414260939,
+          "job": 131848065417,
+          "runner": "c500c564395917f6c659c733197e04c829e4286f",
+          "artifact": 14031680180,
+          "digest": "sha256:0110423260a1b120942e5d70c89bc8077dd5587f2293d2ad082a7421eb410483"
+        }
+      },
+      "previousCanonicalRun": 43317326789,
+      "sourceGate": {
+        "job": 131848943017,
+        "status": "PASS"
+      },
+      "stageOneLink": {
+        "job": 131987533313,
+        "artifact": {
+          "id": 14054014198,
+          "digest": "sha256:237a5b835062f3ab17d7ea39ae06785af058c7749daf86ab05a134906dae2b5e",
+          "bytes": 284946723,
+          "name": "ps0-selfhost-stage-one-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131849064730,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14045647072,
+              "digest": "sha256:a7702c7dd12aa274cc73589cece6965fe66f1f09dc9b34dbfbc579414ab216bb",
+              "bytes": 451625486,
+              "name": "ps0-compiler-checkpoint-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14045916866,
+              "digest": "sha256:b8dd581469ec55a68152449d85585734ee8d0906d5cdf17c4d867554496edd9b",
+              "bytes": 8240822,
+              "name": "ps0-compiler-slice-evidence-1-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131935735880,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14049467077,
+              "digest": "sha256:7980bafc1a0a4e5921bd703fb60b6d8827e20502c1a27426adacbb935709b14d",
+              "bytes": 867701911,
+              "name": "ps0-compiler-checkpoint-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14049526956,
+              "digest": "sha256:06ecdf24e7d84f7186279375b1c4971c7b4a115bb906e90653a29e1ab58ab4de",
+              "bytes": 8259799,
+              "name": "ps0-compiler-slice-evidence-1-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131966340940,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14053066175,
+              "digest": "sha256:08660f60f498c6c167f86f50bc27e4a7fb3c2a0e08811d17fa4af52cec21902c",
+              "bytes": 1088117263,
+              "name": "ps0-compiler-checkpoint-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14052806261,
+              "digest": "sha256:39eb5a47221174af23f6ba7e498f727dcb3ddc06114c89683051efe5681b16dc",
+              "bytes": 8268476,
+              "name": "ps0-compiler-slice-evidence-1-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 131982100410,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14053132799,
+              "digest": "sha256:4ad5120e2feb14283f24c8ab2c75dea0036223b9eb9754bead9003b4e2375e56",
+              "bytes": 1101799646,
+              "name": "ps0-compiler-checkpoint-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14053607744,
+              "digest": "sha256:c7805c0b3df3d4a734a00bc83ea0a02aafe92c3eb92eb9e39ea1b05dc154fd67",
+              "bytes": 8268936,
+              "name": "ps0-compiler-slice-evidence-1-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ]
+      },
+      "stageTwoLink": {
+        "job": 132147282879,
+        "artifact": {
+          "id": 14074263951,
+          "digest": "sha256:3de0d4290ba7f79371211ae9c9ea71e2661ead75a49bcd424644196d8b90b50a",
+          "bytes": 284946744,
+          "name": "ps0-selfhost-stage-two-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+        },
+        "status": "PASS",
+        "partitions": [
+          {
+            "job": 131999194719,
+            "objects": 1147,
+            "checkpoint": {
+              "id": 14069140151,
+              "digest": "sha256:4e3d1ff5cb489fbff9150ff7f32d431670a918498276dd69c0d3e98e38b66c5d",
+              "bytes": 451626738,
+              "name": "ps0-compiler-checkpoint-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14068336416,
+              "digest": "sha256:97396d720b14f859f17056708b9c1d60c2356009ba4ebfd6c426961e6a4231a0",
+              "bytes": 8240759,
+              "name": "ps0-compiler-slice-evidence-2-base-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132100789446,
+            "objects": 850,
+            "checkpoint": {
+              "id": 14071099560,
+              "digest": "sha256:c09a20d26d1d94ff49fb9a738552bc15e102027c9d7157cf5c589f132a83ac57",
+              "bytes": 867686736,
+              "name": "ps0-compiler-checkpoint-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14072087704,
+              "digest": "sha256:e311a22a12825458069c3922432c319ab4a342cec210209b17bcac439857a4f6",
+              "bytes": 8259716,
+              "name": "ps0-compiler-slice-evidence-2-compiler-early-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132131536999,
+            "objects": 368,
+            "checkpoint": {
+              "id": 14073358340,
+              "digest": "sha256:92ac3f64484aaf8574a61c259628506bd03a646a57f51a1b3b0303070b7eaafa",
+              "bytes": 1088130578,
+              "name": "ps0-compiler-checkpoint-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073273481,
+              "digest": "sha256:817f5b870a5dc430eeec01a54da062d63d3ba8505d152af7fd6c97da6baece0e",
+              "bytes": 8268465,
+              "name": "ps0-compiler-slice-evidence-2-compiler-middle-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          },
+          {
+            "job": 132142893867,
+            "objects": 9,
+            "checkpoint": {
+              "id": 14074366235,
+              "digest": "sha256:cc6890aefd1f994ca0bb5384e5db2f71f17ec034271ded6c2be5b63a6dead468",
+              "bytes": 1101751560,
+              "name": "ps0-compiler-checkpoint-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            },
+            "evidence": {
+              "id": 14073678228,
+              "digest": "sha256:f8dcba4c61ebb1981c65ffc7219d1b9a2b2af22d1f138d58e57b40d5e1a8926d",
+              "bytes": 8268927,
+              "name": "ps0-compiler-slice-evidence-2-compiler-430c21f1742334d0abb103a58a7aaa1c65fc16e1-43414525459"
+            }
+          }
+        ],
+        "fixedPoint": {
+          "status": "PASS",
+          "modules": 2569,
+          "changedC": [],
+          "changedPublicOlean": []
+        }
+      },
+      "independentAudit": {
+        "job": 132158734460,
+        "artifact": {
+          "id": 14074514400,
+          "digest": "sha256:68cda6675b46ddc536c40cf751dcd2ff4ccb4c5a49899c1e7bcb0dfec3e60a7c",
+          "bytes": 654,
+          "name": "ps0-canonical-independent-audit-43414525459"
+        },
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      },
+      "jobs": [
+        {
+          "id": 131848943017,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 131849064730,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 131935735880,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 131966340940,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 131982100410,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 131987533313,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 131999194719,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132100789446,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132131536999,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132142893867,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132147282879,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 132158734460,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ]
+    }
+  },
+  "r2DeclarationQualification": {
+    "source": "c5f4089fadae29a070d98bb8d38671d763d462c0",
+    "runner": "5ec1f60b9b1251f86e60d9d86794165f128c55f0",
+    "run": 43528789812,
+    "job": 132241045882,
+    "artifact": {
+      "id": 14085954260,
+      "digest": "sha256:f6de3e919d476aba171ee27a4bb4a6a1dd25b78d15e8908c44719df621805039",
+      "bytes": 11021
+    },
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "referenceSha256": "34bc630e14af32cb65944656cffe98d1791787cbea4aaf61661d8ee9f1a57a26",
+    "compiler": {
+      "source": "430c21f1742334d0abb103a58a7aaa1c65fc16e1",
+      "run": 43414525459,
+      "stageTwoJob": 132147282879,
+      "artifact": 14074263951,
+      "sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+    },
+    "fixture": "tests/v1/r2_declarations.ps",
+    "fixtureSha256": "f362f35fbe07913ea44c4f16dbd1537725cfb7fc320b37e9c208f3b2d5ab38b1",
+    "runtime": "PS0_R2_DECLARATIONS:3:5:1:5:true:0:1:0",
+    "projectRuntime": "PS0_PROJECT:42:7:2",
+    "initialFailure": {
+      "source": "1da2e8cd68c3f2b32aafad94c7267dcb5ddb5ffc",
+      "runner": "6f2f89878b797ec0097e2310bff5aace3c289672",
+      "run": 43528338894,
+      "job": 132239522643,
+      "artifact": 14085923297,
+      "digest": "sha256:17f2ee17fc3db2075bf436a7b531b43cd17a65441e7c72ac4465389384cdbaf6"
+    },
+    "cases": [
+      {
+        "id": "PS0-P-DECL-01",
+        "declaration": "count",
+        "oracle": "Native def with zero binders and rfl value 3"
+      },
+      {
+        "id": "PS0-P-DECL-02",
+        "declaration": "add",
+        "oracle": "Two explicit binders and rfl curried application"
+      },
+      {
+        "id": "PS0-P-DECL-03",
+        "declaration": "tick",
+        "oracle": "Exactly one required explicit Unit binder and successful empty call"
+      },
+      {
+        "id": "PS0-P-DECL-04",
+        "declaration": "f",
+        "oracle": "Two native explicit binders and rfl sum"
+      },
+      {
+        "id": "PS0-P-DECL-05",
+        "declaration": "same",
+        "oracle": "Implicit, instance, explicit, explicit order and rfl result"
+      },
+      {
+        "id": "PS0-P-DECL-06",
+        "declaration": "choose",
+        "oracle": "Explicit, instance, explicit dependent order and rfl Fin result"
+      },
+      {
+        "id": "PS0-P-DECL-07",
+        "declaration": "value",
+        "oracle": "Native opaque declaration and runtime body result 1"
+      },
+      {
+        "id": "PS0-P-DECL-08",
+        "declaration": "defaultCount",
+        "oracle": "Native opaque declaration with omitted body and runtime synthesized 0"
+      },
+      {
+        "id": "PS0-P-DECL-09",
+        "declaration": "assumed",
+        "oracle": "Native axiom declaration classified separately from checked proofs"
+      },
+      {
+        "id": "PS0-P-DECL-10",
+        "declaration": "pick",
+        "oracle": "Noncomputable definition with implicit sort and explicit Nonempty witness"
+      }
+    ]
+  },
+  "r2CallQualification": {
+    "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+    "runner": "c697044136bbdeb6a57712bbe18f4d2809fb9551",
+    "run": 43534219401,
+    "job": 132259155460,
+    "artifact": {
+      "id": 14088508870,
+      "digest": "sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10",
+      "bytes": 24822
+    },
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "fixtureSha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c",
+    "driverSha256": "a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86",
+    "baseline": {
+      "passed": [
+        "PS0-N-CALL-01",
+        "PS0-N-CALL-02",
+        "PS0-N-CALL-03",
+        "PS0-N-CALL-04",
+        "PS0-N-CALL-05",
+        "PS0-N-CALL-06",
+        "PS0-N-CALL-07",
+        "PS0-N-CALL-08",
+        "PS0-N-CALL-09",
+        "PS0-N-CALL-10",
+        "PS0-N-CALL-11",
+        "PS0-N-CALL-12a",
+        "PS0-N-CALL-12b"
+      ],
+      "failures": [
+        "positive"
+      ],
+      "fixture_sha256": "342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c",
+      "driver_sha256": "163fd4d0f10901757e758ba84b8a5929319200113c2f142d1dec9e2d373e2ec3"
+    },
+    "passed": [
+      "PS0-P-CALL-02",
+      "PS0-P-CALL-03",
+      "PS0-P-CALL-04",
+      "PS0-P-CALL-05",
+      "PS0-P-CALL-06",
+      "PS0-P-CALL-07",
+      "PS0-P-CALL-08",
+      "PS0-P-CALL-09",
+      "PS0-P-CALL-10",
+      "PS0-N-CALL-01",
+      "PS0-N-CALL-02",
+      "PS0-N-CALL-03",
+      "PS0-N-CALL-04",
+      "PS0-N-CALL-05",
+      "PS0-N-CALL-06",
+      "PS0-N-CALL-07",
+      "PS0-N-CALL-08",
+      "PS0-N-CALL-09",
+      "PS0-N-CALL-10",
+      "PS0-N-CALL-11",
+      "PS0-N-CALL-12a",
+      "PS0-N-CALL-12b"
+    ],
+    "fullCorpus": {
+      "run": 43534267147,
+      "runner": "343c6939709fb62d3af6eef0cdddf1b7fdb4f6a6",
+      "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "status": "PASS",
+      "runAttempt": 1,
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "jobs": [
+        {
+          "id": 132259472042,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 132259628164,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132290353966,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132302972653,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132311056367,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132314225341,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 132320943319,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132366025472,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132379539951,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132387033117,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132388696712,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 132394382258,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ],
+      "stages": [
+        {
+          "job": 132314225341,
+          "id": 14097057738,
+          "name": "ps0-selfhost-stage-one-c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5-43534267147",
+          "digest": "sha256:00cf00a76bc7e4cc516182d9456dd667e0e39fda178749e94663b976b51db026",
+          "bytes": 285002179
+        },
+        {
+          "job": 132388696712,
+          "id": 14107360730,
+          "name": "ps0-selfhost-stage-two-c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5-43534267147",
+          "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+          "bytes": 285002372
+        }
+      ],
+      "audit": {
+        "job": 132394382258,
+        "id": 14107121506,
+        "name": "ps0-canonical-independent-audit-43534267147",
+        "digest": "sha256:3442f180565a34576350521c01b160eeb359db9291be43f02d714291a64eb7cf",
+        "bytes": 655,
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      }
+    }
+  },
+  "r2ScopeQualification": {
+    "run": 43579464962,
+    "job": 132400875503,
+    "source": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+    "runner": "15847d69f9547202631477776959067c5e8ab982",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "artifact": {
+      "id": 14107737743,
+      "name": "ps0-r2-scope-evidence-43579464962",
+      "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+      "bytes": 19127,
+      "archiveDigestVerified": true
+    },
+    "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+    "fixtureModules": {
+      "Scopes.Explicit": "ca4a9421602f2d3a570ff65f0ab83cff5bf61213df405a625009abf2943e4d74",
+      "Scopes.Implicit": "5945350c57a1d7a22a70b7658e4f2aa8033d83b5e41336b1eb51097e888c358e",
+      "Scopes.MetaPublic": "3fa7f25b369c12b64a4863a20c37eb3580f3718a1a6c7991474790d7d244d0af",
+      "Scopes.MetaPrivate": "e1db84d27a9a3c0613726422bfe3dcefb618d93f6136895536a122c714775618",
+      "Scopes.Prelude": "2979128781a225738011bc6358ddbeced99a7a532dff1ad8569db01b62f9fb95",
+      "Scopes.Grouping": "4078ce1ff1cb30bf2481b4da192c6acbcc51176830e7af363e984c8cdfabbd75",
+      "Scopes.Consumer": "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97",
+      "Scopes.PrivateConsumer": "71126a4a3a44e8e66ad38b4d16e33a659c1321d85074823e0fce320c7965eaa5",
+      "Scopes.Restricted": "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68",
+      "Scopes.PublicAll": "7d624827a05ba4d7c6c9216eafae10845f1ab6e3cc899a582edd013fb47f1128",
+      "Scopes.LateImport": "5ed6526fa6ea4580ec7141c3053360becf6607336b71f9633432addcb3f90748",
+      "Scopes.MetaRuntime": "582f3c45f3096d4f91c682574b0fddcdcbbbfcb10073d3597a0bcd87b32d080f"
+    },
+    "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+    "driverArtifact": {
+      "run": 43534267147,
+      "job": 132388696712,
+      "id": 14107360730,
+      "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+      "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5"
+    },
+    "passed": [
+      "PS0-P-SCOPE-01",
+      "PS0-P-SCOPE-02",
+      "PS0-P-SCOPE-03",
+      "PS0-P-SCOPE-04",
+      "PS0-P-SCOPE-05",
+      "PS0-P-SCOPE-06",
+      "PS0-P-SCOPE-07",
+      "PS0-P-SCOPE-08",
+      "PS0-N-MOD-01",
+      "PS0-N-MOD-02",
+      "PS0-N-MOD-03"
+    ],
+    "failures": [],
+    "runtime": "PS0_R2_SCOPE:13:17",
+    "prelude": {
+      "header": {
+        "isModule": true,
+        "imports": []
+      },
+      "sourceMapSchema": "ps0-source-map/1",
+      "originalByteSize": 74,
+      "segments": [
+        {
+          "kind": "original",
+          "originalEnd": 74,
+          "originalStart": 0,
+          "preparedEnd": 74,
+          "preparedStart": 0
+        }
+      ]
+    },
+    "diagnostics": {
+      "ordinaryImport": "Unknown identifier `Explicit.internalDefault`",
+      "publicAllPS": "PS0-MODULE-HEADER: invalid import header",
+      "publicAllNative": "cannot use `all` with `public import`",
+      "lateImport": "invalid 'import' command, it must be used in the beginning of the file",
+      "metaRuntime": "Invalid definition `runtimeValue`, may not access declaration `metaValue` marked as `meta`"
+    },
+    "summary": "The ordinary Lake project graph built and linked the consumer. Its output was `PS0_R2_SCOPE:13:17`. The fixtures checked section binders, grouped terms, explicit and implicit module visibility, private and public meta imports, `import all`, and scoped notation with a renamed open. The bootstrap prelude had no imports and one original source-map segment spanning all 74 bytes. Linux also confirmed the public/all restriction with a pinned native Lean control, the late import rejection, and the meta-to-runtime rejection. The compiler source was unchanged for this batch."
+  },
+  "r2DataPatternQualification": {
+    "run": 43582656894,
+    "job": 132410491718,
+    "runner": "ab8d003f23e27cc09e041b03f7503cfa2b78c224",
+    "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "fixtureSha256": "28a8baa32dfc43d7ef6a69943660b8e93aef0e1d90a0042cf83ea20093bde8f4",
+    "fixtureCases": {
+      "PS0-P-DATA-01": "5affb766708ef8f71b58b1967625e6232bb8cc63c400a08da62d9f2cde79b78e",
+      "PS0-P-DATA-02": "efe2a83a58f0ce964f15d834ff7234f044a067cecadf73cdc95312f91fe7c259",
+      "PS0-P-DATA-03": "723191f937434b29361d751b3cbc9f3de4c6dbcbe3032b8de941f56bfb5091f4",
+      "PS0-P-DATA-04": "b5aaab925d51701b44e47065c62c01e398fe7704f5d68e8615aaaf2d5308874d",
+      "PS0-P-DATA-05": "ff5818501e8dcc7aea765a8ae15324e9c9cf7280bcce65081fea759bb38ba918",
+      "PS0-P-PAT-01": "2c2ee78a8afbb09f6b9f912bed50344cc3403a2e9c8c23abcf0ce8b5956a583a",
+      "PS0-P-PAT-02": "d1a9c0d12e8f60f34bfbf97f96a1fa9242f3070938e3138803f87d0015215b18",
+      "PS0-P-PAT-03": "257ed55da115d47c072aea045e3f696aada016ab6336e64a18c2c73e3f6af017",
+      "PS0-P-PAT-04": "3e0860296715bbcb54ab500fd324dc96c252fef0c3318f5a8bd7d97a4ab91cef",
+      "PS0-N-DATA-01": "74fef6a701721330f1b43197a41f2352174cbfa4afb3559934242425cfd8dcda",
+      "PS0-N-DATA-02": "ea8687ae9bb6ff60714ac8afc4662767804eb827b5948c7f081275c5283c9b15",
+      "PS0-N-PAT-01": "105d81767434172c29f6e85fd4f498e7fb56f31c62ec8c05816890c0e0071c40",
+      "PS0-N-PAT-02": "474bf21db5a27f0224c7d9a26b547055dd921494e503f0f198ed967d7de6d9c4",
+      "PS0-N-PAT-03": "df64d0c85ea1a03c91b0f8107fb53c45426bae247c03e855f9c1c836dbb2a0c7"
+    },
+    "driverSha256": "f3bf907a9e735f9bee95d6252cd230410bec58c1f1b28f3ce871a16e8da1b497",
+    "artifact": {
+      "id": 14109151949,
+      "name": "ps0-r2-data-pattern-evidence-43582656894",
+      "digest": "sha256:471a84612557388d546cefd0406e6dfa06e933963f5a73fe67f7a2a7e432f156",
+      "bytes": 14851,
+      "archiveDigestVerified": true
+    },
+    "bootstrap": {
+      "run": 43534267147,
+      "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "artifact": 14107360730,
+      "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+      "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef"
+    },
+    "passed": [
+      "PS0-P-DATA-01",
+      "PS0-P-DATA-02",
+      "PS0-P-DATA-03",
+      "PS0-P-DATA-04",
+      "PS0-P-DATA-05",
+      "PS0-P-PAT-01",
+      "PS0-P-PAT-02",
+      "PS0-P-PAT-03",
+      "PS0-P-PAT-04",
+      "PS0-N-DATA-01",
+      "PS0-N-DATA-02",
+      "PS0-N-PAT-01",
+      "PS0-N-PAT-02",
+      "PS0-N-PAT-03"
+    ],
+    "failures": [],
+    "regressions": {
+      "callProbes": [
+        "PS0-P-CALL-02",
+        "PS0-P-CALL-03",
+        "PS0-P-CALL-04",
+        "PS0-P-CALL-05",
+        "PS0-P-CALL-06",
+        "PS0-P-CALL-07",
+        "PS0-P-CALL-08",
+        "PS0-P-CALL-09",
+        "PS0-P-CALL-10",
+        "PS0-N-CALL-01",
+        "PS0-N-CALL-02",
+        "PS0-N-CALL-03",
+        "PS0-N-CALL-04",
+        "PS0-N-CALL-05",
+        "PS0-N-CALL-06",
+        "PS0-N-CALL-07",
+        "PS0-N-CALL-08",
+        "PS0-N-CALL-09",
+        "PS0-N-CALL-10",
+        "PS0-N-CALL-11",
+        "PS0-N-CALL-12a",
+        "PS0-N-CALL-12b"
+      ],
+      "additionalLogs": [
+        "binder_operands.log",
+        "do_layout_operands.log",
+        "host_postfix_calls.log",
+        "operator_operands.log",
+        "prelude-grammar.log"
+      ],
+      "canonicalSourceFilesVerified": 2569,
+      "nativeLakeJobs": 41
+    },
+    "baseline": {
+      "run": 43580364174,
+      "job": 132403580037,
+      "source": "23f3f7bc814f33070d68d2accefbf65d2e5e4d07",
+      "reproduced": [
+        "braced inductive parser rejected the constructor bar",
+        "adjacent constructor pattern rejected the opening parenthesis"
+      ]
+    },
+    "summary": "Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog.",
+    "fullCorpus": {
+      "run": 43583275609,
+      "runner": "17be3f85c0fe7b0cb36220330062aeb483d936ce",
+      "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
+      "status": "IN_PROGRESS"
+    }
+  },
+  "r2ContinuationBatches": [
+    {
+      "run": 43584745403,
+      "job": 132416725461,
+      "conclusion": "success",
+      "runner": "a5e5fa3e3a8dc0146fe9d80eb7e8d6be0efead37",
+      "source": "7f350d3c5f7e867fb9919630f06bc894d4cd0384",
+      "fixture": "tests/run-r2-recursion-do.py",
+      "fixtureSha256": "95d82fe64c73d8f8faa643394cf9c60eae204a75731e792e04ff0208a7e7def6",
+      "driverSha256": "3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611",
+      "passed": [
+        "PS0-P-REC-01",
+        "PS0-P-REC-02",
+        "PS0-P-REC-03",
+        "PS0-P-REC-04",
+        "PS0-P-DO-01",
+        "PS0-P-DO-02",
+        "PS0-P-DO-03",
+        "PS0-P-DO-04",
+        "PS0-P-DO-05",
+        "PS0-P-DO-06",
+        "PS0-N-REC-01",
+        "PS0-N-REC-02",
+        "PS0-N-REC-03",
+        "PS0-N-DO-01",
+        "PS0-N-DO-02",
+        "PS0-N-DO-03"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "PS0-P-REC-01": "333ccce483720775eccd6ebd32fba1b1b1e186ce8cf62a8208eeeadd890bd424",
+        "PS0-P-REC-02": "fb4ef3214b0e6a661b80f67a3ad9c061475a66c3a79948de79e6330550fab04f",
+        "PS0-P-REC-03": "bc438bfffaded99e3dc1b3ff092a6f9e37c8cdabde1f20d08099c93e47f73f1c",
+        "PS0-P-REC-04": "7beb59e59cf8df9accf0beff1ee8b809aa530360db2797ce2d7ac704d6bc9839",
+        "PS0-P-DO-01": "f1670c8855564409ad0d37ecd409f0aca9b1f53969898397aef46ef2c1158889",
+        "PS0-P-DO-02": "11476bf2ba51b6bf8d404a80d4b9d51e0ef32749abe3dd90a201048f0765f778",
+        "PS0-P-DO-03": "5afe9e438320300da28cfc12ee79b5d0214bc6b8abff279594cd539fb242aa27",
+        "PS0-P-DO-04": "81256eb3a09457c5c932dc6b6468b113b9b6c2bf3c84d84d4fa2005a847b9814",
+        "PS0-P-DO-05": "abedf47772f2f39ae65442c62d40b430b4a26cbbc4977673143f02a5ef025306",
+        "PS0-P-DO-06": "06d7991d1ff7f05b81e2e155d2f953527ddda63cff5fe99a004d155680b5024d",
+        "PS0-N-REC-01": "76372d9918320b6eb1303001be203fe727694b531abe153bc36a9cfdbe281fc4",
+        "PS0-N-REC-02": "3eeb60124867bee4e7d6b163650c7874469002bc694ff518c41cda9306aadce7",
+        "PS0-N-REC-03": "4d6e971c07fe2cc92ac1be540057e8687da4cf8bba32b9bfe2b944337c661548",
+        "PS0-N-DO-01": "618866aad2e9ebfa5aa2a299032281504375d41f515b1f56e6a24eeccc169325",
+        "PS0-N-DO-02": "071f4f6b27fb22fb6689ccb96379f971d9c2eaed3bb2e705eca5c634c483bf0b",
+        "PS0-N-DO-03": "182a444ef508886419bcf10a96662f05f66623a7c1835c5cf711f04a35fcd2f1"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14110465161,
+        "name": "ps0-r2-recursion-do-evidence-43584745403",
+        "digest": "sha256:c419be6ca552713f63f3b2b76a417e004640ba72222bbf143b32c75149c35845",
+        "bytes": 12986,
+        "archiveDigestVerified": true
+      },
+      "summary": "Native Lake linked the compiler and the fixtures exercised well-founded recursion, partial classification, fixed-point equations and monotonicity, loop execution, forwarding, and exception cleanup."
+    },
+    {
+      "run": 43584802449,
+      "job": 132416884117,
+      "conclusion": "success",
+      "runner": "9d1e8f5bc7ce2dc72a79083941bdaac58cf65b4e",
+      "source": "299ca0558e2b13702e9f353dbe9661921ccb27d6",
+      "fixture": "tests/run-r2-proof-bind.py",
+      "fixtureSha256": "14c5acad75d8ad296e99eae312382517a5db99886f69bb618cd8f11ccd526277",
+      "driverSha256": "3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611",
+      "passed": [
+        "PS0-P-PROOF-01",
+        "PS0-P-PROOF-02",
+        "PS0-P-PROOF-03",
+        "PS0-N-BIND-01",
+        "PS0-N-BIND-02",
+        "PS0-N-BIND-03",
+        "PS0-N-BIND-04",
+        "PS0-N-LEX-01"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "PS0-P-PROOF-01": "105c03e0ea03fc0a2fa8b1859443da1607675c88034e210c4e58b13a8d3b431d",
+        "PS0-P-PROOF-02": "89894e5c9a0a0e0eacaa2643ef005f6163dfa66bf68c9d8be97414add45b469c",
+        "PS0-P-PROOF-03": "98da3fde9ca9961b12c038aa17525cc22828aa0f75e04ed85343295b2c72e3e7",
+        "PS0-N-BIND-01": "5245cdc151a9b50e64824de0cf7950f0168767243d622bddbde17e17a374996b",
+        "PS0-N-BIND-02": "4af38b1a0832f7acbc90b2cefdfee8812d64b3837dbcdd23671ae745d5f7a1d5",
+        "PS0-N-BIND-03": "e98e429df46d9f9fb0851873af49e22074c9a6ecce1fd466ec4ed6c8e6039ced",
+        "PS0-N-BIND-04": "a5c4440420471dbd8c293613ac23c0acdb8f21c66d51990008290b9330ab3d84",
+        "PS0-N-LEX-01": "c94b49845eb50da00359e29b0ee42db6d18b58f989a4e060f3dc0f855d21510b"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14109619480,
+        "name": "ps0-r2-proof-bind-evidence-43584802449",
+        "digest": "sha256:cd2060ae8e8f90059b833637498f0ae729e5dcc9237e143e301dbc8ab5dc5230",
+        "bytes": 7680,
+        "archiveDigestVerified": true
+      },
+      "summary": "The proof fixtures verified the assumption closure of a direct proof, a registered custom tactic, and native_decide. The binder and lexer cases matched their intended rejection diagnostics."
+    },
+    {
+      "run": 43585844014,
+      "job": 132420013107,
+      "conclusion": "failure",
+      "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+      "source": "1ca697c673144cf00786a3af6ac9539587823a19",
+      "fixture": "tests/run-r2-boundary.py",
+      "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+      "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+      "passed": [
+        "R2-01",
+        "R2-02",
+        "R2-03",
+        "R2-04",
+        "R2-05",
+        "R2-07",
+        "R2-08",
+        "R2-09",
+        "R2-10",
+        "R2-11",
+        "R2-13",
+        "R2-15",
+        "R2-16",
+        "R2-19",
+        "R2-20",
+        "R2-21",
+        "R2-22",
+        "R2-23",
+        "R2-24",
+        "R2-25",
+        "R2-26",
+        "R2-27",
+        "R2-28",
+        "R2-29",
+        "R2-30",
+        "R2-31"
+      ],
+      "failures": [
+        "R2-06",
+        "R2-12",
+        "R2-14",
+        "R2-17",
+        "R2-18"
+      ],
+      "fixtureCases": {
+        "R2-01": "48e1a1ac14bbff7755c9da4f85633e4b1b70d5404dced1c8f3e42d7c9dbfae6f",
+        "R2-02": "b7c44a485704c934a11d9912e66e1d58eef9ec288b38942067b5413282bfc540",
+        "R2-03": "dec3118a39de6d99d7243798def4adb12e113217387f7c66ece31cc6eba971a2",
+        "R2-04": "c25e52f742d79ff4e96771d31322807401d73c1c83e3a1cac9d3b2d532a8136d",
+        "R2-05": "bd61646f369b6162b77c65893b9a868953cfaddd2d6c9582913eafd4115fe0ee",
+        "R2-06": "ab994d95671eb6c0070bc36013d268ec5021b9adc7c7efe7551a5f687a31ee1e",
+        "R2-07": "441fbbcb4e9cfd7a140a258b8cf0206f82a7579e3b31ac4315e34e451b617f7a",
+        "R2-08": "42d833139715e2011f705af39fb72922421f9511d9a8a9f8b8b68b41503be390",
+        "R2-09": "65cc6b1747da5118ee13734d2421afa4228b61b9af4aa7dbe44946d39d62b32d",
+        "R2-10": "bd54b90014c3baa7baa103b88a486e013c8b3a43b5c6669f141e598b49fffc44",
+        "R2-11": "9353b747198e05450cc2c550f420bec0db37741c0bc4a556dbb5b1553417dded",
+        "R2-12": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4",
+        "R2-13": "085095a00ca479fa6135c678a33698305eb994ef561cb223388fe45e5b7b7ade",
+        "R2-14": "40d6437fbc57303fad7146bee67f1799ca1a1de811e95f07dcb0efb4055874e4",
+        "R2-15": "0f6391605693769fc3acd33dabab752372773b099ea0448a4ba9d76073732c48",
+        "R2-16": "078456c4f08a9ed92d47f103fffc4c69503a622c16a731263ffa285021e927c5",
+        "R2-17": "646bb601e021a38b2aca72aa41cd4829d8fa044666f8bd6cece80b406dfd9feb",
+        "R2-18": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479",
+        "R2-19": "88fa3f4585cf2da61b75a3a561ff395510b7c2a5f97912a917d10a1ad4df9733",
+        "R2-20": "e744f33d9b43a854bf32d740f8efd87ae814c89c1f52d07bcfebe63aed63b508",
+        "R2-21": "e372ede74524ab7c875bee819b5da836ef225dd8843438f02957d022f2c88749",
+        "R2-22": "ddbe774fef4d3facbe941f50fed5bff89787ca65f4e9994c21e318ea5a2b36c2",
+        "R2-23": "bebed0b544fc393a1f027ff42cd612cadafd8ae2e1ceb3dcfc3ce8eb6a435cee",
+        "R2-24": "15e4562fd9a8f2da3991eb12d1cc8278f69759e98d2c5d3ef1802d61ea52ac49",
+        "R2-25": "3f2d95c12d8bb7cc6f51a64020d6154741c492e2fa498eacc9bbcb71acac9760",
+        "R2-26": "77533618e0e1f8abed2385d24220de66aa5dfe09949af4a5fd3e823388350c09",
+        "R2-27": "f31f8fdf331db49df67d95b42e67bb7a5290d0829a04f2cef27d005be8ddddc2",
+        "R2-28": "a946dc311f976fff5de8eb8b5e2cb5f28313e64c5b53654ce9833fb3bd76d8ad",
+        "R2-29": "3062792a2c6a315cc9ae86a9a53e67524cbbcde6a42e4535bc7bd6109936403b",
+        "R2-30": "b38d6d1565714e9052d7ed1b8c4e27e03fa88fd6bc0f77b368420c2cb875a848",
+        "R2-31": "01fc21364dc568588e812db7a0864ab46ce996762db2e39cc3a44c94d7d2a065"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14110138542,
+        "name": "ps0-r2-boundary-evidence-43585844014",
+        "digest": "sha256:a8323b4a9e4c140bffe50f7f33b895f9fb37c6b1ad38d3af65194196ad08007c",
+        "bytes": 23409,
+        "archiveDigestVerified": true
+      },
+      "summary": "The numbered reference suite produced 26 passing witnesses. Five remain pending for defaults in constructor patterns, an explicit syntax bridge, competing parser rejection, and two marker-free braced headers."
+    },
+    {
+      "run": 43585844032,
+      "job": 132420013348,
+      "conclusion": "failure",
+      "runner": "dbc89e68cb48c3cc09ca8cd018f37479893b4585",
+      "source": "fdff2bb62fee2a2b23fc586aeaa02df4c989dd78",
+      "fixture": "tests/run-r2-contracts.py",
+      "fixtureSha256": "92483622e981ede868b8fbfa9b4e250365081c999502126399f6b28574f556a6",
+      "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+      "passed": [
+        "PS0-P-VC-01",
+        "PS0-P-VC-03",
+        "PS0-N-VC-01",
+        "PS0-N-VC-02",
+        "PS0-N-VC-03",
+        "PS0-N-VC-05"
+      ],
+      "failures": [
+        "PS0-P-VC-02",
+        "PS0-N-VC-04"
+      ],
+      "fixtureCases": {
+        "PS0-P-VC-01": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56",
+        "PS0-P-VC-02": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f",
+        "PS0-P-VC-03": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6",
+        "PS0-N-VC-01": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04",
+        "PS0-N-VC-02": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94",
+        "PS0-N-VC-03": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919",
+        "PS0-N-VC-04": "dcd96ce6b8880d78afbc102452fb0efa1dce916fa30753b8cc16b4a99398ff83",
+        "PS0-N-VC-05": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14109912789,
+        "name": "ps0-r2-contracts-evidence-43585844032",
+        "digest": "sha256:b50dd598c1f093051bb831df2cc4c1afe75963b60c7026254e43ae5219f53bed",
+        "bytes": 9437,
+        "archiveDigestVerified": true
+      },
+      "summary": "Six contract and erasure cases passed, including a checked spec theorem, execution of the erased-result action, and native contract rejections. The braced spec tail and missing-WP witnesses remain pending."
+    },
+    {
+      "run": 43586369627,
+      "job": 132421626281,
+      "conclusion": "success",
+      "runner": "8c2d88e76abfc8f6a23a21525f348d5955ae2158",
+      "source": "dcf33a23d9e671a75eaee6f3be46c6d0cba0a3e8",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "7862a321ffc39803ec6d4c4c7f3c8b00d19abfc37f52103eacc304869dcb52fd",
+      "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+      "passed": [
+        "PS0-P-EXT-01",
+        "PS0-P-EXT-02",
+        "PS0-P-META-02",
+        "PS0-P-RUN-02",
+        "PS0-P-DIAG-01",
+        "PS0-P-RUN-01",
+        "PS0-N-EXT-03",
+        "PS0-P-RUN-03",
+        "PS0-P-META-01"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+        "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+        "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+        "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+        "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+        "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+        "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+        "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+        "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14110284177,
+        "name": "ps0-r2-native-extensions-evidence-43586369627",
+        "digest": "sha256:177991d557f91fb6968a03e35c6f0fb8d7160c130afc1384fb45ff287fff9798",
+        "bytes": 7956486,
+        "archiveDigestVerified": true
+      },
+      "summary": "Nine native capability acceptance cases passed. The linked ABI executable returned 42 through a borrowed Nat FFI argument and a deliberately distinct implemented_by replacement. A second executable observed both ordinary and builtin initializer values."
+    },
+    {
+      "run": 43588334976,
+      "job": 132427517941,
+      "conclusion": "success",
+      "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+      "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "9336b1d9227b4a3aa6a721a2c8f4c67619c9809b5e534e915197201f7dc04801",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "PS0-N-EXT-01",
+        "PS0-N-EXT-02",
+        "PS0-P-DOC-01"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+        "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+        "PS0-N-EXT-01": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174",
+        "PS0-N-EXT-02": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3",
+        "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+        "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+        "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+        "PS0-P-DOC-01": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77",
+        "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+        "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+        "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+        "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14111765743,
+        "name": "ps0-r2-native-extensions-evidence-43588334976",
+        "digest": "sha256:7a453e11b7fdadb37c331c01fafd3a6629b61f6d41f6903aa046887e76c89386",
+        "bytes": 7958951,
+        "archiveDigestVerified": true
+      },
+      "summary": "Markdown and Verso were observed as distinct registered docstring kinds. Native quotation retained its tuple argument and explicit PS capture rejected the spaced call."
+    },
+    {
+      "run": 43588334974,
+      "job": 132427517789,
+      "conclusion": "failure",
+      "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+      "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "fixture": "tests/run-r2-contracts.py",
+      "fixtureSha256": "071a2979538449e072c7a6fd3d2e941998056152b96dafa235ca8bda224af63f",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "PS0-P-VC-02"
+      ],
+      "failures": [
+        "PS0-N-VC-04"
+      ],
+      "fixtureCases": {
+        "PS0-P-VC-01": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56",
+        "PS0-P-VC-02": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f",
+        "PS0-P-VC-03": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6",
+        "PS0-N-VC-01": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04",
+        "PS0-N-VC-02": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94",
+        "PS0-N-VC-03": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919",
+        "PS0-N-VC-04": "dcd96ce6b8880d78afbc102452fb0efa1dce916fa30753b8cc16b4a99398ff83",
+        "PS0-N-VC-05": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14111960906,
+        "name": "ps0-r2-contracts-evidence-43588334974",
+        "digest": "sha256:187aea82461f19d88d9f326cec7ac69049e221383a45b24040339fe5f1c9353f",
+        "bytes": 8232,
+        "archiveDigestVerified": true
+      },
+      "summary": "The braced spec subsection discharged the remaining VC and the generated theorem was checked for sorry dependencies."
+    },
+    {
+      "run": 43588334990,
+      "job": 132427517719,
+      "conclusion": "failure",
+      "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+      "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "fixture": "tests/run-r2-lexical-types.py",
+      "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "V1-001",
+        "V1-002",
+        "V1-003",
+        "V1-005",
+        "V1-006",
+        "V1-007",
+        "V1-008",
+        "V1-009",
+        "PS0-N-BOOT-01"
+      ],
+      "failures": [
+        "V1-004"
+      ],
+      "fixtureCases": {
+        "V1-001": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759",
+        "V1-002": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672",
+        "V1-003": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969",
+        "V1-004": "06d5e95ff75622019811981a7a33c6d00f676adad85367a4052b22e8c8325cb4",
+        "V1-005": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5",
+        "V1-006": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa",
+        "V1-007": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623",
+        "V1-008": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20",
+        "V1-009": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1",
+        "PS0-N-BOOT-01": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14110962028,
+        "name": "ps0-r2-lexical-types-evidence-43588334990",
+        "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+        "bytes": 8784,
+        "archiveDigestVerified": true
+      },
+      "summary": "Eight lexical and type families and the duplicate quotient-bootstrap rejection passed. The raw/interpolated string case was pending its corrected evaluation oracle."
+    },
+    {
+      "run": 43588891012,
+      "job": 132429179925,
+      "conclusion": "success",
+      "runner": "eac700fc96dfa34497d52689ffd576f9a61f3a4b",
+      "source": "17b8b1e167d2a1f118cdfb8bcfd19a54e09d6a26",
+      "fixture": "tests/run-r2-lexical-types.py",
+      "fixtureSha256": "03267377d6aab255bb34b2dcc60d467175626fecb8b81cba6d3f47444bae39a7",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "V1-004"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "V1-001": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759",
+        "V1-002": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672",
+        "V1-003": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969",
+        "V1-004": "baa8da6b5a0e6718d6dbde4bd75ec7bc72bcd1b7abfead86acb55e354b7f1cdf",
+        "V1-005": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5",
+        "V1-006": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa",
+        "V1-007": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623",
+        "V1-008": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20",
+        "V1-009": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1",
+        "PS0-N-BOOT-01": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14111686532,
+        "name": "ps0-r2-lexical-types-evidence-43588891012",
+        "digest": "sha256:e024bad9d42cfc6a3f9342d98a936c06f27f4eee63a66d482e15a0e5117dc96b",
+        "bytes": 8629,
+        "archiveDigestVerified": true
+      },
+      "summary": "The native IO oracle verified raw string parsing and evaluated interpolation to the exact expected text."
+    },
+    {
+      "run": 43588983637,
+      "job": 132429461142,
+      "conclusion": "failure",
+      "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+      "source": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "fixture": "tests/run-r2-declaration-families.py",
+      "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "V1-010",
+        "V1-016",
+        "V1-017",
+        "V1-019",
+        "V1-021",
+        "V1-022",
+        "V1-023",
+        "PS0-N-ASSURE-01",
+        "PS0-N-ASSURE-02"
+      ],
+      "failures": [
+        "V1-020"
+      ],
+      "fixtureCases": {
+        "V1-010": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd",
+        "V1-016": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a",
+        "V1-017": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33",
+        "V1-019": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f",
+        "V1-020": "e48d317201fe26e19e54569f6563be7b85bd47dfa4c28cf9e3f9280626bb7e19",
+        "V1-021": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247",
+        "V1-022": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f",
+        "V1-023": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1",
+        "PS0-N-ASSURE-01": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03",
+        "PS0-N-ASSURE-02": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14112101177,
+        "name": "ps0-r2-declaration-families-evidence-43588983637",
+        "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+        "bytes": 9071,
+        "archiveDigestVerified": true
+      },
+      "summary": "Seven declaration families and two assumption-boundary cases passed. Lean reported transitive sorry and user or native axioms while leaving ordinary checking explicitly uncertified."
+    },
+    {
+      "run": 43589563081,
+      "job": 132431198887,
+      "conclusion": "success",
+      "runner": "820e6c7622387a141230f59ecd62354181c8dca3",
+      "source": "5268d1e7fb533b5a70036205cec5ffaabd83d70d",
+      "fixture": "tests/run-r2-declaration-families.py",
+      "fixtureSha256": "45c7a0bdb73bcec206f03fc9b1e59c0b89edc778214c3230e895e7181a666bce",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "V1-020"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "V1-010": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd",
+        "V1-016": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a",
+        "V1-017": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33",
+        "V1-019": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f",
+        "V1-020": "e4e8dbfcb1c8a2c0431f16b1565fe994a0b2dba6dc9e191195678963458a4502",
+        "V1-021": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247",
+        "V1-022": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f",
+        "V1-023": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1",
+        "PS0-N-ASSURE-01": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03",
+        "PS0-N-ASSURE-02": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14112270036,
+        "name": "ps0-r2-declaration-families-evidence-43589563081",
+        "digest": "sha256:698b15c9282a2a75dc475cae9783d09e25e4fc300253aadacd8243176e7711b1",
+        "bytes": 8921,
+        "archiveDigestVerified": true
+      },
+      "summary": "The exposed definition supported the exported theorem. Lean also checked the abbreviation’s reducibility hint and the theorem’s declaration kind."
+    },
+    {
+      "run": 43589813648,
+      "job": 132431941598,
+      "conclusion": "failure",
+      "runner": "e9a365fd05e9cafa7a86fd23d05120dd534e7679",
+      "source": "64137d9e1f07cc2553dc9c73f36feb90405f19d9",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "2d8833c6c85d7c6f04a551521ad7dc98e2cb3146e4f09f6dca69fda245aee782",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "PS0-N-ASSURE-03",
+        "PS0-N-ASSURE-04",
+        "PS0-N-ASSURE-06"
+      ],
+      "failures": [
+        "PS0-P-ENV-01",
+        "PS0-N-ASSURE-05"
+      ],
+      "fixtureCases": {
+        "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+        "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+        "PS0-N-EXT-01": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174",
+        "PS0-N-EXT-02": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3",
+        "PS0-P-ENV-01": "7b08ced0763a855546c054578e5607d6b617ff1bb0e04f42475151f0f3608392",
+        "PS0-N-ASSURE-03": "6fe2efbd8d1acea823dc5cb2b66293b5913e186157ac6f0496030f7849324d6b",
+        "PS0-N-ASSURE-04": "c42b4e968d0330dab3b3188363fd53df00b13a6ba8e3122e981f23bdc5727903",
+        "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+        "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+        "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+        "PS0-P-DOC-01": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77",
+        "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+        "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+        "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+        "PS0-N-ASSURE-05": "ed3ec1d78f3e439ae36571c17a8f1276ab32bf17b5e8aad0c43313491912657c",
+        "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442",
+        "PS0-N-ASSURE-06": "5bee2412f64cd8c219a2845ea95188b5c39c304141a701f22b037de84705a8fc"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14111624454,
+        "name": "ps0-r2-native-extensions-evidence-43589813648",
+        "digest": "sha256:b5943d2b6b663855297e011ab3039f98e43fca98714328b20f097721174de424",
+        "bytes": 7963582,
+        "archiveDigestVerified": true
+      },
+      "summary": "The compiler retained the partial implementation and uncertified status, ran the erased action, and demonstrated distinct native and PS source admission on identical source bytes."
+    }
+  ]
 }

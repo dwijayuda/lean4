@@ -1,0 +1,1644 @@
+/-
+Copyright (c) 2026 Dwijayuda. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+module
+prelude
+public import Init
+public meta import Init
+public meta import Lean
+public import PS0.Operators
+public meta section
+
+/-! PS-owned category adapters; independently owned native and DSL syntax stays opaque. -/
+
+open Lean
+
+declare_syntax_cat psTerm
+declare_syntax_cat psCommand
+declare_syntax_cat psTactic (behavior := both)
+declare_syntax_cat psDoSeq
+declare_syntax_cat psCallArg
+declare_syntax_cat psHead
+declare_syntax_cat psFunBinder
+declare_syntax_cat psDoElem
+declare_syntax_cat psDoItem
+declare_syntax_cat psLocalBinder
+declare_syntax_cat psStructInstFieldDecl
+declare_syntax_cat psLoopBinder
+declare_syntax_cat psDataOperand
+declare_syntax_cat psDataTacticOperand
+declare_syntax_cat psDataBinder
+declare_syntax_cat psMatchPattern
+
+namespace PS0.DoLayout
+open Lean.Parser
+
+private function redirect(roles : Array((Name × Name)), ctx : ParserContextCore) : ParserContextCore := Id.run(do
+  let native := categoryParserFnExtension.getState ctx.env
+  let restore := fun (child : ParserContextCore) => {child with env := categoryParserFnExtension.setState child.env native}
+  let dispatch : CategoryParserFn := fun category =>
+    match roles.find?((fun role => role.1 == category)) with
+    | some (_, target) => adaptUncacheableContextFn(restore, (native target))
+    | none => adaptUncacheableContextFn(restore, (native category))
+  return {ctx with env := categoryParserFnExtension.setState ctx.env dispatch})
+
+private function operands(roles : Array((Name × Name)), parser : Parser) : Parser :=
+  withFn((adaptUncacheableContextFn((redirect roles))), parser)
+
+@[run_parser_attribute_hooks] const sequence : Parser :=
+  operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doSeq
+
+@[run_parser_attribute_hooks] const returnElem : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.doReturn
+
+@[run_parser_attribute_hooks] const nestedActionTerm : Parser :=
+  operands #[(`doElem, `psDoElem)] Lean.Parser.Term.nestedAction
+
+@[run_parser_attribute_hooks] const returnTerm : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.termReturn
+
+@[run_parser_attribute_hooks] const expressionElem : Parser :=
+  -- Both do-expression alternatives read the same PS operand. Enter it directly
+  -- so longest-match alternatives can reuse Lean's category cache.
+  leadingNode ``Lean.Parser.Term.doExpr leadPrec <|
+    Lean.Parser.Term.notFollowedByRedefinedTermToken >> categoryParser `psTerm 0 >>
+      notFollowedBy((symbol ":=" <|> Lean.Parser.Term.leftArrow),
+        "unexpected token after 'expr' in 'do' block")
+
+@[run_parser_attribute_hooks] const nativeDoOperand : Parser :=
+  withFn((fun parse ctx initial =>
+    let parsed := parse ctx initial
+    if parsed.hasError then parsed
+    else if parsed.stxStack.back.isOfKind ``Lean.Parser.Term.doIf then
+      initial.mkUnexpectedError "PS0V1-DO-OWNERSHIP: if uses its PS operand adapter"
+    else parsed), (categoryParser `doElem 0))
+
+private const letPrefix : Parser :=
+  symbol "let " >> optional((symbol "mut ")) >> Lean.Parser.Term.letConfig
+
+@[run_parser_attribute_hooks] const localBinder : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.letIdBinder
+
+@[run_parser_attribute_hooks] const localLhs : Parser :=
+  Lean.Parser.Term.letId >> many((ppSpace >> categoryParser `psLocalBinder 0)) >>
+    operands #[(`term, `psTerm)] Lean.Parser.Term.optType
+
+@[run_parser_attribute_hooks] const whereFinally : Parser :=
+  operands #[(`tactic, `psTactic)] Lean.Parser.Term.whereFinally
+
+@[run_parser_attribute_hooks] const contractType : Parser :=
+  withForbiddens(#["given", "requires", "ensures"], (categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] const argumentValue : Parser :=
+  withoutPosition((withoutForbidden((categoryParser `psTerm 0))))
+
+@[run_parser_attribute_hooks] const forwardTerm : Parser :=
+  operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doForward
+
+@[run_parser_attribute_hooks] const ascriptionTerm : Parser :=
+  -- These overlapping native grouping productions must share category caches.
+  -- Their value callbacks enter PS directly with native position/hygiene rules.
+  withCache `PS0.DoLayout.ascriptionTerm <|
+    leadingNode ``Lean.Parser.Term.typeAscription maxPrec <|
+      Lean.Parser.Term.hygienicLParen >>
+        withoutPosition((withoutForbidden((categoryParser `psTerm 0 >> " :" >>
+          optional((ppSpace >> categoryParser `psTerm 0)))))) >> ")"
+
+@[run_parser_attribute_hooks] const byTerm : Parser :=
+  operands #[(`tactic, `psTactic)] Lean.Parser.Term.byTactic
+
+@[run_parser_attribute_hooks] const loopTypedBinder : Parser :=
+  leadingNode ``Lean.Parser.Term.typeAscription maxPrec <|
+    Lean.Parser.Term.hygienicLParen >> withoutPosition((withoutForbidden(
+      (termParser >> " :" >> optional((ppSpace >> categoryParser `psTerm 0)))))) >> ")"
+
+@[run_parser_attribute_hooks] const loopImplicitBinder : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.funImplicitBinder
+
+@[run_parser_attribute_hooks] const loopStrictBinder : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.funStrictImplicitBinder
+
+@[run_parser_attribute_hooks] const loopInstanceBinder : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.instBinder
+
+const loopBasicFun : Parser :=
+  node ``Lean.Parser.Term.basicFun <|
+    ppGroup((many1((ppSpace >> categoryParser `psLoopBinder 0)) >>
+      operands #[(`term, `psTerm)] Lean.Parser.Term.optType >>
+      unicodeSymbol " ↦" " =>" (preserveForPP := true))) >>
+      ppSpace >> categoryParser `psTerm 0
+
+@[run_parser_attribute_hooks] const loopInvariant : Parser :=
+  node ``Lean.Parser.Term.doLoopInvariant <|
+    ppIndent((ppLine >> nonReservedSymbol "invariant" >>
+      withForbiddens #["do", "decreasing"] loopBasicFun))
+
+@[run_parser_attribute_hooks] const loopDecreasing : Parser :=
+  node ``Lean.Parser.Term.doLoopDecreasing <|
+    ppIndent((ppLine >> nonReservedSymbol "decreasing" >>
+      withForbidden("do", (atomic loopBasicFun <|> (ppSpace >> categoryParser `psTerm 0)))))
+
+@[run_parser_attribute_hooks] const tupleTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.tuple maxPrec <|
+    Lean.Parser.Term.hygienicLParen >> optional((withoutPosition((withoutForbidden(
+      (categoryParser `psTerm 0 >> ", " >>
+        sepBy1( (categoryParser `psTerm 0), ", ", allowTrailingSep := true))))))) >> ")"
+
+@[run_parser_attribute_hooks] const forallTerm : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.«forall»
+
+@[run_parser_attribute_hooks] const listTerm : Parser :=
+  leadingNode `«term[_]» maxPrec <|
+    "[" >> withoutPosition((sepBy( (categoryParser `psTerm 0), ", ", allowTrailingSep := true))) >> "]"
+
+@[run_parser_attribute_hooks] const arrayTerm : Parser :=
+  leadingNode `«term#[_,]» maxPrec <|
+    "#[" >> withoutPosition((sepBy( (categoryParser `psTerm 0), ", ", allowTrailingSep := true))) >> "]"
+
+@[run_parser_attribute_hooks] const interpolationTerm : Parser :=
+  leadingNode `termS!_ maxPrec <| "s!" >> interpolatedStr((categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] const constructorTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.anonymousCtor maxPrec <|
+    "⟨" >> withoutPosition((withoutForbidden(
+      (sepBy( (categoryParser `psTerm 0), ", ", allowTrailingSep := true))))) >> "⟩"
+
+@[run_parser_attribute_hooks] const showTerm : Parser :=
+  operands #[(`term, `psTerm), (`tactic, `psTactic)] Lean.Parser.Term.«show»
+
+@[run_parser_attribute_hooks] const sufficesTerm : Parser :=
+  operands #[(`term, `psTerm), (`tactic, `psTactic)] Lean.Parser.Term.«suffices»
+
+@[run_parser_attribute_hooks] const patternIfTerm : Parser :=
+  leadingNode `termIfLet leadPrec <|
+    "if " >> "let " >> termParser >> " := " >>
+      ((withForbiddens(#["{"], (categoryParser `psHead maxPrec)) >>
+        withFn((fun parse ctx initial =>
+          let parsed := parse ctx initial
+          if parsed.hasError then parsed else
+            let body := parsed.stxStack.back
+            let stack := parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "then")
+            stack.pushSyntax body[1]),
+          (node nullKind <| "{" >> argumentValue >> "}")) >>
+        " else " >> withFn((fun parse => withResultOfFn(parse, fun body => body[1])),
+          (node nullKind <| "{" >> argumentValue >> "}"))) <|>
+      (categoryParser `psTerm 0 >> " then " >> categoryParser `psTerm 0 >>
+        " else " >> categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] const patternLetTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.«let» leadPrec <|
+    withPosition(("let" >> Lean.Parser.Term.letConfig >>
+      node(``Lean.Parser.Term.letDecl,
+        (node(``Lean.Parser.Term.letPatDecl,
+          (atomic((ppSpace >> termParser >> pushNone >>
+            operands #[(`term, `psTerm)] Lean.Parser.Term.optType >> " := ")) >>
+            categoryParser `psTerm 0)))))) >>
+      Lean.Parser.Term.optSemicolon((categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] const dependentIfTerm : Parser :=
+  leadingNode `termDepIfThenElse leadPrec <|
+    ppRealGroup((ppRealFill((ppIndent(("if " >> node `Lean.binderIdent Lean.Parser.Term.binderIdent >> " : " >>
+      categoryParser `psTerm 0 >> " then")) >> ppSpace >> categoryParser `psTerm 0)) >>
+      ppDedent ppSpace >> ppRealFill(("else " >> categoryParser `psTerm 0))))
+
+-- The positional call adapter emits a native pattern application. In
+-- particular an empty application must reach Lean's pattern arity check.
+@[run_parser_attribute_hooks] const patternCall : Parser :=
+  withFn((fun parse => andthenFn((checkPrecFn maxPrec), withResultOfFn(parse, fun source =>
+    let info := match source.getRange? with
+      | some span => .synthetic span.start span.stop false
+      | none => .none
+    .node(info, ``Lean.Parser.Term.app, #[source[0], mkNullNode(source[2].getSepArgs)])))),
+    ((node ``Lean.Parser.Term.app <|
+      atomic((PS0.Operators.adjacentIdentifier <|> Lean.Parser.Term.dotIdent) >>
+        checkNoWsBefore >> "(") >>
+        withoutPosition((sepBy((categoryParser `psMatchPattern 0), ",", ("," >> ppSpace), true))) >>
+        ")") <|> Lean.Parser.error "expected constructor pattern"))
+
+const matchPatternAlternative : Parser :=
+  node ``Lean.Parser.Term.matchAlt <|
+    "| " >> ppIndent(
+      sepBy1((sepBy1((categoryParser `psMatchPattern 0), ", ")), " | ") >>
+        Lean.Parser.darrow >>
+        checkColGe "alternative right-hand-side to start in a column greater than or equal to the corresponding '|'" >>
+        categoryParser `psTerm 0)
+
+const matchPatternAlternatives : Parser :=
+  node ``Lean.Parser.Term.matchAlts <| withPosition(many1Indent(ppLine >> matchPatternAlternative))
+
+@[run_parser_attribute_hooks] const matchTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.«match» leadPrec <|
+    "match " >> optional Lean.Parser.Term.generalizingParam >>
+      optional((operands #[(`term, `psTerm)] Lean.Parser.Term.motive)) >>
+      sepBy1((operands #[(`term, `psTerm)] Lean.Parser.Term.matchDiscr), ", ") >>
+      " with" >> ppDedent(
+        withFn((fun parse => withResultOfFn(parse, fun source => source[1])),
+          (node `PS0.DoLayout.bracedAlternatives <| "{" >> matchPatternAlternatives >> "}")) <|>
+        matchPatternAlternatives)
+
+@[run_parser_attribute_hooks] const patternLambda : Parser :=
+  leadingNode ``Lean.Parser.Term.«fun» maxPrec <|
+    ppAllowUngrouped >> unicodeSymbol "λ" "fun" (preserveForPP := true) >>
+      Lean.Parser.Term.matchAlts((categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] const recordTerm : Parser :=
+  withFn((fun parse ctx initial =>
+    let parsed := parse ctx initial
+    if parsed.hasError then parsed else
+      let source := parsed.stxStack.back
+      if source.getArgs.size == 6 && source[1].getArgs.isEmpty &&
+          source[2].isOfKind(``Lean.Parser.Term.structInstFields) &&
+          source[2][0].getArgs.isEmpty && source[4].getArgs.isEmpty &&
+          source[3].getArgs.size == 1 && source[3][0].getArgs.isEmpty then
+        -- No PS operands occur in `{}`. Preserve the native empty-collection/
+        -- structure choice instead of committing to a structure before typing.
+        PS0.Operators.leading.fn ctx initial
+      else parsed),
+    (operands #[(`term, `psTerm), (`structInstFieldDecl, `psStructInstFieldDecl)]
+      Lean.Parser.Term.structInst))
+
+@[run_parser_attribute_hooks] const fieldDefinition : Parser :=
+  operands #[(`term, `psTerm)] Lean.Parser.Term.structInstFieldDef
+
+@[run_parser_attribute_hooks] const fieldEquations : Parser :=
+  node ``Lean.Parser.Term.structInstFieldEqns <|
+    optional "private" >> Lean.Parser.Term.matchAlts((categoryParser `psTerm 0))
+
+private const ifCondition : Parser :=
+  node(``Lean.Parser.Term.doIfLet,
+      ("let " >> termParser >>
+        (operands #[(`term, `psTerm)] Lean.Parser.Term.doIfLetPure <|>
+         operands #[(`term, `psTerm)] Lean.Parser.Term.doIfLetBind))) <|>
+    operands #[(`term, `psTerm)] Lean.Parser.Term.doIfProp
+
+@[run_parser_attribute_hooks] const ifElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doIf maxPrec <| withResetCache <|
+    withPositionAfterLinebreak <| ppRealGroup <|
+      ppRealFill((ppIndent(("if " >> ifCondition >> " then")) >> ppSpace >> sequence)) >>
+      many((checkColGe "'else if' in 'do' must be indented" >>
+        group((ppDedent ppSpace >> ppRealFill(
+          (Lean.Parser.Term.elseIf >> ifCondition >> " then " >> sequence)))))) >>
+      optional((checkColGe "'else' in 'do' must be indented" >>
+        ppDedent ppSpace >> ppRealFill(("else " >> sequence))))
+
+@[run_parser_attribute_hooks] const whileElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doWhile maxPrec <|
+    "while " >> withForbiddens #["do", "invariant", "decreasing"] ifCondition >>
+      optional loopInvariant >> optional loopDecreasing >>
+      " do " >> sequence
+
+@[run_parser_attribute_hooks] const repeatElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doRepeatUntil maxPrec <|
+    "repeat " >> optional loopInvariant >> optional loopDecreasing >>
+      sequence >> ppDedent ppLine >> "until " >> categoryParser `psTerm 0
+
+const namedDeclaration : Parser :=
+  node ``Lean.Parser.Term.letDecl <|
+    notFollowedBy((nonReservedSymbol "rec"), "rec") >>
+      node(``Lean.Parser.Term.letIdDecl,
+        (atomic((localLhs >> " := ")) >> categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] const letElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doLet maxPrec <|
+    letPrefix >> namedDeclaration
+
+@[run_parser_attribute_hooks] const haveElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doHave maxPrec <|
+    "have " >> Lean.Parser.Term.letConfig >> namedDeclaration
+
+@[run_parser_attribute_hooks] const matchElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doMatch leadPrec <|
+    "match " >> optional Lean.Parser.Term.dependentParam >>
+      optional Lean.Parser.Term.generalizingParam >>
+      optional((operands #[(`term, `psTerm)] Lean.Parser.Term.motive)) >>
+      sepBy1((operands #[(`term, `psTerm)] Lean.Parser.Term.matchDiscr), ", ") >>
+      " with" >> ppDedent((Lean.Parser.Term.matchAlts sequence))
+
+function forDeclaration(collection : Parser) : Parser :=
+  node ``Lean.Parser.Term.doForDecl <|
+    optional((atomic((ident >> " : ")))) >> termParser >> " in " >>
+      withForbiddens(#["do", "invariant", "decreasing"], collection)
+
+@[run_parser_attribute_hooks] const forElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doFor maxPrec <|
+    "for " >>
+    ((sepBy1((forDeclaration((categoryParser `psHead maxPrec))), ", ") >>
+      optional loopInvariant >> optional loopDecreasing >> withFn((fun parse ctx initial =>
+        let parsed := parse ctx initial
+        if parsed.hasError then parsed else
+          let body := parsed.stxStack.back
+          let stack := parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "do")
+          stack.pushSyntax body),
+        (operands #[ (`doElem, `psDoElem) ] Lean.Parser.Term.doSeqBracketed))) <|>
+    (sepBy1((forDeclaration((categoryParser `psTerm 0))), ", ") >> optional loopInvariant >>
+      optional loopDecreasing >> " do " >> sequence))
+
+@[run_parser_attribute_hooks] const forTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.termFor leadPrec <|
+    "for " >> sepBy1((forDeclaration((categoryParser `psTerm 0))), ", ") >> optional loopInvariant >>
+      optional loopDecreasing >> " do " >> sequence
+
+const catchElem : Parser :=
+  node ``Lean.Parser.Term.doCatch <|
+    ppDedent ppLine >> atomic(("catch " >> Lean.Parser.Term.binderIdent)) >>
+      optional((" : " >> categoryParser `psTerm 0)) >> darrow >> sequence
+
+const catchMatchElem : Parser :=
+  node ``Lean.Parser.Term.doCatchMatch <|
+    ppDedent ppLine >> "catch " >> ppDedent((Lean.Parser.Term.matchAlts sequence))
+
+const finallyElem : Parser :=
+  node ``Lean.Parser.Term.doFinally <| ppDedent ppLine >> "finally " >> sequence
+
+@[run_parser_attribute_hooks] const tryElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doTry maxPrec <|
+    "try " >> sequence >> many((catchElem <|> catchMatchElem)) >> optional finallyElem
+
+@[run_parser_attribute_hooks] const tryTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.termTry leadPrec <|
+    "try " >> sequence >> many((catchElem <|> catchMatchElem)) >> optional finallyElem
+
+@[run_parser_attribute_hooks] const initializeCommand : Parser :=
+  leadingNode ``Lean.Parser.Command.«initialize» leadPrec <|
+    Lean.Parser.Command.declModifiers false >> Lean.Parser.Command.initializeKeyword >>
+      optional((atomic((ident >> operands #[(`term, `psTerm)] Lean.Parser.Term.typeSpec >>
+        ppSpace >> Lean.Parser.Term.leftArrow)))) >> sequence
+
+const dataSignature : Parser :=
+  node ``Lean.Parser.Command.optDeclSig <|
+    withForbiddens(#["given", "requires", "ensures"],
+      (many((ppSpace >> (Lean.Parser.Term.binderIdent <|> categoryParser `psDataBinder 0))))) >>
+    optional((operands #[(`term, `psDataOperand)] Lean.Parser.Command.defTypeSpec))
+
+const dataRequiredSignature : Parser :=
+  node ``Lean.Parser.Command.declSig <|
+    many((ppSpace >> (Lean.Parser.Term.binderIdent <|> categoryParser `psDataBinder 0))) >>
+      operands #[(`term, `psDataOperand)] Lean.Parser.Term.typeSpec
+
+@[run_parser_attribute_hooks] const dataNativeBinder : Parser :=
+  operands #[(`term, `psDataOperand)] Lean.Parser.Term.bracketedBinder
+
+const dataBinderSuffix : Parser :=
+  Lean.Parser.Term.binderTactic <|>
+    operands #[(`term, `psDataOperand)] Lean.Parser.Term.binderDefault
+
+const dataStructExplicitBinder : Parser :=
+  node ``Lean.Parser.Command.structExplicitBinder <|
+    atomic((Lean.Parser.Command.declModifiers true >> "(")) >>
+      withoutPosition((many1 ident >> ppIndent dataSignature >> optional dataBinderSuffix)) >> ")"
+
+const dataStructImplicitBinder : Parser :=
+  node ``Lean.Parser.Command.structImplicitBinder <|
+    atomic((Lean.Parser.Command.declModifiers true >> "{")) >>
+      withoutPosition((many1 ident >> dataRequiredSignature)) >> "}"
+
+const dataStructInstBinder : Parser :=
+  node ``Lean.Parser.Command.structInstBinder <|
+    atomic((Lean.Parser.Command.declModifiers true >> "[")) >>
+      withoutPosition((many1 ident >> dataRequiredSignature)) >> "]"
+
+const dataStructSimpleBinder : Parser :=
+  node ``Lean.Parser.Command.structSimpleBinder <|
+    atomic((Lean.Parser.Command.declModifiers true >> ident)) >>
+      dataSignature >> optional dataBinderSuffix
+
+const dataStructField : Parser :=
+  ppGroup((dataStructExplicitBinder <|> dataStructImplicitBinder <|>
+    dataStructInstBinder <|> dataStructSimpleBinder))
+
+const dataStructFields : Parser :=
+  node ``Lean.Parser.Command.structFields <|
+    manyIndent((ppLine >> checkColGe >> dataStructField))
+
+const dataStructCtor : Parser :=
+  node ``Lean.Parser.Command.structCtor <|
+    atomic((ppIndent((Lean.Parser.Command.declModifiers true >> ident >>
+      many((ppSpace >> categoryParser `psDataBinder 0)) >> " :: "))))
+
+const bracedDataStructFields : Parser :=
+  node ``Lean.Parser.Command.structFields <|
+    withPosition(withFn((fun parse => withResultOfFn(parse, fun source =>
+      mkNullNode(source.getArgs.map(fun field => field[0])))),
+      (many1(group((checkColGe >> dataStructField >> optional((symbol ";" <|> symbol ","))))))))
+
+const dataStructBody : Parser :=
+  withFn((fun parse ctx initial =>
+    let parsed := parse ctx initial
+    if parsed.hasError then parsed else
+      let body := parsed.stxStack.back
+      let stack := parsed.popSyntax
+      (stack.pushSyntax body[1]).pushSyntax body[2]),
+    (node `PS0.DoLayout.bracedDataStruct <|
+      "{" >> optional dataStructCtor >> bracedDataStructFields >> "}")) <|>
+    (optional dataStructCtor >> dataStructFields)
+
+const dataComputedField : Parser :=
+  node ``Lean.Parser.Command.computedField <|
+    Lean.Parser.Command.declModifiers true >> ident >> " : " >>
+      categoryParser `psDataOperand 0 >> Lean.Parser.Term.matchAlts((categoryParser `psDataOperand 0))
+
+const dataComputedFields : Parser :=
+  node ``Lean.Parser.Command.computedFields <|
+    "with" >> manyIndent((ppLine >> ppGroup dataComputedField))
+
+const dataConstructor : Parser :=
+  node ``Lean.Parser.Command.ctor <|
+    atomic((optional Lean.Parser.Command.docComment >> "\n| ")) >>
+      ppGroup((Lean.Parser.Command.declModifiers true >> rawIdent >> dataSignature))
+
+private const dataConstructors : Parser :=
+  withFn((fun parse => withResultOfFn(parse, fun source => source[1])),
+    (node `PS0.DoLayout.bracedConstructors <| "{" >> many dataConstructor >> "}")) <|> many dataConstructor
+
+const dataDeclRecovery : Parser where
+  fn := andthenFn(
+    (takeUntilFn(fun c => c.isWhitespace || c == '(' || c == ')' || c == ':' || c == '{' || c == '}' || c == '|')),
+    (takeWhileFn Char.isWhitespace))
+
+function dataInductive(kind : Name, keyword : String) : Parser :=
+  node kind <| symbol keyword >> recover Lean.Parser.Command.declId dataDeclRecovery >>
+    ppIndent dataSignature >> optional((symbol " :=" <|> " where")) >> dataConstructors >>
+    optional((ppDedent ppLine >> dataComputedFields)) >> Lean.Parser.Command.optDeriving >>
+    optional((operands #[(`tactic, `psDataTacticOperand)] Lean.Parser.Command.monotonicityBy))
+
+const dataClassInductive : Parser :=
+  node ``Lean.Parser.Command.classInductive <|
+    atomic((group((symbol "class " >> "inductive ")))) >>
+      recover Lean.Parser.Command.declId dataDeclRecovery >> ppIndent dataSignature >>
+      optional((symbol " :=" <|> " where")) >> dataConstructors >> Lean.Parser.Command.optDeriving
+
+const dataExtends : Parser :=
+  node ``Lean.Parser.Command.«extends» <|
+    " extends " >> sepBy1((operands #[(`term, `psDataOperand)] Lean.Parser.Command.structParent), ", ") >>
+      operands #[(`term, `psDataOperand)] Lean.Parser.Term.optType
+
+const dataStructure : Parser :=
+  node ``Lean.Parser.Command.«structure» <|
+    (Lean.Parser.Command.structureTk <|> Lean.Parser.Command.classTk) >> Lean.Parser.Command.declId >>
+      ppIndent((dataSignature >> optional dataExtends)) >>
+      optional(((symbol " := " <|> " where ") >>
+        dataStructBody)) >>
+      Lean.Parser.Command.optDeriving
+
+@[run_parser_attribute_hooks] const dataCommand : Parser :=
+  leadingNode ``Lean.Parser.Command.declaration leadPrec <|
+    Lean.Parser.Command.declModifiers false >>
+      (dataInductive ``Lean.Parser.Command.«inductive» "inductive " <|>
+       dataInductive ``Lean.Parser.Command.«coinductive» "coinductive " <|>
+       dataClassInductive <|> dataStructure)
+
+@[run_parser_attribute_hooks] const namedLetTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.«let» leadPrec <|
+    withPosition(("let" >> Lean.Parser.Term.letConfig >> namedDeclaration)) >>
+      Lean.Parser.Term.optSemicolon((categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] const namedHaveTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.«have» leadPrec <|
+    withPosition(("have" >> Lean.Parser.Term.letConfig >> namedDeclaration)) >>
+      Lean.Parser.Term.optSemicolon((categoryParser `psTerm 0))
+
+const recursiveDeclaration : Parser :=
+  node ``Lean.Parser.Term.letRecDecl <|
+    optional Lean.Parser.Command.docComment >> optional Lean.Parser.Term.attributes >>
+    node(``Lean.Parser.Term.letDecl,
+      (notFollowedBy((nonReservedSymbol "rec"), "rec") >>
+        (node(``Lean.Parser.Term.letIdDecl,
+          (atomic((localLhs >> " := ")) >>
+            categoryParser `psTerm 0)) <|>
+         node(``Lean.Parser.Term.letEqnsDecl,
+          (localLhs >>
+            Lean.Parser.Term.matchAlts((categoryParser `psTerm 0))))))) >>
+    Lean.Parser.Termination.suffix
+
+const recursiveDeclarations : Parser :=
+  node ``Lean.Parser.Term.letRecDecls <| sepBy1 recursiveDeclaration ", "
+
+const recursivePrefix : Parser :=
+  group((symbol "let " >> nonReservedSymbol "rec "))
+
+@[run_parser_attribute_hooks] const recursiveElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doLetRec maxPrec <| recursivePrefix >> recursiveDeclarations
+
+@[run_parser_attribute_hooks] const recursiveTerm : Parser :=
+  leadingNode ``Lean.Parser.Term.letrec leadPrec <|
+    withPosition((recursivePrefix >> recursiveDeclarations)) >>
+      Lean.Parser.Term.optSemicolon((categoryParser `psTerm 0))
+
+@[run_parser_attribute_hooks] const bindElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doLetArrow maxPrec <| withPosition <|
+    letPrefix >> operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.doIdDecl
+
+@[run_parser_attribute_hooks] const patternBindElem : Parser :=
+  operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doLetArrow
+
+@[run_parser_attribute_hooks] const patternLetElseElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doLetElse leadPrec <| withPosition <|
+    letPrefix >> termParser >> " := " >> categoryParser `psTerm 0 >>
+      (checkColGe >> " | " >> operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doSeqIndent) >>
+      optional((checkColGe >> operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doSeqIndent))
+
+@[run_parser_attribute_hooks] const reassignElem : Parser :=
+  leadingNode ``Lean.Parser.Term.doReassign maxPrec <|
+    Lean.Parser.Term.notFollowedByRedefinedTermToken >>
+      operands #[(`term, `psTerm)] Lean.Parser.Term.letIdDeclNoBinders
+
+@[run_parser_attribute_hooks] const nestedElem : Parser :=
+  operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doNested
+
+@[run_parser_attribute_hooks] const unlessElem : Parser :=
+  operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.doUnless
+
+@[run_parser_attribute_hooks] const unlessTerm : Parser :=
+  operands #[(`term, `psTerm), (`doElem, `psDoElem)] Lean.Parser.Term.termUnless
+
+private function manyPunningFields(source : Syntax) : Bool := Id.run(do
+  unless source.isOfKind ``Lean.Parser.Term.structInst && source.getArgs.size == 6 &&
+      source[1].getArgs.isEmpty && source[4].getArgs.isEmpty &&
+      source[3].getArgs.size == 1 && source[3][0].getArgs.isEmpty &&
+      source[2].isOfKind(``Lean.Parser.Term.structInstFields) do return false
+  let fields := source[2][0].getSepArgs
+  return fields.size >= 2 && fields.all(fun field =>
+    field.isOfKind ``Lean.Parser.Term.structInstField && field.getArgs.size == 2 &&
+      field[1].getArgs.isEmpty && field[0].getArgs.size == 2 &&
+      field[0][0].isIdent && field[0][1].getArgs.isEmpty))
+
+@[run_parser_attribute_hooks] const punningBraces : Parser :=
+  withFn((fun _ ctx initial =>
+    let parsed := Lean.Parser.Term.structInst.fn ctx initial
+    if parsed.hasError then parsed
+    else if manyPunningFields parsed.stxStack.back then PS0.Operators.leading.fn ctx initial
+    else initial.mkUnexpectedError "PS0V1-PUNNING-BRACES: expected a native punning field list"),
+    Lean.Parser.Term.structInst)
+
+end PS0.DoLayout
+
+@[psMatchPattern_parser high]
+const ps0ConstructorPatternCall : Lean.Parser.Parser := PS0.DoLayout.patternCall
+@[psMatchPattern_parser low]
+const ps0NativeMatchPattern : Lean.Parser.Parser := Lean.Parser.termParser
+
+@[psTerm_parser low]
+const ps0NativeTermBridge : Lean.Parser.Parser := PS0.Operators.leading
+@[psTerm_parser]
+const ps0NativeOperatorParser : Lean.Parser.TrailingParser := PS0.Operators.trailing
+syntax (name := ps0NativeCommandBridge) command : psCommand
+syntax (name := ps0NativeTacticBridge) (priority := low) tactic : psTactic
+syntax (name := ps0NativeDoBridge) (priority := low) doSeq : psDoSeq
+syntax (name := ps0NativeLayoutDoSeq) PS0.DoLayout.sequence : psDoSeq
+syntax (name := ps0NativeLocalBinder) PS0.DoLayout.localBinder : psLocalBinder
+syntax (name := ps0LoopNativeBinderBridge) (priority := low) Lean.Parser.Term.funBinder : psLoopBinder
+@[psLoopBinder_parser 20000]
+const ps0LoopTypedBinder : Lean.Parser.Parser := PS0.DoLayout.loopTypedBinder
+@[psLoopBinder_parser 20000]
+const ps0LoopImplicitBinder : Lean.Parser.Parser := PS0.DoLayout.loopImplicitBinder
+@[psLoopBinder_parser 20000]
+const ps0LoopStrictBinder : Lean.Parser.Parser := PS0.DoLayout.loopStrictBinder
+@[psLoopBinder_parser 20000]
+const ps0LoopInstanceBinder : Lean.Parser.Parser := PS0.DoLayout.loopInstanceBinder
+syntax (name := ps0NativeDoElemBridge) (priority := low) PS0.DoLayout.nativeDoOperand : psDoElem
+@[psDoElem_parser 20000]
+const ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
+@[psTerm_parser 20000]
+const ps0NativeNestedAction : Lean.Parser.Parser := PS0.DoLayout.nestedActionTerm
+@[psTerm_parser 20000]
+const ps0NativeDoForward : Lean.Parser.Parser := PS0.DoLayout.forwardTerm
+@[psTerm_parser 20000]
+const ps0NativeTermReturn : Lean.Parser.Parser := PS0.DoLayout.returnTerm
+@[psTerm_parser 20000]
+const ps0NativeTermFor : Lean.Parser.Parser := PS0.DoLayout.forTerm
+@[psTerm_parser 20000]
+const ps0NativeTermTry : Lean.Parser.Parser := PS0.DoLayout.tryTerm
+@[psDoElem_parser 20000]
+const ps0NativeDoExpression : Lean.Parser.Parser := PS0.DoLayout.expressionElem
+@[psDoElem_parser 20000]
+const ps0NativeDoLet : Lean.Parser.Parser := PS0.DoLayout.letElem
+@[psDoElem_parser 20000]
+const ps0NativeDoHave : Lean.Parser.Parser := PS0.DoLayout.haveElem
+@[psDoElem_parser 20000]
+const ps0NativeDoMatch : Lean.Parser.Parser := PS0.DoLayout.matchElem
+@[psDoElem_parser 20000]
+const ps0NativeDoFor : Lean.Parser.Parser := PS0.DoLayout.forElem
+@[psDoElem_parser 20000]
+const ps0NativeDoTry : Lean.Parser.Parser := PS0.DoLayout.tryElem
+@[psDoElem_parser 20000]
+const ps0NativeDoLetRec : Lean.Parser.Parser := PS0.DoLayout.recursiveElem
+@[psTerm_parser 20000]
+const ps0NativeTermLetRec : Lean.Parser.Parser := PS0.DoLayout.recursiveTerm
+@[psTerm_parser 20000]
+const ps0NativeTermLet : Lean.Parser.Parser := PS0.DoLayout.namedLetTerm
+@[psTerm_parser 20000]
+const ps0NativeTermHave : Lean.Parser.Parser := PS0.DoLayout.namedHaveTerm
+@[psDoElem_parser 20000]
+const ps0NativeDoBind : Lean.Parser.Parser := PS0.DoLayout.bindElem
+@[psDoElem_parser 10000]
+const ps0NativeDoPatternBind : Lean.Parser.Parser := PS0.DoLayout.patternBindElem
+@[psDoElem_parser 30000]
+const ps0NativeDoPatternLetElse : Lean.Parser.Parser := PS0.DoLayout.patternLetElseElem
+@[psDoElem_parser 20000]
+const ps0NativeDoReassign : Lean.Parser.Parser := PS0.DoLayout.reassignElem
+@[psDoElem_parser 20000]
+const ps0NativeDoNested : Lean.Parser.Parser := PS0.DoLayout.nestedElem
+@[psDoElem_parser 20000]
+const ps0NativeDoUnless : Lean.Parser.Parser := PS0.DoLayout.unlessElem
+@[psTerm_parser 20000]
+const ps0NativeTermUnless : Lean.Parser.Parser := PS0.DoLayout.unlessTerm
+@[psTerm_parser 20000]
+const ps0NativeTermMatch : Lean.Parser.Parser := PS0.DoLayout.matchTerm
+@[psTerm_parser 20000]
+const ps0NativeTypeAscription : Lean.Parser.Parser := PS0.DoLayout.ascriptionTerm
+@[psTerm_parser 20000]
+const ps0NativeBy : Lean.Parser.Parser := PS0.DoLayout.byTerm
+@[psTerm_parser 20000]
+const ps0NativeTuple : Lean.Parser.Parser := PS0.DoLayout.tupleTerm
+@[psTerm_parser 20000]
+const ps0NativeForall : Lean.Parser.Parser := PS0.DoLayout.forallTerm
+@[psTerm_parser 20000]
+const ps0NativeList : Lean.Parser.Parser := PS0.DoLayout.listTerm
+@[psTerm_parser 20000]
+const ps0NativeArray : Lean.Parser.Parser := PS0.DoLayout.arrayTerm
+@[psTerm_parser 20000]
+const ps0NativeInterpolation : Lean.Parser.Parser := PS0.DoLayout.interpolationTerm
+@[psTerm_parser 20000]
+const ps0NativeConstructor : Lean.Parser.Parser := PS0.DoLayout.constructorTerm
+@[psTerm_parser 20000]
+const ps0NativeShow : Lean.Parser.Parser := PS0.DoLayout.showTerm
+@[psTerm_parser 20000]
+const ps0NativeSuffices : Lean.Parser.Parser := PS0.DoLayout.sufficesTerm
+@[psTerm_parser 20000]
+const ps0NativePatternIf : Lean.Parser.Parser := PS0.DoLayout.patternIfTerm
+@[psTerm_parser 10000]
+const ps0NativePatternLet : Lean.Parser.Parser := PS0.DoLayout.patternLetTerm
+@[psTerm_parser 20000]
+const ps0NativeDependentIf : Lean.Parser.Parser := PS0.DoLayout.dependentIfTerm
+@[psTerm_parser 20000]
+const ps0NativePatternLambda : Lean.Parser.Parser := PS0.DoLayout.patternLambda
+@[psTerm_parser 20000]
+const ps0NativeRecord : Lean.Parser.Parser := PS0.DoLayout.recordTerm
+@[psStructInstFieldDecl_parser]
+const ps0NativeFieldDefinition : Lean.Parser.Parser := PS0.DoLayout.fieldDefinition
+@[psStructInstFieldDecl_parser]
+const ps0NativeFieldEquations : Lean.Parser.Parser := PS0.DoLayout.fieldEquations
+@[psDoElem_parser 20000]
+const ps0NativeDoIf : Lean.Parser.Parser := PS0.DoLayout.ifElem
+@[psDoElem_parser 20000]
+const ps0NativeDoWhile : Lean.Parser.Parser := PS0.DoLayout.whileElem
+@[psDoElem_parser 20000]
+const ps0NativeDoRepeat : Lean.Parser.Parser := PS0.DoLayout.repeatElem
+@[psTerm_parser 30002]
+const ps0NativePunningBraces : Lean.Parser.Parser := PS0.DoLayout.punningBraces
+syntax (name := ps0PositionalArg) PS0.DoLayout.argumentValue : psCallArg
+syntax (name := ps0NamedArg) ident " := " PS0.DoLayout.argumentValue : psCallArg
+syntax (name := ps0NativeEllipsisArg) Lean.Parser.Term.ellipsis : psCallArg
+
+syntax (name := ps0NativeFunBinderBridge) (priority := low) Lean.Parser.Term.funBinder : psFunBinder
+syntax (name := ps0FunExplicit) (priority := high)
+  "(" Lean.Parser.Term.binderIdent+ ":" psTerm ")" : psFunBinder
+syntax (name := ps0FunImplicit) (priority := high)
+  "{" Lean.Parser.Term.binderIdent+ (":" psTerm)? "}" : psFunBinder
+syntax (name := ps0FunStrict) (priority := high)
+  Lean.Parser.Term.strictImplicitLeftBracket Lean.Parser.Term.binderIdent+
+  (":" psTerm)? Lean.Parser.Term.strictImplicitRightBracket : psFunBinder
+syntax (name := ps0FunInstance) (priority := high)
+  "[" Lean.Parser.Term.optIdent psTerm "]" : psFunBinder
+const ps0LambdaToken := Lean.Parser.unicodeSymbol "λ" "fun" (preserveForPP := true)
+const ps0LambdaArrow := Lean.Parser.unicodeSymbol " ↦" " =>" (preserveForPP := true)
+syntax:max (name := ps0HostLambda) (priority := high)
+  ps0LambdaToken psFunBinder+ (":" psTerm)? ps0LambdaArrow psTerm : psTerm
+
+syntax:max (name := ps0HostAdjacentCall) (priority := high)
+  PS0.Operators.adjacentIdentifier noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
+
+@[psHead_parser low]
+const ps0NativeHeadBridge : Lean.Parser.Parser := PS0.Operators.headLeading
+@[psHead_parser]
+const ps0NativeHeadProjectionParser : Lean.Parser.TrailingParser := PS0.Operators.projection
+syntax:max (name := ps0ParenthesizedHead) Lean.Parser.Term.hygienicLParen PS0.DoLayout.argumentValue ")" : psHead
+syntax:max (name := ps0AscribedHead) (priority := 20000) PS0.DoLayout.ascriptionTerm : psHead
+syntax:max (name := ps0HeadCall) psHead:max noWs
+  "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psHead
+syntax:max (name := ps0HeadEmptyCall) psHead:max noWs "(" ")" : psHead
+syntax (name := ps0HostHeadTerm) psHead : psTerm
+syntax:max (name := ps0HostParens) (priority := high)
+  Lean.Parser.Term.hygienicLParen PS0.DoLayout.argumentValue ")" : psTerm
+syntax:max (name := ps0HostBraces) (priority := 30001) "{" psTerm "}" : psTerm
+syntax (name := ps0HostIf) (priority := high) "if " psTerm " then " psTerm " else " psTerm : psTerm
+syntax (name := ps0HostExact) (priority := high) "exact " psTerm : psTactic
+syntax (name := ps0HostApply) (priority := high) "apply " psTerm : psTactic
+syntax (name := ps0HostRefine) (priority := high) "refine " psTerm : psTactic
+syntax (name := ps0HostBy) (priority := high)
+  "by " "{" sepBy1(psTactic, ";", ";" ppSpace, allowTrailingSep) "}" : psTerm
+syntax (name := ps0HostDoLet) (priority := high)
+  "let " ident (":" psTerm)? ":=" psTerm : psDoElem
+syntax (name := ps0HostDoLetMut) (priority := high)
+  "let " "mut " ident (":" psTerm)? ":=" psTerm : psDoElem
+syntax (name := ps0HostDoReassign) (priority := high) ident ":=" psTerm : psDoElem
+syntax (name := ps0HostDoExpr) (priority := high)
+  Lean.Parser.Term.notFollowedByRedefinedTermToken psTerm : psDoElem
+syntax (name := ps0HostDoItem) ppLine psDoElem ";"? : psDoItem
+syntax (name := ps0HostDoSeq) (priority := high) "{" psDoItem+ ppLine "}" : psDoSeq
+syntax (name := ps0HostDo) (priority := high) "do " psDoSeq : psTerm
+
+namespace PS0.Syntax
+
+private function loweringInfo(source : Lean.Syntax) : SourceInfo :=
+  match source.getRange? with
+  | some span => .synthetic span.start span.stop false
+  | none => .none
+
+private partial function punningIdentifier?(source : Lean.Syntax) : Option Lean.Syntax :=
+  if source.isIdent then some source else
+  if #[`ps0NativeTermBridge, `ps0HostHeadTerm, `ps0NativeHeadBridge].contains(source.getKind) &&
+      source.getArgs.size == 1 then punningIdentifier?(source[0])
+  else none
+
+private partial def nativeBraceOrigins (source native : Lean.Syntax) : MacroM Lean.Syntax := do
+  if native.isOfKind choiceKind then
+    let alternatives ← native.getArgs.mapM((nativeBraceOrigins source))
+    return .node((loweringInfo source), choiceKind, alternatives)
+  let args := native.getArgs
+  unless args.size >= 2 && args[0]!.isAtom && args[0]!.getAtomVal == "{" &&
+      args.back!.isAtom && args.back!.getAtomVal == "}" do
+    Macro.throwError s!"PS0V1-NATIVE-BRACES: unexpected native alternative {native.getKind}"
+  let native := (native.setArg(0, source[0])).setArg((args.size - 1), source[2])
+  return .node((loweringInfo source), native.getKind, native.getArgs)
+
+private function rejectHostGap(source : Lean.Syntax) : MacroM Unit := do
+  if let .node (.synthetic ..) _ _ := source then return ()
+  if source.isOfKind ``Lean.Parser.Term.app then
+    for arg in source[1].getArgs do
+      if arg.isOfKind ``Lean.Parser.Term.paren || arg.isOfKind ``Lean.Parser.Term.tuple then
+        if let some start := arg.getPos? then
+          if let some stop := source[0].getTailPos? then
+            if stop < start then
+              withRef(arg, do Macro.throwError "PS0V1-CALL-GAP: parenthesized host arguments require adjacency")
+
+private partial function checkProjectionSubject(source : Lean.Syntax) : MacroM Unit := do
+  if let .node (.synthetic ..) _ _ := source then return ()
+  rejectHostGap source
+  if source.isOfKind ``Lean.Parser.Term.paren then
+    checkProjectionSubject(source[1])
+  else if source.isOfKind ``Lean.Parser.Term.proj then
+    checkProjectionSubject(source[0])
+  else if source.isOfKind ``Lean.Parser.Term.app then
+    checkProjectionSubject(source[0])
+    for argument in source[1].getArgs do
+      checkProjectionSubject(
+        (if argument.isOfKind ``Lean.Parser.Term.namedArgument then argument[3] else argument))
+
+private def lowerShowRhsWith
+    (lowerTerm lowerTactics : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.isOfKind ``Lean.Parser.Term.fromTerm && source.getArgs.size == 2 then
+    return source.setArg(1, (← lowerTerm(source[1])))
+  if source.isOfKind ``Lean.Parser.Term.byTactic' && source.getArgs.size == 2 then
+    return source.setArg(1, (← lowerTactics(source[1])))
+  Macro.throwError "PS0V1-SHOW-RHS: unexpected native value/tactic grammar")
+
+private def lowerAggregateValue
+    (lowerTerm lowerBinder lowerOptionalType lowerTactics : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.isOfKind ``Lean.Parser.Term.«show» then
+    unless source.getArgs.size == 3 do Macro.throwError "PS0V1-SHOW: unexpected native type/value roles"
+    let source := source.setArg(1, (← lowerTerm(source[1])))
+    return source.setArg(2, (← lowerShowRhsWith(lowerTerm, lowerTactics, source[2])))
+  if source.isOfKind ``Lean.Parser.Term.«suffices» then
+    unless source.getArgs.size == 4 && source[1].isOfKind(``Lean.Parser.Term.sufficesDecl) &&
+        source[1].getArgs.size == 3 do
+      Macro.throwError "PS0V1-SUFFICES: unexpected native binder/type/value roles"
+    let declaration := source[1].setArg(1, (← lowerTerm(source[1][1])))
+    let declaration := declaration.setArg(2, (← lowerShowRhsWith(lowerTerm, lowerTactics, declaration[2])))
+    return (source.setArg 1 declaration).setArg(3, (← lowerTerm(source[3])))
+  if source.isOfKind ``Lean.Parser.Term.tuple then
+    unless source.getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native delimiters"
+    if source[1].getArgs.isEmpty then return source
+    unless source[1].getArgs.size == 3 do Macro.throwError "PS0V1-TUPLE: unexpected native elements"
+    let rest ← source[1][2].getArgs.mapM(fun value => do
+      if value.isAtom then return value
+      lowerTerm value)
+    return source.setArg(1, ((source[1].setArg(0, (← lowerTerm(source[1][0])))).setArg(2,
+      (source[1][2].setArgs(rest)))))
+  if source.isOfKind `«term[_]» || source.isOfKind `«term#[_,]» ||
+      source.isOfKind ``Lean.Parser.Term.anonymousCtor then
+    unless source.getArgs.size == 3 do Macro.throwError "PS0V1-COLLECTION: unexpected native elements"
+    let values ← source[1].getArgs.mapM(fun value => do
+      if value.isAtom then return value
+      lowerTerm value)
+    return source.setArg(1, (source[1].setArgs(values)))
+  if source.isOfKind `termS!_ then
+    unless source.getArgs.size == 2 && source[1].isOfKind(`interpolatedStrKind) do
+      Macro.throwError "PS0V1-INTERPOLATION: unexpected native string lexer result"
+    let values ← source[1].getArgs.mapM(fun value => do
+      if value.isOfKind `interpolatedStrLitKind then return value
+      lowerTerm value)
+    return source.setArg(1, (source[1].setArgs(values)))
+  if source.isOfKind ``Lean.Parser.Term.«forall» then
+    unless source.getArgs.size == 5 do Macro.throwError "PS0V1-FORALL: unexpected native binder roles"
+    let binders ← source[1].getArgs.mapM(lowerBinder)
+    let source := source.setArg(1, (source[1].setArgs(binders)))
+    let source := source.setArg(2, (← lowerOptionalType(source[2])))
+    return source.setArg(4, (← lowerTerm(source[4])))
+  if source.isOfKind `termIfLet then
+    unless source.getArgs.size == 9 do Macro.throwError "PS0V1-PATTERN-IF: unexpected native pattern/value roles"
+    let source := source.setArg(4, (← lowerTerm(source[4])))
+    let source := source.setArg(6, (← lowerTerm(source[6])))
+    return source.setArg(8, (← lowerTerm(source[8])))
+  Macro.throwError "PS0V1-AGGREGATE: unexpected owned aggregate root")
+
+private def lowerNativeRecordFieldWith
+    (lowerTerm lowerBinder lowerType lowerAlts : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  unless source.isOfKind ``Lean.Parser.Term.structInstField && source.getArgs.size == 2 do
+    Macro.throwError "PS0V1-RECORD-FIELD: unexpected native field"
+  let lvalue := source[0]
+  let components ← lvalue.getArgs.mapM(fun part => do
+    if part.isOfKind ``Lean.Parser.Term.structInstArrayRef then
+      return part.setArg(1, (← lowerTerm(part[1])))
+    if part.isOfKind nullKind then
+      return part.setArgs((← part.getArgs.mapM(fun child => do
+        if child.isOfKind ``Lean.Parser.Term.structInstArrayRef then
+          return child.setArg(1, (← lowerTerm(child[1])))
+        return child)))
+    return part)
+  let source := source.setArg(0, (lvalue.setArgs components))
+  if source[1].getArgs.isEmpty then return source
+  unless source[1].getArgs.size == 3 do
+    Macro.throwError "PS0V1-RECORD-FIELD: unexpected native binder/type/value roles"
+  let body := source[1]
+  let binders ← body[0].getArgs.mapM(lowerBinder)
+  let body := body.setArg(0, (body[0].setArgs(binders)))
+  let body := body.setArg(1, (← lowerType(body[1])))
+  let rhs := body[2]
+  let rhs ← if rhs.isOfKind ``Lean.Parser.Term.structInstFieldDef && rhs.getArgs.size == 3 then
+      pure <| rhs.setArg(2, (← lowerTerm(rhs[2])))
+    else if rhs.isOfKind ``Lean.Parser.Term.structInstFieldEqns && rhs.getArgs.size == 2 then
+      pure <| rhs.setArg(1, (← lowerAlts(rhs[1])))
+    else Macro.throwError "PS0V1-RECORD-FIELD: unexpected native field declaration"
+  return source.setArg(1, (body.setArg 2 rhs)))
+
+
+private def lowerNativeRecordWith
+    (lowerTerm lowerField : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  unless source.getArgs.size == 6 && source[2].isOfKind(``Lean.Parser.Term.structInstFields) do
+    Macro.throwError "PS0V1-RECORD: unexpected native structure instance"
+  let update := source[1]
+  let source ← if update.getArgs.isEmpty then pure source else do
+    unless update.getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native update sources"
+    let values ← update[0].getArgs.mapM(fun value => do
+      if value.isAtom then return value
+      lowerTerm value)
+    pure <| source.setArg(1, (update.setArg(0, (update[0].setArgs(values)))))
+  let fields ← source[2][0].getArgs.mapM(fun field => do
+    if field.isAtom || field.isOfKind nullKind then return field
+    lowerField field)
+  let source := source.setArg(2, (source[2].setArg(0, (source[2][0].setArgs(fields)))))
+  if source[4].getArgs.isEmpty then return source
+  unless source[4].getArgs.size == 2 do Macro.throwError "PS0V1-RECORD: unexpected native result type"
+  return source.setArg(4, (source[4].setArg(1, (← lowerTerm(source[4][1]))))))
+
+
+private def lowerNativeTacticSequenceWith
+    (lowerTactic : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  unless source.isOfKind ``Lean.Parser.Tactic.tacticSeq && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-TACTIC-SEQUENCE: unexpected native sequence"
+  let inner := source[0]
+  let index ← if inner.isOfKind ``Lean.Parser.Tactic.tacticSeqBracketed && inner.getArgs.size == 3 then
+      pure 1
+    else if inner.isOfKind ``Lean.Parser.Tactic.tacticSeq1Indented && inner.getArgs.size == 1 then
+      pure 0
+    else Macro.throwError "PS0V1-TACTIC-LAYOUT: unexpected native tactic layout"
+  let items ← inner[index].getArgs.mapM(fun item => do
+    if item.isAtom || item.isMissing || item.isOfKind nullKind then return item
+    lowerTactic item)
+  return source.setArg(0, (inner.setArg(index, (inner[index].setArgs(items))))))
+
+
+private def lowerNativeLocalBinderWith
+    (lowerTerm lowerBinderType : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := do
+  if source.isIdent || source.isOfKind ``Lean.Parser.Term.hole then return source
+  if source.isOfKind ``Lean.Parser.Term.instBinder then
+    return source.setArg(2, (← lowerTerm(source[2])))
+  unless source.isOfKind ``Lean.Parser.Term.explicitBinder ||
+      source.isOfKind ``Lean.Parser.Term.implicitBinder ||
+      source.isOfKind ``Lean.Parser.Term.strictImplicitBinder do
+    Macro.throwError "PS0V1-LOCAL-BINDER: unexpected native binder"
+  let source := source.setArg(2, (← lowerBinderType(source[2])))
+  if source.isOfKind ``Lean.Parser.Term.explicitBinder && !source[3].getArgs.isEmpty &&
+      source[3][0].isOfKind(``Lean.Parser.Term.binderDefault) then
+    return source.setArg(3, (source[3].setArg(0,
+      (source[3][0].setArg(1, (← lowerTerm(source[3][0][1])))))))
+  return source
+
+
+set_option maxHeartbeats 800000 in
+private def lowerBorrowedTermWith
+    (lowerTerm lowerTactics lowerRecord lowerMatch lowerAlts lowerId lowerType lowerRec lowerUnless :
+      Lean.Syntax → MacroM Lean.Syntax)
+    (lowerIndex lowerSlice : Lean.Syntax → Bool → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.isOfKind `termDepIfThenElse then
+    unless source.getArgs.size == 8 do Macro.throwError "PS0V1-DEPENDENT-IF: unexpected native condition"
+    let source := source.setArg(3, (← lowerTerm(source[3])))
+    let source := source.setArg(5, (← lowerTerm(source[5])))
+    return source.setArg(7, (← lowerTerm(source[7])))
+  if source.isOfKind ``Lean.Parser.Term.typeAscription then
+    unless source.getArgs.size == 5 && source[3].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-ASCRIPTION: unexpected native value/type roles"
+    let source := source.setArg(1, (← lowerTerm(source[1])))
+    if source[3].getArgs.isEmpty then return source
+    return source.setArg(3, (source[3].setArg(0, (← lowerTerm(source[3][0])))))
+  if source.isOfKind ``Lean.Parser.Term.byTactic then
+    unless source.getArgs.size == 2 do Macro.throwError "PS0V1-BY: unexpected native tactic term"
+    return source.setArg(1, (← lowerTactics(source[1])))
+  if source.isOfKind ``Lean.Parser.Term.structInst then
+    return ← lowerRecord source
+  if source.isOfKind ``Lean.Parser.Term.«match» then
+    return ← lowerMatch source
+  if source.isOfKind ``Lean.Parser.Term.«fun» && source.getArgs.size == 2 &&
+      source[1].isOfKind(``Lean.Parser.Term.matchAlts) then
+    return source.setArg(1, (← lowerAlts(source[1])))
+  if source.isOfKind ``Lean.Parser.Term.«let» || source.isOfKind ``Lean.Parser.Term.«have» then
+    unless source.getArgs.size == 5 && source[2].isOfKind(``Lean.Parser.Term.letDecl) &&
+        source[2].getArgs.size == 1 do
+      Macro.throwError "PS0V1-LOCAL-LET: unexpected native term shape"
+    let declaration := source[2][0]
+    let declaration ← if declaration.isOfKind ``Lean.Parser.Term.letPatDecl then do
+        unless declaration.getArgs.size == 5 do Macro.throwError "PS0V1-PATTERN-LET: unexpected native pattern/value roles"
+        let declaration := declaration.setArg(2, (← lowerType(declaration[2])))
+        pure <| declaration.setArg(4, (← lowerTerm(declaration[4])))
+      else lowerId declaration
+    let source := source.setArg(2, (source[2].setArg(0, declaration)))
+    return source.setArg(4, (← lowerTerm(source[4])))
+  if source.isOfKind ``Lean.Parser.Term.letrec then
+    unless source.getArgs.size == 4 do
+      Macro.throwError "PS0V1-LOCAL-REC: unexpected native term shape"
+    let source := source.setArg(1, (← lowerRec(source[1])))
+    return source.setArg(3, (← lowerTerm(source[3])))
+  if source.isOfKind ``Lean.Parser.Term.termUnless then
+    return ← lowerUnless source
+  if source.isOfKind ``ps0NativeTermBridge then
+    let native := source[0]
+    rejectHostGap native
+    if native.isOfKind ``Lean.Parser.Term.app then
+      let mut arguments := #[]
+      for arg in native[1].getArgs do
+        let kind := arg.getKind
+        if kind == `ps0HeadCall || kind == `ps0HeadEmptyCall then
+          let wrapped := Lean.Syntax.node .none `ps0HostHeadTerm #[arg]
+          let lowered ← lowerTerm wrapped
+          arguments := arguments.push lowered
+        else
+          arguments := arguments.push arg
+      let args := native[1].setArgs arguments
+      return native.setArg(1, args)
+    if native.isOfKind ``Lean.Parser.Term.proj then
+      checkProjectionSubject(native[0])
+    return native
+  if source.isOfKind `PS0.Operators.ownedBinary then
+    let native := source[0]
+    if native.isOfKind choiceKind then
+      let alternatives ← native.getArgs.mapM(fun alternative =>
+        lowerTerm((.node .none `PS0.Operators.ownedBinary #[alternative])))
+      return native.setArgs alternatives
+    unless native.getArgs.size == 3 do Macro.throwError "PS0V1-OP-LOWER: invalid owned operator"
+    let lhs ← lowerTerm(native[0])
+    let rhs ← lowerTerm(native[2])
+    return (native.setArg 0 lhs).setArg(2, rhs)
+  if source.isOfKind `PS0.Operators.ownedPostfix then
+    let native := source[0]
+    if native.isOfKind PS0.Operators.matchesKind && native.getArgs.size == 3 then
+      return native.setArg(0, (← lowerTerm(native[0])))
+    if (PS0.Operators.indexArity? native.getKind).isSome then
+      return ← lowerIndex native false
+    if (PS0.Operators.sliceShape? native.getKind).isSome then
+      return ← lowerSlice native false
+    if native.isOfKind ``Lean.Parser.Term.pipeProj && native.getArgs.size == 5 then
+      let arguments ← native[4].getArgs.mapM(fun argument => do
+        if argument.isOfKind ``Lean.Parser.Term.ellipsis then return argument
+        if argument.isOfKind ``Lean.Parser.Term.namedArgument then
+          return argument.setArg(3, (← lowerTerm(argument[3])))
+        return ← lowerTerm argument)
+      return (native.setArg(0, (← lowerTerm(native[0])))).setArg(4, (native[4].setArgs(arguments)))
+    unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
+      Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native projection"
+    return native.setArg(0, (← lowerTerm(native[0])))
+  Macro.throwError "PS0V1-BORROWED-TERM: unexpected owned native root")
+
+
+set_option maxHeartbeats 800000 in
+private function lowerCallWith(lowerTerm : Lean.Syntax → MacroM Lean.Syntax,
+    head : Lean.Syntax, args : Array((TSyntax `psCallArg)),
+    source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  let mut positional := true
+  let mut seen : Array Name := #[]
+  let mut nativeArgs : Array Lean.Syntax := #[]
+  for arg in args do
+    if arg.raw.isOfKind ``ps0NativeEllipsisArg then
+      unless positional do
+        withRef(arg, do Macro.throwError "PS0V1-CALL-ORDER: positional argument after named argument")
+      let completion := arg.raw[0]
+      unless completion.isOfKind ``Lean.Parser.Term.ellipsis && completion.getArgs.size == 1 do
+        Macro.throwError "PS0V1-CALL-ELLIPSIS: unexpected native completion argument"
+      nativeArgs := nativeArgs.push completion
+      continue
+    match arg with
+    | `(psCallArg| $name:ident := $value:psTerm) =>
+        let n := name.getId
+        if seen.contains n then
+          withRef(name, do Macro.throwError s!"PS0V1-CALL-NAMED: duplicate named argument {n}")
+        positional := false
+        seen := seen.push n
+        let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+        nativeArgs := nativeArgs.push((← `(Lean.Parser.Term.namedArgument| ($name := $value))).raw)
+    | `(psCallArg| $value:psTerm) =>
+        unless positional do
+          withRef(arg, do Macro.throwError "PS0V1-CALL-ORDER: positional argument after named argument")
+        nativeArgs := nativeArgs.push((← lowerTerm value.raw))
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: malformed psCallArg"
+  -- Native expandArgs reads a final ellipsis before separating named arguments.
+  -- Keep PS named arguments last on the surface and preserve all native nodes.
+  if let some index := nativeArgs.findIdx?((·.isOfKind(``Lean.Parser.Term.namedArgument))) then
+    if index > 0 && nativeArgs[index - 1]!.isOfKind(``Lean.Parser.Term.ellipsis) then
+      let completion := nativeArgs[index - 1]!
+      nativeArgs := nativeArgs.extract(0, (index - 1)) ++
+        nativeArgs.extract index nativeArgs.size ++ #[completion]
+    else if index > 0 then
+      let positionalApp : TSyntax `term := ⟨.node((loweringInfo source),
+        ``Lean.Parser.Term.app, #[head, mkNullNode((nativeArgs.extract 0 index))])⟩
+      -- Native do-forwarding recognizes the final argument before named-argument elaboration.
+      if (Lean.Elab.Do.Forward.matchApp? positionalApp).isSome then
+        let forwarding := nativeArgs[index - 1]!
+        nativeArgs := nativeArgs.extract(0, (index - 1)) ++
+          nativeArgs.extract index nativeArgs.size ++ #[forwarding]
+  return .node((loweringInfo source), ``Lean.Parser.Term.app, #[head, mkNullNode nativeArgs]))
+
+private def lowerLoopBinderWith
+    (lowerTerm lowerLocalBinder : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.isOfKind ``ps0LoopNativeBinderBridge then return source[0]
+  if source.isOfKind ``Lean.Parser.Term.typeAscription then
+    unless source.getArgs.size == 5 && source[3].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-LOOP-BINDER: unexpected native pattern/type roles"
+    if source[3].getArgs.isEmpty then return source
+    return source.setArg(3, (source[3].setArg(0, (← lowerTerm(source[3][0])))))
+  if source.isOfKind ``Lean.Parser.Term.implicitBinder ||
+      source.isOfKind ``Lean.Parser.Term.strictImplicitBinder ||
+      source.isOfKind ``Lean.Parser.Term.instBinder then
+    return ← lowerLocalBinder source
+  Macro.throwError "PS0V1-LOOP-BINDER: unsupported native binder")
+
+private def lowerLoopAnnotationWith
+    (lowerTerm lowerType lowerBinder : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.getArgs.isEmpty then return source
+  unless source.getArgs.size == 1 && source[0].getArgs.size == 2 &&
+      (source[0].isOfKind(``Lean.Parser.Term.doLoopInvariant) ||
+        source[0].isOfKind(``Lean.Parser.Term.doLoopDecreasing)) do
+    Macro.throwError "PS0V1-LOOP-ANNOTATION: unexpected native clause"
+  let clause := source[0]
+  let payload := clause[1]
+  let payload ← if payload.isOfKind ``Lean.Parser.Term.basicFun then do
+      unless payload.getArgs.size == 4 do
+        Macro.throwError "PS0V1-LOOP-FUN: unexpected native binder/body roles"
+      let binders ← payload[0].getArgs.mapM(lowerBinder)
+      let payload := payload.setArg(0, (payload[0].setArgs(binders)))
+      let payload := payload.setArg(1, (← lowerType(payload[1])))
+      pure <| payload.setArg(3, (← lowerTerm(payload[3])))
+    else do
+      unless clause.isOfKind ``Lean.Parser.Term.doLoopDecreasing do
+        Macro.throwError "PS0V1-LOOP-INVARIANT: expected native basicFun"
+      lowerTerm payload
+  return source.setArg(0, (clause.setArg 1 payload)))
+
+set_option maxHeartbeats 800000 in
+private def lowerDoLoopWith
+    (lowerTerm lowerIf lowerAnnotation lowerSequence : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.isOfKind ``Lean.Parser.Term.doWhile then
+    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-WHILE: unexpected native loop"
+    let source := source.setArg(1, (← lowerIf(source[1])))
+    let source := source.setArg(2, (← lowerAnnotation(source[2])))
+    let source := source.setArg(3, (← lowerAnnotation(source[3])))
+    return source.setArg(5, (← lowerSequence(source[5])))
+  if source.isOfKind ``Lean.Parser.Term.doRepeatUntil then
+    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-REPEAT: unexpected native loop"
+    let source := source.setArg(1, (← lowerAnnotation(source[1])))
+    let source := source.setArg(2, (← lowerAnnotation(source[2])))
+    let source := source.setArg(3, (← lowerSequence(source[3])))
+    return source.setArg(5, (← lowerTerm(source[5])))
+  if source.isOfKind ``Lean.Parser.Term.doFor || source.isOfKind ``Lean.Parser.Term.termFor then
+    unless source.getArgs.size == 6 do Macro.throwError "PS0V1-DO-FOR: unexpected native loop"
+    let declarations ← source[1].getArgs.mapM(fun declaration => do
+      if declaration.isAtom then return declaration
+      unless declaration.isOfKind ``Lean.Parser.Term.doForDecl && declaration.getArgs.size == 4 do
+        Macro.throwError "PS0V1-DO-FOR: unexpected native pattern/collection roles"
+      return declaration.setArg(3, (← lowerTerm(declaration[3]))))
+    let source := source.setArg(1, (source[1].setArgs(declarations)))
+    let source := source.setArg(2, (← lowerAnnotation(source[2])))
+    let source := source.setArg(3, (← lowerAnnotation(source[3])))
+    return source.setArg(5,
+      (← lowerSequence(source[5])))
+  Macro.throwError "PS0V1-DO-LOOP: unsupported native loop")
+
+set_option maxHeartbeats 800000 in
+private def lowerDoQuotedWith
+    (lowerTerm lowerBody : Lean.Syntax → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  match source with
+  | `(psDoElem| let mut $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
+      let ty ← ty.mapM(fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term))
+      let value : TSyntax `term := ⟨← lowerBody value.raw⟩
+      return (← `(doElem| let mut $name:ident $[: $ty:term]? := $value)).raw
+  | `(psDoElem| let $name:ident $[: $ty:psTerm]? := $value:psTerm) => do
+      let ty ← ty.mapM(fun t => do return (⟨← lowerTerm t.raw⟩ : TSyntax `term))
+      let value : TSyntax `term := ⟨← lowerBody value.raw⟩
+      return (← `(doElem| let $name:ident $[: $ty:term]? := $value)).raw
+  | `(psDoElem| $name:ident := $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+      return (← `(doElem| $name:ident := $value:term)).raw
+  | `(psDoElem| $value:psTerm) => do
+      let value : TSyntax `term := ⟨← lowerTerm value.raw⟩
+      return (← `(doElem| $value:term)).raw
+  | `(psDoElem| $native:doElem) => return native.raw
+  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoElem")
+
+
+set_option maxHeartbeats 800000 in
+private def lowerDoElemWith
+    (lowerTerm lowerIf lowerAnnotation lowerSequence lowerTry lowerId lowerRec lowerUnless
+      lowerPatternBind lowerType lowerElement lowerLoop lowerQuoted : Lean.Syntax → MacroM Lean.Syntax)
+    (lowerMatch : Lean.Syntax → Bool → MacroM Lean.Syntax)
+    (source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if #[``Lean.Parser.Term.doWhile, ``Lean.Parser.Term.doRepeatUntil,
+      ``Lean.Parser.Term.doFor, ``Lean.Parser.Term.termFor].contains(source.getKind) then
+    return ← lowerLoop source
+  if source.isOfKind ``Lean.Parser.Term.doTry || source.isOfKind ``Lean.Parser.Term.termTry then
+    return ← lowerTry source
+  if source.isOfKind ``Lean.Parser.Term.doMatch then
+    unless source.getArgs.size == 7 do
+      Macro.throwError "PS0V1-DO-MATCH: unexpected native match shape"
+    let view := source.setArgs #[source[0], source[2], source[3], source[4], source[5], source[6]]
+    let lowered ← lowerMatch view true
+    return source.setArgs #[lowered[0], source[1], lowered[1], lowered[2], lowered[3], lowered[4], lowered[5]]
+  if source.isOfKind ``Lean.Parser.Term.doHave then
+    unless source.getArgs.size == 3 && source[2].isOfKind(``Lean.Parser.Term.letDecl) &&
+        source[2].getArgs.size == 1 do
+      Macro.throwError "PS0V1-DO-HAVE: unexpected native named declaration"
+    return source.setArg(2, (source[2].setArg(0, (← lowerId(source[2][0])))))
+  if source.isOfKind ``Lean.Parser.Term.doIf then
+    unless source.getArgs.size == 6 do
+      Macro.throwError "PS0V1-DO-IF: unexpected native branch shape"
+    return source.setArgs((← source.getArgs.mapM lowerIf))
+  if source.isOfKind ``Lean.Parser.Term.doLetElse then
+    unless source.getArgs.size == 9 && source[8].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-DO-PATTERN-LET: unexpected native fallback/continuation"
+    let source := source.setArg(5, (← lowerTerm(source[5])))
+    let source := source.setArg(7, (← lowerSequence(source[7])))
+    if source[8].getArgs.isEmpty then return source
+    return source.setArg(8, (source[8].setArg(0, (← lowerSequence(source[8][0])))))
+  if source.isOfKind ``Lean.Parser.Term.doLetRec then
+    unless source.getArgs.size == 2 do
+      Macro.throwError "PS0V1-LOCAL-REC: unexpected native do shape"
+    return source.setArg(1, (← lowerRec(source[1])))
+  if source.isOfKind ``Lean.Parser.Term.doUnless then
+    return ← lowerUnless source
+  if source.isOfKind ``Lean.Parser.Term.doLet then
+    unless source.getArgs.size == 4 && source[3].isOfKind(``Lean.Parser.Term.letDecl) &&
+        source[3].getArgs.size == 1 do
+      Macro.throwError "PS0V1-DO-LET: unexpected native ID declaration"
+    return source.setArg(3, (source[3].setArg(0, (← lowerId(source[3][0])))))
+  if source.isOfKind ``Lean.Parser.Term.doReassign then
+    unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-ASSIGN: unexpected native ID assignment"
+    return source.setArg(0, (← lowerId(source[0])))
+  if source.isOfKind ``Lean.Parser.Term.doLetArrow then
+    unless source.getArgs.size == 4 do Macro.throwError "PS0V1-DO-BIND: unexpected native binding"
+    let decl := source[3]
+    if decl.isOfKind ``Lean.Parser.Term.doPatDecl then
+      return source.setArg(3, (← lowerPatternBind decl))
+    unless decl.isOfKind ``Lean.Parser.Term.doIdDecl && decl.getArgs.size == 4 do
+      Macro.throwError "PS0V1-DO-BIND: unexpected native ID binding"
+    let decl := decl.setArg(1, (← lowerType(decl[1])))
+    return source.setArg(3, (decl.setArg(3, (← lowerElement(decl[3])))))
+  if source.isOfKind ``Lean.Parser.Term.doNested then
+    unless source.getArgs.size == 2 do Macro.throwError "PS0V1-DO-NESTED: unexpected native block"
+    return source.setArg(1, (← lowerSequence(source[1])))
+  if source.isOfKind ``Lean.Parser.Term.doReturn || source.isOfKind ``Lean.Parser.Term.termReturn then
+    unless source.getArgs.size == 2 && source[1].getArgs.size <= 1 do
+      Macro.throwError "PS0V1-DO-RETURN: unexpected native return"
+    if source[1].getArgs.isEmpty then return source
+    return source.setArg(1, (source[1].setArg(0, (← lowerTerm(source[1][0])))))
+  if source.isOfKind ``Lean.Parser.Term.doExpr then
+    unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-EXPRESSION: unexpected native expression"
+    return source.setArg(0, (← lowerTerm(source[0])))
+  lowerQuoted source)
+
+
+set_option maxHeartbeats 800000 in
+mutual
+partial function lower(category : Name, source : Lean.Syntax) :
+    MacroM Lean.Syntax := withRef source <| Macro.withIncRecDepth(source, do
+  if source.isOfKind choiceKind then
+    Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
+  if category == `psTerm then
+    if #[`ps0HeadCall, `ps0HeadEmptyCall, `ps0NativeHeadBridge,
+        `ps0ParenthesizedHead, `ps0AscribedHead].contains(source.getKind) then
+      return ← lowerHead source
+    if source.isOfKind ``Lean.Parser.Term.doForward then
+      unless source.getArgs.size == 3 do Macro.throwError "PS0V1-DO-FORWARD: unexpected native marker"
+      return source.setArg(2, (← lowerNativeDoSequence(source[2])))
+    if source.isOfKind ``Lean.Parser.Term.nestedAction then
+      unless source.getArgs.size == 2 do Macro.throwError "PS0V1-NESTED-ACTION: unexpected native action"
+      return source.setArg(1, (← lowerDoElem(source[1])))
+    if #[``Lean.Parser.Term.termReturn, ``Lean.Parser.Term.termFor,
+        ``Lean.Parser.Term.termTry].contains(source.getKind) then
+      return ← lowerDoElem source
+    if #[``Lean.Parser.Term.tuple, ``Lean.Parser.Term.anonymousCtor, ``Lean.Parser.Term.«show»,
+        ``Lean.Parser.Term.«suffices»,
+        `«term[_]», `«term#[_,]», `termS!_,
+        ``Lean.Parser.Term.«forall», `termIfLet].contains(source.getKind) then
+      return ← lowerAggregateValue((lower `psTerm), lowerNativeLocalBinder, lowerNativeOptionalType,
+        lowerNativeTacticSequence, source)
+    if #[`termDepIfThenElse, ``Lean.Parser.Term.typeAscription,
+        ``Lean.Parser.Term.byTactic, ``Lean.Parser.Term.structInst, ``Lean.Parser.Term.«match»,
+        ``Lean.Parser.Term.«let», ``Lean.Parser.Term.«have», ``Lean.Parser.Term.letrec, ``Lean.Parser.Term.termUnless,
+        ``ps0NativeTermBridge, `PS0.Operators.ownedBinary, `PS0.Operators.ownedPostfix].contains(source.getKind) ||
+        (source.isOfKind ``Lean.Parser.Term.«fun» && source.getArgs.size == 2 &&
+          source[1].isOfKind(``Lean.Parser.Term.matchAlts)) then
+      return ← lowerBorrowedTerm source
+    match source with
+    | `(psTerm| $head:ident($[$args:psCallArg],*)) => lowerCall head.raw args source
+    | `(psTerm| $head:psHead) => lowerHead head.raw
+    | `(psTerm| ($body:psTerm)) => do
+        return .node((loweringInfo source), ``Lean.Parser.Term.paren,
+          #[source[0], ← lower `psTerm body.raw, source[2]])
+    | `(psTerm| { $body:psTerm }) => do
+        if let some identifier := punningIdentifier? body.raw then
+          let field : TSyntax `ident := ⟨identifier⟩
+          let record ← `({ $field:ident })
+          return ← nativeBraceOrigins source record.raw
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+          let collection ← `({ $body:term })
+          return ← nativeBraceOrigins source collection.raw
+    | `(psTerm| if $cond:psTerm then $yes:psTerm else $no:psTerm) => do
+        let cond : TSyntax `term := ⟨← lower `psTerm cond.raw⟩
+        let yes : TSyntax `term := ⟨← lower `psTerm yes.raw⟩
+        let no : TSyntax `term := ⟨← lower `psTerm no.raw⟩
+        return (← `(if $cond then $yes else $no)).raw
+    | `(psTerm| fun $binders:psFunBinder* $[: $ty:psTerm]? => $body:psTerm) => do
+        let binders ← binders.mapM(fun binder => lowerFunBinder binder.raw)
+        let ty ← ty.mapM(fun t => do return (⟨← lower `psTerm t.raw⟩ : TSyntax `term))
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        let native ← `(fun $binders:funBinder* $[: $ty:term]? => $body:term)
+        return .node((loweringInfo source), ``Lean.Parser.Term.fun,
+          #[source[0], native.raw[1].setArg(2, source[3])])
+    | `(psTerm| by { $[$items:psTactic];* }) => do
+        let items ← items.mapM(fun item => do
+          return (⟨← lower `psTactic item.raw⟩ : TSyntax `tactic))
+        return (← `(by { $[$items:tactic];* })).raw
+    | `(psTerm| do $seq:psDoSeq) => do
+        let seq : TSyntax ``Lean.Parser.Term.doSeq := ⟨← lower `psDoSeq seq.raw⟩
+        return (← `(do $seq:doSeq)).raw
+    | _ => do
+        if let some expanded ← Macro.expandMacro? source then
+          lower category expanded
+        else Macro.throwError s!"PS0V1-HOST-LOWER: unsupported psTerm {source.getKind} / {source.getArgs.size}"
+  else if category == `psCommand then
+    match source with
+    | `(psCommand| $native:command) => return native.raw
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psCommand"
+  else if category == `psTactic then
+    match source with
+    | `(psTactic| exact $body:psTerm) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        let native ← `(tactic| exact $body)
+        return .node((loweringInfo source), native.raw.getKind, (native.raw.setArg(0, source[0])).getArgs)
+    | `(psTactic| apply $body:psTerm) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        let native ← `(tactic| apply $body)
+        return .node((loweringInfo source), native.raw.getKind, (native.raw.setArg(0, source[0])).getArgs)
+    | `(psTactic| refine $body:psTerm) => do
+        let body : TSyntax `term := ⟨← lower `psTerm body.raw⟩
+        let native ← `(tactic| refine $body)
+        return .node((loweringInfo source), native.raw.getKind, (native.raw.setArg(0, source[0])).getArgs)
+    | `(psTactic| $native:tactic) => return native.raw
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psTactic"
+  else if category == `psDoSeq then
+    if source.isOfKind ``ps0NativeLayoutDoSeq then
+      return ← lowerNativeDoSequence(source[0])
+    match source with
+    | `(psDoSeq| { $items:psDoItem* }) => do
+        let mut nativeItems := #[]
+        for item in items do
+          let native ← lowerDoElem(item.raw[0])
+          nativeItems := nativeItems.push <| .node((loweringInfo item.raw),
+            ``Lean.Parser.Term.doSeqItem, #[native, item.raw[1]])
+        return .node((loweringInfo source), ``Lean.Parser.Term.doSeqBracketed,
+          #[source[0], mkNullNode nativeItems, source[2]])
+    | `(psDoSeq| $native:doSeq) => return native.raw
+    | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported psDoSeq"
+  else Macro.throwError s!"PS0V1-HOST-LOWER: unrecognized PS category {category}")
+
+partial function lowerBorrowedTerm(source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerBorrowedTermWith((lower `psTerm), lowerNativeTacticSequence, lowerNativeRecord,
+    (fun value => lowerNativeMatch value), (fun value => lowerNativeMatchAlternatives value),
+    lowerNativeLocalId, lowerNativeOptionalType, lowerNativeRecursiveDeclarations, lowerNativeUnless,
+    lowerNativeIndex, lowerNativeSlice, source)
+
+partial function lowerBodyValue(source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.isOfKind ``ps0HostBraces && (punningIdentifier?(source[1])).isNone then
+    let body : TSyntax `term := ⟨← lower(`psTerm, source[1])⟩
+    let native ← `(($body))
+    unless native.raw.isOfKind ``Lean.Parser.Term.paren && native.raw.getArgs.size == 3 &&
+        native.raw[0].isOfKind(``Lean.Parser.Term.hygienicLParen) && native.raw[0].getArgs.size == 2 do
+      Macro.throwError "PS0V1-BODY-WRAPPER: unexpected native parenthesis shape"
+    let opening : Lean.Syntax := .node((loweringInfo(source[0])), ``Lean.Parser.Term.hygienicLParen,
+      #[.atom((loweringInfo(source[0])), "("), native.raw[0][1]])
+    return .node((loweringInfo source), native.raw.getKind,
+      #[opening, body.raw, .atom((loweringInfo(source[2])), ")")])
+  lower `psTerm source)
+
+partial function lowerDoElem(source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerDoElemWith((lower `psTerm), lowerNativeIfRole, lowerNativeLoopAnnotation,
+    lowerNativeDoSequence, lowerNativeTry, lowerNativeLocalId, lowerNativeRecursiveDeclarations,
+    lowerNativeUnless, lowerNativePatternBind, lowerNativeOptionalType, lowerDoElem,
+    (lowerDoLoopWith((lower `psTerm), lowerNativeIfRole, lowerNativeLoopAnnotation, lowerNativeDoSequence)),
+    (lowerDoQuotedWith((lower `psTerm), lowerBodyValue)),
+    (fun value mode => lowerNativeMatch value mode), source)
+
+partial function lowerNativeLoopAnnotation(source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerLoopAnnotationWith((lower `psTerm), lowerNativeOptionalType,
+    (lowerLoopBinderWith((lower `psTerm), lowerNativeLocalBinder)), source)
+
+partial function lowerFunType(optionalType : Lean.Syntax) : MacroM Lean.Syntax := do
+  if optionalType.getArgs.isEmpty then return optionalType
+  return optionalType.setArg(1, (← lower(`psTerm, optionalType[1])))
+
+partial function lowerNativeMatchAlternatives(source : Lean.Syntax, sequence : Bool := false) : MacroM Lean.Syntax := withRef(source, do
+  unless source.isOfKind ``Lean.Parser.Term.matchAlts && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-MATCH-ALTERNATIVES: unexpected native alternatives"
+  let alternatives ← source[0].getArgs.mapM(fun alternative => do
+    unless alternative.isOfKind ``Lean.Parser.Term.matchAlt && alternative.getArgs.size == 4 do
+      Macro.throwError "PS0V1-MATCH-ALTERNATIVE: unexpected native pattern/body roles"
+    let rhs ← if sequence then lowerNativeDoSequence(alternative[3]) else lower(`psTerm, alternative[3])
+    return alternative.setArg 3 rhs)
+  return source.setArg(0, (source[0].setArgs(alternatives))))
+
+partial function lowerNativeIfRole(source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.isOfKind ``Lean.Parser.Term.doIfProp && source.getArgs.size == 2 then
+    return source.setArg(1, (← lower(`psTerm, source[1])))
+  if source.isOfKind ``Lean.Parser.Term.doIfLet && source.getArgs.size == 3 then
+    let value := source[2]
+    unless (value.isOfKind ``Lean.Parser.Term.doIfLetPure ||
+        value.isOfKind ``Lean.Parser.Term.doIfLetBind) && value.getArgs.size == 2 do
+      Macro.throwError "PS0V1-DO-IF-LET: unexpected native value role"
+    return source.setArg(2, (value.setArg(1, (← lower(`psTerm, value[1])))))
+  if source.isOfKind ``Lean.Parser.Term.doSeqIndent ||
+      source.isOfKind ``Lean.Parser.Term.doSeqBracketed then
+    return ← lowerNativeDoSequence source
+  if source.isOfKind nullKind || source.isOfKind `group then
+    return source.setArgs((← source.getArgs.mapM lowerNativeIfRole))
+  if source.isAtom || source.isOfKind ``Lean.Parser.Term.elseIf then return source
+  Macro.throwError s!"PS0V1-DO-IF-ROLE: unexpected native condition/sequence role {source.getKind}")
+
+partial function lowerNativeTry(source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  unless source.getArgs.size == 4 && source[3].getArgs.size <= 1 do
+    Macro.throwError "PS0V1-DO-TRY: unexpected native try/catch/finally"
+  let source := source.setArg(1, (← lowerNativeDoSequence(source[1])))
+  let catches ← source[2].getArgs.mapM(fun branch => do
+    if branch.isOfKind ``Lean.Parser.Term.doCatchMatch && branch.getArgs.size == 2 then
+      return branch.setArg(1, (← lowerNativeMatchAlternatives(branch[1], true)))
+    unless branch.isOfKind ``Lean.Parser.Term.doCatch && branch.getArgs.size == 5 do
+      Macro.throwError "PS0V1-DO-CATCH: unexpected native catch"
+    let branch ← if branch[2].getArgs.isEmpty then pure branch else do
+      unless branch[2].getArgs.size == 2 do Macro.throwError "PS0V1-DO-CATCH: unexpected exception type"
+      pure <| branch.setArg(2, (branch[2].setArg(1, (← lower(`psTerm, branch[2][1])))))
+    return branch.setArg(4, (← lowerNativeDoSequence(branch[4]))))
+  let source := source.setArg(2, (source[2].setArgs(catches)))
+  if source[3].getArgs.isEmpty then return source
+  let finalizer := source[3][0]
+  unless finalizer.isOfKind ``Lean.Parser.Term.doFinally && finalizer.getArgs.size == 2 do
+    Macro.throwError "PS0V1-DO-FINALLY: unexpected native finalizer"
+  return source.setArg(3, (source[3].setArg(0,
+    (finalizer.setArg(1, (← lowerNativeDoSequence(finalizer[1]))))))))
+
+partial function lowerNativeRecordField(source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerNativeRecordFieldWith((lower `psTerm), lowerNativeLocalBinder, lowerNativeOptionalType, (fun value => lowerNativeMatchAlternatives value), source)
+partial function lowerNativeRecord(source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerNativeRecordWith((lower `psTerm), lowerNativeRecordField, source)
+partial function lowerNativeMatch(source : Lean.Syntax, sequence : Bool := false) : MacroM Lean.Syntax := withRef(source, do
+  unless source.getArgs.size == 6 && source[2].getArgs.size <= 1 do
+    Macro.throwError "PS0V1-MATCH-SHAPE: unexpected native match"
+  let source ← if source[2].getArgs.isEmpty then pure source else do
+    let motive := source[2][0]
+    unless motive.isOfKind ``Lean.Parser.Term.motive && motive.getArgs.size == 5 do
+      Macro.throwError "PS0V1-MATCH-MOTIVE: unexpected native motive"
+    pure <| source.setArg(2, (source[2].setArg(0, (motive.setArg(3, (← lower(`psTerm, motive[3])))))))
+  let discriminants ← source[3].getArgs.mapM(fun discriminant => do
+    if discriminant.isAtom then return discriminant
+    unless discriminant.isOfKind ``Lean.Parser.Term.matchDiscr && discriminant.getArgs.size == 2 do
+      Macro.throwError "PS0V1-MATCH-DISCRIMINANT: unexpected native discriminant"
+    return discriminant.setArg(1, (← lower(`psTerm, discriminant[1]))))
+  return (source.setArg(3, (source[3].setArgs(discriminants)))).setArg(5,
+    (← lowerNativeMatchAlternatives(source[5], sequence))))
+
+partial function lowerNativeDoSequence(native : Lean.Syntax) : MacroM Lean.Syntax := do
+  let index ← if native.isOfKind ``Lean.Parser.Term.doSeqIndent then pure 0
+    else if native.isOfKind ``Lean.Parser.Term.doSeqBracketed then pure 1
+    else Macro.throwError "PS0V1-DO-LAYOUT: unexpected native sequence"
+  let items ← native[index].getArgs.mapM(fun item => do
+    unless item.isOfKind ``Lean.Parser.Term.doSeqItem && item.getArgs.size == 2 do
+      Macro.throwError "PS0V1-DO-LAYOUT: unexpected native sequence item"
+    return item.setArg(0, (← lowerDoElem(item[0]))))
+  return native.setArg(index, (native[index].setArgs(items)))
+
+partial function lowerNativeTacticSequence(source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerNativeTacticSequenceWith((lower `psTactic), source)
+partial function lowerNativePatternBind(source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  unless source.getArgs.size == 5 do
+    Macro.throwError "PS0V1-DO-PATTERN-BIND: unexpected native pattern binding"
+  let source := source.setArg(3, (← lowerDoElem(source[3])))
+  let branches := source[4]
+  if branches.getArgs.isEmpty then return source
+  unless branches.getArgs.size == 3 && branches[2].getArgs.size <= 1 do
+    Macro.throwError "PS0V1-DO-PATTERN-BRANCHES: unexpected native fallback/continuation"
+  let branches := branches.setArg(1, (← lowerNativeDoSequence(branches[1])))
+  let branches ← if branches[2].getArgs.isEmpty then pure branches else
+    pure <| branches.setArg(2, (branches[2].setArg(0, (← lowerNativeDoSequence(branches[2][0])))))
+  return source.setArg 4 branches)
+
+partial function lowerNativeUnless(source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  unless source.getArgs.size == 4 && source[0].isAtom && source[0].getAtomVal == "unless" &&
+      source[2].isAtom && source[2].getAtomVal == "do" do
+    Macro.throwError "PS0V1-UNLESS-SHAPE: unexpected native control node"
+  let source := source.setArg(1, (← lower(`psTerm, source[1])))
+  return source.setArg(3, (← lowerNativeDoSequence(source[3]))))
+
+partial function lowerNativeOptionalType(source : Lean.Syntax) : MacroM Lean.Syntax := do
+  if source.getArgs.isEmpty then return source
+  unless source.getArgs.size == 1 && source[0].isOfKind(``Lean.Parser.Term.typeSpec) &&
+      source[0].getArgs.size == 2 do Macro.throwError "PS0V1-LOCAL-TYPE: unexpected native type specification"
+  return source.setArg(0, (source[0].setArg(1, (← lower(`psTerm, source[0][1])))))
+
+partial function lowerNativeLocalBinder(source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerNativeLocalBinderWith((lower `psTerm), lowerFunType, source)
+partial function lowerLocalBinder(source : Lean.Syntax) : MacroM((Array Lean.Syntax)) := withRef(source, do
+  if source.isOfKind choiceKind then
+    let mut result? : Option((Array Lean.Syntax)) := none
+    for alternative in source.getArgs do
+      let candidate ← lowerLocalBinder alternative
+      if let some previous := result? then
+        unless sameLocalBinders previous candidate do
+          Macro.throwError "PS0V1-BINDER-AMBIGUITY: different successful binder partitions"
+        -- Coalescing keeps the original native delimiters/source information.
+        -- Every alternative is still normalized and checked before elaboration.
+        if alternative.isOfKind ``ps0NativeLocalBinder then result? := some candidate
+      else result? := some candidate
+    return result?.getD #[]
+  if source.isOfKind ``ps0NativeLocalBinder then
+    return #[← lowerNativeLocalBinder(source[0])]
+  if let some expanded ← Macro.expandMacro? source then
+    return expanded.getArgs
+  Macro.throwError "PS0V1-LOCAL-BINDER: missing local telescope adapter")
+
+partial def sameLocalTree (a b : Lean.Syntax) : Bool :=
+  match a, b with
+  | .missing, .missing => true
+  | .atom _ x, .atom _ y => x == y
+  | .ident _ _ x _, .ident _ _ y _ => x == y
+  | .node _ k xs, .node _ j ys =>
+      k == j && xs.size == ys.size && (xs.zip ys).all((fun (x, y) => sameLocalTree x y))
+  | _, _ => false
+
+partial def sameLocalBinders (a b : Array Lean.Syntax) : Bool :=
+  a.size == b.size && (a.zip b).all((fun (x, y) => sameLocalTree x y))
+
+partial function lowerLocalTelescope(parts : Array Lean.Syntax) : MacroM((Array Lean.Syntax)) := do
+  let mut result := #[]
+  for part in parts do
+    result := result ++ (← lowerLocalBinder part)
+  return result
+
+partial function retainLocalGroup(source : Lean.Syntax, binders : Array Lean.Syntax) : Lean.Syntax :=
+  let group := source.setArgs binders
+  if group.getRange? == source.getRange? then group
+  else .node((loweringInfo source), source.getKind, binders)
+
+partial function lowerNativeLocalId(source : Lean.Syntax) : MacroM Lean.Syntax := do
+  unless (source.isOfKind ``Lean.Parser.Term.letIdDecl ||
+      source.isOfKind ``Lean.Parser.Term.letIdDeclNoBinders) && source.getArgs.size == 5 do
+    Macro.throwError "PS0V1-LOCAL-ID: unexpected native declaration"
+  let binders ← lowerLocalTelescope(source[1].getArgs)
+  let source := source.setArg(1, (retainLocalGroup(source[1], binders)))
+  let source := source.setArg(2, (← lowerNativeOptionalType(source[2])))
+  let value ← if source.isOfKind ``Lean.Parser.Term.letIdDecl then
+      lowerBodyValue(source[4])
+    else lower(`psTerm, source[4])
+  return source.setArg 4 value
+
+partial function lowerNativeRecursiveDeclarations(source : Lean.Syntax) : MacroM Lean.Syntax := do
+  unless source.isOfKind ``Lean.Parser.Term.letRecDecls && source.getArgs.size == 1 do
+    Macro.throwError "PS0V1-LOCAL-REC: unexpected native declaration group"
+  let items ← source[0].getArgs.mapM(fun declaration => do
+    if declaration.isAtom || declaration.isOfKind nullKind then return declaration
+    unless declaration.isOfKind ``Lean.Parser.Term.letRecDecl && declaration.getArgs.size == 4 &&
+        declaration[2].isOfKind(``Lean.Parser.Term.letDecl) && declaration[2].getArgs.size == 1 do
+      Macro.throwError "PS0V1-LOCAL-REC: unexpected native recursive declaration"
+    let value := declaration[2][0]
+    let value ← if value.isOfKind ``Lean.Parser.Term.letIdDecl then
+        lowerNativeLocalId value
+      else do
+        unless value.isOfKind ``Lean.Parser.Term.letEqnsDecl && value.getArgs.size == 4 &&
+            value[3].isOfKind(``Lean.Parser.Term.matchAlts) do
+          Macro.throwError "PS0V1-LOCAL-REC: unexpected native recursive value"
+        let binders ← lowerLocalTelescope(value[1].getArgs)
+        let value := value.setArg(1, (retainLocalGroup(value[1], binders)))
+        let value := value.setArg(2, (← lowerNativeOptionalType(value[2])))
+        let alternatives ← value[3][0].getArgs.mapM(fun alternative => do
+          unless alternative.isOfKind ``Lean.Parser.Term.matchAlt && alternative.getArgs.size == 4 do
+            Macro.throwError "PS0V1-LOCAL-REC: unexpected native equation alternative"
+          return alternative.setArg(3, (← lower(`psTerm, alternative[3]))))
+        pure <| value.setArg(3, (value[3].setArg(0, (value[3][0].setArgs(alternatives)))))
+    return declaration.setArg(2, (declaration[2].setArg(0, value))))
+  return source.setArg(0, (source[0].setArgs(items)))
+
+partial function lowerFunBinder(source : Lean.Syntax) :
+    MacroM((TSyntax ``Lean.Parser.Term.funBinder)) := withRef(source, do
+  if source.isOfKind ``ps0NativeFunBinderBridge then return ⟨source[0]⟩
+  if source.isOfKind ``ps0FunExplicit then
+    let names := source[1].getArgs
+    let head := if names.size == 1 then names[0]! else
+      .node((loweringInfo source), ``Lean.Parser.Term.app, #[names[0]!, mkNullNode((names.extract 1 names.size))])
+    let head : TSyntax `term := ⟨head⟩
+    let ty : TSyntax `term := ⟨← lower(`psTerm, source[3])⟩
+    return ⟨(← `(($head:term : $ty:term))).raw⟩
+  if source.isOfKind ``ps0FunImplicit || source.isOfKind ``ps0FunStrict then
+    let kind := if source.isOfKind ``ps0FunImplicit then
+      ``Lean.Parser.Term.implicitBinder else ``Lean.Parser.Term.strictImplicitBinder
+    return ⟨.node((loweringInfo source), kind,
+      #[source[0], source[1], ← lowerFunType(source[2]), source[3]])⟩
+  if source.isOfKind ``ps0FunInstance then
+    return ⟨.node((loweringInfo source), ``Lean.Parser.Term.instBinder,
+      #[source[0], source[1], ← lower(`psTerm, source[2]), source[3]])⟩
+  Macro.throwError "PS0V1-LAMBDA-BINDER: unsupported owned lambda binder")
+
+partial function lowerHead(source : Lean.Syntax) : MacroM Lean.Syntax := withRef(source, do
+  if source.isOfKind ``ps0AscribedHead then
+    return ← lower(`psTerm, source[0])
+  if source.isOfKind `PS0.Operators.ownedPostfix then
+    let native := source[0]
+    if (PS0.Operators.indexArity? native.getKind).isSome then
+      return ← lowerNativeIndex native true
+    if (PS0.Operators.sliceShape? native.getKind).isSome then
+      return ← lowerNativeSlice native true
+    unless native.isOfKind ``Lean.Parser.Term.proj && native.getArgs.size == 3 do
+      Macro.throwError "PS0V1-PROJECTION-SHAPE: unexpected native head projection"
+    return native.setArg(0, (← lowerHead(native[0])))
+  match source with
+  | `(psHead| $head:psHead($[$args:psCallArg],*)) =>
+      lowerCall((← lowerHead head.raw), args, source)
+  | `(psHead| $head:psHead()) =>
+      return .node((loweringInfo source), `PS0.pscvEmptyCall,
+        #[← lowerHead head.raw, mkAtom "(", mkAtom ")"])
+  | `(psHead| ($body:psTerm)) => do
+      return .node((loweringInfo source), ``Lean.Parser.Term.paren,
+        #[source[0], ← lower `psTerm body.raw, source[2]])
+  | `(psHead| $native:term) => do
+      rejectHostGap native.raw
+      if native.raw.isOfKind ``Lean.Parser.Term.proj then
+        checkProjectionSubject(native.raw[0])
+      return native.raw
+  | _ => Macro.throwError "PS0V1-HOST-LOWER: unsupported postfix head")
+
+partial function lowerNativeSlice(source : Lean.Syntax, head : Bool) : MacroM Lean.Syntax := do
+  let some (arity, bounds) := PS0.Operators.sliceShape? source.getKind
+    | Macro.throwError "PS0V1-SLICE-SHAPE: unsupported native array slice"
+  unless source.getArgs.size == arity && source[1].isAtom && source[1].getAtomVal == "[" do
+    Macro.throwError "PS0V1-SLICE-SHAPE: unexpected native array slice"
+  let subject ← if head then lowerHead(source[0]) else lower(`psTerm, source[0])
+  let mut result := source.setArg 0 subject
+  for index in bounds do
+    result := result.setArg(index, (← lower(`psTerm, source[index])))
+  return result
+
+partial function lowerNativeIndex(source : Lean.Syntax, head : Bool) : MacroM Lean.Syntax := do
+  let some arity := PS0.Operators.indexArity? source.getKind
+    | Macro.throwError "PS0V1-INDEX-SHAPE: unsupported native indexed access"
+  let index := if arity == 7 then 3 else 2
+  unless source.getArgs.size == arity && source[index - 1].isAtom &&
+      source[index - 1].getAtomVal == "[" do
+    Macro.throwError "PS0V1-INDEX-SHAPE: unexpected native indexed access"
+  let subject ← if head then lowerHead(source[0]) else lower(`psTerm, source[0])
+  let source := (source.setArg 0 subject).setArg(index, (← lower(`psTerm, source[index])))
+  if source.isOfKind `«term__[_]'_» then
+    return source.setArg(4, (← lower(`psTerm, source[4])))
+  return source
+
+partial function lowerCall(head : Lean.Syntax, args : Array((TSyntax `psCallArg)),
+    source : Lean.Syntax) : MacroM Lean.Syntax :=
+  lowerCallWith((lower `psTerm), head, args, source)
+
+end
+end PS0.Syntax

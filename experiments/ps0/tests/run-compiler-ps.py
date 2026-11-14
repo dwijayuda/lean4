@@ -11,6 +11,7 @@ import subprocess
 import time
 from native_census_cache import NativeCensusCache, needs_head_lexical_refresh, needs_initializer_refresh, needs_data_refresh, OPERATOR_SCOPE
 from native_compiler_prefix import source_identity_counts, verify_compiler_prefix
+from canonical_compiler_sources import definition_digest, read_canonical_corpus, stage_canonical_corpus
 from compiler_build_checkpoint import (
     compiler_part_targets, graph_run_id as checkpoint_graph_run_id,
     seal as seal_checkpoint, verify as verify_checkpoint,
@@ -26,6 +27,9 @@ parser.add_argument('--census-source')
 parser.add_argument('--prepare-only', action='store_true')
 parser.add_argument('--stage-artifact', type=Path)
 parser.add_argument('--stage-source')
+parser.add_argument('--canonical-corpus', action='store_true', help='Build the tracked .ps compiler corpus')
+parser.add_argument('--bootstrap-artifact', type=Path, help='Verified previous compiler used to seed canonical stage one')
+parser.add_argument('--bootstrap-source')
 parser.add_argument('--build-slice', choices=['base', 'compiler', 'finish'], default='finish')
 parser.add_argument('--resume-build', type=Path)
 parser.add_argument('--checkpoint-run-id', help='Producer run ID when resuming across workflows')
@@ -33,19 +37,27 @@ parser.add_argument('--compiler-part', choices=['early', 'middle', 'late'])
 parser.add_argument('--compiler-target-plan', type=Path)
 parser.add_argument('--workspace', type=Path, help='Pinned compiler source checkout for a separately pinned harness')
 args = parser.parse_args()
+source_grammar = bool(args.source_plans or args.canonical_corpus)
+if bool(args.bootstrap_artifact) != bool(args.bootstrap_source):
+    parser.error('--bootstrap-artifact and --bootstrap-source must be supplied together')
+if args.bootstrap_artifact and not args.canonical_corpus:
+    parser.error('--bootstrap-artifact requires --canonical-corpus')
+if args.canonical_corpus and (args.source_plans or args.plan_source or args.native_censuses or args.prepare_only or
+                              args.driver or args.compare or bool(args.bootstrap_artifact) == bool(args.stage_artifact)):
+    parser.error('canonical corpus requires exactly one verified bootstrap or previous-stage artifact')
 if bool(args.native_censuses) != bool(args.census_source):
     parser.error('--native-censuses and --census-source must be supplied together')
 if (args.native_censuses or args.prepare_only) and not args.source_plans:
     parser.error('native census reuse and preparation-only require --source-plans')
 if bool(args.stage_artifact) != bool(args.stage_source):
     parser.error('--stage-artifact and --stage-source must be supplied together')
-if args.stage_artifact and (args.driver or args.compare or args.prepare_only or not args.source_plans):
+if args.stage_artifact and (args.driver or args.compare or args.prepare_only or not source_grammar):
     parser.error('verified stage artifact requires full PS grammar build without separate driver/compare/prepare-only options')
-if args.resume_build and (args.prepare_only or args.build_slice == 'base' or not args.source_plans):
+if args.resume_build and (args.prepare_only or args.build_slice == 'base' or not source_grammar):
     parser.error('checkpoint resume requires PS grammar compiler/finish slice')
 if args.build_slice == 'compiler' and not args.resume_build:
     parser.error('compiler slice requires verified base checkpoint')
-if args.build_slice != 'finish' and (args.prepare_only or not args.source_plans):
+if args.build_slice != 'finish' and (args.prepare_only or not source_grammar):
     parser.error('partial slices require PS grammar and cannot be preparation-only')
 if args.checkpoint_run_id and not args.resume_build:
     parser.error('--checkpoint-run-id requires --resume-build')
@@ -55,8 +67,11 @@ ROOT = args.workspace.resolve() if args.workspace else Path(__file__).resolve().
 os.chdir(ROOT)
 target_plan = json.loads(args.compiler_target_plan.read_text()) if args.compiler_target_plan else None
 stage = verify_compiler_prefix(args.stage_artifact, args.stage_source) if args.stage_artifact else None
+bootstrap = verify_compiler_prefix(args.bootstrap_artifact, args.bootstrap_source) if args.bootstrap_artifact else None
 if stage:
     args.driver, args.compare = Path(stage['driver']), Path(stage['migration'])
+elif bootstrap:
+    args.driver = Path(bootstrap['driver'])
 baseline = json.loads(args.compare.read_text()) if args.compare else None
 driver = (args.driver or ROOT / '.lake/build/bin/ps0').resolve()
 evidence = ROOT / 'build/compiler-evidence'
@@ -64,6 +79,9 @@ evidence.mkdir(parents=True, exist_ok=True)
 if stage:
     (evidence / 'stage-prefix-verification.json').write_text(json.dumps(stage, indent=2) + '\n')
     # GitHub artifact extraction does not preserve executable permission bits.
+    driver.chmod(driver.stat().st_mode | 0o100)
+if bootstrap:
+    (evidence / 'bootstrap-prefix-verification.json').write_text(json.dumps(bootstrap, indent=2) + '\n')
     driver.chmod(driver.stat().st_mode | 0o100)
 LEAN = 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc'
 
@@ -112,19 +130,48 @@ if args.resume_build:
 assert graph_run_id.isascii() and graph_run_id.isdecimal(), graph_run_id
 work = ROOT / 'build' / ('compiler-ps-' + graph_run_id)
 source = work / 'src'
+if args.canonical_corpus:
+    catalog = ROOT / 'compiler-canonical-sources.json'
+    pinned_inventory = json.loads((ROOT / 'compiler-source-inventory.json').read_text())
+    canonical = read_canonical_corpus(ROOT.parent.parent, catalog, pinned_inventory)
+    assert len(canonical) == 2569
 if args.resume_build:
     inputs = json.loads((evidence / 'input-inventory.json').read_text())['inputs']
     assert len(inputs) == 2569
     source_plans = {}
     for module in inputs:
-        candidates = [evidence / name / module / 'plan.json'
-                      for name in ['current-source-plans', 'self-source-plans']]
-        plans = [path for path in candidates if path.is_file()]
-        assert len(plans) == 1, (module, plans)
-        source_plans[module] = json.loads(plans[0].read_text())
+        if args.canonical_corpus:
+            source_plans[module] = canonical[module]
+            assert inputs[module]['canonical_path'] == canonical[module]['path']
+            assert inputs[module]['ps_sha256'] == canonical[module]['ps_sha256']
+        else:
+            candidates = [evidence / name / module / 'plan.json'
+                          for name in ['current-source-plans', 'self-source-plans']]
+            plans = [path for path in candidates if path.is_file()]
+            assert len(plans) == 1, (module, plans)
+            source_plans[module] = json.loads(plans[0].read_text())
         assert digest(source / Path(*module.split('.')).with_suffix('.ps')) == inputs[module]['ps_sha256']
     assert not list(source.rglob('*.lean'))
     identity_counts = source_identity_counts(inputs)
+elif args.canonical_corpus:
+    source_plans = canonical
+    inputs = stage_canonical_corpus(ROOT.parent.parent, canonical, source)
+    shutil.copytree(source, evidence / 'transformed-source')
+    shutil.copy2(catalog, evidence / 'canonical-source-catalog.json')
+    identity_counts = source_identity_counts(inputs)
+    (work / 'modules.txt').write_text('\n'.join(sorted(inputs)) + '\n')
+    (evidence / 'input-inventory.json').write_text(json.dumps({
+        'source_commit': os.environ['PS0_SOURCE_SHA'], 'lean_commit': LEAN,
+        'stage_driver_sha256': digest(driver), 'module_count': len(inputs), 'inputs': inputs,
+        'source_identity_counts': identity_counts,
+    }, indent=2) + '\n')
+    (evidence / 'source-plan-summary.json').write_text(json.dumps({
+        'input_mode': 'canonical-git', 'catalog_sha256': digest(catalog),
+        'planner_source': os.environ['PS0_SOURCE_SHA'], 'module_count': len(inputs), 'source_grammar': True,
+        'stage_compiler': 'retained-ps-built-prefix' if stage else 'retained-audited-bootstrap-prefix',
+        'stage_driver_sha256': digest(driver),
+    }, indent=2) + '\n')
+    print('PS0_COMPILER_CANONICAL_INPUTS: ' + str(len(inputs)) + '; catalog_sha256=' + digest(catalog), flush=True)
 else:
     source.mkdir(parents=True, exist_ok=False)
     originals = {}
@@ -350,7 +397,7 @@ if not args.resume_build:
     shutil.copytree(sysroot / 'include', build / 'include')
 build_command = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceRoot=' + str(source),
      '-Kbootstrap=true',
-     *(['-KsourceGrammar=true'] if args.source_plans else []),
+     *(['-KsourceGrammar=true'] if source_grammar else []),
      '-Kroots=Init,Std,Lean,Lake,LeanChecker,LeanExport,LeanIR,Leanc,LakeMain,PS0,PS0Main', '-KrootModule=PS0Main',
      '-Kdriver=' + str(driver), '-KmoduleNames=' + ','.join(sorted(inputs)),
      '-KlinkMap=' + str(evidence / 'compiler-link.map'),
@@ -386,7 +433,7 @@ except Exception:
             completed.append(module)
     (evidence / 'failed-build.json').write_text(json.dumps({
         'source_commit': os.environ['PS0_SOURCE_SHA'], 'lean_commit': LEAN,
-        'module_count': len(inputs), 'source_grammar': bool(args.source_plans),
+        'module_count': len(inputs), 'source_grammar': source_grammar,
         'completed_census_modules': sorted(completed), 'status': 'FAILED',
         'grammar_migration_complete': False, 'verified_execution': False,
     }, indent=2) + '\n')
@@ -414,7 +461,7 @@ for module, data in inputs.items():
     assert receipt['source'] == data['ps'], (module, receipt)
     setup = json.loads((build / 'ir' / rel.with_suffix('.setup.json')).read_text())
     assert setup['options']['interpreter.prefer_native'] is False, (module, setup['options'])
-    if args.source_plans:
+    if source_grammar:
         assert setup['options']['ps0.sourceGrammar'] is True, (module, setup['options'])
         census_file = build / 'lib/lean' / rel.with_suffix('.ilean.ps0-source-census.json')
         observed = json.loads(census_file.read_text())
@@ -429,11 +476,18 @@ for module, data in inputs.items():
                        'def': 'PS0.StandardAdapters.ps0StandardDef'}
         definition_kinds = set(productions.values()) | {'Lean.Parser.Command.definition'}
         definitions = [declaration for declaration in mapped if declaration['production'] in definition_kinds]
-        assert len(definitions) == len(source_plans[module]['strategies']), module
-        for strategy, declaration in zip(source_plans[module]['strategies'], definitions):
-            assert declaration['sourceName'] == strategy['sourceName'], (module, strategy, declaration)
-            assert declaration['mode'] == 'mapped-ps'
-            assert declaration['production'] == productions[strategy['targetKeyword']], declaration
+        if args.canonical_corpus:
+            sequence = [(declaration['sourceName'], keyword) for declaration in definitions
+                        for keyword, kind in productions.items() if declaration['production'] == kind]
+            assert len(sequence) == len(definitions) == canonical[module]['definition_count'], module
+            assert definition_digest(sequence) == canonical[module]['definition_sha256'], module
+            assert all(declaration['mode'] == 'mapped-ps' for declaration in definitions), module
+        else:
+            assert len(definitions) == len(source_plans[module]['strategies']), module
+            for strategy, declaration in zip(source_plans[module]['strategies'], definitions):
+                assert declaration['sourceName'] == strategy['sourceName'], (module, strategy, declaration)
+                assert declaration['mode'] == 'mapped-ps'
+                assert declaration['production'] == productions[strategy['targetKeyword']], declaration
         assert not any(declaration['mode'] == 'native-compatible' for declaration in mapped), (module, mapped)
         def operand_captures(commands, field):
             for command in commands:
@@ -465,11 +519,13 @@ result = {
     'build_harness_source': os.environ.get('PS0_BUILD_HARNESS_SHA', os.environ['PS0_SOURCE_SHA']),
     'native_lake_build_slices': checkpoint_history + [{'phase': 'finish', 'targets': ['PS0Project:static', 'ps0project']}],
     'stage_lean_options': {'interpreter.prefer_native': False,
-                           **({'ps0.sourceGrammar': True} if args.source_plans else {})},
+                           **({'ps0.sourceGrammar': True} if source_grammar else {})},
     'runtime_smoke': 'PENDING',
     'runtime_grammar_host': {'status': 'PENDING'},
     'lean_header_sha256': digest(build / 'include/lean/lean.h'),
-    'scope': ('All pinned upstream and PS0 source plans compiled with PS grammar enabled' if args.source_plans else
+    'source_input_mode': 'canonical-git' if args.canonical_corpus else 'generated',
+    'scope': ('All tracked compiler .ps sources compiled with PS grammar enabled' if args.canonical_corpus else
+              'All pinned upstream and PS0 source plans compiled with PS grammar enabled' if args.source_plans else
               'All pinned src/**/*.lean Git blobs and repository PS0 modules compiled from .ps with native headers'),
     'grammar_migration_complete': False,
 }
@@ -527,4 +583,3 @@ if baseline:
 else:
     (evidence / 'migration.json').write_text(json.dumps(result, indent=2) + '\n')
 print('PS0_COMPILER_PS_SOURCE: PASS; modules=' + str(len(inputs)), flush=True)
-

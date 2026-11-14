@@ -31,9 +31,15 @@ def projectModules : Array Name :=
   (((get_config? moduleNames).getD "").splitOn ",").toArray.filterMap fun (line : String) =>
     if line.isEmpty then none else some line.toName
 
+def canonicalPS0 : Bool := run_io (FilePath.mk "PS0.ps").pathExists
+
 lean_lib PS0 where
   roots := if projectModules.isEmpty then #[`PS0] else #[]
   globs := if projectModules.isEmpty then #[Glob.one `PS0] else #[]
+  -- The bundled library is canonical PS even when the user project selects
+  -- the ordinary module frontend. Explicit corpus inventories own their roots.
+  leanOptions := if projectModules.isEmpty && canonicalPS0 then
+    #[⟨`ps0.sourceGrammar, true⟩, ⟨`interpreter.prefer_native, false⟩] else #[]
 
 lean_lib PS0Project where
   srcDir := projectSource
