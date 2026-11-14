@@ -62,6 +62,65 @@ declareR2 nineR2
 example : sevenR2 + nineR2 + elevenR2 = 27 := rfl
 example : True := by { finishR2 }
 ''', None),
+    'V1-079': ('''public meta import Lean
+open Lean in
+run_cmd do
+  let universe := Level.succ Level.zero
+  let expr := Expr.sort universe
+  unless expr == mkSort levelOne do throwError "universe construction"
+  let syntaxTree ← Elab.liftMacroM `(term| (42 : Nat))
+  unless syntaxTree.raw.getKind == ``Parser.Term.typeAscription do throwError "syntax kind"
+  unless (Name.str `R2 "member").toString == "R2.member" do throwError "name construction"
+''', None),
+    'V1-085': ('''abbrev AliasR2 := Nat
+def OrdinaryR2 := Nat
+opaque OpaqueR2 : Type := Nat
+open Lean Meta in
+run_cmd liftTermElabM do
+  unless (← withReducible (isDefEq (mkConst ``AliasR2) (mkConst ``Nat))) do
+    throwError "abbreviation is not reducible"
+  if (← withReducible (isDefEq (mkConst ``OrdinaryR2) (mkConst ``Nat))) then
+    throwError "ordinary definition unfolded under reducible transparency"
+  unless (← isDefEq (mkConst ``OrdinaryR2) (mkConst ``Nat)) do
+    throwError "ordinary definition did not unfold"
+  if (← isDefEq (mkConst ``OpaqueR2) (mkConst ``Nat)) then
+    throwError "opaque definition unfolded"
+''', None),
+    'V1-086': ('''public meta import Lean
+open Lean in
+builtin_initialize registerTraceClass `R2.options
+set_option pp.universes true in
+open Lean in
+run_cmd do
+  unless pp.universes.get (← getOptions) do throwError "scoped option missing"
+set_option trace.R2.options true in
+open Lean in
+run_cmd do trace[R2.options] "PS0_R2_TRACE"
+open Lean in
+run_cmd do
+  if pp.universes.get (← getOptions) then throwError "scoped option leaked"
+''', None),
+    'V1-088': ('''const digits: Array UInt8 := #[1, 2, 3]
+const nested: List(Option Nat) := [some(9), none]
+example : digits[1] = (2 : UInt8) := rfl
+example : digits[9]? = none := rfl
+example : nested.head? = some(some(9)) := rfl
+example : ('a').toNat = 97 := rfl
+''', None),
+    'V1-089': ('''def stateStep : StateM Nat Nat := do
+  let before ← get
+  modify Nat.succ
+  return before
+example : stateStep.run(10) = (10, 11) := rfl
+def readStep : ReaderT Nat (Except String) Nat := do
+  let n ← read
+  if n == 0 then throw "empty" else return n + 1
+example : readStep.run(2) = .ok(3) := rfl
+example : readStep.run(0) = .error("empty") := rfl
+#eval show IO Unit from do
+  let path ← IO.currentDir
+  if path.toString.isEmpty then throw(IO.userError("missing cwd"))
+''', None),
     'V1-094': ('''def diagnosticR2 : Nat := 19
 #check diagnosticR2
 #eval diagnosticR2
@@ -247,6 +306,8 @@ def main():
             ok = ok and 'does not depend on any axioms' in log and 'PS0_DIAGNOSTIC_EVAL' in log
         if case == 'PS0-P-RUN-01':
             ok = ok and 'PS0_R2_IO:hello' in log
+        if case == 'V1-086':
+            ok = ok and 'PS0_R2_TRACE' in log
         if case == 'PS0-N-ASSURE-03':
             ok = ok and 'UNCERTIFIED' in log and 'no verified certificate issued' in log
         if case == 'PS0-N-ASSURE-04':
