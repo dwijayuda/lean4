@@ -92,6 +92,13 @@ scoped syntax (name := ps0StandardInitialize) (priority := 20000)
 private function nativeTerm(body : TSyntax `psTerm) : MacroM((TSyntax `term)) := do
   return ⟨← PS0.Syntax.lower `psTerm body.raw⟩
 
+scoped syntax (name := ps0StandardCheck) (priority := 20000) "#check " psTerm : command
+
+macro_rules (kind := ps0StandardCheck)
+  | `(#check $body:psTerm) => do
+    let native ← nativeTerm body
+    `(#check $native:term)
+
 declare_syntax_cat psDeclTail
 declare_syntax_cat psWhereClause
 declare_syntax_cat psWhereLocalValue

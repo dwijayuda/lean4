@@ -380,16 +380,35 @@ const dataStructSimpleBinder : Parser :=
     atomic((Lean.Parser.Command.declModifiers true >> ident)) >>
       dataSignature >> optional dataBinderSuffix
 
+const dataStructField : Parser :=
+  ppGroup((dataStructExplicitBinder <|> dataStructImplicitBinder <|>
+    dataStructInstBinder <|> dataStructSimpleBinder))
+
 const dataStructFields : Parser :=
   node ``Lean.Parser.Command.structFields <|
-    manyIndent((ppLine >> checkColGe >> ppGroup(
-      (dataStructExplicitBinder <|> dataStructImplicitBinder <|>
-        dataStructInstBinder <|> dataStructSimpleBinder))))
+    manyIndent((ppLine >> checkColGe >> dataStructField))
 
 const dataStructCtor : Parser :=
   node ``Lean.Parser.Command.structCtor <|
     atomic((ppIndent((Lean.Parser.Command.declModifiers true >> ident >>
       many((ppSpace >> categoryParser `psDataBinder 0)) >> " :: "))))
+
+const bracedDataStructFields : Parser :=
+  node ``Lean.Parser.Command.structFields <|
+    withFn((fun parse => withResultOfFn(parse, fun source =>
+      mkNullNode(source.getArgs.map(fun field => field[0])))),
+      (many1(group((dataStructField >> optional((symbol ";" <|> symbol ",")))))))
+
+const dataStructBody : Parser :=
+  withFn((fun parse ctx initial =>
+    let parsed := parse ctx initial
+    if parsed.hasError then parsed else
+      let body := parsed.stxStack.back
+      let stack := parsed.popSyntax
+      (stack.pushSyntax body[1]).pushSyntax body[2]),
+    (node `PS0.DoLayout.bracedDataStruct <|
+      "{" >> optional dataStructCtor >> bracedDataStructFields >> "}")) <|>
+    (optional dataStructCtor >> dataStructFields)
 
 const dataComputedField : Parser :=
   node ``Lean.Parser.Command.computedField <|
@@ -436,7 +455,7 @@ const dataStructure : Parser :=
     (Lean.Parser.Command.structureTk <|> Lean.Parser.Command.classTk) >> Lean.Parser.Command.declId >>
       ppIndent((dataSignature >> optional dataExtends)) >>
       optional(((symbol " := " <|> " where ") >>
-        optional dataStructCtor >> dataStructFields)) >>
+        dataStructBody)) >>
       Lean.Parser.Command.optDeriving
 
 @[run_parser_attribute_hooks] const dataCommand : Parser :=

@@ -22,7 +22,7 @@ register_builtin_option ps0.sourceGrammar : Bool := {
 private const categoryNames : Array Name :=
   #[`psTerm, `psCommand, `psTactic, `psDoSeq, `psCallArg, `psHead,
     `psDoElem, `psDoItem, `psLocalBinder, `psStructInstFieldDecl, `psLoopBinder, `psDataOperand,
-    `psDataTacticOperand, `psDataBinder, `psBinderParam, `psDeclBinder, `psFunBinder, `psDeclTail, `psDeclValue,
+    `psDataTacticOperand, `psDataBinder, `psMatchPattern, `psBinderParam, `psDeclBinder, `psFunBinder, `psDeclTail, `psDeclValue,
     `psStructFieldValue, `psStructField, `psDefDeriving, `psWhereClause,
     `psWhereLocalValue, `psWhereLocalDecl, `psWhereFinally, `psWhereFinallySection]
 
@@ -32,7 +32,7 @@ private const commandNames : Array Name :=
     `PS0.StandardAdapters.ps0StandardFunction, `PS0.StandardAdapters.ps0StandardOpaque,
     `PS0.StandardAdapters.ps0StandardAxiom, `PS0.StandardAdapters.ps0StandardConst,
     `PS0.StandardAdapters.ps0StandardInstance, `PS0.StandardAdapters.ps0StandardInitialize,
-    `PS0.StandardAdapters.ps0StandardData]
+    `PS0.StandardAdapters.ps0StandardData, `PS0.StandardAdapters.ps0StandardCheck]
 
 -- Contextual alias words must remain ordinary identifiers in native DSL syntax.
 private partial const contextualAliases : ParserDescr → ParserDescr
