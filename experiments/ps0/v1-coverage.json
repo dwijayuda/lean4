@@ -96,10 +96,26 @@
       "id": "V1-004",
       "feature": "Raw/interpolated strings and embedded expressions",
       "sourceBasis": "[feature](#collection-indexing-array-literals-strings-and-interpolation), L-INIT, L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-004",
+      "qualifiedCommit": "17b8b1e167d2a1f118cdfb8bcfd19a54e09d6a26",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588891012",
+      "evidence": {
+        "jobId": 132429179925,
+        "runner": "eac700fc96dfa34497d52689ffd576f9a61f3a4b",
+        "artifact": {
+          "id": 14111686532,
+          "name": "ps0-r2-lexical-types-evidence-43588891012",
+          "digest": "sha256:e024bad9d42cfc6a3f9342d98a936c06f27f4eee63a66d482e15a0e5117dc96b",
+          "bytes": 8629,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "03267377d6aab255bb34b2dcc60d467175626fecb8b81cba6d3f47444bae39a7",
+        "caseSha256": "baa8da6b5a0e6718d6dbde4bd75ec7bc72bcd1b7abfead86acb55e354b7f1cdf"
+      }
     },
     {
       "id": "V1-005",
@@ -230,10 +246,26 @@
       "id": "V1-010",
       "feature": "Classes, instances, coercions and overloaded operations",
       "sourceBasis": "L-CMD, L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: V1-010",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd"
+      }
     },
     {
       "id": "V1-011",
@@ -288,19 +320,51 @@
       "id": "V1-016",
       "feature": "Namespace/section/end and include/omit",
       "sourceBasis": "L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: V1-016",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a"
+      }
     },
     {
       "id": "V1-017",
       "feature": "Open/hiding/renaming/only/scoped and namespace export",
       "sourceBasis": "L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: V1-017",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33"
+      }
     },
     {
       "id": "V1-018",
@@ -315,10 +379,26 @@
       "id": "V1-019",
       "feature": "`meta`, `noncomputable`, `nonrec` and modifier legality",
       "sourceBasis": "L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: V1-019",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f"
+      }
     },
     {
       "id": "V1-020",
@@ -333,28 +413,76 @@
       "id": "V1-021",
       "feature": "`function`/`const` and required-Unit nullary lowering",
       "sourceBasis": "[feature](#nullary-function-declarations-and-required-unit)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: V1-021",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247"
+      }
     },
     {
       "id": "V1-022",
       "feature": "Opaque bodies and bodyless inhabitant synthesis",
       "sourceBasis": "L-DEFS, L-DECL",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: V1-022",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f"
+      }
     },
     {
       "id": "V1-023",
       "feature": "Explicit axiom declarations and assumptions",
       "sourceBasis": "L-CMD, L-DECL",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: V1-023",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1"
+      }
     },
     {
       "id": "V1-024",
@@ -3754,10 +3882,26 @@
       "sourceOrClaim": "Claiming a theorem depending on source/generated/imported sorry is completed",
       "expectedCategory": "ASSURANCE",
       "reason": "The hole remains in the relevant dependency closure.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: PS0-N-ASSURE-01",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03"
+      }
     },
     {
       "id": "PS0-N-ASSURE-02",
@@ -3765,10 +3909,26 @@
       "sourceOrClaim": "Hiding a native-computation or user axiom in an assumption-free claim",
       "expectedCategory": "ASSURANCE",
       "reason": "A tactic spelling does not remove generated assumptions.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: PS0-N-ASSURE-02",
+      "qualifiedCommit": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588983637",
+      "evidence": {
+        "jobId": 132429461142,
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "caseSha256": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+      }
     },
     {
       "id": "PS0-N-ASSURE-03",
@@ -7918,12 +8078,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 106,
-    "featureFamiliesPending": 92,
+    "PENDING": 96,
+    "featureFamiliesPending": 84,
     "boundaryWitnessesPending": 5,
-    "acceptanceCasesPending": 9,
+    "acceptanceCasesPending": 7,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 136,
+    "PASS": 146,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -18615,7 +18775,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 106,
+    "obligationsPending": 96,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -25602,6 +25762,88 @@
           "archiveDigestVerified": true
         },
         "summary": "Eight lexical and type families and the duplicate quotient-bootstrap rejection passed. The raw/interpolated string case was pending its corrected evaluation oracle."
+      },
+      {
+        "run": 43588891012,
+        "job": 132429179925,
+        "conclusion": "success",
+        "runner": "eac700fc96dfa34497d52689ffd576f9a61f3a4b",
+        "source": "17b8b1e167d2a1f118cdfb8bcfd19a54e09d6a26",
+        "fixture": "tests/run-r2-lexical-types.py",
+        "fixtureSha256": "03267377d6aab255bb34b2dcc60d467175626fecb8b81cba6d3f47444bae39a7",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "V1-004"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "V1-001": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759",
+          "V1-002": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672",
+          "V1-003": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969",
+          "V1-004": "baa8da6b5a0e6718d6dbde4bd75ec7bc72bcd1b7abfead86acb55e354b7f1cdf",
+          "V1-005": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5",
+          "V1-006": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa",
+          "V1-007": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623",
+          "V1-008": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20",
+          "V1-009": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1",
+          "PS0-N-BOOT-01": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14111686532,
+          "name": "ps0-r2-lexical-types-evidence-43588891012",
+          "digest": "sha256:e024bad9d42cfc6a3f9342d98a936c06f27f4eee63a66d482e15a0e5117dc96b",
+          "bytes": 8629,
+          "archiveDigestVerified": true
+        },
+        "summary": "The native IO oracle verified raw string parsing and evaluated interpolation to the exact expected text."
+      },
+      {
+        "run": 43588983637,
+        "job": 132429461142,
+        "conclusion": "failure",
+        "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+        "source": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+        "fixture": "tests/run-r2-declaration-families.py",
+        "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "V1-010",
+          "V1-016",
+          "V1-017",
+          "V1-019",
+          "V1-021",
+          "V1-022",
+          "V1-023",
+          "PS0-N-ASSURE-01",
+          "PS0-N-ASSURE-02"
+        ],
+        "failures": [
+          "V1-020"
+        ],
+        "fixtureCases": {
+          "V1-010": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd",
+          "V1-016": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a",
+          "V1-017": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33",
+          "V1-019": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f",
+          "V1-020": "e48d317201fe26e19e54569f6563be7b85bd47dfa4c28cf9e3f9280626bb7e19",
+          "V1-021": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247",
+          "V1-022": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f",
+          "V1-023": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1",
+          "PS0-N-ASSURE-01": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03",
+          "PS0-N-ASSURE-02": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14112101177,
+          "name": "ps0-r2-declaration-families-evidence-43588983637",
+          "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+          "bytes": 9071,
+          "archiveDigestVerified": true
+        },
+        "summary": "Seven declaration families and two assumption-boundary cases passed. Lean reported transitive sorry and user or native axioms while leaving ordinary checking explicitly uncertified."
       }
     ]
   },
@@ -96090,6 +96332,88 @@
         "archiveDigestVerified": true
       },
       "summary": "Eight lexical and type families and the duplicate quotient-bootstrap rejection passed. The raw/interpolated string case was pending its corrected evaluation oracle."
+    },
+    {
+      "run": 43588891012,
+      "job": 132429179925,
+      "conclusion": "success",
+      "runner": "eac700fc96dfa34497d52689ffd576f9a61f3a4b",
+      "source": "17b8b1e167d2a1f118cdfb8bcfd19a54e09d6a26",
+      "fixture": "tests/run-r2-lexical-types.py",
+      "fixtureSha256": "03267377d6aab255bb34b2dcc60d467175626fecb8b81cba6d3f47444bae39a7",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "V1-004"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "V1-001": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759",
+        "V1-002": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672",
+        "V1-003": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969",
+        "V1-004": "baa8da6b5a0e6718d6dbde4bd75ec7bc72bcd1b7abfead86acb55e354b7f1cdf",
+        "V1-005": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5",
+        "V1-006": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa",
+        "V1-007": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623",
+        "V1-008": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20",
+        "V1-009": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1",
+        "PS0-N-BOOT-01": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14111686532,
+        "name": "ps0-r2-lexical-types-evidence-43588891012",
+        "digest": "sha256:e024bad9d42cfc6a3f9342d98a936c06f27f4eee63a66d482e15a0e5117dc96b",
+        "bytes": 8629,
+        "archiveDigestVerified": true
+      },
+      "summary": "The native IO oracle verified raw string parsing and evaluated interpolation to the exact expected text."
+    },
+    {
+      "run": 43588983637,
+      "job": 132429461142,
+      "conclusion": "failure",
+      "runner": "4822d8d881b84ef857610b0d16ae77b56e74f993",
+      "source": "a469ca0428a64915270b4ab4a12affc8ee99e5b3",
+      "fixture": "tests/run-r2-declaration-families.py",
+      "fixtureSha256": "e2b9f24b9722bb3f55cb5335b5c460e25012833e653e0484782bf3559f726e0b",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "V1-010",
+        "V1-016",
+        "V1-017",
+        "V1-019",
+        "V1-021",
+        "V1-022",
+        "V1-023",
+        "PS0-N-ASSURE-01",
+        "PS0-N-ASSURE-02"
+      ],
+      "failures": [
+        "V1-020"
+      ],
+      "fixtureCases": {
+        "V1-010": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd",
+        "V1-016": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a",
+        "V1-017": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33",
+        "V1-019": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f",
+        "V1-020": "e48d317201fe26e19e54569f6563be7b85bd47dfa4c28cf9e3f9280626bb7e19",
+        "V1-021": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247",
+        "V1-022": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f",
+        "V1-023": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1",
+        "PS0-N-ASSURE-01": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03",
+        "PS0-N-ASSURE-02": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14112101177,
+        "name": "ps0-r2-declaration-families-evidence-43588983637",
+        "digest": "sha256:94a25804a27e3261b20ac343ab3c457d2279487661259878856613f839c92df6",
+        "bytes": 9071,
+        "archiveDigestVerified": true
+      },
+      "summary": "Seven declaration families and two assumption-boundary cases passed. Lean reported transitive sorry and user or native axioms while leaving ordinary checking explicitly uncertified."
     }
   ]
 }
