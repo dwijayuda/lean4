@@ -60,7 +60,7 @@ run_cmd do
   unless isMarkedMeta env ``compileTime do throwError "missing meta modifier"
   unless isNoncomputable env ``classicalValue do throwError "missing noncomputable modifier"
 ''',
-    'V1-020': '''def ordinary : Nat := 42
+    'V1-020': ('''@[expose] def ordinary : Nat := 42
 abbrev synonym : Nat := ordinary
 theorem checked : synonym = 42 := rfl
 example : synonym = 42 := checked
