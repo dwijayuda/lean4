@@ -29,6 +29,17 @@ example : readR2[answer] = (42 : Nat) := rfl
 binder_predicate x " ≪₀ " y:term => `($x < $y)
 example : (∀ x ≪₀ 0, x = (23 : Nat)) := by { intro x h; omega }
 ''', None),
+    'V1-074': ('''public import Lean
+public meta import Lean
+open Lean Parser
+@[run_parser_attribute_hooks] def r2Operand : Parser := leading_parser num
+syntax (name := r2Prefix) "r2Prefix " r2Operand : term
+syntax:70 (name := r2Tail) term:70 " r2Tail " num : term
+macro_rules
+  | `(r2Prefix $n:num) => pure n
+  | `($lhs r2Tail $n:num) => `($lhs + $n)
+example : (r2Prefix 20 r2Tail 22) = (42 : Nat) := rfl
+''', None),
     'V1-075': ('''public meta import Lean
 syntax "chooseR2 " term : term
 macro_rules
@@ -88,7 +99,7 @@ run_cmd do
     'V1-080': ('''public import Lean
 public meta import Lean
 open Lean Elab Command
-initialize stateR2 : SimplePersistentEnvExtension(Name, List Name) ←
+builtin_initialize stateR2 : SimplePersistentEnvExtension(Name, List Name) ←
   registerSimplePersistentEnvExtension {
     addEntryFn := fun entries name => name :: entries
     addImportedFn := fun _ => []
@@ -98,6 +109,16 @@ run_cmd do
   modifyEnv fun env => stateR2.addEntry env ``valueR2
   unless (stateR2.getState (← getEnv)).contains ``valueR2 do
     throwError "missing registered declaration"
+''', None),
+    'V1-084': ('''public import Lean
+public meta import Lean
+open Lean Elab Command
+builtin_initialize r2Tag : TagAttribute ← registerTagAttribute `r2_tag "R2 tag attribute"
+@[r2_tag] def placedR2 : Nat := 42
+run_cmd do
+  unless r2Tag.hasTag (← getEnv) ``placedR2 do throwError "tag missing"
+@[simp] theorem addR2_zero(n: Nat): n + 0 = n := Nat.add_zero n
+attribute [-simp] addR2_zero
 ''', None),
     'V1-081': ('''public meta import Lean
 open Lean Elab Command Meta
@@ -142,6 +163,7 @@ run_cmd liftTermElabM do
 ''', None),
     'V1-086': ('''public import Lean
 public meta import Lean
+set_option elab.async false
 open Lean in
 builtin_initialize registerTraceClass `R2.options
 set_option pp.universes true in
