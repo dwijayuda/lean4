@@ -74,13 +74,25 @@ private example : pred(5) = 4 := rfl
   | some(n) => n
   | none => 0
 }
+function nested(x: Option (Option Nat)): Nat := match x with {
+  | .some(.some(n,),) => n
+  | .some(.none()) => 1
+  | .none() => 0
+}
+function nativeSpaced(x: Option Nat): Nat := match x with
+  | some (n) => n
+  | none => 0
 private example : unpack(some(7)) = 7 := rfl
 private example : unpack(none) = 0 := rfl
+private example : nested(some(some(8))) = 8 := rfl
+private example : nested(some(none)) = 1 := rfl
+private example : nested(none) = 0 := rfl
+private example : nativeSpaced(some(9)) = 9 := rfl
 ''', None, None),
     'PS0-P-PAT-03': ('''function useEquation(n: Nat): Nat :=
   match h : n with {
-    | 0 => 0
-    | k + 1 => k
+    | 0 => by { have zero : n = 0 := h; exact n }
+    | k + 1 => by { have succ : n = k + 1 := h; exact k }
   }
 function dependent(n: Nat): n = n :=
   match (motive := (k : Nat) → k = k) n with {
@@ -116,7 +128,12 @@ function bad(n: Nat): Nat := match n with {
 function bad(t: Token): Nat := match t with {
   | Token.mk() => 1
 }
-''', '| Token.mk', r'invalid pattern|incorrect number of arguments|insufficient number of arguments|PS0V1-PATTERN'),
+inductive Defaulted where
+  | mk (n : Nat := 2)
+function badDefault(t: Defaulted): Nat := match t with {
+  | Defaulted.mk() => 1
+}
+''', ('| Token.mk', '| Defaulted.mk'), r'Invalid pattern: Not enough arguments'),
     'PS0-N-PAT-03': ('''function bad(n: Nat): Nat := nomatch n
 ''', 'function bad', r'missing cases|did not eliminate|is not empty'),
 }
@@ -142,10 +159,13 @@ def main():
         if diagnostic is None:
             ok = result.returncode == 0
         else:
-            line = next(i for i, text in enumerate(source.splitlines(), 1) if anchor in text)
-            ok = result.returncode == 1 and any(
+            anchors = (anchor,) if isinstance(anchor, str) else anchor
+            lines = [next(i for i, text in enumerate(source.splitlines(), 1) if tag in text)
+                     for tag in anchors]
+            ok = result.returncode == 1 and all(any(
                 re.search(rf':{line}:\d+: error(?:\([^)]*\))?:', entry)
                 and re.search(diagnostic, entry, re.IGNORECASE) for entry in log.splitlines())
+                for line in lines)
         (passed if ok else failures).append(case)
         print(case, 'PASS' if ok else 'FAIL', result.returncode, log, flush=True)
     evidence = {'passed': passed, 'failures': failures, 'fixtures': fixtures,

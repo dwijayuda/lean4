@@ -196,9 +196,9 @@ const loopBasicFun : Parser :=
       | some span => .synthetic span.start span.stop false
       | none => .none
     .node(info, ``Lean.Parser.Term.app, #[source[0], mkNullNode(source[2].getSepArgs)]))),
-    (node ``Lean.Parser.Term.app <|
-      (PS0.Operators.adjacentIdentifier <|> Lean.Parser.Term.dotIdent) >>
-        checkNoWsBefore >> "(" >>
+    (checkPrec maxPrec >> node ``Lean.Parser.Term.app <|
+      atomic((PS0.Operators.adjacentIdentifier <|> Lean.Parser.Term.dotIdent) >>
+        checkNoWsBefore >> "(") >>
         withoutPosition((sepBy((categoryParser `psMatchPattern 0), ",", ("," >> ppSpace), true))) >>
         ")"))
 
