@@ -47,7 +47,7 @@ private example : Id.run(value) = 1 := rfl
   return total
 private example : Id.run(value) = 33 := rfl
 ''', (), ''),
-    'PS0-P-DO-03': ('''const value: Id Nat := do
+    'PS0-P-DO-03': ('''const loopResult: IO Nat := do
   let mut n := 0
   repeat
     n := n + 1
@@ -57,7 +57,7 @@ private example : Id.run(value) = 33 := rfl
   repeat { n := n + 1 } until n == 6
   return n
 #eval show IO Unit from do
-  let observed := Id.run(value)
+  let observed ← loopResult
   if observed == 6 then pure Unit.unit else throw (IO.userError "loop oracle")
 ''', (), ''),
     'PS0-P-DO-04': ('''function getValue(x: Option Nat): Id Nat := do
