@@ -1895,10 +1895,25 @@
       "id": "V1-080",
       "feature": "Environment extensions, declarations and registration APIs",
       "sourceBasis": "L-LEAN, L-DECL",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-080",
+      "qualifiedCommit": "5c4f0588c364f6d43e907e562aa390fa75bbd2fc",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43625471845",
+      "evidence": {
+        "jobId": 132540203525,
+        "runner": "d6a514bdeae1d5ebda3af96a7336e36f4791177c",
+        "artifact": {
+          "id": 14126130789,
+          "name": "ps0-r2-native-extensions-evidence-43625471845",
+          "digest": "sha256:e2cffebb2a4f72fc069b6b5dd9621d0c84cf1e7474a04bc66f1f8765329be0c8",
+          "bytes": 16203806
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "f628e6fbc48b850736811ca3687661e72cac9cf953b0895b72e9f4ad17cea138",
+        "caseSha256": "9d300bb8c187bcf05d01f75cb696d6506c30bceebe7a2c88590e9aba0d1ef500"
+      }
     },
     {
       "id": "V1-081",
@@ -1976,10 +1991,25 @@
       "id": "V1-084",
       "feature": "Attribute declaration/use/removal and custom handlers",
       "sourceBasis": "L-CMD, L-LEAN",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-084",
+      "qualifiedCommit": "5c4f0588c364f6d43e907e562aa390fa75bbd2fc",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43625471845",
+      "evidence": {
+        "jobId": 132540203525,
+        "runner": "d6a514bdeae1d5ebda3af96a7336e36f4791177c",
+        "artifact": {
+          "id": 14126130789,
+          "name": "ps0-r2-native-extensions-evidence-43625471845",
+          "digest": "sha256:e2cffebb2a4f72fc069b6b5dd9621d0c84cf1e7474a04bc66f1f8765329be0c8",
+          "bytes": 16203806
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "f628e6fbc48b850736811ca3687661e72cac9cf953b0895b72e9f4ad17cea138",
+        "caseSha256": "c72af460d80a9fefead74f9db7b6c1ac48e9088b23d717f913681e56e3844cd1"
+      }
     },
     {
       "id": "V1-085",
@@ -2009,10 +2039,25 @@
       "id": "V1-086",
       "feature": "Options/configuration, scoped settings and trace registration",
       "sourceBasis": "L-CMD, L-PREDEF, L-DECIDE",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-086",
+      "qualifiedCommit": "5c4f0588c364f6d43e907e562aa390fa75bbd2fc",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43625471845",
+      "evidence": {
+        "jobId": 132540203525,
+        "runner": "d6a514bdeae1d5ebda3af96a7336e36f4791177c",
+        "artifact": {
+          "id": 14126130789,
+          "name": "ps0-r2-native-extensions-evidence-43625471845",
+          "digest": "sha256:e2cffebb2a4f72fc069b6b5dd9621d0c84cf1e7474a04bc66f1f8765329be0c8",
+          "bytes": 16203806
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "f628e6fbc48b850736811ca3687661e72cac9cf953b0895b72e9f4ad17cea138",
+        "caseSha256": "b41cdd82ca6e1f627cb116c00fdcacdee1cd6deac4244ec8b9e5382e67b6a816"
+      }
     },
     {
       "id": "V1-087",
@@ -9312,12 +9357,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 14,
-    "featureFamiliesPending": 8,
+    "PENDING": 11,
+    "featureFamiliesPending": 5,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 228,
+    "PASS": 231,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -20009,7 +20054,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 14,
+    "obligationsPending": 11,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -28145,6 +28190,37 @@
         "fixtureCases": {
           "V1-096": "74102e56db3b495f3857a7bdb4a4e40a6120f511df0dad973ae548951328236a",
           "V1-098": "f32063980c68352183ab51b32faf7c2dec1ad79c53b62d9f3193176c2df0938b"
+        }
+      },
+      {
+        "summary": "Native Lake built the shared PS registration module and its three importers. Linux checked persistent environment updates, custom attributes and removal, and a registered trace class with scoped option restoration.",
+        "source": "5c4f0588c364f6d43e907e562aa390fa75bbd2fc",
+        "runner": "d6a514bdeae1d5ebda3af96a7336e36f4791177c",
+        "run": 43625471845,
+        "job": 132540203525,
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "f628e6fbc48b850736811ca3687661e72cac9cf953b0895b72e9f4ad17cea138",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14126130789,
+          "name": "ps0-r2-native-extensions-evidence-43625471845",
+          "digest": "sha256:e2cffebb2a4f72fc069b6b5dd9621d0c84cf1e7474a04bc66f1f8765329be0c8",
+          "bytes": 16203806
+        },
+        "passed": [
+          "V1-080",
+          "V1-084",
+          "V1-086"
+        ],
+        "fixtureCases": {
+          "V1-080": "9d300bb8c187bcf05d01f75cb696d6506c30bceebe7a2c88590e9aba0d1ef500",
+          "V1-084": "c72af460d80a9fefead74f9db7b6c1ac48e9088b23d717f913681e56e3844cd1",
+          "V1-086": "b41cdd82ca6e1f627cb116c00fdcacdee1cd6deac4244ec8b9e5382e67b6a816"
+        },
+        "supportingCases": {
+          "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
         }
       }
     ]
@@ -99783,6 +99859,37 @@
       "fixtureCases": {
         "V1-096": "74102e56db3b495f3857a7bdb4a4e40a6120f511df0dad973ae548951328236a",
         "V1-098": "f32063980c68352183ab51b32faf7c2dec1ad79c53b62d9f3193176c2df0938b"
+      }
+    },
+    {
+      "summary": "Native Lake built the shared PS registration module and its three importers. Linux checked persistent environment updates, custom attributes and removal, and a registered trace class with scoped option restoration.",
+      "source": "5c4f0588c364f6d43e907e562aa390fa75bbd2fc",
+      "runner": "d6a514bdeae1d5ebda3af96a7336e36f4791177c",
+      "run": 43625471845,
+      "job": 132540203525,
+      "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "f628e6fbc48b850736811ca3687661e72cac9cf953b0895b72e9f4ad17cea138",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14126130789,
+        "name": "ps0-r2-native-extensions-evidence-43625471845",
+        "digest": "sha256:e2cffebb2a4f72fc069b6b5dd9621d0c84cf1e7474a04bc66f1f8765329be0c8",
+        "bytes": 16203806
+      },
+      "passed": [
+        "V1-080",
+        "V1-084",
+        "V1-086"
+      ],
+      "fixtureCases": {
+        "V1-080": "9d300bb8c187bcf05d01f75cb696d6506c30bceebe7a2c88590e9aba0d1ef500",
+        "V1-084": "c72af460d80a9fefead74f9db7b6c1ac48e9088b23d717f913681e56e3844cd1",
+        "V1-086": "b41cdd82ca6e1f627cb116c00fdcacdee1cd6deac4244ec8b9e5382e67b6a816"
+      },
+      "supportingCases": {
+        "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
       }
     }
   ]
