@@ -7,6 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 
 MODULES = {
@@ -129,6 +130,10 @@ def main():
         path.parent.mkdir(exist_ok=True)
         path.write_text(raw, encoding='utf-8')
     build = work / 'native'
+    metadata = build / 'lib' / 'lean'
+    metadata.mkdir(parents=True, exist_ok=True)
+    linked_metadata = driver.parent.parent / 'lib' / 'lean'
+    shutil.copytree(linked_metadata / 'PS0', metadata / 'PS0', dirs_exist_ok=True)
     lake = ['lake', '-R', '-f', 'lakefile.project.lean', f'-KsourceRoot={src}',
             '-Kroots=Scopes', '-KrootModule=Scopes.Consumer',
             '-KmoduleNames=' + ','.join(MODULES),
