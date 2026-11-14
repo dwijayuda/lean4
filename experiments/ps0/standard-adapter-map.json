@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 41,
-    "featureFamiliesPending": 34,
+    "PENDING": 39,
+    "featureFamiliesPending": 32,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 2,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 201,
+    "PASS": 203,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 41,
+    "obligationsPending": 39,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -21755,6 +21755,32 @@
           "V1-079": "195fcd303b1ec30539132c8fc75a71a99145dc1790c2667c7bebb74e7cb82f6d",
           "V1-085": "4326979e3cf9a76b8efe0a11d98b04bc24d71d9550b128833adde46015b861da",
           "V1-089": "5d4638bc83fd0049b2e398bdf71a88a718e367e51b180e07c611883aea9b0bfb"
+        }
+      },
+      {
+        "summary": "Linux passed the specified marker-free parenthesized conditional and native dependent conditional. It also checked equation-style definitions and a mutually recursive function group.",
+        "source": "623d5030af7db1f98fc2a7d6096b661e079f0450",
+        "runner": "e9491e65cb1e8c08f67cc4f657cacf39c5515f56",
+        "run": 43619269014,
+        "job": 132521018956,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-recursion-do.py",
+        "fixtureSha256": "498b546c40ed2ae65a4bbea5590107363671153def87def1e9573e70eca09ad9",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14124030339,
+          "name": "ps0-r2-recursion-do-evidence-43619269014",
+          "digest": "sha256:2cb70dc7e85fd4fecefc9c605f84db3f4a8d552980c3838a2f35014b82365f16",
+          "bytes": 26802
+        },
+        "passed": [
+          "V1-039",
+          "V1-044"
+        ],
+        "fixtureCases": {
+          "V1-039": "d7f49a1218591738ecf552134ef7e1c0dc93892c72bb4dc63f6f45460b78be99",
+          "V1-044": "f0fa23db7e7cc4624f59340e161249c53206e52d8f2c177d8792641f9074cedb"
         }
       }
     ]
@@ -92981,6 +93007,32 @@
         "V1-079": "195fcd303b1ec30539132c8fc75a71a99145dc1790c2667c7bebb74e7cb82f6d",
         "V1-085": "4326979e3cf9a76b8efe0a11d98b04bc24d71d9550b128833adde46015b861da",
         "V1-089": "5d4638bc83fd0049b2e398bdf71a88a718e367e51b180e07c611883aea9b0bfb"
+      }
+    },
+    {
+      "summary": "Linux passed the specified marker-free parenthesized conditional and native dependent conditional. It also checked equation-style definitions and a mutually recursive function group.",
+      "source": "623d5030af7db1f98fc2a7d6096b661e079f0450",
+      "runner": "e9491e65cb1e8c08f67cc4f657cacf39c5515f56",
+      "run": 43619269014,
+      "job": 132521018956,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-recursion-do.py",
+      "fixtureSha256": "498b546c40ed2ae65a4bbea5590107363671153def87def1e9573e70eca09ad9",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14124030339,
+        "name": "ps0-r2-recursion-do-evidence-43619269014",
+        "digest": "sha256:2cb70dc7e85fd4fecefc9c605f84db3f4a8d552980c3838a2f35014b82365f16",
+        "bytes": 26802
+      },
+      "passed": [
+        "V1-039",
+        "V1-044"
+      ],
+      "fixtureCases": {
+        "V1-039": "d7f49a1218591738ecf552134ef7e1c0dc93892c72bb4dc63f6f45460b78be99",
+        "V1-044": "f0fa23db7e7cc4624f59340e161249c53206e52d8f2c177d8792641f9074cedb"
       }
     }
   ]
