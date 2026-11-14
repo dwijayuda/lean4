@@ -96,30 +96,6 @@ run_cmd do
   unless syntaxTree.raw.getKind == ``Parser.Term.typeAscription do throwError "syntax kind"
   unless (Name.str `R2 "member").toString == "R2.member" do throwError "name construction"
 ''', None),
-    'V1-080': ('''public import Lean
-public meta import Lean
-open Lean Elab Command
-builtin_initialize stateR2 : SimplePersistentEnvExtension(Name, List Name) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := fun entries name => name :: entries
-    addImportedFn := fun _ => []
-  }
-def valueR2 : Nat := 42
-run_cmd do
-  modifyEnv fun env => stateR2.addEntry env ``valueR2
-  unless (stateR2.getState (← getEnv)).contains ``valueR2 do
-    throwError "missing registered declaration"
-''', None),
-    'V1-084': ('''public import Lean
-public meta import Lean
-open Lean Elab Command
-builtin_initialize r2Tag : TagAttribute ← registerTagAttribute `r2_tag "R2 tag attribute"
-@[r2_tag] def placedR2 : Nat := 42
-run_cmd do
-  unless r2Tag.hasTag (← getEnv) ``placedR2 do throwError "tag missing"
-@[simp] theorem addR2_zero(n: Nat): n + 0 = n := Nat.add_zero n
-attribute [-simp] addR2_zero
-''', None),
     'V1-081': ('''public meta import Lean
 open Lean Elab Command Meta
 abbrev R2Number := Nat
@@ -160,21 +136,6 @@ run_cmd liftTermElabM do
     throwError "ordinary definition did not unfold"
   if (← isDefEq (mkConst ``OpaqueR2) (mkConst ``Nat)) then
     throwError "opaque definition unfolded"
-''', None),
-    'V1-086': ('''public import Lean
-public meta import Lean
-open Lean in
-builtin_initialize registerTraceClass `R2.options
-set_option pp.universes true in
-open Lean in
-run_cmd do
-  unless pp.universes.get (← getOptions) do throwError "scoped option missing"
-set_option trace.R2.options true in
-open Lean in
-run_cmd do trace[R2.options] "PS0_R2_TRACE"
-open Lean in
-run_cmd do
-  if pp.universes.get (← getOptions) then throwError "scoped option leaked"
 ''', None),
     'V1-088': ('''const digits: Array UInt8 := #[1, 2, 3]
 const nested: List(Option Nat) := [some(9), none]
@@ -472,8 +433,6 @@ def main():
             ok = ok and 'does not depend on any axioms' in log and 'PS0_DIAGNOSTIC_EVAL' in log
         if case == 'PS0-P-RUN-01':
             ok = ok and 'PS0_R2_IO:hello' in log
-        if case == 'V1-086':
-            ok = ok and 'PS0_R2_TRACE' in log
         if case == 'V1-093':
             ok = ok and 'PS0_RUNTIME_DEBUG' in log and re.search(r'^42$', log, re.M)
         if case == 'PS0-N-ASSURE-03':
@@ -487,6 +446,58 @@ def main():
         failures.append('V1-099')
     src = out / 'src'
     src.mkdir()
+    registration = src / 'R2Registration.ps'
+    registration.write_text('''module
+prelude
+public import Lean
+public meta import Lean
+public section
+open Lean
+initialize stateR2 : SimplePersistentEnvExtension(Name, List Name) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := fun entries name => name :: entries
+    addImportedFn := fun _ => []
+  }
+initialize tagR2 : TagAttribute ← registerTagAttribute `r2_tag "R2 tag attribute"
+initialize registerTraceClass `R2.options
+''', encoding='utf-8')
+    for case, source, expected in [
+        ('V1-080', '''open Lean Elab Command
+def valueR2 : Nat := 42
+run_cmd do
+  modifyEnv fun env => stateR2.addEntry env ``valueR2
+  unless (stateR2.getState (← getEnv)).contains ``valueR2 do
+    throwError "missing registered declaration"
+''', ''),
+        ('V1-084', '''open Lean Elab Command
+@[r2_tag] def markedR2 : Nat := 17
+run_cmd do
+  unless tagR2.hasTag (← getEnv) ``markedR2 do throwError "tag missing"
+@[simp] theorem addedR2 : 0 + (0 : Nat) = 0 := rfl
+attribute [-simp] addedR2
+''', ''),
+        ('V1-086', '''open Lean Elab Command
+set_option pp.universes true in
+run_cmd do
+  unless pp.universes.get (← getOptions) do throwError "scoped option missing"
+set_option trace.R2.options true in
+run_cmd do trace[R2.options] "PS0_R2_TRACE"
+run_cmd do
+  if pp.universes.get (← getOptions) then throwError "scoped option leaked"
+''', 'PS0_R2_TRACE'),
+    ]:
+        module = case.replace('-', '_')
+        path = src / (module + '.ps')
+        path.write_text('module\nprelude\npublic import Lean\npublic meta import Lean\n'
+                        'public import R2Registration\npublic meta import R2Registration\n'
+                        'public section\n' + source, encoding='utf-8')
+        fixtures[case] = hashlib.sha256(path.read_bytes()).hexdigest()
+        fixtures['R2Registration'] = hashlib.sha256(registration.read_bytes()).hexdigest()
+        code, log = run(case, ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceGrammar=true',
+                              f'-KsourceRoot={src}', f'-Kroots={module}', f'-KmoduleNames={module},R2Registration',
+                              f'-Kdriver={args.driver.resolve()}', f'-KprojectBuildDir={out / "registrations"}',
+                              'build', module])
+        (passed if code == 0 and expected in log else failures).append(case)
     for case, module, source, expected in [
         ('PS0-P-RUN-03', 'NativeABI', NATIVE_ABI, 'PS0_R2_ABI:42'),
         ('PS0-P-META-01', 'NativeInitializers', INITIALIZERS, 'PS0_R2_INITIALIZERS:17:23'),
