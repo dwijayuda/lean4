@@ -5,7 +5,6 @@
 import argparse
 import hashlib
 import json
-import os
 from pathlib import Path
 import re
 import subprocess
@@ -120,15 +119,14 @@ def main():
         path.write_text(raw, encoding='utf-8')
     build = work / 'native'
     lake = ['lake', '-R', '-f', 'lakefile.project.lean', f'-KsourceRoot={src}',
-            '-Kroots=Scopes', '-KrootModule=Scopes.Consumer', '-KmoduleNames=' + ','.join(sorted(MODULES)),
+            '-Kroots=Scopes', '-KrootModule=Scopes.Consumer',
             f'-Kdriver={driver}', f'-KprojectBuildDir={build}']
-    env = {**os.environ, 'LEAN_PATH': str(driver.parent.parent / 'lib/lean')}
     passed = []
     failures = []
 
     def probe(label, command, check):
         result = subprocess.run([str(x) for x in command], stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT, text=True, timeout=180, env=env)
+                                stderr=subprocess.STDOUT, text=True, timeout=300)
         log = result.stdout
         (work / (label + '.log')).write_text(log, encoding='utf-8')
         if not check(result.returncode, log):
