@@ -277,13 +277,14 @@ def fatal : Nat := panic! "R2 deliberate panic branch"
     'PS0-P-EXT-03': ('''public import Lean
 public meta import Lean
 open Lean Elab Command
+set_option elab.async false
 class ReportCode (α : Type) where
   code : Nat
-builtin_initialize
-  registerDerivingHandler ``ReportCode fun names => do
-    for name in names do
-      elabCommand (← `(instance : ReportCode $(mkIdent name) := ⟨42⟩))
-    return true
+meta def deriveReportCode : DerivingHandler := fun names => do
+  for name in names do
+    elabCommand (← `(instance : ReportCode $(mkIdent name) := ⟨42⟩))
+  return true
+builtin_initialize registerDerivingHandler ``ReportCode deriveReportCode
 builtin_initialize r2Marked : TagAttribute ← registerTagAttribute `r2_marked "R2 tag"
 inductive Derived where
   | marker
