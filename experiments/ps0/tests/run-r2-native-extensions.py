@@ -284,33 +284,6 @@ def fatal : Nat := panic! "R2 deliberate panic branch"
 #eval guarded true
 #check fatal
 ''', None),
-    'PS0-P-EXT-03': ('''public import Lean
-public meta import Lean
-open Lean Elab Command
-class ReportCode (α : Type) where
-  code : Nat
-meta def deriveReportCode : DerivingHandler := fun names => do
-  for name in names do
-    elabCommand (← `(instance : ReportCode $(mkIdent name) := ⟨42⟩))
-  return true
-builtin_initialize registerDerivingHandler ``ReportCode deriveReportCode
-builtin_initialize r2Marked : TagAttribute ← registerTagAttribute `r2_marked "R2 tag"
-inductive Derived where
-  | marker
-  deriving ReportCode
-@[r2_marked] def marker : Nat := 0
-declare_syntax_cat r2literal
-syntax "fortyTwo" : r2literal
-syntax "readR2 " r2literal : term
-macro_rules | `(readR2 fortyTwo) => `(42)
-def simplifiable : Nat := 42
-dsimproc_decl simplifyR2 (simplifiable) := fun _ => return .done (mkNatLit 42)
-private example : simplifiable = 42 := by dsimp only [simplifyR2]
-private example : readR2 fortyTwo = (42 : Nat) := rfl
-private example : ReportCode.code (α := Derived) = 42 := rfl
-run_cmd do
-  unless r2Marked.hasTag (← getEnv) ``marker do throwError "custom attribute missing"
-''', None),
     'PS0-P-EXT-01': ('''public meta import Lean
 syntax "identityTerm " term : term
 macro_rules | `(identityTerm $x) => pure x
@@ -564,6 +537,12 @@ run_cmd do
                               f'-Kdriver={args.driver.resolve()}', f'-KprojectBuildDir={out / "registrations"}',
                               'build', module])
         (passed if code == 0 and expected in log else failures).append(case)
+    extension_cases = ['V1-030', 'V1-084', 'V1-063', 'V1-073']
+    extension_inputs = [[case, fixtures[case]] for case in extension_cases]
+    extension_inputs.extend([[name, fixtures[name]] for name in ['R2Deriving', 'R2Registration']])
+    fixtures['PS0-P-EXT-03'] = hashlib.sha256(json.dumps(
+        extension_inputs, separators=(',', ':')).encode('utf-8')).hexdigest()
+    (passed if all(case in passed for case in extension_cases) else failures).append('PS0-P-EXT-03')
     for case, module, source, expected in [
         ('PS0-P-RUN-03', 'NativeABI', NATIVE_ABI, 'PS0_R2_ABI:42'),
         ('PS0-P-META-01', 'NativeInitializers', INITIALIZERS, 'PS0_R2_INITIALIZERS:17:23'),

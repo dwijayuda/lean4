@@ -738,10 +738,25 @@
       "id": "V1-030",
       "feature": "Custom deriving and generated-instance checking",
       "sourceBasis": "L-LEAN, L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-030",
+      "qualifiedCommit": "a1e88afad4a14d53198eb26f742550e25e705c13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43626813931",
+      "evidence": {
+        "jobId": 132544442247,
+        "runner": "9576c3d7abf5373432b1e4847ec6a87853dbe1b5",
+        "artifact": {
+          "id": 14126706968,
+          "name": "ps0-r2-native-extensions-evidence-43626813931",
+          "digest": "sha256:a42cc292a60c11dcf923883dafc79358c186e0b91f768b8107c0e612e3580015",
+          "bytes": 16293389
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "0a0fd785b0f3be21130acafd25f9aa77efb70612fc3bc1ef220f5ba660083aef",
+        "caseSha256": "576cd74b2cd6eb39755420f124ac2fcdc5008b9ebb866bf152f69accd32b832c"
+      }
     },
     {
       "id": "V1-031",
@@ -1515,10 +1530,25 @@
       "id": "V1-063",
       "feature": "Simplifiers, simprocs, conversion and registered proof tools",
       "sourceBasis": "L-INIT, L-LEAN",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-063",
+      "qualifiedCommit": "a1e88afad4a14d53198eb26f742550e25e705c13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43626813931",
+      "evidence": {
+        "jobId": 132544442247,
+        "runner": "9576c3d7abf5373432b1e4847ec6a87853dbe1b5",
+        "artifact": {
+          "id": 14126706968,
+          "name": "ps0-r2-native-extensions-evidence-43626813931",
+          "digest": "sha256:a42cc292a60c11dcf923883dafc79358c186e0b91f768b8107c0e612e3580015",
+          "bytes": 16293389
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "0a0fd785b0f3be21130acafd25f9aa77efb70612fc3bc1ef220f5ba660083aef",
+        "caseSha256": "440e97c261c39b445adeeff7889528835ba63f6e1d264bb970fb171e5777e672"
+      }
     },
     {
       "id": "V1-064",
@@ -9387,12 +9417,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 9,
-    "featureFamiliesPending": 3,
+    "PENDING": 7,
+    "featureFamiliesPending": 1,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 233,
+    "PASS": 235,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -20084,7 +20114,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 9,
+    "obligationsPending": 7,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -28280,6 +28310,35 @@
         },
         "supportingCases": {
           "V1-097-duplicate-quotient": "bd18fba9cd9687db264d196b5beb292f0652ba41ff78e80ae13cc2b3f6bf7386"
+        }
+      },
+      {
+        "summary": "Native Lake built the custom deriving registration module and its ProofScript importer, which checked the generated instance. The Linux simplification fixture exercised simp, a registered dsimproc and conversion.",
+        "source": "a1e88afad4a14d53198eb26f742550e25e705c13",
+        "runner": "9576c3d7abf5373432b1e4847ec6a87853dbe1b5",
+        "run": 43626813931,
+        "job": 132544442247,
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "0a0fd785b0f3be21130acafd25f9aa77efb70612fc3bc1ef220f5ba660083aef",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14126706968,
+          "name": "ps0-r2-native-extensions-evidence-43626813931",
+          "digest": "sha256:a42cc292a60c11dcf923883dafc79358c186e0b91f768b8107c0e612e3580015",
+          "bytes": 16293389
+        },
+        "passed": [
+          "V1-030",
+          "V1-063"
+        ],
+        "fixtureCases": {
+          "V1-030": "576cd74b2cd6eb39755420f124ac2fcdc5008b9ebb866bf152f69accd32b832c",
+          "V1-063": "440e97c261c39b445adeeff7889528835ba63f6e1d264bb970fb171e5777e672"
+        },
+        "supportingCases": {
+          "R2Deriving": "1a88b3116df17fcd9d9801c95c5e0e13ac20aaad8df6b6bf9d9582f36c1e3480"
         }
       }
     ]
@@ -99978,6 +100037,35 @@
       },
       "supportingCases": {
         "V1-097-duplicate-quotient": "bd18fba9cd9687db264d196b5beb292f0652ba41ff78e80ae13cc2b3f6bf7386"
+      }
+    },
+    {
+      "summary": "Native Lake built the custom deriving registration module and its ProofScript importer, which checked the generated instance. The Linux simplification fixture exercised simp, a registered dsimproc and conversion.",
+      "source": "a1e88afad4a14d53198eb26f742550e25e705c13",
+      "runner": "9576c3d7abf5373432b1e4847ec6a87853dbe1b5",
+      "run": 43626813931,
+      "job": 132544442247,
+      "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "0a0fd785b0f3be21130acafd25f9aa77efb70612fc3bc1ef220f5ba660083aef",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14126706968,
+        "name": "ps0-r2-native-extensions-evidence-43626813931",
+        "digest": "sha256:a42cc292a60c11dcf923883dafc79358c186e0b91f768b8107c0e612e3580015",
+        "bytes": 16293389
+      },
+      "passed": [
+        "V1-030",
+        "V1-063"
+      ],
+      "fixtureCases": {
+        "V1-030": "576cd74b2cd6eb39755420f124ac2fcdc5008b9ebb866bf152f69accd32b832c",
+        "V1-063": "440e97c261c39b445adeeff7889528835ba63f6e1d264bb970fb171e5777e672"
+      },
+      "supportingCases": {
+        "R2Deriving": "1a88b3116df17fcd9d9801c95c5e0e13ac20aaad8df6b6bf9d9582f36c1e3480"
       }
     }
   ]
