@@ -98,7 +98,14 @@ private const whitespaceArgument : Parser :=
     categoryParser `psHead maxPrec) <|> Lean.Parser.Term.argument
 
 @[run_parser_attribute_hooks] const whitespaceApplication : TrailingParser :=
-  trailingNode(``Lean.Parser.Term.app, leadPrec, maxPrec, many1 whitespaceArgument)
+  withFn((fun parse ctx initial => Id.run(do
+    let parsed := parse ctx initial
+    if parsed.hasError then return parsed
+    let arguments := parsed.stxStack.back[1].getArgs
+    if arguments.any(fun arg => arg.isOfKind `ps0HeadCall || arg.isOfKind `ps0HeadEmptyCall) then
+      return parsed
+    return initial.mkUnexpectedError "expected an adjacent PS call argument")),
+    (trailingNode(``Lean.Parser.Term.app, leadPrec, maxPrec, many1 whitespaceArgument)))
 
 private unsafe function leadingWith(head : Bool) : ParserFn := fun ctx initial => unsafeBaseIO(do
   let some category := getParserCategory? ctx.env `term
@@ -133,9 +140,8 @@ private unsafe function leadingWith(head : Bool) : ParserFn := fun ctx initial =
     for (token, parsers) in category.tables.trailingTable do
       for entry in (parsers.filter keep).reverse do
         trailingTable := trailingTable.insert token entry
-  let trailingParsers := (category.tables.trailingParsers.filter keep).map(fun (parser, priority) =>
-    if !head && (parser.info.collectKinds {}).contains ``Lean.Parser.Term.app then
-      (whitespaceApplication, priority) else (parser, priority))
+  let nativeTrailing := category.tables.trailingParsers.filter keep
+  let trailingParsers := if head then nativeTrailing else (whitespaceApplication, 0) :: nativeTrailing
   let tables := {category.tables with trailingTable, trailingParsers}
   -- The unrestricted legacy wrapper is not an ordinary PS term production.
   -- Native operands keep their context, precedence, antiquotations and syntax data.
