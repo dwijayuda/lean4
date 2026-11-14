@@ -371,14 +371,18 @@ scoped syntax (name := ps0StandardTheorem) (priority := 20000)
 scoped syntax (name := ps0StandardExample) (priority := 20000)
   declModifiers "example " psDeclBinder* (":" psTerm)? psDeclValue : command
 
-open scoped PS0.StandardAdapters in
-macro_rules (kind := ps0StandardDef)
-  | `(ps0StandardDef| $mods:declModifiers def $name:declId $bs:psDeclBinder* $[: $ty:psDefType]? $value:psDeclValue $[$derivation:psDefDeriving]?) => do
-      let bs ← PS0.Binders.lowerTelescope bs
-      let ty ← ty.mapM(fun captured => nativeTerm ⟨captured.raw[0]⟩)
-      let value ← nativeValue value true
-      let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, withDeriving decl.raw derivation]
+private function lowerDefinition(stx : Syntax, isFunction : Bool) : MacroM Syntax := do
+  let name : TSyntax ``declId := ⟨stx[2]⟩
+  let binders ← PS0.Binders.lowerTelescope(stx[3].getArgs.map((⟨·⟩ : Syntax → TSyntax `psDeclBinder)), isFunction)
+  let type ← if stx[4].getArgs.isEmpty then pure none else do
+    return some(← nativeTerm ⟨stx[4][1][0]⟩)
+  let value ← nativeValue ⟨stx[5]⟩ true
+  let derivation : Option((TSyntax `psDefDeriving)) := stx[6].getArgs[0]?.map((⟨·⟩))
+  let decl ← `(Lean.Parser.Command.definition| def $name:declId $binders:bracketedBinder* $[: $type:term]? $value:declVal)
+  return mkNode ``Lean.Parser.Command.declaration #[stx[0], withDeriving decl.raw derivation]
+
+@[macro ps0StandardDef] const lowerStandardDef : Macro := fun stx =>
+  lowerDefinition stx false
 
 open scoped PS0.StandardAdapters in
 macro_rules (kind := ps0StandardAbbrev)
@@ -410,14 +414,8 @@ macro_rules (kind := ps0StandardExample)
 scoped syntax (name := ps0StandardFunction) (priority := 20000)
   declModifiers "function " declId psDeclBinder+ (":" psDefType)? psDeclValue (psDefDeriving)? : command
 
-open scoped PS0.StandardAdapters in
-macro_rules (kind := ps0StandardFunction)
-  | `(ps0StandardFunction| $mods:declModifiers function $name:declId $bs:psDeclBinder* $[: $ty:psDefType]? $value:psDeclValue $[$derivation:psDefDeriving]?) => do
-      let bs ← PS0.Binders.lowerTelescope bs true
-      let ty ← ty.mapM(fun captured => nativeTerm ⟨captured.raw[0]⟩)
-      let value ← nativeValue value true
-      let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
-      return mkNode ``Lean.Parser.Command.declaration #[mods.raw, withDeriving decl.raw derivation]
+@[macro ps0StandardFunction] const lowerStandardFunction : Macro := fun stx =>
+  lowerDefinition stx true
 
 scoped syntax (name := ps0StandardOpaque) (priority := 20000)
   declModifiers "opaque " declId psDeclBinder* ":" psTerm (":=" psTerm)? : command
