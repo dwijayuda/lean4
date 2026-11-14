@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 39,
-    "featureFamiliesPending": 32,
+    "PENDING": 37,
+    "featureFamiliesPending": 30,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 2,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 203,
+    "PASS": 205,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 39,
+    "obligationsPending": 37,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -21781,6 +21781,32 @@
         "fixtureCases": {
           "V1-039": "d7f49a1218591738ecf552134ef7e1c0dc93892c72bb4dc63f6f45460b78be99",
           "V1-044": "f0fa23db7e7cc4624f59340e161249c53206e52d8f2c177d8792641f9074cedb"
+        }
+      },
+      {
+        "summary": "Linux verified the native local-binding alias and its deprecation diagnostic. The layout fixture used semicolons in structure fields, do statements and tactic sequences and checked the native and braced computations.",
+        "source": "84d5c40e57e97576b7991dd6086934021f9055fa",
+        "runner": "2e6a4cfcce96e6e05912193867889499f98e51a8",
+        "run": 43619546417,
+        "job": 132521865703,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-recursion-do.py",
+        "fixtureSha256": "ed2a7c579a579ac55fb3946f3a64a9c6ab0e614fa6f697a0fff51615ada821bf",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14123064534,
+          "name": "ps0-r2-recursion-do-evidence-43619546417",
+          "digest": "sha256:71187409911b7108cf96c48f7da094b296990c37553eeea0cc4b49d9a591577e",
+          "bytes": 28366
+        },
+        "passed": [
+          "V1-037",
+          "V1-051"
+        ],
+        "fixtureCases": {
+          "V1-037": "c518d6881a0c0959332d1e621a309635f52fdade5b810fe024101724e5470a76",
+          "V1-051": "98252ae72a1144a38f50faef40536ac5eae3f3d10b6f1127eb0f22536b838a52"
         }
       }
     ]
@@ -93033,6 +93059,32 @@
       "fixtureCases": {
         "V1-039": "d7f49a1218591738ecf552134ef7e1c0dc93892c72bb4dc63f6f45460b78be99",
         "V1-044": "f0fa23db7e7cc4624f59340e161249c53206e52d8f2c177d8792641f9074cedb"
+      }
+    },
+    {
+      "summary": "Linux verified the native local-binding alias and its deprecation diagnostic. The layout fixture used semicolons in structure fields, do statements and tactic sequences and checked the native and braced computations.",
+      "source": "84d5c40e57e97576b7991dd6086934021f9055fa",
+      "runner": "2e6a4cfcce96e6e05912193867889499f98e51a8",
+      "run": 43619546417,
+      "job": 132521865703,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-recursion-do.py",
+      "fixtureSha256": "ed2a7c579a579ac55fb3946f3a64a9c6ab0e614fa6f697a0fff51615ada821bf",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14123064534,
+        "name": "ps0-r2-recursion-do-evidence-43619546417",
+        "digest": "sha256:71187409911b7108cf96c48f7da094b296990c37553eeea0cc4b49d9a591577e",
+        "bytes": 28366
+      },
+      "passed": [
+        "V1-037",
+        "V1-051"
+      ],
+      "fixtureCases": {
+        "V1-037": "c518d6881a0c0959332d1e621a309635f52fdade5b810fe024101724e5470a76",
+        "V1-051": "98252ae72a1144a38f50faef40536ac5eae3f3d10b6f1127eb0f22536b838a52"
       }
     }
   ]
