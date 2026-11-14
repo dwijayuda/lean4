@@ -64,8 +64,9 @@ prelude
 public import Init
 public section
 set_option experimental.intrinsic true
-function bad(n: Nat): Id Nat
-  requires True := do { return n }
+def bad (n : Nat) : Id Nat
+  requires True := do
+    return n
 ''', '', r'Std.WP|Triple|requires.*import|verification environment'),
     'PS0-N-VC-05': ('''public import Std.WP
 function bad(n: Nat): Id Nat
@@ -90,7 +91,7 @@ def main():
             src.mkdir()
             native = src / 'MissingWP.ps'
             native.write_text(source, encoding='utf-8')
-            command = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceGrammar=true',
+            command = ['lake', '-R', '-f', 'lakefile.project.lean',
                        f'-KsourceRoot={src.resolve()}', '-Kroots=MissingWP', '-KmoduleNames=MissingWP',
                        f'-Kdriver={args.driver.resolve()}',
                        f'-KprojectBuildDir={(args.output / "native").resolve()}', 'build', 'MissingWP']
