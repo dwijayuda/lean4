@@ -1,5 +1,13 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-14 — R2 full-corpus bootstrap recovery
+
+Linux run `43583275609` built and linked stage one from the published bootstrap at source `31335d603912cee8a6f971e894bee90a66a09dc8` and runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. Stage-one job `132478425182` published artifact `14118393694` (285,097,329 bytes, `sha256:0de82e5e4fdcd477d5cf1976d08d8ebf5e1147c0676d503f5ce8821a69242ee9`). Stage-two base job `132482310030` failed in `Init.Prelude.ps`. Its diagnostic artifact `14119025079` has 8,223,378 bytes and digest `sha256:ebde3266bfbed17bcd396bb123d7441446e3621fa18408c44bba98f20f7bbff6`. Stage-two linking and the independent fixed-point audit were skipped. [Stage-one job](https://github.com/dwijayuda/pskernel/actions/runs/43583275609/job/132478425182) [Stage-two job](https://github.com/dwijayuda/pskernel/actions/runs/43583275609/job/132482310030)
+
+The isolated bootstrap grammar at the failed revision omitted `psMatchPattern`. The replacement includes that category at source `04df42b50d2668bf32715d756bd7ba0f915328fd` and runner `f0b06fb36962df7b0c2b25187955b189fdfe5285`. The clean two-stage rebuild and focused Prelude reproduction are in progress. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43612186981) [Prelude reproduction](https://github.com/dwijayuda/pskernel/actions/runs/43612270121)
+
+The ledger records **150 finite passes and 92 pending obligations**.
+
 ## 2026-11-14 — R2 declaration kinds and assurance boundaries
 
 The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)

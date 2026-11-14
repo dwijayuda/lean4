@@ -20641,7 +20641,39 @@
         "run": 43583275609,
         "runner": "17be3f85c0fe7b0cb36220330062aeb483d936ce",
         "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
-        "status": "IN_PROGRESS"
+        "status": "FAIL",
+        "stageOne": {
+          "status": "PASS",
+          "job": 132478425182,
+          "artifact": {
+            "id": 14118393694,
+            "bytes": 285097329,
+            "digest": "sha256:0de82e5e4fdcd477d5cf1976d08d8ebf5e1147c0676d503f5ce8821a69242ee9"
+          }
+        },
+        "stageTwoBase": {
+          "status": "FAIL",
+          "job": 132482310030,
+          "module": "Init.Prelude",
+          "artifact": {
+            "id": 14119025079,
+            "bytes": 8223378,
+            "digest": "sha256:ebde3266bfbed17bcd396bb123d7441446e3621fa18408c44bba98f20f7bbff6"
+          }
+        },
+        "stageTwoLink": "SKIPPED",
+        "fixedPointAudit": "SKIPPED",
+        "replacement": {
+          "run": 43612186981,
+          "runner": "f0b06fb36962df7b0c2b25187955b189fdfe5285",
+          "source": "04df42b50d2668bf32715d756bd7ba0f915328fd",
+          "status": "IN_PROGRESS",
+          "preludeProbe": {
+            "run": 43612270121,
+            "runner": "600b199f566dd5c8b8dd23fc5581f6f365852192",
+            "status": "IN_PROGRESS"
+          }
+        }
       }
     },
     "r2ContinuationBatches": [
@@ -91314,7 +91346,39 @@
       "run": 43583275609,
       "runner": "17be3f85c0fe7b0cb36220330062aeb483d936ce",
       "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
-      "status": "IN_PROGRESS"
+      "status": "FAIL",
+      "stageOne": {
+        "status": "PASS",
+        "job": 132478425182,
+        "artifact": {
+          "id": 14118393694,
+          "bytes": 285097329,
+          "digest": "sha256:0de82e5e4fdcd477d5cf1976d08d8ebf5e1147c0676d503f5ce8821a69242ee9"
+        }
+      },
+      "stageTwoBase": {
+        "status": "FAIL",
+        "job": 132482310030,
+        "module": "Init.Prelude",
+        "artifact": {
+          "id": 14119025079,
+          "bytes": 8223378,
+          "digest": "sha256:ebde3266bfbed17bcd396bb123d7441446e3621fa18408c44bba98f20f7bbff6"
+        }
+      },
+      "stageTwoLink": "SKIPPED",
+      "fixedPointAudit": "SKIPPED",
+      "replacement": {
+        "run": 43612186981,
+        "runner": "f0b06fb36962df7b0c2b25187955b189fdfe5285",
+        "source": "04df42b50d2668bf32715d756bd7ba0f915328fd",
+        "status": "IN_PROGRESS",
+        "preludeProbe": {
+          "run": 43612270121,
+          "runner": "600b199f566dd5c8b8dd23fc5581f6f365852192",
+          "status": "IN_PROGRESS"
+        }
+      }
     }
   },
   "r2ContinuationBatches": [
