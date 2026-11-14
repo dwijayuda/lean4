@@ -131,6 +131,7 @@ def main():
     build = work / 'native'
     lake = ['lake', '-R', '-f', 'lakefile.project.lean', f'-KsourceRoot={src}',
             '-Kroots=Scopes', '-KrootModule=Scopes.Consumer',
+            '-KmoduleNames=' + ','.join(MODULES),
             f'-Kdriver={driver}', f'-KprojectBuildDir={build}']
     passed = []
     failures = []
