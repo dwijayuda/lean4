@@ -14,7 +14,8 @@ run_cmd do
   unless (← collectAxioms ``identityProof).isEmpty do throwError "unexpected assumptions"
 ''', ''),
     'PS0-P-PROOF-02': ('''public meta import Lean
-elab "customTrue" : tactic => Lean.Elab.Tactic.evalTactic (← `(tactic| exact True.intro))
+elab "customTrue" : tactic => do
+  Lean.Elab.Tactic.evalTactic (← `(tactic| exact True.intro))
 theorem customProof: True := by { customTrue }
 open Lean in
 run_cmd do
@@ -33,7 +34,7 @@ run_cmd do
                      r'adjacent explicit groups|unexpected token.*expected'),
     'PS0-N-BIND-02': ('function bad()(x: Nat) := x\n',
                      r'nullary|empty|unexpected token.*expected'),
-    'PS0-N-BIND-03': ('def bad() : Nat := 7\n', r'expected|unexpected token'),
+    'PS0-N-BIND-03': ('def bad() : Nat := 7\n', r'PS0V1-BIND-EMPTY: only function'),
     'PS0-N-BIND-04': ('const bad(x: Nat) := x\n', r'expected|unexpected token'),
     'PS0-N-LEX-01': ('const bad: Nat := /* not a comment */ 7\n',
                     r'unexpected token|expected term|unknown identifier'),
