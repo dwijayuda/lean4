@@ -72,6 +72,47 @@ run_cmd do
   unless syntaxTree.raw.getKind == ``Parser.Term.typeAscription do throwError "syntax kind"
   unless (Name.str `R2 "member").toString == "R2.member" do throwError "name construction"
 ''', None),
+    'V1-080': ('''public import Lean
+public meta import Lean
+open Lean Elab Command
+initialize stateR2 : SimplePersistentEnvExtension Name (List Name) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := fun entries name => name :: entries
+    addImportedFn := fun _ => []
+  }
+def valueR2 : Nat := 42
+run_cmd do
+  modifyEnv fun env => stateR2.addEntry env ``valueR2
+  unless (stateR2.getState (← getEnv)).contains ``valueR2 do
+    throwError "missing registered declaration"
+''', None),
+    'V1-081': ('''public meta import Lean
+open Lean Elab Command Meta
+abbrev R2Number := Nat
+run_cmd liftTermElabM do
+  let mvar ← mkFreshExprMVar (some (mkConst ``Nat))
+  unless (← isDefEq mvar (mkNatLit 42)) do throwError "unification failed"
+  let resolved ← instantiateMVars mvar
+  unless resolved.natLit? == some 42 do throwError "unassigned metavariable"
+  unless (← whnf (mkConst ``R2Number)).isConstOf ``Nat do
+    throwError "weak head reduction failed"
+''', None),
+    'V1-082': ('''public meta import Lean
+open Lean Elab Command Meta
+run_cmd liftTermElabM do
+  let input := mkApp (mkConst ``Nat.succ) (mkNatLit 41)
+  let_expr Nat.succ pred := input | throwError "reflective let mismatch"
+  unless pred.natLit? == some 41 do throwError "unexpected argument"
+  match_expr input with
+  | Nat.succ n => unless n.natLit? == some 41 do throwError "reflective match mismatch"
+  | _ => throwError "reflective match failed"
+#eval Nat.succ 41
+''', None),
+    'V1-083': ('''public import Lean
+example : binop% HAdd.hAdd 20 22 = (42 : Nat) := rfl
+theorem declaredR2 : decl_name% = `declaredR2 := rfl
+#check_failure thereIsNoR2Declaration
+''', None),
     'V1-085': ('''abbrev AliasR2 := Nat
 def OrdinaryR2 := Nat
 opaque OpaqueR2 : Type := Nat
@@ -121,6 +162,25 @@ example : readStep.run(0) = .error("empty") := rfl
 #eval show IO Unit from do
   let path ← IO.currentDir
   if path.toString.isEmpty then throw (IO.userError "missing cwd")
+''', None),
+    'V1-090': ('''public import Lean
+def synchronized : IO Nat := do
+  let ref ← IO.mkRef 20
+  let task ← IO.asTask do
+    ref.modify fun n => n + 22
+    ref.get
+  let result ← IO.ofExcept task.get
+  let current ← ref.get
+  if result != current then throw (IO.userError "task synchronization")
+  return current
+def mutateR2 : StateRefT Nat IO Nat := do
+  modify Nat.succ
+  get
+#eval show IO Unit from do
+  let observed ← synchronized
+  let (state, final) ← mutateR2.run 41
+  unless observed == 42 && state == 42 && final == 42 do
+    throw (IO.userError "reference or task oracle")
 ''', None),
     'V1-094': ('''def diagnosticR2 : Nat := 19
 #check diagnosticR2
