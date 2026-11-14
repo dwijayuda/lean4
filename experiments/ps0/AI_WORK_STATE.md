@@ -10,7 +10,9 @@ V1-100 remains pending. The independent audit must verify the exact production c
 
 The braced do item establishes its own indentation position so the following loop becomes a separate statement. The exact-source Linux job passed all 31 numbered R2 witnesses, including the proof that the loop returns 2. Qualified `R2-17`. Source `40c5b25438906316751441470502055ffc96632b`, runner `c4db6e421c3b9d866ffd58a312f19ff90dcdc155`, executable SHA-256 `e69eda59132a6c3126b9702068f2db166744d87cf713300368c7ec7b1060de31`, and fixture runner SHA-256 `6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5`. Evidence artifact `14129913940` has digest `sha256:c7c0cafa0e4b649a2df4121a3d7b9bcf0eb6e558c2a302879607a71681f94356` and 24,487 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43636141535/job/132573247979)
 
-The ledger records **241 finite passes and 1 pending obligations**.
+The exact R2-17 compiler passed 38 recursion and `do` regression cases in Linux job `132575290676`. Artifact `14130029889` has 28,641 bytes and digest `sha256:db690ed0c7cccc1e20787c12a0cd077b8024ea6d6c1c2681c886cff8dcdf0143`. The native-extension rerun first found that the deriving fixture still used a spaced parenthesized argument in a PS-owned `do` body. I changed the fixture to use PS adjacency. All 50 native-extension cases then passed with the same compiler SHA-256. The corrected fixture source is `cbdac03e9e2f3f9e3d5d4c46d436e48910e4e92d`, runner `3b5d3e6a82f35069676f2046ae35f1992148f198`, and the evidence artifact `14130538034` has 16,292,252 bytes and digest `sha256:fec1481f1553589a4f14c667c12d41754fceea737a0543c90ffb605e060fc9bb`. [Recursion and do](https://github.com/dwijayuda/pskernel/actions/runs/43636805060/job/132575290676) [Deriving failure](https://github.com/dwijayuda/pskernel/actions/runs/43637226095/job/132576575960) [Native extensions](https://github.com/dwijayuda/pskernel/actions/runs/43637760616/job/132578255558)
+
+The ledger records **241 finite passes and one pending obligation**.
 
 ## 2026-11-15 — Linux macro bridge and remaining R2 boundaries
 

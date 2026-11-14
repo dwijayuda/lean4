@@ -20828,7 +20828,45 @@
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132573593470,
           "stageOneBaseStatus": "IN_PROGRESS",
-          "status": "IN_PROGRESS"
+          "status": "IN_PROGRESS",
+          "regression": {
+            "recursionAndDo": {
+              "source": "40c5b25438906316751441470502055ffc96632b",
+              "runner": "1cdd8c96e6173c306925b1a08297d0af24c54fa0",
+              "run": 43636805060,
+              "job": 132575290676,
+              "artifact": {
+                "id": 14130029889,
+                "bytes": 28641,
+                "digest": "sha256:db690ed0c7cccc1e20787c12a0cd077b8024ea6d6c1c2681c886cff8dcdf0143"
+              },
+              "caseCount": 38,
+              "driverSha256": "e69eda59132a6c3126b9702068f2db166744d87cf713300368c7ec7b1060de31",
+              "fixtureSha256": "4ec27d7c131c1d580503736a337d1a7183715b497df017f04cfc4506dd73510c"
+            },
+            "nativeExtensions": {
+              "source": "cbdac03e9e2f3f9e3d5d4c46d436e48910e4e92d",
+              "runner": "3b5d3e6a82f35069676f2046ae35f1992148f198",
+              "run": 43637760616,
+              "job": 132578255558,
+              "failedRun": 43637226095,
+              "failedJob": 132576575960,
+              "artifact": {
+                "id": 14130538034,
+                "bytes": 16292252,
+                "digest": "sha256:fec1481f1553589a4f14c667c12d41754fceea737a0543c90ffb605e060fc9bb"
+              },
+              "driverSha256": "e69eda59132a6c3126b9702068f2db166744d87cf713300368c7ec7b1060de31",
+              "fixtureSha256": "10f1f0bf377d1b8a7bfa462c24657502b0eef63bde0a01df0e968761e2494681",
+              "caseCount": 50,
+              "fixtureCases": {
+                "V1-030": "576cd74b2cd6eb39755420f124ac2fcdc5008b9ebb866bf152f69accd32b832c",
+                "PS0-P-EXT-03": "db3455ca5819f18e28cba4db626ab1e95d90b6ba471f26e14fedf4963c805257",
+                "R2Deriving": "e1d2160ca08703cc1bf9634bf6ad9b274a4b2b816e209258dfb4bd4592733094",
+                "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
+              }
+            }
+          }
         }
       }
     },
@@ -92786,7 +92824,45 @@
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132573593470,
         "stageOneBaseStatus": "IN_PROGRESS",
-        "status": "IN_PROGRESS"
+        "status": "IN_PROGRESS",
+        "regression": {
+          "recursionAndDo": {
+            "source": "40c5b25438906316751441470502055ffc96632b",
+            "runner": "1cdd8c96e6173c306925b1a08297d0af24c54fa0",
+            "run": 43636805060,
+            "job": 132575290676,
+            "artifact": {
+              "id": 14130029889,
+              "bytes": 28641,
+              "digest": "sha256:db690ed0c7cccc1e20787c12a0cd077b8024ea6d6c1c2681c886cff8dcdf0143"
+            },
+            "caseCount": 38,
+            "driverSha256": "e69eda59132a6c3126b9702068f2db166744d87cf713300368c7ec7b1060de31",
+            "fixtureSha256": "4ec27d7c131c1d580503736a337d1a7183715b497df017f04cfc4506dd73510c"
+          },
+          "nativeExtensions": {
+            "source": "cbdac03e9e2f3f9e3d5d4c46d436e48910e4e92d",
+            "runner": "3b5d3e6a82f35069676f2046ae35f1992148f198",
+            "run": 43637760616,
+            "job": 132578255558,
+            "failedRun": 43637226095,
+            "failedJob": 132576575960,
+            "artifact": {
+              "id": 14130538034,
+              "bytes": 16292252,
+              "digest": "sha256:fec1481f1553589a4f14c667c12d41754fceea737a0543c90ffb605e060fc9bb"
+            },
+            "driverSha256": "e69eda59132a6c3126b9702068f2db166744d87cf713300368c7ec7b1060de31",
+            "fixtureSha256": "10f1f0bf377d1b8a7bfa462c24657502b0eef63bde0a01df0e968761e2494681",
+            "caseCount": 50,
+            "fixtureCases": {
+              "V1-030": "576cd74b2cd6eb39755420f124ac2fcdc5008b9ebb866bf152f69accd32b832c",
+              "PS0-P-EXT-03": "db3455ca5819f18e28cba4db626ab1e95d90b6ba471f26e14fedf4963c805257",
+              "R2Deriving": "e1d2160ca08703cc1bf9634bf6ad9b274a4b2b816e209258dfb4bd4592733094",
+              "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
+            }
+          }
+        }
       }
     }
   },
