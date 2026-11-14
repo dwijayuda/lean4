@@ -222,6 +222,24 @@ run_cmd liftTermElabM do
 #check Lean.Server.FileWorker.workerMain
 #check Lean.Compiler.LCNF.Decl
 ''', None),
+    'V1-097': ('''public import Lean
+public meta import Lean
+open Lean Parser
+@[run_parser_attribute_hooks] meta def r2BootOperand : Parser := leading_parser Lean.Parser.Term.num
+syntax "r2Boot " r2BootOperand : term
+macro_rules | `(r2Boot $n:num) => pure n
+set_option doc.verso true in
+/-- A *scoped* bootstrap documentation fixture. -/
+def scopedR2 : Nat := r2Boot 42
+example : scopedR2 = 42 := rfl
+open Lean in
+run_cmd do
+  let some (.inr _) ← findInternalDocString? (← getEnv) ``scopedR2 |
+    throwError "missing scoped Verso registration"
+''', None),
+    'V1-097-duplicate-quotient': ('''public import Init
+init_quot
+''', r'quotient initialization is already present'),
     'V1-099': ('''public import Lake
 public meta import Lake
 open Lake DSL
@@ -444,6 +462,9 @@ def main():
     if 'V1-099' in passed and 'V1-099-no-import' not in passed:
         passed.remove('V1-099')
         failures.append('V1-099')
+    if 'V1-097' in passed and 'V1-097-duplicate-quotient' not in passed:
+        passed.remove('V1-097')
+        failures.append('V1-097')
     src = out / 'src'
     src.mkdir()
     registration = src / 'R2Registration.ps'
