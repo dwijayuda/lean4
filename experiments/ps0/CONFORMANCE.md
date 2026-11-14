@@ -1,5 +1,15 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-14 — R2 recursion, proofs and numbered source witnesses
+
+The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
+
+Native Lake linked the compiler and the fixtures exercised well-founded recursion, partial classification, fixed-point equations and monotonicity, loop execution, forwarding, and exception cleanup. Qualified `PS0-P-REC-01`, `PS0-P-REC-02`, `PS0-P-REC-03`, `PS0-P-REC-04`, `PS0-P-DO-01`, `PS0-P-DO-02`, `PS0-P-DO-03`, `PS0-P-DO-04`, `PS0-P-DO-05`, `PS0-P-DO-06`, `PS0-N-REC-01`, `PS0-N-REC-02`, `PS0-N-REC-03`, `PS0-N-DO-01`, `PS0-N-DO-02`, `PS0-N-DO-03`. Source `7f350d3c5f7e867fb9919630f06bc894d4cd0384`, runner `a5e5fa3e3a8dc0146fe9d80eb7e8d6be0efead37`, executable SHA-256 `3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611`, and fixture runner SHA-256 `95d82fe64c73d8f8faa643394cf9c60eae204a75731e792e04ff0208a7e7def6`. Evidence artifact `14110465161` has digest `sha256:c419be6ca552713f63f3b2b76a417e004640ba72222bbf143b32c75149c35845` and 12,986 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43584745403/job/132416725461)
+
+The proof fixtures verified the assumption closure of a direct proof, a registered custom tactic, and native_decide. The binder and lexer cases matched their intended rejection diagnostics. Qualified `PS0-P-PROOF-01`, `PS0-P-PROOF-02`, `PS0-P-PROOF-03`, `PS0-N-BIND-01`, `PS0-N-BIND-02`, `PS0-N-BIND-03`, `PS0-N-BIND-04`, `PS0-N-LEX-01`. Source `299ca0558e2b13702e9f353dbe9661921ccb27d6`, runner `9d1e8f5bc7ce2dc72a79083941bdaac58cf65b4e`, executable SHA-256 `3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611`, and fixture runner SHA-256 `14c5acad75d8ad296e99eae312382517a5db99886f69bb618cd8f11ccd526277`. Evidence artifact `14109619480` has digest `sha256:cd2060ae8e8f90059b833637498f0ae729e5dcc9237e143e301dbc8ab5dc5230` and 7,680 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43584802449/job/132416884117)
+
+The ledger records **82 finite passes and 160 pending obligations**.
+
 ## 2026-11-14 — R2 data declarations and patterns
 
 Linux qualified all **14** data and pattern acceptance cases. Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog.

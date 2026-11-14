@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 184,
+    "PENDING": 160,
     "featureFamiliesPending": 100,
     "boundaryWitnessesPending": 31,
-    "acceptanceCasesPending": 53,
-    "note": "Fourteen finite R2 data and pattern cases join the previous acceptance passes.",
-    "PASS": 58,
+    "acceptanceCasesPending": 29,
+    "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
+    "PASS": 82,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 184,
+    "obligationsPending": 160,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -20636,8 +20636,114 @@
           "adjacent constructor pattern rejected the opening parenthesis"
         ]
       },
-      "summary": "Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog."
-    }
+      "summary": "Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog.",
+      "fullCorpus": {
+        "run": 43583275609,
+        "runner": "17be3f85c0fe7b0cb36220330062aeb483d936ce",
+        "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
+        "status": "IN_PROGRESS"
+      }
+    },
+    "r2ContinuationBatches": [
+      {
+        "run": 43584745403,
+        "job": 132416725461,
+        "conclusion": "success",
+        "runner": "a5e5fa3e3a8dc0146fe9d80eb7e8d6be0efead37",
+        "source": "7f350d3c5f7e867fb9919630f06bc894d4cd0384",
+        "fixture": "tests/run-r2-recursion-do.py",
+        "fixtureSha256": "95d82fe64c73d8f8faa643394cf9c60eae204a75731e792e04ff0208a7e7def6",
+        "driverSha256": "3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611",
+        "passed": [
+          "PS0-P-REC-01",
+          "PS0-P-REC-02",
+          "PS0-P-REC-03",
+          "PS0-P-REC-04",
+          "PS0-P-DO-01",
+          "PS0-P-DO-02",
+          "PS0-P-DO-03",
+          "PS0-P-DO-04",
+          "PS0-P-DO-05",
+          "PS0-P-DO-06",
+          "PS0-N-REC-01",
+          "PS0-N-REC-02",
+          "PS0-N-REC-03",
+          "PS0-N-DO-01",
+          "PS0-N-DO-02",
+          "PS0-N-DO-03"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "PS0-P-REC-01": "333ccce483720775eccd6ebd32fba1b1b1e186ce8cf62a8208eeeadd890bd424",
+          "PS0-P-REC-02": "fb4ef3214b0e6a661b80f67a3ad9c061475a66c3a79948de79e6330550fab04f",
+          "PS0-P-REC-03": "bc438bfffaded99e3dc1b3ff092a6f9e37c8cdabde1f20d08099c93e47f73f1c",
+          "PS0-P-REC-04": "7beb59e59cf8df9accf0beff1ee8b809aa530360db2797ce2d7ac704d6bc9839",
+          "PS0-P-DO-01": "f1670c8855564409ad0d37ecd409f0aca9b1f53969898397aef46ef2c1158889",
+          "PS0-P-DO-02": "11476bf2ba51b6bf8d404a80d4b9d51e0ef32749abe3dd90a201048f0765f778",
+          "PS0-P-DO-03": "5afe9e438320300da28cfc12ee79b5d0214bc6b8abff279594cd539fb242aa27",
+          "PS0-P-DO-04": "81256eb3a09457c5c932dc6b6468b113b9b6c2bf3c84d84d4fa2005a847b9814",
+          "PS0-P-DO-05": "abedf47772f2f39ae65442c62d40b430b4a26cbbc4977673143f02a5ef025306",
+          "PS0-P-DO-06": "06d7991d1ff7f05b81e2e155d2f953527ddda63cff5fe99a004d155680b5024d",
+          "PS0-N-REC-01": "76372d9918320b6eb1303001be203fe727694b531abe153bc36a9cfdbe281fc4",
+          "PS0-N-REC-02": "3eeb60124867bee4e7d6b163650c7874469002bc694ff518c41cda9306aadce7",
+          "PS0-N-REC-03": "4d6e971c07fe2cc92ac1be540057e8687da4cf8bba32b9bfe2b944337c661548",
+          "PS0-N-DO-01": "618866aad2e9ebfa5aa2a299032281504375d41f515b1f56e6a24eeccc169325",
+          "PS0-N-DO-02": "071f4f6b27fb22fb6689ccb96379f971d9c2eaed3bb2e705eca5c634c483bf0b",
+          "PS0-N-DO-03": "182a444ef508886419bcf10a96662f05f66623a7c1835c5cf711f04a35fcd2f1"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14110465161,
+          "name": "ps0-r2-recursion-do-evidence-43584745403",
+          "digest": "sha256:c419be6ca552713f63f3b2b76a417e004640ba72222bbf143b32c75149c35845",
+          "bytes": 12986,
+          "archiveDigestVerified": true
+        },
+        "summary": "Native Lake linked the compiler and the fixtures exercised well-founded recursion, partial classification, fixed-point equations and monotonicity, loop execution, forwarding, and exception cleanup."
+      },
+      {
+        "run": 43584802449,
+        "job": 132416884117,
+        "conclusion": "success",
+        "runner": "9d1e8f5bc7ce2dc72a79083941bdaac58cf65b4e",
+        "source": "299ca0558e2b13702e9f353dbe9661921ccb27d6",
+        "fixture": "tests/run-r2-proof-bind.py",
+        "fixtureSha256": "14c5acad75d8ad296e99eae312382517a5db99886f69bb618cd8f11ccd526277",
+        "driverSha256": "3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611",
+        "passed": [
+          "PS0-P-PROOF-01",
+          "PS0-P-PROOF-02",
+          "PS0-P-PROOF-03",
+          "PS0-N-BIND-01",
+          "PS0-N-BIND-02",
+          "PS0-N-BIND-03",
+          "PS0-N-BIND-04",
+          "PS0-N-LEX-01"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "PS0-P-PROOF-01": "105c03e0ea03fc0a2fa8b1859443da1607675c88034e210c4e58b13a8d3b431d",
+          "PS0-P-PROOF-02": "89894e5c9a0a0e0eacaa2643ef005f6163dfa66bf68c9d8be97414add45b469c",
+          "PS0-P-PROOF-03": "98da3fde9ca9961b12c038aa17525cc22828aa0f75e04ed85343295b2c72e3e7",
+          "PS0-N-BIND-01": "5245cdc151a9b50e64824de0cf7950f0168767243d622bddbde17e17a374996b",
+          "PS0-N-BIND-02": "4af38b1a0832f7acbc90b2cefdfee8812d64b3837dbcdd23671ae745d5f7a1d5",
+          "PS0-N-BIND-03": "e98e429df46d9f9fb0851873af49e22074c9a6ecce1fd466ec4ed6c8e6039ced",
+          "PS0-N-BIND-04": "a5c4440420471dbd8c293613ac23c0acdb8f21c66d51990008290b9330ab3d84",
+          "PS0-N-LEX-01": "c94b49845eb50da00359e29b0ee42db6d18b58f989a4e060f3dc0f855d21510b"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14109619480,
+          "name": "ps0-r2-proof-bind-evidence-43584802449",
+          "digest": "sha256:cd2060ae8e8f90059b833637498f0ae729e5dcc9237e143e301dbc8ab5dc5230",
+          "bytes": 7680,
+          "archiveDigestVerified": true
+        },
+        "summary": "The proof fixtures verified the assumption closure of a direct proof, a registered custom tactic, and native_decide. The binder and lexer cases matched their intended rejection diagnostics."
+      }
+    ]
   },
   "canonicalGraphThirteenthTerminalEvidence": {
     "source": "68ae3ba8b7ea3bcd4de56d925a4455b8f1105ddf",
@@ -90742,6 +90848,112 @@
         "adjacent constructor pattern rejected the opening parenthesis"
       ]
     },
-    "summary": "Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog."
-  }
+    "summary": "Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog.",
+    "fullCorpus": {
+      "run": 43583275609,
+      "runner": "17be3f85c0fe7b0cb36220330062aeb483d936ce",
+      "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
+      "status": "IN_PROGRESS"
+    }
+  },
+  "r2ContinuationBatches": [
+    {
+      "run": 43584745403,
+      "job": 132416725461,
+      "conclusion": "success",
+      "runner": "a5e5fa3e3a8dc0146fe9d80eb7e8d6be0efead37",
+      "source": "7f350d3c5f7e867fb9919630f06bc894d4cd0384",
+      "fixture": "tests/run-r2-recursion-do.py",
+      "fixtureSha256": "95d82fe64c73d8f8faa643394cf9c60eae204a75731e792e04ff0208a7e7def6",
+      "driverSha256": "3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611",
+      "passed": [
+        "PS0-P-REC-01",
+        "PS0-P-REC-02",
+        "PS0-P-REC-03",
+        "PS0-P-REC-04",
+        "PS0-P-DO-01",
+        "PS0-P-DO-02",
+        "PS0-P-DO-03",
+        "PS0-P-DO-04",
+        "PS0-P-DO-05",
+        "PS0-P-DO-06",
+        "PS0-N-REC-01",
+        "PS0-N-REC-02",
+        "PS0-N-REC-03",
+        "PS0-N-DO-01",
+        "PS0-N-DO-02",
+        "PS0-N-DO-03"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "PS0-P-REC-01": "333ccce483720775eccd6ebd32fba1b1b1e186ce8cf62a8208eeeadd890bd424",
+        "PS0-P-REC-02": "fb4ef3214b0e6a661b80f67a3ad9c061475a66c3a79948de79e6330550fab04f",
+        "PS0-P-REC-03": "bc438bfffaded99e3dc1b3ff092a6f9e37c8cdabde1f20d08099c93e47f73f1c",
+        "PS0-P-REC-04": "7beb59e59cf8df9accf0beff1ee8b809aa530360db2797ce2d7ac704d6bc9839",
+        "PS0-P-DO-01": "f1670c8855564409ad0d37ecd409f0aca9b1f53969898397aef46ef2c1158889",
+        "PS0-P-DO-02": "11476bf2ba51b6bf8d404a80d4b9d51e0ef32749abe3dd90a201048f0765f778",
+        "PS0-P-DO-03": "5afe9e438320300da28cfc12ee79b5d0214bc6b8abff279594cd539fb242aa27",
+        "PS0-P-DO-04": "81256eb3a09457c5c932dc6b6468b113b9b6c2bf3c84d84d4fa2005a847b9814",
+        "PS0-P-DO-05": "abedf47772f2f39ae65442c62d40b430b4a26cbbc4977673143f02a5ef025306",
+        "PS0-P-DO-06": "06d7991d1ff7f05b81e2e155d2f953527ddda63cff5fe99a004d155680b5024d",
+        "PS0-N-REC-01": "76372d9918320b6eb1303001be203fe727694b531abe153bc36a9cfdbe281fc4",
+        "PS0-N-REC-02": "3eeb60124867bee4e7d6b163650c7874469002bc694ff518c41cda9306aadce7",
+        "PS0-N-REC-03": "4d6e971c07fe2cc92ac1be540057e8687da4cf8bba32b9bfe2b944337c661548",
+        "PS0-N-DO-01": "618866aad2e9ebfa5aa2a299032281504375d41f515b1f56e6a24eeccc169325",
+        "PS0-N-DO-02": "071f4f6b27fb22fb6689ccb96379f971d9c2eaed3bb2e705eca5c634c483bf0b",
+        "PS0-N-DO-03": "182a444ef508886419bcf10a96662f05f66623a7c1835c5cf711f04a35fcd2f1"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14110465161,
+        "name": "ps0-r2-recursion-do-evidence-43584745403",
+        "digest": "sha256:c419be6ca552713f63f3b2b76a417e004640ba72222bbf143b32c75149c35845",
+        "bytes": 12986,
+        "archiveDigestVerified": true
+      },
+      "summary": "Native Lake linked the compiler and the fixtures exercised well-founded recursion, partial classification, fixed-point equations and monotonicity, loop execution, forwarding, and exception cleanup."
+    },
+    {
+      "run": 43584802449,
+      "job": 132416884117,
+      "conclusion": "success",
+      "runner": "9d1e8f5bc7ce2dc72a79083941bdaac58cf65b4e",
+      "source": "299ca0558e2b13702e9f353dbe9661921ccb27d6",
+      "fixture": "tests/run-r2-proof-bind.py",
+      "fixtureSha256": "14c5acad75d8ad296e99eae312382517a5db99886f69bb618cd8f11ccd526277",
+      "driverSha256": "3e9a7e9606089381eac240cef30f8f5f0fe3695ca36fb546f7b7ebe835bd8611",
+      "passed": [
+        "PS0-P-PROOF-01",
+        "PS0-P-PROOF-02",
+        "PS0-P-PROOF-03",
+        "PS0-N-BIND-01",
+        "PS0-N-BIND-02",
+        "PS0-N-BIND-03",
+        "PS0-N-BIND-04",
+        "PS0-N-LEX-01"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "PS0-P-PROOF-01": "105c03e0ea03fc0a2fa8b1859443da1607675c88034e210c4e58b13a8d3b431d",
+        "PS0-P-PROOF-02": "89894e5c9a0a0e0eacaa2643ef005f6163dfa66bf68c9d8be97414add45b469c",
+        "PS0-P-PROOF-03": "98da3fde9ca9961b12c038aa17525cc22828aa0f75e04ed85343295b2c72e3e7",
+        "PS0-N-BIND-01": "5245cdc151a9b50e64824de0cf7950f0168767243d622bddbde17e17a374996b",
+        "PS0-N-BIND-02": "4af38b1a0832f7acbc90b2cefdfee8812d64b3837dbcdd23671ae745d5f7a1d5",
+        "PS0-N-BIND-03": "e98e429df46d9f9fb0851873af49e22074c9a6ecce1fd466ec4ed6c8e6039ced",
+        "PS0-N-BIND-04": "a5c4440420471dbd8c293613ac23c0acdb8f21c66d51990008290b9330ab3d84",
+        "PS0-N-LEX-01": "c94b49845eb50da00359e29b0ee42db6d18b58f989a4e060f3dc0f855d21510b"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14109619480,
+        "name": "ps0-r2-proof-bind-evidence-43584802449",
+        "digest": "sha256:cd2060ae8e8f90059b833637498f0ae729e5dcc9237e143e301dbc8ab5dc5230",
+        "bytes": 7680,
+        "archiveDigestVerified": true
+      },
+      "summary": "The proof fixtures verified the assumption closure of a direct proof, a registered custom tactic, and native_decide. The binder and lexer cases matched their intended rejection diagnostics."
+    }
+  ]
 }
