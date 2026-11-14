@@ -25,6 +25,41 @@ NEGATIVES = [
     ("12b", "function f(x: Nat, y: Nat): Nat := x + y", "f(1,,2)", "unexpected token ','|expected term"),
 ]
 
+FAMILIES = {
+    'V1-031': '''function divPair(pair: Nat × Nat): Nat := pair.1 + pair.2
+function unitValue(): Nat := 7
+function addTwo(x: Nat, y: Nat): Nat := x + y
+example : divPair((20, 22)) = 42 := rfl
+example : unitValue() = unitValue(()) := rfl
+example : addTwo(20, 22,) = 42 := rfl
+''',
+    'V1-032': '''function addTwo(x: Nat, y: Nat): Nat := x + y
+example : addTwo 20 22 = 42 := rfl
+example : @id Nat 42 = 42 := rfl
+example : addTwo id(20) 22 = 42 := rfl
+''',
+    'V1-033': '''function addTwo(x: Nat, y: Nat): Nat := x + y
+def partialApply : Nat → Nat := addTwo(20)
+example : partialApply 22 = 42 := rfl
+example : addTwo(y := 22, x := 20) = 42 := rfl
+example : (show Nat → Nat from (· + 22)) 20 = 42 := rfl
+const reflexive: Eq(3, 3) := Eq.refl(..)
+const namedReflexive: Eq(3, 3) := Eq.refl(.., a := 3)
+''',
+    'V1-034': '''structure Receiver where { value: Nat }
+function Receiver.plus(r: Receiver, byValue: Nat): Nat := r.value + byValue
+def r : Receiver := { value := 20 }
+example : r.plus(22) = 42 := rfl
+example : (20, 22).2 = 22 := rfl
+example : (r |>.value) = 20 := rfl
+''',
+    'V1-035': '''const inferredPair: Nat × Nat := ⟨20, 22⟩
+example : (inferredPair : Nat × Nat).2 = 22 := rfl
+const chosen: Option Nat := (.some(42) : Option Nat)
+example : chosen = some(42) := rfl
+''',
+}
+
 
 def check(driver, fixture):
     result = subprocess.run([str(driver), 'check', str(fixture)], text=True,
@@ -43,6 +78,15 @@ def main():
     (args.output / 'positive.log').write_text(log)
     passed = []
     failures = []
+    fixtures = {}
+    for case, source in FAMILIES.items():
+        path = args.output / (case + '.ps')
+        path.write_text(source, encoding='utf-8')
+        fixtures[case] = hashlib.sha256(path.read_bytes()).hexdigest()
+        status, case_log = check(args.driver, path)
+        (args.output / (case + '.log')).write_text(case_log, encoding='utf-8')
+        (passed if status == 0 else failures).append(case)
+        print(case, 'PASS' if status == 0 else 'FAIL', status, case_log, flush=True)
     if code == 0:
         passed.extend(f'PS0-P-CALL-{i:02}' for i in range(2, 11))
     else:
@@ -62,6 +106,7 @@ def main():
             print(case, code, log)
     result = {'passed': passed, 'failures': failures,
               'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
+              'fixtures': fixtures,
               'driver_sha256': hashlib.sha256(args.driver.read_bytes()).hexdigest()}
     (args.output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print('PS0_R2_CALLS', json.dumps(result), flush=True)
