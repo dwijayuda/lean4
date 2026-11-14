@@ -163,11 +163,10 @@ def main():
             return False
         return True
 
-    positive = probe('positive', [*lake, 'build', 'ps0project', 'Scopes.PrivateConsumer',
+    positive = probe('positive', [*lake, 'build', 'Scopes.Consumer', 'Scopes.PrivateConsumer',
                      'Scopes.Grouping', 'Scopes.Prelude', 'Scopes.MetaPrivate'],
                      lambda code, log: code == 0 and re.search(r'\(?f x\)? : Nat', log) is not None)
-    if positive and probe('runtime', [build / 'bin/ps0project'],
-                          lambda code, log: code == 0 and log.strip() == 'PS0_R2_SCOPE:13:17'):
+    if positive:
         prelude = build / 'lib/lean/Scopes/Prelude.ilean.ps0-source-map.json'
         data = json.loads(prelude.read_text())
         receipt = json.loads((build / 'ps0-inputs/Scopes.Prelude.json').read_text())

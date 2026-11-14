@@ -1754,19 +1754,49 @@
       "id": "V1-081",
       "feature": "Reduction, unification, metavariables and elaboration scheduling",
       "sourceBasis": "L-TERM, L-PREDEF",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-081",
+      "qualifiedCommit": "674983f2f7cdb902984f9c0cc4066ab3dc8b4ff4",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43620623678",
+      "evidence": {
+        "jobId": 132525264153,
+        "runner": "3ac588c1304de2e496a30fa5b8a8101ca2d147c1",
+        "artifact": {
+          "id": 14123808239,
+          "name": "ps0-r2-native-extensions-evidence-43620623678",
+          "digest": "sha256:0246c7991b5f47c3a5aef78e3828ecbf11cec66b27851afe22c02537f3cdb55c",
+          "bytes": 7977410
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "5175f4f0c591d71a7cf8c1b59173281bdd80d5d748b57b7bb349acb0db7ec271",
+        "caseSha256": "fcd06c919ffc9bd640b3dec29653658d9e24c16bbac91b12b6969fb826d20981"
+      }
     },
     {
       "id": "V1-082",
       "feature": "Match_expr/let_expr and reflection/evaluation facilities",
       "sourceBasis": "L-TERM, L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-082",
+      "qualifiedCommit": "674983f2f7cdb902984f9c0cc4066ab3dc8b4ff4",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43620623678",
+      "evidence": {
+        "jobId": 132525264153,
+        "runner": "3ac588c1304de2e496a30fa5b8a8101ca2d147c1",
+        "artifact": {
+          "id": 14123808239,
+          "name": "ps0-r2-native-extensions-evidence-43620623678",
+          "digest": "sha256:0246c7991b5f47c3a5aef78e3828ecbf11cec66b27851afe22c02537f3cdb55c",
+          "bytes": 7977410
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "5175f4f0c591d71a7cf8c1b59173281bdd80d5d748b57b7bb349acb0db7ec271",
+        "caseSha256": "26aaae269ada8563036ec92e0473094eed07a266c0388c91e48166f4cf7fd1a3"
+      }
     },
     {
       "id": "V1-083",
@@ -1895,10 +1925,25 @@
       "id": "V1-090",
       "feature": "References, StateRefT, tasks and synchronization",
       "sourceBasis": "L-TERM, L-INIT, L-STD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-090",
+      "qualifiedCommit": "674983f2f7cdb902984f9c0cc4066ab3dc8b4ff4",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43620623678",
+      "evidence": {
+        "jobId": 132525264153,
+        "runner": "3ac588c1304de2e496a30fa5b8a8101ca2d147c1",
+        "artifact": {
+          "id": 14123808239,
+          "name": "ps0-r2-native-extensions-evidence-43620623678",
+          "digest": "sha256:0246c7991b5f47c3a5aef78e3828ecbf11cec66b27851afe22c02537f3cdb55c",
+          "bytes": 7977410
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixtureSha256": "5175f4f0c591d71a7cf8c1b59173281bdd80d5d748b57b7bb349acb0db7ec271",
+        "caseSha256": "a78a7ec9f00f3a6103f4116dfa823155dc00c40ab95e6000eca482fa659439c9"
+      }
     },
     {
       "id": "V1-091",
@@ -8997,12 +9042,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 35,
-    "featureFamiliesPending": 29,
+    "PENDING": 32,
+    "featureFamiliesPending": 26,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 207,
+    "PASS": 210,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19694,7 +19739,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 35,
+    "obligationsPending": 32,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -27499,6 +27544,34 @@
         ],
         "fixtureCases": {
           "PS0-P-ENV-01": "732dfc2907f433004318f2643418165f90d89badef54c1c38b3bfca01254ebb6"
+        }
+      },
+      {
+        "summary": "Linux checked metavariable assignment and reduction, match_expr and let_expr reflection, and synchronized IO tasks with StateRefT.",
+        "source": "674983f2f7cdb902984f9c0cc4066ab3dc8b4ff4",
+        "runner": "3ac588c1304de2e496a30fa5b8a8101ca2d147c1",
+        "run": 43620623678,
+        "job": 132525264153,
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "5175f4f0c591d71a7cf8c1b59173281bdd80d5d748b57b7bb349acb0db7ec271",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14123808239,
+          "name": "ps0-r2-native-extensions-evidence-43620623678",
+          "digest": "sha256:0246c7991b5f47c3a5aef78e3828ecbf11cec66b27851afe22c02537f3cdb55c",
+          "bytes": 7977410
+        },
+        "passed": [
+          "V1-081",
+          "V1-082",
+          "V1-090"
+        ],
+        "fixtureCases": {
+          "V1-081": "fcd06c919ffc9bd640b3dec29653658d9e24c16bbac91b12b6969fb826d20981",
+          "V1-082": "26aaae269ada8563036ec92e0473094eed07a266c0388c91e48166f4cf7fd1a3",
+          "V1-090": "a78a7ec9f00f3a6103f4116dfa823155dc00c40ab95e6000eca482fa659439c9"
         }
       }
     ]
@@ -98806,6 +98879,34 @@
       ],
       "fixtureCases": {
         "PS0-P-ENV-01": "732dfc2907f433004318f2643418165f90d89badef54c1c38b3bfca01254ebb6"
+      }
+    },
+    {
+      "summary": "Linux checked metavariable assignment and reduction, match_expr and let_expr reflection, and synchronized IO tasks with StateRefT.",
+      "source": "674983f2f7cdb902984f9c0cc4066ab3dc8b4ff4",
+      "runner": "3ac588c1304de2e496a30fa5b8a8101ca2d147c1",
+      "run": 43620623678,
+      "job": 132525264153,
+      "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "5175f4f0c591d71a7cf8c1b59173281bdd80d5d748b57b7bb349acb0db7ec271",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14123808239,
+        "name": "ps0-r2-native-extensions-evidence-43620623678",
+        "digest": "sha256:0246c7991b5f47c3a5aef78e3828ecbf11cec66b27851afe22c02537f3cdb55c",
+        "bytes": 7977410
+      },
+      "passed": [
+        "V1-081",
+        "V1-082",
+        "V1-090"
+      ],
+      "fixtureCases": {
+        "V1-081": "fcd06c919ffc9bd640b3dec29653658d9e24c16bbac91b12b6969fb826d20981",
+        "V1-082": "26aaae269ada8563036ec92e0473094eed07a266c0388c91e48166f4cf7fd1a3",
+        "V1-090": "a78a7ec9f00f3a6103f4116dfa823155dc00c40ab95e6000eca482fa659439c9"
       }
     }
   ]
