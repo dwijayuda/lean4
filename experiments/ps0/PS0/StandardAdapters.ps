@@ -347,10 +347,10 @@ private function nativeValue(source : TSyntax `psDeclValue, allowContract : Bool
       if index < next then
         Macro.throwErrorAt clause "PS0V1-CONTRACT-ORDER: expected given, requires, ensures in order"
       next := index + 1
-      clauses := clauses.set! index (mkNullNode #[clause[0]])
+      clauses := clauses.set!(index, mkNullNode #[clause[0]])
     let body := mkNode ``Lean.Parser.Command.declValSimple
       #[value[1], ← PS0.Syntax.lowerBodyValue(value[2]), suffix, whereDecls]
-    return ⟨mkNode ``Lean.Parser.Command.contractDeclVal (clauses.push body)⟩
+    return ⟨mkNode(``Lean.Parser.Command.contractDeclVal, clauses.push(body))⟩
   if value.isOfKind ``ps0DeclSimple then
     return ⟨mkNode(``Lean.Parser.Command.declValSimple,
       #[value[0], ← PS0.Syntax.lowerBodyValue(value[1]), suffix, whereDecls])⟩
