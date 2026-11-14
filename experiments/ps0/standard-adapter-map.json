@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 27,
-    "featureFamiliesPending": 21,
+    "PENDING": 23,
+    "featureFamiliesPending": 17,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 215,
+    "PASS": 219,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 27,
+    "obligationsPending": 23,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -22016,6 +22016,36 @@
               "e93ad17813a3b60d672b1dd3d9139d359aaac637ca609f50e58b5944d389b27a"
             ]
           ]
+        }
+      },
+      {
+        "summary": "Native Lake linked startup and ABI fixtures. Linux verified both initializer results, the borrowed ABI call and implemented_by runtime, and the exported symbol. It also checked unsafe classification and evaluated runtime debug output on the reachable branch.",
+        "source": "f4dc497d170ce5a4076a633e93b57c35957a1668",
+        "runner": "aefb0ea9affafbe264e25f13a65f724434e6acf8",
+        "run": 43621936458,
+        "job": 132529322294,
+        "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "aebc594187707669598e6f681c5e776c1e4a17f11bfd73b006a6dace96789517",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14124308035,
+          "name": "ps0-r2-native-extensions-evidence-43621936458",
+          "digest": "sha256:d64aa5bf0a1af22662e0dae92370c48c951ca2d7fd05c4424e3842838995e706",
+          "bytes": 16122974
+        },
+        "passed": [
+          "V1-087",
+          "V1-091",
+          "V1-092",
+          "V1-093"
+        ],
+        "fixtureCases": {
+          "V1-087": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442",
+          "V1-091": "d5dc991144783676d54a57e029773c9add478c68226b2f70ab4539b731a7bc01",
+          "V1-092": "3d666186161a4b7cb495b0fdb43045dde2a33197aadeb50a24b13b03b2b797f3",
+          "V1-093": "8ecd6185b2ec180ab39aaf61988eb3f29e634fa5a35d5f346748a7476cbc48c9"
         }
       }
     ]
@@ -93503,6 +93533,36 @@
             "e93ad17813a3b60d672b1dd3d9139d359aaac637ca609f50e58b5944d389b27a"
           ]
         ]
+      }
+    },
+    {
+      "summary": "Native Lake linked startup and ABI fixtures. Linux verified both initializer results, the borrowed ABI call and implemented_by runtime, and the exported symbol. It also checked unsafe classification and evaluated runtime debug output on the reachable branch.",
+      "source": "f4dc497d170ce5a4076a633e93b57c35957a1668",
+      "runner": "aefb0ea9affafbe264e25f13a65f724434e6acf8",
+      "run": 43621936458,
+      "job": 132529322294,
+      "driverSha256": "61ab94d9ed5e5c36b88845616e0d714767bbf567793e864f5142c008e499f459",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "aebc594187707669598e6f681c5e776c1e4a17f11bfd73b006a6dace96789517",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14124308035,
+        "name": "ps0-r2-native-extensions-evidence-43621936458",
+        "digest": "sha256:d64aa5bf0a1af22662e0dae92370c48c951ca2d7fd05c4424e3842838995e706",
+        "bytes": 16122974
+      },
+      "passed": [
+        "V1-087",
+        "V1-091",
+        "V1-092",
+        "V1-093"
+      ],
+      "fixtureCases": {
+        "V1-087": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442",
+        "V1-091": "d5dc991144783676d54a57e029773c9add478c68226b2f70ab4539b731a7bc01",
+        "V1-092": "3d666186161a4b7cb495b0fdb43045dde2a33197aadeb50a24b13b03b2b797f3",
+        "V1-093": "8ecd6185b2ec180ab39aaf61988eb3f29e634fa5a35d5f346748a7476cbc48c9"
       }
     }
   ]
