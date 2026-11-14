@@ -17,13 +17,13 @@ run_cmd do
 '''
 CASES = {
     'V1-069': ('''public import Std.WP
-def observed : IO Nat := do
+def observed : Id Nat := do
   assert False
   assert! 2 + 2 == 4
   debug_assert! 2 + 2 == 4
   return 42
 #eval show IO Unit from do
-  let value ← observed
+  let value := Id.run observed
   if value != 42 then throw (IO.userError "assertion runtime oracle")
   IO.println "PS0_ASSERTION_RUNTIME:42"
 ''', 'PS0_ASSERTION_RUNTIME:42', ''),
@@ -39,7 +39,8 @@ function annotated(n: Nat): Id Nat := do
   do value := 0
   return value
 #eval show IO Unit from do
-  unless Id.run(annotated(41)) == 42 do throw(IO.userError("loop measure changed execution"))
+  let observed := Id.run (annotated 41)
+  unless observed == 42 do throw (IO.userError "loop measure changed execution")
   IO.println "PS0_LOOP_ANNOTATIONS:42"
 ''', 'PS0_LOOP_ANNOTATIONS:42', ''),
     'V1-071': ('''public import Std.WP
