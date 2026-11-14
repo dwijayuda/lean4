@@ -125,13 +125,20 @@ def main():
     failures = []
 
     def probe(label, command, check):
-        result = subprocess.run([str(x) for x in command], stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT, text=True, timeout=300)
-        log = result.stdout
-        (work / (label + '.log')).write_text(log, encoding='utf-8')
-        if not check(result.returncode, log):
+        path = work / (label + '.log')
+        print(f'Checking {label}', flush=True)
+        with path.open('w', encoding='utf-8') as stream:
+            with subprocess.Popen([str(x) for x in command], stdout=subprocess.PIPE,
+                                  stderr=subprocess.STDOUT, text=True) as process:
+                for line in process.stdout:
+                    stream.write(line)
+                    stream.flush()
+                    print(line, end='', flush=True)
+                code = process.wait()
+        log = path.read_text(encoding='utf-8')
+        if not check(code, log):
             failures.append(label)
-            print(label, result.returncode, log, flush=True)
+            print(f'{label} failed its oracle with exit {code}', flush=True)
             return False
         return True
 
@@ -148,8 +155,12 @@ def main():
         assert data['nativeSource'] == data['source'] == MODULES['Scopes.Prelude']
         assert all(span['kind'] == 'original' for span in data['segments'])
         passed.extend(f'PS0-P-SCOPE-{i:02}' for i in range(1, 9))
+    native = work / 'PublicAll.lean'
+    native.write_text(MODULES['Scopes.PublicAll'], encoding='utf-8')
+    native_rejected = probe('public-all-native', ['lean', native],
+                            lambda code, log: code == 1 and 'cannot use `all` with `public import`' in log)
     if probe('PS0-N-MOD-01', [driver, 'lake-header', src / 'Scopes/PublicAll.ps'],
-             lambda code, log: code == 1 and log.strip() == 'PS0-MODULE-HEADER: invalid import header'):
+             lambda code, log: code == 1 and log.strip() == 'PS0-MODULE-HEADER: invalid import header') and native_rejected:
         passed.append('PS0-N-MOD-01')
     for label, module, match in [
         ('restricted', 'Restricted', r'Unknown identifier.*Explicit\.internalDefault|unknown constant.*Explicit\.internalDefault'),
