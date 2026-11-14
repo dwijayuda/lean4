@@ -191,12 +191,12 @@ const loopBasicFun : Parser :=
 -- The positional call adapter emits a native pattern application. In
 -- particular an empty application must reach Lean's pattern arity check.
 @[run_parser_attribute_hooks] const patternCall : Parser :=
-  withFn((fun parse => withResultOfFn(parse, fun source =>
+  withFn((fun parse => andthenFn((checkPrecFn maxPrec), withResultOfFn(parse, fun source =>
     let info := match source.getRange? with
       | some span => .synthetic span.start span.stop false
       | none => .none
-    .node(info, ``Lean.Parser.Term.app, #[source[0], mkNullNode(source[2].getSepArgs)]))),
-    (checkPrec maxPrec >> node ``Lean.Parser.Term.app <|
+    .node(info, ``Lean.Parser.Term.app, #[source[0], mkNullNode(source[2].getSepArgs)])))),
+    (node ``Lean.Parser.Term.app <|
       atomic((PS0.Operators.adjacentIdentifier <|> Lean.Parser.Term.dotIdent) >>
         checkNoWsBefore >> "(") >>
         withoutPosition((sepBy((categoryParser `psMatchPattern 0), ",", ("," >> ppSpace), true))) >>
