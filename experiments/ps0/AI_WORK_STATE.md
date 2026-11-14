@@ -1,5 +1,17 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-15 — Linux macro bridge and remaining R2 boundaries
+
+Clean Linux run `43624421323` is pinned to source `c07976a05c85035b2103f983a5773dff302524dd` and runner `87c2716b0fb713eddc5fc6b6139f51c22caa4481`. Checkpoint job `132536979423` passed. Native stage-one base job `132537063664` is in progress. Both native links and the independent fixed-point audit are pending. [Clean Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43624421323)
+
+The first R2-12 validation stopped at an outdated checkout assertion in job `132551963088`. The retry aligned the assertion with the checkout pin and built the driver before running all 31 frozen cases. [Initial Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43629250507/job/132551963088)
+
+Follow-up source `0639618d0652821533267767f59512b84979ac7d` corrects the R2-06 witness to reflect the native pattern rule, adds paired native and PS omitted-field checks, and changes the protected adjacent-call and marker-free header parsers. Linux boundary run `43629915657` uses runner `cebe38bfe00f46c67d6031770a816589b6f07b73`. [Follow-up Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43629915657)
+
+The native macro declaration adapter passes the frozen R2-12 witness, including the `result = 5` proof. The boundary job retained the report and failed on the four other numbered obligations. Qualified `R2-12`. Source `6dfe41f772bdb32cd8a9b9714cc93f236c3380b5`, runner `ee1d3a637c8e118c51fb31d88b9a3bbc5ec46071`, executable SHA-256 `010b6f6f0489dd08953ca8be49d8c7bfef3dad2266e8070c2a788a69a4d4027d`, and fixture runner SHA-256 `0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3`. Evidence artifact `14126509764` has digest `sha256:29f055595b822d5a0f1f0260547ae7c89a13132aa58b43901e61b3a475b03544` and 23,272 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43629358333/job/132552298919)
+
+The ledger records **237 finite passes and 5 pending obligations**.
+
 ## 2026-11-14 — R2 combined native extension acceptance
 
 Linux run `43583275609` built and linked stage one from the published bootstrap at source `31335d603912cee8a6f971e894bee90a66a09dc8` and runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. Stage-one job `132478425182` published artifact `14118393694` (285,097,329 bytes, `sha256:0de82e5e4fdcd477d5cf1976d08d8ebf5e1147c0676d503f5ce8821a69242ee9`). Stage-two base job `132482310030` failed in `Init.Prelude.ps`. Its diagnostic artifact `14119025079` has 8,223,378 bytes and digest `sha256:ebde3266bfbed17bcd396bb123d7441446e3621fa18408c44bba98f20f7bbff6`. Stage-two linking and the independent fixed-point audit were skipped. [Stage-one job](https://github.com/dwijayuda/pskernel/actions/runs/43583275609/job/132478425182) [Stage-two job](https://github.com/dwijayuda/pskernel/actions/runs/43583275609/job/132482310030)

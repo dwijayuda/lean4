@@ -5689,10 +5689,24 @@
     {
       "id": "R2-12",
       "title": "Explicit syntax bridge from PS capture to native result",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "experiments/ps0/tests/run-r2-boundary.py :: R2-12",
+      "qualifiedCommit": "6dfe41f772bdb32cd8a9b9714cc93f236c3380b5",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43629358333",
+      "evidence": {
+        "jobId": 132552298919,
+        "runner": "ee1d3a637c8e118c51fb31d88b9a3bbc5ec46071",
+        "artifact": {
+          "id": 14126509764,
+          "bytes": 23272,
+          "digest": "sha256:29f055595b822d5a0f1f0260547ae7c89a13132aa58b43901e61b3a475b03544"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "010b6f6f0489dd08953ca8be49d8c7bfef3dad2266e8070c2a788a69a4d4027d",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "caseSha256": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4"
+      }
     },
     {
       "id": "R2-13",
@@ -9432,12 +9446,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 6,
+    "PENDING": 5,
     "featureFamiliesPending": 1,
-    "boundaryWitnessesPending": 5,
+    "boundaryWitnessesPending": 4,
     "acceptanceCasesPending": 0,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases, capability families, and numbered witnesses.",
-    "PASS": 236,
+    "PASS": 237,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -20129,7 +20143,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 6,
+    "obligationsPending": 5,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -28417,6 +28431,29 @@
             "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
           ]
         ]
+      },
+      {
+        "summary": "The native macro declaration adapter passes the frozen R2-12 witness, including the `result = 5` proof. The boundary job retained the report and failed on the four other numbered obligations.",
+        "passed": [
+          "R2-12"
+        ],
+        "fixture": "experiments/ps0/tests/run-r2-boundary.py",
+        "source": "6dfe41f772bdb32cd8a9b9714cc93f236c3380b5",
+        "runner": "ee1d3a637c8e118c51fb31d88b9a3bbc5ec46071",
+        "run": 43629358333,
+        "job": 132552298919,
+        "artifact": {
+          "id": 14126509764,
+          "bytes": 23272,
+          "digest": "sha256:29f055595b822d5a0f1f0260547ae7c89a13132aa58b43901e61b3a475b03544"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "010b6f6f0489dd08953ca8be49d8c7bfef3dad2266e8070c2a788a69a4d4027d",
+        "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+        "fixtureCases": {
+          "R2-12": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4"
+        }
       }
     ]
   },
@@ -100206,6 +100243,29 @@
           "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
         ]
       ]
+    },
+    {
+      "summary": "The native macro declaration adapter passes the frozen R2-12 witness, including the `result = 5` proof. The boundary job retained the report and failed on the four other numbered obligations.",
+      "passed": [
+        "R2-12"
+      ],
+      "fixture": "experiments/ps0/tests/run-r2-boundary.py",
+      "source": "6dfe41f772bdb32cd8a9b9714cc93f236c3380b5",
+      "runner": "ee1d3a637c8e118c51fb31d88b9a3bbc5ec46071",
+      "run": 43629358333,
+      "job": 132552298919,
+      "artifact": {
+        "id": 14126509764,
+        "bytes": 23272,
+        "digest": "sha256:29f055595b822d5a0f1f0260547ae7c89a13132aa58b43901e61b3a475b03544"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "driverSha256": "010b6f6f0489dd08953ca8be49d8c7bfef3dad2266e8070c2a788a69a4d4027d",
+      "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
+      "fixtureCases": {
+        "R2-12": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4"
+      }
     }
   ]
 }
