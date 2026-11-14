@@ -44,6 +44,7 @@ function sumPair(p: Nat × Nat): Nat := p.1 + p.2
 const bad: Nat := hostOperand sumPair (1, 2)
 ''', r':4:\d+: error: PS0V1-CALL-GAP'),
     'PS0-P-ENV-01': ('''public import Lake
+public meta import Lake
 open Lake DSL
 package r2example where
   version := v!"0.2.0"
@@ -185,7 +186,10 @@ def main():
         (passed if ok else failures).append(case)
         if case == 'PS0-P-RUN-03':
             control = out / 'PS0-N-ASSURE-05.ps'
-            control.write_text(source + '\nprivate example : model 40 = 41 := rfl\n', encoding='utf-8')
+            control.write_text('public import Init\n' +
+                'def replacement (n : UInt32) : UInt32 := n + 2\n' +
+                '@[implemented_by replacement] def model (n : UInt32) : UInt32 := n + 1\n' +
+                'private example : model(40) = 41 := rfl\n', encoding='utf-8')
             fixtures['PS0-N-ASSURE-05'] = hashlib.sha256(control.read_bytes()).hexdigest()
             logical, log = run('PS0-N-ASSURE-05', [args.driver, 'check', control])
             (passed if ok and logical == 0 and 'UNCERTIFIED' in log else failures).append('PS0-N-ASSURE-05')
