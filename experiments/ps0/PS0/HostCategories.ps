@@ -599,6 +599,8 @@ const ps0LoopInstanceBinder : Lean.Parser.Parser := PS0.DoLayout.loopInstanceBin
 syntax (name := ps0NativeDoElemBridge) (priority := low) PS0.DoLayout.nativeDoOperand : psDoElem
 @[psDoElem_parser 20000]
 const ps0NativeDoReturn : Lean.Parser.Parser := PS0.DoLayout.returnElem
+syntax (name := ps0NativeDoAssertion) (priority := 30000)
+  Lean.Parser.Term.doAssertion : psDoElem
 @[psTerm_parser 20000]
 const ps0NativeNestedAction : Lean.Parser.Parser := PS0.DoLayout.nestedActionTerm
 @[psTerm_parser 20000]
@@ -1233,6 +1235,7 @@ private def lowerDoElemWith
   if source.isOfKind ``Lean.Parser.Term.doExpr then
     unless source.getArgs.size == 1 do Macro.throwError "PS0V1-DO-EXPRESSION: unexpected native expression"
     return source.setArg(0, (← lowerTerm(source[0])))
+  if source.isOfKind ``ps0NativeDoAssertion then return source[0]
   lowerQuoted source)
 
 
