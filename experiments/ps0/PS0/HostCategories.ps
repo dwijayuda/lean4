@@ -169,8 +169,18 @@ const loopBasicFun : Parser :=
 
 @[run_parser_attribute_hooks] const patternIfTerm : Parser :=
   leadingNode `termIfLet leadPrec <|
-    "if " >> "let " >> termParser >> " := " >> categoryParser `psTerm 0 >>
-      " then " >> categoryParser `psTerm 0 >> " else " >> categoryParser `psTerm 0
+    "if " >> "let " >> termParser >> " := " >>
+      ((withForbiddens(#["{"], (categoryParser `psTerm 0)) >>
+        withFn((fun parse ctx initial =>
+          let parsed := parse ctx initial
+          if parsed.hasError then parsed else
+            let body := parsed.stxStack.back
+            (parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "then")).pushSyntax body[1]),
+          (node nullKind <| "{" >> categoryParser `psTerm 0 >> "}")) >>
+        " else " >> withFn((fun parse => withResultOfFn(parse, fun body => body[1])),
+          (node nullKind <| "{" >> categoryParser `psTerm 0 >> "}"))) <|>
+      (categoryParser `psTerm 0 >> " then " >> categoryParser `psTerm 0 >>
+        " else " >> categoryParser `psTerm 0))
 
 @[run_parser_attribute_hooks] const patternLetTerm : Parser :=
   leadingNode ``Lean.Parser.Term.«let» leadPrec <|
@@ -308,8 +318,15 @@ const forDeclaration : Parser :=
 
 @[run_parser_attribute_hooks] const forElem : Parser :=
   leadingNode ``Lean.Parser.Term.doFor maxPrec <|
-    "for " >> sepBy1 forDeclaration ", " >> optional loopInvariant >>
-      optional loopDecreasing >> " do " >> sequence
+    "for " >>
+    ((withForbiddens(#["{"], (sepBy1 forDeclaration ", "))) >> optional loopInvariant >>
+      optional loopDecreasing >> withFn((fun parse ctx initial =>
+        let parsed := parse ctx initial
+        if parsed.hasError then parsed else
+          let body := parsed.stxStack.back
+          (parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "do")).pushSyntax body),
+        (operands #[ (`doElem, `psDoElem) ] Lean.Parser.Term.doSeqBracketed))) <|>
+    (sepBy1 forDeclaration ", " >> optional loopInvariant >> optional loopDecreasing >> " do " >> sequence)
 
 @[run_parser_attribute_hooks] const forTerm : Parser :=
   leadingNode ``Lean.Parser.Term.termFor leadPrec <|
