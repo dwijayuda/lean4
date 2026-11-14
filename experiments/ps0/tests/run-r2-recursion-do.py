@@ -8,6 +8,57 @@ import re
 import subprocess
 
 CASES = {
+    'V1-036': ('''def value : Nat :=
+  let x := 20
+  have y : Nat := 22
+  letI : Inhabited Bool := ⟨true⟩
+  if (default : Bool) then x + y else 0
+example : value = 42 := rfl
+example : (let +zeta x := 42; x) = 42 := rfl
+''', (), ''),
+    'V1-038': ('''structure Point where { x: Nat; y: Nat }
+def point : Point := { x := 20, y := 22 }
+function move(x: Nat): Point := { point with x }
+structure MapFn where { run: Option Nat → Nat }
+def mapper : MapFn := {
+  run
+    | none => 0
+    | some n => n
+}
+example : (move(42)).x = 42 ∧ (move(42)).y = 22 := ⟨rfl, rfl⟩
+example : mapper.run(some(8)) = 8 := rfl
+''', (), ''),
+    'V1-039': ('''function absolute(n: Int): Int := if n < 0 then { -n } else { n }
+function bounded(n: Nat): Nat := if h : n < 5 then (⟨n, h⟩ : Fin 5).val else 0
+example : absolute(-7) = 7 := rfl
+example : bounded(4) = 4 := rfl
+example : bounded(7) = 0 := rfl
+''', (), ''),
+    'V1-043': ('''def readValue (input : Option Nat) : Nat :=
+  if let some n := input then n else 0
+def unpackPair (p : Nat × Nat) : Nat :=
+  let (x, y) := p
+  x + y
+def noValue (x : False) : Nat := nomatch x
+def noValueFn : False → Nat := nofun
+example : readValue(some(41)) = 41 := rfl
+example : unpackPair((20, 22)) = 42 := rfl
+example : (some 4 matches some _) := by { decide }
+''', (), ''),
+    'V1-044': ('''function pred(n: Nat): Nat
+  | 0 => 0
+  | k + 1 => k
+mutual
+function yes(n: Nat): Bool := match n with
+  | 0 => true
+  | k + 1 => no(k)
+function no(n: Nat): Bool := match n with
+  | 0 => false
+  | k + 1 => yes(k)
+end
+example : pred(7) = 6 := rfl
+example : yes(2) = true ∧ no(3) = true := ⟨rfl, rfl⟩
+''', (), ''),
     'V1-046': ('''function length(xs: List Nat): Nat := match xs with
   | [] => 0
   | _ :: tail => 1 + length(tail)
