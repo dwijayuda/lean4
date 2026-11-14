@@ -404,10 +404,26 @@
       "id": "V1-020",
       "feature": "Definition, theorem, example and abbreviation declarations",
       "sourceBasis": "L-CMD, L-DECL",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-declaration-families.py :: V1-020",
+      "qualifiedCommit": "5268d1e7fb533b5a70036205cec5ffaabd83d70d",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43589563081",
+      "evidence": {
+        "jobId": 132431198887,
+        "runner": "820e6c7622387a141230f59ecd62354181c8dca3",
+        "artifact": {
+          "id": 14112270036,
+          "name": "ps0-r2-declaration-families-evidence-43589563081",
+          "digest": "sha256:698b15c9282a2a75dc475cae9783d09e25e4fc300253aadacd8243176e7711b1",
+          "bytes": 8921,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "45c7a0bdb73bcec206f03fc9b1e59c0b89edc778214c3230e895e7181a666bce",
+        "caseSha256": "e4e8dbfcb1c8a2c0431f16b1565fe994a0b2dba6dc9e191195678963458a4502"
+      }
     },
     {
       "id": "V1-021",
@@ -3936,10 +3952,26 @@
       "sourceOrClaim": "Calling a partial program total because it compiled",
       "expectedCategory": "ASSURANCE",
       "reason": "Compilation is not termination evidence.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-N-ASSURE-03",
+      "qualifiedCommit": "64137d9e1f07cc2553dc9c73f36feb90405f19d9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43589813648",
+      "evidence": {
+        "jobId": 132431941598,
+        "runner": "e9a365fd05e9cafa7a86fd23d05120dd534e7679",
+        "artifact": {
+          "id": 14111624454,
+          "name": "ps0-r2-native-extensions-evidence-43589813648",
+          "digest": "sha256:b5943d2b6b663855297e011ab3039f98e43fca98714328b20f097721174de424",
+          "bytes": 7963582,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "2d8833c6c85d7c6f04a551521ad7dc98e2cb3146e4f09f6dca69fda245aee782",
+        "caseSha256": "6fe2efbd8d1acea823dc5cb2b66293b5913e186157ac6f0496030f7849324d6b"
+      }
     },
     {
       "id": "PS0-N-ASSURE-04",
@@ -3947,10 +3979,26 @@
       "sourceOrClaim": "Dropping the effects of `erased x ← action`",
       "expectedCategory": "ASSURANCE/semantic mismatch",
       "reason": "Erased result is not erased execution.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-N-ASSURE-04",
+      "qualifiedCommit": "64137d9e1f07cc2553dc9c73f36feb90405f19d9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43589813648",
+      "evidence": {
+        "jobId": 132431941598,
+        "runner": "e9a365fd05e9cafa7a86fd23d05120dd534e7679",
+        "artifact": {
+          "id": 14111624454,
+          "name": "ps0-r2-native-extensions-evidence-43589813648",
+          "digest": "sha256:b5943d2b6b663855297e011ab3039f98e43fca98714328b20f097721174de424",
+          "bytes": 7963582,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "2d8833c6c85d7c6f04a551521ad7dc98e2cb3146e4f09f6dca69fda245aee782",
+        "caseSha256": "c42b4e968d0330dab3b3188363fd53df00b13a6ba8e3122e981f23bdc5727903"
+      }
     },
     {
       "id": "PS0-N-ASSURE-05",
@@ -3969,10 +4017,26 @@
       "sourceOrClaim": "Counting `.lean` pass-through as implemented `.ps` grammar",
       "expectedCategory": "ASSURANCE/evidence error",
       "reason": "Different source lanes.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-N-ASSURE-06",
+      "qualifiedCommit": "64137d9e1f07cc2553dc9c73f36feb90405f19d9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43589813648",
+      "evidence": {
+        "jobId": 132431941598,
+        "runner": "e9a365fd05e9cafa7a86fd23d05120dd534e7679",
+        "artifact": {
+          "id": 14111624454,
+          "name": "ps0-r2-native-extensions-evidence-43589813648",
+          "digest": "sha256:b5943d2b6b663855297e011ab3039f98e43fca98714328b20f097721174de424",
+          "bytes": 7963582,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "2d8833c6c85d7c6f04a551521ad7dc98e2cb3146e4f09f6dca69fda245aee782",
+        "caseSha256": "5bee2412f64cd8c219a2845ea95188b5c39c304141a701f22b037de84705a8fc"
+      }
     },
     {
       "id": "PS0-N-EXT-01",
@@ -8078,12 +8142,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 96,
-    "featureFamiliesPending": 84,
+    "PENDING": 92,
+    "featureFamiliesPending": 83,
     "boundaryWitnessesPending": 5,
-    "acceptanceCasesPending": 7,
+    "acceptanceCasesPending": 4,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 146,
+    "PASS": 150,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -18775,7 +18839,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 96,
+    "obligationsPending": 92,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -25844,6 +25908,90 @@
           "archiveDigestVerified": true
         },
         "summary": "Seven declaration families and two assumption-boundary cases passed. Lean reported transitive sorry and user or native axioms while leaving ordinary checking explicitly uncertified."
+      },
+      {
+        "run": 43589563081,
+        "job": 132431198887,
+        "conclusion": "success",
+        "runner": "820e6c7622387a141230f59ecd62354181c8dca3",
+        "source": "5268d1e7fb533b5a70036205cec5ffaabd83d70d",
+        "fixture": "tests/run-r2-declaration-families.py",
+        "fixtureSha256": "45c7a0bdb73bcec206f03fc9b1e59c0b89edc778214c3230e895e7181a666bce",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "V1-020"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "V1-010": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd",
+          "V1-016": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a",
+          "V1-017": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33",
+          "V1-019": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f",
+          "V1-020": "e4e8dbfcb1c8a2c0431f16b1565fe994a0b2dba6dc9e191195678963458a4502",
+          "V1-021": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247",
+          "V1-022": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f",
+          "V1-023": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1",
+          "PS0-N-ASSURE-01": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03",
+          "PS0-N-ASSURE-02": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14112270036,
+          "name": "ps0-r2-declaration-families-evidence-43589563081",
+          "digest": "sha256:698b15c9282a2a75dc475cae9783d09e25e4fc300253aadacd8243176e7711b1",
+          "bytes": 8921,
+          "archiveDigestVerified": true
+        },
+        "summary": "The exposed definition supported the exported theorem. Lean also checked the abbreviation’s reducibility hint and the theorem’s declaration kind."
+      },
+      {
+        "run": 43589813648,
+        "job": 132431941598,
+        "conclusion": "failure",
+        "runner": "e9a365fd05e9cafa7a86fd23d05120dd534e7679",
+        "source": "64137d9e1f07cc2553dc9c73f36feb90405f19d9",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "2d8833c6c85d7c6f04a551521ad7dc98e2cb3146e4f09f6dca69fda245aee782",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "PS0-N-ASSURE-03",
+          "PS0-N-ASSURE-04",
+          "PS0-N-ASSURE-06"
+        ],
+        "failures": [
+          "PS0-P-ENV-01",
+          "PS0-N-ASSURE-05"
+        ],
+        "fixtureCases": {
+          "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+          "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+          "PS0-N-EXT-01": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174",
+          "PS0-N-EXT-02": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3",
+          "PS0-P-ENV-01": "7b08ced0763a855546c054578e5607d6b617ff1bb0e04f42475151f0f3608392",
+          "PS0-N-ASSURE-03": "6fe2efbd8d1acea823dc5cb2b66293b5913e186157ac6f0496030f7849324d6b",
+          "PS0-N-ASSURE-04": "c42b4e968d0330dab3b3188363fd53df00b13a6ba8e3122e981f23bdc5727903",
+          "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+          "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+          "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+          "PS0-P-DOC-01": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77",
+          "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+          "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+          "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+          "PS0-N-ASSURE-05": "ed3ec1d78f3e439ae36571c17a8f1276ab32bf17b5e8aad0c43313491912657c",
+          "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442",
+          "PS0-N-ASSURE-06": "5bee2412f64cd8c219a2845ea95188b5c39c304141a701f22b037de84705a8fc"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14111624454,
+          "name": "ps0-r2-native-extensions-evidence-43589813648",
+          "digest": "sha256:b5943d2b6b663855297e011ab3039f98e43fca98714328b20f097721174de424",
+          "bytes": 7963582,
+          "archiveDigestVerified": true
+        },
+        "summary": "The compiler retained the partial implementation and uncertified status, ran the erased action, and demonstrated distinct native and PS source admission on identical source bytes."
       }
     ]
   },
@@ -96414,6 +96562,90 @@
         "archiveDigestVerified": true
       },
       "summary": "Seven declaration families and two assumption-boundary cases passed. Lean reported transitive sorry and user or native axioms while leaving ordinary checking explicitly uncertified."
+    },
+    {
+      "run": 43589563081,
+      "job": 132431198887,
+      "conclusion": "success",
+      "runner": "820e6c7622387a141230f59ecd62354181c8dca3",
+      "source": "5268d1e7fb533b5a70036205cec5ffaabd83d70d",
+      "fixture": "tests/run-r2-declaration-families.py",
+      "fixtureSha256": "45c7a0bdb73bcec206f03fc9b1e59c0b89edc778214c3230e895e7181a666bce",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "V1-020"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "V1-010": "d621b3a492ac1b527a83cb08217d7f6a423d60f248806f54f41792b680c570cd",
+        "V1-016": "88a6b200fd4135fefc9130c96fb87e7826c0feb2923bbac2d34ccaff93077d8a",
+        "V1-017": "a2113e5b154aecdaa69a1e7373ddf79b78a9c0cafc6a969f986aec8b8e1bfc33",
+        "V1-019": "c641fd4ea56f2fa81bde081d5c5e08e39f3834347a0cf2c1a6bf06b3c09d510f",
+        "V1-020": "e4e8dbfcb1c8a2c0431f16b1565fe994a0b2dba6dc9e191195678963458a4502",
+        "V1-021": "6f4d852f35e930ade381b89ceb51a7fb723aa64b5f4db8c8c3f9f1a5734d4247",
+        "V1-022": "f763cbaa8ebc2a06c6ba3b02fb7faa17cf2e919b1f2512b36b3ca5299061130f",
+        "V1-023": "50008f8ddb18841890c51b147b06e3f2f317a5a35836ad685b319b7e8ce676c1",
+        "PS0-N-ASSURE-01": "acdbef77757db6a73143f94f5b7b46e636117900b15b23d24779df01abc79d03",
+        "PS0-N-ASSURE-02": "861eedd59af41126ed4d7981baf7d7cca16f2cec4880c493c5d83e54aa161ccc"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14112270036,
+        "name": "ps0-r2-declaration-families-evidence-43589563081",
+        "digest": "sha256:698b15c9282a2a75dc475cae9783d09e25e4fc300253aadacd8243176e7711b1",
+        "bytes": 8921,
+        "archiveDigestVerified": true
+      },
+      "summary": "The exposed definition supported the exported theorem. Lean also checked the abbreviation’s reducibility hint and the theorem’s declaration kind."
+    },
+    {
+      "run": 43589813648,
+      "job": 132431941598,
+      "conclusion": "failure",
+      "runner": "e9a365fd05e9cafa7a86fd23d05120dd534e7679",
+      "source": "64137d9e1f07cc2553dc9c73f36feb90405f19d9",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "2d8833c6c85d7c6f04a551521ad7dc98e2cb3146e4f09f6dca69fda245aee782",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "PS0-N-ASSURE-03",
+        "PS0-N-ASSURE-04",
+        "PS0-N-ASSURE-06"
+      ],
+      "failures": [
+        "PS0-P-ENV-01",
+        "PS0-N-ASSURE-05"
+      ],
+      "fixtureCases": {
+        "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+        "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+        "PS0-N-EXT-01": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174",
+        "PS0-N-EXT-02": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3",
+        "PS0-P-ENV-01": "7b08ced0763a855546c054578e5607d6b617ff1bb0e04f42475151f0f3608392",
+        "PS0-N-ASSURE-03": "6fe2efbd8d1acea823dc5cb2b66293b5913e186157ac6f0496030f7849324d6b",
+        "PS0-N-ASSURE-04": "c42b4e968d0330dab3b3188363fd53df00b13a6ba8e3122e981f23bdc5727903",
+        "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+        "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+        "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+        "PS0-P-DOC-01": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77",
+        "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+        "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+        "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+        "PS0-N-ASSURE-05": "ed3ec1d78f3e439ae36571c17a8f1276ab32bf17b5e8aad0c43313491912657c",
+        "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442",
+        "PS0-N-ASSURE-06": "5bee2412f64cd8c219a2845ea95188b5c39c304141a701f22b037de84705a8fc"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14111624454,
+        "name": "ps0-r2-native-extensions-evidence-43589813648",
+        "digest": "sha256:b5943d2b6b663855297e011ab3039f98e43fca98714328b20f097721174de424",
+        "bytes": 7963582,
+        "archiveDigestVerified": true
+      },
+      "summary": "The compiler retained the partial implementation and uncertified status, ran the erased action, and demonstrated distinct native and PS source admission on identical source bytes."
     }
   ]
 }

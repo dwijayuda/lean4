@@ -1,5 +1,15 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-14 — R2 declaration kinds and assurance boundaries
+
+The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
+
+The exposed definition supported the exported theorem. Lean also checked the abbreviation’s reducibility hint and the theorem’s declaration kind. Qualified `V1-020`. Source `5268d1e7fb533b5a70036205cec5ffaabd83d70d`, runner `820e6c7622387a141230f59ecd62354181c8dca3`, executable SHA-256 `e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af`, and fixture runner SHA-256 `45c7a0bdb73bcec206f03fc9b1e59c0b89edc778214c3230e895e7181a666bce`. Evidence artifact `14112270036` has digest `sha256:698b15c9282a2a75dc475cae9783d09e25e4fc300253aadacd8243176e7711b1` and 8,921 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43589563081/job/132431198887)
+
+The compiler retained the partial implementation and uncertified status, ran the erased action, and demonstrated distinct native and PS source admission on identical source bytes. Qualified `PS0-N-ASSURE-03`, `PS0-N-ASSURE-04`, `PS0-N-ASSURE-06`. Source `64137d9e1f07cc2553dc9c73f36feb90405f19d9`, runner `e9a365fd05e9cafa7a86fd23d05120dd534e7679`, executable SHA-256 `e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af`, and fixture runner SHA-256 `2d8833c6c85d7c6f04a551521ad7dc98e2cb3146e4f09f6dca69fda245aee782`. Evidence artifact `14111624454` has digest `sha256:b5943d2b6b663855297e011ab3039f98e43fca98714328b20f097721174de424` and 7,963,582 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43589813648/job/132431941598)
+
+The ledger records **150 finite passes and 92 pending obligations**.
+
 ## 2026-11-14 — R2 declaration families and assumption closure
 
 The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
