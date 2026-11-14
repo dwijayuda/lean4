@@ -173,7 +173,7 @@ const loopBasicFun : Parser :=
 @[run_parser_attribute_hooks] const patternIfTerm : Parser :=
   leadingNode `termIfLet leadPrec <|
     "if " >> "let " >> termParser >> " := " >>
-      ((atomic((withForbidden "{" (categoryParser `psTerm 0) >> lookahead "{")) >>
+      ((atomic((withForbidden("{", (categoryParser `psTerm 0)) >> lookahead "{")) >>
         withFn((fun parse ctx initial =>
           let parsed := parse ctx initial
           if parsed.hasError then parsed else
@@ -323,7 +323,7 @@ function forDeclaration(collection : Parser) : Parser :=
 @[run_parser_attribute_hooks] const forElem : Parser :=
   leadingNode ``Lean.Parser.Term.doFor maxPrec <|
     "for " >>
-    ((atomic((sepBy1((forDeclaration((withForbidden "{" (categoryParser `psTerm 0)))), ", ") >>
+    ((atomic((sepBy1((forDeclaration((withForbidden("{", (categoryParser `psTerm 0))))), ", ") >>
       lookahead("{" <|> nonReservedSymbol "invariant" <|> nonReservedSymbol "decreasing"))) >>
       optional loopInvariant >> optional loopDecreasing >> withFn((fun parse ctx initial =>
         let parsed := parse ctx initial
