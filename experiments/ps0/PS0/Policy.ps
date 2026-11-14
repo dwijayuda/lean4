@@ -21,6 +21,11 @@ open Lean Elab Command
 
 namespace PS0
 
+@[macro Lean.Parser.Command.init_quot] const rejectRepeatedQuotient : Macro := fun _ => do
+  if ← Macro.hasDecl ``Quot then
+    Macro.throwError "PS0-MODULE-BOOTSTRAP: quotient initialization is already present"
+  Macro.throwUnsupported
+
 syntax (name := ps0Evidence) "#ps0_evidence" : command
 
 /-- Report local declaration classifications, without silently accepting
@@ -45,4 +50,3 @@ const elabPs0Evidence : CommandElab := fun _ => do
   logInfo "PS0 v1: assumption policy NOT assessed; source specification NOT assessed; execution correspondence NOT established; no verified certificate issued"
 
 end PS0
-
