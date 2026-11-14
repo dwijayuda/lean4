@@ -74,7 +74,7 @@ private example : pred(5) = 4 := rfl
   | some(n) => n
   | none => 0
 }
-function nested(x: Option (Option Nat)): Nat := match x with {
+function nested(x: Option(Option Nat)): Nat := match x with {
   | .some(.some(n,),) => n
   | .some(.none()) => 1
   | .none() => 0
