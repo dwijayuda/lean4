@@ -115,9 +115,8 @@ function eliminate(impossible: OnlyZero(1)): Nat := nomatch impossible
     'V1-024': ('''inductive Code : Nat → Type where
   | zero : Code 0
   | step (prev : Code n) : Code (n + 1)
-function decode(n: Nat, value: Code(n)): Nat :=
-  Code.rec (motive := fun _ _ => Nat) 0 (fun _ _ k => k + 1) value
-example : decode(2, .step(.step(.zero))) = 2 := rfl
+example : Code.rec (motive := fun _ _ => Nat) 0 (fun _ k => k + 1)
+    (.step(.step(.zero))) = 2 := rfl
 #check Code.casesOn
 #check Code.noConfusion
 ''', None, None),
@@ -148,7 +147,7 @@ example : p.point.x = 2 ∧ p.color = 5 := ⟨rfl, rfl⟩
   value : α := default
   ok : value = value := rfl
 def config : Config := { α := Nat }
-example : config.value = 0 := rfl
+example : (show Nat from config.value) = 0 := rfl
 example : config.ok = rfl := rfl
 ''', None, None),
     'V1-028': ('''class Measure (α : Type) where { size: α → Nat }
@@ -176,15 +175,25 @@ function predecessor(n: Nat): Nat := match n with { | 0 => 0 | k + 1 => k }
 example : predecessor(7) = 6 := rfl
 ''', None, None),
     'V1-041': ('''function inspect(n: Nat, flag: Bool, h: n = n): n = n :=
-  match (generalizing := true) (motive := fun k _ => k = k) n, flag with
+  match (generalizing := true) n, flag with
   | 0, false => h
   | 0, true => h
   | k + 1, _ => rfl
 example : inspect(0, true, rfl) = rfl := rfl
+function explicitMotive(n: Nat, flag: Bool): n = n :=
+  match (motive := (k : Nat) → Bool → k = k) n, flag with
+  | 0, false => rfl
+  | 0, true => rfl
+  | k + 1, _ => rfl
+example : explicitMotive(3, false) = rfl := rfl
 ''', None, None),
     'V1-042': ('''function inspect(value: Option Nat): Nat :=
   match h : value with {
-    | chosen@(some n) => by { have e : value = chosen := h; exact n }
+    | chosen@(some n) => by {
+        have e : value = some n := h
+        have alias : Option Nat := chosen
+        exact n
+      }
     | none => 0
   }
 example : inspect(some(7)) = 7 := rfl
