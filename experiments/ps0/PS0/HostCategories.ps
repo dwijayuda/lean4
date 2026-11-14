@@ -69,13 +69,7 @@ private function operands(roles : Array((Name × Name)), parser : Parser) : Pars
 @[run_parser_attribute_hooks] const nativeDoOperand : Parser :=
   withFn((fun parse ctx initial =>
     let parsed := parse ctx initial
-    if parsed.hasError then
-      match (peekToken ctx initial).2 with
-      | .ok (.atom _ token) =>
-        if #["let", "have", "for"].contains token then
-          initial.mkUnexpectedError "use the owned ProofScript do statement parser"
-        else parsed
-      | _ => parsed
+    if parsed.hasError then parsed
     else if parsed.stxStack.back.isOfKind ``Lean.Parser.Term.doIf then
       initial.mkUnexpectedError "PS0V1-DO-OWNERSHIP: if uses its PS operand adapter"
     else parsed), (categoryParser `doElem 0))
@@ -306,17 +300,15 @@ const namedDeclaration : Parser :=
   node ``Lean.Parser.Term.letDecl <|
     notFollowedBy((nonReservedSymbol "rec"), "rec") >>
       node(``Lean.Parser.Term.letIdDecl,
-        (atomic((localLhs >> " := ")) >>
-          ((lookahead "for" >> categoryParser `psTerm 0) <|>
-            withForbidden("for", (categoryParser `psTerm 0)))))
+        (atomic((localLhs >> " := ")) >> categoryParser `psTerm 0))
 
 @[run_parser_attribute_hooks] const letElem : Parser :=
   leadingNode ``Lean.Parser.Term.doLet maxPrec <|
-    withPosition((letPrefix >> namedDeclaration))
+    letPrefix >> namedDeclaration
 
 @[run_parser_attribute_hooks] const haveElem : Parser :=
   leadingNode ``Lean.Parser.Term.doHave maxPrec <|
-    withPosition(("have " >> Lean.Parser.Term.letConfig >> namedDeclaration))
+    "have " >> Lean.Parser.Term.letConfig >> namedDeclaration
 
 @[run_parser_attribute_hooks] const matchElem : Parser :=
   leadingNode ``Lean.Parser.Term.doMatch leadPrec <|
