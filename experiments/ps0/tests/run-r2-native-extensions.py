@@ -8,6 +8,15 @@ import re
 import subprocess
 
 CASES = {
+    'V1-063': ('''public import Lean
+public meta import Lean
+open Lean Meta
+def simplifiableR2 : Nat := 42
+dsimproc_decl simplifyR2 (simplifiableR2) := fun _ => return .done (mkNatLit 42)
+example : simplifiableR2 = 42 := by
+  conv => lhs; dsimp only [simplifyR2]
+example (n : Nat) : n + 0 = n := by { simp }
+''', None),
     'V1-072': ('''namespace R2Notation
 scoped infixl:62 " ⊕₀ " => Nat.add
 scoped infixr:65 " ⊗₀ " => Nat.mul
@@ -467,6 +476,41 @@ def main():
         failures.append('V1-097')
     src = out / 'src'
     src.mkdir()
+    deriving_support = src / 'R2Deriving.ps'
+    deriving_support.write_text('''module
+prelude
+public import Lean
+public meta import Lean
+public section
+open Lean Elab Command
+class R2Report (α : Type) where
+  code : Nat
+private meta def deriveR2Report : DerivingHandler := fun names => do
+  for name in names do
+    elabCommand (← `(instance : R2Report $(mkIdent name) := ⟨42⟩))
+  return true
+initialize registerDerivingHandler ``R2Report deriveR2Report
+''', encoding='utf-8')
+    deriving_user = src / 'R2DerivingUser.ps'
+    deriving_user.write_text('''module
+prelude
+public import Lean
+public meta import Lean
+public import R2Deriving
+public meta import R2Deriving
+public section
+inductive R2Derived where
+  | marker
+  deriving R2Report
+example : R2Report.code (α := R2Derived) = 42 := rfl
+''', encoding='utf-8')
+    fixtures['R2Deriving'] = hashlib.sha256(deriving_support.read_bytes()).hexdigest()
+    fixtures['V1-030'] = hashlib.sha256(deriving_user.read_bytes()).hexdigest()
+    derive_code, _ = run('V1-030', ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceGrammar=true',
+                                  f'-KsourceRoot={src}', '-Kroots=R2DerivingUser',
+                                  '-KmoduleNames=R2Deriving,R2DerivingUser', f'-Kdriver={args.driver.resolve()}',
+                                  f'-KprojectBuildDir={out / "deriving"}', 'build', 'R2DerivingUser'])
+    (passed if derive_code == 0 else failures).append('V1-030')
     registration = src / 'R2Registration.ps'
     registration.write_text('''module
 prelude
