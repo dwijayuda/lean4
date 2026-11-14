@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 5,
+    "PENDING": 3,
     "featureFamiliesPending": 1,
-    "boundaryWitnessesPending": 4,
+    "boundaryWitnessesPending": 2,
     "acceptanceCasesPending": 0,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases, capability families, and numbered witnesses.",
-    "PASS": 237,
+    "PASS": 239,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 5,
+    "obligationsPending": 3,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -20758,7 +20758,22 @@
           "checkpointJob": 132536979423,
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132537063664,
-          "status": "IN_PROGRESS"
+          "status": "IN_PROGRESS",
+          "numberedBoundary": {
+            "run": 43629915657,
+            "job": 132554012506,
+            "runner": "cebe38bfe00f46c67d6031770a816589b6f07b73",
+            "source": "0639618d0652821533267767f59512b84979ac7d",
+            "artifact": {
+              "id": 14127802132,
+              "bytes": 24777,
+              "digest": "sha256:e739746d5f9a0d9463c64539881c27552e49aa71b8678cb016d694dffc58f1b0"
+            },
+            "remaining": [
+              "R2-17",
+              "R2-18"
+            ]
+          }
         },
         "remainingNumberedProbe": {
           "run": 43614371826,
@@ -22360,6 +22375,33 @@
         "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
         "fixtureCases": {
           "R2-12": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4"
+        }
+      },
+      {
+        "summary": "The corrected R2-06 witness proved both explicit branches, and the pinned Lean and PS omission controls emitted the same constructor-arity diagnostic. R2-14 emitted PS0V1-CALL-CONFLICT at the protected adjacent call.",
+        "passed": [
+          "R2-06",
+          "R2-14"
+        ],
+        "fixture": "experiments/ps0/tests/run-r2-boundary.py",
+        "source": "0639618d0652821533267767f59512b84979ac7d",
+        "runner": "cebe38bfe00f46c67d6031770a816589b6f07b73",
+        "run": 43629915657,
+        "job": 132554012506,
+        "artifact": {
+          "id": 14127802132,
+          "bytes": 24777,
+          "digest": "sha256:e739746d5f9a0d9463c64539881c27552e49aa71b8678cb016d694dffc58f1b0"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "d446dc87b2f9487919f5c0eb47df7a1163c5e140",
+        "driverSha256": "b81e979e48c732a73a3e433c5e96eb11a4a9838168e1ab16e8093633810fd8dd",
+        "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
+        "fixtureCases": {
+          "R2-06": "6ec3f5772f6339b8111c977643408e029e12397f08822b901324d0acfdba4105",
+          "R2-06-omitted.ps": "ab994d95671eb6c0070bc36013d268ec5021b9adc7c7efe7551a5f687a31ee1e",
+          "R2-06-omitted.lean": "4e62f6c3519e945b68874debecb749665abd84eea69a86cb357035a2ea36300f",
+          "R2-14": "40d6437fbc57303fad7146bee67f1799ca1a1de811e95f07dcb0efb4055874e4"
         }
       }
     ]
@@ -92589,7 +92631,22 @@
         "checkpointJob": 132536979423,
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132537063664,
-        "status": "IN_PROGRESS"
+        "status": "IN_PROGRESS",
+        "numberedBoundary": {
+          "run": 43629915657,
+          "job": 132554012506,
+          "runner": "cebe38bfe00f46c67d6031770a816589b6f07b73",
+          "source": "0639618d0652821533267767f59512b84979ac7d",
+          "artifact": {
+            "id": 14127802132,
+            "bytes": 24777,
+            "digest": "sha256:e739746d5f9a0d9463c64539881c27552e49aa71b8678cb016d694dffc58f1b0"
+          },
+          "remaining": [
+            "R2-17",
+            "R2-18"
+          ]
+        }
       },
       "remainingNumberedProbe": {
         "run": 43614371826,
@@ -94191,6 +94248,33 @@
       "fixtureSha256": "0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3",
       "fixtureCases": {
         "R2-12": "93ac2db14b2f50ce43d2eb1d59ffca9952a6b6d1c2bcba30093019e718475de4"
+      }
+    },
+    {
+      "summary": "The corrected R2-06 witness proved both explicit branches, and the pinned Lean and PS omission controls emitted the same constructor-arity diagnostic. R2-14 emitted PS0V1-CALL-CONFLICT at the protected adjacent call.",
+      "passed": [
+        "R2-06",
+        "R2-14"
+      ],
+      "fixture": "experiments/ps0/tests/run-r2-boundary.py",
+      "source": "0639618d0652821533267767f59512b84979ac7d",
+      "runner": "cebe38bfe00f46c67d6031770a816589b6f07b73",
+      "run": 43629915657,
+      "job": 132554012506,
+      "artifact": {
+        "id": 14127802132,
+        "bytes": 24777,
+        "digest": "sha256:e739746d5f9a0d9463c64539881c27552e49aa71b8678cb016d694dffc58f1b0"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "d446dc87b2f9487919f5c0eb47df7a1163c5e140",
+      "driverSha256": "b81e979e48c732a73a3e433c5e96eb11a4a9838168e1ab16e8093633810fd8dd",
+      "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
+      "fixtureCases": {
+        "R2-06": "6ec3f5772f6339b8111c977643408e029e12397f08822b901324d0acfdba4105",
+        "R2-06-omitted.ps": "ab994d95671eb6c0070bc36013d268ec5021b9adc7c7efe7551a5f687a31ee1e",
+        "R2-06-omitted.lean": "4e62f6c3519e945b68874debecb749665abd84eea69a86cb357035a2ea36300f",
+        "R2-14": "40d6437fbc57303fad7146bee67f1799ca1a1de811e95f07dcb0efb4055874e4"
       }
     }
   ]
