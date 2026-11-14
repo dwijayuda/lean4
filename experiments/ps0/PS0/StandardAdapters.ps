@@ -112,6 +112,7 @@ declare_syntax_cat psWhereFinallySection
 syntax (name := ps0DeclTail) nativeDeclTail : psDeclTail
 
 declare_syntax_cat psDeclValue
+declare_syntax_cat psContractClause
 declare_syntax_cat psDefDeriving
 syntax (name := ps0DefDeriving) Lean.Parser.Command.optDefDeriving : psDefDeriving
 
@@ -145,6 +146,12 @@ syntax (name := ps0StructField) Lean.Parser.Term.structInstLVal
 
 syntax (name := ps0DeclWhere) "where" nativePSStructFields
   (psWhereClause)? : psDeclValue
+
+syntax (name := ps0ContractGiven) Lean.Parser.Command.givenClause : psContractClause
+syntax (name := ps0ContractRequires) Lean.Parser.Command.requiresClause : psContractClause
+syntax (name := ps0ContractEnsures) Lean.Parser.Command.ensuresClause : psContractClause
+syntax (name := ps0ContractValue) (psContractClause)+
+  ":=" psTerm (psDeclTail)? : psDeclValue
 
 syntax (name := psWhereLocalSimple) ":=" psTerm : psWhereLocalValue
 syntax (name := psWhereLocalEquations) nativePSMatchAlts : psWhereLocalValue
@@ -320,7 +327,7 @@ private function lowerOptionalWhere(source : Syntax) : MacroM Syntax := do
   if source.getArgs.isEmpty then return source
   return source.setArg(0, (← lowerWhereClause(source[0])))
 
-private function nativeValue(source : TSyntax `psDeclValue) : MacroM((TSyntax ``Lean.Parser.Command.declVal)) := do
+private function nativeValue(source : TSyntax `psDeclValue, allowContract : Bool := false) : MacroM((TSyntax ``Lean.Parser.Command.declVal)) := do
   let value := source.raw
   if value.isOfKind ``ps0DeclWhere then
     return ⟨mkNode(``Lean.Parser.Command.whereStructInst,
@@ -329,6 +336,21 @@ private function nativeValue(source : TSyntax `psDeclValue) : MacroM((TSyntax ``
   let defaults ← `(Lean.Parser.Command.definition| def __ps0Value := ())
   let suffix := if tail.isMissing then defaults.raw[3][2] else tail[0]
   let whereDecls ← if tail.isMissing then pure(defaults.raw[3][3]) else lowerOptionalWhere(tail[1])
+  if value.isOfKind ``ps0ContractValue then
+    unless allowContract do
+      Macro.throwErrorAt value "PS0V1-CONTRACT: intrinsic clauses require a def or function"
+    let mut clauses := #[mkNullNode #[], mkNullNode #[], mkNullNode #[]]
+    let mut next := 0
+    for clause in value[0].getArgs do
+      let index := if clause.isOfKind ``ps0ContractGiven then 0
+        else if clause.isOfKind ``ps0ContractRequires then 1 else 2
+      if index < next then
+        Macro.throwErrorAt clause "PS0V1-CONTRACT-ORDER: expected given, requires, ensures in order"
+      next := index + 1
+      clauses := clauses.set! index (mkNullNode #[clause[0]])
+    let body := mkNode ``Lean.Parser.Command.declValSimple
+      #[value[1], ← PS0.Syntax.lowerBodyValue(value[2]), suffix, whereDecls]
+    return ⟨mkNode ``Lean.Parser.Command.contractDeclVal (clauses.push body)⟩
   if value.isOfKind ``ps0DeclSimple then
     return ⟨mkNode(``Lean.Parser.Command.declValSimple,
       #[value[0], ← PS0.Syntax.lowerBodyValue(value[1]), suffix, whereDecls])⟩
@@ -352,7 +374,7 @@ macro_rules (kind := ps0StandardDef)
   | `($mods:declModifiers def $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? $value:psDeclValue $[$derivation:psDefDeriving]?) => do
       let bs ← PS0.Binders.lowerTelescope bs
       let ty ← ty.mapM nativeTerm
-      let value ← nativeValue value
+      let value ← nativeValue value true
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, withDeriving decl.raw derivation]
 
@@ -391,7 +413,7 @@ macro_rules (kind := ps0StandardFunction)
   | `($mods:declModifiers function $name:declId $bs:psDeclBinder* $[: $ty:psTerm]? $value:psDeclValue $[$derivation:psDefDeriving]?) => do
       let bs ← PS0.Binders.lowerTelescope bs true
       let ty ← ty.mapM nativeTerm
-      let value ← nativeValue value
+      let value ← nativeValue value true
       let decl ← `(Lean.Parser.Command.definition| def $name:declId $bs:bracketedBinder* $[: $ty:term]? $value:declVal)
       return mkNode ``Lean.Parser.Command.declaration #[mods.raw, withDeriving decl.raw derivation]
 

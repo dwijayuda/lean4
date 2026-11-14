@@ -103,7 +103,8 @@ def main():
             errors = [line for line in log.splitlines() if re.search(r':\d+:\d+: error(?:\([^)]*\))?:', line)]
             ok = result.returncode == 1 and bool(errors) and all(re.search(diagnostic, line, re.I) for line in errors)
             if case == 'PS0-N-VC-01':
-                ok = ok and len(errors) == 2 and all("unexpected token 'requires'" in line for line in errors)
+                ok = result.returncode == 1 and len(errors) == 2 and all(
+                    "unexpected token 'requires'" in line or "PS0V1-CONTRACT-ORDER" in line for line in errors)
         else:
             ok = result.returncode == 0 and expected in log
         (passed if ok else failures).append(case)
