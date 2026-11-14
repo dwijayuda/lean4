@@ -189,6 +189,27 @@ def mutateR2 : StateRefT Nat IO Nat := do
 #print diagnosticR2
 #check_failure diagnosticR2.noSuchProjection
 ''', None),
+    'V1-092': ('''unsafe def runtimeUnsafe : IO Nat := do
+  let value ← IO.mkRef 40
+  value.modify fun n => n + 2
+  value.get
+#eval! show IO Unit from do
+  let result ← runtimeUnsafe
+  unless result == 42 do throw (IO.userError "unsafe runtime result")
+open Lean in
+run_cmd do
+  unless ((← getEnv).find? ``runtimeUnsafe).any ConstantInfo.isUnsafe do
+    throwError "missing unsafe tag"
+''', None),
+    'V1-093': ('''def debugValue : Nat :=
+  dbg_trace "PS0_RUNTIME_DEBUG"
+  42
+def guarded (flag : Bool) : Nat :=
+  if flag then debugValue else unreachable!
+def fatal : Nat := panic! "R2 deliberate panic branch"
+#eval guarded true
+#check fatal
+''', None),
     'PS0-P-EXT-03': ('''public import Lean
 public meta import Lean
 open Lean Elab Command
@@ -368,6 +389,8 @@ def main():
             ok = ok and 'PS0_R2_IO:hello' in log
         if case == 'V1-086':
             ok = ok and 'PS0_R2_TRACE' in log
+        if case == 'V1-093':
+            ok = ok and 'PS0_RUNTIME_DEBUG' in log and re.search(r'^42$', log, re.M)
         if case == 'PS0-N-ASSURE-03':
             ok = ok and 'UNCERTIFIED' in log and 'no verified certificate issued' in log
         if case == 'PS0-N-ASSURE-04':
@@ -379,6 +402,10 @@ def main():
     for case, module, source, expected in [
         ('PS0-P-RUN-03', 'NativeABI', NATIVE_ABI, 'PS0_R2_ABI:42'),
         ('PS0-P-META-01', 'NativeInitializers', INITIALIZERS, 'PS0_R2_INITIALIZERS:17:23'),
+        ('V1-087', 'NativeR2Initializers', INITIALIZERS, 'PS0_R2_INITIALIZERS:17:23'),
+        ('V1-091', 'NativeR2ABI', NATIVE_ABI.replace(
+            'def replacement', '@[export ps0_r2_exported_replacement] def replacement'),
+            'PS0_R2_ABI:42'),
     ]:
         path = src / (module + '.ps')
         path.write_text(source, encoding='utf-8')
@@ -392,6 +419,9 @@ def main():
         if ok:
             code, log = run(case + '-runtime', [build / 'bin/ps0project'])
             ok = code == 0 and log.strip() == expected
+        if case == 'V1-091' and ok:
+            code, log = run(case + '-symbol', ['nm', '-g', build / 'bin/ps0project'])
+            ok = code == 0 and re.search(r'\bT ps0_r2_exported_replacement$', log, re.M) is not None
         (passed if ok else failures).append(case)
         if case == 'PS0-P-RUN-03':
             control = out / 'PS0-N-ASSURE-05.ps'
