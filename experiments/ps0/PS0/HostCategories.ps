@@ -29,6 +29,7 @@ declare_syntax_cat psLoopBinder
 declare_syntax_cat psDataOperand
 declare_syntax_cat psDataTacticOperand
 declare_syntax_cat psDataBinder
+declare_syntax_cat psMatchPattern
 
 namespace PS0.DoLayout
 open Lean.Parser
@@ -187,12 +188,38 @@ const loopBasicFun : Parser :=
       categoryParser `psTerm 0 >> " then")) >> ppSpace >> categoryParser `psTerm 0)) >>
       ppDedent ppSpace >> ppRealFill(("else " >> categoryParser `psTerm 0))))
 
+-- The positional call adapter emits a native pattern application. In
+-- particular an empty application must reach Lean's pattern arity check.
+@[run_parser_attribute_hooks] const patternCall : Parser :=
+  withResultOf(
+    (node `PS0.DoLayout.patternCall <|
+      (PS0.Operators.adjacentIdentifier <|> Lean.Parser.Term.dotIdent) >>
+        checkNoWsBefore >> "(" >>
+        withoutPosition((sepBy((categoryParser `psMatchPattern 0), ",", "," ppSpace, allowTrailingSep))) >>
+        ")"),
+    fun source => .node(source.getHeadInfo, ``Lean.Parser.Term.app,
+      #[source[0], mkNullNode(source[2].getSepArgs)]))
+
+private const matchPatternAlternative : Parser :=
+  node ``Lean.Parser.Term.matchAlt <|
+    "| " >> ppIndent(
+      sepBy1((sepBy1((categoryParser `psMatchPattern 0), ", ")), " | ") >>
+        Lean.Parser.Term.darrow >>
+        checkColGe "alternative right-hand-side to start in a column greater than or equal to the corresponding '|'" >>
+        categoryParser `psTerm 0)
+
+private const matchPatternAlternatives : Parser :=
+  node ``Lean.Parser.Term.matchAlts <| withPosition(many1Indent(ppLine >> matchPatternAlternative))
+
 @[run_parser_attribute_hooks] const matchTerm : Parser :=
   leadingNode ``Lean.Parser.Term.«match» leadPrec <|
     "match " >> optional Lean.Parser.Term.generalizingParam >>
       optional((operands #[(`term, `psTerm)] Lean.Parser.Term.motive)) >>
       sepBy1((operands #[(`term, `psTerm)] Lean.Parser.Term.matchDiscr), ", ") >>
-      " with" >> ppDedent((Lean.Parser.Term.matchAlts((categoryParser `psTerm 0))))
+      " with" >> ppDedent(
+        (withResultOf((node `PS0.DoLayout.bracedAlternatives <|
+          "{" >> matchPatternAlternatives >> "}"), fun source => source[1])) <|>
+        matchPatternAlternatives)
 
 @[run_parser_attribute_hooks] const patternLambda : Parser :=
   leadingNode ``Lean.Parser.Term.«fun» maxPrec <|
@@ -376,6 +403,10 @@ const dataConstructor : Parser :=
     atomic((optional Lean.Parser.Command.docComment >> "\n| ")) >>
       ppGroup((Lean.Parser.Command.declModifiers true >> rawIdent >> dataSignature))
 
+private const dataConstructors : Parser :=
+  withResultOf((node `PS0.DoLayout.bracedConstructors <| "{" >> many dataConstructor >> "}"),
+    fun source => source[1]) <|> many dataConstructor
+
 const dataDeclRecovery : Parser where
   fn := andthenFn(
     (takeUntilFn(fun c => c.isWhitespace || c == '(' || c == ')' || c == ':' || c == '{' || c == '}' || c == '|')),
@@ -383,7 +414,7 @@ const dataDeclRecovery : Parser where
 
 function dataInductive(kind : Name, keyword : String) : Parser :=
   node kind <| symbol keyword >> recover Lean.Parser.Command.declId dataDeclRecovery >>
-    ppIndent dataSignature >> optional((symbol " :=" <|> " where")) >> many dataConstructor >>
+    ppIndent dataSignature >> optional((symbol " :=" <|> " where")) >> dataConstructors >>
     optional((ppDedent ppLine >> dataComputedFields)) >> Lean.Parser.Command.optDeriving >>
     optional((operands #[(`tactic, `psDataTacticOperand)] Lean.Parser.Command.monotonicityBy))
 
@@ -391,7 +422,7 @@ const dataClassInductive : Parser :=
   node ``Lean.Parser.Command.classInductive <|
     atomic((group((symbol "class " >> "inductive ")))) >>
       recover Lean.Parser.Command.declId dataDeclRecovery >> ppIndent dataSignature >>
-      optional((symbol " :=" <|> " where")) >> many dataConstructor >> Lean.Parser.Command.optDeriving
+      optional((symbol " :=" <|> " where")) >> dataConstructors >> Lean.Parser.Command.optDeriving
 
 const dataExtends : Parser :=
   node ``Lean.Parser.Command.«extends» <|
@@ -497,6 +528,11 @@ private function manyPunningFields(source : Syntax) : Bool := Id.run(do
     Lean.Parser.Term.structInst)
 
 end PS0.DoLayout
+
+@[psMatchPattern_parser high]
+const ps0ConstructorPatternCall : Lean.Parser.Parser := PS0.DoLayout.patternCall
+@[psMatchPattern_parser low]
+const ps0NativeMatchPattern : Lean.Parser.Parser := Lean.Parser.termParser
 
 @[psTerm_parser low]
 const ps0NativeTermBridge : Lean.Parser.Parser := PS0.Operators.leading

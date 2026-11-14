@@ -83,7 +83,7 @@ private example : unpack(none) = 0 := rfl
     | k + 1 => k
   }
 function dependent(n: Nat): n = n :=
-  match (motive := fun k => k = k) n with {
+  match (motive := (k : Nat) → k = k) n with {
     | 0 => rfl
     | k + 1 => rfl
   }
@@ -102,7 +102,7 @@ function eliminate(impossible: OnlyZero(1)): Nat := nomatch impossible
 ''', None, None),
     'PS0-N-DATA-01': ('''inductive Negative where
   | mk (consume : Negative → Nat) : Negative
-''', '| mk', r'non positive|non-positive|positivity'),
+''', 'inductive Negative', r'non positive|non-positive|positivity'),
     'PS0-N-DATA-02': ('''const bad: { n: Nat // n < 10 } := ⟨3, True.intro⟩
 ''', 'const bad', r'type mismatch|application type mismatch'),
     'PS0-N-PAT-01': ('''function arbitrary(n: Nat): Nat := n + 1
