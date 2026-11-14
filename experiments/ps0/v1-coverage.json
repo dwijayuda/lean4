@@ -1083,10 +1083,25 @@
       "id": "V1-045",
       "feature": "Local recursion and complete where/finally facilities",
       "sourceBasis": "L-TERM, L-PREDEF",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-045",
+      "qualifiedCommit": "398d07cab0ece49677893dae1cebcb87599bad33",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43622811310",
+      "evidence": {
+        "jobId": 132532019574,
+        "runner": "fa0b5ac3f06c58c02e5ce1e93a9c816585696a17",
+        "artifact": {
+          "id": 14124971964,
+          "name": "ps0-r2-recursion-do-evidence-43622811310",
+          "digest": "sha256:a0a8f54282ec6084d2ec613a193f220d3929aea244ce28a614825609092ad0a2",
+          "bytes": 28742
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "d6623cb2d2dfab442c01770fbdfbb0d828113176516a5ca9148f524d966faeb7",
+        "caseSha256": "5347dbada47bc4de455d98cc9f0291921a73c182876a979b2f0d588f3497a86b"
+      }
     },
     {
       "id": "V1-046",
@@ -9222,12 +9237,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 20,
-    "featureFamiliesPending": 14,
+    "PENDING": 19,
+    "featureFamiliesPending": 13,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 222,
+    "PASS": 223,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19919,7 +19934,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 20,
+    "obligationsPending": 19,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -27946,6 +27961,30 @@
         },
         "supportingCases": {
           "V1-099-no-import": "76dfd4210eaff54180d2f02089aff008e49bc63ccd16a3ed8d2e16c49098da00"
+        }
+      },
+      {
+        "summary": "Linux checked local recursion, a braced where helper, and both native and braced finally tails that fill a proof hole.",
+        "source": "398d07cab0ece49677893dae1cebcb87599bad33",
+        "runner": "fa0b5ac3f06c58c02e5ce1e93a9c816585696a17",
+        "run": 43622811310,
+        "job": 132532019574,
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixture": "tests/run-r2-recursion-do.py",
+        "fixtureSha256": "d6623cb2d2dfab442c01770fbdfbb0d828113176516a5ca9148f524d966faeb7",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14124971964,
+          "name": "ps0-r2-recursion-do-evidence-43622811310",
+          "digest": "sha256:a0a8f54282ec6084d2ec613a193f220d3929aea244ce28a614825609092ad0a2",
+          "bytes": 28742
+        },
+        "passed": [
+          "V1-045"
+        ],
+        "fixtureCases": {
+          "V1-045": "5347dbada47bc4de455d98cc9f0291921a73c182876a979b2f0d588f3497a86b"
         }
       }
     ]
@@ -99475,6 +99514,30 @@
       },
       "supportingCases": {
         "V1-099-no-import": "76dfd4210eaff54180d2f02089aff008e49bc63ccd16a3ed8d2e16c49098da00"
+      }
+    },
+    {
+      "summary": "Linux checked local recursion, a braced where helper, and both native and braced finally tails that fill a proof hole.",
+      "source": "398d07cab0ece49677893dae1cebcb87599bad33",
+      "runner": "fa0b5ac3f06c58c02e5ce1e93a9c816585696a17",
+      "run": 43622811310,
+      "job": 132532019574,
+      "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+      "fixture": "tests/run-r2-recursion-do.py",
+      "fixtureSha256": "d6623cb2d2dfab442c01770fbdfbb0d828113176516a5ca9148f524d966faeb7",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14124971964,
+        "name": "ps0-r2-recursion-do-evidence-43622811310",
+        "digest": "sha256:a0a8f54282ec6084d2ec613a193f220d3929aea244ce28a614825609092ad0a2",
+        "bytes": 28742
+      },
+      "passed": [
+        "V1-045"
+      ],
+      "fixtureCases": {
+        "V1-045": "5347dbada47bc4de455d98cc9f0291921a73c182876a979b2f0d588f3497a86b"
       }
     }
   ]

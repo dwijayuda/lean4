@@ -100,7 +100,7 @@ inductive_fixpoint
 function greatest(n: Nat): Prop := n = 0 ∧ greatest(n)
 coinductive_fixpoint
 example : least(0) := by { rw [least.eq_def]; exact Or.inl rfl }
-example : ¬ greatest(1) := by { rw [greatest.eq_def]; exact fun h => Nat.noConfusion h.1 }
+example : ¬ (greatest 1) := by { rw [greatest.eq_def]; exact fun h => Nat.noConfusion h.1 }
 ''', (), ''),
     'V1-051': ('''structure Pair where { x: Nat; y: Nat }
 def nativePair : Id Pair := do
