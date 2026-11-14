@@ -122,12 +122,13 @@ def main():
     lake = ['lake', '-R', '-f', 'lakefile.project.lean', f'-KsourceRoot={src}',
             '-Kroots=Scopes', '-KrootModule=Scopes.Consumer', '-KmoduleNames=' + ','.join(sorted(MODULES)),
             f'-Kdriver={driver}', f'-KprojectBuildDir={build}']
+    env = {**os.environ, 'LEAN_PATH': str(driver.parent.parent / 'lib/lean')}
     passed = []
     failures = []
 
     def probe(label, command, check):
         result = subprocess.run([str(x) for x in command], stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT, text=True, timeout=180)
+                                stderr=subprocess.STDOUT, text=True, timeout=180, env=env)
         log = result.stdout
         (work / (label + '.log')).write_text(log, encoding='utf-8')
         if not check(result.returncode, log):
@@ -138,7 +139,7 @@ def main():
 
     positive = probe('positive', [*lake, 'build', 'ps0project', 'Scopes.PrivateConsumer',
                      'Scopes.Grouping', 'Scopes.Prelude', 'Scopes.MetaPrivate'],
-                     lambda code, log: code == 0 and 'f x : Nat' in log)
+                     lambda code, log: code == 0 and re.search(r'\(?f x\)? : Nat', log) is not None)
     if positive:
         assert probe('runtime', [build / 'bin/ps0project'],
                      lambda code, log: code == 0 and log.strip() == 'PS0_R2_SCOPE:13:17')
@@ -159,7 +160,7 @@ def main():
     ]:
         if probe(label, [*lake, 'build', 'Scopes.' + module],
                  lambda code, log: code == 1 and any(re.search(match, line, re.I)
-                    for line in log.splitlines() if 'error:' in line and f'{module}.ps:' in line)):
+                    for line in log.splitlines() if re.search(r'error(?:\([^)]*\))?:', line) and f'{module}.ps:' in line)):
             if label != 'restricted':
                 passed.append(label)
     result = {'passed': passed, 'failures': failures,
