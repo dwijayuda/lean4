@@ -90,21 +90,23 @@ private function filterToken(table : TokenMap((Parser × Nat)), token : Name,
   | none => table
   | some parsers => Std.TreeMap.insert(table, token, (parsers.filter keep))
 
--- A native whitespace application may contain an explicitly adjacent PS call.
+-- A native whitespace application may contain a PS call or do block.
 -- Retain the native argument parser for ordinary Lean arguments and syntax data.
 private const whitespaceArgument : Parser :=
   (checkWsBefore "expected space" >> checkColGt "expected to be indented" >>
-    lookahead(adjacentIdentifier >> checkNoWsBefore >> "(") >>
-    categoryParser `psHead maxPrec) <|> Lean.Parser.Term.argument
+    ((lookahead(adjacentIdentifier >> checkNoWsBefore >> "(") >>
+      categoryParser `psHead maxPrec) <|>
+    (lookahead(symbol "do") >> categoryParser `psTerm argPrec))) <|> Lean.Parser.Term.argument
 
 @[run_parser_attribute_hooks] const whitespaceApplication : TrailingParser :=
   withFn((fun parse ctx initial => Id.run(do
     let parsed := parse ctx initial
     if parsed.hasError then return parsed
     let arguments := parsed.stxStack.back[1].getArgs
-    if arguments.any(fun arg => arg.isOfKind `ps0HeadCall || arg.isOfKind `ps0HeadEmptyCall) then
+    if arguments.any(fun arg => arg.isOfKind `ps0HeadCall || arg.isOfKind `ps0HeadEmptyCall ||
+        arg.isOfKind `ps0HostDo) then
       return parsed
-    return initial.mkUnexpectedError "expected an adjacent PS call argument")),
+    return initial.mkUnexpectedError "expected an adjacent PS call or do block argument")),
     (trailingNode(``Lean.Parser.Term.app, leadPrec, maxPrec, many1 whitespaceArgument)))
 
 private unsafe function leadingWith(head : Bool) : ParserFn := fun ctx initial => unsafeBaseIO(do
