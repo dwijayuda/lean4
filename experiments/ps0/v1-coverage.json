@@ -1489,10 +1489,28 @@
       "sourceOrSetup": "`variable (n: Nat)`",
       "requiredInterpretation": "A native explicit section binder, not application.",
       "section": "§1",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.Grouping",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.Grouping": "4078ce1ff1cb30bf2481b4da192c6acbcc51176830e7af363e984c8cdfabbd75"
+        }
+      }
     },
     {
       "id": "PS0-P-SCOPE-02",
@@ -1500,10 +1518,28 @@
       "sourceOrSetup": "`#check (f x)` / `exact (hp)`",
       "requiredInterpretation": "Fresh grouped terms in command/tactic argument positions.",
       "section": "§1, §2",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.Grouping",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.Grouping": "4078ce1ff1cb30bf2481b4da192c6acbcc51176830e7af363e984c8cdfabbd75"
+        }
+      }
     },
     {
       "id": "PS0-P-SCOPE-03",
@@ -1511,12 +1547,32 @@
       "sourceOrSetup": "`module` with `public section`",
       "requiredInterpretation": "Native explicit-module visibility.",
       "section": "§1",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.Explicit, Scopes.Consumer, Scopes.Restricted",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
       "fixtureCandidate": "tests/v1/explicit_private_module.ps",
-      "candidateCoverage": "SOURCE_ADMISSION_CANDIDATE"
+      "candidateCoverage": "SOURCE_ADMISSION_CANDIDATE",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.Explicit": "ca4a9421602f2d3a570ff65f0ab83cff5bf61213df405a625009abf2943e4d74",
+          "Scopes.Consumer": "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97",
+          "Scopes.Restricted": "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68"
+        }
+      }
     },
     {
       "id": "PS0-P-SCOPE-04",
@@ -1524,12 +1580,31 @@
       "sourceOrSetup": "Headerless `.ps` with `public import Init`",
       "requiredInterpretation": "Implicit modern module and public-name default.",
       "section": "§1",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null,
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.Implicit, Scopes.Consumer",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
       "fixtureCandidate": "tests/v1/implicit_public_module.ps",
-      "candidateCoverage": "SOURCE_ADMISSION_CANDIDATE"
+      "candidateCoverage": "SOURCE_ADMISSION_CANDIDATE",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.Implicit": "5945350c57a1d7a22a70b7658e4f2aa8033d83b5e41336b1eb51097e888c358e",
+          "Scopes.Consumer": "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97"
+        }
+      }
     },
     {
       "id": "PS0-P-SCOPE-05",
@@ -1537,10 +1612,30 @@
       "sourceOrSetup": "`meta import Lean` / `public meta import Lean`",
       "requiredInterpretation": "Stage availability under native module rules.",
       "section": "§1",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.MetaPublic, Scopes.MetaPrivate, Scopes.Consumer",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.MetaPublic": "3fa7f25b369c12b64a4863a20c37eb3580f3718a1a6c7991474790d7d244d0af",
+          "Scopes.MetaPrivate": "e1db84d27a9a3c0613726422bfe3dcefb618d93f6136895536a122c714775618",
+          "Scopes.Consumer": "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97"
+        }
+      }
     },
     {
       "id": "PS0-P-SCOPE-06",
@@ -1548,10 +1643,30 @@
       "sourceOrSetup": "`import all M`",
       "requiredInterpretation": "Native all/private access where valid.",
       "section": "§1",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.Explicit, Scopes.PrivateConsumer, Scopes.Restricted",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.Explicit": "ca4a9421602f2d3a570ff65f0ab83cff5bf61213df405a625009abf2943e4d74",
+          "Scopes.PrivateConsumer": "71126a4a3a44e8e66ad38b4d16e33a659c1321d85074823e0fce320c7965eaa5",
+          "Scopes.Restricted": "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68"
+        }
+      }
     },
     {
       "id": "PS0-P-SCOPE-07",
@@ -1559,10 +1674,28 @@
       "sourceOrSetup": "`open scoped N` / `open N renaming x → y`",
       "requiredInterpretation": "Distinct scoped/naming behavior.",
       "section": "§1",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.Grouping",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.Grouping": "4078ce1ff1cb30bf2481b4da192c6acbcc51176830e7af363e984c8cdfabbd75"
+        }
+      }
     },
     {
       "id": "PS0-P-SCOPE-08",
@@ -1570,10 +1703,28 @@
       "sourceOrSetup": "`prelude` in a proper bootstrap module",
       "requiredInterpretation": "No injected ordinary prelude dependency.",
       "section": "§1, §11",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.Prelude",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.Prelude": "2979128781a225738011bc6358ddbeced99a7a532dff1ad8569db01b62f9fb95"
+        }
+      }
     },
     {
       "id": "PS0-P-DATA-01",
@@ -2319,10 +2470,28 @@
       "sourceOrClaim": "`public import all M`",
       "expectedCategory": "ENV/PARSE",
       "reason": "Native header restriction: separate public import from all/private access.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.PublicAll",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.PublicAll": "7d624827a05ba4d7c6c9216eafae10845f1ab6e3cc899a582edd013fb47f1128"
+        }
+      }
     },
     {
       "id": "PS0-N-MOD-02",
@@ -2330,10 +2499,28 @@
       "sourceOrClaim": "Import following an ordinary declaration",
       "expectedCategory": "PARSE",
       "reason": "Imports belong in the header.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.LateImport",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.LateImport": "5ed6526fa6ea4580ec7141c3053360becf6607336b71f9633432addcb3f90748"
+        }
+      }
     },
     {
       "id": "PS0-N-MOD-03",
@@ -2341,10 +2528,28 @@
       "sourceOrClaim": "A runtime reference to a meta-only definition",
       "expectedCategory": "ELAB",
       "reason": "Native staging restriction.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-scope.py :: Scopes.MetaRuntime",
+      "qualifiedCommit": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43579464962",
+      "evidence": {
+        "jobId": 132400875503,
+        "runner": "15847d69f9547202631477776959067c5e8ab982",
+        "artifact": {
+          "id": 14107737743,
+          "name": "ps0-r2-scope-evidence-43579464962",
+          "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+          "bytes": 19127,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+        "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+        "fixtureModules": {
+          "Scopes.MetaRuntime": "582f3c45f3096d4f91c682574b0fddcdcbbbfcb10073d3597a0bcd87b32d080f"
+        }
+      }
     },
     {
       "id": "PS0-N-MOD-04",
@@ -6241,12 +6446,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 209,
+    "PENDING": 198,
     "featureFamiliesPending": 100,
     "boundaryWitnessesPending": 31,
-    "acceptanceCasesPending": 78,
-    "note": "Twenty-one finite R2 call obligations passed in addition to the declaration batch and two historical passes.",
-    "PASS": 33,
+    "acceptanceCasesPending": 67,
+    "note": "Finite R2 scope and module cases join the declaration, call, and historical passes.",
+    "PASS": 44,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -16938,7 +17143,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 209,
+    "obligationsPending": 198,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -23345,6 +23550,84 @@
           }
         }
       }
+    },
+    "r2ScopeQualification": {
+      "run": 43579464962,
+      "job": 132400875503,
+      "source": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+      "runner": "15847d69f9547202631477776959067c5e8ab982",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14107737743,
+        "name": "ps0-r2-scope-evidence-43579464962",
+        "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+        "bytes": 19127,
+        "archiveDigestVerified": true
+      },
+      "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+      "fixtureModules": {
+        "Scopes.Explicit": "ca4a9421602f2d3a570ff65f0ab83cff5bf61213df405a625009abf2943e4d74",
+        "Scopes.Implicit": "5945350c57a1d7a22a70b7658e4f2aa8033d83b5e41336b1eb51097e888c358e",
+        "Scopes.MetaPublic": "3fa7f25b369c12b64a4863a20c37eb3580f3718a1a6c7991474790d7d244d0af",
+        "Scopes.MetaPrivate": "e1db84d27a9a3c0613726422bfe3dcefb618d93f6136895536a122c714775618",
+        "Scopes.Prelude": "2979128781a225738011bc6358ddbeced99a7a532dff1ad8569db01b62f9fb95",
+        "Scopes.Grouping": "4078ce1ff1cb30bf2481b4da192c6acbcc51176830e7af363e984c8cdfabbd75",
+        "Scopes.Consumer": "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97",
+        "Scopes.PrivateConsumer": "71126a4a3a44e8e66ad38b4d16e33a659c1321d85074823e0fce320c7965eaa5",
+        "Scopes.Restricted": "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68",
+        "Scopes.PublicAll": "7d624827a05ba4d7c6c9216eafae10845f1ab6e3cc899a582edd013fb47f1128",
+        "Scopes.LateImport": "5ed6526fa6ea4580ec7141c3053360becf6607336b71f9633432addcb3f90748",
+        "Scopes.MetaRuntime": "582f3c45f3096d4f91c682574b0fddcdcbbbfcb10073d3597a0bcd87b32d080f"
+      },
+      "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+      "driverArtifact": {
+        "run": 43534267147,
+        "job": 132388696712,
+        "id": 14107360730,
+        "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+        "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5"
+      },
+      "passed": [
+        "PS0-P-SCOPE-01",
+        "PS0-P-SCOPE-02",
+        "PS0-P-SCOPE-03",
+        "PS0-P-SCOPE-04",
+        "PS0-P-SCOPE-05",
+        "PS0-P-SCOPE-06",
+        "PS0-P-SCOPE-07",
+        "PS0-P-SCOPE-08",
+        "PS0-N-MOD-01",
+        "PS0-N-MOD-02",
+        "PS0-N-MOD-03"
+      ],
+      "failures": [],
+      "runtime": "PS0_R2_SCOPE:13:17",
+      "prelude": {
+        "header": {
+          "isModule": true,
+          "imports": []
+        },
+        "sourceMapSchema": "ps0-source-map/1",
+        "originalByteSize": 74,
+        "segments": [
+          {
+            "kind": "original",
+            "originalEnd": 74,
+            "originalStart": 0,
+            "preparedEnd": 74,
+            "preparedStart": 0
+          }
+        ]
+      },
+      "diagnostics": {
+        "ordinaryImport": "Unknown identifier `Explicit.internalDefault`",
+        "publicAllPS": "PS0-MODULE-HEADER: invalid import header",
+        "publicAllNative": "cannot use `all` with `public import`",
+        "lateImport": "invalid 'import' command, it must be used in the beginning of the file",
+        "metaRuntime": "Invalid definition `runtimeValue`, may not access declaration `metaValue` marked as `meta`"
+      },
+      "summary": "The ordinary Lake project graph built and linked the consumer. Its output was `PS0_R2_SCOPE:13:17`. The fixtures checked section binders, grouped terms, explicit and implicit module visibility, private and public meta imports, `import all`, and scoped notation with a renamed open. The bootstrap prelude had no imports and one original source-map segment spanning all 74 bytes. Linux also confirmed the public/all restriction with a pinned native Lean control, the late import rejection, and the meta-to-runtime rejection. The compiler source was unchanged for this batch."
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -93252,5 +93535,83 @@
         }
       }
     }
+  },
+  "r2ScopeQualification": {
+    "run": 43579464962,
+    "job": 132400875503,
+    "source": "c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13",
+    "runner": "15847d69f9547202631477776959067c5e8ab982",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "artifact": {
+      "id": 14107737743,
+      "name": "ps0-r2-scope-evidence-43579464962",
+      "digest": "sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6",
+      "bytes": 19127,
+      "archiveDigestVerified": true
+    },
+    "fixtureSha256": "aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530",
+    "fixtureModules": {
+      "Scopes.Explicit": "ca4a9421602f2d3a570ff65f0ab83cff5bf61213df405a625009abf2943e4d74",
+      "Scopes.Implicit": "5945350c57a1d7a22a70b7658e4f2aa8033d83b5e41336b1eb51097e888c358e",
+      "Scopes.MetaPublic": "3fa7f25b369c12b64a4863a20c37eb3580f3718a1a6c7991474790d7d244d0af",
+      "Scopes.MetaPrivate": "e1db84d27a9a3c0613726422bfe3dcefb618d93f6136895536a122c714775618",
+      "Scopes.Prelude": "2979128781a225738011bc6358ddbeced99a7a532dff1ad8569db01b62f9fb95",
+      "Scopes.Grouping": "4078ce1ff1cb30bf2481b4da192c6acbcc51176830e7af363e984c8cdfabbd75",
+      "Scopes.Consumer": "a06fb4bc7b6f597302ed914dc318ce5c3f2a7677222f698eb6fa43cc6c529b97",
+      "Scopes.PrivateConsumer": "71126a4a3a44e8e66ad38b4d16e33a659c1321d85074823e0fce320c7965eaa5",
+      "Scopes.Restricted": "516d0c176f2150e3009ee313aa54eec7f0b072c05008b0dfdb7d3a1a9cb5ad68",
+      "Scopes.PublicAll": "7d624827a05ba4d7c6c9216eafae10845f1ab6e3cc899a582edd013fb47f1128",
+      "Scopes.LateImport": "5ed6526fa6ea4580ec7141c3053360becf6607336b71f9633432addcb3f90748",
+      "Scopes.MetaRuntime": "582f3c45f3096d4f91c682574b0fddcdcbbbfcb10073d3597a0bcd87b32d080f"
+    },
+    "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef",
+    "driverArtifact": {
+      "run": 43534267147,
+      "job": 132388696712,
+      "id": 14107360730,
+      "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+      "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5"
+    },
+    "passed": [
+      "PS0-P-SCOPE-01",
+      "PS0-P-SCOPE-02",
+      "PS0-P-SCOPE-03",
+      "PS0-P-SCOPE-04",
+      "PS0-P-SCOPE-05",
+      "PS0-P-SCOPE-06",
+      "PS0-P-SCOPE-07",
+      "PS0-P-SCOPE-08",
+      "PS0-N-MOD-01",
+      "PS0-N-MOD-02",
+      "PS0-N-MOD-03"
+    ],
+    "failures": [],
+    "runtime": "PS0_R2_SCOPE:13:17",
+    "prelude": {
+      "header": {
+        "isModule": true,
+        "imports": []
+      },
+      "sourceMapSchema": "ps0-source-map/1",
+      "originalByteSize": 74,
+      "segments": [
+        {
+          "kind": "original",
+          "originalEnd": 74,
+          "originalStart": 0,
+          "preparedEnd": 74,
+          "preparedStart": 0
+        }
+      ]
+    },
+    "diagnostics": {
+      "ordinaryImport": "Unknown identifier `Explicit.internalDefault`",
+      "publicAllPS": "PS0-MODULE-HEADER: invalid import header",
+      "publicAllNative": "cannot use `all` with `public import`",
+      "lateImport": "invalid 'import' command, it must be used in the beginning of the file",
+      "metaRuntime": "Invalid definition `runtimeValue`, may not access declaration `metaValue` marked as `meta`"
+    },
+    "summary": "The ordinary Lake project graph built and linked the consumer. Its output was `PS0_R2_SCOPE:13:17`. The fixtures checked section binders, grouped terms, explicit and implicit module visibility, private and public meta imports, `import all`, and scoped notation with a renamed open. The bootstrap prelude had no imports and one original source-map segment spanning all 74 bytes. Linux also confirmed the public/all restriction with a pinned native Lean control, the late import rejection, and the meta-to-runtime rejection. The compiler source was unchanged for this batch."
   }
 }

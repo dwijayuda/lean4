@@ -1,5 +1,13 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-14 — R2 scope and module conformance
+
+Linux qualified 11 finite R2 obligations covering `PS0-P-SCOPE-01` through `PS0-P-SCOPE-08` and `PS0-N-MOD-01` through `PS0-N-MOD-03`. The ordinary Lake project graph built and linked the consumer. Its output was `PS0_R2_SCOPE:13:17`. The fixtures checked section binders, grouped terms, explicit and implicit module visibility, private and public meta imports, `import all`, and scoped notation with a renamed open. The bootstrap prelude had no imports and one original source-map segment spanning all 74 bytes. Linux also confirmed the public/all restriction with a pinned native Lean control, the late import rejection, and the meta-to-runtime rejection. The compiler source was unchanged for this batch.
+
+Fixture source `c369a1afe8a6ee2e1e2c8f85206ec80adc4abb13`, runner `15847d69f9547202631477776959067c5e8ab982`, pinned Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`, and frozen reference Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`. The job used the audited stage-two prefix from run `43534267147`, artifact `14107360730`. Compiler SHA-256 `aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef` and fixture runner SHA-256 `aa18d1bc4ed5e5a11b2ff6506355045e81b28608f10ab5a0c9b6c7378c4df530`. Evidence artifact `14107737743` has digest `sha256:51718170e6323a83fbb2eafdee9cc5e424c3f95c86db327cc7d59f80ff8b03a6` and 19,127 bytes. [Linux qualification](https://github.com/dwijayuda/pskernel/actions/runs/43579464962/job/132400875503)
+
+The ledger now records **198 pending and 44 finite passes**. The 100 capability families and 31 boundary witnesses remain pending.
+
 ## 2026-11-14 — Call-precedence revision passed the complete two-stage fixed point
 
 All 12 jobs in Linux run `43534267147` passed at source `c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5`, runner `343c6939709fb62d3af6eef0cdddf1b7fdb4f6a6`, and pinned Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. The published bootstrap seeded the first native Lake build. Both stages linked the executable and static library, checked the relocated executable, and reported 78,714 mapped PS declarations each. The exact retained stage-one compiler prefix built stage two. Stage one artifact `14097057738` has digest `sha256:00cf00a76bc7e4cc516182d9456dd667e0e39fda178749e94663b976b51db026` and 285,002,179 bytes. [Stage one job](https://github.com/dwijayuda/pskernel/actions/runs/43534267147/job/132314225341) Stage two artifact `14107360730` has digest `sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1` and 285,002,372 bytes. [Stage two job](https://github.com/dwijayuda/pskernel/actions/runs/43534267147/job/132388696712)
