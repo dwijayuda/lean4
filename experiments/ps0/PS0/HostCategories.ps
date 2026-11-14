@@ -175,7 +175,8 @@ const loopBasicFun : Parser :=
           let parsed := parse ctx initial
           if parsed.hasError then parsed else
             let body := parsed.stxStack.back
-            (parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "then")).pushSyntax body[1]),
+            let stack := parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "then")
+            stack.pushSyntax body[1]),
           (node nullKind <| "{" >> categoryParser `psTerm 0 >> "}")) >>
         " else " >> withFn((fun parse => withResultOfFn(parse, fun body => body[1])),
           (node nullKind <| "{" >> categoryParser `psTerm 0 >> "}"))) <|>
@@ -324,7 +325,8 @@ const forDeclaration : Parser :=
         let parsed := parse ctx initial
         if parsed.hasError then parsed else
           let body := parsed.stxStack.back
-          (parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "do")).pushSyntax body),
+          let stack := parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "do")
+          stack.pushSyntax body),
         (operands #[ (`doElem, `psDoElem) ] Lean.Parser.Term.doSeqBracketed))) <|>
     (sepBy1 forDeclaration ", " >> optional loopInvariant >> optional loopDecreasing >> " do " >> sequence)
 

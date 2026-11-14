@@ -43,6 +43,13 @@ run_cmd do
     let .forallE _ type _ _ := (← getConstInfo name).type | throwError "missing telescope"
     unless type.getAppFn.isConstOf annotation do throwError "incorrect binder annotation"
 '''),
+    '27': (None, None, '''open Lean in
+run_cmd do
+  let some (.thmInfo _) := (← getEnv).find? ``plusOne.spec | throwError "missing checked spec"
+  let assumptions ← collectAxioms ``plusOne.spec
+  if assumptions.contains ``sorryAx then throwError "spec depends on sorry"
+  logInfo m!"PS0_R2_SPEC_ASSUMPTIONS {assumptions}"
+'''),
 }
 
 
@@ -83,7 +90,7 @@ def main():
         if case == '02':
             ok = ok and 'does not depend on any axioms' in log
         if case == '25':
-            ok = ok and 'Nat → Nat' in log
+            ok = ok and 'makeAdder ()' in log
         (passed if ok else failures).append(case_id)
         print(case_id, 'PASS' if ok else 'FAIL', result.returncode, log, flush=True)
     evidence = {'passed': passed, 'failures': failures, 'fixtures': fixtures,
