@@ -9,7 +9,7 @@ import subprocess
 
 CASES = {
     'PS0-P-REC-01': ('''function down(n: Nat): Nat :=
-  if n == 0 then 0 else 1 + down(n - 1)
+  if n = 0 then 0 else 1 + down(n - 1)
 termination_by n
 decreasing_by omega
 private example : down(4) = 4 := by decide
@@ -17,13 +17,15 @@ private example : down(4) = 4 := by decide
     'PS0-P-REC-02': ('''partial function spin(n: Nat): Nat := spin(n)
 open Lean in
 run_cmd do
-  let some info := (← getEnv).find? ``spin | throwError "missing spin"
-  unless info.isPartial do throwError "spin did not retain partial classification"
+  let env ← getEnv
+  let some (.opaqueInfo _) := env.find? ``spin | throwError "missing opaque logical interface"
+  unless (env.find? (Compiler.mkUnsafeRecName ``spin)).any ConstantInfo.isPartial do
+    throwError "missing partial implementation"
 ''', (), ''),
     'PS0-P-REC-03': ('''function eventually(n: Nat): Option Nat :=
   if n == 0 then some(7) else eventually(n - 1)
 partial_fixpoint
-private example : eventually(0) = some(7) := by rw [eventually.eq_def]
+private example : eventually(0) = some(7) := by simp [eventually.eq_def]
 ''', (), ''),
     'PS0-P-REC-04': ('''function least(n: Nat): Prop := n = 0 ∨ least(n - 1)
 inductive_fixpoint
@@ -32,7 +34,7 @@ coinductive_fixpoint
 private example : least(0) := by
   rw [least.eq_def]
   exact Or.inl rfl
-private example : ¬greatest(1) := by
+private example : ¬(greatest(1)) := by
   rw [greatest.eq_def]
   exact fun h => Nat.noConfusion h.1
 ''', (), ''),
@@ -54,35 +56,38 @@ private example : Id.run(value) = 33 := rfl
     n := n + 1
   repeat { n := n + 1 } until n == 6
   return n
-#eval if Id.run(value) == 6 then pure () else throw (IO.userError "loop oracle")
+#eval show IO Unit from do
+  unless Id.run(value) == 6 do throw(IO.userError("loop oracle"))
 ''', (), ''),
     'PS0-P-DO-04': ('''function getValue(x: Option Nat): Id Nat := do
-  if let some n ← (pure x : Id (Option Nat)) then
+  if let some n ← (pure x : Id(Option Nat)) then
     return n
   else
     return 0
 private example : Id.run(getValue(some(7))) = 7 := rfl
 private example : Id.run(getValue(none)) = 0 := rfl
 ''', (), ''),
-    'PS0-P-DO-05': ('''def wrap {α : Type} (body : Id α) : Id α := body
-const value: Id Nat := do
+    'PS0-P-DO-05': ('''def wrap {α : Type} (body : Option α) : Option α := body
+const value: Option Nat := do
   wrap(do← { return 7 })
   return 9
-private example : Id.run(value) = 7 := rfl
+private example : value = some(7) := rfl
 ''', (), ''),
     'PS0-P-DO-06': ('''def runCatch : IO Nat := do
   let cleanup ← IO.mkRef false
   let value ← try
-    throw (IO.userError "trigger")
+    throw(IO.userError("trigger"))
   catch e : IO.Error =>
-    return if e.toString == "trigger" then 7 else 0
+    match e with
+    | .userError msg => pure(if msg == "trigger" then 7 else 0)
+    | _ => pure 0
   finally
     cleanup.set true
   if ← cleanup.get then return value else return 0
 
 def runPatternCatch : IO Nat := do
   try
-    throw (IO.userError "pattern")
+    throw(IO.userError("pattern"))
   catch
   | .userError msg => return if msg == "pattern" then 9 else 0
   | _ => return 0
@@ -92,31 +97,31 @@ def runPatternCatch : IO Nat := do
 #eval show IO Unit from do
   let typed ← runCatch
   let patterned ← runPatternCatch
-  unless typed == 7 && patterned == 9 do throw (IO.userError "catch oracle")
+  unless typed == 7 && patterned == 9 do throw(IO.userError("catch oracle"))
 ''', (), ''),
     'PS0-N-REC-01': ('''function bad(n: Nat): Nat := match n with
   | 0 => 0
   | k + 1 => bad(k)
 termination_by structural n
 decreasing_by omega
-''', ('termination_by', 'decreasing_by'), r'structural.*decreasing_by|decreasing_by.*structural'),
-    'PS0-N-REC-02': ('''function bad(n: Nat): Nat := bad(n)
+''', ('termination_by', 'decreasing_by'), r'Incompatible termination hint.*structural'),
+    'PS0-N-REC-02': ('''function bad(n: Nat): Nat := if n = 0 then 0 else bad(n + 1)
 termination_by n
 decreasing_by omega
 ''', ('decreasing_by', 'function bad'), r'omega could not prove|failed to prove termination|could not prove|failed to discharge'),
-    'PS0-N-REC-03': ('''function bad(n: Nat): Prop := ¬bad(n)
+    'PS0-N-REC-03': ('''function bad(n: Nat): Prop := ¬(bad(n))
 inductive_fixpoint
 ''', ('function bad', 'inductive_fixpoint'), r'monotonicity|monotone'),
     'PS0-N-DO-01': ('''const bad: Id Nat := do
   let n := 1
   n := 2
   return n
-''', ('n := 2',), r'not mutable|immutable|cannot be reassigned'),
+''', ('n := 2',), r'cannot be mutated'),
     'PS0-N-DO-02': ('''const badBreak: Id Unit := do
   break
 const badContinue: Id Unit := do
   continue
-''', ('  break', '  continue'), r'outside.*loop|must be.*loop|only.*loop|within.*loop'),
+''', ('  break', '  continue'), r'must be nested inside a loop'),
     'PS0-N-DO-03': ('''def wrap (body : Id Nat) (after : Nat) : Id Nat := body
 const bad: Id Nat := do
   wrap(do← { return 7 }, 9)
