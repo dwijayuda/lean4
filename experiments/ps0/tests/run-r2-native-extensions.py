@@ -212,6 +212,34 @@ open Lean in
 run_cmd do
   unless Lean.versionString.startsWith "4.35.0" do throwError "unexpected pinned Lean version"
 ''', None),
+    'V1-096': ('''public meta import Lean
+/-- A Markdown docstring. -/
+def markdownR2 : Nat := 1
+set_option doc.verso true in
+/-- A *Verso* docstring. -/
+def versoR2 : Nat := 2
+recommended_spelling "markdownR2" for "R2" in [markdownR2]
+/-- An R2 diagnostic explanation. -/
+register_error_explanation lean.r2Fixture {
+  summary := "R2 diagnostic fixture."
+  sinceVersion := "4.35.0"
+}
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let some (.inl _) ← findInternalDocString? env ``markdownR2 | throwError "Markdown missing"
+  let some (.inr _) ← findInternalDocString? env ``versoR2 | throwError "Verso missing"
+  let some _ ← getErrorExplanation? `lean.r2Fixture | throwError "explanation missing"
+''', None),
+    'V1-098': ('''public meta import Lean
+public meta import Lean.Server
+open Lean Elab Command Meta
+run_cmd liftTermElabM do
+  let pretty ← PrettyPrinter.ppExpr (mkNatLit 42)
+  unless pretty.pretty == "42" do throwError "pretty printer changed"
+#check Lean.Server.FileWorker.workerMain
+#check Lean.Compiler.LCNF.Decl
+''', None),
     'V1-099': ('''public import Lake
 public meta import Lake
 open Lake DSL
