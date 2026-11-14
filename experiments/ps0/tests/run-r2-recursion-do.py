@@ -78,6 +78,29 @@ where {
 }
 example : countDown(4) = 4 := rfl
 example : useWhere(4) = 5 := rfl
+function nativeProof(n: Nat): Nat := ?value
+where
+finally
+  exact(n + 3)
+function bracedProof(n: Nat): Nat := ?value
+where { finally { exact(n + 4) } }
+example : nativeProof(4) = 7 ∧ bracedProof(4) = 8 := ⟨rfl, rfl⟩
+''', (), ''),
+    'V1-050': ('''public import Lean
+inductive Reached : Nat → Prop where
+  | base : Reached 0
+  | step : Reached n → Reached(n + 1)
+coinductive Remains : Nat → Prop where
+  | step : Remains n → Remains n
+example : Reached 1 := .step .base
+#check Remains.step
+#check Remains
+function least(n: Nat): Prop := n = 0 ∨ least(n - 1)
+inductive_fixpoint
+function greatest(n: Nat): Prop := n = 0 ∧ greatest(n)
+coinductive_fixpoint
+example : least(0) := by { rw [least.eq_def]; exact Or.inl rfl }
+example : ¬ greatest(1) := by { rw [greatest.eq_def]; exact fun h => Nat.noConfusion h.1 }
 ''', (), ''),
     'V1-051': ('''structure Pair where { x: Nat; y: Nat }
 def nativePair : Id Pair := do
@@ -256,7 +279,7 @@ const bad: Id Nat := do
 }
 for family, case in {
     'V1-047': 'PS0-P-REC-01', 'V1-048': 'PS0-P-REC-02',
-    'V1-049': 'PS0-P-REC-03', 'V1-050': 'PS0-P-REC-04',
+    'V1-049': 'PS0-P-REC-03',
     'V1-056': 'PS0-P-DO-02',
     'V1-057': 'PS0-P-DO-03', 'V1-059': 'PS0-P-DO-05',
     'V1-060': 'PS0-P-DO-06',
