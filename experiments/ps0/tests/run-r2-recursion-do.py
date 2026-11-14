@@ -8,6 +8,53 @@ import re
 import subprocess
 
 CASES = {
+    'V1-046': ('''function length(xs: List Nat): Nat := match xs with
+  | [] => 0
+  | _ :: tail => 1 + length(tail)
+termination_by structural xs
+private example : length([1, 2, 3]) = 3 := rfl
+''', (), ''),
+    'V1-052': ('''const result: Option Nat := do
+  let x ← some 5
+  let y := 2 + (← some 3)
+  pure(x + y)
+private example : result = some(10) := rfl
+''', (), ''),
+    'V1-053': ('''const result: Option Nat := do
+  let mut count := 2
+  count := count + 3
+  count ← some count.succ
+  return count
+private example : result = some(6) := rfl
+''', (), ''),
+    'V1-054': ('''function fallback(input: Option Nat): Id Nat := do
+  let some n := input | return 99
+  return n
+private example : Id.run(fallback(some(7))) = 7 := rfl
+private example : Id.run(fallback(none)) = 99 := rfl
+''', (), ''),
+    'V1-055': ('''function branch(input: Option Nat): Id Nat := do
+  let mut n := 0
+  if let some k ← (pure input : Id(Option Nat)) then
+    n := k
+  else
+    n := 4
+  unless n == 7 do n := n + 1
+  return n
+private example : Id.run(branch(some(7))) = 7 := rfl
+private example : Id.run(branch(none)) = 5 := rfl
+''', (), ''),
+    'V1-058': ('''function run(limit: Nat): Id Nat := do
+  let mut total := 0
+  for n in [1, 2, 3, 4] do
+    if n == 1 then continue
+    if n == limit then return total + 100
+    if n == 4 then break
+    total := total + n
+  return total
+private example : Id.run(run(3)) = 102 := rfl
+private example : Id.run(run(9)) = 5 := rfl
+''', (), ''),
     'PS0-P-REC-01': ('''function down(n: Nat): Nat :=
   if n = 0 then 0 else 1 + down(n - 1)
 termination_by n
@@ -128,6 +175,14 @@ const bad: Id Nat := do
   wrap(do← { return 7 }, 9)
 ''', ('wrap(do',), r'do.*forward|do←.*(?:last|argument|allowed|unexpected)|(?:last|argument|allowed|unexpected).*do←'),
 }
+for family, case in {
+    'V1-047': 'PS0-P-REC-01', 'V1-048': 'PS0-P-REC-02',
+    'V1-049': 'PS0-P-REC-03', 'V1-050': 'PS0-P-REC-04',
+    'V1-051': 'PS0-P-DO-01', 'V1-056': 'PS0-P-DO-02',
+    'V1-057': 'PS0-P-DO-03', 'V1-059': 'PS0-P-DO-05',
+    'V1-060': 'PS0-P-DO-06',
+}.items():
+    CASES[family] = CASES[case]
 
 def main():
     parser = argparse.ArgumentParser()
