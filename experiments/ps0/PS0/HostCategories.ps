@@ -426,7 +426,12 @@ const bracedDataStructFields : Parser :=
       mkNullNode(source.getArgs.map(fun field => field[0])))),
       (many1(group((checkColGe >> dataStructField >> optional((symbol ";" <|> symbol ","))))))))
 
+const dataStructFieldsWithConstructor : Parser :=
+  optional dataStructCtor >> dataStructFields
+
 const dataStructBody : Parser :=
+  (atomic((lookahead((withPosition((dataStructImplicitBinder >> checkColEq >> dataStructField)))))) >>
+    dataStructFieldsWithConstructor) <|>
   withFn((fun parse ctx initial =>
     let parsed := parse ctx initial
     if parsed.hasError then parsed else
@@ -435,7 +440,7 @@ const dataStructBody : Parser :=
       (stack.pushSyntax body[1]).pushSyntax body[2]),
     (node `PS0.DoLayout.bracedDataStruct <|
       "{" >> optional dataStructCtor >> bracedDataStructFields >> "}")) <|>
-    (optional dataStructCtor >> dataStructFields)
+    dataStructFieldsWithConstructor
 
 const dataComputedField : Parser :=
   node ``Lean.Parser.Command.computedField <|
