@@ -374,7 +374,7 @@ scoped syntax (name := ps0StandardExample) (priority := 20000)
 private function lowerDefinition(stx : Syntax, isFunction : Bool) : MacroM Syntax := do
   let name : TSyntax ``declId := ⟨stx[2]⟩
   let binders ← PS0.Binders.lowerTelescope(stx[3].getArgs.map((⟨·⟩ : Syntax → TSyntax `psDeclBinder)), isFunction)
-  let type ← if stx[4].getArgs.isEmpty then pure none else do
+  let type : Option((TSyntax `term)) ← if stx[4].getArgs.isEmpty then pure none else do
     return some(← nativeTerm ⟨stx[4][1][0]⟩)
   let value ← nativeValue ⟨stx[5]⟩ true
   let derivation : Option((TSyntax `psDefDeriving)) := stx[6].getArgs[0]?.map((⟨·⟩))
