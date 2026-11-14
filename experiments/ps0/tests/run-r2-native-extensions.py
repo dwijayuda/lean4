@@ -8,6 +8,64 @@ import re
 import subprocess
 
 CASES = {
+    'V1-072': ('''namespace R2Notation
+scoped infixl:62 " ⊕₀ " => Nat.add
+scoped infixr:65 " ⊗₀ " => Nat.mul
+end R2Notation
+section
+open scoped R2Notation
+local notation:max "firstOf[" x "," y "]" => Prod.fst (x, y)
+example : 1 ⊕₀ 2 ⊗₀ 3 = 7 := rfl
+example : firstOf[4, 5] = 4 := rfl
+end
+''', None),
+    'V1-073': ('''public meta import Lean
+declare_syntax_cat r2number
+syntax "answer" : r2number
+syntax r2numberAlias := r2number
+syntax "readR2[" r2numberAlias "]" : term
+macro_rules | `(readR2[answer]) => `(42)
+example : readR2[answer] = (42 : Nat) := rfl
+binder_predicate x " ≪₀ " y:term => `($x < $y)
+example : (∀ x ≪₀ 0, x = (23 : Nat)) := by { intro x h; omega }
+''', None),
+    'V1-075': ('''public meta import Lean
+syntax "chooseR2 " term : term
+macro_rules
+  | `(chooseR2 true) => `(17)
+  | `(chooseR2 $x) => `(if $x then 17 else 31)
+macro "wrappedR2 " x:term : term => `(chooseR2 $x)
+example : wrappedR2 true = 17 := rfl
+example : wrappedR2 false = 31 := rfl
+''', None),
+    'V1-076': ('''public meta import Lean
+macro "letR2 " x:term : term => `(let value := 9; $x + value)
+macro "sizeR2[" xs:term,* "]" : term => `((#[$xs,*] : Array Nat).size)
+function proof(value: Nat): Nat := letR2 value
+example : proof(3) = 12 := rfl
+example : sizeR2[3, 4, 5] = 3 := rfl
+''', None),
+    'V1-078': ('''public meta import Lean
+open Lean Elab in
+elab "sevenR2" : term => Term.elabTerm (← `(7)) none
+open Lean Elab Command in
+elab "declareR2 " name:ident : command => elabCommand (← `(def $name : Nat := 9))
+open Lean Elab Tactic in
+elab "finishR2" : tactic => evalTactic (← `(tactic| exact True.intro))
+syntax "elevenR2" : term
+elab_rules : term
+  | `(elevenR2) => Lean.Elab.Term.elabTerm (← `(11)) none
+declareR2 nineR2
+example : sevenR2 + nineR2 + elevenR2 = 27 := rfl
+example : True := by { finishR2 }
+''', None),
+    'V1-094': ('''def diagnosticR2 : Nat := 19
+#check diagnosticR2
+#eval diagnosticR2
+#reduce diagnosticR2
+#print diagnosticR2
+#check_failure diagnosticR2.noSuchProjection
+''', None),
     'PS0-P-EXT-03': ('''public import Lean
 public meta import Lean
 open Lean Elab Command

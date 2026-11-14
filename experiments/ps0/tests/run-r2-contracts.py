@@ -102,7 +102,8 @@ def main():
         log = result.stdout
         (args.output / (case + '.log')).write_text(log, encoding='utf-8')
         if diagnostic:
-            errors = [line for line in log.splitlines() if re.search(r':\d+:\d+: error(?:\([^)]*\))?:', line)]
+            errors = [line for line in log.splitlines() if re.search(
+                r':\d+:\d+: error(?:\([^)]*\))?:|^error: .*\.ps:\d+:\d+:', line)]
             ok = result.returncode == 1 and bool(errors) and all(re.search(diagnostic, line, re.I) for line in errors)
             if case == 'PS0-N-VC-01':
                 ok = result.returncode == 1 and len(errors) == 2 and all(

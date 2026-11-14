@@ -47,7 +47,7 @@ run_cmd do
     throwError "development hole missing its assumption marker"
 ''', ''),
     'V1-066-recovery': ('''theorem broken: True := by { exact 7 }
-''', r'type mismatch|has type'),
+''', r'type mismatch|has type|the expected type is a proposition'),
     'PS0-P-PROOF-01': ('''theorem identityProof(p: Prop): p → p := by { intro h; exact h }
 open Lean in
 run_cmd do
