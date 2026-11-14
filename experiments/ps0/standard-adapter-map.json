@@ -20344,7 +20344,118 @@
         "run": 43534267147,
         "runner": "343c6939709fb62d3af6eef0cdddf1b7fdb4f6a6",
         "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
-        "status": "IN_PROGRESS"
+        "status": "PASS",
+        "runAttempt": 1,
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "jobs": [
+          {
+            "id": 132259472042,
+            "name": "checkpoint-qualification",
+            "conclusion": "success"
+          },
+          {
+            "id": 132259628164,
+            "name": "stage-one-base",
+            "conclusion": "success"
+          },
+          {
+            "id": 132290353966,
+            "name": "stage-one-compiler-early",
+            "conclusion": "success"
+          },
+          {
+            "id": 132302972653,
+            "name": "stage-one-compiler-middle",
+            "conclusion": "success"
+          },
+          {
+            "id": 132311056367,
+            "name": "stage-one-compiler",
+            "conclusion": "success"
+          },
+          {
+            "id": 132314225341,
+            "name": "stage-one",
+            "conclusion": "success"
+          },
+          {
+            "id": 132320943319,
+            "name": "stage-two-base",
+            "conclusion": "success"
+          },
+          {
+            "id": 132366025472,
+            "name": "stage-two-compiler-early",
+            "conclusion": "success"
+          },
+          {
+            "id": 132379539951,
+            "name": "stage-two-compiler-middle",
+            "conclusion": "success"
+          },
+          {
+            "id": 132387033117,
+            "name": "stage-two-compiler",
+            "conclusion": "success"
+          },
+          {
+            "id": 132388696712,
+            "name": "stage-two",
+            "conclusion": "success"
+          },
+          {
+            "id": 132394382258,
+            "name": "independent-audit",
+            "conclusion": "success"
+          }
+        ],
+        "stages": [
+          {
+            "job": 132314225341,
+            "id": 14097057738,
+            "name": "ps0-selfhost-stage-one-c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5-43534267147",
+            "digest": "sha256:00cf00a76bc7e4cc516182d9456dd667e0e39fda178749e94663b976b51db026",
+            "bytes": 285002179
+          },
+          {
+            "job": 132388696712,
+            "id": 14107360730,
+            "name": "ps0-selfhost-stage-two-c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5-43534267147",
+            "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+            "bytes": 285002372
+          }
+        ],
+        "audit": {
+          "job": 132394382258,
+          "id": 14107121506,
+          "name": "ps0-canonical-independent-audit-43534267147",
+          "digest": "sha256:3442f180565a34576350521c01b160eeb359db9291be43f02d714291a64eb7cf",
+          "bytes": 655,
+          "receipt": {
+            "schema": "ps0-independent-fixed-point-artifact-audit/1",
+            "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+            "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+            "modules": 2569,
+            "stages": 2,
+            "ps_sources_rehashed": 5138,
+            "mapped_censuses_rehashed": 5138,
+            "driver_files_rehashed": 2,
+            "metadata_files_rehashed": 440,
+            "source_identity_counts": {
+              "total_inputs": 2569,
+              "planned_ps_grammar_inputs": 2569,
+              "byte_identical_mode_inputs": 0,
+              "native_compatible_mode_inputs": 0,
+              "source_hashes_equal_original": 402
+            },
+            "c_and_public_olean_receipt_hashes_compared": 5138,
+            "stage_two_metadata_mode": "retained-ps-built-prefix",
+            "status": "PASS",
+            "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+            "grammar_migration_complete": false,
+            "verified_execution": false
+          }
+        }
       }
     }
   },
@@ -90159,7 +90270,118 @@
       "run": 43534267147,
       "runner": "343c6939709fb62d3af6eef0cdddf1b7fdb4f6a6",
       "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
-      "status": "IN_PROGRESS"
+      "status": "PASS",
+      "runAttempt": 1,
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "jobs": [
+        {
+          "id": 132259472042,
+          "name": "checkpoint-qualification",
+          "conclusion": "success"
+        },
+        {
+          "id": 132259628164,
+          "name": "stage-one-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132290353966,
+          "name": "stage-one-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132302972653,
+          "name": "stage-one-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132311056367,
+          "name": "stage-one-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132314225341,
+          "name": "stage-one",
+          "conclusion": "success"
+        },
+        {
+          "id": 132320943319,
+          "name": "stage-two-base",
+          "conclusion": "success"
+        },
+        {
+          "id": 132366025472,
+          "name": "stage-two-compiler-early",
+          "conclusion": "success"
+        },
+        {
+          "id": 132379539951,
+          "name": "stage-two-compiler-middle",
+          "conclusion": "success"
+        },
+        {
+          "id": 132387033117,
+          "name": "stage-two-compiler",
+          "conclusion": "success"
+        },
+        {
+          "id": 132388696712,
+          "name": "stage-two",
+          "conclusion": "success"
+        },
+        {
+          "id": 132394382258,
+          "name": "independent-audit",
+          "conclusion": "success"
+        }
+      ],
+      "stages": [
+        {
+          "job": 132314225341,
+          "id": 14097057738,
+          "name": "ps0-selfhost-stage-one-c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5-43534267147",
+          "digest": "sha256:00cf00a76bc7e4cc516182d9456dd667e0e39fda178749e94663b976b51db026",
+          "bytes": 285002179
+        },
+        {
+          "job": 132388696712,
+          "id": 14107360730,
+          "name": "ps0-selfhost-stage-two-c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5-43534267147",
+          "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+          "bytes": 285002372
+        }
+      ],
+      "audit": {
+        "job": 132394382258,
+        "id": 14107121506,
+        "name": "ps0-canonical-independent-audit-43534267147",
+        "digest": "sha256:3442f180565a34576350521c01b160eeb359db9291be43f02d714291a64eb7cf",
+        "bytes": 655,
+        "receipt": {
+          "schema": "ps0-independent-fixed-point-artifact-audit/1",
+          "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+          "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "modules": 2569,
+          "stages": 2,
+          "ps_sources_rehashed": 5138,
+          "mapped_censuses_rehashed": 5138,
+          "driver_files_rehashed": 2,
+          "metadata_files_rehashed": 440,
+          "source_identity_counts": {
+            "total_inputs": 2569,
+            "planned_ps_grammar_inputs": 2569,
+            "byte_identical_mode_inputs": 0,
+            "native_compatible_mode_inputs": 0,
+            "source_hashes_equal_original": 402
+          },
+          "c_and_public_olean_receipt_hashes_compared": 5138,
+          "stage_two_metadata_mode": "retained-ps-built-prefix",
+          "status": "PASS",
+          "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+          "grammar_migration_complete": false,
+          "verified_execution": false
+        }
+      }
     }
   }
 }

@@ -1,5 +1,11 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-14 — Call-precedence revision passed the complete two-stage fixed point
+
+All 12 jobs in Linux run `43534267147` passed at source `c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5`, runner `343c6939709fb62d3af6eef0cdddf1b7fdb4f6a6`, and pinned Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. The published bootstrap seeded the first native Lake build. Both stages linked the executable and static library, checked the relocated executable, and reported 78,714 mapped PS declarations each. The exact retained stage-one compiler prefix built stage two. Stage one artifact `14097057738` has digest `sha256:00cf00a76bc7e4cc516182d9456dd667e0e39fda178749e94663b976b51db026` and 285,002,179 bytes. [Stage one job](https://github.com/dwijayuda/pskernel/actions/runs/43534267147/job/132314225341) Stage two artifact `14107360730` has digest `sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1` and 285,002,372 bytes. [Stage two job](https://github.com/dwijayuda/pskernel/actions/runs/43534267147/job/132388696712)
+
+The independent audit verified all 2,569 modules. It rehashed 5,138 retained PS sources, 5,138 mapped source censuses, two executable files, and 440 metadata files. It compared 5,138 C and public `.olean` hashes from the producer receipts. Independent audit artifact `14107121506` has digest `sha256:3442f180565a34576350521c01b160eeb359db9291be43f02d714291a64eb7cf` and 655 bytes. [Independent audit job](https://github.com/dwijayuda/pskernel/actions/runs/43534267147/job/132394382258)
+
 ## 2026-11-14 — R2 call conformance and application precedence
 
 Linux qualified nine positive call cases (PS0-P-CALL-02 through 10) and all twelve call rejections (PS0-N-CALL-01 through 12). The malformed comma obligation exercises both forms. The semantic fixture checks tuple arity, Unit completion, named/default arguments, partial application, trailing comma, comments, and distinct grouping for nested and parenthesized heads. Rejection probes require the case-specific diagnostic at the call line.
@@ -8,7 +14,7 @@ The prior audited compiler reproduced the whitespace-application failure for `f 
 
 Source `c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5`, runner `c697044136bbdeb6a57712bbe18f4d2809fb9551`, Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`, frozen reference Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`. Fixture SHA-256 `342d21d0df2d1588632e374bdef55b6df1c0903e0b2061cd2fb48cde10de079c`. Patched compiler SHA-256 `a987691ac73cb7ae83b214d8148801516bdc61d5559e6c7459dad64606e03d86`. Evidence artifact `14088508870` has digest `sha256:41e6c3ded902e515398cb0d538371348efd8ddb47d946006f159fc4a1ae0eb10` and 24822 bytes. [Linux qualification](https://github.com/dwijayuda/pskernel/actions/runs/43534219401/job/132259155460)
 
-The ledger now records **209 pending and 33 finite passes**. The complete two-stage corpus rebuild at this source revision is running. [Full Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43534267147)
+The ledger now records **209 pending and 33 finite passes**. The complete two-stage corpus rebuild at this source revision passed. [Full Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43534267147)
 
 ## 2026-11-14 — Canonical project fix and first ten R2 declaration cases passed
 
