@@ -15,6 +15,7 @@ def simplifiableR2 : Nat := 42
 dsimproc_decl simplifyR2 (simplifiableR2) := fun _ => return .done (mkNatLit 42)
 example : simplifiableR2 = 42 := by
   conv => lhs; dsimp only [simplifyR2]
+  rfl
 example (n : Nat) : n + 0 = n := by { simp }
 ''', None),
     'V1-072': ('''namespace R2Notation
@@ -485,7 +486,7 @@ public section
 open Lean Elab Command
 class R2Report (α : Type) where
   code : Nat
-private meta def deriveR2Report : DerivingHandler := fun names => do
+private def deriveR2Report : DerivingHandler := fun names => do
   for name in names do
     elabCommand (← `(instance : R2Report $(mkIdent name) := ⟨42⟩))
   return true
