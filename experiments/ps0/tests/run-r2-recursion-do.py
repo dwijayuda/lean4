@@ -12,7 +12,7 @@ CASES = {
   if n = 0 then 0 else 1 + down(n - 1)
 termination_by n
 decreasing_by omega
-private example : down(4) = 4 := by decide
+private example : down(4) = 4 := by simp [down]
 ''', (), ''),
     'PS0-P-REC-02': ('''partial function spin(n: Nat): Nat := spin(n)
 open Lean in
@@ -34,7 +34,7 @@ coinductive_fixpoint
 private example : least(0) := by
   rw [least.eq_def]
   exact Or.inl rfl
-private example : ¬(greatest(1)) := by
+private example : ¬ (greatest 1) := by
   rw [greatest.eq_def]
   exact fun h => Nat.noConfusion h.1
 ''', (), ''),
@@ -57,7 +57,8 @@ private example : Id.run(value) = 33 := rfl
   repeat { n := n + 1 } until n == 6
   return n
 #eval show IO Unit from do
-  unless Id.run(value) == 6 do throw(IO.userError("loop oracle"))
+  let observed := Id.run(value)
+  if observed == 6 then pure Unit.unit else throw (IO.userError "loop oracle")
 ''', (), ''),
     'PS0-P-DO-04': ('''function getValue(x: Option Nat): Id Nat := do
   if let some n ← (pure x : Id(Option Nat)) then
@@ -92,12 +93,12 @@ def runPatternCatch : IO Nat := do
   | .userError msg => return if msg == "pattern" then 9 else 0
   | _ => return 0
   finally
-    pure ()
+    pure Unit.unit
 
 #eval show IO Unit from do
   let typed ← runCatch
   let patterned ← runPatternCatch
-  unless typed == 7 && patterned == 9 do throw(IO.userError("catch oracle"))
+  if typed == 7 && patterned == 9 then pure Unit.unit else throw (IO.userError "catch oracle")
 ''', (), ''),
     'PS0-N-REC-01': ('''function bad(n: Nat): Nat := match n with
   | 0 => 0
@@ -109,7 +110,7 @@ decreasing_by omega
 termination_by n
 decreasing_by omega
 ''', ('decreasing_by', 'function bad'), r'omega could not prove|failed to prove termination|could not prove|failed to discharge'),
-    'PS0-N-REC-03': ('''function bad(n: Nat): Prop := ¬(bad(n))
+    'PS0-N-REC-03': ('''function bad(n: Nat): Prop := ¬ (bad n)
 inductive_fixpoint
 ''', ('function bad', 'inductive_fixpoint'), r'monotonicity|monotone'),
     'PS0-N-DO-01': ('''const bad: Id Nat := do
