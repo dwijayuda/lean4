@@ -65,7 +65,7 @@ public import Init
 public section
 set_option experimental.intrinsic true
 function bad(n: Nat): Id Nat
-  ensures r => r = n := do { return n }
+  requires True := do { return n }
 ''', '', r'Std.WP|Triple|requires.*import|verification environment'),
     'PS0-N-VC-05': ('''public import Std.WP
 function bad(n: Nat): Id Nat
