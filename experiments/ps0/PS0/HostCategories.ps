@@ -903,10 +903,17 @@ private def lowerBorrowedTermWith
     let native := source[0]
     rejectHostGap native
     if native.isOfKind ``Lean.Parser.Term.app then
-      let arguments ← native[1].getArgs.mapM(fun arg =>
-        if #[`ps0HeadCall, `ps0HeadEmptyCall].contains arg.getKind then
-          lowerTerm((.node .none `ps0HostHeadTerm #[arg])) else pure arg)
-      return native.setArg(1, native[1].setArgs arguments)
+      let mut arguments := #[]
+      for arg in native[1].getArgs do
+        let kind := arg.getKind
+        if kind == `ps0HeadCall || kind == `ps0HeadEmptyCall then
+          let wrapped := Lean.Syntax.node .none `ps0HostHeadTerm #[arg]
+          let lowered ← lowerTerm wrapped
+          arguments := arguments.push lowered
+        else
+          arguments := arguments.push arg
+      let args := native[1].setArgs arguments
+      return native.setArg(1, args)
     if native.isOfKind ``Lean.Parser.Term.proj then
       checkProjectionSubject(native[0])
     return native
