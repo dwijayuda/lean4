@@ -75,7 +75,7 @@ run_cmd do
     'V1-080': ('''public import Lean
 public meta import Lean
 open Lean Elab Command
-initialize stateR2 : SimplePersistentEnvExtension Name (List Name) ←
+initialize stateR2 : SimplePersistentEnvExtension(Name, List Name) ←
   registerSimplePersistentEnvExtension {
     addEntryFn := fun entries name => name :: entries
     addImportedFn := fun _ => []
@@ -93,7 +93,7 @@ run_cmd liftTermElabM do
   let mvar ← mkFreshExprMVar (some (mkConst ``Nat))
   unless (← isDefEq mvar (mkNatLit 42)) do throwError "unification failed"
   let resolved ← instantiateMVars mvar
-  unless resolved.natLit? == some 42 do throwError "unassigned metavariable"
+  unless resolved == mkNatLit 42 do throwError "unassigned metavariable"
   unless (← whnf (mkConst ``R2Number)).isConstOf ``Nat do
     throwError "weak head reduction failed"
 ''', None),
@@ -102,9 +102,9 @@ open Lean Elab Command Meta
 run_cmd liftTermElabM do
   let input := mkApp (mkConst ``Nat.succ) (mkNatLit 41)
   let_expr Nat.succ pred := input | throwError "reflective let mismatch"
-  unless pred.natLit? == some 41 do throwError "unexpected argument"
+  unless pred == mkNatLit 41 do throwError "unexpected argument"
   match_expr input with
-  | Nat.succ n => unless n.natLit? == some 41 do throwError "reflective match mismatch"
+  | Nat.succ n => unless n == mkNatLit 41 do throwError "reflective match mismatch"
   | _ => throwError "reflective match failed"
 #eval Nat.succ 41
 ''', None),
@@ -171,7 +171,7 @@ def synchronized : IO Nat := do
     ref.get
   let result ← IO.ofExcept task.get
   let current ← ref.get
-  if result != current then throw (IO.userError "task synchronization")
+  if result != current then throw(IO.userError("task synchronization"))
   return current
 def mutateR2 : StateRefT Nat IO Nat := do
   modify Nat.succ
