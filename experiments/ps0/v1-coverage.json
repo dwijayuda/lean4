@@ -26419,6 +26419,15 @@
           "checkpointStatus": "PASS",
           "status": "IN_PROGRESS"
         },
+        "cleanLakePluginRebuild": {
+          "run": 43621200843,
+          "source": "fb1afb775ebaa329b943cce92504d19249f9d4a8",
+          "runner": "597f5418913fc55d558f4e922be7f3d352ff4d21",
+          "checkpointJob": 132527062785,
+          "checkpointStatus": "PASS",
+          "stageOneBaseJob": 132527184886,
+          "status": "IN_PROGRESS"
+        },
         "remainingNumberedProbe": {
           "run": 43614371826,
           "job": 132506096088,
@@ -97752,6 +97761,15 @@
         "checkpointJob": 132507907215,
         "stageOneBaseJob": 132508121552,
         "checkpointStatus": "PASS",
+        "status": "IN_PROGRESS"
+      },
+      "cleanLakePluginRebuild": {
+        "run": 43621200843,
+        "source": "fb1afb775ebaa329b943cce92504d19249f9d4a8",
+        "runner": "597f5418913fc55d558f4e922be7f3d352ff4d21",
+        "checkpointJob": 132527062785,
+        "checkpointStatus": "PASS",
+        "stageOneBaseJob": 132527184886,
         "status": "IN_PROGRESS"
       },
       "remainingNumberedProbe": {
