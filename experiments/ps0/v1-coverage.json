@@ -5827,10 +5827,24 @@
     {
       "id": "R2-18",
       "title": "The same header boundary in if-let",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "experiments/ps0/tests/run-r2-boundary.py :: R2-18",
+      "qualifiedCommit": "bde34b170ed70f16202ecfe3857d91aefbacf693",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43631175141",
+      "evidence": {
+        "jobId": 132557896762,
+        "runner": "4158d22756debf205cfbe8b89f6cef27606ad995",
+        "artifact": {
+          "id": 14128505443,
+          "bytes": 24666,
+          "digest": "sha256:3291bf60045653a85723124d3ace86b028dcf4ce6812d5f1d2b6c2906eaf36d9"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "d446dc87b2f9487919f5c0eb47df7a1163c5e140",
+        "driverSha256": "164d28e0cda0a25f2f1df8ecd0bf001c8832caa937937483461e7c7703997da8",
+        "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
+        "caseSha256": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479"
+      }
     },
     {
       "id": "R2-19",
@@ -9474,12 +9488,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 3,
+    "PENDING": 2,
     "featureFamiliesPending": 1,
-    "boundaryWitnessesPending": 2,
+    "boundaryWitnessesPending": 1,
     "acceptanceCasesPending": 0,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases, capability families, and numbered witnesses.",
-    "PASS": 239,
+    "PASS": 240,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -20171,7 +20185,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 3,
+    "obligationsPending": 2,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -28523,6 +28537,29 @@
           "R2-06-omitted.ps": "ab994d95671eb6c0070bc36013d268ec5021b9adc7c7efe7551a5f687a31ee1e",
           "R2-06-omitted.lean": "4e62f6c3519e945b68874debecb749665abd84eea69a86cb357035a2ea36300f",
           "R2-14": "40d6437fbc57303fad7146bee67f1799ca1a1de811e95f07dcb0efb4055874e4"
+        }
+      },
+      {
+        "summary": "The marker-free if-let header preserves the nested record argument and proves the frozen branch result.",
+        "passed": [
+          "R2-18"
+        ],
+        "fixture": "experiments/ps0/tests/run-r2-boundary.py",
+        "source": "bde34b170ed70f16202ecfe3857d91aefbacf693",
+        "runner": "4158d22756debf205cfbe8b89f6cef27606ad995",
+        "run": 43631175141,
+        "job": 132557896762,
+        "artifact": {
+          "id": 14128505443,
+          "bytes": 24666,
+          "digest": "sha256:3291bf60045653a85723124d3ace86b028dcf4ce6812d5f1d2b6c2906eaf36d9"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "d446dc87b2f9487919f5c0eb47df7a1163c5e140",
+        "driverSha256": "164d28e0cda0a25f2f1df8ecd0bf001c8832caa937937483461e7c7703997da8",
+        "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
+        "fixtureCases": {
+          "R2-18": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479"
         }
       }
     ]
@@ -100377,6 +100414,29 @@
         "R2-06-omitted.ps": "ab994d95671eb6c0070bc36013d268ec5021b9adc7c7efe7551a5f687a31ee1e",
         "R2-06-omitted.lean": "4e62f6c3519e945b68874debecb749665abd84eea69a86cb357035a2ea36300f",
         "R2-14": "40d6437fbc57303fad7146bee67f1799ca1a1de811e95f07dcb0efb4055874e4"
+      }
+    },
+    {
+      "summary": "The marker-free if-let header preserves the nested record argument and proves the frozen branch result.",
+      "passed": [
+        "R2-18"
+      ],
+      "fixture": "experiments/ps0/tests/run-r2-boundary.py",
+      "source": "bde34b170ed70f16202ecfe3857d91aefbacf693",
+      "runner": "4158d22756debf205cfbe8b89f6cef27606ad995",
+      "run": 43631175141,
+      "job": 132557896762,
+      "artifact": {
+        "id": 14128505443,
+        "bytes": 24666,
+        "digest": "sha256:3291bf60045653a85723124d3ace86b028dcf4ce6812d5f1d2b6c2906eaf36d9"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "d446dc87b2f9487919f5c0eb47df7a1163c5e140",
+      "driverSha256": "164d28e0cda0a25f2f1df8ecd0bf001c8832caa937937483461e7c7703997da8",
+      "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
+      "fixtureCases": {
+        "R2-18": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479"
       }
     }
   ]

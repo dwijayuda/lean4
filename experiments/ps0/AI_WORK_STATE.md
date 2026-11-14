@@ -8,11 +8,17 @@ The first R2-12 validation stopped at an outdated checkout assertion in job `132
 
 Linux run `43629915657` checked the corrected R2-06 appendix against the pinned native pattern rule. The original omission is still exercised in both PS0 and Lean. The same run passed R2-14 and reproduced R2-17 (`expected 'do'` at the adjacent call) and R2-18 (`expected 'then'` at the body brace). [Boundary job](https://github.com/dwijayuda/pskernel/actions/runs/43629915657/job/132554012506)
 
+Linux trace job `132556485568` recorded a forbidden `{` inside the adjacent call argument. Resetting the delimiter at the argument-list boundary let R2-18 retain the outer body braces. R2-17 still failed, and trace job `132559441065` showed the loop being consumed as a continuation of the preceding local initializer. [If-let trace](https://github.com/dwijayuda/pskernel/actions/runs/43630724995/job/132556485568) [Do binding trace](https://github.com/dwijayuda/pskernel/actions/runs/43631675014/job/132559441065)
+
+Source `107838d7d2b068270560f696d557e7ef80ba81ec` preserves the starting column for a local do binding. Linux run `43632088092` at runner `79af546cb3b907eea096f9a6043de1184b22cba3` checks the complete numbered boundary suite. [Linux loop validation](https://github.com/dwijayuda/pskernel/actions/runs/43632088092)
+
 The native macro declaration adapter passes the frozen R2-12 witness, including the `result = 5` proof. The boundary job retained the report and failed on the four other numbered obligations. Qualified `R2-12`. Source `6dfe41f772bdb32cd8a9b9714cc93f236c3380b5`, runner `ee1d3a637c8e118c51fb31d88b9a3bbc5ec46071`, executable SHA-256 `010b6f6f0489dd08953ca8be49d8c7bfef3dad2266e8070c2a788a69a4d4027d`, and fixture runner SHA-256 `0146cebc949d90fb56ff933792fc76c200d490406fa56ab3b4c3f682be6ecde3`. Evidence artifact `14126509764` has digest `sha256:29f055595b822d5a0f1f0260547ae7c89a13132aa58b43901e61b3a475b03544` and 23,272 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43629358333/job/132552298919)
 
 The corrected R2-06 witness proved both explicit branches, and the pinned Lean and PS omission controls emitted the same constructor-arity diagnostic. R2-14 emitted PS0V1-CALL-CONFLICT at the protected adjacent call. Qualified `R2-06`, `R2-14`. Source `0639618d0652821533267767f59512b84979ac7d`, runner `cebe38bfe00f46c67d6031770a816589b6f07b73`, executable SHA-256 `b81e979e48c732a73a3e433c5e96eb11a4a9838168e1ab16e8093633810fd8dd`, and fixture runner SHA-256 `6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5`. Evidence artifact `14127802132` has digest `sha256:e739746d5f9a0d9463c64539881c27552e49aa71b8678cb016d694dffc58f1b0` and 24,777 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43629915657/job/132554012506)
 
-The ledger records **239 finite passes and 3 pending obligations**.
+The marker-free if-let header preserves the nested record argument and proves the frozen branch result. Qualified `R2-18`. Source `bde34b170ed70f16202ecfe3857d91aefbacf693`, runner `4158d22756debf205cfbe8b89f6cef27606ad995`, executable SHA-256 `164d28e0cda0a25f2f1df8ecd0bf001c8832caa937937483461e7c7703997da8`, and fixture runner SHA-256 `6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5`. Evidence artifact `14128505443` has digest `sha256:3291bf60045653a85723124d3ace86b028dcf4ce6812d5f1d2b6c2906eaf36d9` and 24,666 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43631175141/job/132557896762)
+
+The ledger records **240 finite passes and 2 pending obligations**.
 
 ## 2026-11-14 — R2 combined native extension acceptance
 
