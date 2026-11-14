@@ -138,15 +138,19 @@ def main():
     def probe(label, command, check):
         path = work / (label + '.log')
         print(f'Checking {label}', flush=True)
-        with path.open('w', encoding='utf-8') as stream:
-            with subprocess.Popen([str(x) for x in command], stdout=subprocess.PIPE,
-                                  stderr=subprocess.STDOUT, text=True) as process:
-                for line in process.stdout:
-                    stream.write(line)
-                    stream.flush()
-                    print(line, end='', flush=True)
-                code = process.wait()
-        log = path.read_text(encoding='utf-8')
+        def emit(log):
+            path.write_text(log, encoding='utf-8')
+            print(log, end='', flush=True)
+        try:
+            result = subprocess.run([str(x) for x in command], stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT, encoding='utf-8', timeout=360)
+        except subprocess.TimeoutExpired as error:
+            log = (error.stdout or b'').decode('utf-8', errors='replace')
+            emit(log + f'\n{label} exceeded the 360-second probe timeout\n')
+            failures.append(label)
+            return False
+        code, log = result.returncode, result.stdout
+        emit(log)
         if not check(code, log):
             failures.append(label)
             print(f'{label} failed its oracle with exit {code}', flush=True)
