@@ -93,6 +93,9 @@ private const letPrefix : Parser :=
 @[run_parser_attribute_hooks] const argumentValue : Parser :=
   withoutPosition((withoutForbidden((categoryParser `psTerm 0))))
 
+@[run_parser_attribute_hooks] const macroCommand : Parser :=
+  operands #[ (`term, `psTerm) ] Lean.Parser.Command.«macro»
+
 @[run_parser_attribute_hooks] const forwardTerm : Parser :=
   operands #[(`doElem, `psDoElem)] Lean.Parser.Term.doForward
 

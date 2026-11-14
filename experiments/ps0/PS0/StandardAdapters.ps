@@ -98,6 +98,20 @@ scoped syntax (name := ps0StandardCheck) (priority := 20000) "#check " psTerm : 
   let native ← PS0.Syntax.lower `psTerm stx[1]
   return Syntax.node stx.getHeadInfo ``Lean.Parser.Command.check #[stx[0], native]
 
+scoped syntax (name := ps0StandardMacro) (priority := 20000)
+  PS0.DoLayout.macroCommand : command
+
+@[macro ps0StandardMacro] const lowerMacro : Macro := fun stx => do
+  let native := stx[0]
+  let tail := native[8]
+  let rhs := tail[3]
+  unless native.isOfKind ``Lean.Parser.Command.«macro» && native.getArgs.size == 9 &&
+      tail.isOfKind ``Lean.Parser.Command.macroTail && tail.getArgs.size == 4 &&
+      rhs.isOfKind ``Lean.Parser.Command.macroRhs && rhs.getArgs.size == 1 do
+    Macro.throwErrorAt stx "PS0V1-MACRO: unexpected native macro body"
+  let body ← PS0.Syntax.lower `psTerm rhs[0]
+  return native.setArg(8, (tail.setArg(3, (rhs.setArg 0 body))))
+
 declare_syntax_cat psDeclTail
 declare_syntax_cat psWhereClause
 declare_syntax_cat psWhereLocalValue
