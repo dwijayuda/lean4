@@ -1227,19 +1227,49 @@
       "id": "V1-061",
       "feature": "Term proofs, by blocks and full goal-control syntax",
       "sourceBasis": "L-TERM, L-TACTIC",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-proof-bind.py :: V1-061",
+      "qualifiedCommit": "2f06344c9d05c57ca1f72f218856c8557ea7a221",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43616705636",
+      "evidence": {
+        "jobId": 132513232631,
+        "runner": "4094bb81b60b40cbec66c60cbdc46c131897c143",
+        "artifact": {
+          "id": 14122572825,
+          "name": "ps0-r2-proof-bind-evidence-43616705636",
+          "digest": "sha256:183e2623d89da37897598aafa1b3b3b9e2fcf7a2a2c875f19c8166245350ff16",
+          "bytes": 10895
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "bca10df6ccdf43fda359a0dc67aa2e733ff4dde1b7a36a2b33c46e118fedbe4b",
+        "caseSha256": "d23c3da4178ada2acd2865af98666dfb1a6a48db776aa6e4fe9f1974a2c5b0b2"
+      }
     },
     {
       "id": "V1-062",
       "feature": "Imported tactics, configuration and proof construction",
       "sourceBasis": "L-INIT, L-STD, L-LEAN",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-proof-bind.py :: V1-062",
+      "qualifiedCommit": "2f06344c9d05c57ca1f72f218856c8557ea7a221",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43616705636",
+      "evidence": {
+        "jobId": 132513232631,
+        "runner": "4094bb81b60b40cbec66c60cbdc46c131897c143",
+        "artifact": {
+          "id": 14122572825,
+          "name": "ps0-r2-proof-bind-evidence-43616705636",
+          "digest": "sha256:183e2623d89da37897598aafa1b3b3b9e2fcf7a2a2c875f19c8166245350ff16",
+          "bytes": 10895
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "bca10df6ccdf43fda359a0dc67aa2e733ff4dde1b7a36a2b33c46e118fedbe4b",
+        "caseSha256": "797ee75afb39bfdd8be9b4ed44cc301f2e9e3f1a54d2bb2ccd25eeea1a4b34cf"
+      }
     },
     {
       "id": "V1-063",
@@ -1254,19 +1284,49 @@
       "id": "V1-064",
       "feature": "Arithmetic/bitvector/grind and decision procedures",
       "sourceBasis": "L-INIT, L-STD, L-DECIDE, L-NATIVE",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-proof-bind.py :: V1-064",
+      "qualifiedCommit": "2f06344c9d05c57ca1f72f218856c8557ea7a221",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43616705636",
+      "evidence": {
+        "jobId": 132513232631,
+        "runner": "4094bb81b60b40cbec66c60cbdc46c131897c143",
+        "artifact": {
+          "id": 14122572825,
+          "name": "ps0-r2-proof-bind-evidence-43616705636",
+          "digest": "sha256:183e2623d89da37897598aafa1b3b3b9e2fcf7a2a2c875f19c8166245350ff16",
+          "bytes": 10895
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "bca10df6ccdf43fda359a0dc67aa2e733ff4dde1b7a36a2b33c46e118fedbe4b",
+        "caseSha256": "443d13174d7433ecd3864a43aa6d46c9b4f79d2f6a3d7725c20391851b699285"
+      }
     },
     {
       "id": "V1-065",
       "feature": "Custom tactics and compile-time proof programs",
       "sourceBasis": "L-SYNTAX, L-LEAN",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-proof-bind.py :: V1-065",
+      "qualifiedCommit": "2f06344c9d05c57ca1f72f218856c8557ea7a221",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43616705636",
+      "evidence": {
+        "jobId": 132513232631,
+        "runner": "4094bb81b60b40cbec66c60cbdc46c131897c143",
+        "artifact": {
+          "id": 14122572825,
+          "name": "ps0-r2-proof-bind-evidence-43616705636",
+          "digest": "sha256:183e2623d89da37897598aafa1b3b3b9e2fcf7a2a2c875f19c8166245350ff16",
+          "bytes": 10895
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "bca10df6ccdf43fda359a0dc67aa2e733ff4dde1b7a36a2b33c46e118fedbe4b",
+        "caseSha256": "cc088a81d46db3a1c502b6a5b805ff8fba8306afd6115f9bc5c23af96d1f6c66"
+      }
     },
     {
       "id": "V1-066",
@@ -8547,12 +8607,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 65,
-    "featureFamiliesPending": 57,
+    "PENDING": 61,
+    "featureFamiliesPending": 53,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 3,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 177,
+    "PASS": 181,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19244,7 +19304,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 65,
+    "obligationsPending": 61,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -26722,6 +26782,36 @@
           "V1-024": "f6986802219eb1619fcbff5a19ba2cec03fce5acbe8d31ef129786fd62d62737",
           "V1-026": "3ed4ea8e231f70ff601f3dd97495bc1ddb08ec4f48f148c56ea75dd9e184a46f",
           "V1-040": "7da5d345c7f20db17638d464926b154e60250ee6ed3138d5791d2c814024b069"
+        }
+      },
+      {
+        "summary": "Four Linux proof families qualified term proofs and structured goal control, imported tactic configuration, arithmetic and bitvector decision procedures with grind, and assumption-checked custom tactic elaboration.",
+        "source": "2f06344c9d05c57ca1f72f218856c8557ea7a221",
+        "runner": "4094bb81b60b40cbec66c60cbdc46c131897c143",
+        "run": 43616705636,
+        "job": 132513232631,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-proof-bind.py",
+        "fixtureSha256": "bca10df6ccdf43fda359a0dc67aa2e733ff4dde1b7a36a2b33c46e118fedbe4b",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14122572825,
+          "name": "ps0-r2-proof-bind-evidence-43616705636",
+          "digest": "sha256:183e2623d89da37897598aafa1b3b3b9e2fcf7a2a2c875f19c8166245350ff16",
+          "bytes": 10895
+        },
+        "passed": [
+          "V1-061",
+          "V1-062",
+          "V1-064",
+          "V1-065"
+        ],
+        "fixtureCases": {
+          "V1-061": "d23c3da4178ada2acd2865af98666dfb1a6a48db776aa6e4fe9f1974a2c5b0b2",
+          "V1-062": "797ee75afb39bfdd8be9b4ed44cc301f2e9e3f1a54d2bb2ccd25eeea1a4b34cf",
+          "V1-064": "443d13174d7433ecd3864a43aa6d46c9b4f79d2f6a3d7725c20391851b699285",
+          "V1-065": "cc088a81d46db3a1c502b6a5b805ff8fba8306afd6115f9bc5c23af96d1f6c66"
         }
       }
     ]
@@ -97702,6 +97792,36 @@
         "V1-024": "f6986802219eb1619fcbff5a19ba2cec03fce5acbe8d31ef129786fd62d62737",
         "V1-026": "3ed4ea8e231f70ff601f3dd97495bc1ddb08ec4f48f148c56ea75dd9e184a46f",
         "V1-040": "7da5d345c7f20db17638d464926b154e60250ee6ed3138d5791d2c814024b069"
+      }
+    },
+    {
+      "summary": "Four Linux proof families qualified term proofs and structured goal control, imported tactic configuration, arithmetic and bitvector decision procedures with grind, and assumption-checked custom tactic elaboration.",
+      "source": "2f06344c9d05c57ca1f72f218856c8557ea7a221",
+      "runner": "4094bb81b60b40cbec66c60cbdc46c131897c143",
+      "run": 43616705636,
+      "job": 132513232631,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-proof-bind.py",
+      "fixtureSha256": "bca10df6ccdf43fda359a0dc67aa2e733ff4dde1b7a36a2b33c46e118fedbe4b",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14122572825,
+        "name": "ps0-r2-proof-bind-evidence-43616705636",
+        "digest": "sha256:183e2623d89da37897598aafa1b3b3b9e2fcf7a2a2c875f19c8166245350ff16",
+        "bytes": 10895
+      },
+      "passed": [
+        "V1-061",
+        "V1-062",
+        "V1-064",
+        "V1-065"
+      ],
+      "fixtureCases": {
+        "V1-061": "d23c3da4178ada2acd2865af98666dfb1a6a48db776aa6e4fe9f1974a2c5b0b2",
+        "V1-062": "797ee75afb39bfdd8be9b4ed44cc301f2e9e3f1a54d2bb2ccd25eeea1a4b34cf",
+        "V1-064": "443d13174d7433ecd3864a43aa6d46c9b4f79d2f6a3d7725c20391851b699285",
+        "V1-065": "cc088a81d46db3a1c502b6a5b805ff8fba8306afd6115f9bc5c23af96d1f6c66"
       }
     }
   ]
