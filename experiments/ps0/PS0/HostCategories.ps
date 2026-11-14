@@ -713,14 +713,16 @@ syntax:max (name := ps0HostLambda) (priority := high)
   ps0LambdaToken psFunBinder+ (":" psTerm)? ps0LambdaArrow psTerm : psTerm
 
 syntax:max (name := ps0HostAdjacentCall) (priority := high)
-  PS0.Operators.adjacentIdentifier noWs "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psTerm
+  PS0.Operators.adjacentIdentifier noWs "("
+  withoutForbidden(sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep)) ")" : psTerm
 
 @[psTerm_parser 30000]
 const ps0HostConflictingCall : Lean.Parser.Parser :=
   Lean.Parser.withFn(PS0.Operators.checkCallConflict,
     (Lean.Parser.leadingNode `ps0HostConflictingCall Lean.Parser.maxPrec <|
       PS0.Operators.adjacentIdentifier >> Lean.Parser.checkNoWsBefore >> "(" >>
-      Lean.Parser.sepBy((Lean.Parser.categoryParser `psCallArg 0), ",", allowTrailingSep := true) >> ")"))
+      Lean.Parser.withoutForbidden(
+        (Lean.Parser.sepBy((Lean.Parser.categoryParser `psCallArg 0), ",", allowTrailingSep := true))) >> ")"))
 
 @[psHead_parser low]
 const ps0NativeHeadBridge : Lean.Parser.Parser := PS0.Operators.headLeading
@@ -729,7 +731,7 @@ const ps0NativeHeadProjectionParser : Lean.Parser.TrailingParser := PS0.Operator
 syntax:max (name := ps0ParenthesizedHead) Lean.Parser.Term.hygienicLParen PS0.DoLayout.argumentValue ")" : psHead
 syntax:max (name := ps0AscribedHead) (priority := 20000) PS0.DoLayout.ascriptionTerm : psHead
 syntax:max (name := ps0HeadCall) psHead:max noWs
-  "(" sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep) ")" : psHead
+  "(" withoutForbidden(sepBy1(psCallArg, ",", "," ppSpace, allowTrailingSep)) ")" : psHead
 syntax:max (name := ps0HeadEmptyCall) psHead:max noWs "(" ")" : psHead
 syntax (name := ps0HostHeadTerm) psHead : psTerm
 syntax:max (name := ps0HostParens) (priority := high)
