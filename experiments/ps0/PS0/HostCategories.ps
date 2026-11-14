@@ -170,16 +170,16 @@ const loopBasicFun : Parser :=
 @[run_parser_attribute_hooks] const patternIfTerm : Parser :=
   leadingNode `termIfLet leadPrec <|
     "if " >> "let " >> termParser >> " := " >>
-      ((withForbiddens(#["{"], (categoryParser `psTerm 0)) >>
+      ((withForbiddens(#["{"], (categoryParser `psHead maxPrec)) >>
         withFn((fun parse ctx initial =>
           let parsed := parse ctx initial
           if parsed.hasError then parsed else
             let body := parsed.stxStack.back
             let stack := parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "then")
             stack.pushSyntax body[1]),
-          (node nullKind <| "{" >> categoryParser `psTerm 0 >> "}")) >>
+          (node nullKind <| "{" >> argumentValue >> "}")) >>
         " else " >> withFn((fun parse => withResultOfFn(parse, fun body => body[1])),
-          (node nullKind <| "{" >> categoryParser `psTerm 0 >> "}"))) <|>
+          (node nullKind <| "{" >> argumentValue >> "}"))) <|>
       (categoryParser `psTerm 0 >> " then " >> categoryParser `psTerm 0 >>
         " else " >> categoryParser `psTerm 0))
 
@@ -312,27 +312,28 @@ const namedDeclaration : Parser :=
       sepBy1((operands #[(`term, `psTerm)] Lean.Parser.Term.matchDiscr), ", ") >>
       " with" >> ppDedent((Lean.Parser.Term.matchAlts sequence))
 
-const forDeclaration : Parser :=
+function forDeclaration(collection : Parser) : Parser :=
   node ``Lean.Parser.Term.doForDecl <|
     optional((atomic((ident >> " : ")))) >> termParser >> " in " >>
-      withForbiddens(#["do", "invariant", "decreasing"], (categoryParser `psTerm 0))
+      withForbiddens(#["do", "invariant", "decreasing"], collection)
 
 @[run_parser_attribute_hooks] const forElem : Parser :=
   leadingNode ``Lean.Parser.Term.doFor maxPrec <|
     "for " >>
-    ((withForbiddens(#["{"], (sepBy1 forDeclaration ", "))) >> optional loopInvariant >>
-      optional loopDecreasing >> withFn((fun parse ctx initial =>
+    ((sepBy1((forDeclaration((categoryParser `psHead maxPrec))), ", ") >>
+      optional loopInvariant >> optional loopDecreasing >> withFn((fun parse ctx initial =>
         let parsed := parse ctx initial
         if parsed.hasError then parsed else
           let body := parsed.stxStack.back
           let stack := parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "do")
           stack.pushSyntax body),
         (operands #[ (`doElem, `psDoElem) ] Lean.Parser.Term.doSeqBracketed))) <|>
-    (sepBy1 forDeclaration ", " >> optional loopInvariant >> optional loopDecreasing >> " do " >> sequence)
+    (sepBy1((forDeclaration((categoryParser `psTerm 0))), ", ") >> optional loopInvariant >>
+      optional loopDecreasing >> " do " >> sequence))
 
 @[run_parser_attribute_hooks] const forTerm : Parser :=
   leadingNode ``Lean.Parser.Term.termFor leadPrec <|
-    "for " >> sepBy1 forDeclaration ", " >> optional loopInvariant >>
+    "for " >> sepBy1((forDeclaration((categoryParser `psTerm 0))), ", ") >> optional loopInvariant >>
       optional loopDecreasing >> " do " >> sequence
 
 const catchElem : Parser :=
@@ -1239,6 +1240,9 @@ partial function lower(category : Name, source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    if #[`ps0HeadCall, `ps0HeadEmptyCall, `ps0NativeHeadBridge,
+        `ps0ParenthesizedHead, `ps0AscribedHead].contains(source.getKind) then
+      return ← lowerHead source
     if source.isOfKind ``Lean.Parser.Term.doForward then
       unless source.getArgs.size == 3 do Macro.throwError "PS0V1-DO-FORWARD: unexpected native marker"
       return source.setArg(2, (← lowerNativeDoSequence(source[2])))
