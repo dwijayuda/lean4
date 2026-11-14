@@ -3963,10 +3963,25 @@
       "sourceOrSetup": "Custom deriving, attributes, simprocs, parser categories",
       "requiredInterpretation": "Registration-driven feature closure.",
       "section": "§4, §6, §9",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-P-EXT-03",
+      "qualifiedCommit": "cf0c24e7e6bf0e647e4ace1dbe6316db71cf1c00",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43627417017",
+      "evidence": {
+        "jobId": 132546316199,
+        "runner": "3670903d4ae89f4e45c2db672645a3953522d6ab",
+        "artifact": {
+          "id": 14126593193,
+          "name": "ps0-r2-native-extensions-evidence-43627417017",
+          "digest": "sha256:5f96132763939e1d8b09931b97597a68377e7f6f73ce88ac9a40514b5b9394c9",
+          "bytes": 16292276
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "cfc7a7fab71e921f9f8be3763b056ca90d2db4d927cff899fdd5e0a300bfbccc",
+        "caseSha256": "7fdf23490cdd6d18f736aea023de3e882cae3bec45a28d4bb66a6499a2fde5af"
+      }
     },
     {
       "id": "PS0-P-META-01",
@@ -9417,12 +9432,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 7,
+    "PENDING": 6,
     "featureFamiliesPending": 1,
     "boundaryWitnessesPending": 5,
-    "acceptanceCasesPending": 1,
-    "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 235,
+    "acceptanceCasesPending": 0,
+    "note": "Exact Linux case receipts qualify the recorded finite acceptance cases, capability families, and numbered witnesses.",
+    "PASS": 236,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -20114,7 +20129,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 7,
+    "obligationsPending": 6,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -26791,6 +26806,18 @@
           "runner": "38e39c3945df9ceb84d8828a475f9e707926fa87",
           "checkpointJob": 132507907215,
           "stageOneBaseJob": 132508121552,
+          "stageOneBaseStatus": "PASS",
+          "stageOneBaseCheckpoint": {
+            "id": 14126692041,
+            "bytes": 451611014,
+            "digest": "sha256:e15b281f74e21095a7dc02221a3dd3073c9f26ebd502547e539bbe88e1463fe6"
+          },
+          "stageOneBaseEvidence": {
+            "id": 14126751935,
+            "bytes": 8242685,
+            "digest": "sha256:2fbd30ae63672a5f0c20768cfba36c7da817369cb4d83a43ab313886b05c5d6f"
+          },
+          "stageOneCompilerEarlyJob": 132545862846,
           "checkpointStatus": "PASS",
           "status": "IN_PROGRESS"
         },
@@ -28340,6 +28367,56 @@
         "supportingCases": {
           "R2Deriving": "1a88b3116df17fcd9d9801c95c5e0e13ac20aaad8df6b6bf9d9582f36c1e3480"
         }
+      },
+      {
+        "summary": "The native-extension suite passed its combined custom deriving, attribute registration, simproc and parser-category acceptance case. Native Lake exercised registration across imported ProofScript modules. Its combined case digest hashes the ordered extensionFixtureInputs pairs.",
+        "source": "cf0c24e7e6bf0e647e4ace1dbe6316db71cf1c00",
+        "runner": "3670903d4ae89f4e45c2db672645a3953522d6ab",
+        "run": 43627417017,
+        "job": 132546316199,
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "cfc7a7fab71e921f9f8be3763b056ca90d2db4d927cff899fdd5e0a300bfbccc",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14126593193,
+          "name": "ps0-r2-native-extensions-evidence-43627417017",
+          "digest": "sha256:5f96132763939e1d8b09931b97597a68377e7f6f73ce88ac9a40514b5b9394c9",
+          "bytes": 16292276
+        },
+        "passed": [
+          "PS0-P-EXT-03"
+        ],
+        "fixtureCases": {
+          "PS0-P-EXT-03": "7fdf23490cdd6d18f736aea023de3e882cae3bec45a28d4bb66a6499a2fde5af"
+        },
+        "extensionFixtureInputs": [
+          [
+            "V1-030",
+            "576cd74b2cd6eb39755420f124ac2fcdc5008b9ebb866bf152f69accd32b832c"
+          ],
+          [
+            "V1-084",
+            "c72af460d80a9fefead74f9db7b6c1ac48e9088b23d717f913681e56e3844cd1"
+          ],
+          [
+            "V1-063",
+            "440e97c261c39b445adeeff7889528835ba63f6e1d264bb970fb171e5777e672"
+          ],
+          [
+            "V1-073",
+            "1fec0ba309f8fdd23cd296bdda1c8e8a1d9382738252d40d916f2589ff43aeb2"
+          ],
+          [
+            "R2Deriving",
+            "1a88b3116df17fcd9d9801c95c5e0e13ac20aaad8df6b6bf9d9582f36c1e3480"
+          ],
+          [
+            "R2Registration",
+            "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
+          ]
+        ]
       }
     ]
   },
@@ -98518,6 +98595,18 @@
         "runner": "38e39c3945df9ceb84d8828a475f9e707926fa87",
         "checkpointJob": 132507907215,
         "stageOneBaseJob": 132508121552,
+        "stageOneBaseStatus": "PASS",
+        "stageOneBaseCheckpoint": {
+          "id": 14126692041,
+          "bytes": 451611014,
+          "digest": "sha256:e15b281f74e21095a7dc02221a3dd3073c9f26ebd502547e539bbe88e1463fe6"
+        },
+        "stageOneBaseEvidence": {
+          "id": 14126751935,
+          "bytes": 8242685,
+          "digest": "sha256:2fbd30ae63672a5f0c20768cfba36c7da817369cb4d83a43ab313886b05c5d6f"
+        },
+        "stageOneCompilerEarlyJob": 132545862846,
         "checkpointStatus": "PASS",
         "status": "IN_PROGRESS"
       },
@@ -100067,6 +100156,56 @@
       "supportingCases": {
         "R2Deriving": "1a88b3116df17fcd9d9801c95c5e0e13ac20aaad8df6b6bf9d9582f36c1e3480"
       }
+    },
+    {
+      "summary": "The native-extension suite passed its combined custom deriving, attribute registration, simproc and parser-category acceptance case. Native Lake exercised registration across imported ProofScript modules. Its combined case digest hashes the ordered extensionFixtureInputs pairs.",
+      "source": "cf0c24e7e6bf0e647e4ace1dbe6316db71cf1c00",
+      "runner": "3670903d4ae89f4e45c2db672645a3953522d6ab",
+      "run": 43627417017,
+      "job": 132546316199,
+      "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "cfc7a7fab71e921f9f8be3763b056ca90d2db4d927cff899fdd5e0a300bfbccc",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14126593193,
+        "name": "ps0-r2-native-extensions-evidence-43627417017",
+        "digest": "sha256:5f96132763939e1d8b09931b97597a68377e7f6f73ce88ac9a40514b5b9394c9",
+        "bytes": 16292276
+      },
+      "passed": [
+        "PS0-P-EXT-03"
+      ],
+      "fixtureCases": {
+        "PS0-P-EXT-03": "7fdf23490cdd6d18f736aea023de3e882cae3bec45a28d4bb66a6499a2fde5af"
+      },
+      "extensionFixtureInputs": [
+        [
+          "V1-030",
+          "576cd74b2cd6eb39755420f124ac2fcdc5008b9ebb866bf152f69accd32b832c"
+        ],
+        [
+          "V1-084",
+          "c72af460d80a9fefead74f9db7b6c1ac48e9088b23d717f913681e56e3844cd1"
+        ],
+        [
+          "V1-063",
+          "440e97c261c39b445adeeff7889528835ba63f6e1d264bb970fb171e5777e672"
+        ],
+        [
+          "V1-073",
+          "1fec0ba309f8fdd23cd296bdda1c8e8a1d9382738252d40d916f2589ff43aeb2"
+        ],
+        [
+          "R2Deriving",
+          "1a88b3116df17fcd9d9801c95c5e0e13ac20aaad8df6b6bf9d9582f36c1e3480"
+        ],
+        [
+          "R2Registration",
+          "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
+        ]
+      ]
     }
   ]
 }
