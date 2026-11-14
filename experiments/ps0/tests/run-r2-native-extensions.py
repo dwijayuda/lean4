@@ -461,7 +461,7 @@ class R2Report (α : Type) where
   code : Nat
 private def deriveR2Report : DerivingHandler := fun names => do
   for name in names do
-    elabCommand (← `(instance : R2Report $(mkIdent name) := ⟨42⟩))
+    elabCommand(← `(instance : R2Report $(mkIdent name) := ⟨42⟩))
   return true
 initialize registerDerivingHandler ``R2Report deriveR2Report
 ''', encoding='utf-8')
