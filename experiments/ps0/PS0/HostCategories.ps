@@ -196,13 +196,13 @@ const loopBasicFun : Parser :=
       | some span => .synthetic span.start span.stop false
       | none => .none
     .node(info, ``Lean.Parser.Term.app, #[source[0], mkNullNode(source[2].getSepArgs)]))),
-    (node `PS0.DoLayout.patternCall <|
+    (node ``Lean.Parser.Term.app <|
       (PS0.Operators.adjacentIdentifier <|> Lean.Parser.Term.dotIdent) >>
         checkNoWsBefore >> "(" >>
         withoutPosition((sepBy((categoryParser `psMatchPattern 0), ",", ("," >> ppSpace), true))) >>
         ")"))
 
-private const matchPatternAlternative : Parser :=
+const matchPatternAlternative : Parser :=
   node ``Lean.Parser.Term.matchAlt <|
     "| " >> ppIndent(
       sepBy1((sepBy1((categoryParser `psMatchPattern 0), ", ")), " | ") >>
@@ -210,7 +210,7 @@ private const matchPatternAlternative : Parser :=
         checkColGe "alternative right-hand-side to start in a column greater than or equal to the corresponding '|'" >>
         categoryParser `psTerm 0)
 
-private const matchPatternAlternatives : Parser :=
+const matchPatternAlternatives : Parser :=
   node ``Lean.Parser.Term.matchAlts <| withPosition(many1Indent(ppLine >> matchPatternAlternative))
 
 @[run_parser_attribute_hooks] const matchTerm : Parser :=
