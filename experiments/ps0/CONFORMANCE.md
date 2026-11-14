@@ -1,5 +1,17 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-15 — R2-17 braced do items and clean audit pins
+
+The R2-17 fix scopes Lean's `withPosition` to each `psDoElem` in a braced block. The source SHA-256 is `3be342bdb0c61f07ec2d66c2840415561c1ef0a8e3ae04c095b42f378e708932`. The initial Linux probe passed all 31 witnesses and the separate exact-source checkout reproduced that result. [Linux parser probe](https://github.com/dwijayuda/pskernel/actions/runs/43635682596/job/132571840580)
+
+Clean Linux run `43634773769` at source `2f9787de086ffc0c8255fe383cb01df32d4a5521` passed checkpoint `132569058353` and is building the stage-one base in job `132569177226`. Clean run `43636172790` covers the subsequent R2-17 fix at source `40c5b25438906316751441470502055ffc96632b` and runner `25102ad3966b5fe8bfc92bbe44cc0a5c7b1fa6b7`. Its checkpoint `132573345223` passed and stage-one base job `132573593470` is building. Both native links and the independent audit are pending in both runs. [Requested clean audit](https://github.com/dwijayuda/pskernel/actions/runs/43634773769) [Clean audit with R2-17](https://github.com/dwijayuda/pskernel/actions/runs/43636172790)
+
+V1-100 remains pending. The independent audit must verify the exact production corpus on both stages. The retained census and registration evidence must cover §0 and §14.
+
+The braced do item establishes its own indentation position so the following loop becomes a separate statement. The exact-source Linux job passed all 31 numbered R2 witnesses, including the proof that the loop returns 2. Qualified `R2-17`. Source `40c5b25438906316751441470502055ffc96632b`, runner `c4db6e421c3b9d866ffd58a312f19ff90dcdc155`, executable SHA-256 `e69eda59132a6c3126b9702068f2db166744d87cf713300368c7ec7b1060de31`, and fixture runner SHA-256 `6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5`. Evidence artifact `14129913940` has digest `sha256:c7c0cafa0e4b649a2df4121a3d7b9bcf0eb6e558c2a302879607a71681f94356` and 24,487 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43636141535/job/132573247979)
+
+The ledger records **241 finite passes and 1 pending obligations**.
+
 ## 2026-11-15 — Linux macro bridge and remaining R2 boundaries
 
 Clean Linux run `43624421323` is pinned to source `c07976a05c85035b2103f983a5773dff302524dd` and runner `87c2716b0fb713eddc5fc6b6139f51c22caa4481`. Checkpoint job `132536979423` passed. Native stage-one base job `132537063664` is in progress. Both native links and the independent fixed-point audit are pending. [Clean Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43624421323)

@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 2,
+    "PENDING": 1,
     "featureFamiliesPending": 1,
-    "boundaryWitnessesPending": 1,
+    "boundaryWitnessesPending": 0,
     "acceptanceCasesPending": 0,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases, capability families, and numbered witnesses.",
-    "PASS": 240,
+    "PASS": 241,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 2,
+    "obligationsPending": 1,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -20819,6 +20819,16 @@
               "digest": "sha256:ffe7104f9fd676188671f2ba665790fb79614210191bf28a6732564a2fec11a9"
             }
           }
+        },
+        "cleanR2DoIndentRebuild": {
+          "source": "40c5b25438906316751441470502055ffc96632b",
+          "runner": "25102ad3966b5fe8bfc92bbe44cc0a5c7b1fa6b7",
+          "run": 43636172790,
+          "checkpointJob": 132573345223,
+          "checkpointStatus": "PASS",
+          "stageOneBaseJob": 132573593470,
+          "stageOneBaseStatus": "IN_PROGRESS",
+          "status": "IN_PROGRESS"
         }
       }
     },
@@ -22452,6 +22462,31 @@
         "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
         "fixtureCases": {
           "R2-18": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479"
+        }
+      },
+      {
+        "summary": "The braced do item establishes its own indentation position so the following loop becomes a separate statement. The exact-source Linux job passed all 31 numbered R2 witnesses, including the proof that the loop returns 2.",
+        "passed": [
+          "R2-17"
+        ],
+        "fixture": "experiments/ps0/tests/run-r2-boundary.py",
+        "source": "40c5b25438906316751441470502055ffc96632b",
+        "runner": "c4db6e421c3b9d866ffd58a312f19ff90dcdc155",
+        "run": 43636141535,
+        "job": 132573247979,
+        "artifact": {
+          "id": 14129913940,
+          "bytes": 24487,
+          "digest": "sha256:c7c0cafa0e4b649a2df4121a3d7b9bcf0eb6e558c2a302879607a71681f94356"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "d446dc87b2f9487919f5c0eb47df7a1163c5e140",
+        "driverSha256": "e69eda59132a6c3126b9702068f2db166744d87cf713300368c7ec7b1060de31",
+        "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
+        "caseCount": 31,
+        "hostCategoriesSha256": "3be342bdb0c61f07ec2d66c2840415561c1ef0a8e3ae04c095b42f378e708932",
+        "fixtureCases": {
+          "R2-17": "646bb601e021a38b2aca72aa41cd4829d8fa044666f8bd6cece80b406dfd9feb"
         }
       }
     ]
@@ -92742,6 +92777,16 @@
             "digest": "sha256:ffe7104f9fd676188671f2ba665790fb79614210191bf28a6732564a2fec11a9"
           }
         }
+      },
+      "cleanR2DoIndentRebuild": {
+        "source": "40c5b25438906316751441470502055ffc96632b",
+        "runner": "25102ad3966b5fe8bfc92bbe44cc0a5c7b1fa6b7",
+        "run": 43636172790,
+        "checkpointJob": 132573345223,
+        "checkpointStatus": "PASS",
+        "stageOneBaseJob": 132573593470,
+        "stageOneBaseStatus": "IN_PROGRESS",
+        "status": "IN_PROGRESS"
       }
     }
   },
@@ -94375,6 +94420,31 @@
       "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
       "fixtureCases": {
         "R2-18": "5ce2c39b8049561486537053645bb903aead9762f0d9a3c4a4ff23996baa2479"
+      }
+    },
+    {
+      "summary": "The braced do item establishes its own indentation position so the following loop becomes a separate statement. The exact-source Linux job passed all 31 numbered R2 witnesses, including the proof that the loop returns 2.",
+      "passed": [
+        "R2-17"
+      ],
+      "fixture": "experiments/ps0/tests/run-r2-boundary.py",
+      "source": "40c5b25438906316751441470502055ffc96632b",
+      "runner": "c4db6e421c3b9d866ffd58a312f19ff90dcdc155",
+      "run": 43636141535,
+      "job": 132573247979,
+      "artifact": {
+        "id": 14129913940,
+        "bytes": 24487,
+        "digest": "sha256:c7c0cafa0e4b649a2df4121a3d7b9bcf0eb6e558c2a302879607a71681f94356"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "d446dc87b2f9487919f5c0eb47df7a1163c5e140",
+      "driverSha256": "e69eda59132a6c3126b9702068f2db166744d87cf713300368c7ec7b1060de31",
+      "fixtureSha256": "6e1e1b45fc43be265481c997170e01a27b251a4ec9f3a34d9d982ea7ea7134d5",
+      "caseCount": 31,
+      "hostCategoriesSha256": "3be342bdb0c61f07ec2d66c2840415561c1ef0a8e3ae04c095b42f378e708932",
+      "fixtureCases": {
+        "R2-17": "646bb601e021a38b2aca72aa41cd4829d8fa044666f8bd6cece80b406dfd9feb"
       }
     }
   ]
