@@ -1764,10 +1764,25 @@
       "id": "V1-074",
       "feature": "Parser descriptors/combinators and leading/trailing parsers",
       "sourceBasis": "L-SYNTAX, L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-074",
+      "qualifiedCommit": "2dc511f05a149f588ca0183518e15cf2fa0df96e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43625909438",
+      "evidence": {
+        "jobId": 132541539713,
+        "runner": "d02d442f4d57f2a79f9d0dfa883ef729e4014093",
+        "artifact": {
+          "id": 14125993618,
+          "name": "ps0-r2-native-extensions-evidence-43625909438",
+          "digest": "sha256:e06289e27c9f42db99cd008a71a66de1a96a977296404afa3b1ad8da778273cf",
+          "bytes": 16205356
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "2d57e0e153d47fb353623dc16fbc103fa678dfd960020a15ec60dc206cd39916",
+        "caseSha256": "ec580a0df5e34f27082ae5ea0ca38ccc6e58995c50983edccd6ea936940ac0b2"
+      }
     },
     {
       "id": "V1-075",
@@ -2303,10 +2318,25 @@
       "id": "V1-097",
       "feature": "Quotient/parser/documentation bootstrap commands and internal scopes",
       "sourceBasis": "L-CMD, L-SYNTAX",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: V1-097",
+      "qualifiedCommit": "2dc511f05a149f588ca0183518e15cf2fa0df96e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43625909438",
+      "evidence": {
+        "jobId": 132541539713,
+        "runner": "d02d442f4d57f2a79f9d0dfa883ef729e4014093",
+        "artifact": {
+          "id": 14125993618,
+          "name": "ps0-r2-native-extensions-evidence-43625909438",
+          "digest": "sha256:e06289e27c9f42db99cd008a71a66de1a96a977296404afa3b1ad8da778273cf",
+          "bytes": 16205356
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "2d57e0e153d47fb353623dc16fbc103fa678dfd960020a15ec60dc206cd39916",
+        "caseSha256": "70dbb909256f1e8c56cfc6b99d5a382e3165b9fd88215f460579ea8646e6b1b6"
+      }
     },
     {
       "id": "V1-098",
@@ -9357,12 +9387,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 11,
-    "featureFamiliesPending": 5,
+    "PENDING": 9,
+    "featureFamiliesPending": 3,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 231,
+    "PASS": 233,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -20054,7 +20084,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 11,
+    "obligationsPending": 9,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -28221,6 +28251,35 @@
         },
         "supportingCases": {
           "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
+        }
+      },
+      {
+        "summary": "Linux checked a native parser descriptor and its leading and trailing syntax. The bootstrap fixture accepted scoped parser and Verso documentation, and its duplicate quotient control produced the exact bootstrap diagnostic.",
+        "source": "2dc511f05a149f588ca0183518e15cf2fa0df96e",
+        "runner": "d02d442f4d57f2a79f9d0dfa883ef729e4014093",
+        "run": 43625909438,
+        "job": 132541539713,
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "2d57e0e153d47fb353623dc16fbc103fa678dfd960020a15ec60dc206cd39916",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14125993618,
+          "name": "ps0-r2-native-extensions-evidence-43625909438",
+          "digest": "sha256:e06289e27c9f42db99cd008a71a66de1a96a977296404afa3b1ad8da778273cf",
+          "bytes": 16205356
+        },
+        "passed": [
+          "V1-074",
+          "V1-097"
+        ],
+        "fixtureCases": {
+          "V1-074": "ec580a0df5e34f27082ae5ea0ca38ccc6e58995c50983edccd6ea936940ac0b2",
+          "V1-097": "70dbb909256f1e8c56cfc6b99d5a382e3165b9fd88215f460579ea8646e6b1b6"
+        },
+        "supportingCases": {
+          "V1-097-duplicate-quotient": "bd18fba9cd9687db264d196b5beb292f0652ba41ff78e80ae13cc2b3f6bf7386"
         }
       }
     ]
@@ -99890,6 +99949,35 @@
       },
       "supportingCases": {
         "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
+      }
+    },
+    {
+      "summary": "Linux checked a native parser descriptor and its leading and trailing syntax. The bootstrap fixture accepted scoped parser and Verso documentation, and its duplicate quotient control produced the exact bootstrap diagnostic.",
+      "source": "2dc511f05a149f588ca0183518e15cf2fa0df96e",
+      "runner": "d02d442f4d57f2a79f9d0dfa883ef729e4014093",
+      "run": 43625909438,
+      "job": 132541539713,
+      "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "2d57e0e153d47fb353623dc16fbc103fa678dfd960020a15ec60dc206cd39916",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14125993618,
+        "name": "ps0-r2-native-extensions-evidence-43625909438",
+        "digest": "sha256:e06289e27c9f42db99cd008a71a66de1a96a977296404afa3b1ad8da778273cf",
+        "bytes": 16205356
+      },
+      "passed": [
+        "V1-074",
+        "V1-097"
+      ],
+      "fixtureCases": {
+        "V1-074": "ec580a0df5e34f27082ae5ea0ca38ccc6e58995c50983edccd6ea936940ac0b2",
+        "V1-097": "70dbb909256f1e8c56cfc6b99d5a382e3165b9fd88215f460579ea8646e6b1b6"
+      },
+      "supportingCases": {
+        "V1-097-duplicate-quotient": "bd18fba9cd9687db264d196b5beb292f0652ba41ff78e80ae13cc2b3f6bf7386"
       }
     }
   ]
