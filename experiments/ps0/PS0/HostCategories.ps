@@ -1243,6 +1243,9 @@ partial function lower(category : Name, source : Lean.Syntax) :
   if source.isOfKind choiceKind then
     Macro.throwError "PS0V1-HOST-AMBIGUITY: resolve host syntax before lowering"
   if category == `psTerm then
+    -- Reuse the native bridge when a bounded parser returns an unwrapped application.
+    if source.isOfKind ``Lean.Parser.Term.app then
+      return ← lowerBorrowedTerm (.node .none `ps0NativeTermBridge #[source])
     if #[`ps0HeadCall, `ps0HeadEmptyCall, `ps0NativeHeadBridge,
         `ps0ParenthesizedHead, `ps0AscribedHead].contains(source.getKind) then
       return ← lowerHead source
