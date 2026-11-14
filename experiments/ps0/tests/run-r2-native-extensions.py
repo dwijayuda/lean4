@@ -32,7 +32,7 @@ example : (∀ x ≪₀ 0, x = (23 : Nat)) := by { intro x h; omega }
     'V1-074': ('''public import Lean
 public meta import Lean
 open Lean Parser
-@[run_parser_attribute_hooks] meta def r2Operand : Parser := leading_parser Lean.Parser.Term.num
+meta def r2Operand : Parser := leading_parser Lean.Parser.Term.num
 syntax (name := r2Prefix) "r2Prefix " r2Operand : term
 syntax:70 (name := r2Tail) term:70 " r2Tail " num : term
 macro_rules
@@ -225,7 +225,7 @@ run_cmd liftTermElabM do
     'V1-097': ('''public import Lean
 public meta import Lean
 open Lean Parser
-@[run_parser_attribute_hooks] meta def r2BootOperand : Parser := leading_parser Lean.Parser.Term.num
+meta def r2BootOperand : Parser := leading_parser Lean.Parser.Term.num
 syntax "r2Boot " r2BootOperand : term
 macro_rules | `(r2Boot $n:num) => pure n
 set_option doc.verso true in
