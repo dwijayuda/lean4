@@ -16,6 +16,45 @@ run_cmd do
   logInfo m!"PS0_CHECKED_SPEC {assumptions}"
 '''
 CASES = {
+    'V1-069': ('''public import Std.WP
+def observed : IO Nat := do
+  assert False
+  assert! 2 + 2 == 4
+  debug_assert! 2 + 2 == 4
+  return 42
+#eval show IO Unit from do
+  let value ← observed
+  if value != 42 then throw (IO.userError "assertion runtime oracle")
+  IO.println "PS0_ASSERTION_RUNTIME:42"
+''', 'PS0_ASSERTION_RUNTIME:42', ''),
+    'V1-070': ('''public import Std.WP
+function annotated(n: Nat): Id Nat := do
+  let mut value := n
+  for i in [n]
+  invariant prefix suffix => True
+  do value := i + 1
+  while false
+  invariant exit => True
+  decreasing value
+  do value := 0
+  return value
+example : Id.run(annotated(41)) = 42 := rfl
+''', '', ''),
+    'V1-071': ('''public import Std.WP
+def effect (counter : IO.Ref Nat) : IO Nat := do
+  counter.modify Nat.succ
+  return 37
+def observe : IO Nat := do
+  let counter ← IO.mkRef 0
+  erased mut witness := 0
+  witness := 1
+  erased _value ← effect counter
+  counter.get
+#eval show IO Unit from do
+  let events ← observe
+  if events != 1 then throw (IO.userError "erased effect missing")
+  IO.println "PS0_ERASED_MUT_EFFECT:1"
+''', 'PS0_ERASED_MUT_EFFECT:1', ''),
     'PS0-P-VC-01': ('''public import Std.WP
 function checked(n: Nat): Id Nat
   given (target: Nat)
@@ -112,6 +151,11 @@ def main():
             ok = result.returncode == 0 and expected in log
         (passed if ok else failures).append(case)
         print(case, 'PASS' if ok else 'FAIL', result.returncode, log, flush=True)
+    for family, required in {
+        'V1-067': {'PS0-P-VC-01', 'PS0-N-VC-01', 'PS0-N-VC-03'},
+        'V1-068': {'PS0-P-VC-02', 'PS0-N-VC-05'},
+    }.items():
+        (passed if required.issubset(passed) else failures).append(family)
     evidence = {'passed': passed, 'failures': failures, 'fixtures': fixtures,
                 'driver_sha256': hashlib.sha256(args.driver.read_bytes()).hexdigest()}
     (args.output / 'result.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
