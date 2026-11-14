@@ -207,11 +207,11 @@ const loopBasicFun : Parser :=
       | some span => .synthetic span.start span.stop false
       | none => .none
     .node(info, ``Lean.Parser.Term.app, #[source[0], mkNullNode(source[2].getSepArgs)])))),
-    (node ``Lean.Parser.Term.app <|
+    ((node ``Lean.Parser.Term.app <|
       atomic((PS0.Operators.adjacentIdentifier <|> Lean.Parser.Term.dotIdent) >>
         checkNoWsBefore >> "(") >>
         withoutPosition((sepBy((categoryParser `psMatchPattern 0), ",", ("," >> ppSpace), true))) >>
-        ")"))
+        ")") <|> Lean.Parser.error "expected constructor pattern"))
 
 const matchPatternAlternative : Parser :=
   node ``Lean.Parser.Term.matchAlt <|

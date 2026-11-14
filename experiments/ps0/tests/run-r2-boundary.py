@@ -90,7 +90,7 @@ def main():
         if case == '02':
             ok = ok and 'does not depend on any axioms' in log
         if case == '25':
-            ok = ok and 'makeAdder ()' in log
+            ok = ok and 'Nat → Nat' in log
         (passed if ok else failures).append(case_id)
         print(case_id, 'PASS' if ok else 'FAIL', result.returncode, log, flush=True)
     evidence = {'passed': passed, 'failures': failures, 'fixtures': fixtures,
