@@ -17,6 +17,8 @@ def internalDefault : Nat := 7
 private def hidden : Nat := 11
 public section
 def visible : Nat := 13
+@[expose] def transparent : Nat := 29
+@[expose] protected def protectedValue : Nat := 31
 end
 end Explicit
 ''',
@@ -75,6 +77,18 @@ run_cmd do
   unless metaPublic.toString == "r2Scope" do Lean.throwError "public meta import"
 public section
 def main : IO Unit := IO.println s!"PS0_R2_SCOPE:{Explicit.visible}:{Implicit.visible}"
+''',
+    'Scopes.Reexport': '''module
+import Scopes.Consumer
+import Scopes.MetaPrivate
+open Explicit
+example : Explicit.transparent = 29 := rfl
+example : Explicit.protectedValue = 31 := rfl
+#check_failure protectedValue
+''',
+    'Scopes.HiddenBody': '''module
+import Scopes.Consumer
+example : Explicit.visible = 13 := rfl
 ''',
     'Scopes.PrivateConsumer': '''module
 import all Scopes.Explicit
@@ -151,6 +165,7 @@ def main():
         assert data['nativeSource'] == data['source'] == MODULES['Scopes.Prelude']
         assert all(span['kind'] == 'original' for span in data['segments'])
         passed.extend(f'PS0-P-SCOPE-{i:02}' for i in range(1, 9))
+        passed.extend(['V1-011', 'V1-012'])
     native = work / 'PublicAll.lean'
     native.write_text(MODULES['Scopes.PublicAll'], encoding='utf-8')
     native_rejected = probe('public-all-native', ['lean', native],
@@ -158,16 +173,31 @@ def main():
     if probe('PS0-N-MOD-01', [driver, 'lake-header', src / 'Scopes/PublicAll.ps'],
              lambda code, log: code == 1 and log.strip() == 'PS0-MODULE-HEADER: invalid import header') and native_rejected:
         passed.append('PS0-N-MOD-01')
+        if positive:
+            passed.append('V1-015')
+    reexport = probe('reexport', [*lake, 'build', 'Scopes.Reexport'],
+                     lambda code, log: code == 0)
+    hidden_body = probe('hidden-body', [*lake, 'build', 'Scopes.HiddenBody'],
+                        lambda code, log: code == 1 and re.search(
+                            r'Theorem statements are not definitionally equal|Type mismatch|definitional equality', log, re.I))
+    scope_results = {}
     for label, module, match in [
         ('restricted', 'Restricted', r'Unknown identifier.*Explicit\.internalDefault|unknown constant.*Explicit\.internalDefault'),
         ('PS0-N-MOD-02', 'LateImport', r'import.*(?:beginning|header)|unexpected token .import.|invalid.*import'),
         ('PS0-N-MOD-03', 'MetaRuntime', r'Invalid definition .*runtimeValue.*may not access declaration .*metaValue.*marked as .meta.'),
     ]:
-        if probe(label, [*lake, 'build', 'Scopes.' + module],
+        scope_results[label] = probe(label, [*lake, 'build', 'Scopes.' + module],
                  lambda code, log: code == 1 and any(re.search(match, line, re.I)
-                    for line in log.splitlines() if re.search(r'error(?:\([^)]*\))?:', line) and f'{module}.ps:' in line)):
+                    for line in log.splitlines() if re.search(r'error(?:\([^)]*\))?:', line) and f'{module}.ps:' in line))
+        if scope_results[label]:
             if label != 'restricted':
                 passed.append(label)
+    if positive and reexport and scope_results['restricted']:
+        passed.append('V1-013')
+    if positive and scope_results['PS0-N-MOD-03']:
+        passed.append('V1-014')
+    if positive and reexport and hidden_body and scope_results['restricted']:
+        passed.append('V1-018')
     result = {'passed': passed, 'failures': failures,
               'driver_sha256': hashlib.sha256(driver.read_bytes()).hexdigest(),
               'fixtures': {name: hashlib.sha256(raw.encode()).hexdigest() for name, raw in MODULES.items()}}

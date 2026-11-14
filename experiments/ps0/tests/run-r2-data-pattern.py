@@ -112,6 +112,83 @@ private example : generalized(2, rfl) = rfl := rfl
   | zero : OnlyZero 0
 function eliminate(impossible: OnlyZero(1)): Nat := nomatch impossible
 ''', None, None),
+    'V1-024': ('''inductive Code : Nat → Type where
+  | zero : Code 0
+  | step (prev : Code n) : Code (n + 1)
+function decode(n: Nat, value: Code(n)): Nat :=
+  Code.rec (motive := fun _ _ => Nat) 0 (fun _ _ k => k + 1) value
+example : decode(2, .step(.step(.zero))) = 2 := rfl
+#check Code.casesOn
+#check Code.noConfusion
+''', None, None),
+    'V1-025': ('''mutual
+inductive A where
+  | zero
+  | wrap (b : B)
+inductive B where
+  | wrap (a : A)
+end
+inductive Rose where
+  | node (children : List Rose)
+example : A = A := rfl
+#check A.rec
+#check B.rec
+#check Rose.rec
+''', None, None),
+    'V1-026': ('''structure Point where { x: Nat }
+structure ColoredPoint extends point : Point where
+  make ::
+  color : Nat
+def p : ColoredPoint := ColoredPoint.make (Point.mk 2) 5
+example : p.point.x = 2 ∧ p.color = 5 := ⟨rfl, rfl⟩
+''', None, None),
+    'V1-027': ('''structure Config where
+  {α : Type}
+  [inst : Inhabited α]
+  value : α := default
+  ok : value = value := rfl
+def config : Config := { α := Nat }
+example : config.value = 0 := rfl
+example : config.ok = rfl := rfl
+''', None, None),
+    'V1-028': ('''class Measure (α : Type) where { size: α → Nat }
+instance : Measure Nat where
+  size := id
+class inductive Choice (α : Type) where
+  | choose (value : α)
+instance : Choice Nat := .choose 7
+example : Measure.size(3) = 3 := rfl
+example : (inferInstance : Choice Nat) = .choose 7 := rfl
+''', None, None),
+    'V1-029': ('''inductive Color where { | red | blue } deriving Repr
+deriving instance DecidableEq for Color
+example : Color.red ≠ Color.blue := by { decide }
+#synth Repr Color
+''', None, None),
+    'V1-040': ('''inductive Marker : Nat → Type where
+  | zero : Marker 0
+  | next (n : Nat) : Marker (n + 1)
+function inspect(n: Nat, m: Marker(n)): Nat := match n, m with
+  | .(0), .zero => 0
+  | .(k + 1), .next(k) => k + 1
+example : inspect(3, .next(2)) = 3 := rfl
+function predecessor(n: Nat): Nat := match n with { | 0 => 0 | k + 1 => k }
+example : predecessor(7) = 6 := rfl
+''', None, None),
+    'V1-041': ('''function inspect(n: Nat, flag: Bool, h: n = n): n = n :=
+  match (generalizing := true) (motive := fun k _ => k = k) n, flag with
+  | 0, false => h
+  | 0, true => h
+  | k + 1, _ => rfl
+example : inspect(0, true, rfl) = rfl := rfl
+''', None, None),
+    'V1-042': ('''function inspect(value: Option Nat): Nat :=
+  match h : value with {
+    | chosen@(some n) => by { have e : value = chosen := h; exact n }
+    | none => 0
+  }
+example : inspect(some(7)) = 7 := rfl
+''', None, None),
     'PS0-N-DATA-01': ('''inductive Negative where
   | mk (consume : Negative → Nat) : Negative
 ''', 'inductive Negative', r'non positive|non-positive|positivity'),
@@ -168,6 +245,10 @@ def main():
                 for line in lines)
         (passed if ok else failures).append(case)
         print(case, 'PASS' if ok else 'FAIL', result.returncode, log, flush=True)
+    # The mutual/nested witness also requires the positivity rejection.
+    if 'V1-025' in passed and 'PS0-N-DATA-01' not in passed:
+        passed.remove('V1-025')
+        failures.append('V1-025')
     evidence = {'passed': passed, 'failures': failures, 'fixtures': fixtures,
                 'driver_sha256': hashlib.sha256(args.driver.read_bytes()).hexdigest()}
     (args.output / 'result.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
