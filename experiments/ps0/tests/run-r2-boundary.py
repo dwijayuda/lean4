@@ -89,6 +89,33 @@ def main():
             ok = result.returncode == 0
         if case == '02':
             ok = ok and 'does not depend on any axioms' in log
+        if case == '06':
+            omitted = 'Packet.mk(n, true)'
+            if source.count(omitted) != 1:
+                raise ValueError('missing R2-06 explicit-field control')
+            controls = {
+                'R2-06-omitted.ps': ([args.driver, 'check'],
+                                     source.replace(omitted, 'Packet.mk(n)')),
+                'R2-06-omitted.lean': (['lean'], '''import Init
+inductive Packet where
+  | mk (n : Nat) (flag : Bool := true)
+def readPacket : Packet → Nat
+  | Packet.mk n => n
+  | Packet.mk _ false => 0
+'''),
+            }
+            for name, (command, control) in controls.items():
+                control_path = args.output / name
+                control_path.write_text(control, encoding='utf-8')
+                fixtures[name] = hashlib.sha256(control_path.read_bytes()).hexdigest()
+                result_control = subprocess.run(
+                    [*command, control_path], text=True, stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT, timeout=90)
+                (args.output / (name + '.log')).write_text(result_control.stdout, encoding='utf-8')
+                rejected = result_control.returncode == 1 and bool(re.search(
+                    r'Invalid pattern: Not enough arguments', result_control.stdout))
+                ok = ok and rejected
+                print(name, 'PASS' if rejected else 'FAIL', result_control.stdout, flush=True)
         if case == '25':
             ok = ok and 'Nat → Nat' in log
         (passed if ok else failures).append(case_id)

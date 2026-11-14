@@ -61,6 +61,23 @@ private const adjacentIdentifierFn : ParserFn := fun ctx initial => Id.run(do
 @[run_parser_attribute_hooks] const adjacentIdentifier : Parser :=
   withFn((fun _ => adjacentIdentifierFn), ident)
 
+function checkCallConflict(parse : ParserFn) : ParserFn := fun ctx initial => Id.run(do
+  let head := adjacentIdentifierFn ctx initial
+  if head.hasError || ctx.atEnd head.pos || ctx.get head.pos != '(' then
+    return initial.mkUnexpectedError "expected an adjacent identifier call"
+  let some category := getParserCategory? ctx.env `term
+    | return initial.mkUnexpectedError "missing native term category"
+  let (start, candidates) := indexed category.tables.trailingTable ctx head .default
+  if start.hasError || candidates.isEmpty then
+    return initial.mkUnexpectedError "no competing native call parser"
+  let candidate := longestMatchFn((some start.stxStack.back), candidates, ctx,
+    ({start.popSyntax with lhsPrec := maxPrec}))
+  if candidate.hasError then
+    return initial.mkUnexpectedError "no competing native call span"
+  let call := parse ctx initial
+  if !call.hasError && call.pos == candidate.pos then return call
+  return initial.mkUnexpectedError "no competing native call span")
+
 builtin_initialize
   registerBuiltinNodeKind ownedKind
   registerBuiltinNodeKind ownedPostfixKind
@@ -94,15 +111,16 @@ private function filterToken(table : TokenMap((Parser × Nat)), token : Name,
 -- Retain the native argument parser for ordinary Lean arguments and syntax data.
 private const whitespaceArgument : Parser :=
   (checkWsBefore "expected space" >> checkColGt "expected to be indented" >>
-    lookahead(adjacentIdentifier >> checkNoWsBefore >> "(") >>
-    categoryParser `psHead maxPrec) <|> Lean.Parser.Term.argument
+    (atomic((lookahead "do" >> categoryParser `psTerm argPrec)) <|>
+      (lookahead(adjacentIdentifier >> checkNoWsBefore >> "(") >>
+        categoryParser `psHead maxPrec))) <|> Lean.Parser.Term.argument
 
 @[run_parser_attribute_hooks] const whitespaceApplication : TrailingParser :=
   withFn((fun parse ctx initial => Id.run(do
     let parsed := parse ctx initial
     if parsed.hasError then return parsed
     let arguments := parsed.stxStack.back[1].getArgs
-    if arguments.any(fun arg => arg.isOfKind `ps0HeadCall || arg.isOfKind `ps0HeadEmptyCall) then
+    if arguments.any(fun arg => #[`ps0HeadCall, `ps0HeadEmptyCall, `ps0HostDo].contains arg.getKind) then
       return parsed
     return initial.mkUnexpectedError "expected an adjacent PS call argument")),
     (trailingNode(``Lean.Parser.Term.app, leadPrec, maxPrec, many1 whitespaceArgument)))
