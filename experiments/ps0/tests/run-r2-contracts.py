@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -26,7 +27,7 @@ opaque hidden : Nat := 7
 axiom hiddenLaw : hidden = 7
 function checked(): Id Nat
   ensures r => r = 7 := do { return hidden }
-where { finally { | spec => { exact hiddenLaw } } }
+  where { finally { | spec => { exact hiddenLaw } } }
 ''' + SPEC, 'PS0_CHECKED_SPEC', ''),
     'PS0-P-VC-03': ('''public import Std.WP
 def effect (counter : IO.Ref Nat) : IO Nat := do
@@ -58,7 +59,10 @@ function bad(n: Nat): Id Nat
   given target: Nat
   ensures r => r = target := do { return n }
 ''', '', r'unexpected token|expected|typed logical binder'),
-    'PS0-N-VC-04': ('''public import Init
+    'PS0-N-VC-04': ('''module
+prelude
+public import Init
+public section
 function bad(n: Nat): Id Nat
   ensures r => r = n := do { return n }
 ''', '', r'Std.WP|Triple|requires.*import|verification environment'),
@@ -80,7 +84,18 @@ def main():
         path = args.output / (case + '.ps')
         path.write_text(source, encoding='utf-8')
         fixtures[case] = hashlib.sha256(path.read_bytes()).hexdigest()
-        result = subprocess.run([args.driver, 'check', path], text=True,
+        if case == 'PS0-N-VC-04':
+            src = args.output / 'bootstrap'
+            src.mkdir()
+            native = src / 'MissingWP.ps'
+            native.write_text(source, encoding='utf-8')
+            command = ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceGrammar=true',
+                       f'-KsourceRoot={src.resolve()}', '-Kroots=MissingWP', '-KmoduleNames=MissingWP',
+                       f'-Kdriver={args.driver.resolve()}',
+                       f'-KprojectBuildDir={(args.output / "native").resolve()}', 'build', 'MissingWP']
+        else:
+            command = [args.driver, 'check', path]
+        result = subprocess.run(command, env=os.environ, text=True,
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=90)
         log = result.stdout
         (args.output / (case + '.log')).write_text(log, encoding='utf-8')
@@ -88,7 +103,7 @@ def main():
             errors = [line for line in log.splitlines() if re.search(r':\d+:\d+: error(?:\([^)]*\))?:', line)]
             ok = result.returncode == 1 and bool(errors) and all(re.search(diagnostic, line, re.I) for line in errors)
             if case == 'PS0-N-VC-01':
-                ok = ok and any(':4:' in line for line in errors) and any(':8:' in line for line in errors)
+                ok = ok and len(errors) == 2 and all("unexpected token 'requires'" in line for line in errors)
         else:
             ok = result.returncode == 0 and expected in log
         (passed if ok else failures).append(case)
