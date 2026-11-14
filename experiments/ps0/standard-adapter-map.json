@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 128,
+    "PENDING": 119,
     "featureFamiliesPending": 100,
     "boundaryWitnessesPending": 5,
-    "acceptanceCasesPending": 23,
+    "acceptanceCasesPending": 14,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 114,
+    "PASS": 123,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 128,
+    "obligationsPending": 119,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -20872,6 +20872,49 @@
           "archiveDigestVerified": true
         },
         "summary": "Six contract and erasure cases passed, including a checked spec theorem, execution of the erased-result action, and native contract rejections. The braced spec tail and missing-WP witnesses remain pending."
+      },
+      {
+        "run": 43586369627,
+        "job": 132421626281,
+        "conclusion": "success",
+        "runner": "8c2d88e76abfc8f6a23a21525f348d5955ae2158",
+        "source": "dcf33a23d9e671a75eaee6f3be46c6d0cba0a3e8",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "7862a321ffc39803ec6d4c4c7f3c8b00d19abfc37f52103eacc304869dcb52fd",
+        "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+        "passed": [
+          "PS0-P-EXT-01",
+          "PS0-P-EXT-02",
+          "PS0-P-META-02",
+          "PS0-P-RUN-02",
+          "PS0-P-DIAG-01",
+          "PS0-P-RUN-01",
+          "PS0-N-EXT-03",
+          "PS0-P-RUN-03",
+          "PS0-P-META-01"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+          "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+          "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+          "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+          "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+          "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+          "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+          "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+          "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14110284177,
+          "name": "ps0-r2-native-extensions-evidence-43586369627",
+          "digest": "sha256:177991d557f91fb6968a03e35c6f0fb8d7160c130afc1384fb45ff287fff9798",
+          "bytes": 7956486,
+          "archiveDigestVerified": true
+        },
+        "summary": "Nine native capability acceptance cases passed. The linked ABI executable returned 42 through a borrowed Nat FFI argument and a deliberately distinct implemented_by replacement. A second executable observed both ordinary and builtin initializer values."
       }
     ]
   },
@@ -91214,6 +91257,49 @@
         "archiveDigestVerified": true
       },
       "summary": "Six contract and erasure cases passed, including a checked spec theorem, execution of the erased-result action, and native contract rejections. The braced spec tail and missing-WP witnesses remain pending."
+    },
+    {
+      "run": 43586369627,
+      "job": 132421626281,
+      "conclusion": "success",
+      "runner": "8c2d88e76abfc8f6a23a21525f348d5955ae2158",
+      "source": "dcf33a23d9e671a75eaee6f3be46c6d0cba0a3e8",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "7862a321ffc39803ec6d4c4c7f3c8b00d19abfc37f52103eacc304869dcb52fd",
+      "driverSha256": "7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e",
+      "passed": [
+        "PS0-P-EXT-01",
+        "PS0-P-EXT-02",
+        "PS0-P-META-02",
+        "PS0-P-RUN-02",
+        "PS0-P-DIAG-01",
+        "PS0-P-RUN-01",
+        "PS0-N-EXT-03",
+        "PS0-P-RUN-03",
+        "PS0-P-META-01"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+        "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+        "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+        "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+        "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+        "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+        "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+        "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+        "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14110284177,
+        "name": "ps0-r2-native-extensions-evidence-43586369627",
+        "digest": "sha256:177991d557f91fb6968a03e35c6f0fb8d7160c130afc1384fb45ff287fff9798",
+        "bytes": 7956486,
+        "archiveDigestVerified": true
+      },
+      "summary": "Nine native capability acceptance cases passed. The linked ABI executable returned 42 through a borrowed Nat FFI argument and a deliberately distinct implemented_by replacement. A second executable observed both ordinary and builtin initializer values."
     }
   ]
 }

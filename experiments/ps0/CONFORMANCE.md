@@ -1,5 +1,13 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-14 — R2 native extensions, initializers and ABI
+
+The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
+
+Nine native capability acceptance cases passed. The linked ABI executable returned 42 through a borrowed Nat FFI argument and a deliberately distinct implemented_by replacement. A second executable observed both ordinary and builtin initializer values. Qualified `PS0-P-EXT-01`, `PS0-P-EXT-02`, `PS0-P-META-02`, `PS0-P-RUN-02`, `PS0-P-DIAG-01`, `PS0-P-RUN-01`, `PS0-N-EXT-03`, `PS0-P-RUN-03`, `PS0-P-META-01`. Source `dcf33a23d9e671a75eaee6f3be46c6d0cba0a3e8`, runner `8c2d88e76abfc8f6a23a21525f348d5955ae2158`, executable SHA-256 `7db2071be6f65c7b0a1231c797c4b772f238d4e4dafcd50850682b6d4ca8334e`, and fixture runner SHA-256 `7862a321ffc39803ec6d4c4c7f3c8b00d19abfc37f52103eacc304869dcb52fd`. Evidence artifact `14110284177` has digest `sha256:177991d557f91fb6968a03e35c6f0fb8d7160c130afc1384fb45ff287fff9798` and 7,956,486 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43586369627/job/132421626281)
+
+The ledger records **123 finite passes and 119 pending obligations**.
+
 ## 2026-11-14 — R2 source boundaries and intrinsic contracts
 
 The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
