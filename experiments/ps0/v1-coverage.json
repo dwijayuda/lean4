@@ -573,10 +573,25 @@
       "id": "V1-025",
       "feature": "Mutual/nested inductives and positivity requirements",
       "sourceBasis": "L-DECL, L-REF",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-data-pattern.py :: V1-025",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371774",
+      "evidence": {
+        "jobId": 132506095924,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14120729923,
+          "name": "ps0-r2-data-pattern-evidence-43614371774",
+          "digest": "sha256:d8655da48f754b1c24ef29033f782f853292fb1c8028d55cfe60dbf18ef6ad4c",
+          "bytes": 18901
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "420230f5cd864e679a26fda705a97158d98970dec81092e8bf55c0599bd445bd",
+        "caseSha256": "2749a58bd6da2802537aca1e423e41413ce11d57fab4261c5d4bf163b28051f5"
+      }
     },
     {
       "id": "V1-026",
@@ -591,28 +606,73 @@
       "id": "V1-027",
       "feature": "Implicit/instance/proof/default fields and computed fields",
       "sourceBasis": "L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-data-pattern.py :: V1-027",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371774",
+      "evidence": {
+        "jobId": 132506095924,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14120729923,
+          "name": "ps0-r2-data-pattern-evidence-43614371774",
+          "digest": "sha256:d8655da48f754b1c24ef29033f782f853292fb1c8028d55cfe60dbf18ef6ad4c",
+          "bytes": 18901
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "420230f5cd864e679a26fda705a97158d98970dec81092e8bf55c0599bd445bd",
+        "caseSha256": "d056fa46a96e08c46839164a220a2c3432266bf82fef9eeccf6bbe8a92882142"
+      }
     },
     {
       "id": "V1-028",
       "feature": "Classes and class inductives",
       "sourceBasis": "L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-data-pattern.py :: V1-028",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371774",
+      "evidence": {
+        "jobId": 132506095924,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14120729923,
+          "name": "ps0-r2-data-pattern-evidence-43614371774",
+          "digest": "sha256:d8655da48f754b1c24ef29033f782f853292fb1c8028d55cfe60dbf18ef6ad4c",
+          "bytes": 18901
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "420230f5cd864e679a26fda705a97158d98970dec81092e8bf55c0599bd445bd",
+        "caseSha256": "3dd0accf7505fa06cf3e365fc7798ce4f030fe992a1686581591eb3ac11adeb0"
+      }
     },
     {
       "id": "V1-029",
       "feature": "Trailing and standalone deriving",
       "sourceBasis": "L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-data-pattern.py :: V1-029",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371774",
+      "evidence": {
+        "jobId": 132506095924,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14120729923,
+          "name": "ps0-r2-data-pattern-evidence-43614371774",
+          "digest": "sha256:d8655da48f754b1c24ef29033f782f853292fb1c8028d55cfe60dbf18ef6ad4c",
+          "bytes": 18901
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "420230f5cd864e679a26fda705a97158d98970dec81092e8bf55c0599bd445bd",
+        "caseSha256": "5c67533eb9a5855c34b86ac3607c5d1dd78a14790dac628fbba6303fa8299d01"
+      }
     },
     {
       "id": "V1-030",
@@ -717,19 +777,49 @@
       "id": "V1-041",
       "feature": "Multi-discriminant/dependent match, motive and generalization",
       "sourceBasis": "L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-data-pattern.py :: V1-041",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371774",
+      "evidence": {
+        "jobId": 132506095924,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14120729923,
+          "name": "ps0-r2-data-pattern-evidence-43614371774",
+          "digest": "sha256:d8655da48f754b1c24ef29033f782f853292fb1c8028d55cfe60dbf18ef6ad4c",
+          "bytes": 18901
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "420230f5cd864e679a26fda705a97158d98970dec81092e8bf55c0599bd445bd",
+        "caseSha256": "a629dbe92bdc354470f8ba085bb155ea068684057990b1b3ab7fb3bd8ba3b4e3"
+      }
     },
     {
       "id": "V1-042",
       "feature": "Pattern aliases and named match equations",
       "sourceBasis": "L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-data-pattern.py :: V1-042",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371774",
+      "evidence": {
+        "jobId": 132506095924,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14120729923,
+          "name": "ps0-r2-data-pattern-evidence-43614371774",
+          "digest": "sha256:d8655da48f754b1c24ef29033f782f853292fb1c8028d55cfe60dbf18ef6ad4c",
+          "bytes": 18901
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "420230f5cd864e679a26fda705a97158d98970dec81092e8bf55c0599bd445bd",
+        "caseSha256": "cbaae62e20a385cc1df5c604ac0895f85b5c14b9cc066b7b0f50875c0c683cc9"
+      }
     },
     {
       "id": "V1-043",
@@ -762,37 +852,97 @@
       "id": "V1-046",
       "feature": "Structural recursion and structural hints",
       "sourceBasis": "L-PREDEF, L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-046",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "2a5430f31bdc4cfc7d0a821def2b5946339576ce84736f7e4b023d4e299a66a8"
+      }
     },
     {
       "id": "V1-047",
       "feature": "Well-founded recursion, measures and decreasing proofs",
       "sourceBasis": "L-PREDEF, L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-047",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "333ccce483720775eccd6ebd32fba1b1b1e186ce8cf62a8208eeeadd890bd424"
+      }
     },
     {
       "id": "V1-048",
       "feature": "Partial functions and opaque logical interfaces",
       "sourceBasis": "L-PREDEF",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-048",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "fb4ef3214b0e6a661b80f67a3ad9c061475a66c3a79948de79e6330550fab04f"
+      }
     },
     {
       "id": "V1-049",
       "feature": "Partial fixed points and monotonicity",
       "sourceBasis": "L-TERM, L-PREDEF",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-049",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "bc438bfffaded99e3dc1b3ff092a6f9e37c8cdabde1f20d08099c93e47f73f1c"
+      }
     },
     {
       "id": "V1-050",
@@ -816,82 +966,217 @@
       "id": "V1-052",
       "feature": "Generic do, monad operations and nested actions",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-052",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "07b583ce804f92b584cb40692efc400c8651b649244a6cab6550a03d548d5fb9"
+      }
     },
     {
       "id": "V1-053",
       "feature": "Mutable locals and pure/monadic reassignment",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-053",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "3e7b4e62268716ceb417eac57f1fa81be537b1ec0fe9901fd02334b43479ffb7"
+      }
     },
     {
       "id": "V1-054",
       "feature": "Refutable let bindings and fallback control flow",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-054",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "b8a1586cd627081f1d9573d541a43761c940215da9c13b2b4bc042e4f2e1a601"
+      }
     },
     {
       "id": "V1-055",
       "feature": "Do-if, monadic if-let and unless",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-055",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "21b1398f4072c04d4f55b69923f51ef004e225bfb87a68e283d520675e5bf512"
+      }
     },
     {
       "id": "V1-056",
       "feature": "Single and zipped for iteration",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-056",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "11476bf2ba51b6bf8d404a80d4b9d51e0ef32749abe3dd90a201048f0765f778"
+      }
     },
     {
       "id": "V1-057",
       "feature": "While, repeat and repeat-until",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-057",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "5afe9e438320300da28cfc12ee79b5d0214bc6b8abff279594cd539fb242aa27"
+      }
     },
     {
       "id": "V1-058",
       "feature": "Break, continue and early return",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-058",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "db12f57157875596b83f429331e1f0a0956c63d2ca6e8d90c5e5ea3a88cd838e"
+      }
     },
     {
       "id": "V1-059",
       "feature": "Forwarding `do←` and wrapper control effects",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-059",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "abedf47772f2f39ae65442c62d40b430b4a26cbbc4977673143f02a5ef025306"
+      }
     },
     {
       "id": "V1-060",
       "feature": "Typed/pattern catch, try/finally and term sugar",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-060",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371832",
+      "evidence": {
+        "jobId": 132506096241,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "caseSha256": "06d7991d1ff7f05b81e2e155d2f953527ddda63cff5fe99a004d155680b5024d"
+      }
     },
     {
       "id": "V1-061",
@@ -4066,10 +4351,25 @@
       "sourceOrClaim": "Treating extern/implemented_by typing as native correspondence proof",
       "expectedCategory": "ASSURANCE",
       "reason": "Implementation behavior is a separate obligation.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-N-ASSURE-05",
+      "qualifiedCommit": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43614371829",
+      "evidence": {
+        "jobId": 132506096100,
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "artifact": {
+          "id": 14121865413,
+          "name": "ps0-r2-native-extensions-evidence-43614371829",
+          "digest": "sha256:d19ebf881fbac6ae00262cc3f9c1a4ac58f68be414db30d7b44e5599901f2986",
+          "bytes": 7964691
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "4c5be2315630c101a35ae0be51eaf980df5316ba9e1ae6663771d3361bf27cac",
+        "caseSha256": "1a3290be02161ea52cfc3fbe7d40b6013e215dd03874c9a51d14f456acb4de68"
+      }
     },
     {
       "id": "PS0-N-ASSURE-06",
@@ -8202,12 +8502,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 88,
-    "featureFamiliesPending": 79,
+    "PENDING": 68,
+    "featureFamiliesPending": 60,
     "boundaryWitnessesPending": 5,
-    "acceptanceCasesPending": 4,
+    "acceptanceCasesPending": 3,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 154,
+    "PASS": 174,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -18899,7 +19199,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 88,
+    "obligationsPending": 68,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -25562,7 +25862,38 @@
           "run": 43614371790,
           "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
           "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+          "status": "PASS",
+          "job": 132506095832,
+          "artifact": {
+            "id": 14121199547,
+            "bytes": 749314,
+            "digest": "sha256:cc14a3b21ea1e0b0627ca9249040c12b4e3b27948a6545a836f8d9e09c905ddb"
+          }
+        },
+        "cleanTypeAdapterRebuild": {
+          "run": 43614931481,
+          "source": "cfba2f7436ccd805c27ae09d8a27f551fa1651fa",
+          "runner": "38e39c3945df9ceb84d8828a475f9e707926fa87",
+          "checkpointJob": 132507907215,
           "status": "SUBMITTED"
+        },
+        "remainingNumberedProbe": {
+          "run": 43614371826,
+          "job": 132506096088,
+          "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+          "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+          "failures": [
+            "R2-06",
+            "R2-12",
+            "R2-14",
+            "R2-17",
+            "R2-18"
+          ],
+          "artifact": {
+            "id": 14120988628,
+            "bytes": 23452,
+            "digest": "sha256:6fdb6b694e5f8e4d00605823426e414714b110cc32577f5f45b252d4954a49b6"
+          }
         }
       }
     },
@@ -26204,6 +26535,118 @@
               "7d624827a05ba4d7c6c9216eafae10845f1ab6e3cc899a582edd013fb47f1128"
             ]
           ]
+        }
+      },
+      {
+        "summary": "The data suite qualified mutual and nested inductives with positivity rejection, implicit/instance/proof/default fields, classes and class inductives, deriving, dependent multi-discriminant matching, and named pattern equations and aliases.",
+        "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "run": 43614371774,
+        "job": 132506095924,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-data-pattern.py",
+        "fixtureSha256": "420230f5cd864e679a26fda705a97158d98970dec81092e8bf55c0599bd445bd",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14120729923,
+          "name": "ps0-r2-data-pattern-evidence-43614371774",
+          "digest": "sha256:d8655da48f754b1c24ef29033f782f853292fb1c8028d55cfe60dbf18ef6ad4c",
+          "bytes": 18901
+        },
+        "passed": [
+          "V1-025",
+          "V1-027",
+          "V1-028",
+          "V1-029",
+          "V1-041",
+          "V1-042"
+        ],
+        "fixtureCases": {
+          "V1-025": "2749a58bd6da2802537aca1e423e41413ce11d57fab4261c5d4bf163b28051f5",
+          "V1-027": "d056fa46a96e08c46839164a220a2c3432266bf82fef9eeccf6bbe8a92882142",
+          "V1-028": "3dd0accf7505fa06cf3e365fc7798ce4f030fe992a1686581591eb3ac11adeb0",
+          "V1-029": "5c67533eb9a5855c34b86ac3607c5d1dd78a14790dac628fbba6303fa8299d01",
+          "V1-041": "a629dbe92bdc354470f8ba085bb155ea068684057990b1b3ab7fb3bd8ba3b4e3",
+          "V1-042": "cbaae62e20a385cc1df5c604ac0895f85b5c14b9cc066b7b0f50875c0c683cc9"
+        },
+        "supportingCases": {
+          "PS0-N-DATA-01": "74fef6a701721330f1b43197a41f2352174cbfa4afb3559934242425cfd8dcda"
+        }
+      },
+      {
+        "summary": "The FFI assurance case checked source-level model evaluation and linked the external implementation through native Lake to observe its different runtime result.",
+        "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "run": 43614371829,
+        "job": 132506096100,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "4c5be2315630c101a35ae0be51eaf980df5316ba9e1ae6663771d3361bf27cac",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14121865413,
+          "name": "ps0-r2-native-extensions-evidence-43614371829",
+          "digest": "sha256:d19ebf881fbac6ae00262cc3f9c1a4ac58f68be414db30d7b44e5599901f2986",
+          "bytes": 7964691
+        },
+        "passed": [
+          "PS0-N-ASSURE-05"
+        ],
+        "fixtureCases": {
+          "PS0-N-ASSURE-05": "1a3290be02161ea52cfc3fbe7d40b6013e215dd03874c9a51d14f456acb4de68"
+        }
+      },
+      {
+        "summary": "The recursion and do suite qualified structural and well-founded recursion, partial and fixed-point interfaces, monadic sequencing, mutation and fallback, loop control, forwarding, and exception handling. Single for iteration is additionally exercised by V1-058 in the same retained fixture suite.",
+        "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "run": 43614371832,
+        "job": 132506096241,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-recursion-do.py",
+        "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14121686301,
+          "name": "ps0-r2-recursion-do-evidence-43614371832",
+          "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+          "bytes": 23189
+        },
+        "passed": [
+          "V1-046",
+          "V1-047",
+          "V1-048",
+          "V1-049",
+          "V1-052",
+          "V1-053",
+          "V1-054",
+          "V1-055",
+          "V1-056",
+          "V1-057",
+          "V1-058",
+          "V1-059",
+          "V1-060"
+        ],
+        "fixtureCases": {
+          "V1-046": "2a5430f31bdc4cfc7d0a821def2b5946339576ce84736f7e4b023d4e299a66a8",
+          "V1-047": "333ccce483720775eccd6ebd32fba1b1b1e186ce8cf62a8208eeeadd890bd424",
+          "V1-048": "fb4ef3214b0e6a661b80f67a3ad9c061475a66c3a79948de79e6330550fab04f",
+          "V1-049": "bc438bfffaded99e3dc1b3ff092a6f9e37c8cdabde1f20d08099c93e47f73f1c",
+          "V1-052": "07b583ce804f92b584cb40692efc400c8651b649244a6cab6550a03d548d5fb9",
+          "V1-053": "3e7b4e62268716ceb417eac57f1fa81be537b1ec0fe9901fd02334b43479ffb7",
+          "V1-054": "b8a1586cd627081f1d9573d541a43761c940215da9c13b2b4bc042e4f2e1a601",
+          "V1-055": "21b1398f4072c04d4f55b69923f51ef004e225bfb87a68e283d520675e5bf512",
+          "V1-056": "11476bf2ba51b6bf8d404a80d4b9d51e0ef32749abe3dd90a201048f0765f778",
+          "V1-057": "5afe9e438320300da28cfc12ee79b5d0214bc6b8abff279594cd539fb242aa27",
+          "V1-058": "db12f57157875596b83f429331e1f0a0956c63d2ca6e8d90c5e5ea3a88cd838e",
+          "V1-059": "abedf47772f2f39ae65442c62d40b430b4a26cbbc4977673143f02a5ef025306",
+          "V1-060": "06d7991d1ff7f05b81e2e155d2f953527ddda63cff5fe99a004d155680b5024d"
+        },
+        "supportingCases": {
+          "V1-058": "db12f57157875596b83f429331e1f0a0956c63d2ca6e8d90c5e5ea3a88cd838e"
         }
       }
     ]
@@ -96369,7 +96812,38 @@
         "run": 43614371790,
         "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
         "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "status": "PASS",
+        "job": 132506095832,
+        "artifact": {
+          "id": 14121199547,
+          "bytes": 749314,
+          "digest": "sha256:cc14a3b21ea1e0b0627ca9249040c12b4e3b27948a6545a836f8d9e09c905ddb"
+        }
+      },
+      "cleanTypeAdapterRebuild": {
+        "run": 43614931481,
+        "source": "cfba2f7436ccd805c27ae09d8a27f551fa1651fa",
+        "runner": "38e39c3945df9ceb84d8828a475f9e707926fa87",
+        "checkpointJob": 132507907215,
         "status": "SUBMITTED"
+      },
+      "remainingNumberedProbe": {
+        "run": 43614371826,
+        "job": 132506096088,
+        "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+        "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+        "failures": [
+          "R2-06",
+          "R2-12",
+          "R2-14",
+          "R2-17",
+          "R2-18"
+        ],
+        "artifact": {
+          "id": 14120988628,
+          "bytes": 23452,
+          "digest": "sha256:6fdb6b694e5f8e4d00605823426e414714b110cc32577f5f45b252d4954a49b6"
+        }
       }
     }
   },
@@ -97011,6 +97485,118 @@
             "7d624827a05ba4d7c6c9216eafae10845f1ab6e3cc899a582edd013fb47f1128"
           ]
         ]
+      }
+    },
+    {
+      "summary": "The data suite qualified mutual and nested inductives with positivity rejection, implicit/instance/proof/default fields, classes and class inductives, deriving, dependent multi-discriminant matching, and named pattern equations and aliases.",
+      "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+      "run": 43614371774,
+      "job": 132506095924,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-data-pattern.py",
+      "fixtureSha256": "420230f5cd864e679a26fda705a97158d98970dec81092e8bf55c0599bd445bd",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14120729923,
+        "name": "ps0-r2-data-pattern-evidence-43614371774",
+        "digest": "sha256:d8655da48f754b1c24ef29033f782f853292fb1c8028d55cfe60dbf18ef6ad4c",
+        "bytes": 18901
+      },
+      "passed": [
+        "V1-025",
+        "V1-027",
+        "V1-028",
+        "V1-029",
+        "V1-041",
+        "V1-042"
+      ],
+      "fixtureCases": {
+        "V1-025": "2749a58bd6da2802537aca1e423e41413ce11d57fab4261c5d4bf163b28051f5",
+        "V1-027": "d056fa46a96e08c46839164a220a2c3432266bf82fef9eeccf6bbe8a92882142",
+        "V1-028": "3dd0accf7505fa06cf3e365fc7798ce4f030fe992a1686581591eb3ac11adeb0",
+        "V1-029": "5c67533eb9a5855c34b86ac3607c5d1dd78a14790dac628fbba6303fa8299d01",
+        "V1-041": "a629dbe92bdc354470f8ba085bb155ea068684057990b1b3ab7fb3bd8ba3b4e3",
+        "V1-042": "cbaae62e20a385cc1df5c604ac0895f85b5c14b9cc066b7b0f50875c0c683cc9"
+      },
+      "supportingCases": {
+        "PS0-N-DATA-01": "74fef6a701721330f1b43197a41f2352174cbfa4afb3559934242425cfd8dcda"
+      }
+    },
+    {
+      "summary": "The FFI assurance case checked source-level model evaluation and linked the external implementation through native Lake to observe its different runtime result.",
+      "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+      "run": 43614371829,
+      "job": 132506096100,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "4c5be2315630c101a35ae0be51eaf980df5316ba9e1ae6663771d3361bf27cac",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14121865413,
+        "name": "ps0-r2-native-extensions-evidence-43614371829",
+        "digest": "sha256:d19ebf881fbac6ae00262cc3f9c1a4ac58f68be414db30d7b44e5599901f2986",
+        "bytes": 7964691
+      },
+      "passed": [
+        "PS0-N-ASSURE-05"
+      ],
+      "fixtureCases": {
+        "PS0-N-ASSURE-05": "1a3290be02161ea52cfc3fbe7d40b6013e215dd03874c9a51d14f456acb4de68"
+      }
+    },
+    {
+      "summary": "The recursion and do suite qualified structural and well-founded recursion, partial and fixed-point interfaces, monadic sequencing, mutation and fallback, loop control, forwarding, and exception handling. Single for iteration is additionally exercised by V1-058 in the same retained fixture suite.",
+      "source": "f3006855247554712b6a39ae5131cc688e5c4d3e",
+      "runner": "0b477c6caa229e9ec9a368ca05b97590218dca90",
+      "run": 43614371832,
+      "job": 132506096241,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-recursion-do.py",
+      "fixtureSha256": "69891e9b6534d6610452503915941a88b99781066659962f2a9a3227b021e200",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14121686301,
+        "name": "ps0-r2-recursion-do-evidence-43614371832",
+        "digest": "sha256:2bf3bcefd3fcaa9d60cf0969262657d5609987514e2a7a2663fb9f63eb0eddf5",
+        "bytes": 23189
+      },
+      "passed": [
+        "V1-046",
+        "V1-047",
+        "V1-048",
+        "V1-049",
+        "V1-052",
+        "V1-053",
+        "V1-054",
+        "V1-055",
+        "V1-056",
+        "V1-057",
+        "V1-058",
+        "V1-059",
+        "V1-060"
+      ],
+      "fixtureCases": {
+        "V1-046": "2a5430f31bdc4cfc7d0a821def2b5946339576ce84736f7e4b023d4e299a66a8",
+        "V1-047": "333ccce483720775eccd6ebd32fba1b1b1e186ce8cf62a8208eeeadd890bd424",
+        "V1-048": "fb4ef3214b0e6a661b80f67a3ad9c061475a66c3a79948de79e6330550fab04f",
+        "V1-049": "bc438bfffaded99e3dc1b3ff092a6f9e37c8cdabde1f20d08099c93e47f73f1c",
+        "V1-052": "07b583ce804f92b584cb40692efc400c8651b649244a6cab6550a03d548d5fb9",
+        "V1-053": "3e7b4e62268716ceb417eac57f1fa81be537b1ec0fe9901fd02334b43479ffb7",
+        "V1-054": "b8a1586cd627081f1d9573d541a43761c940215da9c13b2b4bc042e4f2e1a601",
+        "V1-055": "21b1398f4072c04d4f55b69923f51ef004e225bfb87a68e283d520675e5bf512",
+        "V1-056": "11476bf2ba51b6bf8d404a80d4b9d51e0ef32749abe3dd90a201048f0765f778",
+        "V1-057": "5afe9e438320300da28cfc12ee79b5d0214bc6b8abff279594cd539fb242aa27",
+        "V1-058": "db12f57157875596b83f429331e1f0a0956c63d2ca6e8d90c5e5ea3a88cd838e",
+        "V1-059": "abedf47772f2f39ae65442c62d40b430b4a26cbbc4977673143f02a5ef025306",
+        "V1-060": "06d7991d1ff7f05b81e2e155d2f953527ddda63cff5fe99a004d155680b5024d"
+      },
+      "supportingCases": {
+        "V1-058": "db12f57157875596b83f429331e1f0a0956c63d2ca6e8d90c5e5ea3a88cd838e"
       }
     }
   ]
