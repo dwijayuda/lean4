@@ -62,6 +62,19 @@ declareR2 nineR2
 example : sevenR2 + nineR2 + elevenR2 = 27 := rfl
 example : True := by { finishR2 }
 ''', None),
+    'V1-077': ('''public meta import Lean
+macro "psOperandR2 " x:psTerm : term => do
+  return ⟨← PS0.Syntax.lower `psTerm x.raw⟩
+function add(x: Nat, y: Nat): Nat := x + y
+example : (psOperandR2 add(20, 22)) = 42 := rfl
+meta def nativeSyntax : Lean.MacroM(Lean.TSyntax `term) := `(term| add (20, 22))
+open Lean in
+run_cmd do
+  let tree ← Elab.liftMacroM nativeSyntax
+  let args := tree.raw[1].getArgs
+  unless args.size == 1 && args[0]!.isOfKind ``Parser.Term.tuple do
+    throwError "native syntax lost tuple ownership"
+''', None),
     'V1-079': ('''public meta import Lean
 open Lean in
 run_cmd do
@@ -189,6 +202,29 @@ def mutateR2 : StateRefT Nat IO Nat := do
 #print diagnosticR2
 #check_failure diagnosticR2.noSuchProjection
 ''', None),
+    'V1-095': ('''public meta import Lean
+assert_not_exists NoR2Decl
+assert_not_imported Mathlib
+def answerR2 : Nat := 42
+recall answerR2 : Nat := 42
+#check_assertions
+open Lean in
+run_cmd do
+  unless Lean.versionString.startsWith "4.35.0" do throwError "unexpected pinned Lean version"
+''', None),
+    'V1-099': ('''public import Lake
+public meta import Lake
+open Lake DSL
+package optionalR2 where
+  version := v!"0.4.0"
+lean_lib OptionalR2 where
+  roots := #[`OptionalR2]
+example : _package.origName = `optionalR2 := rfl
+example : _package.config.version = v!"0.4.0" := rfl
+example : OptionalR2.config.roots = #[`OptionalR2] := rfl
+''', None),
+    'V1-099-no-import': ('''package noLakeR2
+''', r'unexpected identifier|expected command|unknown identifier'),
     'V1-092': ('''unsafe def runtimeUnsafe : IO Nat := do
   let value ← IO.mkRef 40
   value.modify fun n => n + 2
@@ -397,6 +433,9 @@ def main():
             ok = ok and 'PS0_EFFECT_RETAINED' in log
         (passed if ok else failures).append(case)
 
+    if 'V1-099' in passed and 'V1-099-no-import' not in passed:
+        passed.remove('V1-099')
+        failures.append('V1-099')
     src = out / 'src'
     src.mkdir()
     for case, module, source, expected in [
