@@ -32,7 +32,7 @@ example : (∀ x ≪₀ 0, x = (23 : Nat)) := by { intro x h; omega }
     'V1-074': ('''public import Lean
 public meta import Lean
 open Lean Parser
-@[run_parser_attribute_hooks] def r2Operand : Parser := leading_parser num
+@[run_parser_attribute_hooks] meta def r2Operand : Parser := leading_parser Lean.Parser.Term.num
 syntax (name := r2Prefix) "r2Prefix " r2Operand : term
 syntax:70 (name := r2Tail) term:70 " r2Tail " num : term
 macro_rules
@@ -163,7 +163,6 @@ run_cmd liftTermElabM do
 ''', None),
     'V1-086': ('''public import Lean
 public meta import Lean
-set_option elab.async false
 open Lean in
 builtin_initialize registerTraceClass `R2.options
 set_option pp.universes true in
@@ -299,7 +298,6 @@ def fatal : Nat := panic! "R2 deliberate panic branch"
     'PS0-P-EXT-03': ('''public import Lean
 public meta import Lean
 open Lean Elab Command
-set_option elab.async false
 class ReportCode (α : Type) where
   code : Nat
 meta def deriveReportCode : DerivingHandler := fun names => do
