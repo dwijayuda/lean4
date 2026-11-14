@@ -1629,19 +1629,49 @@
       "id": "V1-069",
       "feature": "Verification-only assert versus runtime assertions",
       "sourceBasis": "L-DO",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: V1-069",
+      "qualifiedCommit": "f065ea578aa6aebc6370699b22740e8356aceff9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43623680383",
+      "evidence": {
+        "jobId": 132534712655,
+        "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+        "artifact": {
+          "id": 14125441720,
+          "name": "ps0-r2-contracts-evidence-43623680383",
+          "digest": "sha256:a1da5d12d572481f92b692f10c00e0ae9d108a3f512e26fbe2c5d865cc51edeb",
+          "bytes": 10952
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "6aa41c0fa6dca7c331950b7b347169fb2e8738b6eca2b808f97ef81b629afba2",
+        "caseSha256": "e6bf55395374040535f20185478c62b45963a681062ac2188017ab9eb24b86da"
+      }
     },
     {
       "id": "V1-070",
       "feature": "Loop invariants/decreasing annotations and WP facilities",
       "sourceBasis": "L-DO, L-STD, [feature](#assertions-loop-invariants-and-decreasing-measures)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: V1-070",
+      "qualifiedCommit": "f065ea578aa6aebc6370699b22740e8356aceff9",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43623680383",
+      "evidence": {
+        "jobId": 132534712655,
+        "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+        "artifact": {
+          "id": 14125441720,
+          "name": "ps0-r2-contracts-evidence-43623680383",
+          "digest": "sha256:a1da5d12d572481f92b692f10c00e0ae9d108a3f512e26fbe2c5d865cc51edeb",
+          "bytes": 10952
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixtureSha256": "6aa41c0fa6dca7c331950b7b347169fb2e8738b6eca2b808f97ef81b629afba2",
+        "caseSha256": "48c4c47f0e76f297aa5f999055f3192b83988d1d624d404cd302e52a94338c03"
+      }
     },
     {
       "id": "V1-071",
@@ -9237,12 +9267,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 19,
-    "featureFamiliesPending": 13,
+    "PENDING": 17,
+    "featureFamiliesPending": 11,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 1,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 223,
+    "PASS": 225,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19934,7 +19964,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 19,
+    "obligationsPending": 17,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -27985,6 +28015,32 @@
         ],
         "fixtureCases": {
           "V1-045": "5347dbada47bc4de455d98cc9f0291921a73c182876a979b2f0d588f3497a86b"
+        }
+      },
+      {
+        "summary": "Linux exercised the native verification-only assert element through the PS do parser while retaining runtime assert and debug_assert behavior. It checked the loop annotation and decreasing syntax with observable native execution.",
+        "source": "f065ea578aa6aebc6370699b22740e8356aceff9",
+        "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+        "run": 43623680383,
+        "job": 132534712655,
+        "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+        "fixture": "tests/run-r2-contracts.py",
+        "fixtureSha256": "6aa41c0fa6dca7c331950b7b347169fb2e8738b6eca2b808f97ef81b629afba2",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14125441720,
+          "name": "ps0-r2-contracts-evidence-43623680383",
+          "digest": "sha256:a1da5d12d572481f92b692f10c00e0ae9d108a3f512e26fbe2c5d865cc51edeb",
+          "bytes": 10952
+        },
+        "passed": [
+          "V1-069",
+          "V1-070"
+        ],
+        "fixtureCases": {
+          "V1-069": "e6bf55395374040535f20185478c62b45963a681062ac2188017ab9eb24b86da",
+          "V1-070": "48c4c47f0e76f297aa5f999055f3192b83988d1d624d404cd302e52a94338c03"
         }
       }
     ]
@@ -99538,6 +99594,32 @@
       ],
       "fixtureCases": {
         "V1-045": "5347dbada47bc4de455d98cc9f0291921a73c182876a979b2f0d588f3497a86b"
+      }
+    },
+    {
+      "summary": "Linux exercised the native verification-only assert element through the PS do parser while retaining runtime assert and debug_assert behavior. It checked the loop annotation and decreasing syntax with observable native execution.",
+      "source": "f065ea578aa6aebc6370699b22740e8356aceff9",
+      "runner": "f807aca2fbee913fc6d4d078fbf7bd14e5d35801",
+      "run": 43623680383,
+      "job": 132534712655,
+      "driverSha256": "7791248616152ba525319e0e8a7a3421f9ab3aa0785e7aab3b0d065147315cfb",
+      "fixture": "tests/run-r2-contracts.py",
+      "fixtureSha256": "6aa41c0fa6dca7c331950b7b347169fb2e8738b6eca2b808f97ef81b629afba2",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14125441720,
+        "name": "ps0-r2-contracts-evidence-43623680383",
+        "digest": "sha256:a1da5d12d572481f92b692f10c00e0ae9d108a3f512e26fbe2c5d865cc51edeb",
+        "bytes": 10952
+      },
+      "passed": [
+        "V1-069",
+        "V1-070"
+      ],
+      "fixtureCases": {
+        "V1-069": "e6bf55395374040535f20185478c62b45963a681062ac2188017ab9eb24b86da",
+        "V1-070": "48c4c47f0e76f297aa5f999055f3192b83988d1d624d404cd302e52a94338c03"
       }
     }
   ]
