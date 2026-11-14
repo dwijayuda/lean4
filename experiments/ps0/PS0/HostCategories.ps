@@ -70,9 +70,12 @@ private function operands(roles : Array((Name × Name)), parser : Parser) : Pars
   withFn((fun parse ctx initial =>
     let parsed := parse ctx initial
     if parsed.hasError then
-      let owned := (lookahead("let" <|> "have" <|> "for")).fn(ctx, initial)
-      if owned.hasError then parsed
-      else initial.mkUnexpectedError "use the owned ProofScript do statement parser"
+      match (peekToken ctx initial).2 with
+      | .ok (.atom _ token) =>
+        if #["let", "have", "for"].contains token then
+          initial.mkUnexpectedError "use the owned ProofScript do statement parser"
+        else parsed
+      | _ => parsed
     else if parsed.stxStack.back.isOfKind ``Lean.Parser.Term.doIf then
       initial.mkUnexpectedError "PS0V1-DO-OWNERSHIP: if uses its PS operand adapter"
     else parsed), (categoryParser `doElem 0))
