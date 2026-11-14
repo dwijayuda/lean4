@@ -21,21 +21,13 @@ private example : (identityTerm forty) + checkedTwo = 42 := rfl
 private example : checkedForty = 40 := rfl
 ''', None),
     'PS0-P-EXT-02': ('''public meta import Lean
-def pairQuote : Lean.MacroM (Lean.TSyntax `term) := `(term| f (x, y))
+meta def pairQuote : Lean.MacroM(Lean.TSyntax `term) := `(term| f (x, y))
 open Lean in
 run_cmd do
   let syntaxTree ← Elab.liftMacroM pairQuote
   unless syntaxTree.raw.isOfKind ``Parser.Term.app &&
       syntaxTree.raw[1].getArgs.size == 1 && syntaxTree.raw[1][0].isOfKind ``Parser.Term.tuple do
     throwError "tuple partition changed"
-''', None),
-    'PS0-P-META-01': ('''public meta import Lean
-initialize ordinaryRef : IO.Ref Nat ← IO.mkRef 17
-builtin_initialize earlyRef : IO.Ref Nat ← IO.mkRef 23
-run_cmd do
-  let first ← ordinaryRef.get
-  let second ← earlyRef.get
-  unless first == 17 && second == 23 do throwError "initializer result"
 ''', None),
     'PS0-P-META-02': ('''public import Lean
 private example : binop% HAdd.hAdd 20 22 = (42 : Nat) := rfl
@@ -69,6 +61,18 @@ def replacement (n : UInt32) : UInt32 := n + 2
 def main : IO Unit := do
   IO.println(s!"PS0_R2_ABI:{model(borrowed(40))}")
 '''
+INITIALIZERS = '''module
+prelude
+public import Init
+public section
+initialize ordinaryRef : IO.Ref Nat ← IO.mkRef 17
+builtin_initialize earlyRef : IO.Ref Nat ← IO.mkRef 23
+def main : IO Unit := do
+  let first ← ordinaryRef.get
+  let second ← earlyRef.get
+  unless first == 17 && second == 23 do throw(IO.userError("initializer result"))
+  IO.println "PS0_R2_INITIALIZERS:17:23"
+'''
 
 
 def main():
@@ -99,22 +103,25 @@ def main():
             ok = ok and 'PS0_R2_IO:hello' in log
         (passed if ok else failures).append(case)
 
-    case = 'PS0-P-RUN-03'
     src = out / 'src'
     src.mkdir()
-    path = src / 'NativeABI.ps'
-    path.write_text(NATIVE_ABI, encoding='utf-8')
-    fixtures[case] = hashlib.sha256(path.read_bytes()).hexdigest()
-    build = out / 'native'
-    code, _ = run(case, ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceGrammar=true',
-                        f'-KsourceRoot={src}', '-Kroots=NativeABI', '-KrootModule=NativeABI',
-                        '-KmoduleNames=NativeABI', f'-Kdriver={args.driver.resolve()}',
-                        f'-KprojectBuildDir={build}', 'build', 'ps0project'])
-    ok = code == 0
-    if ok:
-        code, log = run('runtime-abi', [build / 'bin/ps0project'])
-        ok = code == 0 and log.strip() == 'PS0_R2_ABI:42'
-    (passed if ok else failures).append(case)
+    for case, module, source, expected in [
+        ('PS0-P-RUN-03', 'NativeABI', NATIVE_ABI, 'PS0_R2_ABI:42'),
+        ('PS0-P-META-01', 'NativeInitializers', INITIALIZERS, 'PS0_R2_INITIALIZERS:17:23'),
+    ]:
+        path = src / (module + '.ps')
+        path.write_text(source, encoding='utf-8')
+        fixtures[case] = hashlib.sha256(path.read_bytes()).hexdigest()
+        build = out / module
+        code, _ = run(case, ['lake', '-R', '-f', 'lakefile.project.lean', '-KsourceGrammar=true',
+                            f'-KsourceRoot={src}', f'-Kroots={module}', f'-KrootModule={module}',
+                            f'-KmoduleNames={module}', f'-Kdriver={args.driver.resolve()}',
+                            f'-KprojectBuildDir={build}', 'build', 'ps0project'])
+        ok = code == 0
+        if ok:
+            code, log = run(case + '-runtime', [build / 'bin/ps0project'])
+            ok = code == 0 and log.strip() == expected
+        (passed if ok else failures).append(case)
     evidence = {'passed': passed, 'failures': failures, 'fixtures': fixtures,
                 'driver_sha256': hashlib.sha256(args.driver.read_bytes()).hexdigest()}
     (out / 'result.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
