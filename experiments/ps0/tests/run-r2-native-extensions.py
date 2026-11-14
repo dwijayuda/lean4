@@ -35,8 +35,8 @@ macro_rules
   | `(chooseR2 true) => `(17)
   | `(chooseR2 $x) => `(if $x then 17 else 31)
 macro "wrappedR2 " x:term : term => `(chooseR2 $x)
-example : wrappedR2 true = 17 := rfl
-example : wrappedR2 false = 31 := rfl
+example : (wrappedR2 true) = (17 : Nat) := rfl
+example : (wrappedR2 false) = (31 : Nat) := rfl
 ''', None),
     'V1-076': ('''public meta import Lean
 macro "letR2 " x:term : term => `(let value := 9; $x + value)
@@ -47,14 +47,17 @@ example : sizeR2[3, 4, 5] = 3 := rfl
 ''', None),
     'V1-078': ('''public meta import Lean
 open Lean Elab in
-elab "sevenR2" : term => Term.elabTerm (← `(7)) none
+elab "sevenR2" : term => do
+  Term.elabTerm (← `(7)) none
 open Lean Elab Command in
-elab "declareR2 " name:ident : command => elabCommand (← `(def $name : Nat := 9))
+elab "declareR2 " name:ident : command => do
+  elabCommand (← `(def $name : Nat := 9))
 open Lean Elab Tactic in
-elab "finishR2" : tactic => evalTactic (← `(tactic| exact True.intro))
+elab "finishR2" : tactic => do
+  evalTactic (← `(tactic| exact True.intro))
 syntax "elevenR2" : term
 elab_rules : term
-  | `(elevenR2) => Lean.Elab.Term.elabTerm (← `(11)) none
+  | `(elevenR2) => do Lean.Elab.Term.elabTerm (← `(11)) none
 declareR2 nineR2
 example : sevenR2 + nineR2 + elevenR2 = 27 := rfl
 example : True := by { finishR2 }
