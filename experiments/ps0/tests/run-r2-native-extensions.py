@@ -258,10 +258,9 @@ package r2example where
   version := v!"0.2.0"
 lean_lib R2Library where
   roots := #[`R2Library]
-open Lean in
-run_cmd do
-  let env ← getEnv
-  unless env.contains `pkgConfig do throwError "missing Lake configuration declaration"
+example : _package.origName = `r2example := rfl
+example : _package.config.version = v!"0.2.0" := rfl
+example : R2Library.config.roots = #[`R2Library] := rfl
 ''', None),
     'PS0-N-ASSURE-03': ('''partial function loop(n: Nat): Nat := loop(n)
 open Lean in

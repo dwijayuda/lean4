@@ -147,11 +147,17 @@ function checkWithOrigins(prepared : PreparedSource, raw : String, opts : Option
   let inputCtx := Parser.mkInputContext prepared.source filename
   let opts := Lean.internal.cmdlineSnapshots.setIfNotSet opts true
   let opts := Lean.Elab.async.setIfNotSet opts true
+  let sysroot ← findSysroot
   let snapshot ← Language.Lean.process((fun header => pure <| .ok {
     imports := header.imports
     isModule := header.isModule
     mainModuleName, opts
     trustLevel := 0
+    plugins := if header.imports.any(fun entry => (`Lake).isPrefixOf entry.module) then
+      let library := if Platform.isWindows then sysroot / "bin" / "libLake_shared.dll" else
+        sysroot / "lib" / "lean" / (if Platform.isOSX then "libLake_shared.dylib" else "libLake_shared.so")
+      #[Plugin.ofFilePath library]
+    else #[]
   }), none, {inputCtx with})
   let tree := Language.toSnapshotTree snapshot
   let preparedMap := FileMap.ofString prepared.source
