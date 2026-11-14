@@ -43,6 +43,37 @@ macro "hostOperand " x:psTerm : psTerm => pure x
 function sumPair(p: Nat × Nat): Nat := p.1 + p.2
 const bad: Nat := hostOperand sumPair (1, 2)
 ''', r':4:\d+: error: PS0V1-CALL-GAP'),
+    'PS0-P-ENV-01': ('''public import Lake
+open Lake DSL
+package r2example where
+  version := v!"0.2.0"
+lean_lib R2Library where
+  roots := #[`R2Library]
+open Lean in
+run_cmd do
+  let env ← getEnv
+  unless env.contains `pkgConfig do throwError "missing Lake configuration declaration"
+''', None),
+    'PS0-N-ASSURE-03': ('''partial function loop(n: Nat): Nat := loop(n)
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let some (.opaqueInfo _) := env.find? ``loop | throwError "missing opaque interface"
+  unless (env.find? (Compiler.mkUnsafeRecName ``loop)).any ConstantInfo.isPartial do
+    throwError "expected compiled partial implementation"
+''', None),
+    'PS0-N-ASSURE-04': ('''public import Std.WP
+def effect (counter : IO.Ref Nat) : IO Nat := do
+  counter.modify Nat.succ
+  return 37
+def observe : IO Nat := do
+  let counter ← IO.mkRef 0
+  erased _witness ← effect counter
+  counter.get
+#eval show IO Unit from do
+  let n ← observe
+  if n == 1 then IO.println "PS0_EFFECT_RETAINED" else throw (IO.userError "erased effect missing")
+''', None),
     'PS0-P-META-02': ('''public import Lean
 private example : binop% HAdd.hAdd 20 22 = (42 : Nat) := rfl
 ''', None),
@@ -127,6 +158,10 @@ def main():
             ok = ok and 'does not depend on any axioms' in log and 'PS0_DIAGNOSTIC_EVAL' in log
         if case == 'PS0-P-RUN-01':
             ok = ok and 'PS0_R2_IO:hello' in log
+        if case == 'PS0-N-ASSURE-03':
+            ok = ok and 'UNCERTIFIED' in log and 'no verified certificate issued' in log
+        if case == 'PS0-N-ASSURE-04':
+            ok = ok and 'PS0_EFFECT_RETAINED' in log
         (passed if ok else failures).append(case)
 
     src = out / 'src'
@@ -148,6 +183,22 @@ def main():
             code, log = run(case + '-runtime', [build / 'bin/ps0project'])
             ok = code == 0 and log.strip() == expected
         (passed if ok else failures).append(case)
+        if case == 'PS0-P-RUN-03':
+            control = out / 'PS0-N-ASSURE-05.ps'
+            control.write_text(source + '\nprivate example : model 40 = 41 := rfl\n', encoding='utf-8')
+            fixtures['PS0-N-ASSURE-05'] = hashlib.sha256(control.read_bytes()).hexdigest()
+            logical, log = run('PS0-N-ASSURE-05', [args.driver, 'check', control])
+            (passed if ok and logical == 0 and 'UNCERTIFIED' in log else failures).append('PS0-N-ASSURE-05')
+    native = out / 'PS0-N-ASSURE-06.lean'
+    proofscript = out / 'PS0-N-ASSURE-06.ps'
+    source = 'def nativeOnly (x : Nat) : Nat := x\ndef checked : Nat := nativeOnly (42)\n'
+    for path in (native, proofscript):
+        path.write_text(source, encoding='utf-8')
+    fixtures['PS0-N-ASSURE-06'] = hashlib.sha256(proofscript.read_bytes()).hexdigest()
+    native_code, native_log = run('native-pass-through', [args.driver, 'check', native])
+    ps_code, ps_log = run('PS0-N-ASSURE-06', [args.driver, 'check', proofscript])
+    (passed if native_code == 0 and 'PS0V1:' not in native_log and ps_code == 1 and
+        'PS0V1-CALL-GAP' in ps_log else failures).append('PS0-N-ASSURE-06')
     evidence = {'passed': passed, 'failures': failures, 'fixtures': fixtures,
                 'driver_sha256': hashlib.sha256(args.driver.read_bytes()).hexdigest()}
     (out / 'result.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
