@@ -1,5 +1,13 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-14 — R2 data declarations and patterns
+
+Linux qualified all **14** data and pattern acceptance cases. Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog.
+
+Source `31335d603912cee8a6f971e894bee90a66a09dc8`, runner `ab8d003f23e27cc09e041b03f7503cfa2b78c224`, pinned Lean `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`, and frozen reference Git blob `c50203f8e4cb79b3e6680088a07c1d1e145b8f0b`. Linux linked the patched compiler with native Lake from the audited stage-two prefix of run `43534267147`. Compiler SHA-256 `f3bf907a9e735f9bee95d6252cd230410bec58c1f1b28f3ce871a16e8da1b497` and fixture runner SHA-256 `28a8baa32dfc43d7ef6a69943660b8e93aef0e1d90a0042cf83ea20093bde8f4`. Evidence artifact `14109151949` has digest `sha256:471a84612557388d546cefd0406e6dfa06e933963f5a73fe67f7a2a7e432f156` and 14,851 bytes. [Linux qualification](https://github.com/dwijayuda/pskernel/actions/runs/43582656894/job/132410491718)
+
+The ledger now records **184 pending and 58 finite passes**. The current build covers the PS0 compiler dependency graph and the recorded fixtures. The last complete two-stage corpus audit remains tied to its exact prior compiler revision.
+
 ## 2026-11-14 — R2 scope and module conformance
 
 Linux qualified 11 finite R2 obligations covering `PS0-P-SCOPE-01` through `PS0-P-SCOPE-08` and `PS0-N-MOD-01` through `PS0-N-MOD-03`. The ordinary Lake project graph built and linked the consumer. Its output was `PS0_R2_SCOPE:13:17`. The fixtures checked section binders, grouped terms, explicit and implicit module visibility, private and public meta imports, `import all`, and scoped notation with a renamed open. The bootstrap prelude had no imports and one original source-map segment spanning all 74 bytes. Linux also confirmed the public/all restriction with a pinned native Lean control, the late import rejection, and the meta-to-runtime rejection. The compiler source was unchanged for this batch.

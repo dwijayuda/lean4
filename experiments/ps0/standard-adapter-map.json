@@ -3353,12 +3353,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 198,
+    "PENDING": 184,
     "featureFamiliesPending": 100,
     "boundaryWitnessesPending": 31,
-    "acceptanceCasesPending": 67,
-    "note": "Finite R2 scope and module cases join the declaration, call, and historical passes.",
-    "PASS": 44,
+    "acceptanceCasesPending": 53,
+    "note": "Fourteen finite R2 data and pattern cases join the previous acceptance passes.",
+    "PASS": 58,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -14050,7 +14050,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 198,
+    "obligationsPending": 184,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -20535,6 +20535,108 @@
         "metaRuntime": "Invalid definition `runtimeValue`, may not access declaration `metaValue` marked as `meta`"
       },
       "summary": "The ordinary Lake project graph built and linked the consumer. Its output was `PS0_R2_SCOPE:13:17`. The fixtures checked section binders, grouped terms, explicit and implicit module visibility, private and public meta imports, `import all`, and scoped notation with a renamed open. The bootstrap prelude had no imports and one original source-map segment spanning all 74 bytes. Linux also confirmed the public/all restriction with a pinned native Lean control, the late import rejection, and the meta-to-runtime rejection. The compiler source was unchanged for this batch."
+    },
+    "r2DataPatternQualification": {
+      "run": 43582656894,
+      "job": 132410491718,
+      "runner": "ab8d003f23e27cc09e041b03f7503cfa2b78c224",
+      "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "fixtureSha256": "28a8baa32dfc43d7ef6a69943660b8e93aef0e1d90a0042cf83ea20093bde8f4",
+      "fixtureCases": {
+        "PS0-P-DATA-01": "5affb766708ef8f71b58b1967625e6232bb8cc63c400a08da62d9f2cde79b78e",
+        "PS0-P-DATA-02": "efe2a83a58f0ce964f15d834ff7234f044a067cecadf73cdc95312f91fe7c259",
+        "PS0-P-DATA-03": "723191f937434b29361d751b3cbc9f3de4c6dbcbe3032b8de941f56bfb5091f4",
+        "PS0-P-DATA-04": "b5aaab925d51701b44e47065c62c01e398fe7704f5d68e8615aaaf2d5308874d",
+        "PS0-P-DATA-05": "ff5818501e8dcc7aea765a8ae15324e9c9cf7280bcce65081fea759bb38ba918",
+        "PS0-P-PAT-01": "2c2ee78a8afbb09f6b9f912bed50344cc3403a2e9c8c23abcf0ce8b5956a583a",
+        "PS0-P-PAT-02": "d1a9c0d12e8f60f34bfbf97f96a1fa9242f3070938e3138803f87d0015215b18",
+        "PS0-P-PAT-03": "257ed55da115d47c072aea045e3f696aada016ab6336e64a18c2c73e3f6af017",
+        "PS0-P-PAT-04": "3e0860296715bbcb54ab500fd324dc96c252fef0c3318f5a8bd7d97a4ab91cef",
+        "PS0-N-DATA-01": "74fef6a701721330f1b43197a41f2352174cbfa4afb3559934242425cfd8dcda",
+        "PS0-N-DATA-02": "ea8687ae9bb6ff60714ac8afc4662767804eb827b5948c7f081275c5283c9b15",
+        "PS0-N-PAT-01": "105d81767434172c29f6e85fd4f498e7fb56f31c62ec8c05816890c0e0071c40",
+        "PS0-N-PAT-02": "474bf21db5a27f0224c7d9a26b547055dd921494e503f0f198ed967d7de6d9c4",
+        "PS0-N-PAT-03": "df64d0c85ea1a03c91b0f8107fb53c45426bae247c03e855f9c1c836dbb2a0c7"
+      },
+      "driverSha256": "f3bf907a9e735f9bee95d6252cd230410bec58c1f1b28f3ce871a16e8da1b497",
+      "artifact": {
+        "id": 14109151949,
+        "name": "ps0-r2-data-pattern-evidence-43582656894",
+        "digest": "sha256:471a84612557388d546cefd0406e6dfa06e933963f5a73fe67f7a2a7e432f156",
+        "bytes": 14851,
+        "archiveDigestVerified": true
+      },
+      "bootstrap": {
+        "run": 43534267147,
+        "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+        "artifact": 14107360730,
+        "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+        "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef"
+      },
+      "passed": [
+        "PS0-P-DATA-01",
+        "PS0-P-DATA-02",
+        "PS0-P-DATA-03",
+        "PS0-P-DATA-04",
+        "PS0-P-DATA-05",
+        "PS0-P-PAT-01",
+        "PS0-P-PAT-02",
+        "PS0-P-PAT-03",
+        "PS0-P-PAT-04",
+        "PS0-N-DATA-01",
+        "PS0-N-DATA-02",
+        "PS0-N-PAT-01",
+        "PS0-N-PAT-02",
+        "PS0-N-PAT-03"
+      ],
+      "failures": [],
+      "regressions": {
+        "callProbes": [
+          "PS0-P-CALL-02",
+          "PS0-P-CALL-03",
+          "PS0-P-CALL-04",
+          "PS0-P-CALL-05",
+          "PS0-P-CALL-06",
+          "PS0-P-CALL-07",
+          "PS0-P-CALL-08",
+          "PS0-P-CALL-09",
+          "PS0-P-CALL-10",
+          "PS0-N-CALL-01",
+          "PS0-N-CALL-02",
+          "PS0-N-CALL-03",
+          "PS0-N-CALL-04",
+          "PS0-N-CALL-05",
+          "PS0-N-CALL-06",
+          "PS0-N-CALL-07",
+          "PS0-N-CALL-08",
+          "PS0-N-CALL-09",
+          "PS0-N-CALL-10",
+          "PS0-N-CALL-11",
+          "PS0-N-CALL-12a",
+          "PS0-N-CALL-12b"
+        ],
+        "additionalLogs": [
+          "binder_operands.log",
+          "do_layout_operands.log",
+          "host_postfix_calls.log",
+          "operator_operands.log",
+          "prelude-grammar.log"
+        ],
+        "canonicalSourceFilesVerified": 2569,
+        "nativeLakeJobs": 41
+      },
+      "baseline": {
+        "run": 43580364174,
+        "job": 132403580037,
+        "source": "23f3f7bc814f33070d68d2accefbf65d2e5e4d07",
+        "reproduced": [
+          "braced inductive parser rejected the constructor bar",
+          "adjacent constructor pattern rejected the opening parenthesis"
+        ]
+      },
+      "summary": "Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog."
     }
   },
   "canonicalGraphThirteenthTerminalEvidence": {
@@ -90539,5 +90641,107 @@
       "metaRuntime": "Invalid definition `runtimeValue`, may not access declaration `metaValue` marked as `meta`"
     },
     "summary": "The ordinary Lake project graph built and linked the consumer. Its output was `PS0_R2_SCOPE:13:17`. The fixtures checked section binders, grouped terms, explicit and implicit module visibility, private and public meta imports, `import all`, and scoped notation with a renamed open. The bootstrap prelude had no imports and one original source-map segment spanning all 74 bytes. Linux also confirmed the public/all restriction with a pinned native Lean control, the late import rejection, and the meta-to-runtime rejection. The compiler source was unchanged for this batch."
+  },
+  "r2DataPatternQualification": {
+    "run": 43582656894,
+    "job": 132410491718,
+    "runner": "ab8d003f23e27cc09e041b03f7503cfa2b78c224",
+    "source": "31335d603912cee8a6f971e894bee90a66a09dc8",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+    "fixtureSha256": "28a8baa32dfc43d7ef6a69943660b8e93aef0e1d90a0042cf83ea20093bde8f4",
+    "fixtureCases": {
+      "PS0-P-DATA-01": "5affb766708ef8f71b58b1967625e6232bb8cc63c400a08da62d9f2cde79b78e",
+      "PS0-P-DATA-02": "efe2a83a58f0ce964f15d834ff7234f044a067cecadf73cdc95312f91fe7c259",
+      "PS0-P-DATA-03": "723191f937434b29361d751b3cbc9f3de4c6dbcbe3032b8de941f56bfb5091f4",
+      "PS0-P-DATA-04": "b5aaab925d51701b44e47065c62c01e398fe7704f5d68e8615aaaf2d5308874d",
+      "PS0-P-DATA-05": "ff5818501e8dcc7aea765a8ae15324e9c9cf7280bcce65081fea759bb38ba918",
+      "PS0-P-PAT-01": "2c2ee78a8afbb09f6b9f912bed50344cc3403a2e9c8c23abcf0ce8b5956a583a",
+      "PS0-P-PAT-02": "d1a9c0d12e8f60f34bfbf97f96a1fa9242f3070938e3138803f87d0015215b18",
+      "PS0-P-PAT-03": "257ed55da115d47c072aea045e3f696aada016ab6336e64a18c2c73e3f6af017",
+      "PS0-P-PAT-04": "3e0860296715bbcb54ab500fd324dc96c252fef0c3318f5a8bd7d97a4ab91cef",
+      "PS0-N-DATA-01": "74fef6a701721330f1b43197a41f2352174cbfa4afb3559934242425cfd8dcda",
+      "PS0-N-DATA-02": "ea8687ae9bb6ff60714ac8afc4662767804eb827b5948c7f081275c5283c9b15",
+      "PS0-N-PAT-01": "105d81767434172c29f6e85fd4f498e7fb56f31c62ec8c05816890c0e0071c40",
+      "PS0-N-PAT-02": "474bf21db5a27f0224c7d9a26b547055dd921494e503f0f198ed967d7de6d9c4",
+      "PS0-N-PAT-03": "df64d0c85ea1a03c91b0f8107fb53c45426bae247c03e855f9c1c836dbb2a0c7"
+    },
+    "driverSha256": "f3bf907a9e735f9bee95d6252cd230410bec58c1f1b28f3ce871a16e8da1b497",
+    "artifact": {
+      "id": 14109151949,
+      "name": "ps0-r2-data-pattern-evidence-43582656894",
+      "digest": "sha256:471a84612557388d546cefd0406e6dfa06e933963f5a73fe67f7a2a7e432f156",
+      "bytes": 14851,
+      "archiveDigestVerified": true
+    },
+    "bootstrap": {
+      "run": 43534267147,
+      "source": "c8e776e295eed4019a5bd1567ecd3b9ec8c85ab5",
+      "artifact": 14107360730,
+      "digest": "sha256:894ddeb97ec02430a16bc89d1e3a626dd446108e00445e64d7a1977f38877ed1",
+      "driverSha256": "aa45ecc3353c57b821ba4e19e58838e5f34ae8e482c53d3fba8f87b2575249ef"
+    },
+    "passed": [
+      "PS0-P-DATA-01",
+      "PS0-P-DATA-02",
+      "PS0-P-DATA-03",
+      "PS0-P-DATA-04",
+      "PS0-P-DATA-05",
+      "PS0-P-PAT-01",
+      "PS0-P-PAT-02",
+      "PS0-P-PAT-03",
+      "PS0-P-PAT-04",
+      "PS0-N-DATA-01",
+      "PS0-N-DATA-02",
+      "PS0-N-PAT-01",
+      "PS0-N-PAT-02",
+      "PS0-N-PAT-03"
+    ],
+    "failures": [],
+    "regressions": {
+      "callProbes": [
+        "PS0-P-CALL-02",
+        "PS0-P-CALL-03",
+        "PS0-P-CALL-04",
+        "PS0-P-CALL-05",
+        "PS0-P-CALL-06",
+        "PS0-P-CALL-07",
+        "PS0-P-CALL-08",
+        "PS0-P-CALL-09",
+        "PS0-P-CALL-10",
+        "PS0-N-CALL-01",
+        "PS0-N-CALL-02",
+        "PS0-N-CALL-03",
+        "PS0-N-CALL-04",
+        "PS0-N-CALL-05",
+        "PS0-N-CALL-06",
+        "PS0-N-CALL-07",
+        "PS0-N-CALL-08",
+        "PS0-N-CALL-09",
+        "PS0-N-CALL-10",
+        "PS0-N-CALL-11",
+        "PS0-N-CALL-12a",
+        "PS0-N-CALL-12b"
+      ],
+      "additionalLogs": [
+        "binder_operands.log",
+        "do_layout_operands.log",
+        "host_postfix_calls.log",
+        "operator_operands.log",
+        "prelude-grammar.log"
+      ],
+      "canonicalSourceFilesVerified": 2569,
+      "nativeLakeJobs": 41
+    },
+    "baseline": {
+      "run": 43580364174,
+      "job": 132403580037,
+      "source": "23f3f7bc814f33070d68d2accefbf65d2e5e4d07",
+      "reproduced": [
+        "braced inductive parser rejected the constructor bar",
+        "adjacent constructor pattern rejected the opening parenthesis"
+      ]
+    },
+    "summary": "Braced inductive constructors and adjacent constructor patterns now use Lean’s existing data and match elaboration. The fixtures exercise both data layouts, nested and nullary patterns, native whitespace, a named match equation, a dependent motive, generalization, record updates, and subtype proofs. Lean rejects negative recursion in an inductive declaration, invalid proofs and patterns, and empty patterns for Unit and defaulted fields. The same job passed all 22 prior call probes, binder, operator, host-call, do-layout and prelude regressions, and checked the 2,569-source catalog."
   }
 }
