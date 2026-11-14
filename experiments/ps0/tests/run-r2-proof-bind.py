@@ -8,6 +8,46 @@ import re
 import subprocess
 
 CASES = {
+    'V1-061': ('''theorem withTerm(p: Prop, h: p): p := h
+theorem goals(p: Prop, q: Prop, hp: p, hq: q): p ∧ q := by {
+  constructor
+  case left => exact hp
+  case right => first | contradiction | exact hq
+}
+theorem choose(p: Prop, hp: p): p := by
+  first
+  | exact hp
+  | contradiction
+''', ''),
+    'V1-062': ('''public import Init
+public meta import Lean
+theorem simplified(n: Nat): n + 0 = n := by {
+  simp (config := { contextual := true }) only [Nat.add_zero]
+}
+theorem constructed(p: Prop): p → p := by { exact fun hp => hp }
+''', ''),
+    'V1-064': ('''public import Std
+theorem arith(n: Nat, h: n < 4): n + 1 ≤ 4 := by { omega }
+theorem bits: (15 : BitVec 8) &&& 3 = 3 := by { bv_decide }
+theorem congruence(f: Nat → Nat, x: Nat, y: Nat, h: x = y): f x = f y := by { grind }
+theorem decidable: 2 + 2 = 4 := by { decide }
+''', ''),
+    'V1-065': ('''public meta import Lean
+open Lean Elab Tactic
+elab "proveUnit" : tactic => do
+  evalTactic (← `(tactic| exact True.intro))
+theorem checked: True := by { proveUnit }
+run_cmd do
+  unless (← collectAxioms ``checked).isEmpty do throwError "custom proof added assumptions"
+''', ''),
+    'V1-066': ('''theorem incomplete: False := by { sorry }
+open Lean in
+run_cmd do
+  unless (← collectAxioms ``incomplete).contains ``sorryAx do
+    throwError "development hole missing its assumption marker"
+''', ''),
+    'V1-066-recovery': ('''theorem broken: True := by { exact 7 }
+''', r'type mismatch|has type'),
     'PS0-P-PROOF-01': ('''theorem identityProof(p: Prop): p → p := by { intro h; exact h }
 open Lean in
 run_cmd do
@@ -63,6 +103,9 @@ def main():
             ok = result.returncode == 0
         (passed if ok else failures).append(case)
         print(case, 'PASS' if ok else 'FAIL', result.returncode, log, flush=True)
+    if 'V1-066' in passed and 'V1-066-recovery' not in passed:
+        passed.remove('V1-066')
+        failures.append('V1-066')
     evidence = {'passed': passed, 'failures': failures, 'fixtures': fixtures,
                 'driver_sha256': hashlib.sha256(args.driver.read_bytes()).hexdigest()}
     (args.output / 'result.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
