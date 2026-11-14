@@ -28,7 +28,7 @@ def mapper : MapFn := {
 example : (move(42)).x = 42 ∧ (move(42)).y = 22 := ⟨rfl, rfl⟩
 example : mapper.run(some(8)) = 8 := rfl
 ''', (), ''),
-    'V1-039': ('''function absolute(n: Int): Int := if n < 0 then { -n } else { n }
+    'V1-039': ('''function absolute(n: Int): Int := if (n < 0) { -n } else { n }
 function bounded(n: Nat): Nat := if h : n < 5 then (⟨n, h⟩ : Fin 5).val else 0
 example : absolute(-7) = 7 := rfl
 example : bounded(4) = 4 := rfl
@@ -45,7 +45,7 @@ example : readValue(some(41)) = 41 := rfl
 example : unpackPair((20, 22)) = 42 := rfl
 example : (some 4 matches some _) := by { decide }
 ''', (), ''),
-    'V1-044': ('''function pred(n: Nat): Nat
+    'V1-044': ('''def pred : Nat → Nat
   | 0 => 0
   | k + 1 => k
 mutual

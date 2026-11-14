@@ -837,10 +837,25 @@
       "id": "V1-036",
       "feature": "Let/have, local instances and binding configurations",
       "sourceBasis": "L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-036",
+      "qualifiedCommit": "19b953d3f9a4489872921e89bf161c8a8daadc5e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618590505",
+      "evidence": {
+        "jobId": 132518998596,
+        "runner": "f371154b505492243ed1e798a5203f1c3eb9b95f",
+        "artifact": {
+          "id": 14123286871,
+          "name": "ps0-r2-recursion-do-evidence-43618590505",
+          "digest": "sha256:7b0f822ded85ab8c334cd09e8760a0aed1b9f229d0f022588c25fe2e5a9809ba",
+          "bytes": 27252
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "1ff511cdf39559ceec9993deaf7a59c3f9518da2bbaf215c06ad7de86c026a8d",
+        "caseSha256": "ee5f5b755bc65250eb82a7a2e9354276ee7d8af584362cbe0358dd672f1dd9be"
+      }
     },
     {
       "id": "V1-037",
@@ -855,10 +870,25 @@
       "id": "V1-038",
       "feature": "Records, updates, punning and field equations",
       "sourceBasis": "L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-038",
+      "qualifiedCommit": "19b953d3f9a4489872921e89bf161c8a8daadc5e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618590505",
+      "evidence": {
+        "jobId": 132518998596,
+        "runner": "f371154b505492243ed1e798a5203f1c3eb9b95f",
+        "artifact": {
+          "id": 14123286871,
+          "name": "ps0-r2-recursion-do-evidence-43618590505",
+          "digest": "sha256:7b0f822ded85ab8c334cd09e8760a0aed1b9f229d0f022588c25fe2e5a9809ba",
+          "bytes": 27252
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "1ff511cdf39559ceec9993deaf7a59c3f9518da2bbaf215c06ad7de86c026a8d",
+        "caseSha256": "e3a54aadb44178826912b5a45a0f88272401da16bc14d5155309890374adfab8"
+      }
     },
     {
       "id": "V1-039",
@@ -945,10 +975,25 @@
       "id": "V1-043",
       "feature": "`if let`, pattern bindings, `matches`, `nomatch`, `nofun`",
       "sourceBasis": "L-TERM, [feature](#pattern-grammar-dependent-matching-and-empty-elimination)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-recursion-do.py :: V1-043",
+      "qualifiedCommit": "19b953d3f9a4489872921e89bf161c8a8daadc5e",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43618590505",
+      "evidence": {
+        "jobId": 132518998596,
+        "runner": "f371154b505492243ed1e798a5203f1c3eb9b95f",
+        "artifact": {
+          "id": 14123286871,
+          "name": "ps0-r2-recursion-do-evidence-43618590505",
+          "digest": "sha256:7b0f822ded85ab8c334cd09e8760a0aed1b9f229d0f022588c25fe2e5a9809ba",
+          "bytes": 27252
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixtureSha256": "1ff511cdf39559ceec9993deaf7a59c3f9518da2bbaf215c06ad7de86c026a8d",
+        "caseSha256": "b1a8335400be2b619f75c19f688a7783b4628056ccdd717e1ee4a04dc9885da8"
+      }
     },
     {
       "id": "V1-044",
@@ -8817,12 +8862,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 47,
-    "featureFamiliesPending": 40,
+    "PENDING": 44,
+    "featureFamiliesPending": 37,
     "boundaryWitnessesPending": 5,
     "acceptanceCasesPending": 2,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 195,
+    "PASS": 198,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -19514,7 +19559,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 47,
+    "obligationsPending": 44,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -27163,6 +27208,34 @@
           "V1-075": "7afb05791c13299e9c6123ee13d89b6b3dafa7d192c77fd8b7eefde7ccb2253b",
           "V1-078": "07bb0bf4f26894398dc90a70fcae0a15bed8caeabc1a507fa342220a0c0e55aa",
           "V1-088": "8f0ae4b1c5dbca5dd6193434391a95de9c630c400c8fe528a3b5c77819978144"
+        }
+      },
+      {
+        "summary": "Linux qualified configured local binding and instances, record construction/update/punning and field equations, and if-let, pattern binding, matches, nomatch and nofun.",
+        "source": "19b953d3f9a4489872921e89bf161c8a8daadc5e",
+        "runner": "f371154b505492243ed1e798a5203f1c3eb9b95f",
+        "run": 43618590505,
+        "job": 132518998596,
+        "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+        "fixture": "tests/run-r2-recursion-do.py",
+        "fixtureSha256": "1ff511cdf39559ceec9993deaf7a59c3f9518da2bbaf215c06ad7de86c026a8d",
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14123286871,
+          "name": "ps0-r2-recursion-do-evidence-43618590505",
+          "digest": "sha256:7b0f822ded85ab8c334cd09e8760a0aed1b9f229d0f022588c25fe2e5a9809ba",
+          "bytes": 27252
+        },
+        "passed": [
+          "V1-036",
+          "V1-038",
+          "V1-043"
+        ],
+        "fixtureCases": {
+          "V1-036": "ee5f5b755bc65250eb82a7a2e9354276ee7d8af584362cbe0358dd672f1dd9be",
+          "V1-038": "e3a54aadb44178826912b5a45a0f88272401da16bc14d5155309890374adfab8",
+          "V1-043": "b1a8335400be2b619f75c19f688a7783b4628056ccdd717e1ee4a04dc9885da8"
         }
       }
     ]
@@ -98314,6 +98387,34 @@
         "V1-075": "7afb05791c13299e9c6123ee13d89b6b3dafa7d192c77fd8b7eefde7ccb2253b",
         "V1-078": "07bb0bf4f26894398dc90a70fcae0a15bed8caeabc1a507fa342220a0c0e55aa",
         "V1-088": "8f0ae4b1c5dbca5dd6193434391a95de9c630c400c8fe528a3b5c77819978144"
+      }
+    },
+    {
+      "summary": "Linux qualified configured local binding and instances, record construction/update/punning and field equations, and if-let, pattern binding, matches, nomatch and nofun.",
+      "source": "19b953d3f9a4489872921e89bf161c8a8daadc5e",
+      "runner": "f371154b505492243ed1e798a5203f1c3eb9b95f",
+      "run": 43618590505,
+      "job": 132518998596,
+      "driverSha256": "39bf24574db61145cebadf521f589a9a6e37cddc3b6752b21e9860c9e5e796f9",
+      "fixture": "tests/run-r2-recursion-do.py",
+      "fixtureSha256": "1ff511cdf39559ceec9993deaf7a59c3f9518da2bbaf215c06ad7de86c026a8d",
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14123286871,
+        "name": "ps0-r2-recursion-do-evidence-43618590505",
+        "digest": "sha256:7b0f822ded85ab8c334cd09e8760a0aed1b9f229d0f022588c25fe2e5a9809ba",
+        "bytes": 27252
+      },
+      "passed": [
+        "V1-036",
+        "V1-038",
+        "V1-043"
+      ],
+      "fixtureCases": {
+        "V1-036": "ee5f5b755bc65250eb82a7a2e9354276ee7d8af584362cbe0358dd672f1dd9be",
+        "V1-038": "e3a54aadb44178826912b5a45a0f88272401da16bc14d5155309890374adfab8",
+        "V1-043": "b1a8335400be2b619f75c19f688a7783b4628056ccdd717e1ee4a04dc9885da8"
       }
     }
   ]
