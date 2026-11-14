@@ -21,28 +21,76 @@
       "id": "V1-001",
       "feature": "Unicode and escaped/hierarchical identifiers",
       "sourceBasis": "L-TERM, L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-001",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759"
+      }
     },
     {
       "id": "V1-002",
       "feature": "Comments and documentation comments",
       "sourceBasis": "L-TERM, L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-002",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672"
+      }
     },
     {
       "id": "V1-003",
       "feature": "Numeral, scientific, character, string and registered literals",
       "sourceBasis": "L-TERM, L-INIT",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-003",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969"
+      }
     },
     {
       "id": "V1-004",
@@ -57,46 +105,126 @@
       "id": "V1-005",
       "feature": "Universes, `Sort`, `Type`, `Prop`, explicit level parameters",
       "sourceBasis": "L-TERM, L-CMD",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-005",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5"
+      }
     },
     {
       "id": "V1-006",
       "feature": "Explicit, implicit, strict implicit and instance binders",
       "sourceBasis": "L-TERM, [feature](#explicit-implicit-strict-implicit-instance-and-interleaved-binders)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-006",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa"
+      }
     },
     {
       "id": "V1-007",
       "feature": "Dependent/interleaved binders and section generalization",
       "sourceBasis": "L-CMD, [feature](#namespaces-sections-variables-open-and-export)",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-007",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623"
+      }
     },
     {
       "id": "V1-008",
       "feature": "Default/automatic parameters and type-directed completion",
       "sourceBasis": "[feature](#defaults-named-arguments-coefun-and-empty-invocation), L-DEFS",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-008",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20"
+      }
     },
     {
       "id": "V1-009",
       "feature": "Pi types, lambdas and pattern lambdas",
       "sourceBasis": "L-TERM",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: V1-009",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1"
+      }
     },
     {
       "id": "V1-010",
@@ -2353,10 +2481,26 @@
       "sourceOrSetup": "Braced `where { finally { \\",
       "requiredInterpretation": "spec => { ... } } }`",
       "section": "A genuine proof must replace the schematic ellipsis. | §7",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-contracts.py :: PS0-P-VC-02",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334974",
+      "evidence": {
+        "jobId": 132427517789,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14111960906,
+          "name": "ps0-r2-contracts-evidence-43588334974",
+          "digest": "sha256:187aea82461f19d88d9f326cec7ac69049e221383a45b24040339fe5f1c9353f",
+          "bytes": 8232,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "071a2979538449e072c7a6fd3d2e941998056152b96dafa235ca8bda224af63f",
+        "caseSha256": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f"
+      }
     },
     {
       "id": "PS0-P-VC-03",
@@ -2618,10 +2762,26 @@
       "sourceOrSetup": "Native Markdown/Verso documentation and bootstrap forms",
       "requiredInterpretation": "Actual import/initialization conditions, not universal execution.",
       "section": "§11",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-P-DOC-01",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334976",
+      "evidence": {
+        "jobId": 132427517941,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14111765743,
+          "name": "ps0-r2-native-extensions-evidence-43588334976",
+          "digest": "sha256:7a453e11b7fdadb37c331c01fafd3a6629b61f6d41f6903aa046887e76c89386",
+          "bytes": 7958951,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "9336b1d9227b4a3aa6a721a2c8f4c67619c9809b5e534e915197201f7dc04801",
+        "caseSha256": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77"
+      }
     },
     {
       "id": "PS0-P-ENV-01",
@@ -3660,10 +3820,26 @@
       "sourceOrClaim": "Rewriting native quotation tuple calls into PS multiple arguments",
       "expectedCategory": "semantic mismatch",
       "reason": "Preserve syntax-data argument partition.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-N-EXT-01",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334976",
+      "evidence": {
+        "jobId": 132427517941,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14111765743,
+          "name": "ps0-r2-native-extensions-evidence-43588334976",
+          "digest": "sha256:7a453e11b7fdadb37c331c01fafd3a6629b61f6d41f6903aa046887e76c89386",
+          "bytes": 7958951,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "9336b1d9227b4a3aa6a721a2c8f4c67619c9809b5e534e915197201f7dc04801",
+        "caseSha256": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174"
+      }
     },
     {
       "id": "PS0-N-EXT-02",
@@ -3671,10 +3847,26 @@
       "sourceOrClaim": "Falling back to unrestricted native parsing for malformed host terms",
       "expectedCategory": "PARSE/semantic mismatch",
       "reason": "No invisible grammar-contract change.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-native-extensions.py :: PS0-N-EXT-02",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334976",
+      "evidence": {
+        "jobId": 132427517941,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14111765743,
+          "name": "ps0-r2-native-extensions-evidence-43588334976",
+          "digest": "sha256:7a453e11b7fdadb37c331c01fafd3a6629b61f6d41f6903aa046887e76c89386",
+          "bytes": 7958951,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "9336b1d9227b4a3aa6a721a2c8f4c67619c9809b5e534e915197201f7dc04801",
+        "caseSha256": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3"
+      }
     },
     {
       "id": "PS0-N-EXT-03",
@@ -3709,10 +3901,26 @@
       "sourceOrClaim": "Repeating quotient/bootstrap initialization in an invalid environment",
       "expectedCategory": "ENV/KERNEL",
       "reason": "Full capability preserves native preconditions.",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "tests/run-r2-lexical-types.py :: PS0-N-BOOT-01",
+      "qualifiedCommit": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43588334990",
+      "evidence": {
+        "jobId": 132427517719,
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "caseSha256": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+      }
     }
   ],
   "boundaryWitnesses": [
@@ -7710,12 +7918,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 119,
-    "featureFamiliesPending": 100,
+    "PENDING": 106,
+    "featureFamiliesPending": 92,
     "boundaryWitnessesPending": 5,
-    "acceptanceCasesPending": 14,
+    "acceptanceCasesPending": 9,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases and numbered witnesses.",
-    "PASS": 123,
+    "PASS": 136,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -18407,7 +18615,7 @@
     },
     "nextActions": [],
     "goalStatus": "COMPLETE",
-    "obligationsPending": 119,
+    "obligationsPending": 106,
     "grammarMigrationComplete": false,
     "verified_execution": false,
     "nativeIndexingFollowup": {
@@ -25272,6 +25480,128 @@
           "archiveDigestVerified": true
         },
         "summary": "Nine native capability acceptance cases passed. The linked ABI executable returned 42 through a borrowed Nat FFI argument and a deliberately distinct implemented_by replacement. A second executable observed both ordinary and builtin initializer values."
+      },
+      {
+        "run": 43588334976,
+        "job": 132427517941,
+        "conclusion": "success",
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+        "fixture": "tests/run-r2-native-extensions.py",
+        "fixtureSha256": "9336b1d9227b4a3aa6a721a2c8f4c67619c9809b5e534e915197201f7dc04801",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "PS0-N-EXT-01",
+          "PS0-N-EXT-02",
+          "PS0-P-DOC-01"
+        ],
+        "failures": [],
+        "fixtureCases": {
+          "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+          "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+          "PS0-N-EXT-01": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174",
+          "PS0-N-EXT-02": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3",
+          "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+          "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+          "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+          "PS0-P-DOC-01": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77",
+          "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+          "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+          "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+          "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14111765743,
+          "name": "ps0-r2-native-extensions-evidence-43588334976",
+          "digest": "sha256:7a453e11b7fdadb37c331c01fafd3a6629b61f6d41f6903aa046887e76c89386",
+          "bytes": 7958951,
+          "archiveDigestVerified": true
+        },
+        "summary": "Markdown and Verso were observed as distinct registered docstring kinds. Native quotation retained its tuple argument and explicit PS capture rejected the spaced call."
+      },
+      {
+        "run": 43588334974,
+        "job": 132427517789,
+        "conclusion": "failure",
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+        "fixture": "tests/run-r2-contracts.py",
+        "fixtureSha256": "071a2979538449e072c7a6fd3d2e941998056152b96dafa235ca8bda224af63f",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "PS0-P-VC-02"
+        ],
+        "failures": [
+          "PS0-N-VC-04"
+        ],
+        "fixtureCases": {
+          "PS0-P-VC-01": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56",
+          "PS0-P-VC-02": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f",
+          "PS0-P-VC-03": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6",
+          "PS0-N-VC-01": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04",
+          "PS0-N-VC-02": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94",
+          "PS0-N-VC-03": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919",
+          "PS0-N-VC-04": "dcd96ce6b8880d78afbc102452fb0efa1dce916fa30753b8cc16b4a99398ff83",
+          "PS0-N-VC-05": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14111960906,
+          "name": "ps0-r2-contracts-evidence-43588334974",
+          "digest": "sha256:187aea82461f19d88d9f326cec7ac69049e221383a45b24040339fe5f1c9353f",
+          "bytes": 8232,
+          "archiveDigestVerified": true
+        },
+        "summary": "The braced spec subsection discharged the remaining VC and the generated theorem was checked for sorry dependencies."
+      },
+      {
+        "run": 43588334990,
+        "job": 132427517719,
+        "conclusion": "failure",
+        "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+        "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+        "fixture": "tests/run-r2-lexical-types.py",
+        "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+        "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+        "passed": [
+          "V1-001",
+          "V1-002",
+          "V1-003",
+          "V1-005",
+          "V1-006",
+          "V1-007",
+          "V1-008",
+          "V1-009",
+          "PS0-N-BOOT-01"
+        ],
+        "failures": [
+          "V1-004"
+        ],
+        "fixtureCases": {
+          "V1-001": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759",
+          "V1-002": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672",
+          "V1-003": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969",
+          "V1-004": "06d5e95ff75622019811981a7a33c6d00f676adad85367a4052b22e8c8325cb4",
+          "V1-005": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5",
+          "V1-006": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa",
+          "V1-007": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623",
+          "V1-008": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20",
+          "V1-009": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1",
+          "PS0-N-BOOT-01": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+        },
+        "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+        "artifact": {
+          "id": 14110962028,
+          "name": "ps0-r2-lexical-types-evidence-43588334990",
+          "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+          "bytes": 8784,
+          "archiveDigestVerified": true
+        },
+        "summary": "Eight lexical and type families and the duplicate quotient-bootstrap rejection passed. The raw/interpolated string case was pending its corrected evaluation oracle."
       }
     ]
   },
@@ -95638,6 +95968,128 @@
         "archiveDigestVerified": true
       },
       "summary": "Nine native capability acceptance cases passed. The linked ABI executable returned 42 through a borrowed Nat FFI argument and a deliberately distinct implemented_by replacement. A second executable observed both ordinary and builtin initializer values."
+    },
+    {
+      "run": 43588334976,
+      "job": 132427517941,
+      "conclusion": "success",
+      "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+      "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "fixture": "tests/run-r2-native-extensions.py",
+      "fixtureSha256": "9336b1d9227b4a3aa6a721a2c8f4c67619c9809b5e534e915197201f7dc04801",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "PS0-N-EXT-01",
+        "PS0-N-EXT-02",
+        "PS0-P-DOC-01"
+      ],
+      "failures": [],
+      "fixtureCases": {
+        "PS0-P-EXT-01": "26186b6de4bdda70db0fa8dea9ca6171c46d52202eed5a94140c04ddf7d841c5",
+        "PS0-P-EXT-02": "a22b7e684729c30876ea4cb18bd988a8ae8672309023f6330522b886e6f1166c",
+        "PS0-N-EXT-01": "3176e4259c8443aa8a7e35beaf48f83d38a83c1fe53ce332ea4598b2d5b39174",
+        "PS0-N-EXT-02": "ec4d919385c05edfeaf6a201cfdaa0b33c32384c2ed53a6e357ebf1fb7e405c3",
+        "PS0-P-META-02": "1164beb04340bf4c498199fec6fbbffb1c134b651a41986d9593341bc341494c",
+        "PS0-P-RUN-02": "db50da51a9018dd770205956c27a4bc51bb7838426487ee449430d55c5f0e893",
+        "PS0-P-DIAG-01": "cc091eae33a964d264283b061b28ba3e8ecf61fe55f6f130b375097f2a498288",
+        "PS0-P-DOC-01": "3cb99147994ed3672b05053ad0a1252754f4e9bbbaa2b622158b442beca13b77",
+        "PS0-P-RUN-01": "13c3d61f7237ad191325788987a554030c8e519111b2bd614d064d4f774e5a4e",
+        "PS0-N-EXT-03": "19e4acc326735a3c9f03686d1fa6f2ee37ae90e557cce3ad23ff0df7a1e2aad8",
+        "PS0-P-RUN-03": "d5d3ae1e4083d99ca44c1c5c0e3749ce2b8b1194032c1faf96f4ca4bfb072d72",
+        "PS0-P-META-01": "3c94ab1d110d5dbf02fafef8021be1cdac471c9558c975e8e2d6377eb8619442"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14111765743,
+        "name": "ps0-r2-native-extensions-evidence-43588334976",
+        "digest": "sha256:7a453e11b7fdadb37c331c01fafd3a6629b61f6d41f6903aa046887e76c89386",
+        "bytes": 7958951,
+        "archiveDigestVerified": true
+      },
+      "summary": "Markdown and Verso were observed as distinct registered docstring kinds. Native quotation retained its tuple argument and explicit PS capture rejected the spaced call."
+    },
+    {
+      "run": 43588334974,
+      "job": 132427517789,
+      "conclusion": "failure",
+      "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+      "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "fixture": "tests/run-r2-contracts.py",
+      "fixtureSha256": "071a2979538449e072c7a6fd3d2e941998056152b96dafa235ca8bda224af63f",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "PS0-P-VC-02"
+      ],
+      "failures": [
+        "PS0-N-VC-04"
+      ],
+      "fixtureCases": {
+        "PS0-P-VC-01": "07b8b8e3159e7c685d402441cbe1646b2c659b513844b227f1ba7b0f1148ce56",
+        "PS0-P-VC-02": "6ae9ff20c4362c04ae182158cc0ccaabaa0214eacc52b3b0663c3d082b0cdc1f",
+        "PS0-P-VC-03": "2317a3ec743dd0a8afcbf2cac82d2321f57a8f3ba13203095435afda51be9cc6",
+        "PS0-N-VC-01": "3acb272fee8f0b1ac99f4de55492b23dde4714b9f1aebc530854a1b309944f04",
+        "PS0-N-VC-02": "c70fd08a8149f97128a6c5e1e374089968c72dad6c2b08fc7cde04638e824f94",
+        "PS0-N-VC-03": "0563484c38a21d64603b3e100e3351745ae1710ea75839809249dd6415906919",
+        "PS0-N-VC-04": "dcd96ce6b8880d78afbc102452fb0efa1dce916fa30753b8cc16b4a99398ff83",
+        "PS0-N-VC-05": "8a35eedc75d92e7b84eac83263d72ae70dfaff2249ce31e0f097ace5bb0ddaec"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14111960906,
+        "name": "ps0-r2-contracts-evidence-43588334974",
+        "digest": "sha256:187aea82461f19d88d9f326cec7ac69049e221383a45b24040339fe5f1c9353f",
+        "bytes": 8232,
+        "archiveDigestVerified": true
+      },
+      "summary": "The braced spec subsection discharged the remaining VC and the generated theorem was checked for sorry dependencies."
+    },
+    {
+      "run": 43588334990,
+      "job": 132427517719,
+      "conclusion": "failure",
+      "runner": "a20a4fc598929a14aaf8c928554f43223deded57",
+      "source": "b010d9cdfdc51e24184cb18dc47f2bfde67c2089",
+      "fixture": "tests/run-r2-lexical-types.py",
+      "fixtureSha256": "ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9",
+      "driverSha256": "e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af",
+      "passed": [
+        "V1-001",
+        "V1-002",
+        "V1-003",
+        "V1-005",
+        "V1-006",
+        "V1-007",
+        "V1-008",
+        "V1-009",
+        "PS0-N-BOOT-01"
+      ],
+      "failures": [
+        "V1-004"
+      ],
+      "fixtureCases": {
+        "V1-001": "757a9446c6a9c23d061462b2a340e5645c9ddbaf78fdff4ff80277a278463759",
+        "V1-002": "03324d0094da727fe540710f19ab585d1d3e6e62407e7bf6e561a4f02a980672",
+        "V1-003": "47d19924faad552fa05b60aca275af3511e18832f6af0a6f07d90e363e74e969",
+        "V1-004": "06d5e95ff75622019811981a7a33c6d00f676adad85367a4052b22e8c8325cb4",
+        "V1-005": "d524c800ec6b139499ea8e38481f9e8ecd90ca966e2b2cb1fdcdccc26c35dec5",
+        "V1-006": "665dedf4d2de076bec3acb5a284e135d4ecbdff3eff6b897a78abd9db81f0efa",
+        "V1-007": "e891776bc519ea94337f7005be72f77e58fe2ccf8f1ad649fa5fb420bb3bb623",
+        "V1-008": "4e0c3626f6c43c2c10c57018b4030ff810d0dc596c9d5915aa36249b0d753a20",
+        "V1-009": "bea1225754a8514791f25f0e3f0732105d228c57bea6ce651a0f0faf9cb364e1",
+        "PS0-N-BOOT-01": "d739da3870a58acbf9c87dc082497dbb13d990ec3228df84d098abbd14ee3b00"
+      },
+      "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+      "referenceBlob": "c50203f8e4cb79b3e6680088a07c1d1e145b8f0b",
+      "artifact": {
+        "id": 14110962028,
+        "name": "ps0-r2-lexical-types-evidence-43588334990",
+        "digest": "sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1",
+        "bytes": 8784,
+        "archiveDigestVerified": true
+      },
+      "summary": "Eight lexical and type families and the duplicate quotient-bootstrap rejection passed. The raw/interpolated string case was pending its corrected evaluation oracle."
     }
   ]
 }

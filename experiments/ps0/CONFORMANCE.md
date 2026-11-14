@@ -1,5 +1,17 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-14 — R2 lexical and type families, documentation and spec tails
+
+The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
+
+Markdown and Verso were observed as distinct registered docstring kinds. Native quotation retained its tuple argument and explicit PS capture rejected the spaced call. Qualified `PS0-N-EXT-01`, `PS0-N-EXT-02`, `PS0-P-DOC-01`. Source `b010d9cdfdc51e24184cb18dc47f2bfde67c2089`, runner `a20a4fc598929a14aaf8c928554f43223deded57`, executable SHA-256 `e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af`, and fixture runner SHA-256 `9336b1d9227b4a3aa6a721a2c8f4c67619c9809b5e534e915197201f7dc04801`. Evidence artifact `14111765743` has digest `sha256:7a453e11b7fdadb37c331c01fafd3a6629b61f6d41f6903aa046887e76c89386` and 7,958,951 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43588334976/job/132427517941)
+
+The braced spec subsection discharged the remaining VC and the generated theorem was checked for sorry dependencies. Qualified `PS0-P-VC-02`. Source `b010d9cdfdc51e24184cb18dc47f2bfde67c2089`, runner `a20a4fc598929a14aaf8c928554f43223deded57`, executable SHA-256 `e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af`, and fixture runner SHA-256 `071a2979538449e072c7a6fd3d2e941998056152b96dafa235ca8bda224af63f`. Evidence artifact `14111960906` has digest `sha256:187aea82461f19d88d9f326cec7ac69049e221383a45b24040339fe5f1c9353f` and 8,232 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43588334974/job/132427517789)
+
+Eight lexical and type families and the duplicate quotient-bootstrap rejection passed. The raw/interpolated string case was pending its corrected evaluation oracle. Qualified `V1-001`, `V1-002`, `V1-003`, `V1-005`, `V1-006`, `V1-007`, `V1-008`, `V1-009`, `PS0-N-BOOT-01`. Source `b010d9cdfdc51e24184cb18dc47f2bfde67c2089`, runner `a20a4fc598929a14aaf8c928554f43223deded57`, executable SHA-256 `e2582b2185c688e2996ffa674da8f878f545692a65502575522b81aa5685f5af`, and fixture runner SHA-256 `ac4d8a14e1d4e11790950ab49fde95d52f999cb546a3008d76b4d7ef7dcf2de9`. Evidence artifact `14110962028` has digest `sha256:c8cb933b0ebf27ad39a05f8fe969e679aa78a260c50d2a79d079a4e6d62243a1` and 8,784 bytes. [Linux job](https://github.com/dwijayuda/pskernel/actions/runs/43588334990/job/132427517719)
+
+The ledger records **136 finite passes and 106 pending obligations**.
+
 ## 2026-11-14 — R2 native extensions, initializers and ABI
 
 The data and pattern revision `31335d603912cee8a6f971e894bee90a66a09dc8` is being rebuilt from the published bootstrap. Runner `17be3f85c0fe7b0cb36220330062aeb483d936ce`. [Two-stage Linux run](https://github.com/dwijayuda/pskernel/actions/runs/43583275609)
