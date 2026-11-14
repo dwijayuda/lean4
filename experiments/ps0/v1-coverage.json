@@ -25453,14 +25453,41 @@
         "stageTwoLink": "SKIPPED",
         "fixedPointAudit": "SKIPPED",
         "replacement": {
-          "run": 43612186981,
+          "run": 43612186982,
           "runner": "f0b06fb36962df7b0c2b25187955b189fdfe5285",
           "source": "04df42b50d2668bf32715d756bd7ba0f915328fd",
-          "status": "IN_PROGRESS",
+          "status": "FAIL",
+          "checkpointJob": 132499412159,
+          "checkpointError": "canonical source hash PS0.Policy",
           "preludeProbe": {
             "run": 43612270121,
             "runner": "600b199f566dd5c8b8dd23fc5581f6f365852192",
-            "status": "IN_PROGRESS"
+            "status": "FAIL",
+            "job": 132499666872,
+            "artifact": {
+              "id": 14120981140,
+              "bytes": 574,
+              "digest": "sha256:84b74c2d81306d3e9624a421835acb9a9013fd7e7da21dabafa141c365af830b"
+            }
+          }
+        },
+        "correctedCatalog": {
+          "run": 43613040736,
+          "source": "f2d065ba1016d749b249657550955d56f33e32b0",
+          "runner": "7cabb834619900beb6dee4432c01b572b8da82e8",
+          "checkpointJob": 132502052548,
+          "checkpointStatus": "PASS",
+          "adapterRebuildFailureJob": 132502444415
+        },
+        "adjacentAdapterRebuild": {
+          "run": 43613510401,
+          "source": "fd509bdedf14063450844d499675218fd8db0657",
+          "runner": "11c8ac2b4d690f2b2383278e5526f80479a77d20",
+          "status": "SUBMITTED",
+          "preludeProbe": {
+            "run": 43613506931,
+            "runner": "a44b144f50f4ba28592c5e02fec866dc7e28e7a1",
+            "status": "SUBMITTED"
           }
         }
       }
@@ -96139,14 +96166,41 @@
       "stageTwoLink": "SKIPPED",
       "fixedPointAudit": "SKIPPED",
       "replacement": {
-        "run": 43612186981,
+        "run": 43612186982,
         "runner": "f0b06fb36962df7b0c2b25187955b189fdfe5285",
         "source": "04df42b50d2668bf32715d756bd7ba0f915328fd",
-        "status": "IN_PROGRESS",
+        "status": "FAIL",
+        "checkpointJob": 132499412159,
+        "checkpointError": "canonical source hash PS0.Policy",
         "preludeProbe": {
           "run": 43612270121,
           "runner": "600b199f566dd5c8b8dd23fc5581f6f365852192",
-          "status": "IN_PROGRESS"
+          "status": "FAIL",
+          "job": 132499666872,
+          "artifact": {
+            "id": 14120981140,
+            "bytes": 574,
+            "digest": "sha256:84b74c2d81306d3e9624a421835acb9a9013fd7e7da21dabafa141c365af830b"
+          }
+        }
+      },
+      "correctedCatalog": {
+        "run": 43613040736,
+        "source": "f2d065ba1016d749b249657550955d56f33e32b0",
+        "runner": "7cabb834619900beb6dee4432c01b572b8da82e8",
+        "checkpointJob": 132502052548,
+        "checkpointStatus": "PASS",
+        "adapterRebuildFailureJob": 132502444415
+      },
+      "adjacentAdapterRebuild": {
+        "run": 43613510401,
+        "source": "fd509bdedf14063450844d499675218fd8db0657",
+        "runner": "11c8ac2b4d690f2b2383278e5526f80479a77d20",
+        "status": "SUBMITTED",
+        "preludeProbe": {
+          "run": 43613506931,
+          "runner": "a44b144f50f4ba28592c5e02fec866dc7e28e7a1",
+          "status": "SUBMITTED"
         }
       }
     }
