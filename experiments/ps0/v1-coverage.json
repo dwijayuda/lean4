@@ -27001,6 +27001,28 @@
               "Std/Data/DTreeMap/Internal/Operations.ps",
               "Std/Tactic/BVDecide/Bitblast/BVExpr/Basic.ps"
             ]
+          },
+          "early": {
+            "job": 132615385481,
+            "status": "PASS",
+            "artifacts": [
+              {
+                "id": 14138131435,
+                "bytes": 8262394,
+                "digest": "sha256:643b58567f70866c8763963f8bfa7be0f978765afb56d90564188f803770cf8c",
+                "kind": "evidence"
+              },
+              {
+                "id": 14137839286,
+                "bytes": 867746938,
+                "digest": "sha256:5f5a1d393d04a591d6a4394b0c8a2c0c71ce0100b1f1b9aa2a97525f950a2250",
+                "kind": "checkpoint"
+              }
+            ]
+          },
+          "middle": {
+            "job": 132635078410,
+            "status": "IN_PROGRESS"
           }
         },
         "cleanR2DoIndentRebuild": {
@@ -27010,7 +27032,7 @@
           "checkpointJob": 132573345223,
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132573593470,
-          "stageOneBaseStatus": "IN_PROGRESS",
+          "stageOneBaseStatus": "PASS",
           "status": "IN_PROGRESS",
           "regression": {
             "recursionAndDo": {
@@ -27049,6 +27071,28 @@
                 "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
               }
             }
+          },
+          "early": {
+            "job": 132621173537,
+            "status": "PASS",
+            "artifacts": [
+              {
+                "id": 14137377505,
+                "bytes": 867733732,
+                "digest": "sha256:96addd7ca1337571873065c8dfedfdaff4b486a809b4473dcd2f30f4e7a1272c",
+                "kind": "checkpoint"
+              },
+              {
+                "id": 14137158336,
+                "bytes": 8262522,
+                "digest": "sha256:0821baff71f4cf0e243032416720b8f7e303025e2b6007fd404d89ed66e393c0",
+                "kind": "evidence"
+              }
+            ]
+          },
+          "middle": {
+            "job": 132631806122,
+            "status": "IN_PROGRESS"
           }
         },
         "cleanR2ImplicitFieldsRebuild": {
@@ -99056,6 +99100,28 @@
             "Std/Data/DTreeMap/Internal/Operations.ps",
             "Std/Tactic/BVDecide/Bitblast/BVExpr/Basic.ps"
           ]
+        },
+        "early": {
+          "job": 132615385481,
+          "status": "PASS",
+          "artifacts": [
+            {
+              "id": 14138131435,
+              "bytes": 8262394,
+              "digest": "sha256:643b58567f70866c8763963f8bfa7be0f978765afb56d90564188f803770cf8c",
+              "kind": "evidence"
+            },
+            {
+              "id": 14137839286,
+              "bytes": 867746938,
+              "digest": "sha256:5f5a1d393d04a591d6a4394b0c8a2c0c71ce0100b1f1b9aa2a97525f950a2250",
+              "kind": "checkpoint"
+            }
+          ]
+        },
+        "middle": {
+          "job": 132635078410,
+          "status": "IN_PROGRESS"
         }
       },
       "cleanR2DoIndentRebuild": {
@@ -99065,7 +99131,7 @@
         "checkpointJob": 132573345223,
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132573593470,
-        "stageOneBaseStatus": "IN_PROGRESS",
+        "stageOneBaseStatus": "PASS",
         "status": "IN_PROGRESS",
         "regression": {
           "recursionAndDo": {
@@ -99104,6 +99170,28 @@
               "R2Registration": "e40f3931c0c2f9dc13da75d992247bd17704b5fb664c08ffdb4a43486eee13ee"
             }
           }
+        },
+        "early": {
+          "job": 132621173537,
+          "status": "PASS",
+          "artifacts": [
+            {
+              "id": 14137377505,
+              "bytes": 867733732,
+              "digest": "sha256:96addd7ca1337571873065c8dfedfdaff4b486a809b4473dcd2f30f4e7a1272c",
+              "kind": "checkpoint"
+            },
+            {
+              "id": 14137158336,
+              "bytes": 8262522,
+              "digest": "sha256:0821baff71f4cf0e243032416720b8f7e303025e2b6007fd404d89ed66e393c0",
+              "kind": "evidence"
+            }
+          ]
+        },
+        "middle": {
+          "job": 132631806122,
+          "status": "IN_PROGRESS"
         }
       },
       "cleanR2ImplicitFieldsRebuild": {
