@@ -326,15 +326,16 @@ function forDeclaration(collection : Parser) : Parser :=
 @[run_parser_attribute_hooks] const forElem : Parser :=
   leadingNode ``Lean.Parser.Term.doFor maxPrec <|
     "for " >>
-    ((atomic((sepBy1((forDeclaration((withForbiddens(#["{"], (categoryParser `psTerm 0))))), ", ") >>
-      optional loopInvariant >> optional loopDecreasing >> lookahead "{")) >>
+    (atomic((sepBy1((forDeclaration((withForbiddens(#["{"], (categoryParser `psTerm 0))))), ", ") >>
+      optional loopInvariant >> optional loopDecreasing >>
       withFn((fun parse ctx initial =>
         let parsed := parse ctx initial
         if parsed.hasError then parsed else
           let body := parsed.stxStack.back
           let stack := parsed.popSyntax.pushSyntax(mkAtomFrom body[0] "do")
           stack.pushSyntax body),
-        (operands #[ (`doElem, `psDoElem) ] Lean.Parser.Term.doSeqBracketed))) <|>
+        (operands #[ (`doElem, `psDoElem) ] Lean.Parser.Term.doSeqBracketed)) >>
+      notFollowedBy("do", "explicit do starts after the collection"))) <|>
     (sepBy1((forDeclaration((categoryParser `psTerm 0))), ", ") >> optional loopInvariant >>
       optional loopDecreasing >> " do " >> sequence))
 
