@@ -1,5 +1,9 @@
 # PS0 v1 — Implementation and Conformance Ledger
 
+## 2026-11-16 — Replacement full-corpus qualification is active
+
+The stale record `43745472090` stopped yielding state at stage-one base job `132907809797` and its live-log endpoint returned Azure `BlobNotFound`, so it is not evidence of a compiler failure or success. Retry [run 43750175058](https://github.com/dwijayuda/pskernel/actions/runs/43750175058) uses the identical pinned compiler source `156524fc660dbd6db8fbc4a5845d5a2d486860c3`. Checkpoint job `132922298863` passed at `2026-11-15T19:03:44Z`; stage-one base job `132922422698` started at `2026-11-15T19:03:47Z` and remains active. Therefore V1-100 remains **PENDING**. Only successful native stage-one and stage-two links plus the independent fixed-point audit can close it.
+
 ## 2026-11-16 — Scoped call compatibility and the native self-module link
 
 Run `43693383388` passed all three stage-two compiler slices. Finish job `132899338507` failed in `PS0.Syntax.ps:679` when the conflict detector treated the scoped compatibility call parser as a competing syntax. Its failure artifact `14172883797` has 149,037,749 bytes and digest `sha256:a60c16bd99f3e80dce483beffde12383ee66ec4b5ab69ef72dd27c19e560b313`. The independent audit was skipped. The same source passed all 50 native-extension cases, with artifact `14171593715` and digest `sha256:7884acc1213977b486f4141fb5007cccf11f21d8660c9a763004af971fed0776`. [Stage-two failure](https://github.com/dwijayuda/pskernel/actions/runs/43693383388/job/132899338507) [Extension suite](https://github.com/dwijayuda/pskernel/actions/runs/43740178174/job/132891387451)
