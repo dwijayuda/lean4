@@ -1,5 +1,14 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-15 — Native stage-one links and stage-two handoff
+
+Requested run `43634773769` linked stage one in job `132647648662`. It published artifact `14139873502` (285,353,826 bytes, `sha256:d87be083000187121985fce8fd570cb52beaa79be5a91f53119ae24583bfc4c8`). Job `132652955195` is using that compiler for the native stage-two base. [Requested stage-one link](https://github.com/dwijayuda/pskernel/actions/runs/43634773769/job/132647648662) [Stage-two base](https://github.com/dwijayuda/pskernel/actions/runs/43634773769/job/132652955195)
+
+The R2-17 rebuild linked stage one in job `132643320897` and published artifact `14140026495` (285,354,974 bytes, `sha256:8f74af0685658de00a26274e8d82e70bec002f59d036759311491ae435d39952`). Job `132649274000` is building its stage-two base. The later implicit-field patch has its own clean run `43651120197`. [R2-17 stage-one link](https://github.com/dwijayuda/pskernel/actions/runs/43636172790/job/132643320897) [R2-17 stage-two base](https://github.com/dwijayuda/pskernel/actions/runs/43636172790/job/132649274000) [Implicit-field clean run](https://github.com/dwijayuda/pskernel/actions/runs/43651120197)
+
+Older run `43624421323` linked stage one and failed in its stage-two base on the same five `Init` and `Std` modules seen in run `43614931481`. The failure artifact `14139293326` has 56,364,869 bytes and digest `sha256:44747b7a2a7c833e3bd2a74e27912cd56786a0aab0134873a7e8dc3da4800c01`. V1-100 remains pending through stage-two linking and the independent fixed-point audit. [Older stage-two failure](https://github.com/dwijayuda/pskernel/actions/runs/43624421323/job/132617574923)
+
+
 ## 2026-11-15 — Implicit structure fields and stage-two base probes
 
 The R2-17 driver built four of the five earlier failing base modules with the pinned Linux SDK imports. `Std.Tactic.BVDecide.Bitblast.BVExpr.Basic` still failed because the braced-body parser claimed the first indented implicit field. The parser now recognizes an implicit binder followed by an aligned native field before trying the braced body. [Reproduction](https://github.com/dwijayuda/pskernel/actions/runs/43649970008/job/132616021331)

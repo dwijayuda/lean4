@@ -20758,7 +20758,7 @@
           "checkpointJob": 132536979423,
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132537063664,
-          "status": "IN_PROGRESS",
+          "status": "FAIL",
           "numberedBoundary": {
             "run": 43629915657,
             "job": 132554012506,
@@ -20773,6 +20773,31 @@
               "R2-17",
               "R2-18"
             ]
+          },
+          "nativeStageOne": {
+            "job": 132611961311,
+            "status": "PASS",
+            "artifact": {
+              "id": 14136210160,
+              "bytes": 285265177,
+              "digest": "sha256:1b9bca682372064266a2f4139c11797a2f433533dc71e02e197a928a09cd3ea9"
+            }
+          },
+          "nativeStageTwoBase": {
+            "job": 132617574923,
+            "status": "FAIL",
+            "modules": [
+              "Std/Data/DHashMap/RawDef.ps",
+              "Init/Data/Array/Lex/Basic.ps",
+              "Init/Data/Vector/Basic.ps",
+              "Std/Data/DTreeMap/Internal/Operations.ps",
+              "Std/Tactic/BVDecide/Bitblast/BVExpr/Basic.ps"
+            ],
+            "artifact": {
+              "id": 14139293326,
+              "bytes": 56364869,
+              "digest": "sha256:44747b7a2a7c833e3bd2a74e27912cd56786a0aab0134873a7e8dc3da4800c01"
+            }
           }
         },
         "remainingNumberedProbe": {
@@ -20873,7 +20898,24 @@
           },
           "middle": {
             "job": 132635078410,
+            "status": "PASS"
+          },
+          "nativeStageOne": {
+            "job": 132647648662,
+            "status": "PASS",
+            "artifact": {
+              "id": 14139873502,
+              "bytes": 285353826,
+              "digest": "sha256:d87be083000187121985fce8fd570cb52beaa79be5a91f53119ae24583bfc4c8"
+            }
+          },
+          "nativeStageTwoBase": {
+            "job": 132652955195,
             "status": "IN_PROGRESS"
+          },
+          "compiler": {
+            "job": 132645048735,
+            "status": "PASS"
           }
         },
         "cleanR2DoIndentRebuild": {
@@ -20943,7 +20985,24 @@
           },
           "middle": {
             "job": 132631806122,
+            "status": "PASS"
+          },
+          "nativeStageOne": {
+            "job": 132643320897,
+            "status": "PASS",
+            "artifact": {
+              "id": 14140026495,
+              "bytes": 285354974,
+              "digest": "sha256:8f74af0685658de00a26274e8d82e70bec002f59d036759311491ae435d39952"
+            }
+          },
+          "nativeStageTwoBase": {
+            "job": 132649274000,
             "status": "IN_PROGRESS"
+          },
+          "compiler": {
+            "job": 132641504931,
+            "status": "PASS"
           }
         },
         "cleanR2ImplicitFieldsRebuild": {
@@ -92876,7 +92935,7 @@
         "checkpointJob": 132536979423,
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132537063664,
-        "status": "IN_PROGRESS",
+        "status": "FAIL",
         "numberedBoundary": {
           "run": 43629915657,
           "job": 132554012506,
@@ -92891,6 +92950,31 @@
             "R2-17",
             "R2-18"
           ]
+        },
+        "nativeStageOne": {
+          "job": 132611961311,
+          "status": "PASS",
+          "artifact": {
+            "id": 14136210160,
+            "bytes": 285265177,
+            "digest": "sha256:1b9bca682372064266a2f4139c11797a2f433533dc71e02e197a928a09cd3ea9"
+          }
+        },
+        "nativeStageTwoBase": {
+          "job": 132617574923,
+          "status": "FAIL",
+          "modules": [
+            "Std/Data/DHashMap/RawDef.ps",
+            "Init/Data/Array/Lex/Basic.ps",
+            "Init/Data/Vector/Basic.ps",
+            "Std/Data/DTreeMap/Internal/Operations.ps",
+            "Std/Tactic/BVDecide/Bitblast/BVExpr/Basic.ps"
+          ],
+          "artifact": {
+            "id": 14139293326,
+            "bytes": 56364869,
+            "digest": "sha256:44747b7a2a7c833e3bd2a74e27912cd56786a0aab0134873a7e8dc3da4800c01"
+          }
         }
       },
       "remainingNumberedProbe": {
@@ -92991,7 +93075,24 @@
         },
         "middle": {
           "job": 132635078410,
+          "status": "PASS"
+        },
+        "nativeStageOne": {
+          "job": 132647648662,
+          "status": "PASS",
+          "artifact": {
+            "id": 14139873502,
+            "bytes": 285353826,
+            "digest": "sha256:d87be083000187121985fce8fd570cb52beaa79be5a91f53119ae24583bfc4c8"
+          }
+        },
+        "nativeStageTwoBase": {
+          "job": 132652955195,
           "status": "IN_PROGRESS"
+        },
+        "compiler": {
+          "job": 132645048735,
+          "status": "PASS"
         }
       },
       "cleanR2DoIndentRebuild": {
@@ -93061,7 +93162,24 @@
         },
         "middle": {
           "job": 132631806122,
+          "status": "PASS"
+        },
+        "nativeStageOne": {
+          "job": 132643320897,
+          "status": "PASS",
+          "artifact": {
+            "id": 14140026495,
+            "bytes": 285354974,
+            "digest": "sha256:8f74af0685658de00a26274e8d82e70bec002f59d036759311491ae435d39952"
+          }
+        },
+        "nativeStageTwoBase": {
+          "job": 132649274000,
           "status": "IN_PROGRESS"
+        },
+        "compiler": {
+          "job": 132641504931,
+          "status": "PASS"
         }
       },
       "cleanR2ImplicitFieldsRebuild": {
