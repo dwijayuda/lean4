@@ -21035,7 +21035,7 @@
           "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
           "runner": "c7a7d356b4ad075cbd74a7c083e3ef09e21b46e2",
           "run": 43651120197,
-          "status": "IN_PROGRESS",
+          "status": "FAIL",
           "checkpointJob": 132619580652,
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132619684382,
@@ -21092,6 +21092,21 @@
                 "bytes": 2517,
                 "digest": "sha256:c92e3a00545b785dbdeecdec826d1b88b722331e992dcc2b908f903c54300760"
               }
+            },
+            "nativeExtensions": {
+              "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
+              "runner": "f867743bcaebfaff2e8c69ab1b53b95eabeadcba",
+              "run": 43687326781,
+              "job": 132730414613,
+              "status": "PASS",
+              "cases": 50,
+              "driverSha256": "708907d0cc0eba1af247a803273753cfb0b3111dcb3b80ac6da98b1c6a781c08",
+              "fixtureSha256": "10f1f0bf377d1b8a7bfa462c24657502b0eef63bde0a01df0e968761e2494681",
+              "artifact": {
+                "id": 14150623319,
+                "bytes": 16292253,
+                "digest": "sha256:b5170d82fc27c564a57208ae7f457d54eea3fe0f6293b109c8f529434ffe659f"
+              }
             }
           },
           "nativeStageOne": {
@@ -21119,7 +21134,71 @@
           },
           "nativeStageTwoCompilerEarly": {
             "job": 132729032405,
-            "status": "IN_PROGRESS"
+            "status": "FAIL",
+            "modules": [
+              "Lean/Elab/Tactic/Doc.ps"
+            ],
+            "artifact": {
+              "id": 14152452996,
+              "bytes": 128873996,
+              "digest": "sha256:bd81653a023f275d14c628ba2ccefb7b9cc8a358840508f564ab86f03b474d79"
+            }
+          },
+          "nativeStageTwo": {
+            "job": 132743014434,
+            "status": "SKIPPED"
+          },
+          "independentAudit": {
+            "job": 132743014522,
+            "status": "SKIPPED"
+          }
+        },
+        "cleanR2ForRecordRebuild": {
+          "source": "1b7887b2fd00052823582c8e111b2d4365b39220",
+          "runner": "998c3822bc1cf5184e7e5d63919901315d8c8e5b",
+          "run": 43693383388,
+          "status": "IN_PROGRESS",
+          "checkpointJob": 132748542891,
+          "checkpointStatus": "PASS",
+          "stageOneBaseJob": 132748608415,
+          "stageOneBaseStatus": "IN_PROGRESS",
+          "targeted": {
+            "source": "1b7887b2fd00052823582c8e111b2d4365b39220",
+            "runner": "4bbd6b21dbac26a07b3aaa3c5864269eec93243b",
+            "hostCategoriesSha256": "9677f25e8c9d479cebd96cf80c615d6874beda4d6578455dcc3da1acbf31b352",
+            "driverSha256": "f680f673286d2db3e685c028970e680a200dfa4dec8f26a8952bd07f09b9db2f",
+            "docModule": {
+              "run": 43693408677,
+              "job": 132748618813,
+              "status": "PASS",
+              "artifact": {
+                "id": 14154050380,
+                "bytes": 851,
+                "digest": "sha256:1e33cec0c188fd0b4619d144f4ce73f878f74870aefa8b435e6413f5be16b67b"
+              }
+            },
+            "boundary": {
+              "run": 43693408724,
+              "job": 132748618908,
+              "status": "PASS",
+              "cases": 31,
+              "artifact": {
+                "id": 14153766074,
+                "bytes": 24488,
+                "digest": "sha256:13dbc7ac4890d0b01a98071dca35a3685e5f804d95203139034e7a3b005641a9"
+              }
+            },
+            "recursionDo": {
+              "run": 43693408572,
+              "job": 132748618657,
+              "status": "PASS",
+              "cases": 38,
+              "artifact": {
+                "id": 14154095250,
+                "bytes": 28641,
+                "digest": "sha256:f7b9008e50198d46d09838395123b64fb0accc22bd2f5cff8ac1e500d95dd526"
+              }
+            }
           }
         }
       }
@@ -93285,7 +93364,7 @@
         "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
         "runner": "c7a7d356b4ad075cbd74a7c083e3ef09e21b46e2",
         "run": 43651120197,
-        "status": "IN_PROGRESS",
+        "status": "FAIL",
         "checkpointJob": 132619580652,
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132619684382,
@@ -93342,6 +93421,21 @@
               "bytes": 2517,
               "digest": "sha256:c92e3a00545b785dbdeecdec826d1b88b722331e992dcc2b908f903c54300760"
             }
+          },
+          "nativeExtensions": {
+            "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
+            "runner": "f867743bcaebfaff2e8c69ab1b53b95eabeadcba",
+            "run": 43687326781,
+            "job": 132730414613,
+            "status": "PASS",
+            "cases": 50,
+            "driverSha256": "708907d0cc0eba1af247a803273753cfb0b3111dcb3b80ac6da98b1c6a781c08",
+            "fixtureSha256": "10f1f0bf377d1b8a7bfa462c24657502b0eef63bde0a01df0e968761e2494681",
+            "artifact": {
+              "id": 14150623319,
+              "bytes": 16292253,
+              "digest": "sha256:b5170d82fc27c564a57208ae7f457d54eea3fe0f6293b109c8f529434ffe659f"
+            }
           }
         },
         "nativeStageOne": {
@@ -93369,7 +93463,71 @@
         },
         "nativeStageTwoCompilerEarly": {
           "job": 132729032405,
-          "status": "IN_PROGRESS"
+          "status": "FAIL",
+          "modules": [
+            "Lean/Elab/Tactic/Doc.ps"
+          ],
+          "artifact": {
+            "id": 14152452996,
+            "bytes": 128873996,
+            "digest": "sha256:bd81653a023f275d14c628ba2ccefb7b9cc8a358840508f564ab86f03b474d79"
+          }
+        },
+        "nativeStageTwo": {
+          "job": 132743014434,
+          "status": "SKIPPED"
+        },
+        "independentAudit": {
+          "job": 132743014522,
+          "status": "SKIPPED"
+        }
+      },
+      "cleanR2ForRecordRebuild": {
+        "source": "1b7887b2fd00052823582c8e111b2d4365b39220",
+        "runner": "998c3822bc1cf5184e7e5d63919901315d8c8e5b",
+        "run": 43693383388,
+        "status": "IN_PROGRESS",
+        "checkpointJob": 132748542891,
+        "checkpointStatus": "PASS",
+        "stageOneBaseJob": 132748608415,
+        "stageOneBaseStatus": "IN_PROGRESS",
+        "targeted": {
+          "source": "1b7887b2fd00052823582c8e111b2d4365b39220",
+          "runner": "4bbd6b21dbac26a07b3aaa3c5864269eec93243b",
+          "hostCategoriesSha256": "9677f25e8c9d479cebd96cf80c615d6874beda4d6578455dcc3da1acbf31b352",
+          "driverSha256": "f680f673286d2db3e685c028970e680a200dfa4dec8f26a8952bd07f09b9db2f",
+          "docModule": {
+            "run": 43693408677,
+            "job": 132748618813,
+            "status": "PASS",
+            "artifact": {
+              "id": 14154050380,
+              "bytes": 851,
+              "digest": "sha256:1e33cec0c188fd0b4619d144f4ce73f878f74870aefa8b435e6413f5be16b67b"
+            }
+          },
+          "boundary": {
+            "run": 43693408724,
+            "job": 132748618908,
+            "status": "PASS",
+            "cases": 31,
+            "artifact": {
+              "id": 14153766074,
+              "bytes": 24488,
+              "digest": "sha256:13dbc7ac4890d0b01a98071dca35a3685e5f804d95203139034e7a3b005641a9"
+            }
+          },
+          "recursionDo": {
+            "run": 43693408572,
+            "job": 132748618657,
+            "status": "PASS",
+            "cases": 38,
+            "artifact": {
+              "id": 14154095250,
+              "bytes": 28641,
+              "digest": "sha256:f7b9008e50198d46d09838395123b64fb0accc22bd2f5cff8ac1e500d95dd526"
+            }
+          }
         }
       }
     }
