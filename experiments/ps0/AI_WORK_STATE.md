@@ -9,7 +9,7 @@ The marker-free parser took the preceding collection's `{}` as the loop body and
 Clean run `43693383388` uses source `1b7887b2fd00052823582c8e111b2d4365b39220` and runner `998c3822bc1cf5184e7e5d63919901315d8c8e5b`. Checkpoint `132748542891` passed and stage-one base job `132748608415` passed. V1-100 remains pending. [Clean native audit](https://github.com/dwijayuda/pskernel/actions/runs/43693383388)
 
 
-Run `43693383388` linked the patched stage-one compiler in job `132815155868`. Artifact `14162253768` has 285,365,819 bytes and digest `sha256:2c798962660ae8ce02a5dbde6a9fa24d8ff415faa9dde3364a45ed848020aa0f`. Stage-two base job `132822107902` is building with that compiler. [Native stage-one link](https://github.com/dwijayuda/pskernel/actions/runs/43693383388/job/132815155868) [Native stage-two base](https://github.com/dwijayuda/pskernel/actions/runs/43693383388/job/132822107902)
+Run `43693383388` linked the patched stage-one compiler in job `132815155868`. Artifact `14162253768` has 285,365,819 bytes and digest `sha256:2c798962660ae8ce02a5dbde6a9fa24d8ff415faa9dde3364a45ed848020aa0f`. The PS-built compiler passed stage-two base job `132822107902`. Checkpoint `14169145935` has 451,752,943 bytes and digest `sha256:1a79d954d6deb40852cbe194a0a2d844ae74c0654fcb1c585c1b24e7768e0b50`. Slice evidence `14169300183` has 8,243,445 bytes and digest `sha256:57a63bbd0ea4c5a0f08c6f4b183049715fc959ceb9a3c626d43a5a4e45a11efe`. Early compiler job `132865673417` followed. [Native stage-one link](https://github.com/dwijayuda/pskernel/actions/runs/43693383388/job/132815155868) [Native stage-two base](https://github.com/dwijayuda/pskernel/actions/runs/43693383388/job/132822107902)
 
 ## 2026-11-15 — Native stage-one links and stage-two handoff
 

@@ -21211,6 +21211,20 @@
           },
           "nativeStageTwoBase": {
             "job": 132822107902,
+            "status": "PASS",
+            "checkpoint": {
+              "id": 14169145935,
+              "bytes": 451752943,
+              "digest": "sha256:1a79d954d6deb40852cbe194a0a2d844ae74c0654fcb1c585c1b24e7768e0b50"
+            },
+            "evidence": {
+              "id": 14169300183,
+              "bytes": 8243445,
+              "digest": "sha256:57a63bbd0ea4c5a0f08c6f4b183049715fc959ceb9a3c626d43a5a4e45a11efe"
+            }
+          },
+          "nativeStageTwoCompilerEarly": {
+            "job": 132865673417,
             "status": "IN_PROGRESS"
           }
         }
@@ -93553,6 +93567,20 @@
         },
         "nativeStageTwoBase": {
           "job": 132822107902,
+          "status": "PASS",
+          "checkpoint": {
+            "id": 14169145935,
+            "bytes": 451752943,
+            "digest": "sha256:1a79d954d6deb40852cbe194a0a2d844ae74c0654fcb1c585c1b24e7768e0b50"
+          },
+          "evidence": {
+            "id": 14169300183,
+            "bytes": 8243445,
+            "digest": "sha256:57a63bbd0ea4c5a0f08c6f4b183049715fc959ceb9a3c626d43a5a4e45a11efe"
+          }
+        },
+        "nativeStageTwoCompilerEarly": {
+          "job": 132865673417,
           "status": "IN_PROGRESS"
         }
       }
