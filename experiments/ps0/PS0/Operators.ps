@@ -68,6 +68,10 @@ function checkCallConflict(parse : ParserFn) : ParserFn := fun ctx initial => Id
   let some category := getParserCategory? ctx.env `term
     | return initial.mkUnexpectedError "missing native term category"
   let (start, candidates) := indexed category.tables.trailingTable ctx head .default
+  -- The scoped compatibility parsers lower the same call argument partition.
+  let candidates := candidates.filter(fun (parser, _) =>
+    let kinds := parser.info.collectKinds({})
+    !kinds.contains `PS0.pscvCall && !kinds.contains `PS0.pscvEmptyCall)
   if start.hasError || candidates.isEmpty then
     return initial.mkUnexpectedError "no competing native call parser"
   let candidate := longestMatchFn((some start.stxStack.back), candidates, ctx,
