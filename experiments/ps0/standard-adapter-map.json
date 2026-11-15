@@ -21013,7 +21013,7 @@
           "checkpointJob": 132619580652,
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132619684382,
-          "stageOneBaseStatus": "IN_PROGRESS",
+          "stageOneBaseStatus": "PASS",
           "targeted": {
             "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
             "runner": "0a52793a0afc9b996c50f62c21f0d744e26e47f3",
@@ -21047,6 +21047,19 @@
                 "digest": "sha256:2f1f3587bd874c6d5a1235f2c5c272cef2ef588b91e8f45b28acc99c76bec9a4"
               }
             }
+          },
+          "nativeStageOne": {
+            "job": 132675735467,
+            "status": "PASS",
+            "artifact": {
+              "id": 14144018614,
+              "bytes": 285364147,
+              "digest": "sha256:1116b8a9d3cebe7d3a670ae3a6f2c3a1d5b36208aef4e2be4d697cf7f1344cb2"
+            }
+          },
+          "nativeStageTwoBase": {
+            "job": 132681485044,
+            "status": "IN_PROGRESS"
           }
         }
       }
@@ -93190,7 +93203,7 @@
         "checkpointJob": 132619580652,
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132619684382,
-        "stageOneBaseStatus": "IN_PROGRESS",
+        "stageOneBaseStatus": "PASS",
         "targeted": {
           "source": "7d4eea2a515c9b3e2878ea3c6bc1cd0b30e919a5",
           "runner": "0a52793a0afc9b996c50f62c21f0d744e26e47f3",
@@ -93224,6 +93237,19 @@
               "digest": "sha256:2f1f3587bd874c6d5a1235f2c5c272cef2ef588b91e8f45b28acc99c76bec9a4"
             }
           }
+        },
+        "nativeStageOne": {
+          "job": 132675735467,
+          "status": "PASS",
+          "artifact": {
+            "id": 14144018614,
+            "bytes": 285364147,
+            "digest": "sha256:1116b8a9d3cebe7d3a670ae3a6f2c3a1d5b36208aef4e2be4d697cf7f1344cb2"
+          }
+        },
+        "nativeStageTwoBase": {
+          "job": 132681485044,
+          "status": "IN_PROGRESS"
         }
       }
     }

@@ -6,6 +6,8 @@ Requested run `43634773769` linked stage one in job `132647648662`. It published
 
 The R2-17 rebuild linked stage one in job `132643320897` and published artifact `14140026495` (285,354,974 bytes, `sha256:8f74af0685658de00a26274e8d82e70bec002f59d036759311491ae435d39952`). Job `132649274000` is building its stage-two base. The later implicit-field patch has its own clean run `43651120197`. [R2-17 stage-one link](https://github.com/dwijayuda/pskernel/actions/runs/43636172790/job/132643320897) [R2-17 stage-two base](https://github.com/dwijayuda/pskernel/actions/runs/43636172790/job/132649274000) [Implicit-field clean run](https://github.com/dwijayuda/pskernel/actions/runs/43651120197)
 
+The clean build with the implicit-field patch linked stage one in job `132675735467`. Artifact `14144018614` has 285,364,147 bytes and digest `sha256:1116b8a9d3cebe7d3a670ae3a6f2c3a1d5b36208aef4e2be4d697cf7f1344cb2`. Job `132681485044` is building stage two using that compiler. [Patched stage-one link](https://github.com/dwijayuda/pskernel/actions/runs/43651120197/job/132675735467) [Patched stage-two base](https://github.com/dwijayuda/pskernel/actions/runs/43651120197/job/132681485044)
+
 Older run `43624421323` linked stage one and failed in its stage-two base on the same five `Init` and `Std` modules seen in run `43614931481`. The failure artifact `14139293326` has 56,364,869 bytes and digest `sha256:44747b7a2a7c833e3bd2a74e27912cd56786a0aab0134873a7e8dc3da4800c01`. V1-100 remains pending through stage-two linking and the independent fixed-point audit. [Older stage-two failure](https://github.com/dwijayuda/pskernel/actions/runs/43624421323/job/132617574923)
 
 
