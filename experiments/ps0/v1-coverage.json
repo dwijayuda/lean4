@@ -26971,7 +26971,7 @@
           "run": 43634773769,
           "source": "2f9787de086ffc0c8255fe383cb01df32d4a5521",
           "runner": "1f6e910ef4adcaf6c3074e9249ef5a1e47ea47ec",
-          "status": "IN_PROGRESS",
+          "status": "FAIL",
           "checkpointJob": 132569058353,
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132569177226,
@@ -27060,11 +27060,28 @@
           },
           "nativeStageTwoBase": {
             "job": 132652955195,
-            "status": "IN_PROGRESS"
+            "status": "FAIL",
+            "modules": [
+              "Std/Tactic/BVDecide/Bitblast/BVExpr/Basic.ps",
+              "Std/Tactic/BVDecide/Bitblast/BVExpr/Circuit/Impl/Operations/GetLsbD.ps"
+            ],
+            "artifact": {
+              "id": 14146830520,
+              "bytes": 97512994,
+              "digest": "sha256:9eac934a3c1853ccab1c9d5d2617b22eed0568865c672dc2e60e89fdd8c5e283"
+            }
           },
           "compiler": {
             "job": 132645048735,
             "status": "PASS"
+          },
+          "nativeStageTwo": {
+            "job": 132698521035,
+            "status": "SKIPPED"
+          },
+          "independentAudit": {
+            "job": 132698521077,
+            "status": "SKIPPED"
           }
         },
         "cleanR2DoIndentRebuild": {
@@ -99171,7 +99188,7 @@
         "run": 43634773769,
         "source": "2f9787de086ffc0c8255fe383cb01df32d4a5521",
         "runner": "1f6e910ef4adcaf6c3074e9249ef5a1e47ea47ec",
-        "status": "IN_PROGRESS",
+        "status": "FAIL",
         "checkpointJob": 132569058353,
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132569177226,
@@ -99260,11 +99277,28 @@
         },
         "nativeStageTwoBase": {
           "job": 132652955195,
-          "status": "IN_PROGRESS"
+          "status": "FAIL",
+          "modules": [
+            "Std/Tactic/BVDecide/Bitblast/BVExpr/Basic.ps",
+            "Std/Tactic/BVDecide/Bitblast/BVExpr/Circuit/Impl/Operations/GetLsbD.ps"
+          ],
+          "artifact": {
+            "id": 14146830520,
+            "bytes": 97512994,
+            "digest": "sha256:9eac934a3c1853ccab1c9d5d2617b22eed0568865c672dc2e60e89fdd8c5e283"
+          }
         },
         "compiler": {
           "job": 132645048735,
           "status": "PASS"
+        },
+        "nativeStageTwo": {
+          "job": 132698521035,
+          "status": "SKIPPED"
+        },
+        "independentAudit": {
+          "job": 132698521077,
+          "status": "SKIPPED"
         }
       },
       "cleanR2DoIndentRebuild": {
