@@ -21157,7 +21157,7 @@
           "source": "1b7887b2fd00052823582c8e111b2d4365b39220",
           "runner": "998c3822bc1cf5184e7e5d63919901315d8c8e5b",
           "run": 43693383388,
-          "status": "IN_PROGRESS",
+          "status": "FAIL",
           "checkpointJob": 132748542891,
           "checkpointStatus": "PASS",
           "stageOneBaseJob": 132748608415,
@@ -21225,7 +21225,83 @@
           },
           "nativeStageTwoCompilerEarly": {
             "job": 132865673417,
-            "status": "IN_PROGRESS"
+            "status": "PASS",
+            "checkpoint": {
+              "id": 14171397894,
+              "bytes": 867983361,
+              "digest": "sha256:65f031b15554bec32da0323b9ffcbb6d76da4f6f9f2791c267a37f383d09a682"
+            }
+          },
+          "nativeStageTwoCompilerMiddle": {
+            "job": 132889606363,
+            "status": "PASS",
+            "checkpoint": {
+              "id": 14173105163,
+              "bytes": 1088473595,
+              "digest": "sha256:c9001159c69169e88999aff7e38fdee48bfb598d8229b7019c76858075a47b6b"
+            }
+          },
+          "nativeStageTwoCompiler": {
+            "job": 132896330469,
+            "status": "PASS",
+            "checkpoint": {
+              "id": 14172652443,
+              "bytes": 1102075744,
+              "digest": "sha256:c51bc3de696ef6f732ebde67bfe54b750f2086c48f93ed85116f8b5745a39531"
+            }
+          },
+          "nativeStageTwo": {
+            "job": 132899338507,
+            "status": "FAIL",
+            "module": "PS0.Syntax",
+            "artifact": {
+              "id": 14172883797,
+              "bytes": 149037749,
+              "digest": "sha256:a60c16bd99f3e80dce483beffde12383ee66ec4b5ab69ef72dd27c19e560b313"
+            }
+          },
+          "independentAudit": {
+            "job": 132904335975,
+            "status": "SKIPPED"
+          },
+          "nativeExtensions": {
+            "run": 43740178174,
+            "job": 132891387451,
+            "source": "1b7887b2fd00052823582c8e111b2d4365b39220",
+            "runner": "ddb49a7251f09edb491173a3045aed4b118d3fbf",
+            "cases": 50,
+            "status": "PASS",
+            "artifact": {
+              "id": 14171593715,
+              "bytes": 16292250,
+              "digest": "sha256:7884acc1213977b486f4141fb5007cccf11f21d8660c9a763004af971fed0776"
+            }
+          }
+        },
+        "cleanR2CallCompatibilityRebuild": {
+          "run": 43745472090,
+          "source": "156524fc660dbd6db8fbc4a5845d5a2d486860c3",
+          "runner": "d2102f60ff06e0086a69511f4a46ab9fff1b8c54",
+          "checkpointJob": 132907694793,
+          "checkpointStatus": "PASS",
+          "stageOneBaseJob": 132907809797,
+          "stageOneBaseStatus": "IN_PROGRESS",
+          "status": "IN_PROGRESS",
+          "targeted": {
+            "run": 43745464672,
+            "job": 132907671795,
+            "source": "156524fc660dbd6db8fbc4a5845d5a2d486860c3",
+            "runner": "8d17f5f5d5532f8f005e156a9f30659f1ec1a5aa",
+            "operatorsSha256": "a55e972167eb55b993f415d2799c15d9c08073419d1dd3764c91b12a0ec72cbd",
+            "status": "PASS",
+            "cases": 31,
+            "driverSha256": "0d25bc1ce07c4cb7b61af10d135f081d77ef77a3e8cb8039a73cc7ffcab83eb6",
+            "selfModuleStageTwo": "PASS",
+            "artifact": {
+              "id": 14174177527,
+              "bytes": 25421,
+              "digest": "sha256:3eca92635994ef0697a9e6cc88a77740cba6048690b133e02f6d573f864c2f84"
+            }
           }
         }
       }
@@ -93513,7 +93589,7 @@
         "source": "1b7887b2fd00052823582c8e111b2d4365b39220",
         "runner": "998c3822bc1cf5184e7e5d63919901315d8c8e5b",
         "run": 43693383388,
-        "status": "IN_PROGRESS",
+        "status": "FAIL",
         "checkpointJob": 132748542891,
         "checkpointStatus": "PASS",
         "stageOneBaseJob": 132748608415,
@@ -93581,7 +93657,83 @@
         },
         "nativeStageTwoCompilerEarly": {
           "job": 132865673417,
-          "status": "IN_PROGRESS"
+          "status": "PASS",
+          "checkpoint": {
+            "id": 14171397894,
+            "bytes": 867983361,
+            "digest": "sha256:65f031b15554bec32da0323b9ffcbb6d76da4f6f9f2791c267a37f383d09a682"
+          }
+        },
+        "nativeStageTwoCompilerMiddle": {
+          "job": 132889606363,
+          "status": "PASS",
+          "checkpoint": {
+            "id": 14173105163,
+            "bytes": 1088473595,
+            "digest": "sha256:c9001159c69169e88999aff7e38fdee48bfb598d8229b7019c76858075a47b6b"
+          }
+        },
+        "nativeStageTwoCompiler": {
+          "job": 132896330469,
+          "status": "PASS",
+          "checkpoint": {
+            "id": 14172652443,
+            "bytes": 1102075744,
+            "digest": "sha256:c51bc3de696ef6f732ebde67bfe54b750f2086c48f93ed85116f8b5745a39531"
+          }
+        },
+        "nativeStageTwo": {
+          "job": 132899338507,
+          "status": "FAIL",
+          "module": "PS0.Syntax",
+          "artifact": {
+            "id": 14172883797,
+            "bytes": 149037749,
+            "digest": "sha256:a60c16bd99f3e80dce483beffde12383ee66ec4b5ab69ef72dd27c19e560b313"
+          }
+        },
+        "independentAudit": {
+          "job": 132904335975,
+          "status": "SKIPPED"
+        },
+        "nativeExtensions": {
+          "run": 43740178174,
+          "job": 132891387451,
+          "source": "1b7887b2fd00052823582c8e111b2d4365b39220",
+          "runner": "ddb49a7251f09edb491173a3045aed4b118d3fbf",
+          "cases": 50,
+          "status": "PASS",
+          "artifact": {
+            "id": 14171593715,
+            "bytes": 16292250,
+            "digest": "sha256:7884acc1213977b486f4141fb5007cccf11f21d8660c9a763004af971fed0776"
+          }
+        }
+      },
+      "cleanR2CallCompatibilityRebuild": {
+        "run": 43745472090,
+        "source": "156524fc660dbd6db8fbc4a5845d5a2d486860c3",
+        "runner": "d2102f60ff06e0086a69511f4a46ab9fff1b8c54",
+        "checkpointJob": 132907694793,
+        "checkpointStatus": "PASS",
+        "stageOneBaseJob": 132907809797,
+        "stageOneBaseStatus": "IN_PROGRESS",
+        "status": "IN_PROGRESS",
+        "targeted": {
+          "run": 43745464672,
+          "job": 132907671795,
+          "source": "156524fc660dbd6db8fbc4a5845d5a2d486860c3",
+          "runner": "8d17f5f5d5532f8f005e156a9f30659f1ec1a5aa",
+          "operatorsSha256": "a55e972167eb55b993f415d2799c15d9c08073419d1dd3764c91b12a0ec72cbd",
+          "status": "PASS",
+          "cases": 31,
+          "driverSha256": "0d25bc1ce07c4cb7b61af10d135f081d77ef77a3e8cb8039a73cc7ffcab83eb6",
+          "selfModuleStageTwo": "PASS",
+          "artifact": {
+            "id": 14174177527,
+            "bytes": 25421,
+            "digest": "sha256:3eca92635994ef0697a9e6cc88a77740cba6048690b133e02f6d573f864c2f84"
+          }
         }
       }
     }

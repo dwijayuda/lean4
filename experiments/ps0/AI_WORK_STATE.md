@@ -1,5 +1,14 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-16 — Scoped call compatibility and the native self-module link
+
+Run `43693383388` passed all three stage-two compiler slices. Finish job `132899338507` failed in `PS0.Syntax.ps:679` when the conflict detector treated the scoped compatibility call parser as a competing syntax. Its failure artifact `14172883797` has 149,037,749 bytes and digest `sha256:a60c16bd99f3e80dce483beffde12383ee66ec4b5ab69ef72dd27c19e560b313`. The independent audit was skipped. The same source passed all 50 native-extension cases, with artifact `14171593715` and digest `sha256:7884acc1213977b486f4141fb5007cccf11f21d8660c9a763004af971fed0776`. [Stage-two failure](https://github.com/dwijayuda/pskernel/actions/runs/43693383388/job/132899338507) [Extension suite](https://github.com/dwijayuda/pskernel/actions/runs/43740178174/job/132891387451)
+
+Source `156524fc660dbd6db8fbc4a5845d5a2d486860c3` excludes the two PS0 compatibility parsers from competing registrations. The exact-source Linux job `132907671795` still reported `PS0V1-CALL-CONFLICT` for R2-14, passed the other 30 numbered cases, and linked the PS0 self modules twice with Native Lake. Evidence artifact `14174177527` has 25,421 bytes and digest `sha256:3eca92635994ef0697a9e6cc88a77740cba6048690b133e02f6d573f864c2f84`. The focused build used runner `8d17f5f5d5532f8f005e156a9f30659f1ec1a5aa` and driver SHA-256 `0d25bc1ce07c4cb7b61af10d135f081d77ef77a3e8cb8039a73cc7ffcab83eb6`. [Focused two-stage link and numbered witnesses](https://github.com/dwijayuda/pskernel/actions/runs/43745464672/job/132907671795)
+
+Clean full-corpus run `43745472090` uses the same source and runner `d2102f60ff06e0086a69511f4a46ab9fff1b8c54`. Checkpoint job `132907694793` passed and native stage-one base job `132907809797` is building. V1-100 still requires both full-corpus links and the independent audit. [Clean full-corpus run](https://github.com/dwijayuda/pskernel/actions/runs/43745472090)
+
+
 ## 2026-11-15 — Explicit `do` after a braced collection operand
 
 After completing stage-two base, run `43651120197` failed in `Lean.Elab.Tactic.Doc` at job `132729032405`. Artifact `14152452996` has 128,873,996 bytes and digest `sha256:bd81653a023f275d14c628ba2ccefb7b9cc8a358840508f564ab86f03b474d79`. The stage-two link and independent audit were skipped. The same source passed all 50 native-extension cases in job `132730414613` with artifact `14150623319` and digest `sha256:b5170d82fc27c564a57208ae7f457d54eea3fe0f6293b109c8f529434ffe659f`. [Stage-two failure](https://github.com/dwijayuda/pskernel/actions/runs/43651120197/job/132729032405) [Native extensions](https://github.com/dwijayuda/pskernel/actions/runs/43687326781/job/132730414613)
