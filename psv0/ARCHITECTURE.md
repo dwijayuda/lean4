@@ -6,7 +6,7 @@ PSV0 lives only in \`psv0/\` and is not a dependency of or replacement for PS0. 
 
 ## Trusted boundary
 
-PSV0 fast emission accepts only the explicitly bounded grammar. The prototype's parsing, IR generation and printers are untrusted until semantics are proved. \`strict\` invokes official Lean as a checker of *generated Lean* and optionally a user-supplied theorem. Neither Lean acceptance nor target compilation proves cross-language semantic preservation. Full \`verified\` must refuse until a separate evidence-checking path is implemented.
+PSV0 fast emission accepts only the explicitly bounded grammar. The parser, IR generation and printers remain untrusted until their semantics are proved. The exact parse result is now retained as a hashed `.ir.json` artifact. \`strict\` invokes official Lean as a checker of *generated Lean* and optionally a user-supplied theorem. Neither Lean acceptance nor target compilation proves cross-language semantic preservation. Full \`verified\` must refuse until a separate evidence-checking path is implemented.
 
 ## Semantic obligations
 
@@ -35,3 +35,7 @@ V0 intentionally supports only first-order pure Nat arithmetic, to make preceden
 ## Non-goals
 
 No Lean fork-wide compiler changes, no PS0 modifications, no full Lean surface fidelity, no target runtime verification, no arbitrary FFI, no byte-identical generated executable claim, and no silent downgrade from verified to checked.
+
+## Evidence status
+
+A local Node 22 run passed 4 unit tests of the standalone reference evaluator and bridge renderer. The differential and CLI regression tests are committed, but no successful full-suite or Lean build is claimed. The separate PSV0 CI workflow runs Node regressions and requests a pinned Lean 4.35 reference-model build plus strict-mode check. GitHub Actions receipts must be inspected before qualifying either lane. The published `manifest.json` intentionally keeps `source_to_lean_equivalence_proven` and `target_semantics_proven` set to `false`.
