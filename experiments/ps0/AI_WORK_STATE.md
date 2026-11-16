@@ -1,5 +1,34 @@
 # PS0 — AI Work State (10 November 2026)
 
+## 2026-11-16 — V1-100 qualified: canonical source fidelity and two native stages
+
+[Run 43750175058](https://github.com/dwijayuda/pskernel/actions/runs/43750175058) completed successfully on all 12 Ubuntu 22.04 jobs, through the independent audit at `2026-11-16T04:18:36Z`. Compiler source: `156524fc660dbd6db8fbc4a5845d5a2d486860c3`; runner: `fabaecaed7573daf3ffcca751699fceb9079e0cb`; pinned Lean: `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. Both native Lake stages qualified the canonical tracked `.ps` corpus of 2,569 modules. V1-100 is **PASS**; the structured ledger confirms **242 PASS and 0 pending**.
+
+| Job | ID | Conclusion | Completed (UTC) |
+| --- | --- | --- | --- |
+| checkpoint-qualification | [132922298863](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132922298863) | success | 2026-11-15T19:03:44Z |
+| stage-one-base | [132922422698](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132922422698) | success | 2026-11-15T21:16:24Z |
+| stage-one-compiler-early | [132960991270](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132960991270) | success | 2026-11-15T22:15:00Z |
+| stage-one-compiler-middle | [132978030235](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132978030235) | success | 2026-11-15T22:43:43Z |
+| stage-one-compiler | [132986318896](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132986318896) | success | 2026-11-15T22:53:07Z |
+| stage-one | [132988954567](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132988954567) | success | 2026-11-15T23:16:30Z |
+| stage-two-base | [132995721104](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132995721104) | success | 2026-11-16T01:54:08Z |
+| stage-two-compiler-early | [133042737026](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133042737026) | success | 2026-11-16T02:57:38Z |
+| stage-two-compiler-middle | [133062485088](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133062485088) | success | 2026-11-16T03:38:43Z |
+| stage-two-compiler | [133075652071](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133075652071) | success | 2026-11-16T03:46:52Z |
+| stage-two | [133078295815](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133078295815) | success | 2026-11-16T04:16:20Z |
+| independent-audit | [133087565155](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133087565155) | success | 2026-11-16T04:18:36Z |
+
+| Retained artifact | ID | Bytes | GitHub SHA-256 |
+| --- | --- | ---: | --- |
+| Stage one | [14185521698](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14185521698) | 285,372,357 | `sha256:099ab85e1ea17b16222d21c66fd9e37821f387206bde0d302a555d68778fdc22` |
+| Stage two | [14196538258](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14196538258) | 285,576,940 | `sha256:cef1a778bf408e593e735ce51468967fb795f8a936fc434ccb39e7e8a3cdf283` |
+| Independent audit | [14197386699](https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14197386699) | 655 | `sha256:7b3a22fbea17139916a72c24ffc5532bbc84c259d2af3ba0fe76658a1800bc5e` |
+
+The downloaded 655-byte audit ZIP was rehashed locally and matched GitHub digest `sha256:7b3a22fbea17139916a72c24ffc5532bbc84c259d2af3ba0fe76658a1800bc5e`. Its `audit.json` receipt has SHA-256 `a60a100c22da0a96f29489e0082ed75f24d4560722423ccc2a196850179bb217` and status `PASS`: 5,138 retained PS sources, 5,138 mapped censuses, 2 driver files, and 440 metadata files rehashed; 5,138 C/public-olean receipt hashes compared. Stage-two metadata mode is `retained-ps-built-prefix`. All 19 artifact IDs, names, sizes, GitHub digests, job links and the complete audit receipt are recorded in `v1-coverage.json` under `canonicalCompilerTwoStageQualification`.
+
+Qualification is limited to source fidelity and two-stage compiler evidence. Retained source/census/prefix files were independently rehashed; equality of C/public olean outputs is established by producer receipts, not independent rehashing of unretained target output files. This does not establish byte-identical final ELF output or language-wide conformance. `grammar_migration_complete` and `verified_execution` remain `false`. Earlier failures and infrastructure orphans remain historical evidence only.
+
 ## 2026-11-16 — Replacement full-corpus qualification is active
 
 The prior full-corpus run `43745472090` became a GitHub Actions infrastructure orphan at stage-one base job `132907809797`: its last workflow update was `2026-11-15T18:13:26Z`, and GitHub's live-log endpoint returned Azure `BlobNotFound` rather than compiler output. No compiler conclusion is inferred from that record. A nonfunctional workflow-comment retry created [run 43750175058](https://github.com/dwijayuda/pskernel/actions/runs/43750175058) at the unchanged compiler source `156524fc660dbd6db8fbc4a5845d5a2d486860c3`. Checkpoint job `132922298863` passed at `2026-11-15T19:03:44Z`. Stage-one base job `132922422698` began at `2026-11-15T19:03:47Z` and was still running when this entry was written. V1-100 remains **PENDING** until this replacement produces both native Lake stages and the independent fixed-point audit.

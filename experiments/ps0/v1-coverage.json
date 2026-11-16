@@ -2420,10 +2420,12 @@
       "id": "V1-100",
       "feature": "Open-ended pinned registration and production-source closure",
       "sourceBasis": "§0, §14",
-      "status": "PENDING",
-      "fixture": null,
-      "qualifiedCommit": null,
-      "ciRun": null
+      "status": "PASS",
+      "fixture": "Canonical tracked .ps compiler corpus (2569 modules); tests/run-compiler-ps.py --canonical-corpus; tests/audit-compiler-fixed-point.py",
+      "qualifiedCommit": "156524fc660dbd6db8fbc4a5845d5a2d486860c3",
+      "ciRun": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058",
+      "evidence": "canonicalCompilerTwoStageQualification",
+      "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim"
     }
   ],
   "acceptanceCases": [
@@ -9502,12 +9504,12 @@
       "PS0-P-CALL-01",
       "PS0-N-MOD-04"
     ],
-    "PENDING": 1,
-    "featureFamiliesPending": 1,
+    "PENDING": 0,
+    "featureFamiliesPending": 0,
     "boundaryWitnessesPending": 0,
     "acceptanceCasesPending": 0,
     "note": "Exact Linux case receipts qualify the recorded finite acceptance cases, capability families, and numbered witnesses.",
-    "PASS": 241,
+    "PASS": 242,
     "total": 242
   },
   "declarationTailsQualifiedEvidence": {
@@ -101525,5 +101527,271 @@
         "R2-17": "646bb601e021a38b2aca72aa41cd4829d8fa044666f8bd6cece80b406dfd9feb"
       }
     }
-  ]
+  ],
+  "canonicalCompilerTwoStageQualification": {
+    "status": "PASS_CANONICAL_SOURCE_FIDELITY_AND_TWO_STAGE_COMPILER",
+    "source": "156524fc660dbd6db8fbc4a5845d5a2d486860c3",
+    "runner": "fabaecaed7573daf3ffcca751699fceb9079e0cb",
+    "leanCommit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+    "run": 43750175058,
+    "runUrl": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058",
+    "runAttempt": 1,
+    "workflow": ".github/workflows/ps0-canonical-two-stage.yml",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 132922298863,
+        "name": "checkpoint-qualification",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132922298863",
+        "conclusion": "success",
+        "completedAt": "2026-11-15T19:03:44Z"
+      },
+      {
+        "id": 132922422698,
+        "name": "stage-one-base",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132922422698",
+        "conclusion": "success",
+        "completedAt": "2026-11-15T21:16:24Z"
+      },
+      {
+        "id": 132960991270,
+        "name": "stage-one-compiler-early",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132960991270",
+        "conclusion": "success",
+        "completedAt": "2026-11-15T22:15:00Z"
+      },
+      {
+        "id": 132978030235,
+        "name": "stage-one-compiler-middle",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132978030235",
+        "conclusion": "success",
+        "completedAt": "2026-11-15T22:43:43Z"
+      },
+      {
+        "id": 132986318896,
+        "name": "stage-one-compiler",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132986318896",
+        "conclusion": "success",
+        "completedAt": "2026-11-15T22:53:07Z"
+      },
+      {
+        "id": 132988954567,
+        "name": "stage-one",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132988954567",
+        "conclusion": "success",
+        "completedAt": "2026-11-15T23:16:30Z"
+      },
+      {
+        "id": 132995721104,
+        "name": "stage-two-base",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/132995721104",
+        "conclusion": "success",
+        "completedAt": "2026-11-16T01:54:08Z"
+      },
+      {
+        "id": 133042737026,
+        "name": "stage-two-compiler-early",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133042737026",
+        "conclusion": "success",
+        "completedAt": "2026-11-16T02:57:38Z"
+      },
+      {
+        "id": 133062485088,
+        "name": "stage-two-compiler-middle",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133062485088",
+        "conclusion": "success",
+        "completedAt": "2026-11-16T03:38:43Z"
+      },
+      {
+        "id": 133075652071,
+        "name": "stage-two-compiler",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133075652071",
+        "conclusion": "success",
+        "completedAt": "2026-11-16T03:46:52Z"
+      },
+      {
+        "id": 133078295815,
+        "name": "stage-two",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133078295815",
+        "conclusion": "success",
+        "completedAt": "2026-11-16T04:16:20Z"
+      },
+      {
+        "id": 133087565155,
+        "name": "independent-audit",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/job/133087565155",
+        "conclusion": "success",
+        "completedAt": "2026-11-16T04:18:36Z"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 14197386699,
+        "name": "ps0-canonical-independent-audit-43750175058",
+        "bytes": 655,
+        "digest": "sha256:7b3a22fbea17139916a72c24ffc5532bbc84c259d2af3ba0fe76658a1800bc5e",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14197386699"
+      },
+      {
+        "id": 14196538258,
+        "name": "ps0-selfhost-stage-two-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 285576940,
+        "digest": "sha256:cef1a778bf408e593e735ce51468967fb795f8a936fc434ccb39e7e8a3cdf283",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14196538258"
+      },
+      {
+        "id": 14196410780,
+        "name": "ps0-compiler-slice-evidence-2-compiler-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 8271659,
+        "digest": "sha256:05f94959f72b202884923ff64e57da46dc25ad802aae56dbb0158b46562c2403",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14196410780"
+      },
+      {
+        "id": 14196276526,
+        "name": "ps0-compiler-checkpoint-2-compiler-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 1102054114,
+        "digest": "sha256:0292e2389cd38512a66da8a2e2a39463affdbce40dee2f6da0e834bfb15e3293",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14196276526"
+      },
+      {
+        "id": 14196275649,
+        "name": "ps0-compiler-slice-evidence-2-compiler-middle-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 8271196,
+        "digest": "sha256:b399efbddb96e13090eec3b985aa600e9d47fd1781801af5fb6d8e87884aab97",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14196275649"
+      },
+      {
+        "id": 14195966604,
+        "name": "ps0-compiler-checkpoint-2-compiler-middle-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 1088376738,
+        "digest": "sha256:abbf12fefef3286a7258d678b6a74210d3a155195481315bc305fb895e6af899",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14195966604"
+      },
+      {
+        "id": 14193509385,
+        "name": "ps0-compiler-checkpoint-2-compiler-early-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 867966947,
+        "digest": "sha256:cce4e12383fb4f756668329b051551aa28ff26922f8382416926bccb9bdd47f9",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14193509385"
+      },
+      {
+        "id": 14193454606,
+        "name": "ps0-compiler-slice-evidence-2-compiler-early-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 8262450,
+        "digest": "sha256:dc0821bc4f087e002e93fb049c1823c8200b0c8c2c243b0092e885091d5b1e51",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14193454606"
+      },
+      {
+        "id": 14191766585,
+        "name": "ps0-compiler-checkpoint-2-base-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 451753487,
+        "digest": "sha256:954ad078e15f31ff4417886d086a78d01bccf253d30a29857278f85c7a5c3de0",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14191766585"
+      },
+      {
+        "id": 14191139574,
+        "name": "ps0-compiler-slice-evidence-2-base-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 8243574,
+        "digest": "sha256:d4d25443803a1e76e326d219642db851f0fddaf1e8cf1e2750e0227541cb35ae",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14191139574"
+      },
+      {
+        "id": 14185521698,
+        "name": "ps0-selfhost-stage-one-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 285372357,
+        "digest": "sha256:099ab85e1ea17b16222d21c66fd9e37821f387206bde0d302a555d68778fdc22",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14185521698"
+      },
+      {
+        "id": 14184565288,
+        "name": "ps0-compiler-checkpoint-1-compiler-middle-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 1088070025,
+        "digest": "sha256:2c583c64c492fb3e16e0d2d821733858271abd0c8ef1d6a5535f62464ad287d7",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14184565288"
+      },
+      {
+        "id": 14184388564,
+        "name": "ps0-compiler-slice-evidence-1-compiler-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 8271696,
+        "digest": "sha256:2ede957501278f608173a5ce1cd5f6ee7b6c902edbaf22436da154de94815710",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14184388564"
+      },
+      {
+        "id": 14184259339,
+        "name": "ps0-compiler-checkpoint-1-compiler-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 1101698299,
+        "digest": "sha256:bd6a3810685ee2a665ce51381b8bad3a245cc82d2213084296685504ff76f7b9",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14184259339"
+      },
+      {
+        "id": 14184038415,
+        "name": "ps0-compiler-slice-evidence-1-compiler-middle-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 8271235,
+        "digest": "sha256:8926cb92f05b62576622494d00af2d80768e77cfb6143bf201da9fe08c3f4d5b",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14184038415"
+      },
+      {
+        "id": 14183236129,
+        "name": "ps0-compiler-checkpoint-1-compiler-early-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 867702733,
+        "digest": "sha256:4780d83f02ba06cafecb02dff13ff5b85716f9a3b6116640df5c13e539a03452",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14183236129"
+      },
+      {
+        "id": 14182379538,
+        "name": "ps0-compiler-slice-evidence-1-compiler-early-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 8262529,
+        "digest": "sha256:d2cd4f469b4345882f5d58da6a06b2a011ac470301ff74b2d08972a867fae125",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14182379538"
+      },
+      {
+        "id": 14180732280,
+        "name": "ps0-compiler-checkpoint-1-base-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 451629669,
+        "digest": "sha256:68c048e8c12b9c2459c3d8aa47d1eb015675fcb451bdabc938763415d3c70303",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14180732280"
+      },
+      {
+        "id": 14180084510,
+        "name": "ps0-compiler-slice-evidence-1-base-156524fc660dbd6db8fbc4a5845d5a2d486860c3-43750175058",
+        "bytes": 8243606,
+        "digest": "sha256:86a115f4b46e790a9847a14f2c1d1d30d0c85f602a581a168d4be6c29b6c1ed5",
+        "url": "https://github.com/dwijayuda/pskernel/actions/runs/43750175058/artifacts/14180084510"
+      }
+    ],
+    "auditReceipt": {
+      "path": "audit.json",
+      "sha256": "a60a100c22da0a96f29489e0082ed75f24d4560722423ccc2a196850179bb217",
+      "artifactId": 14197386699,
+      "archiveSha256": "7b3a22fbea17139916a72c24ffc5532bbc84c259d2af3ba0fe76658a1800bc5e",
+      "archiveDigestVerified": true,
+      "receipt": {
+        "schema": "ps0-independent-fixed-point-artifact-audit/1",
+        "source": "156524fc660dbd6db8fbc4a5845d5a2d486860c3",
+        "lean_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+        "modules": 2569,
+        "stages": 2,
+        "ps_sources_rehashed": 5138,
+        "mapped_censuses_rehashed": 5138,
+        "driver_files_rehashed": 2,
+        "metadata_files_rehashed": 440,
+        "source_identity_counts": {
+          "total_inputs": 2569,
+          "planned_ps_grammar_inputs": 2569,
+          "byte_identical_mode_inputs": 0,
+          "native_compatible_mode_inputs": 0,
+          "source_hashes_equal_original": 402
+        },
+        "c_and_public_olean_receipt_hashes_compared": 5138,
+        "stage_two_metadata_mode": "retained-ps-built-prefix",
+        "status": "PASS",
+        "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+        "grammar_migration_complete": false,
+        "verified_execution": false
+      }
+    },
+    "scope": "Actual retained sources/censuses/prefix files rehashed; C/public olean equality from producer receipts, not independent rehash of unretained target output files; no bit-identical final ELF or language-wide conformance claim",
+    "grammarMigrationComplete": false,
+    "verified_execution": false
+  }
 }
