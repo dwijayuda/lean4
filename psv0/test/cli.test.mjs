@@ -1,7 +1,7 @@
 // Copyright (c) 2026 ProofScript contributors. All rights reserved.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, existsSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, existsSync, writeFileSync, rmSync, chmodSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -53,6 +53,8 @@ test('fast mode stages and publishes with explicit unverified manifest', () => {
     assert.equal(result.source_to_lean_equivalence_proven, false);
     assert.equal(result.target_semantics_proven, false);
     assert.ok(readFileSync(join(out, 'Inventory.lean'), 'utf8').includes('def remaining'));
+    assert.equal(JSON.parse(readFileSync(join(out, 'Inventory.ir.json'), 'utf8')).schema, 'psv0-ir-v0');
+    assert.equal(result.outputs['Inventory.ir.json'].length, 64);
     assert.ok(readFileSync(join(out, 'Inventory.ts'), 'utf8').includes('bigint'));
     assert.ok(readFileSync(join(out, 'Inventory.js'), 'utf8').includes('psv0NatSub'));
     assert.throws(() => build([source, '--out', out]), /already exists/);
@@ -75,4 +77,29 @@ test('strict and fast modes reject verification claims not supported by evidence
   assert.throws(() => build(['i.ps', '--out', 'x', '--proof', 'fake.lean']), /requires --mode strict/);
   assert.throws(() => build(['i.ps', '--out', 'x', '--target', 'rust']), /unsupported/);
   assert.throws(() => build(['i.ps', '--out', 'x', '--target', 'ts,ts']), /duplicate/);
+});
+
+test('strict bridge artifact is retained and explicitly non-verified (fake checker smoke test only)', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'psv0-bridge-smoke-'));
+  try {
+    const source = join(temp, 'Inventory.ps');
+    const fake = join(temp, 'lean-stub.cjs');
+    writeFileSync(source, SOURCE);
+    writeFileSync(fake, '#!/usr/bin/env node\n' +
+      'const fs=require("node:fs");\n' +
+      'if(process.argv[2]==="--version"){console.log("FAKE-LEAN-TEST-ONLY");process.exit(0)}\n' +
+      'const checked=fs.readFileSync(process.argv[2],"utf8");\n' +
+      'if(!checked.includes("theorem psv0_bridge_remaining") || !checked.includes("targetModel_correct"))process.exit(37);\n');
+    chmodSync(fake, 0o755);
+    const out = join(temp, 'strict');
+    const result = build([source, '--out', out, '--mode', 'strict', '--target', 'lean', '--lean', fake]);
+    assert.equal(result.assurance, 'lean-checked-target-unverified');
+    assert.equal(result.toolchain.lean, 'FAKE-LEAN-TEST-ONLY');
+    assert.equal(result.source_to_lean_equivalence_proven, false);
+    assert.equal(result.target_semantics_proven, false);
+    assert.equal(result.lean_ir_bridge.scope, 'checked-IR-to-generated-Lean-only');
+    const checked = readFileSync(join(out, 'PSV0Check.lean'), 'utf8');
+    assert.match(checked, /theorem psv0_bridge_remaining/);
+    assert.match(checked, /theorem targetModel_correct/);
+  } finally { rmSync(temp, { recursive: true, force: true }); }
 });
