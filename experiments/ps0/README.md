@@ -4,7 +4,36 @@
 not a completed v1 compiler or a verified executable compiler.
 
 
-## Finite compiler-source grammar mode
+## Canonical compiler source
+
+The pinned compiler source is tracked as `.ps` in `src/` and in the PS0
+implementation directory. The canonical catalog preserves the correspondence
+between upstream paths, Lake module names, and the audited ProofScript bytes.
+
+On Linux x86-64 with the pinned Lean 4.35.0 SDK, download the [audited bootstrap bundle](https://github.com/dwijayuda/pskernel/releases/tag/ps0-bootstrap-lean4.35.0-978d594a-linux-x86_64).
+The download script verifies the published `SHA256SUMS` against the digest
+pinned in the checkout and checks the archive before extracting it. Use a new
+output directory for the download.
+
+```bash
+cd experiments/ps0
+test "$(lean --githash)" = eb6cafb7290e8bd5f2937522d8d804f58f02bafc
+bootstrap="$(pwd)/build/release-bootstrap"
+mkdir -p build
+bash tests/fetch-canonical-bootstrap.sh "$bootstrap"
+export PS0_SOURCE_SHA="$(git rev-parse HEAD)"
+python3 tests/run-compiler-ps.py --canonical-corpus \
+  --bootstrap-artifact "$bootstrap/compiler-evidence" \
+  --bootstrap-source 978d594a10fac8f6e5687190a22d70334b331dab
+```
+
+The build verifies the retained seed prefix and stages the checked-out PS
+bytes under Lake's logical module paths. Native Lake builds the archive and
+executable. The Linux two-stage workflow uses a fresh checkout for the second
+stage and supplies the first linked PS-built prefix through `--stage-artifact`
+and `--stage-source`.
+
+## Compiler-source grammar mode
 
 Native Lake project builds may opt into the finite syntax-only compiler host with
 `-KsourceGrammar=true` in addition to their existing `lakefile.project.lean` source,
@@ -25,8 +54,9 @@ Compiler bootstrap builds use native Lake `leanOptions` with
 `interpreter.prefer_native=false`, as in the pinned upstream Lean CMake stage
 configuration. Native frontend/kernel/code generation, graph/artifact/cache,
 native object compilation and linking remain Lean/Lake responsibilities.
-The complete pinned forest has a native-compatible census baseline; canonical PS
-grammar conversion and a fresh full migrated fixed point remain open.
+The generated compiler corpus and its fixed point were qualified before the
+source cutover. The work state and conformance ledger record the corresponding
+generated and canonical build evidence.
 
 ## Sole normative authority
 
@@ -53,57 +83,43 @@ multibackend compiler and from the earlier PSCVL experiment.
 
 ## Build and development commands
 
-Native executable build (run from this package directory):
+After the canonical build above, use its published prefix from this package
+directory. Its sibling metadata supplies the PS0 imports used by the CLI.
 
-```sh
-lake exe ps0 build-native tests/native/Main.ps NativeMain build/native-main
-./build/native-main/NativeMain one two
-```
+```bash
+prefix="$(pwd)/build/compiler-evidence/compiler-prefix"
+ps0="$prefix/bin/ps0"
+export LEAN_PATH="$prefix/lib/lean${LEAN_PATH:+:$LEAN_PATH}"
 
-For incremental development, use the underlying Lake target directly:
-
-```sh
-lake -R -f lakefile.native.lean -Ksource=tests/native/Main.ps -Kps0Module=NativeMain build app
-./.lake/build/bin/NativeMain
-```
-
-The target composes the existing `.ps` adapters and official Lean frontend/LCNF C emitter with Lake's imported-module link information, C-to-object build and executable linker. Lake tracks source bytes, the PS0 compiler, imported Lean modules, native options and the toolchain. Use `-R` so the configuration's `get_config?` values reflect the supplied source/module; compiled artifacts still use Lake's incremental cache. The CLI supplies this flag and publishes an executable and `native-build.json` only after successful linking, refusing an existing output directory. No intermediate textual `.lean` program is generated.
-
-Recursive projects use the native Lake module graph:
-
-```sh
-lake exe ps0 build-project tests/project Demo.Main build/project-demo
+"$ps0" check tests/v1/native_capabilities.ps
+"$ps0" check tests/v1/registered_syntax.ps
+"$ps0" module-header tests/v1/explicit_module.ps
+"$ps0" check tests/lean/unrestricted.lean
+"$ps0" build-project tests/project Demo.Main build/project-demo
 ./build/project-demo/ps0project one two
 ```
 
-The source root supplies dotted-module paths such as `Demo/Library.ps`. Native `.lean` dependencies, public/meta imports, imported syntax, incremental traces, C/object generation and linking retain Lake's existing implementations. A sibling `.lean` and `.ps` for the same module is an error. Executable entries require their own compiled `main`; publication refuses an existing directory. The output contains `ps0project` and `project-build.json`, whose `verified_execution` remains false.
+The recursive project path uses native Lake through `lakefile.project.lean`.
+The source root supplies dotted-module paths such as `Demo/Library.ps`.
+A sibling `.lean` and `.ps` for one module is an error. The entry module
+supplies its own compiled `main`. The CLI publishes `ps0project` and
+`project-build.json` into a new output directory.
 
-`lakefile.project.lean` exposes the input/`leanArts` adapters for direct incremental use. The CLI supplies `-R` and source/root/driver configuration. Native `prelude` sources retain their explicit imports and receive no hidden Init or PS0 import. Compiler bootstrap qualification additionally uses Lake's native bootstrap package identity and pinned include headers.
+The legacy `lakefile.native.lean` and `build-native` path builds the driver
+from the pre-cutover Lean sources. Use `build-project` for native executables
+from this canonical checkout.
 
-This is native build integration, not complete PS0 conformance or verified runtime execution. Recursive/meta imports, source/native invalidation, cache reuse, prelude isolation, collisions, cycles, visibility and local-entry negatives have finite Linux evidence in `AI_WORK_STATE.md`. Full host operand closure and source-origin fidelity remain open.
-
-`cd experiments/ps0`
-
-`lake build PS0 ps0`
-
-`lake exe ps0 check tests/v1/native_capabilities.ps`
-
-`lake exe ps0 check tests/v1/registered_syntax.ps`
-
-`lake exe ps0 module-header tests/v1/explicit_module.ps`
-
-`lake exe ps0 check tests/lean/unrestricted.lean`
-
-`lake exe ps0 lean [native Lean args]`
-
-The `module-header` subcommand is an introspection aid. `lake-header` emits the native module-header JSON used by Lake's input adapter. `convert-native SOURCE.lean TARGET.ps` and `convert-native-tree SOURCE_DIR TARGET_DIR` retain native bodies and adapt legacy headers with the native header parser. These conversion commands alone do not qualify source replacement. `tests/run-compiler-ps.py` and `compiler-source-inventory.json` require every pinned source blob, actual PS inputs and artifacts, a migrated executable and a second clean C/olean comparison. The pinned compiler-source gate now passes both stages: all 2,546 compiler source files plus 18 PS0 modules compile from PS inputs, and the migrated native compiler rebuilds every module with identical C/public-olean hashes. This remains distinct from complete PS-specific grammar conformance or formal execution verification.
+The pinned compiler-source gate covers 2,546 upstream sources and 23 PS0
+implementation modules. Both Linux stages compiled the tracked PS inputs,
+linked, and matched per-module generated C and public `.olean` hashes.
+See [CONFORMANCE.md](CONFORMANCE.md) for the exact scope and evidence.
 
 ### Small JS backend, entirely in Lean
 
-`lake exe ps0 build-js tests/js/nat_mvp.ps NatMvp build/js-nat`
+`"$ps0" build-js tests/js/nat_mvp.ps NatMvp build/js-nat`
 
 The selected Nat runtime subset is implemented under
-`PS0/Backend/Js/*.lean`. Its candidate outputs are `NatMvp.js`,
+`PS0/Backend/Js/*.ps`. Its candidate outputs are `NatMvp.js`,
 `NatMvp.d.ts`, and `NatMvp.js.map` (Source Map v3). It uses exact
 BigInt Nat operations and guarded argument boundaries; it refuses
 unimplemented runtime constructs. This backend does **not** limit
@@ -114,17 +130,17 @@ See [PS0_JS_BACKEND_MVP.md](PS0_JS_BACKEND_MVP.md).
 
 | Lean implementation | Responsibility |
 |---|---|
-| `PS0/HostCategories.lean` | Four PS host interfaces, selected owned calls/grouping/control/proof operands and AST lowering; native/DSL subtrees stay opaque |
-| `PS0/Syntax.lean` | Typed/inferred public/private `function` and `const` bodies now lower through PS-owned `psTerm`; full native declaration/proof/tactic/do operand adaptation pending |
-| `PS0/StandardAdapters.lean` | Scoped ordinary declaration result/value/proof operands; pinned partial map in `standard-adapter-map.json` |
-| `PS0/LakeFrontend.lean` | Native header parsing, ModuleSetup/frontend/C protocol, bootstrap source conversion |
+| `PS0/HostCategories.ps` | Four PS host interfaces, selected owned calls/grouping/control/proof operands and AST lowering; native/DSL subtrees stay opaque |
+| `PS0/Syntax.ps` | Typed/inferred public/private `function` and `const` bodies now lower through PS-owned `psTerm`; full native declaration/proof/tactic/do operand adaptation pending |
+| `PS0/StandardAdapters.ps` | Scoped ordinary declaration result/value/proof operands; pinned partial map in `standard-adapter-map.json` |
+| `PS0/LakeFrontend.ps` | Native header parsing, ModuleSetup/frontend/C protocol, bootstrap source conversion |
 | `lakefile.project.lean` | Thin module input/compiler invocation adapters over native Lake graph/artifacts/objects/linking |
-| `PS0/Grammar.lean` | Non-normative static syntax-kind inspection; official interleaved Lean parser is authoritative |
-| `PS0/Policy.lean` | Local declaration **information only**, no implicit axiom approval or source-language bans |
-| `PS0/StandardEnv.lean` | Pinned edition/source metadata, not an import/tactic/attribute allowlist |
-| `PS0/Effect.lean` | Candidate Lean-native proof/effect library helpers |
-| `PS0/Backend/Js/*.lean` | Typed runtime IR and Lean-based JS/TS/map backend |
-| `PS0Main.lean` | CLI, source-profile routing, Lean elaboration and artifact staging |
+| `PS0/Grammar.ps` | Non-normative static syntax-kind inspection; official interleaved Lean parser is authoritative |
+| `PS0/Policy.ps` | Local declaration **information only**, no implicit axiom approval or source-language bans |
+| `PS0/StandardEnv.ps` | Pinned edition/source metadata, not an import/tactic/attribute allowlist |
+| `PS0/Effect.ps` | Candidate Lean-native proof/effect library helpers |
+| `PS0/Backend/Js/*.ps` | Typed runtime IR and Lean-based JS/TS/map backend |
+| `PS0Main.ps` | CLI, source-profile routing, Lean elaboration and artifact staging |
 
 Language acceptance, ordinary checked source, checked theorems,
 source verification and verified execution correspondence are separate
@@ -157,7 +173,7 @@ The recursive continuation at `b842b26fa2dffaee6a73f03fb70ca77683ccaf31` passed 
 
 The finite grammar/origin increment at `1d76c795edbbaa79fe4d938f073114e5bd76a3ae` passes all four jobs in Linux [run 42507413045](https://github.com/dwijayuda/pskernel/actions/runs/42507413045). It adds native-lowered braced multi-statement do operands (identifier let/mut/bind/reassignment, statement and return), dedicated apply/refine probes and opaque native doSeq DSL coverage. Native Lean and Lake still perform elaboration, code generation, native build and linking.
 
-`lake exe ps0 source-map FILE.ps` exports the exact prepared source, native CRLF-normalized input and half-open UTF-8 original/generated byte ranges. Header/body bytes and comments remain recoverable. `lake exe ps0 source-origin FILE.ps NATIVE_BYTE_OFFSET` uses native FileMaps to return an original byte offset or null; the file must match the captured bytes. Actual Lake invocations retain `*.ilean.ps0-source-map.json` sidecars. Diagnostics and ilean references retain native prepared-source positions; automatic IDE/diagnostic remapping and sidecar cache recovery remain open.
+`"$ps0" source-map FILE.ps` exports the exact prepared source, native CRLF-normalized input and half-open UTF-8 original/generated byte ranges. Header/body bytes and comments remain recoverable. `"$ps0" source-origin FILE.ps NATIVE_BYTE_OFFSET` uses native FileMaps to return an original byte offset or null; the file must match the captured bytes. Actual Lake invocations retain `*.ilean.ps0-source-map.json` sidecars. Diagnostics and ilean references retain native prepared-source positions; automatic IDE/diagnostic remapping and sidecar cache recovery remain open.
 
 See AI_WORK_STATE.md, CONFORMANCE.md, v1-coverage.json and standard-adapter-map.json for exact tests, jobs, artifact IDs/digests and remaining roles. This increment does not rerun or extend the separately recorded complete compiler-source/fixed-point qualification, or claim full PS grammar/source fidelity.
 

@@ -1,0 +1,35 @@
+/-
+Copyright (c) 2021 Mac Malone. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Mac Malone
+-/
+module
+
+prelude
+public import Init.Prelude
+import Init.Data.ToString
+import Init.Data.String.TakeDrop
+
+namespace Lake
+
+public const version.major : Nat := 5
+public const version.minor : Nat := 0
+public const version.patch : Nat := 0
+
+public const version.isRelease : Bool :=
+  Lean.version.isRelease
+
+public const version.specialDesc : String :=
+  if isRelease && !Lean.githash.isEmpty then s!"src+{Lean.githash.take 7}" else "src"
+
+public const versionStringCore : String :=
+  s!"{version.major}.{version.minor}.{version.patch}"
+
+public const versionString : String :=
+  if version.specialDesc ≠ "" then
+    s!"{versionStringCore}-{version.specialDesc}"
+  else
+    versionStringCore
+
+public const uiVersionString : String :=
+  s!"Lake version {versionString} (Lean version {Lean.versionString})"

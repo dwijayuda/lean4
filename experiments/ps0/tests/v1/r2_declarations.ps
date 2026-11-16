@@ -1,0 +1,58 @@
+module
+prelude
+public import Init
+public meta import Lean
+public section
+
+const count: Nat := 3
+function add(x: Nat, y: Nat): Nat := x + y
+function tick(): Nat := 1
+def f (x y : Nat) := x + y
+function same {α: Type}[BEq α](x: α, y: α) := x == y
+function choose(n: Nat)[Decidable(n = 0)](x: Fin(n + 1)) := x.val
+opaque value: Nat := 1
+opaque defaultCount: Nat
+axiom assumed: True
+universe u
+noncomputable def pick {α: Sort u}(h: Nonempty α): α := Classical.choice(h)
+
+example : count = 3 := rfl
+example : (add 2) 3 = 5 := rfl
+example : tick(()) = 1 := rfl
+example : f 2 3 = 5 := rfl
+example : same(3, 3) = true := rfl
+example : choose(0, ⟨0, by decide⟩) = 0 := rfl
+
+open Lean in
+run_cmd do
+  let env ← getEnv
+  for name in [`count, `add, `tick, `f, `same, `choose, `pick] do
+    unless (env.find? name).any (fun | .defnInfo _ => true | _ => false) do
+      throwError "expected definition: {name}"
+  for name in [`value, `defaultCount] do
+    unless (env.find? name).any (fun | .opaqueInfo _ => true | _ => false) do
+      throwError "expected opaque declaration: {name}"
+  unless (env.find? `assumed).any (fun | .axiomInfo _ => true | _ => false) do
+    throwError "expected explicit axiom"
+  for (name, arity, expected) in [
+      (`count, 0, []), (`add, 2, [.default, .default]), (`tick, 1, [.default]),
+      (`f, 2, [.default, .default]),
+      (`same, 4, [.implicit, .instImplicit, .default, .default]),
+      (`choose, 3, [.default, .instImplicit, .default]), (`pick, 2, [.implicit, .default])] do
+    let some info := env.find? name | throwError "missing declaration: {name}"
+    let mut type := info.type
+    let mut binders : List BinderInfo := []
+    for _ in [:arity] do
+      let .forallE _ domain body kind := type | throwError "missing binder: {name}"
+      if name == `tick && !domain.isConstOf ``Unit then throwError "nullary function expects Unit"
+      binders := kind :: binders
+      type := body
+    unless binders.reverse == expected && !type.isForall do throwError "wrong telescope: {name}"
+  unless Lean.isNoncomputable env `pick do throwError "pick should be noncomputable"
+  logInfo "PS0_R2_DECLARATION_ORACLES: PASS"
+
+const added: Nat := add(2, 3)
+const ticked: Nat := tick()
+const sameNat: Bool := same(3, 3)
+const chosen: Nat := choose(0, ⟨0, by decide⟩)
+def main : IO Unit := IO.println s!"PS0_R2_DECLARATIONS:{count}:{added}:{ticked}:{f 2 3}:{sameNat}:{chosen}:{value}:{defaultCount}"

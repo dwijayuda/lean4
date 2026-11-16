@@ -152,4 +152,3 @@ if __name__ == '__main__':
         pack(args.root, args.manifest, args.archive)
     else:
         unpack(args.archive, args.root)
-

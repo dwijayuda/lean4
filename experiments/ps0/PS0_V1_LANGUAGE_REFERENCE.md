@@ -3747,7 +3747,7 @@ function bad(k: K): Nat := match k with { | K.mk() => 0 }
 
 **Oracle:** Reject the empty adapter: K.mk has one explicit field.
 
-### R2-06. Native defaults in a nonempty pattern adapter
+### R2-06. Native constructor arity in a nonempty pattern adapter
 
 **Expected:** `accept`. **Execution status:** NOT RUN.
 
@@ -3756,14 +3756,17 @@ public import Init
 
 inductive Packet where { | mk(n: Nat, flag: Bool := true) }
 function readPacket(p: Packet): Nat := match p with {
-  | Packet.mk(n) => n
+  | Packet.mk(n, true) => n
   | Packet.mk(_, false) => 0
 }
 example : readPacket(Packet.mk(7, true)) = 7 := rfl
 example : readPacket(Packet.mk(7, false)) = 0 := rfl
 ```
 
-**Oracle:** K(n) keeps native default matching; explicit false reaches the second branch.
+**Oracle:** Both explicit field patterns reach the stated branches. A default on
+the constructor declaration does not supply a missing pattern on the pinned
+Lean compiler. Both `Packet.mk(n)` in PS0 and `Packet.mk n` in Lean reject the
+omitted field with the native constructor-arity diagnostic.
 
 ### R2-07. Defaulted fields do not qualify an empty pattern adapter
 

@@ -1,0 +1,35 @@
+function sumPair(p: Nat × Nat): Nat := p.1 + p.2
+function tick(): Nat := 7
+function greet(name: String := "world"): String := name
+function add(x: Nat, y: Nat): Nat := x + y
+
+const tupleValue: Nat := sumPair((1, 2))
+const emptyUnit: Nat := tick()
+const explicitUnit: Nat := tick(())
+const namedValue: String := greet(name := "Ada")
+const defaultValue: String := greet()
+const partialValue: Nat → Nat := add(1)
+
+namespace Nested
+function f(x: Nat): Nat := x * 10
+function g(x: Nat, y: Nat): Nat := x + y
+const nestedValue: Nat := f g(2, 3)
+const trailingValue: Nat := f(2,)
+const commentValue: Nat := f(/- inside -/ 2)
+end Nested
+
+namespace Grouped
+function f(h: Nat → Nat → Nat, x: Nat, y: Nat): Nat := h(x, y) * 10
+function g(x: Nat, y: Nat): Nat := x + y
+const groupedValue: Nat := (f g)(2, 3)
+end Grouped
+
+example : tupleValue = 3 := rfl
+example : emptyUnit = explicitUnit ∧ explicitUnit = 7 := ⟨rfl, rfl⟩
+example : namedValue = "Ada" := rfl
+example : defaultValue = "world" := rfl
+example : partialValue 5 = 6 := rfl
+example : Nested.trailingValue = 20 := rfl
+example : Nested.nestedValue = 50 := rfl
+example : Grouped.groupedValue = 50 := rfl
+example : Nested.commentValue = 20 := rfl
