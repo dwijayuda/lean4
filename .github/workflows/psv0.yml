@@ -1,0 +1,32 @@
+name: PSV0 standalone transpiler
+on:
+  push:
+    branches:
+      - 'feat/psv0-*'
+    paths:
+      - 'psv0/**'
+      - '.github/workflows/psv0.yml'
+  pull_request:
+    paths:
+      - 'psv0/**'
+      - '.github/workflows/psv0.yml'
+permissions:
+  contents: read
+jobs:
+  transpiler-tests:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: syntax and unit tests
+        run: |
+          node --check psv0/src/cli.mjs
+          node --test psv0/test/*.test.mjs
+      - name: TS target qualification (type-check only)
+        run: |
+          mkdir -p /tmp/psv0-ci-target
+          node psv0/src/cli.mjs psv0/examples/Inventory.ps --out /tmp/psv0-ci-target/build --mode fast --target lean,ts,js
+          npx --yes --package typescript@5.8.3 tsc --noEmit --strict --target ES2020 --module ES2020 --skipLibCheck /tmp/psv0-ci-target/build/Inventory.ts
