@@ -1,0 +1,7 @@
+name = "psv0"
+version = "0.0.1"
+defaultTargets = ["Reference"]
+
+[[lean_lib]]
+name = "Reference"
+srcDir = "formal"
