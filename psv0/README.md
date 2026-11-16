@@ -10,11 +10,11 @@ Make ProofScript a low-latency source-to-source language, using the original Lea
 
 A deliberately narrow subset: optional single namespace; one or more single-line declarations of the form
 
-\`\`\`text
+```text
 function remaining(stock: Nat, requested: Nat): Nat := stock - requested
-\`\`\`
+```
 
-Names and parameters must be simple identifiers. Expressions support Nat decimal literals, parameters, parentheses, \`+\`, \`-\` and \`*\`. Operators follow ordinary left associativity and multiplication precedence. Nat subtraction saturates at zero. No imports, user macros, arbitrary Lean syntax, function calls, effects, recursion, proof terms or other types are accepted. Invalid input is rejected instead of passed through as unchecked source. This subset is not claimed to implement PS0 v1 or all of ProofScript.
+Names and parameters must be simple identifiers. Expressions support Nat decimal literals, parameters, parentheses, `+`, `-` and `*`. Operators follow ordinary left associativity and multiplication precedence. Nat subtraction saturates at zero. No imports, user macros, arbitrary Lean syntax, function calls, effects, recursion, proof terms or other types are accepted. Invalid input is rejected instead of passed through as unchecked source. This subset is not claimed to implement PS0 v1 or all of ProofScript.
 
 Generated JS and TS use bigint and perform entry-point nonnegative bigint checks. They have candidate-level semantics tests, not a formal proof against ECMAScript or TypeScript. The Lean emitter is a syntax-directed proposal; no source-to-Lean semantic equivalence theorem is yet established.
 
@@ -22,20 +22,20 @@ Generated JS and TS use bigint and perform entry-point nonnegative bigint checks
 
 Requires Node.js 22+ for the CLI and tests. No npm dependencies.
 
-\`\`\`sh
+```sh
 node psv0/src/cli.mjs psv0/examples/Inventory.ps --out /tmp/psv0-fast --target lean,ts,js --mode fast
 node --test psv0/test/*.test.mjs
-\`\`\`
+```
 
 For an independent Lean check, install a compatible Lean binary and run:
 
-\`\`\`sh
+```sh
 node psv0/src/cli.mjs psv0/examples/Inventory.ps --out /tmp/psv0-strict --target lean,ts,js --mode strict --lean lean --tsc tsc
-\`\`\`
+```
 
-Strict mode invokes the selected original Lean binary on generated Lean (and an optional \`--proof FILE.lean\` appended into its checker module), and invokes \`tsc\` and Node syntax checks for requested targets. The chosen Lean binary and imported proof files are **not sandboxed** by this CLI: use only trusted proof inputs or isolate the build externally. Output is atomically staged and the destination must not already exist. It is labeled \`lean-checked-target-unverified\`, never verified. Lean/checker availability is required for strict mode. The tool does not install or ship Lean.
+Strict mode invokes the selected original Lean binary on generated Lean (and an optional `--proof FILE.lean` appended into its checker module), and invokes `tsc` and Node syntax checks for requested targets. The chosen Lean binary and imported proof files are **not sandboxed** by this CLI: use only trusted proof inputs or isolate the build externally. Output is atomically staged and the destination must not already exist. It is labeled `lean-checked-target-unverified`, never verified. Lean/checker availability is required for strict mode. The tool does not install or ship Lean.
 
-The \`verified\` mode deliberately **fails** until source/IR, IR/target, serialization and runtime correspondence evidence can be checked. It must never auto-downgrade.
+The `verified` mode deliberately **fails** until source/IR, IR/target, serialization and runtime correspondence evidence can be checked. It must never auto-downgrade.
 
 ## Source and target assurance
 
