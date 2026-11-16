@@ -30,3 +30,29 @@ jobs:
           mkdir -p /tmp/psv0-ci-target
           node psv0/src/cli.mjs psv0/examples/Inventory.ps --out /tmp/psv0-ci-target/build --mode fast --target lean,ts,js
           npx --yes --package typescript@5.8.3 tsc --noEmit --strict --target ES2020 --module ES2020 --skipLibCheck /tmp/psv0-ci-target/build/Inventory.ts
+
+  lean-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: true
+          test: false
+          lake-package-directory: psv0
+          use-github-cache: false
+          use-mathlib-cache: false
+      - name: Install isolated TypeScript checker
+        run: npm install --global --ignore-scripts typescript@5.8.3
+      - name: Strict Lean bridge and target syntax checks
+        working-directory: psv0
+        run: |
+          lean --version
+          node src/cli.mjs examples/Inventory.ps --out "$RUNNER_TEMP/psv0-strict" --mode strict --target lean,ts,js --lean lean --tsc tsc
+          test -f "$RUNNER_TEMP/psv0-strict/PSV0Check.lean"
+          node -e 'const m=require(process.argv[1]);if(m.assurance!=="lean-checked-target-unverified"||!m.lean_ir_bridge||m.target_semantics_proven!==false)process.exit(1)' "$RUNNER_TEMP/psv0-strict/manifest.json"
