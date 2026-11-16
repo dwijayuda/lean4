@@ -207,6 +207,10 @@ export function build(argv) {
     const text = { lean: generated.lean, ts: generated.ts, js: generated.js };
     const ext = { lean: '.lean', ts: '.ts', js: '.js' };
     const hashes = {};
+    const irFile = stem + '.ir.json';
+    const irBytes = JSON.stringify({ schema: 'psv0-ir-v0', ...generated.ast }, null, 2) + '\n';
+    writeFileSync(join(stage, irFile), irBytes, { flag: 'wx' });
+    hashes[irFile] = sha256(irBytes);
     for (const target of opt.targets) {
       const file = stem + ext[target];
       writeFileSync(join(stage, file), text[target], { flag: 'wx' });
