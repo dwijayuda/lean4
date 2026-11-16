@@ -5,6 +5,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, w
 import { basename, dirname, join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { renderLeanBridge } from './bridge.mjs';
 
 const RESERVED = new Set(
   'as async await break case catch class const continue debugger default delete do else enum export extends false finally for function if import in instanceof interface let new null of package private protected public return static super switch this throw true try typeof var void while with yield arguments eval def theorem axiom sorry unsafe partial namespace end Nat Bool'.split(' ')
@@ -212,9 +213,18 @@ export function build(argv) {
       hashes[file] = sha256(text[target]);
     }
     const versions = { node: process.version };
+    let leanBridge = null;
     if (opt.mode === 'strict') {
       const checkFile = 'PSV0Check.lean';
-      writeFileSync(join(stage, checkFile), generated.lean + '\n' + (proof ?? ''), { flag: 'wx' });
+      const reference = readFileSync(fileURLToPath(new URL('../formal/Reference.lean', import.meta.url)), 'utf8');
+      const obligations = renderLeanBridge(generated.ast);
+      const checkedSource = reference + '\n' + generated.lean + '\n' + obligations + '\n' + (proof ?? '');
+      writeFileSync(join(stage, checkFile), checkedSource, { flag: 'wx' });
+      leanBridge = {
+        checked_file: checkFile, checked_sha256: sha256(checkedSource),
+        model_sha256: sha256(reference), obligation_sha256: sha256(obligations),
+        scope: 'checked-IR-to-generated-Lean-only'
+      };
       versions.lean = command(opt.lean, ['--version'], stage);
       command(opt.lean, [checkFile], stage);
       if (opt.targets.includes('ts')) {
@@ -223,7 +233,6 @@ export function build(argv) {
           '--skipLibCheck', '--pretty', 'false', stem + '.ts'], stage);
       }
       if (opt.targets.includes('js')) command(process.execPath, ['--check', stem + '.js'], stage);
-      rmSync(join(stage, checkFile));
     }
     const manifest = {
       schema: 'psv0-build-v0',
@@ -233,6 +242,7 @@ export function build(argv) {
       proof: proof === null ? null : { file: basename(opt.proof), sha256: sha256(proof) },
       outputs: hashes,
       toolchain: versions,
+      lean_ir_bridge: leanBridge,
       source_to_lean_equivalence_proven: false,
       target_semantics_proven: false
     };
